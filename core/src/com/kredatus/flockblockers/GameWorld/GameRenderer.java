@@ -538,6 +538,7 @@ public class GameRenderer {
             drawGlider(runTime);
             drawBoosts();
             drawScore();
+
         } else if (myWorld.isReady()) {
             drawBackground();
             drawBoosts();
