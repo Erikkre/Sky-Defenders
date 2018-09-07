@@ -38,6 +38,4 @@ public class FlockBlockersMain extends Game {
         AssetLoader.dispose();
         GameRenderer.dispose();
     }
-
-
 }
