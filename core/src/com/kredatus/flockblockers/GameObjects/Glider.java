@@ -18,7 +18,7 @@ public class Glider {
     public float gamexvelocity;
     protected int width;
     protected int height;
-    protected boolean is;
+    protected boolean isScrolledLeft;
     public float midpointY, midpointX, starty;
     private boolean isAlive;
 

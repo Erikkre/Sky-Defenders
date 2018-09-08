@@ -71,7 +71,7 @@ public class GameRenderer {
     float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
             c0len, c1len, c2len, c3len, c4len, c5len, c6len, c7len, c8len, c9len, c10len, c11len, c12len, c13len, c14len,
             s0len, s1len, s2len, s3len, s4len, s5len, s6len, s7len, s8len, s9len, s10len, s11len, s12len, s13len, s14len;
-    GlyphLayout Highscore, endgame, tryAgain,  boost, score, startLevel, title,
+    private GlyphLayout Highscore, endgame, tryAgain,  boost, score, startLevel, title,
             c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14,
             s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14;
 
@@ -533,7 +533,14 @@ public class GameRenderer {
         batcher.disableBlending();
         batcher.enableBlending();
 
-        if (myWorld.isRunning()) {
+        if (myWorld.isStory()) {
+            drawStory();
+            if (AssetLoader.getHighScore() == 0) {
+                nextButton.draw(batcher);
+            } else {
+                menuButton.draw(batcher);
+            }
+        }  else if (myWorld.isRunning()) {
             drawBackground();
             drawGlider(runTime);
             drawBoosts();
@@ -560,13 +567,6 @@ public class GameRenderer {
             sunshineManager2.update(delta);
             drawSpritesDeathMenu(runTime);
             drawDeathMenu();
-
-        } else if (myWorld.isStory()) {
-            drawStory();
-            if (AssetLoader.getHighScore()==0){
-                nextButton.draw(batcher);
-            } else {
-                menuButton.draw(batcher);}
 
         } else if (myWorld.isCredits()) {
             drawCreditsbg();
