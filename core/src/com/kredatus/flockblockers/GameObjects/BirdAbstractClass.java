@@ -11,7 +11,7 @@ import java.util.Random;
  * Created by Erik Kredatus on 9/8/2018.
  */
 
-public abstract class Bird {
+public abstract class BirdAbstractClass {
     private GameWorld world;
     private float rotation;
     private Circle boundingCircle;
@@ -26,7 +26,7 @@ public abstract class Bird {
     private Random r;
     private OrthographicCamera cam;
 
-    public Bird(int width, int height, OrthographicCamera cam, int camwidth, int camheight) {
+    public BirdAbstractClass(int width, int height, OrthographicCamera cam, int camwidth, int camheight) {
 
         starty= 0;
         isAlive=true;
