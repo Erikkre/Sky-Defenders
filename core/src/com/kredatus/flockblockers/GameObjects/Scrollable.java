@@ -13,7 +13,7 @@ public class Scrollable {
     protected float y;
     protected int width;
     protected int height;
-    protected boolean isScrolledLeft;
+    protected boolean isGone;
 
     public Scrollable(float x, float y, int width, int height) {
         this.width = width;
