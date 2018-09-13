@@ -63,10 +63,12 @@ public abstract class BirdAbstractClass {
         dead(delta);
     }
     public void dead(float delta){
-        while (position.y+height>cam.position.y-(camheight/2)){
-            velocity.add(acceleration.cpy().scl(delta));
-            position.add(velocity.cpy().scl(delta));
+        velocity.add(acceleration.cpy().scl(delta));
+        position.add(velocity.cpy().scl(delta));
+        if ( position.y+height>cam.position.y-(camheight/2) && position.x-width<cam.position.x+(camwidth/2) && position.x+width>cam.position.x-(camwidth/2)){
+            bird.delete();
         }
+
     }
     public Vector2 getPosition() {
         return position;
