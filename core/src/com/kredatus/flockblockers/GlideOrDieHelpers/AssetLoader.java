@@ -49,81 +49,81 @@ public class AssetLoader {
         musiciterator=r.nextInt(6);
 
         //button textures
-        playtexture = new Texture(Gdx.files.internal("ui/play.png"));
+        playtexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/play.png"));
         playtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        playdowntexture = new Texture(Gdx.files.internal("ui/playdown.png"));
+        playdowntexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/playdown.png"));
         playdowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         playdown = new TextureRegion(playdowntexture, 0, 0, 347, 220);
         play = new TextureRegion(playtexture, 0, 0, 347, 220);
         play.flip(false, true);
         playdown.flip(false, true);
 
-        creditstexture = new Texture(Gdx.files.internal("ui/credits.png"));
+        creditstexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/credits.png"));
         creditstexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        creditsdowntexture = new Texture(Gdx.files.internal("ui/creditsdown.png"));
+        creditsdowntexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/creditsdown.png"));
         creditsdowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         credits = new TextureRegion(creditstexture, 0, 0, 536, 221);
         credits.flip(false, true);
         creditsdown = new TextureRegion(creditsdowntexture, 0, 0, 536, 221);
         creditsdown.flip(false, true);
 
-        exittexture = new Texture(Gdx.files.internal("ui/exit.png"));
+        exittexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/exit.png"));
         exittexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        exitdowntexture = new Texture(Gdx.files.internal("ui/exitdown.png"));
+        exitdowntexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/exitdown.png"));
         exitdowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         exit = new TextureRegion(exittexture, 0, 0, 350, 221);
         exit.flip(false, true);
         exitdown = new TextureRegion(exitdowntexture, 0, 0, 350, 221);
         exitdown.flip(false, true);
 
-        retrytexture = new Texture(Gdx.files.internal("ui/retry.png"));
+        retrytexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/retry.png"));
         retrytexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        retrydowntexture = new Texture(Gdx.files.internal("ui/retrydown.png"));
+        retrydowntexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/retrydown.png"));
         retrydowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         retry = new TextureRegion(retrytexture, 0, 0, 465, 222);
         retry.flip(false, true);
         retrydown = new TextureRegion(retrydowntexture, 0, 0, 465, 222);
         retrydown.flip(false, true);
 
-        readytexture = new Texture(Gdx.files.internal("ui/ready.png"));
+        readytexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/ready.png"));
         readytexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        readydowntexture = new Texture(Gdx.files.internal("ui/readydown.png"));
+        readydowntexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/readydown.png"));
         readydowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         ready = new TextureRegion(readytexture, 0, 0, 495, 222);
         ready.flip(false, true);
         readydown = new TextureRegion(readydowntexture, 0, 0, 495, 222);
         readydown.flip(false, true);
 
-        storytexture = new Texture(Gdx.files.internal("ui/story.png"));
+        storytexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/story.png"));
         storytexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        storydowntexture = new Texture(Gdx.files.internal("ui/storydown.png"));
+        storydowntexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/storydown.png"));
         storydowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         story = new TextureRegion(storytexture, 0, 0, 426, 221);
         story.flip(false, true);
         storydown = new TextureRegion(storydowntexture, 0, 0, 426, 221);
         storydown.flip(false, true);
 
-        instrtexture = new Texture(Gdx.files.internal("ui/instr.png"));
+        instrtexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/instr.png"));
         instrtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        instrdowntexture = new Texture(Gdx.files.internal("ui/instrdown.png"));
+        instrdowntexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/instrdown.png"));
         instrdowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         instr = new TextureRegion(instrtexture, instrtexture.getWidth(), instrtexture.getHeight());
         instr.flip(false, true);
         instrdown = new TextureRegion(instrdowntexture, instrdowntexture.getWidth(), instrdowntexture.getHeight());
         instrdown.flip(false, true);
 
-        menutexture = new Texture(Gdx.files.internal("ui/menu.png"));
+        menutexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/menu.png"));
         menutexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        menudowntexture = new Texture(Gdx.files.internal("ui/menudown.png"));
+        menudowntexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/menudown.png"));
         menudowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         menu = new TextureRegion(menutexture, 0, 0, 409, 221);
         menu.flip(false, true);
         menudown = new TextureRegion(menudowntexture, 0, 0, 409, 221);
         menudown.flip(false, true);
 
-        nexttexture = new Texture(Gdx.files.internal("ui/next.png"));
+        nexttexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/next.png"));
         nexttexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        nextdowntexture = new Texture(Gdx.files.internal("ui/nextdown.png"));
+        nextdowntexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/nextdown.png"));
         nextdowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         nextdown = new TextureRegion(nextdowntexture, 0, 0, 347, 220);
         next = new TextureRegion(nexttexture, 0, 0, 347, 220);
@@ -131,68 +131,68 @@ public class AssetLoader {
         nextdown.flip(false, true);
 
         //non-button textures *************************************************************************************************
-        worldStabilizedtexture = new Texture(Gdx.files.internal("ui/worldStabilized.png"));
+        worldStabilizedtexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/worldStabilized.png"));
         worldStabilizedtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         worldStabilized = new TextureRegion(worldStabilizedtexture, worldStabilizedtexture.getWidth(), worldStabilizedtexture.getHeight());
         worldStabilized.flip(false, true);
 
-        logoTexture = new Texture(Gdx.files.internal("backgrounds/companyLogo.jpg"));
+        logoTexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/backgrounds/companyLogo.jpg"));
         logoTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         logo = new TextureRegion(logoTexture, 0, 0, 1100, 800);
 
-        newHighscoretexture = new Texture(Gdx.files.internal("ui/newHighscore.png"));
+        newHighscoretexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/newHighscore.png"));
         newHighscoretexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         newHighscore = new TextureRegion(newHighscoretexture, 0, 0, 644, 184);
         newHighscore.flip(false, true);
 
-        youvediedtexture = new Texture(Gdx.files.internal("ui/youveDied.png"));
+        youvediedtexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/youveDied.png"));
         youvediedtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         youvedied = new TextureRegion(youvediedtexture, 0, 0, 782, 182);
         youvedied.flip(false, true);
 
-        scoretexture = new Texture(Gdx.files.internal("ui/score.png"));
+        scoretexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/score.png"));
         scoretexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         score = new TextureRegion(scoretexture, 0, 0, 446, 221);
         score.flip(false, true);
 
-        ratingtexture = new Texture(Gdx.files.internal("ui/rating.png"));
+        ratingtexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/rating.png"));
         ratingtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         rating = new TextureRegion(ratingtexture, 0, 0, 507, 221);
         rating.flip(false, true);
 
-        topscoretexture = new Texture(Gdx.files.internal("ui/topscore.png"));
+        topscoretexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/topscore.png"));
         topscoretexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         topscore = new TextureRegion(topscoretexture, 0, 0, 680, 221);
         topscore.flip(false, true);
 
         //BACKGROUNDS **************************************************************************************************************
-        gliderbgtexture = new Texture(Gdx.files.internal("backgrounds/gliderbg.png"));
+        gliderbgtexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/backgrounds/gliderbg.png"));
         gliderbgtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         gliderbg = new TextureRegion(gliderbgtexture, gliderbgtexture.getWidth(), gliderbgtexture.getHeight());
         gliderbg.flip(false, true);
 
-        creditsbgtexture=new Texture(Gdx.files.internal("backgrounds/creditsbg.jpg"));
+        creditsbgtexture=new Texture(Gdx.files.internal("Non-Overlap2d Assets/backgrounds/creditsbg.jpg"));
         creditsbgtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         creditsbg = new TextureRegion(creditsbgtexture, creditsbgtexture.getWidth(), creditsbgtexture.getHeight());
         creditsbg.flip(false, true);
 
-        deathmenubgtexture = new Texture(Gdx.files.internal("backgrounds/deathmenubg.png"));
+        deathmenubgtexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/backgrounds/deathmenubg.png"));
         deathmenubgtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         deathmenubg = new TextureRegion(deathmenubgtexture, deathmenubgtexture.getWidth(), deathmenubgtexture.getHeight());
         deathmenubg.flip(false, true);
 
-        instrbgtexture = new Texture(Gdx.files.internal("backgrounds/instrbg.png"));
+        instrbgtexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/backgrounds/instrbg.png"));
         instrbgtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         instrbg = new TextureRegion(instrbgtexture, instrbgtexture.getWidth(), instrbgtexture.getHeight());
         instrbg.flip(false, true);
 
-        readybgtexture = new Texture(Gdx.files.internal("backgrounds/readybg.png"));
+        readybgtexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/backgrounds/readybg.png"));
         readybgtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         readybg = new TextureRegion(readybgtexture, readybgtexture.getWidth(), readybgtexture.getHeight());
         readybg.flip(false, true);
 
         //if button click: choose this map, load this list of locations to randomize boosts at *************************************
-        bg = new Texture(Gdx.files.internal("backgrounds/levels/rockies4K.jpg"));
+        bg = new Texture(Gdx.files.internal("Non-Overlap2d Assets/backgrounds/levels/rockies4K.jpg"));
         bg.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         bgtexture = new TextureRegion(bg, bg.getWidth(), bg.getHeight());
         bgtexture.flip(false, true);
@@ -237,16 +237,16 @@ public class AssetLoader {
 
         //SPRITEWORK
         gliderscaling=3;
-        boost = new Texture(Gdx.files.internal("sprites/boost.png"));
+        boost = new Texture(Gdx.files.internal("Non-Overlap2d Assets/sprites/boost.png"));
         boost.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         boosttexture= new TextureRegion(boost, boost.getWidth(), boost.getHeight());
         boosttexture.flip(false, true);
-        boostdowntexture = new Texture(Gdx.files.internal("ui/boostdown.png"));
+        boostdowntexture = new Texture(Gdx.files.internal("Non-Overlap2d Assets/ui/boostdown.png"));
         boostdowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         boostdown= new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
         boostdown.flip(false, true);
 
-        sprites = new Texture(Gdx.files.internal("sprites/phoenixHD.png"));
+        sprites = new Texture(Gdx.files.internal("Non-Overlap2d Assets/sprites/phoenixHD.png"));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         gliderMid = new TextureRegion(sprites, 1020, 890, 379, 464);
         gliderMid.flip(false, true);
@@ -306,14 +306,14 @@ public class AssetLoader {
         backflaps.setPlayMode(Animation.PlayMode.LOOP);
 
         //SOUNDWORK
-        fire = Gdx.audio.newSound(Gdx.files.internal("sound/fire.wav"));
-        splashdown = Gdx.audio.newSound(Gdx.files.internal("sound/splashdown.wav"));
-        swoop = Gdx.audio.newSound(Gdx.files.internal("sound/swoop.wav"));
+        fire = Gdx.audio.newSound(Gdx.files.internal("Non-Overlap2d Assets/sound/fire.wav"));
+        splashdown = Gdx.audio.newSound(Gdx.files.internal("Non-Overlap2d Assets/sound/splashdown.wav"));
+        swoop = Gdx.audio.newSound(Gdx.files.internal("Non-Overlap2d Assets/sound/swoop.wav"));
 
-        musiclist = new Music[] { Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic2.mp3")),
-                Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic3.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic4.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic5.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic6.mp3"))};
-        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic2.mp3"))};
-        deathmenumusic = Gdx.audio.newMusic(Gdx.files.internal("music/deathmenuMusic.mp3"));
+        musiclist = new Music[] { Gdx.audio.newMusic(Gdx.files.internal("Non-Overlap2d Assets/music/bgMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("Non-Overlap2d Assets/music/bgMusic2.mp3")),
+                Gdx.audio.newMusic(Gdx.files.internal("Non-Overlap2d Assets/music/bgMusic3.mp3")), Gdx.audio.newMusic(Gdx.files.internal("Non-Overlap2d Assets/music/bgMusic4.mp3")), Gdx.audio.newMusic(Gdx.files.internal("Non-Overlap2d Assets/music/bgMusic5.mp3")), Gdx.audio.newMusic(Gdx.files.internal("Non-Overlap2d Assets/music/bgMusic6.mp3"))};
+        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("Non-Overlap2d Assets/music/menuMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("Non-Overlap2d Assets/music/menuMusic2.mp3"))};
+        deathmenumusic = Gdx.audio.newMusic(Gdx.files.internal("Non-Overlap2d Assets/music/deathmenuMusic.mp3"));
 
         // Create (or retrieve existing) preferences file
         prefs = Gdx.app.getPreferences("GlideorDie");

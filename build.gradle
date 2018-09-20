@@ -138,7 +138,7 @@ project(":core") {
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-        compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.0"
+        compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.1"
         compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.4"
         compile "net.dermetfan.libgdx-utils:libgdx-utils:0.13.4"
         

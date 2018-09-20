@@ -52,7 +52,7 @@ public abstract class BirdAbstractClass {
 
     public void update(float delta){
 
-        if (position.x)
+        //if (position.x)
         fly(delta);
     };
 
@@ -66,7 +66,7 @@ public abstract class BirdAbstractClass {
         velocity.add(acceleration.cpy().scl(delta));
         position.add(velocity.cpy().scl(delta));
         if ( position.y+height>cam.position.y-(camheight/2) && position.x-width<cam.position.x+(camwidth/2) && position.x+width>cam.position.x-(camwidth/2)){
-            bird.delete();
+            //bird.delete();
         }
 
     }

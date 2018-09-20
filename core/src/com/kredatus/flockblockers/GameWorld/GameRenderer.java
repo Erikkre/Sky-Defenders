@@ -14,7 +14,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.kredatus.flockblockers.GameObjects.Background;
-import com.kredatus.flockblockers.GameObjects.Boost;
+//import com.kredatus.flockblockers.GameObjects.Boost;
 import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.GameObjects.ScrollHandler;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
@@ -22,6 +22,7 @@ import com.kredatus.flockblockers.GlideOrDieHelpers.InputHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.ui.SimpleButton;
+import com.uwsoft.editor.renderer.SceneLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,10 @@ import aurelienribon.tweenengine.TweenManager;
  */
 
 public class GameRenderer {
+    //overlap2d stuff
+    private SceneLoader sceneLoader;
+
+
     // Tween stuff
     public TweenManager manager, sunshineManager, sunshineManager2;
     private Value alpha = new Value(), beta = new Value(), charlie=new Value(), delta = new Value();
@@ -58,7 +63,7 @@ public class GameRenderer {
             gliderbg, instrbg, readybg, frontglidermid, worldStabilized;
     private ScrollHandler scroller;
     private Background background, background2, background3, background4;
-    public ArrayList<Boost> boostlist, flipboostlist, invboostlist, invflipboostlist;
+    //public ArrayList<Boost> boostlist, flipboostlist, invboostlist, invflipboostlist;
 
     float rotate = 0, previousvalue;
     int scorenumber = 0;
@@ -78,6 +83,8 @@ public class GameRenderer {
     private Color transitionColor;
 
     public GameRenderer(GameWorld world, int camwidth, int camheight) {
+
+
         myWorld = world;
         this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButtons();
         this.deathButtons = ((InputHandler) Gdx.input.getInputProcessor()).getDeathButtons();
@@ -158,12 +165,12 @@ public class GameRenderer {
         background2 = scroller.getBackground2();
         background3 = scroller.getBackground3();
         background4 = scroller.getBackground4();
-
+/*
         boostlist = scroller.getboostlist();
         flipboostlist = scroller.getflipboostlist();
         invboostlist = scroller.getinvboostlist();
         invflipboostlist = scroller.getinvflipboostlist();
-
+*/
         glider = myWorld.getGlider();
     }
 
@@ -179,8 +186,8 @@ public class GameRenderer {
         smallfont.shadowColor = Color.BLACK;
         smallfont.shadowOffsetX = 4;
         smallfont.shadowOffsetY = 2;
-        gamefont = new FreeTypeFontGenerator(Gdx.files.internal("font/blowbrush.ttf"));
-        otherfont = new FreeTypeFontGenerator(Gdx.files.internal("font/DroidSerif-Bold.ttf"));
+        gamefont = new FreeTypeFontGenerator(Gdx.files.internal("Non-Overlap2d Assets/font/blowbrush.ttf"));
+        otherfont = new FreeTypeFontGenerator(Gdx.files.internal("Non-Overlap2d Assets/font/DroidSerif-Bold.ttf"));
         droidSerifFont= otherfont.generateFont(smallfont);
         droidSerifFont.setUseIntegerPositions(false);
         droidSerifFont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -314,7 +321,7 @@ public class GameRenderer {
         batcher.draw(horvertflipbgtexture, background4.getX(), background4.getY(),
                 background4.getWidth(), background4.getHeight());
     }
-
+/*
     private void specificdrawBoosts(ArrayList<Boost> boostlist) {
         for (int i = 0; i < boostlist.size(); i++) {
             rotate += 0.3;
@@ -328,7 +335,7 @@ public class GameRenderer {
         specificdrawBoosts(invboostlist);
         specificdrawBoosts(flipboostlist);
         specificdrawBoosts(invflipboostlist);
-    }
+    }*/
 
     private void drawGlider(float runTime){
         if (glider.isAlive()){
@@ -526,6 +533,10 @@ public class GameRenderer {
     }
 
     public void render(float delta, float runTime) {
+        //overlap2d
+
+
+
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
@@ -543,12 +554,12 @@ public class GameRenderer {
         }  else if (myWorld.isRunning()) {
             drawBackground();
             drawGlider(runTime);
-            drawBoosts();
+            //drawBoosts();
             drawScore();
 
         } else if (myWorld.isReady()) {
             drawBackground();
-            drawBoosts();
+            //drawBoosts();
             if (AssetLoader.getHighScore()<15){
                 batcher.draw(readybg, cam.position.x-cam.viewportWidth/2, -cam.viewportHeight/3f, readybg.getRegionWidth(), readybg.getRegionHeight());
             }

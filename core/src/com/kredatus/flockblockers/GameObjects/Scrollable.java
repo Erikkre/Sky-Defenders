@@ -2,6 +2,8 @@ package com.kredatus.flockblockers.GameObjects;
 
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.Screens.GameScreen;
+import com.kredatus.flockblockers.GameWorld.GameRenderer;
+import com.kredatus.flockblockers.Screens.GameScreen;
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.
@@ -13,7 +15,7 @@ public class Scrollable {
     protected float y;
     protected int width;
     protected int height;
-    protected boolean isGone;
+    protected boolean isScrolledLeft;
 
     public Scrollable(float x, float y, int width, int height) {
         this.width = width;
@@ -27,9 +29,9 @@ public class Scrollable {
 
         // If the Scrollable object is no longer visible:
         //try {
-            //System.out.println("scrollhandler edge:"+(GameRenderer.getCameraPosition().x - GameScreen.camwidth / 2));
-    if (x + width < GameRenderer.getCameraPosition().x - GameScreen.camwidth / 2) {
-        isScrolledLeft = true;}
+        //System.out.println("scrollhandler edge:"+(GameRenderer.getCameraPosition().x - GameScreen.camwidth / 2));
+        if (x + width < GameRenderer.getCameraPosition().x - GameScreen.camwidth / 2) {
+            isScrolledLeft = true;}
     }
 
     // Reset: Should Override in subclass for more specific behavior.

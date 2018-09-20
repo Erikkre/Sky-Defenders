@@ -17,5 +17,5 @@ public class FireBird extends BirdAbstractClass {
     @Override
     public void fly(float delta) {
 
-        }
+    }
 }
