@@ -1,12 +1,8 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.math.Vector3;
-import com.kredatus.flockblockers.GameObjects.Background;
-import com.kredatus.flockblockers.GameObjects.Glider;
-import com.kredatus.flockblockers.GameWorld.GameRenderer;
-import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.GameWorld.ExGameWorld;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
-import com.kredatus.flockblockers.Screens.GameScreen;
 
 
 import java.util.ArrayList;
@@ -35,11 +31,11 @@ public class ScrollHandler {
     public int bgw = AssetLoader.bg.getWidth();
     public int bgh = AssetLoader.bg.getHeight();
     float x, y, width, height;
-    private GameWorld gameWorld;
+    private ExGameWorld gameWorld;
     // Constructor receives a float that tells us where we need to create our
     // Grass and Pipe objects.
 
-    public ScrollHandler(GameWorld gameWorld) {
+    public ScrollHandler(ExGameWorld gameWorld) {
         this.gameWorld = gameWorld;
         background = new Background(0, 0, bgw, bgh);
         background2 = new Background(background.getTailX(), 0, bgw, bgh);

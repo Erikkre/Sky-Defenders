@@ -22,27 +22,17 @@ import com.badlogic.gdx.Game;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 import com.kredatus.flockblockers.Screens.SplashScreen;
-import com.uwsoft.editor.renderer.SceneLoader;
+
 
 public class FlockBlockersMain extends Game {
-    private SceneLoader s1;
     @Override
     public void create() {
-        SceneLoader s1= new SceneLoader();
-        s1.loadScene("MainScene");
 
 
         Gdx.app.log("GlideorDie", "created");
         AssetLoader.load();
 
         setScreen(new SplashScreen(this));
-    }
-
-    @Override
-    public void render() {
-
-        super.render();
-        s1.getEngine().update(Gdx.graphics.getDeltaTime());
     }
 
     @Override

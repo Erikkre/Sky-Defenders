@@ -3,7 +3,7 @@ package com.kredatus.flockblockers.GameObjects;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.GameWorld.ExGameWorld;
 import java.util.Random;
 
 /**
@@ -24,7 +24,7 @@ import java.util.Random;
  */
 
 public abstract class BirdAbstractClass {
-    protected GameWorld world;
+    protected ExGameWorld world;
     protected float rotation;
     protected Circle boundingCircle;
     protected static Vector2 position;

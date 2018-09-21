@@ -2,7 +2,7 @@ package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.GameWorld.ExGameWorld;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 
 /**
@@ -24,8 +24,8 @@ public class Glider {
 
     float bgh = AssetLoader.bg.getHeight();
     float originalyacc=2000, originalGamevelocity=750;
-    private GameWorld world;
-    public Glider(float midPointX, float midPointY, int width, int height, GameWorld world) {
+    private ExGameWorld world;
+    public Glider(float midPointX, float midPointY, int width, int height, ExGameWorld world) {
         this.midpointY = midPointY;
         starty= bgh / 8+20;
         this.midpointX= midPointX;

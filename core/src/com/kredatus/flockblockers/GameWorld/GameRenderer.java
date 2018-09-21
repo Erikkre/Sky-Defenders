@@ -24,7 +24,6 @@ import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.ui.SimpleButton;
 import com.uwsoft.editor.renderer.SceneLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import aurelienribon.tweenengine.Tween;
@@ -48,7 +47,7 @@ public class GameRenderer {
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> deathButtons;
     private SimpleButton readyButton, menuButton, nextButton;
-    private GameWorld myWorld;
+    private ExGameWorld myWorld;
     public OrthographicCamera cam;
     private ShapeRenderer shapeRenderer;
     boolean turnback=true;
@@ -82,7 +81,7 @@ public class GameRenderer {
 
     private Color transitionColor;
 
-    public GameRenderer(GameWorld world, int camwidth, int camheight) {
+    public GameRenderer(ExGameWorld world, int camwidth, int camheight) {
 
 
         myWorld = world;

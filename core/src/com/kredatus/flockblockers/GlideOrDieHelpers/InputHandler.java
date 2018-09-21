@@ -3,7 +3,7 @@ package com.kredatus.flockblockers.GlideOrDieHelpers;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.kredatus.flockblockers.GameObjects.Glider;
-import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.GameWorld.ExGameWorld;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public class InputHandler implements InputProcessor {
-    private GameWorld myWorld;
+    private ExGameWorld myWorld;
     private Glider myGlider;
 
     private List<SimpleButton> menuButtons, deathButtons;
@@ -24,7 +24,7 @@ public class InputHandler implements InputProcessor {
     private float scaleFactorY;
     private int camwidth;
     // Ask for a reference to the glider when InputHandler is created.
-    public InputHandler(GameWorld myWorld, float scaleFactorX, float scaleFactorY, int camwidth, int camheight) {
+    public InputHandler(ExGameWorld myWorld, float scaleFactorX, float scaleFactorY, int camwidth, int camheight) {
         // myBird now represents the gameWorld's bird.
         this.camwidth=camwidth;
         this.myWorld = myWorld;

@@ -9,7 +9,7 @@ import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 /**
  * Created by Mr. Kredatus on 8/5/2017.
  */
-public class GameWorld {
+public class ExGameWorld {
     private Glider glider;
     private ScrollHandler scroller;
     //private boolean isAlive = true;
@@ -24,11 +24,11 @@ public class GameWorld {
     }
 
     private GameState currentState;
-    public GameWorld(int midPointY, int midPointX, float camwidth) {
+    public ExGameWorld(int midPointY, int midPointX, float camwidth) {
         if (AssetLoader.getHighScore()==0){
             currentState= GameState.STORY;
         } else {
-        currentState = GameState.MENU;}
+        currentState = GameState.RUNNING;}
 
         this.camwidth=camwidth;
         this.midPointY=midPointY;
