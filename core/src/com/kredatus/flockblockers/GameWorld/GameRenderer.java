@@ -47,7 +47,7 @@ public class GameRenderer {
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> deathButtons;
     private SimpleButton readyButton, menuButton, nextButton;
-    private ExGameWorld myWorld;
+    private GameWorld myWorld;
     public OrthographicCamera cam;
     private ShapeRenderer shapeRenderer;
     boolean turnback=true;
@@ -81,7 +81,7 @@ public class GameRenderer {
 
     private Color transitionColor;
 
-    public GameRenderer(ExGameWorld world, int camwidth, int camheight) {
+    public GameRenderer(GameWorld world, int camwidth, int camheight) {
 
 
         myWorld = world;
@@ -185,8 +185,8 @@ public class GameRenderer {
         smallfont.shadowColor = Color.BLACK;
         smallfont.shadowOffsetX = 4;
         smallfont.shadowOffsetY = 2;
-        gamefont = new FreeTypeFontGenerator(Gdx.files.internal("Non-Overlap2d Assets/font/blowbrush.ttf"));
-        otherfont = new FreeTypeFontGenerator(Gdx.files.internal("Non-Overlap2d Assets/font/DroidSerif-Bold.ttf"));
+        gamefont = new FreeTypeFontGenerator(Gdx.files.internal("font/blowbrush.ttf"));
+        otherfont = new FreeTypeFontGenerator(Gdx.files.internal("font/DroidSerif-Bold.ttf"));
         droidSerifFont= otherfont.generateFont(smallfont);
         droidSerifFont.setUseIntegerPositions(false);
         droidSerifFont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);

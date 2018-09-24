@@ -192,7 +192,7 @@ public class AssetLoader {
         readybg.flip(false, true);
 
         //if button click: choose this map, load this list of locations to randomize boosts at *************************************
-        bg = new Texture(Gdx.files.internal("backgrounds/levels/rockies4K.jpg"));
+        bg = new Texture(Gdx.files.internal("backgrounds/levels/City of 1000 suns.jpg"));
         bg.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         bgtexture = new TextureRegion(bg, bg.getWidth(), bg.getHeight());
         bgtexture.flip(false, true);

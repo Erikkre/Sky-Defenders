@@ -3,7 +3,7 @@ package com.kredatus.flockblockers.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
-import com.kredatus.flockblockers.GameWorld.ExGameWorld;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.GlideOrDieHelpers.InputHandler;
 
 /**
@@ -11,7 +11,7 @@ import com.kredatus.flockblockers.GlideOrDieHelpers.InputHandler;
  */
 
 public class GameScreen implements Screen {
-    private ExGameWorld world;
+    private GameWorld world;
     private GameRenderer renderer;
     private float runTime;
     public static int camwidth, midPointY, camheight, midPointX;
@@ -19,13 +19,13 @@ public class GameScreen implements Screen {
     public GameScreen() {
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
-        camwidth=1100;
+        camwidth=1080;
         camheight= (int) (camwidth* (screenHeight/screenWidth)) ;
 
         midPointY = camheight/2;
         midPointX = camwidth/2;
 
-        world = new ExGameWorld(midPointY, midPointX, camwidth);
+        world = new GameWorld(midPointY, midPointX, camwidth);
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camwidth, screenHeight / camheight, camwidth, camheight));
         renderer = new GameRenderer(world, camwidth, camheight);
         world.setRenderer(renderer);

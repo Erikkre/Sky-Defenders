@@ -3,28 +3,27 @@ package com.kredatus.flockblockers.GameObjects;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.GameWorld.ExGameWorld;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 import java.util.Random;
 
 /**
  * Created by Erik Kredatus on 9/8/2018.
  *
- *                  Health Speed  Gold                        Size   Amount
- *
- * FlockBird  =     2      M      4(400)                      S      100
+ *                  Health Speed  Gold                        Size   Amount/Wave
+ * FlockBird  =     2      M      4(400 / wave)               S      100
  * ThunderBird=     4      F      15(450)                     M      30
  * GoldBird   =     25     S      100(400)                    L      4
  * LunarBird  =     7      F      35(525)                     S      15
- * PhoenixBird=     50     S      30++Diamond                 XL     1
+ * PhoenixBird=     50     S      30+Diamond                 XL      1
 
-                                            Damage      Fire Rate     Penetration       Spread
- bow, Pistol, Machinegun, Minigun, arty     2           L            M                  S
- crossbow, sniper, cannon, gauss cannon     4           S            L                  S
- catapult, shotgun, canister shot, missile  1           M            L                  XL
+                                                          Damage      Fire Rate     Penetration       Spread
+ (Fast Firing) bow, Pistol, Machinegun, Minigun, arty     2           L            M                  S
+ (High Damage) crossbow, sniper, cannon, gauss cannon     4           S            L                  S
+ (Wide Spread) catapult, shotgun, canister shot, missile  1           M            L                  XL
  */
 
 public abstract class BirdAbstractClass {
-    protected ExGameWorld world;
+    protected GameWorld world;
     protected float rotation;
     protected Circle boundingCircle;
     protected static Vector2 position;
@@ -62,14 +61,15 @@ public abstract class BirdAbstractClass {
         velocity.y=30;
         dead(delta);
     }
+
     public void dead(float delta){
         velocity.add(acceleration.cpy().scl(delta));
         position.add(velocity.cpy().scl(delta));
         if ( position.y+height>cam.position.y-(camheight/2) && position.x-width<cam.position.x+(camwidth/2) && position.x+width>cam.position.x-(camwidth/2)){
             //bird.delete();
         }
-
     }
+
     public Vector2 getPosition() {
         return position;
     }
@@ -89,5 +89,4 @@ public abstract class BirdAbstractClass {
     public Circle getBoundingCircle() {
         return boundingCircle;
     }
-
 }

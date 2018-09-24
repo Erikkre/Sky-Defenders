@@ -1,7 +1,7 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.math.Vector3;
-import com.kredatus.flockblockers.GameWorld.ExGameWorld;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 
 
@@ -31,11 +31,11 @@ public class ScrollHandler {
     public int bgw = AssetLoader.bg.getWidth();
     public int bgh = AssetLoader.bg.getHeight();
     float x, y, width, height;
-    private ExGameWorld gameWorld;
+    private GameWorld gameWorld;
     // Constructor receives a float that tells us where we need to create our
     // Grass and Pipe objects.
 
-    public ScrollHandler(ExGameWorld gameWorld) {
+    public ScrollHandler(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
         background = new Background(0, 0, bgw, bgh);
         background2 = new Background(background.getTailX(), 0, bgw, bgh);
@@ -44,10 +44,10 @@ public class ScrollHandler {
         background3 = new Background(0, -bgh, bgw, bgh);
         background4 = new Background(background3.getTailX(), -bgh, bgw, bgh);
         r = new Random();
-        startlist(boostlist, false, false, orgBoostnumber);
+        /*startlist(boostlist, false, false, orgBoostnumber);
         startlist(invboostlist, false, true, orgBoostnumber);
         startlist(flipboostlist, true, false, orgBoostnumber);
-        startlist(invflipboostlist, true, true, orgBoostnumber);    //start is same as restart only for boosts
+        startlist(invflipboostlist, true, true, orgBoostnumber); */   //start is same as restart only for boosts
     }
     public void remove(ArrayList<Boost> boostlist, int i, int boostnumber){
         if (boostlist.size() > boostnumber && boostlist.get(i).isScrolledLeft()){
@@ -156,7 +156,7 @@ public class ScrollHandler {
         return invflipboostlist;
     }
 
-    public void startlist(ArrayList<Boost> boostlist, boolean flipped, boolean horinv, int boostnumber) {
+    /*public void startlist(ArrayList<Boost> boostlist, boolean flipped, boolean horinv, int boostnumber) {
         while (boostlist.size() < boostnumber) {   //first half of boosts (unflipped map passing)
 
             int index = r.nextInt(coordslistsize);
@@ -185,7 +185,7 @@ public class ScrollHandler {
             }
             same = false;
         }
-    }
+    }*/
 
     public ArrayList<Boost> updatelist(ArrayList<Boost> boostlist, boolean flipped, boolean horinv, int boostnumber) {
         //System.out.println("list size : "+boostlist.size());
@@ -230,6 +230,7 @@ public class ScrollHandler {
     }
 
     public void onRestart() {
+        /*
         background.onRestart(0, 0);
         background2.onRestart(background.getTailX(), 0);
         background3.onRestart(0, -bgh);
@@ -242,6 +243,6 @@ public class ScrollHandler {
         startlist(boostlist, false, false, orgBoostnumber);
         startlist(invboostlist, false, true, orgBoostnumber);
         startlist(flipboostlist, true, false, orgBoostnumber);
-        startlist(invflipboostlist, true, true, orgBoostnumber);
+        startlist(invflipboostlist, true, true, orgBoostnumber);*/
     }
 }

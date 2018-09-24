@@ -1,6 +1,7 @@
 package com.kredatus.flockblockers.GameObjects;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.Screens.GameScreen;
 
@@ -11,12 +12,11 @@ import com.kredatus.flockblockers.Screens.GameScreen;
 public class Bullet  {
     private Rectangle rectangle;
     public boolean isScored = false;
-    protected float x;
-    protected float y;
-    protected int width;
-    protected int height;
+    protected float x, y;
+    protected int width, height;
     protected boolean isGone;
-
+    private static Vector2 position, velocity, acceleration;
+    protected float damage;
 
     public Bullet(float x, float y, int width, int height) {
         this.x = x;

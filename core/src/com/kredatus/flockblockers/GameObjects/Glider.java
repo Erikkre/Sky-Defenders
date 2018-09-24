@@ -2,7 +2,7 @@ package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.GameWorld.ExGameWorld;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 
 /**
@@ -12,9 +12,7 @@ import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 public class Glider {
     private float rotation;
     private Circle boundingCircle;
-    private static Vector2 position;
-    private static Vector2 velocity;
-    private Vector2 acceleration;
+    private static Vector2 position, velocity, acceleration;
     public float gamexvelocity;
     protected int width;
     protected int height;
@@ -24,8 +22,8 @@ public class Glider {
 
     float bgh = AssetLoader.bg.getHeight();
     float originalyacc=2000, originalGamevelocity=750;
-    private ExGameWorld world;
-    public Glider(float midPointX, float midPointY, int width, int height, ExGameWorld world) {
+    private GameWorld world;
+    public Glider(float midPointX, float midPointY, int width, int height, GameWorld world) {
         this.midpointY = midPointY;
         starty= bgh / 8+20;
         this.midpointX= midPointX;
