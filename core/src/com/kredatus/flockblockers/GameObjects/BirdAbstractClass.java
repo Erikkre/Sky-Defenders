@@ -1,9 +1,15 @@
 package com.kredatus.flockblockers.GameObjects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
+
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -36,7 +42,7 @@ public abstract class BirdAbstractClass {
     protected boolean isAlive;
     protected Random r;
     protected OrthographicCamera cam;
-
+    protected Animation frontFlaps, backFlaps, leftSideFlaps, rightSideFlaps;
     public BirdAbstractClass(int width, int height, OrthographicCamera cam, int camwidth, int camheight, int health) {
         position.set(r.nextInt(camwidth)+cam.position.x,r.nextInt(camheight)+cam.position.y);
         isAlive=true;
@@ -60,6 +66,46 @@ public abstract class BirdAbstractClass {
     public void die(float delta){
         velocity.y=30;
         dead(delta);
+    }
+
+    public final void load(){
+        Texture sprites = new Texture(Gdx.files.internal("sprites/phoenixHD.png"));
+        sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
+
+        TextureRegion[] front=new TextureRegion[0];
+        TextureRegion[] side=new TextureRegion[0];
+        TextureRegion[] back=new TextureRegion[0];
+
+        for (int i=0;i<16;i++) {
+            TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
+            temp.flip(false, true);
+            positions.add(temp);
+            if (i == 5) {
+                front =  positions.toArray(new TextureRegion[6]);
+                positions.clear();
+            } else if (i == 11){
+                side = positions.toArray(new TextureRegion[6]);
+                positions.clear();
+            } else if (i==15){
+                back = positions.toArray(new TextureRegion[4]);
+                positions.clear();
+            }
+        }
+
+        frontFlaps= new Animation<TextureRegion>(0.15f, front);
+        frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        rightSideFlaps= new Animation<TextureRegion>(0.12f, side);
+        rightSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        for (TextureRegion i : side){
+            i.flip(true, false);
+        }
+        leftSideFlaps= new Animation<TextureRegion>(0.12f, side);
+        leftSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        backFlaps= new Animation<TextureRegion>(0.12f, back);
+        backFlaps.setPlayMode(Animation.PlayMode.LOOP);
     }
 
     public void dead(float delta){

@@ -223,7 +223,8 @@ public class Glider {
     }
 
     public void updateReady(float runTime) {
-        position.y = 20 * (float) Math.sin(7.87 * runTime) + starty;
+        position.y=starty;
+        //position.y = 20 * (float) Math.sin(7.87 * runTime) + starty;
         position.x=midpointX;
     }
 }

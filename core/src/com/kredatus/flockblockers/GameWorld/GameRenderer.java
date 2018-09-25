@@ -54,7 +54,7 @@ public class GameRenderer {
     private SpriteBatch batcher;
     private Glider glider;
     public static Vector3 camposition;
-    private Animation flaps, flipflaps, frontViewFlaps, backflaps;
+    private Animation frontFlaps, flipflaps, frontViewFlaps, backFlaps;
     private TextureRegion gliderMid, vertflipgliderMid;
     private int gliderscaling=AssetLoader.getgliderScaling();
     private TextureRegion bgtexture, horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
@@ -137,11 +137,11 @@ public class GameRenderer {
         gliderMid = AssetLoader.gliderMid;
         vertflipgliderMid = AssetLoader.vertflipgliderMid;
 
-        flaps = AssetLoader.flaps;
+        frontFlaps = AssetLoader.frontFlaps;
         flipflaps = AssetLoader.flipflaps;
         frontViewFlaps = AssetLoader.frontViewFlaps;
         frontglidermid=AssetLoader.frontGliderMid;
-        backflaps=AssetLoader.backflaps;
+        backFlaps=AssetLoader.backFlaps;
 
         creditsbg = AssetLoader.creditsbg;
         deathmenubg = AssetLoader.deathmenubg;
@@ -345,7 +345,7 @@ public class GameRenderer {
                     batcher.draw(gliderMid, glider.getPosition().x, glider.getPosition().y,
                             glider.getWidth() / 2.0f, glider.getHeight() / 2.0f, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());
                 } else {
-                    batcher.draw((TextureRegion) flaps.getKeyFrame(runTime+0.1f), glider.getPosition().x, glider.getPosition().y,
+                    batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x, glider.getPosition().y,
                             glider.getWidth() / 2.0f, glider.getHeight() / 2.0f, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());
                 }
             }
@@ -437,7 +437,7 @@ public class GameRenderer {
             batcher.draw(frontTexture, cam.position.x-charlie.getValue()* ((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), glider.getPosition().y - 40 -delta.getValue()* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()),
                     charlie.getValue()*2*((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), delta.getValue()*2* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()));
         } else {
-            frontTexture = (TextureRegion) backflaps.getKeyFrame(runTime+0.5f);
+            frontTexture = (TextureRegion) backFlaps.getKeyFrame(runTime+0.5f);
             batcher.draw(frontTexture, cam.position.x-charlie.getValue()* ((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), glider.getPosition().y - 40 -delta.getValue()* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()),
                     charlie.getValue()*2*((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), delta.getValue()*2* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()));
             batcher.draw(gliderbg, cam.position.x-charlie.getValue()*1.5f, glider.getPosition().y- 40  - charlie.getValue()*1.5f, charlie.getValue()*1.5f, charlie.getValue()*1.5f,
@@ -450,7 +450,8 @@ public class GameRenderer {
         rotate += 3;
         batcher.draw(gliderbg, cam.position.x-beta.getValue(), cam.viewportHeight/2-50 -beta.getValue(), beta.getValue(), beta.getValue(),
                 beta.getValue()*2, beta.getValue()*2, 1, 1, rotate);
-        frontTexture = (TextureRegion) frontViewFlaps.getKeyFrame(runTime+0.5f);
+        frontTexture = (TextureRegion) frontFlaps.getKeyFrame(runTime+0.5f);
+        System.out.print(glider.getPosition().y);
         batcher.draw(frontTexture, cam.position.x-frontTexture.getRegionWidth()/(gliderscaling/1.8f)/2, glider.getPosition().y +cam.position.y- glider.starty-30 -frontTexture.getRegionHeight()/(gliderscaling /1.8f)/2, frontTexture.getRegionWidth()/(gliderscaling/1.8f), frontTexture.getRegionHeight()/(gliderscaling/1.8f));
     }
 

@@ -38,7 +38,7 @@ public class AssetLoader {
     public static Vector3 p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19,
             p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31;
 
-    public static Animation<TextureRegion> flaps, flipflaps, frontViewFlaps, backflaps;
+    public static Animation<TextureRegion> frontFlaps, rightSideFlaps, leftSideFlaps, backFlaps, flipflaps, frontViewFlaps;
     public static TextureRegion gliderMid, gliderDown, gliderUp ,vertflipgliderMid, vertflipgliderDown, vertflipgliderUp,
             frontGliderMid, frontGliderDown, frontGliderUp, frontGliderUpHigh, backgliderMid, backgliderDown, backgliderUp;
 
@@ -248,18 +248,42 @@ public class AssetLoader {
 
         sprites = new Texture(Gdx.files.internal("sprites/phoenixHD.png"));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        gliderMid = new TextureRegion(sprites, 1020, 890, 379, 464);
-        gliderMid.flip(false, true);
+        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
 
-        gliderDown= new TextureRegion(sprites, 545, 890, 404, 464);
-        gliderDown.flip(false, true);
+        TextureRegion[] front=new TextureRegion[0];
+        TextureRegion[] side=new TextureRegion[0];
+        TextureRegion[] back=new TextureRegion[0];
 
-        gliderUp= new TextureRegion(sprites, 1500, 890, 379, 464);
-        gliderUp.flip(false, true);
+        for (int i=0;i<16;i++) {
+            TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
+            temp.flip(false, true);
+            positions.add(temp);
+            if (i == 5) {
+                front =  positions.toArray(new TextureRegion[6]);
+                positions.clear();
+            } else if (i == 11){
+                side = positions.toArray(new TextureRegion[6]);
+                positions.clear();
+            } else if (i==15){
+                back = positions.toArray(new TextureRegion[4]);
+                positions.clear();
+            }
+        }
 
-        TextureRegion[] positions = { gliderUp,  gliderMid, gliderDown, gliderMid };
-        flaps= new Animation<TextureRegion>(0.12f, positions);
-        flaps.setPlayMode(Animation.PlayMode.LOOP);
+        frontFlaps= new Animation<TextureRegion>(0.15f, front);
+        frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        rightSideFlaps= new Animation<TextureRegion>(0.12f, side);
+        rightSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        for (TextureRegion i : side){
+            i.flip(true, false);
+        }
+        leftSideFlaps= new Animation<TextureRegion>(0.12f, side);
+        leftSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        backFlaps= new Animation<TextureRegion>(0.12f, back);
+        backFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
 
         //flip world
         vertflipgliderMid = new TextureRegion(sprites, 1020, 890, 379, 464);
@@ -300,10 +324,10 @@ public class AssetLoader {
 
         backgliderUp= new TextureRegion(sprites, 1465, 1365, 426, 444);
         backgliderUp.flip(false, true);
-
+/*
         TextureRegion[] backPositions = { backgliderUp, backgliderMid, backgliderDown, backgliderMid };
         backflaps= new Animation<TextureRegion>(0.2f, backPositions);
-        backflaps.setPlayMode(Animation.PlayMode.LOOP);
+        backflaps.setPlayMode(Animation.PlayMode.LOOP);*/
 
         //SOUNDWORK
         fire = Gdx.audio.newSound(Gdx.files.internal("sound/fire.wav"));

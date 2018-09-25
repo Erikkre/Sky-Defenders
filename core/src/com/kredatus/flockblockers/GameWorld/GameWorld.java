@@ -32,7 +32,7 @@ public class GameWorld {
 
         this.camwidth=camwidth;
         this.midPointY=midPointY;
-        glider = new Glider(midPointX, midPointY, AssetLoader.gliderMid.getRegionWidth()/AssetLoader.getgliderScaling(), AssetLoader.gliderMid.getRegionHeight()/AssetLoader.getgliderScaling(), this);
+        glider = new Glider(midPointX, midPointY, AssetLoader.frontFlaps.getKeyFrame(0).getRegionWidth()/AssetLoader.getgliderScaling(), AssetLoader.frontFlaps.getKeyFrame(0).getRegionHeight()/AssetLoader.getgliderScaling(), this);
         scroller = new ScrollHandler(this);
         AssetLoader.playnext(AssetLoader.menumusiclist);
         updatedboostnumber=orgboostnumber;
@@ -97,7 +97,7 @@ public class GameWorld {
     public void start() {
         currentState = GameState.RUNNING;
         boost=5;
-        AssetLoader.flaps.setFrameDuration(0.12f);
+        AssetLoader.frontFlaps.setFrameDuration(0.12f);
     }
 
     public void restart() {
@@ -107,7 +107,7 @@ public class GameWorld {
         renderer.scorenumber=0;
         AssetLoader.deathmenumusic.stop();
         AssetLoader.playnext(AssetLoader.musiclist);
-        AssetLoader.flaps.setFrameDuration(0.2f);
+        AssetLoader.frontFlaps.setFrameDuration(0.2f);
         currentState = GameState.READY;
         renderer.prepareTransition(0, 0, 0, 1f);}
 
