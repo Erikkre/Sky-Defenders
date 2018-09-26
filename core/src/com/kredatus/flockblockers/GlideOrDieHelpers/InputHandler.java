@@ -175,7 +175,6 @@ public class InputHandler implements InputProcessor {
             if (menuButton.isTouchUp(screenX, screenY)) {
                 myWorld.backToMenu();}
         }
-
         return false;
     }
 

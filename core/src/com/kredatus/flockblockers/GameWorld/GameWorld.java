@@ -26,6 +26,7 @@ public class GameWorld {
     private GameState currentState;
     public GameWorld(int midPointY, int midPointX, float camwidth) {
         if (AssetLoader.getHighScore()==0){
+
             currentState= GameState.STORY;
         } else {
             currentState = GameState.MENU;}

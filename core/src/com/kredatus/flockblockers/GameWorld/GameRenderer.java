@@ -84,6 +84,8 @@ public class GameRenderer {
     public GameRenderer(GameWorld world, int camwidth, int camheight) {
 
 
+
+
         myWorld = world;
         this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButtons();
         this.deathButtons = ((InputHandler) Gdx.input.getInputProcessor()).getDeathButtons();
@@ -212,7 +214,7 @@ public class GameRenderer {
         bigfont.shadowOffsetY = 14;
         bigfont.borderStraight = false;
         titlefont = gamefont.generateFont(bigfont);
-        title = new GlyphLayout(titlefont, "GLiDE Or DIE");
+        title = new GlyphLayout(titlefont, "Cloud Defenders");
         titlelen = title.width;
     }
 
@@ -250,6 +252,7 @@ public class GameRenderer {
     }
 
     public void drawStory() {
+        /*
         storyfont.draw(batcher, "Stories are told of a hero that only appears in times of great chaos,", cam.position.x - s0len / 2, cam.viewportHeight / 15);
         storyfont.draw(batcher, "an elemental deity known simply as The Phoenix. Since the dawn of", cam.position.x - s2len / 2, 2 * cam.viewportHeight / 15);
         storyfont.draw(batcher, "time, its infinite lives and elemental power are fueled by its home", cam.position.x - s1len / 2, 3 * cam.viewportHeight / 15);
@@ -262,7 +265,7 @@ public class GameRenderer {
         storyfont.draw(batcher, "home. However, the closer it comes to saving a world, the less fragments", cam.position.x - s9len / 2, 10 * cam.viewportHeight / 15);
         storyfont.draw(batcher, "appear there for the Phoenix to use. The Phoenix will stop at nothing", cam.position.x - s10len / 2, 11 * cam.viewportHeight / 15);
         storyfont.draw(batcher, "to prevent the collapse of reality by travelling the universe and", cam.position.x - s11len / 2, 12 * cam.viewportHeight / 15);
-        storyfont.draw(batcher, "stabilizing every last world.", cam.position.x - s12len / 2, 13 * cam.viewportHeight / 15);
+        storyfont.draw(batcher, "stabilizing every last world.", cam.position.x - s12len / 2, 13 * cam.viewportHeight / 15);*/
     }
 
     private void instrFontSetup() {
@@ -291,7 +294,7 @@ public class GameRenderer {
         c8len = c8.width;
         c9 = new GlyphLayout(instrfont, "\nAll under CREATIVE COMMONS LICENSE");
         c9len = c9.width;
-        c10 = new GlyphLayout(instrfont, "\n\nSpecial thanks to Tabitha - this project wouldn't have been the same without you.");
+        c10 = new GlyphLayout(instrfont, "\n\n");
         c10len = c10.width;*/
     }
 
@@ -414,7 +417,7 @@ public class GameRenderer {
     }
 
     private void drawMenuUI() {
-        titlefont.draw(batcher, "GLiDE Or DiE", cam.position.x - titlelen/2, 10);
+        titlefont.draw(batcher, "Cloud Defenders", cam.position.x - titlelen/2, 10);
         titlefont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         for (SimpleButton button : menuButtons) {
@@ -451,7 +454,7 @@ public class GameRenderer {
         batcher.draw(gliderbg, cam.position.x-beta.getValue(), cam.viewportHeight/2-50 -beta.getValue(), beta.getValue(), beta.getValue(),
                 beta.getValue()*2, beta.getValue()*2, 1, 1, rotate);
         frontTexture = (TextureRegion) frontFlaps.getKeyFrame(runTime+0.5f);
-        System.out.print(glider.getPosition().y);
+
         batcher.draw(frontTexture, cam.position.x-frontTexture.getRegionWidth()/(gliderscaling/1.8f)/2, glider.getPosition().y +cam.position.y- glider.starty-30 -frontTexture.getRegionHeight()/(gliderscaling /1.8f)/2, frontTexture.getRegionWidth()/(gliderscaling/1.8f), frontTexture.getRegionHeight()/(gliderscaling/1.8f));
     }
 
@@ -533,7 +536,6 @@ public class GameRenderer {
     }
 
     public void render(float delta, float runTime) {
-        //overlap2d
 
 
 
@@ -545,12 +547,21 @@ public class GameRenderer {
         batcher.enableBlending();
 
         if (myWorld.isStory()) {
+            if (runTime<1){ //start of game intro
+                System.out.println(cam.position);
+            prepareTransition(0, 0, 0, 10f);}
+            drawBackground();
+
+
+
+
             drawStory();
+            /*
             if (AssetLoader.getHighScore() == 0) {
                 nextButton.draw(batcher);
             } else {
                 menuButton.draw(batcher);
-            }
+            }*/
         }  else if (myWorld.isRunning()) {
             drawBackground();
             drawGlider(runTime);
