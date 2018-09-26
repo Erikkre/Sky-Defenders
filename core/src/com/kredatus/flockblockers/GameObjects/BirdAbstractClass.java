@@ -15,17 +15,24 @@ import java.util.Random;
 /**
  * Created by Erik Kredatus on 9/8/2018.
  *
- *                  Health Speed  Gold                        Size   Amount/Wave
- * FlockBird  =     2      M      4(400 / wave)               S      100
- * ThunderBird=     4      F      15(450)                     M      30
- * GoldBird   =     25     S      100(400)                    L      4
- * LunarBird  =     7      F      35(525)                     S      15
- * PhoenixBird=     50     S      30+Diamond                 XL      1
+ *                  Health Speed  Size  Gold             Amount/Wave
+ * FlockBird  =     3      M      S      4(400 / wave)   100
+ * ThunderBird=     7      XF     M      15(450)         30
+ * AcidBird   =     7      F      M      15(450)         30
+ * FireBird   =     7      F      S      30(600)         20
+ * LunarBird  =     7      XF     S      50(750)         15
+ * GoldBird   =     25     S      L      100(400)        4
+ * PhoenixBird=     100    S      XL     7+Diamond       1
 
-                                                          Damage      Fire Rate     Penetration       Spread
- (Fast Firing) bow, Pistol, Machinegun, Minigun, arty     2           L            M                  S
- (High Damage) crossbow, sniper, cannon, gauss cannon     4           S            L                  S
- (Wide Spread) catapult, shotgun, canister shot, missile  1           M            L                  XL
+ Gun upgrades work as: each can be upgraded once, to upgrade to level 2 must upgrade whole turret, see .excel file (Dmg, RoF, Pen)
+
+                                                                                                     Damage      Fire Rate     Penetration   Spread
+ (Fast Firing) knife thrower,    bow,        submachinegun,  assault rifle,    Machinegun,  Minigun, laser,  ion cannon        2           L             M
+ (High Damage) spear thrower,    crossbow,   ballistae,  hunting rifle,  anti-tank sniper, cannon,      gauss cannon           4           S             L
+ (Wide Spread) shuriken thrower, tripleShot, tripleCatapult, shotgun, blunderbuss, missile, Microwave emitter                  1           M             L             XL
+
+ 1 Diamond=10000 Gold
+ Powerups: Climate Cooling(10 diamonds), Overclock Turrets(20 diamonds), Nuclear Bomb (50 Diamonds)
  */
 
 public abstract class BirdAbstractClass {
