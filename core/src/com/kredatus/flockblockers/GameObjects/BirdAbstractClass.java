@@ -16,9 +16,9 @@ import java.util.Random;
  * Created by Erik Kredatus on 9/8/2018.
  *
  *                  Health Speed  Size  Gold             Amount/Wave
- * FlockBird  =     3      M      S      4(400 / wave)   100
- * ThunderBird=     7      XF     M      15(450)         30
- * AcidBird   =     7      F      M      15(450)         30
+ * FlockBird  =     3      M      S      4(400 / wave)   60
+ * ThunderBird=     7      XF     M      15(450)         20
+ * AcidBird   =     7      F      M      15(450)         20
  * FireBird   =     7      F      S      30(600)         20
  * LunarBird  =     7      XF     S      50(750)         15
  * GoldBird   =     25     S      L      100(400)        4
