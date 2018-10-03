@@ -12,14 +12,12 @@ public class LunarBird extends BirdAbstractClass {
         super( width,  height,  cam,  camwidth, camheight, health);
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
         this.height = height-sizeVariance+r.nextInt(sizeVariance*2);
+        super.load("sprites/lunar.png");
     }
 
     @Override
     public void fly(float delta) {
 
     }
-    @Override
-    public void update(float delta) {
 
-    }
 }

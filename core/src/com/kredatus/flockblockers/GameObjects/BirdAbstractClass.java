@@ -49,7 +49,8 @@ public abstract class BirdAbstractClass {
     protected boolean isAlive;
     protected Random r;
     protected OrthographicCamera cam;
-    protected Animation frontFlaps, backFlaps, leftSideFlaps, rightSideFlaps;
+    protected Animation frontFlaps, backFlaps, leftFlaps, rightFlaps;
+
     public BirdAbstractClass(int width, int height, OrthographicCamera cam, int camwidth, int camheight, int health) {
         position.set(r.nextInt(camwidth)+cam.position.x,r.nextInt(camheight)+cam.position.y);
         isAlive=true;
@@ -64,8 +65,11 @@ public abstract class BirdAbstractClass {
 
     public void update(float delta){
 
-        //if (position.x)
-        fly(delta);
+        if (position.y<cam.position.y+camheight/2){
+            fly(delta);
+        }
+
+
     };
 
     public abstract void fly(float delta) ;
@@ -75,8 +79,8 @@ public abstract class BirdAbstractClass {
         dead(delta);
     }
 
-    public final void load(){
-        Texture sprites = new Texture(Gdx.files.internal("sprites/phoenixHD.png"));
+    public final void load(String path){
+        Texture sprites = new Texture(Gdx.files.internal(path));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
 
@@ -103,23 +107,28 @@ public abstract class BirdAbstractClass {
         frontFlaps= new Animation<TextureRegion>(0.15f, front);
         frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-        rightSideFlaps= new Animation<TextureRegion>(0.12f, side);
-        rightSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        rightFlaps= new Animation<TextureRegion>(0.12f, side);
+        rightFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
         for (TextureRegion i : side){
             i.flip(true, false);
         }
-        leftSideFlaps= new Animation<TextureRegion>(0.12f, side);
-        leftSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        leftFlaps= new Animation<TextureRegion>(0.12f, side);
+        leftFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
         backFlaps= new Animation<TextureRegion>(0.12f, back);
         backFlaps.setPlayMode(Animation.PlayMode.LOOP);
+    }
+
+    public final hit(Bullet bullet){
+        health-=bullet.damage;
     }
 
     public void dead(float delta){
         velocity.add(acceleration.cpy().scl(delta));
         position.add(velocity.cpy().scl(delta));
         if ( position.y+height>cam.position.y-(camheight/2) && position.x-width<cam.position.x+(camwidth/2) && position.x+width>cam.position.x-(camwidth/2)){
-            //bird.delete();
+            //delete
         }
     }
 

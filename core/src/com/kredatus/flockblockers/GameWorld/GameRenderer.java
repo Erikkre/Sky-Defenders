@@ -551,7 +551,7 @@ public class GameRenderer {
                 System.out.println(cam.position);
             prepareTransition(0, 0, 0, 10f);}
             drawBackground();
-
+            drawPhoenix();
 
 
 

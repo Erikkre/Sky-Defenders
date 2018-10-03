@@ -12,6 +12,7 @@ public class GoldBird extends BirdAbstractClass {
         super( width,  height,  cam,  camwidth, camheight, health);
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
         this.height = height-sizeVariance+r.nextInt(sizeVariance*2);
+        super.load("sprites/gold.png");
     }
 
 
