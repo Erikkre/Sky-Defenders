@@ -535,6 +535,10 @@ public class GameRenderer {
         camposition = cam.position;
     }
 
+    public void drawPhoenix(){
+
+    }
+
     public void render(float delta, float runTime) {
 
 

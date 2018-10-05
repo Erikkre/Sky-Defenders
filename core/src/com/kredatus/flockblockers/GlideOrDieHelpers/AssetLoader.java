@@ -21,12 +21,12 @@ public class AssetLoader {
     public static Random r = new Random();
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;
-    public static Texture bg, sprites, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
+    public static Texture bgPhoenix, bgAcid, bgFire, bgFlock, bgGold, bgLunar, bgThunder, sprites, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
             creditstexture, creditsdowntexture, exittexture, exitdowntexture, retrytexture, retrydowntexture, readytexture, readydowntexture,
             storytexture, storydowntexture, scoretexture, ratingtexture, topscoretexture, menutexture, menudowntexture, youvediedtexture,
             creditsbgtexture, deathmenubgtexture, instrtexture, instrdowntexture, gliderbgtexture, instrbgtexture, readybgtexture, nexttexture,
             nextdowntexture, worldStabilizedtexture;
-    public static TextureRegion bgtexture, horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture,boostdown,logo, playdown,
+    public static TextureRegion bgPhoenixtexture, bgAcidtexture, bgFiretexture, bgFlocktexture, bgGoldtexture, bgLunartexture, bgThundertexture, horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture,boostdown,logo, playdown,
             play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu, menudown,
             score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized;
 
@@ -192,17 +192,44 @@ public class AssetLoader {
         readybg.flip(false, true);
 
         //if button click: choose this map, load this list of locations to randomize boosts at *************************************
-        bg = new Texture(Gdx.files.internal("backgrounds/levels/City of 1000 suns.jpg"));
-        bg.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        bgtexture = new TextureRegion(bg, bg.getWidth(), bg.getHeight());
-        bgtexture.flip(false, true);
-        horflipbgtexture = new TextureRegion(bg, bg.getWidth(), bg.getHeight());
-        horflipbgtexture.flip(true, true);
-        vertflipbgtexture = new TextureRegion(bg, bg.getWidth(), bg.getHeight());
-        vertflipbgtexture.flip(false, false);
-        horvertflipbgtexture = new TextureRegion(bg, bg.getWidth(), bg.getHeight());
-        horvertflipbgtexture.flip(true, false);
+        bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix.jpg"));
+        bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
+        bgPhoenixtexture.flip(false, true);
 
+        bgAcid = new Texture(Gdx.files.internal("backgrounds/levels/bgAcid.jpg"));
+        bgAcid.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
+        bgAcidtexture.flip(true, true);
+
+        bgFire = new Texture(Gdx.files.internal("backgrounds/levels/bgFire.jpg"));
+        bgFire.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgFiretexture = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
+        bgFiretexture.flip(true, true);
+
+        bgFlock = new Texture(Gdx.files.internal("backgrounds/levels/bgFlock.jpg"));
+        bgFlock.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgFlocktexture = new TextureRegion(bgFlock, bgFlock.getWidth(), bgFlock.getHeight());
+        bgFlocktexture.flip(true, true);
+
+        bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold.jpg"));
+        bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
+        bgGoldtexture.flip(true, true);
+
+        bgLunar = new Texture(Gdx.files.internal("backgrounds/levels/bgLunar.jpg"));
+        bgLunar.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgLunartexture = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
+        bgLunartexture.flip(true, true);
+
+        bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder.jpg"));
+        bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
+        bgThundertexture.flip(true, true);
+
+
+
+/*
         coordslistsize=22;
         boostnumber=20; //14 boosts for 2 map sizes: 50% random chance of each boost being rendered in its coordinate
         ArrayList<Vector3> boostcoordslist = new ArrayList<Vector3>();      //there will be 7 variables for this map
@@ -234,7 +261,7 @@ public class AssetLoader {
 
         Collections.addAll(boostcoordslist, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31);
         boostcoords=boostcoordslist;
-
+*?
         //SPRITEWORK
         gliderscaling=3;
         boost = new Texture(Gdx.files.internal("sprites/boost.png"));
@@ -246,7 +273,7 @@ public class AssetLoader {
         boostdown= new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
         boostdown.flip(false, true);
 
-        sprites = new Texture(Gdx.files.internal("sprites/phoenixHD.png"));
+        sprites = new Texture(Gdx.files.internal("sprites/phoenix.png"));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
 
@@ -258,7 +285,7 @@ public class AssetLoader {
             TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
             temp.flip(false, true);
             positions.add(temp);
-            if (i == 5) {
+            if (i == 5){
                 front =  positions.toArray(new TextureRegion[6]);
                 positions.clear();
             } else if (i == 11){
@@ -396,7 +423,7 @@ public class AssetLoader {
 
     public static void dispose() {
         // We must dispose of the texture when we are finished.
-        bg.dispose();
+        bgPhoenix.dispose();
         sprites.dispose();
         boost.dispose();
 

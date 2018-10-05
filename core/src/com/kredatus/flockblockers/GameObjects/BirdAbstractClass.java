@@ -120,7 +120,7 @@ public abstract class BirdAbstractClass {
         backFlaps.setPlayMode(Animation.PlayMode.LOOP);
     }
 
-    public final hit(Bullet bullet){
+    public final void hit(Bullet bullet){
         health-=bullet.damage;
     }
 
