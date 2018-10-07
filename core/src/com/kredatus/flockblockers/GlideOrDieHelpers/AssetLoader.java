@@ -31,7 +31,7 @@ public class AssetLoader {
             score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized;
 
     public static ArrayList<Vector3> boostcoords;
-    public static TextureRegion[] menubglist;
+    public static ArrayList<TextureRegion> bgList;
     public static int bgscaling, gliderscaling, boostnumber, coordslistsize;
     public static Sound splashdown, swoop, fire;
     public static Music deathmenumusic;
@@ -191,43 +191,65 @@ public class AssetLoader {
         readybg = new TextureRegion(readybgtexture, readybgtexture.getWidth(), readybgtexture.getHeight());
         readybg.flip(false, true);
 
+
         //if button click: choose this map, load this list of locations to randomize boosts at *************************************
+        bgList=new ArrayList<TextureRegion>();
+
         bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix.jpg"));
         bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
-        bgPhoenixtexture.flip(false, true);
+        bgList.add(bgPhoenixtexture);
 
         bgAcid = new Texture(Gdx.files.internal("backgrounds/levels/bgAcid.jpg"));
         bgAcid.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
-        bgAcidtexture.flip(true, true);
+        bgAcidtexture.flip(false, true);
+        bgList.add(bgAcidtexture);
+        bgAcidtexture.flip(false, false);
+        bgList.add(bgAcidtexture);
 
         bgFire = new Texture(Gdx.files.internal("backgrounds/levels/bgFire.jpg"));
         bgFire.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         bgFiretexture = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
-        bgFiretexture.flip(true, true);
+        bgFiretexture.flip(false, true);
+        bgList.add(bgFiretexture);
+        bgFiretexture.flip(false, false);
+        bgList.add(bgFiretexture);
 
         bgFlock = new Texture(Gdx.files.internal("backgrounds/levels/bgFlock.jpg"));
         bgFlock.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         bgFlocktexture = new TextureRegion(bgFlock, bgFlock.getWidth(), bgFlock.getHeight());
-        bgFlocktexture.flip(true, true);
+        bgFlocktexture.flip(false, true);
+        bgList.add(bgFlocktexture);
+        bgFlocktexture.flip(false, false);
+        bgList.add(bgFlocktexture);
 
         bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold.jpg"));
         bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
-        bgGoldtexture.flip(true, true);
+        bgGoldtexture.flip(false, true);
+        bgList.add(bgGoldtexture);
+        bgGoldtexture.flip(false, false);
+        bgList.add(bgGoldtexture);
 
         bgLunar = new Texture(Gdx.files.internal("backgrounds/levels/bgLunar.jpg"));
         bgLunar.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         bgLunartexture = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
-        bgLunartexture.flip(true, true);
+        bgLunartexture.flip(false, true);
+        bgList.add(bgLunartexture);
+        bgLunartexture.flip(false, false);
+        bgList.add(bgLunartexture);
 
         bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder.jpg"));
         bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
-        bgThundertexture.flip(true, true);
+        bgThundertexture.flip(false, true);
+        bgList.add(bgThundertexture);
+        bgThundertexture.flip(false, false);
+        bgList.add(bgThundertexture);
 
-
+        bgPhoenixtexture.flip(false, true);
+        bgList.add(bgPhoenixtexture);
 
 /*
         coordslistsize=22;
@@ -261,7 +283,7 @@ public class AssetLoader {
 
         Collections.addAll(boostcoordslist, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31);
         boostcoords=boostcoordslist;
-*?
+*/
         //SPRITEWORK
         gliderscaling=3;
         boost = new Texture(Gdx.files.internal("sprites/boost.png"));
@@ -311,7 +333,7 @@ public class AssetLoader {
         backFlaps= new Animation<TextureRegion>(0.12f, back);
         backFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-
+/*
         //flip world
         vertflipgliderMid = new TextureRegion(sprites, 1020, 890, 379, 464);
         vertflipgliderMid.flip(false, false);
@@ -351,7 +373,7 @@ public class AssetLoader {
 
         backgliderUp= new TextureRegion(sprites, 1465, 1365, 426, 444);
         backgliderUp.flip(false, true);
-/*
+
         TextureRegion[] backPositions = { backgliderUp, backgliderMid, backgliderDown, backgliderMid };
         backflaps= new Animation<TextureRegion>(0.2f, backPositions);
         backflaps.setPlayMode(Animation.PlayMode.LOOP);*/

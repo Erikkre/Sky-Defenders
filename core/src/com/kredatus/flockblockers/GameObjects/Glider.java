@@ -16,11 +16,11 @@ public class Glider {
     public float gamexvelocity;
     protected int width;
     protected int height;
-    protected boolean isScrolledLeft;
+    protected boolean isScrolledDown;
     public float midpointY, midpointX, starty;
     private boolean isAlive;
 
-    float bgh = AssetLoader.bg.getHeight();
+    float bgh = AssetLoader.bgPhoenix.getHeight();
     float originalyacc=2000, originalGamevelocity=750;
     private GameWorld world;
     public Glider(float midPointX, float midPointY, int width, int height, GameWorld world) {
@@ -35,7 +35,7 @@ public class Glider {
         acceleration = new Vector2(6000, originalyacc-1600);
         gamexvelocity = originalGamevelocity;
 
-        isScrolledLeft = false;
+        isScrolledDown = false;
         isAlive = true;
         boundingCircle = new Circle();
     }

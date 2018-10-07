@@ -3,7 +3,7 @@ package com.kredatus.flockblockers.GameWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameObjects.Glider;
-import com.kredatus.flockblockers.GameObjects.ScrollHandler;
+import com.kredatus.flockblockers.GlideOrDieHelpers.ScrollHandler;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 
 /**
@@ -41,7 +41,6 @@ public class GameWorld {
 
     public void update(float delta, float runTime) {
         switch (currentState) {
-
             case MENU:
             case READY:
             case DEATHMENU:
@@ -65,20 +64,20 @@ public class GameWorld {
         //System.out.println((int)((-renderer.scorenumber/5f)+orgboostnumber));
         if (delta > .15f) {
             delta = .15f;}
-        scroller.collides(glider, updatedboostnumber);
+        //scroller.collides(glider, updatedboostnumber);
         glider.update(delta);
         scroller.update(updatedboostnumber);
 
         if (Math.abs(glider.getPosition().y) > scroller.bgh) {
-            renderer.prepareSunshine();
+           // renderer.prepareSunshine();
             currentState = GameState.DEATHMENU;
             if (renderer.scorenumber > AssetLoader.getHighScore()) {
                 AssetLoader.setHighScore(renderer.scorenumber);
             }
 
-            scroller.onRestart();
+            //scroller.onRestart();
             AssetLoader.frontViewFlaps.setFrameDuration(0.2f);
-            renderer.setCamPositionOriginal();
+           //renderer.setCamPositionOriginal();
             renderer.prepareTransition(255, 255, 255, 1);
         }
     }
@@ -104,7 +103,7 @@ public class GameWorld {
     public void restart() {
         boost = 0;
         glider.onRestart();
-        renderer.setCamPositionOriginal();
+        //renderer.setCamPositionOriginal();
         renderer.scorenumber=0;
         AssetLoader.deathmenumusic.stop();
         AssetLoader.playnext(AssetLoader.musiclist);
@@ -115,8 +114,8 @@ public class GameWorld {
     public void backToMenu() {
         boost = 0;
         glider.onRestart();
-        scroller.onRestart();
-        renderer.setCamPositionOriginal();
+        //scroller.onRestart();
+        //renderer.setCamPositionOriginal();
         currentState = GameState.MENU;
         renderer.prepareTransition(0, 0, 0, 1f);}
 

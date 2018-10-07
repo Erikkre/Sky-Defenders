@@ -17,10 +17,10 @@ import java.util.Random;
  *
  *                  Health Speed  Size  Gold             Amount/Wave
  * FlockBird  =     3      M      S      4(400 / wave)   60
- * ThunderBird=     7      XF     M      15(450)         20
  * AcidBird   =     7      F      M      15(450)         20
  * FireBird   =     7      F      S      30(600)         20
- * LunarBird  =     7      XF     S      50(750)         15
+ * ThunderBird=     7      XF     M      15(450)         15
+ * LunarBird  =     7      XF     S      50(750)         10
  * GoldBird   =     25     S      L      100(400)        4
  * PhoenixBird=     100    S      XL     7+Diamond       1
 
@@ -32,7 +32,7 @@ import java.util.Random;
  (Wide Spread) shuriken thrower, tripleShot, tripleCatapult, shotgun, blunderbuss, missile, Microwave emitter                  1           M             L             XL
 
  1 Diamond=10000 Gold
- Powerups: Climate Cooling(10 diamonds), Overclock Turrets(20 diamonds), Nuclear Bomb (50 Diamonds)
+ Powerups: Climate Cooling(5 diamonds), Overclock Turrets(15 diamonds), Nuclear Bomb (25 Diamonds)
  */
 
 public abstract class BirdAbstractClass {

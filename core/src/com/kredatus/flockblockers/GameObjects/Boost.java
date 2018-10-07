@@ -6,13 +6,13 @@ import com.kredatus.flockblockers.GameObjects.Scrollable;
 /**
  * Created by Mr. Kredatus on 8/31/2017.
  */
-
+/*
 public class Boost extends Scrollable {
     private Circle circle;
-    public boolean isScored = false, isScrolledLeft;
+    public boolean isScored = false, isScrolledDown;
 
     public Boost(float x, float y, int width, int height) {
-        super(x, y, width, height);
+        //super(x, y, width, height);
         this.x = x;
         this.y = y;
         this.width = width;
@@ -27,7 +27,7 @@ public class Boost extends Scrollable {
     }
 
     public void boostReset() {
-        isScrolledLeft = false;
+        isScrolledDown = false;
         isScored=false;
     }
 
@@ -45,4 +45,4 @@ public class Boost extends Scrollable {
     public void setScored(boolean b) {
         isScored = b;
     }
-}
+}*/

@@ -1,5 +1,6 @@
 package com.kredatus.flockblockers.GameObjects;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.Screens.GameScreen;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
@@ -15,33 +16,39 @@ public class Scrollable {
     protected float y;
     protected int width;
     protected int height;
-    protected boolean isScrolledLeft;
+    protected boolean isScrolledDown;
+    private TextureRegion texture;
 
-    public Scrollable(float x, float y, int width, int height) {
+    public Scrollable(float x, float y, int width, int height, TextureRegion texture) {
         this.width = width;
         this.height = height;
         this.x = x;
         this.y = y;
-        isScrolledLeft = false;
+        isScrolledDown = false;
+        this.texture=texture;
     }
 
     public void update() {
-
         // If the Scrollable object is no longer visible:
         //try {
         //System.out.println("scrollhandler edge:"+(GameRenderer.getCameraPosition().x - GameScreen.camwidth / 2));
-        if (x + width < GameRenderer.getCameraPosition().x - GameScreen.camwidth / 2) {
-            isScrolledLeft = true;}
+        if (y + height <  GameScreen.camheight / 2) {
+            isScrolledDown = true;}
     }
 
+
     // Reset: Should Override in subclass for more specific behavior.
-    public void reset(float newX) {
-        x = newX;
-        isScrolledLeft = false;}
+    public void reset(float newY) {
+        y = newY;
+        isScrolledDown = false;}
 
-    public boolean isScrolledLeft() {return isScrolledLeft;}
+    public boolean isScrolledDown() {return isScrolledDown;}
 
-    public float getTailX() {return x + width;}
+    public float getTailY() {return x + width;}
+
+    public TextureRegion getTexture() {
+        return texture;
+    }
 
     public float getX() {return x;}
 
