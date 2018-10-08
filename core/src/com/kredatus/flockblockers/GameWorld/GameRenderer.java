@@ -261,7 +261,15 @@ public class GameRenderer {
         s12len = s12.width;
     }
 
-    public void drawStory() {
+    public void drawStory(float runTime) {
+
+        batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x, glider.getPosition().y,
+                glider.getWidth() / 2.0f, glider.getHeight() / 2.0f, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());
+
+
+
+
+
         /*
         storyfont.draw(batcher, "Stories are told of a hero that only appears in times of great chaos,", cam.position.x - s0len / 2, viewHeight / 15);
         storyfont.draw(batcher, "an elemental deity known simply as The Phoenix. Since the dawn of", cam.position.x - s2len / 2, 2 * viewHeight / 15);
@@ -546,14 +554,7 @@ public class GameRenderer {
             camposition = cam.position;
         }
     */
-    public void drawPhoenix(){
-
-    }
-
     public void render(float delta, float runTime) {
-
-
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
@@ -567,8 +568,10 @@ public class GameRenderer {
 //                System.out.println(cam.position);
             prepareTransition(0, 0, 0, 10f);}
             drawBackground();
-            drawPhoenix();
-
+            /*
+            cam.position.y+=10;
+            cam.update();
+            batcher.setProjectionMatrix(cam.combined);*/
 
 
             drawStory();

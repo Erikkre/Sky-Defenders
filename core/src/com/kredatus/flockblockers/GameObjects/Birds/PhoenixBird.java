@@ -15,6 +15,10 @@ public class PhoenixBird extends BirdAbstractClass {
         super.load("sprites/phoenix.png");
     }
 
+    public void intro(float delta){
+
+    }
+
     @Override
     public void fly(float delta) {
 

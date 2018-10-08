@@ -26,18 +26,20 @@ public class ScrollHandler {
     int w = AssetLoader.boost.getWidth();
     int h = AssetLoader.boost.getHeight();
     //private Boost tempBoost;
-    private int orgBoostnumber = AssetLoader.getBoostnumber(), coordslistsize=AssetLoader.getcoordslistsize();
+    //private int orgBoostnumber = AssetLoader.getBoostnumber(), coordslistsize=AssetLoader.getcoordslistsize();
     public int bgw = AssetLoader.bgPhoenix.getWidth();
     public int bgh = AssetLoader.bgPhoenix.getHeight();
     float x, y, width, height;
     private GameWorld gameWorld;
+    public int bgNumber;
     // Constructor receives a float that tells us where we need to create our
     // Grass and Pipe objects.
 
     public ScrollHandler(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
-        background = new Background(-bgw/2, 0, bgw, bgh, AssetLoader.bgList.get(0));
-        background2 = new Background(-bgw/2, bgh, bgw, bgh, AssetLoader.bgList.get(1));
+        bgNumber=0;
+        background = new Background(-bgw/2, 0, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
+        background2 = new Background(-bgw/2, bgh, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
         r = new Random();
 
         /* //flipworld
@@ -92,9 +94,17 @@ public class ScrollHandler {
         // and reset accordingly
 
         if (background.isScrolledDown()) {
-            background.reset(background2.getTailY());
+            if (bgNumber==AssetLoader.bgList.size()){
+                //waveNumber+=1;
+                bgNumber=0;
+            }
+            background.reset(background2.getTailY(), bgNumber++);
         } else if (background2.isScrolledDown()) {
-            background2.reset(background.getTailY());
+            if (bgNumber==AssetLoader.bgList.size()){
+                //waveNumber+=1;
+                bgNumber=0;
+            }
+            background2.reset(background.getTailY(), bgNumber++);
         }
         /*
         if (background3.isScrolledDown()) {

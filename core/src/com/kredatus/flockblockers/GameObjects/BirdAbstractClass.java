@@ -61,9 +61,12 @@ public abstract class BirdAbstractClass {
         isGone = false;
         isAlive = true;
         boundingCircle = new Circle();
+        
     };
 
     public void update(float delta){
+        velocity.add(acceleration.cpy().scl(delta));
+        position.add(velocity.cpy().scl(delta));
 
         if (position.y<cam.position.y+camheight/2){
             fly(delta);
@@ -130,6 +133,27 @@ public abstract class BirdAbstractClass {
         if ( position.y+height>cam.position.y-(camheight/2) && position.x-width<cam.position.x+(camwidth/2) && position.x+width>cam.position.x-(camwidth/2)){
             //delete
         }
+    }
+
+
+    public float distanceAfterDeath() {
+        return Math.abs(position.y+height/2) - (bgh - midpointY);
+    }
+
+    public boolean isFlipWorld() {
+        return position.y < -bgh / 8;
+    }
+
+    public boolean isNormalWorld() {
+        return position.y > bgh / 8;
+    }
+
+    public boolean isPositive() {
+        return position.y >0;
+    }
+
+    public boolean isNegative() {
+        return position.y <0;
     }
 
     public Vector2 getPosition() {

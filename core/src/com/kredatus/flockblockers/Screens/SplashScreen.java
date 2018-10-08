@@ -17,7 +17,6 @@ import aurelienribon.tweenengine.TweenManager;
 
 
 public class SplashScreen implements Screen {
-
     private TweenManager manager;
     private SpriteBatch batcher;
     private Sprite sprite, sunshine;
@@ -48,8 +47,6 @@ public class SplashScreen implements Screen {
         sunshine.setColor(1, 1, 1, 0);
         sunshine.setSize(AssetLoader.frontGliderMid.getRegionWidth()*2, AssetLoader.frontGliderMid.getRegionHeight()*2 );
         sunshine.setPosition(1100/2-AssetLoader.frontGliderMid.getRegionWidth(), (1100* (height/width))/2-130);*/
-
-
     }
 
     private void setupTween() {

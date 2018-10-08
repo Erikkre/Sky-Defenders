@@ -11,7 +11,7 @@ import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
  */
 public class GameWorld {
     private Glider glider;
-    private ScrollHandler scroller;
+    public ScrollHandler scroller;
     //private boolean isAlive = true;
     private Rectangle ground;
     public double boost = 0;  //boostamount
@@ -49,9 +49,16 @@ public class GameWorld {
             case RUNNING:
                 updateRunning(delta);
                 break;
+            case STORY:
+                updateStory(delta);
+                break;
             default:
                 break;
         }
+    }
+
+    private void updateStory(float delta) {
+        scroller.update(updatedboostnumber);
     }
 
     private void updateReady(float runTime) {
