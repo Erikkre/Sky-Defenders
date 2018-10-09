@@ -135,7 +135,7 @@ public abstract class BirdAbstractClass {
         }
     }
 
-
+/*
     public float distanceAfterDeath() {
         return Math.abs(position.y+height/2) - (bgh - midpointY);
     }
@@ -175,4 +175,5 @@ public abstract class BirdAbstractClass {
     public Circle getBoundingCircle() {
         return boundingCircle;
     }
+    */
 }

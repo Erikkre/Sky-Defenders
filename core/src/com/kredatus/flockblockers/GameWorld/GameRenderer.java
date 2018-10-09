@@ -56,7 +56,7 @@ public class GameRenderer {
     private SpriteBatch batcher;
     private Glider glider;
     public static Vector3 camposition;
-    private Animation frontFlaps, flipflaps, frontViewFlaps, backFlaps;
+    private Animation frontFlaps, leftSideFlaps, rightSideFlaps, flipflaps, frontViewFlaps, backFlaps;
     private TextureRegion gliderMid, vertflipgliderMid;
     private int gliderscaling=AssetLoader.getgliderScaling();
     private TextureRegion bgPhoenix, horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
@@ -151,7 +151,7 @@ public class GameRenderer {
 
         frontFlaps = AssetLoader.frontFlaps;
         flipflaps = AssetLoader.flipflaps;
-        frontViewFlaps = AssetLoader.frontViewFlaps;
+        frontViewFlaps = null;
         frontglidermid=AssetLoader.frontGliderMid;
         backFlaps=AssetLoader.backFlaps;
 
@@ -261,30 +261,7 @@ public class GameRenderer {
         s12len = s12.width;
     }
 
-    public void drawStory(float runTime) {
 
-        batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x, glider.getPosition().y,
-                glider.getWidth() / 2.0f, glider.getHeight() / 2.0f, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());
-
-
-
-
-
-        /*
-        storyfont.draw(batcher, "Stories are told of a hero that only appears in times of great chaos,", cam.position.x - s0len / 2, viewHeight / 15);
-        storyfont.draw(batcher, "an elemental deity known simply as The Phoenix. Since the dawn of", cam.position.x - s2len / 2, 2 * viewHeight / 15);
-        storyfont.draw(batcher, "time, its infinite lives and elemental power are fueled by its home", cam.position.x - s1len / 2, 3 * viewHeight / 15);
-        storyfont.draw(batcher, "star, Sol. After an impossible cosmic event, the universe has begun", cam.position.x - s3len / 2, 4 * viewHeight / 15);
-        storyfont.draw(batcher, "to collapse. Reality is folding in on itself, worlds are destabilizing", cam.position.x - s4len / 2, 5 * viewHeight / 15);
-        storyfont.draw(batcher, "and the Phoenix's purpose has been made clear. It must save the", cam.position.x - s5len / 2, 6 * viewHeight / 15);
-        storyfont.draw(batcher, "universe once more. Able to traverse all planes of reality, it uses Sol's", cam.position.x - s6len / 2, 7 * viewHeight / 15);
-        storyfont.draw(batcher, "power to stabilize the worlds it travels through. Only by absorbing", cam.position.x - s7len / 2, 8 * viewHeight / 15);
-        storyfont.draw(batcher, "faraway fragments of Sol is it able to keep flying further away from", cam.position.x - s8len / 2, 9 * viewHeight / 15);
-        storyfont.draw(batcher, "home. However, the closer it comes to saving a world, the less fragments", cam.position.x - s9len / 2, 10 * viewHeight / 15);
-        storyfont.draw(batcher, "appear there for the Phoenix to use. The Phoenix will stop at nothing", cam.position.x - s10len / 2, 11 * viewHeight / 15);
-        storyfont.draw(batcher, "to prevent the collapse of reality by travelling the universe and", cam.position.x - s11len / 2, 12 * viewHeight / 15);
-        storyfont.draw(batcher, "stabilizing every last world.", cam.position.x - s12len / 2, 13 * viewHeight / 15);*/
-    }
 
     private void instrFontSetup() {
         xxsmallfont = smallfont;
@@ -554,6 +531,28 @@ public class GameRenderer {
             camposition = cam.position;
         }
     */
+
+    public void drawStory(float runTime) {
+
+        batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-300, glider.getPosition().y,
+                glider.getWidth(), glider.getHeight(), glider.getWidth(), glider.getHeight(), 3, 3, glider.getRotation()+180);
+
+        /*
+        storyfont.draw(batcher, "Stories are told of a hero that only appears in times of great chaos,", cam.position.x - s0len / 2, viewHeight / 15);
+        storyfont.draw(batcher, "an elemental deity known simply as The Phoenix. Since the dawn of", cam.position.x - s2len / 2, 2 * viewHeight / 15);
+        storyfont.draw(batcher, "time, its infinite lives and elemental power are fueled by its home", cam.position.x - s1len / 2, 3 * viewHeight / 15);
+        storyfont.draw(batcher, "star, Sol. After an impossible cosmic event, the universe has begun", cam.position.x - s3len / 2, 4 * viewHeight / 15);
+        storyfont.draw(batcher, "to collapse. Reality is folding in on itself, worlds are destabilizing", cam.position.x - s4len / 2, 5 * viewHeight / 15);
+        storyfont.draw(batcher, "and the Phoenix's purpose has been made clear. It must save the", cam.position.x - s5len / 2, 6 * viewHeight / 15);
+        storyfont.draw(batcher, "universe once more. Able to traverse all planes of reality, it uses Sol's", cam.position.x - s6len / 2, 7 * viewHeight / 15);
+        storyfont.draw(batcher, "power to stabilize the worlds it travels through. Only by absorbing", cam.position.x - s7len / 2, 8 * viewHeight / 15);
+        storyfont.draw(batcher, "faraway fragments of Sol is it able to keep flying further away from", cam.position.x - s8len / 2, 9 * viewHeight / 15);
+        storyfont.draw(batcher, "home. However, the closer it comes to saving a world, the less fragments", cam.position.x - s9len / 2, 10 * viewHeight / 15);
+        storyfont.draw(batcher, "appear there for the Phoenix to use. The Phoenix will stop at nothing", cam.position.x - s10len / 2, 11 * viewHeight / 15);
+        storyfont.draw(batcher, "to prevent the collapse of reality by travelling the universe and", cam.position.x - s11len / 2, 12 * viewHeight / 15);
+        storyfont.draw(batcher, "stabilizing every last world.", cam.position.x - s12len / 2, 13 * viewHeight / 15);*/
+    }
+
     public void render(float delta, float runTime) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
@@ -574,7 +573,7 @@ public class GameRenderer {
             batcher.setProjectionMatrix(cam.combined);*/
 
 
-            drawStory();
+            drawStory(runTime);
             /*
             if (AssetLoader.getHighScore() == 0) {
                 nextButton.draw(batcher);
