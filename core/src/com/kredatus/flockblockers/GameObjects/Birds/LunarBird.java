@@ -10,6 +10,7 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 public class LunarBird extends BirdAbstractClass {
     public LunarBird(int width, int height, OrthographicCamera cam, int camwidth, int camheight, int sizeVariance, int health){
         super( cam);
+        this.coins=50;
         this.health=7;
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
         this.height = height-sizeVariance+r.nextInt(sizeVariance*2);

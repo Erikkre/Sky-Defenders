@@ -10,6 +10,7 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 public class FlockBird extends BirdAbstractClass {
     public FlockBird(OrthographicCamera cam){
         super(cam);
+        this.coins=4;
         this.health=3;
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
         this.height = height-sizeVariance+r.nextInt(sizeVariance*2);

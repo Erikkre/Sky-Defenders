@@ -43,21 +43,22 @@ public abstract class BirdAbstractClass {
     protected static Vector2 velocity;
     protected Vector2 acceleration;
     public float gamexvelocity;
-    protected int width, height, camwidth, camheight, health;
+    protected int width, height;
+    protected double camwidth, camheight;
     protected boolean isGone;
     public float  starty;
     protected boolean isAlive;
     protected Random r;
     protected OrthographicCamera cam;
     protected Animation frontFlaps, backFlaps, leftFlaps, rightFlaps;
-    protected int sizeVariance;
+    protected int sizeVariance, coins, health, diamonds;
     public BirdAbstractClass(OrthographicCamera cam) {
 
-        position.set(r.nextInt(camwidth)+cam.position.x,r.nextInt(camheight)+cam.position.y);
+        position.set(r.nextInt((int)camwidth)+cam.position.x,r.nextInt((int)camheight)+cam.position.y);
         isAlive=true;
         this.cam=cam;
 
-        this.camwidth = camwidth;
+        this.camwidth = cam.viewportHeight;
         this.camheight = camheight;
         isGone = false;
         isAlive = true;

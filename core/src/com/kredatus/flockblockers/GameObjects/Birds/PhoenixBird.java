@@ -11,6 +11,8 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 public class PhoenixBird extends BirdAbstractClass {
     public PhoenixBird( int sizeVariance, int health, OrthographicCamera cam){
         super(cam);
+        this.diamonds=1;
+        this.coins=7;
         this.health=100;
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
         this.height = height-sizeVariance+r.nextInt(sizeVariance*2);

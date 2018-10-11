@@ -7,6 +7,7 @@ public class AcidBird extends BirdAbstractClass{
     public AcidBird(OrthographicCamera cam){
         super(cam);
         this.health=7;
+        this.coins=15;
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
         this.height = height-sizeVariance+r.nextInt(sizeVariance*2);
         super.load("sprites/acid.png");
