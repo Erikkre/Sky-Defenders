@@ -9,7 +9,8 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 
 public class ThunderBird extends BirdAbstractClass {
     public ThunderBird(int width, int height, OrthographicCamera cam, int camwidth, int camheight, int sizeVariance, int health){
-        super( width,  height,  cam,  camwidth, camheight, health);
+        super(cam);
+        this.health=7;
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
         this.height = height-sizeVariance+r.nextInt(sizeVariance*2);
         super.load("sprites/thunder.png");

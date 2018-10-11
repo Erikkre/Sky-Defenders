@@ -38,8 +38,6 @@ import aurelienribon.tweenengine.TweenManager;
 
 public class GameRenderer {
 
-
-
     // Tween stuff
     public TweenManager manager, sunshineManager, sunshineManager2;
     private Value alpha = new Value(), beta = new Value(), charlie=new Value(), delta = new Value();
@@ -104,7 +102,6 @@ public class GameRenderer {
         //cam.update();
         //viewport = new FitViewport(viewWidth, viewHeight, cam);
         //viewport.apply();
-
 
         batcher = new SpriteBatch();
         batcher.setProjectionMatrix(cam.combined);
@@ -261,8 +258,6 @@ public class GameRenderer {
         s12len = s12.width;
     }
 
-
-
     private void instrFontSetup() {
         xxsmallfont = smallfont;
         xxsmallfont.size = 26;
@@ -305,7 +300,6 @@ public class GameRenderer {
     }
 
     private void drawBackground() {
-
         batcher.draw(background.getTexture(), background.getX(), background.getY(),
                 background.getWidth(), background.getHeight());
 
@@ -319,6 +313,7 @@ public class GameRenderer {
        //batcher.draw(horvertflipbgtexture, background4.getX(), background4.getY(),
        //         background4.getWidth(), background4.getHeight());
     }
+
 /*
     private void specificdrawBoosts(ArrayList<Boost> boostlist) {
         for (int i = 0; i < boostlist.size(); i++) {
@@ -395,6 +390,7 @@ public class GameRenderer {
         } else {
             batcher.draw(instrbg, cam.position.x- (viewHeight*((float)instrbg.getRegionWidth() / instrbg.getRegionHeight()))/2, 0, viewHeight*((float)instrbg.getRegionWidth() / instrbg.getRegionHeight()), viewHeight-50);}
     }
+
 /*
     public void prepareSunshine(){
         beta.setValue(viewWidth*1.6f); //start val
@@ -412,6 +408,7 @@ public class GameRenderer {
                 .ease(TweenEquations.easeInOutExpo).repeatYoyo(Tween.INFINITY,0).start(sunshineManager2);
     }
 */
+
     private void drawMenuUI() {
         titlefont.draw(batcher, "Cloud Defenders", cam.position.x - titlelen/2, 10);
         titlefont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -500,6 +497,7 @@ public class GameRenderer {
             batcher.draw(worldStabilized, cam.position.x - worldStabilized.getRegionWidth() / 4, viewHeight - (worldStabilized.getRegionHeight() / 2) - 10, worldStabilized.getRegionWidth() / 1.9f, worldStabilized.getRegionHeight() / 1.9f);
         }
     }
+
     /*private void drawWorldMenu(){
         batcher.draw(bgRockies, viewWidth/4-150, viewHeight/3-100, 300, 200);
         batcher.draw(bgCanyon, 2*viewWidth/4-150, viewHeight/3-100, 300, 200);
@@ -508,6 +506,7 @@ public class GameRenderer {
         batcher.draw(bgDesert, 2*viewWidth/4-150, 2*viewHeight/3-100, 300, 200);
         batcher.draw(bgChicago, 3*viewWidth/4-150, 2*viewHeight/3-100, 300, 200);
     }*/
+
     private void drawScore() {
         scorenumber= (int) (glider.getPosition().x - viewWidth / 2)/2000;
         font.draw(batcher, "STABILITY: " + scorenumber, cam.position.x + (viewWidth / 2) - scorelen, cam.position.y - viewHeight / 2 + 5);
@@ -533,7 +532,6 @@ public class GameRenderer {
     */
 
     public void drawStory(float runTime) {
-
         batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-300, glider.getPosition().y,
                 glider.getWidth(), glider.getHeight(), glider.getWidth(), glider.getHeight(), 3, 3, glider.getRotation()+180);
 
@@ -571,6 +569,7 @@ public class GameRenderer {
             cam.position.y+=10;
             cam.update();
             batcher.setProjectionMatrix(cam.combined);*/
+
 
 
             drawStory(runTime);
@@ -621,9 +620,10 @@ public class GameRenderer {
             drawInstr();
             menuButton.draw(batcher);
         }
+
         batcher.end();
         drawTransition(delta);
-        //System.out.println("gamerenderer edge:"+(cam.position.x - viewWidth / 2));
+        //System.out.println("gameRenderer edge:"+(cam.position.x - viewWidth / 2));
     }
 
     public void prepareTransition(int r, int g, int b, float duration) {
@@ -641,17 +641,14 @@ public class GameRenderer {
             Gdx.gl.glEnable(GL30.GL_BLEND);
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(transitionColor.r, transitionColor.g,
-                    transitionColor.b, alpha.getValue());
+            shapeRenderer.setColor(transitionColor.r, transitionColor.g,transitionColor.b, alpha.getValue());
             shapeRenderer.rect(glider.getPosition().x-viewWidth*5000, glider.getPosition().y-viewHeight*5000, viewWidth*10000, viewHeight*10000);
             shapeRenderer.end();
             Gdx.gl.glDisable(GL30.GL_BLEND);
         }
     }
 
-    public static Vector3 getCameraPosition() {
-        return camposition;
-    }
+    public static Vector3 getCameraPosition() { return camposition; }
 
     public static void dispose(){
         font.dispose();

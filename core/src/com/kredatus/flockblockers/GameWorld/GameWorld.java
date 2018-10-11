@@ -63,7 +63,6 @@ public class GameWorld {
 
     private void updateReady(float runTime) {
         glider.updateReady(runTime);
-        //scroller.updateReady(delta);
     }
 
     private void updateRunning(float delta) {

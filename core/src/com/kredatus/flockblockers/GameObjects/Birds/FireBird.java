@@ -8,10 +8,13 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
  */
 
 public class FireBird extends BirdAbstractClass {
-    FireBird(int width, int height, OrthographicCamera cam, int camwidth, int camheight, int sizeVariance, int health){
-        super( width,  height,  cam,  camwidth, camheight, health);
-        this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
-        this.height = height-sizeVariance+r.nextInt(sizeVariance*2);
+    FireBird(OrthographicCamera cam){
+        super(cam);
+        this.health=7;
+        this.sizeVariance=15;
+        int variance = r.nextInt(sizeVariance*2);
+        this.width = width-sizeVariance+variance;
+        this.height = height-sizeVariance+variance;
         super.load("sprites/fire.png");
     }
 

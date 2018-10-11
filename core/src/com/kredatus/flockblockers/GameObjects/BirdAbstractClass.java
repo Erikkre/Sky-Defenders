@@ -50,8 +50,9 @@ public abstract class BirdAbstractClass {
     protected Random r;
     protected OrthographicCamera cam;
     protected Animation frontFlaps, backFlaps, leftFlaps, rightFlaps;
+    protected int sizeVariance;
+    public BirdAbstractClass(OrthographicCamera cam) {
 
-    public BirdAbstractClass(int width, int height, OrthographicCamera cam, int camwidth, int camheight, int health) {
         position.set(r.nextInt(camwidth)+cam.position.x,r.nextInt(camheight)+cam.position.y);
         isAlive=true;
         this.cam=cam;
@@ -121,6 +122,9 @@ public abstract class BirdAbstractClass {
 
         backFlaps= new Animation<TextureRegion>(0.12f, back);
         backFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        this.height=back[3].getRegionHeight();
+        this.width=back[0].getRegionWidth();
     }
 
     public final void hit(Bullet bullet){
