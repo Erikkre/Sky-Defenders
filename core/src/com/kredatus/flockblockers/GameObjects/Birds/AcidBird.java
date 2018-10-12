@@ -17,6 +17,7 @@ public class AcidBird extends BirdAbstractClass{
     public void fly(float delta) {
 
     }
+
     @Override
     public void update(float delta) {
 
