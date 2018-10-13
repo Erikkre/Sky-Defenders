@@ -17,6 +17,7 @@ import java.util.Random;
  *
  *                  Health Speed  Size  Gold             Amount/Wave
  * FlockBird  =     3      M      S      4(400 / wave)   60
+ *
  * AcidBird   =     7      F      M      15(450)         20
  * FireBird   =     7      F      S      30(600)         20
  * ThunderBird=     7      XF     M      15(450)         15

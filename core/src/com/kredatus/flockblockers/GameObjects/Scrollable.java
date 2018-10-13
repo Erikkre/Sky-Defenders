@@ -35,7 +35,7 @@ public class Scrollable {
         // If the Scrollable object is no longer visible:
         //try {
         //System.out.println("scrollhandler edge:"+(GameRenderer.getCameraPosition().x - GameScreen.camwidth / 2));
-
+//y-=30;
         System.out.println("Y of background:" + y);
         if (y + height < -GameScreen.camheight / 2) {
             isScrolledDown = true;
