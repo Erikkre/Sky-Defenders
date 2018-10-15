@@ -32,6 +32,8 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 
+import static com.kredatus.flockblockers.Screens.GameScreen.camheight;
+
 /**
  * Created by Mr. Kredatus on 8/5/2017.
  */
@@ -55,7 +57,7 @@ public class GameRenderer {
     private Glider glider;
     public static Vector3 camposition;
     private Animation frontFlaps, leftSideFlaps, rightSideFlaps, flipflaps, frontViewFlaps, backFlaps;
-    private TextureRegion gliderMid, vertflipgliderMid;
+    //private TextureRegion gliderMid, vertflipgliderMid;
     private int gliderscaling=AssetLoader.getgliderScaling();
     private TextureRegion bgPhoenix, horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
             creditsbg, deathmenubg, newHighscore, topscore, deathmenuscore, rating, youvedied, boostdown,
@@ -81,7 +83,8 @@ public class GameRenderer {
 
     private Color transitionColor;
     private int viewWidth, viewHeight;
-    
+
+    public static float camwidth;
     public GameRenderer(GameWorld world, int viewWidth, int viewHeight) {
         this.viewWidth=viewWidth;
         this.viewHeight=viewHeight;
@@ -94,17 +97,23 @@ public class GameRenderer {
         this.menuButton = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButton();
         this.nextButton =  ((InputHandler) Gdx.input.getInputProcessor()).getNextButton();
 
-
+        batcher = new SpriteBatch();
         cam = new OrthographicCamera();
         cam.setToOrtho(false, viewWidth, viewHeight);
-        //cam.position.set(new Vector2(0,0),0);
+        cam.position.set(new Vector3(0,0,0));
+        cam.update();
+        batcher.setProjectionMatrix(cam.combined);
+        camwidth=cam.viewportWidth;
+        camposition = cam.position;
+        System.out.println("Height: "+cam.viewportHeight);
+        //cam.position.set(new Vector3(0,0,0));
         //cam.position.x=9*camwidth/10;  //seems random but is 1/2(glider position in camwidth) + 2/5
         //cam.update();
         //viewport = new FitViewport(viewWidth, viewHeight, cam);
         //viewport.apply();
 
-        batcher = new SpriteBatch();
-        batcher.setProjectionMatrix(cam.combined);
+
+
 
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(cam.combined);
@@ -143,13 +152,13 @@ public class GameRenderer {
 
         boosttexture = AssetLoader.boosttexture;
 
-        gliderMid = AssetLoader.gliderMid;
-        vertflipgliderMid = AssetLoader.vertflipgliderMid;
+        //gliderMid = AssetLoader.gliderMid;
+        //vertflipgliderMid = AssetLoader.vertflipgliderMid;
 
         frontFlaps = AssetLoader.frontFlaps;
         flipflaps = AssetLoader.flipflaps;
-        frontViewFlaps = null;
-        frontglidermid=AssetLoader.frontGliderMid;
+        //frontViewFlaps = null;
+        //frontglidermid=AssetLoader.frontGliderMid;
         backFlaps=AssetLoader.backFlaps;
 
         creditsbg = AssetLoader.creditsbg;
@@ -331,7 +340,7 @@ public class GameRenderer {
     }*/
 
     private void drawGlider(float runTime){
-        if (glider.isAlive()){
+        /*if (glider.isAlive()){
             //setCamPosition( glider.getPosition().x + viewWidth / 2.5f, glider.getPosition().y+glider.getHeight()/2);
 
             if (glider.isNormalWorld()) {
@@ -369,12 +378,12 @@ public class GameRenderer {
                 }
                 prepareTransition(0, 0, 0, 3f);
                 setCamPosition( glider.getPosition().x + viewWidth / 2.5f, glider.getPosition().y);
-                splashdown=false;}*/
+                splashdown=false;}
             AssetLoader.frontViewFlaps.setFrameDuration((glider.distanceAfterDeath() / 200 + 0.17f));
             frontTexture = (TextureRegion) frontViewFlaps.getKeyFrame(runTime);
             batcher.draw(frontTexture, glider.getPosition().x, glider.getPosition().y, frontTexture.getRegionWidth() /gliderscaling/ 2.0f, frontTexture.getRegionHeight() /gliderscaling/ 2.0f,
                     frontTexture.getRegionWidth()/gliderscaling, frontTexture.getRegionHeight()/gliderscaling, 1, 1, glider.getRotation() - 90);
-        }
+        }*/
     }
 
     public void drawCreditsbg() {
@@ -421,7 +430,7 @@ public class GameRenderer {
     private void drawSpritesDeathMenu(float runTime) {
         rotate += 1;
 
-        if (charlie.getValue()<previousvalue && turnback==false && charlie.getValue()<0.85*AssetLoader.frontGliderMid.getRegionWidth()/2){   //if bird going away and 0.2 of the way there and facing towards, face away
+        /*if (charlie.getValue()<previousvalue && turnback==false && charlie.getValue()<0.85*AssetLoader.frontGliderMid.getRegionWidth()/2){   //if bird going away and 0.2 of the way there and facing towards, face away
             turnback=true;
         } else if (charlie.getValue()> previousvalue && turnback==true){   //if bird coming and facing away, face towards
             turnback=false;
@@ -439,7 +448,7 @@ public class GameRenderer {
             batcher.draw(gliderbg, cam.position.x-charlie.getValue()*1.5f, glider.getPosition().y- 40  - charlie.getValue()*1.5f, charlie.getValue()*1.5f, charlie.getValue()*1.5f,
                     charlie.getValue()*3, charlie.getValue()*3, 1, 1, rotate);
         }
-        previousvalue=charlie.getValue();
+        previousvalue=charlie.getValue();*/
     }
 
     private void drawSpritesMenu(float runTime) {
@@ -532,8 +541,12 @@ public class GameRenderer {
     */
 
     public void drawStory(float runTime) {
-        batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-300, glider.getPosition().y,
-                glider.getWidth(), glider.getHeight(), glider.getWidth(), glider.getHeight(), 3, 3, glider.getRotation()+180);
+        //System.out.println("Glider: "+glider.getPosition());
+        //System.out.println("Cam: "+cam.position);
+        //glider.getPosition().x+glider.getWidth()/2  glider.getPosition().y+glider.getHeight()/2
+
+        batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-glider.getWidth()/2, glider.getPosition().y-glider.getHeight()/2,
+                glider.getPosition().x-glider.getWidth()/2,glider.getPosition().y-glider.getHeight()/2, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());
 
         /*
         storyfont.draw(batcher, "Stories are told of a hero that only appears in times of great chaos,", cam.position.x - s0len / 2, viewHeight / 15);
@@ -560,8 +573,9 @@ public class GameRenderer {
         batcher.enableBlending();
 
         if (myWorld.isStory()) {
+            //System.out.println(glider.getPosition());
             //System.out.print("Cam position:" + cam.position);
-            if (runTime<1){ //start of game intro
+            if (runTime<2){ //start of game intro
 //                System.out.println(cam.position);
             prepareTransition(0, 0, 0, 10f);}
             drawBackground();

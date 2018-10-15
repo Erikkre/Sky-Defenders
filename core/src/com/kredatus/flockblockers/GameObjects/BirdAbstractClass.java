@@ -16,13 +16,13 @@ import java.util.Random;
  * Created by Erik Kredatus on 9/8/2018.
  *
  *                  Health Speed  Size  Gold             Amount/Wave
- * FlockBird  =     3      M      S      4(400 / wave)   60
- *
- * AcidBird   =     7      F      M      15(450)         20
- * FireBird   =     7      F      S      30(600)         20
- * ThunderBird=     7      XF     M      15(450)         15
- * LunarBird  =     7      XF     S      50(750)         10
- * GoldBird   =     25     S      L      100(400)        4
+ * FlockBird  =     3      S      S      8(480 / wave)   60
+ * WaterBird  =     3      M      S      12(480)         40
+ * AcidBird   =     7      F      M      15(300)         20
+ * FireBird   =     7      F      S      15(300)         20
+ * ThunderBird=     7      XF     M      15(300)         20
+ * LunarBird  =     7      XF     S      50(500)         10
+ * GoldBird   =     25     S      L      100(500)        5
  * PhoenixBird=     100    S      XL     7+Diamond       1
 
  Gun upgrades work as: each can be upgraded once, to upgrade to level 2 must upgrade whole turret, see .excel file (Dmg, RoF, Pen)
@@ -59,8 +59,8 @@ public abstract class BirdAbstractClass {
         isAlive=true;
         this.cam=cam;
 
-        this.camwidth = cam.viewportHeight;
-        this.camheight = camheight;
+        this.camwidth = cam.viewportWidth;
+        this.camheight = cam.viewportHeight;
         isGone = false;
         isAlive = true;
         boundingCircle = new Circle();

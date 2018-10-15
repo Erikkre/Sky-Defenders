@@ -35,11 +35,12 @@ public class ScrollHandler {
     // Constructor receives a float that tells us where we need to create our
     // Grass and Pipe objects.
 
-    public ScrollHandler(GameWorld gameWorld) {
+    public ScrollHandler(GameWorld gameWorld, float camwidth, float camheight) {
         this.gameWorld = gameWorld;
         bgNumber=0;
-        background = new Background(-bgw/2, 0, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
-        background2 = new Background(-bgw/2, bgh, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
+        System.out.println("-camwidth/2: "+ -camwidth/2);
+        background = new Background(-camwidth/2, -camheight/2, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
+        background2 = new Background(-camwidth/2, -camheight/2+bgh, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
         r = new Random();
 
         /* //flipworld
@@ -66,10 +67,11 @@ public class ScrollHandler {
         }
     }*/
 
-    public void update(int boostnumber) {
+    public void update(int boostnumber, float runTime) {
         // Update our objects
         background.update();
         background2.update();
+
                 /*
         background3.update();
         background4.update();
@@ -161,93 +163,8 @@ public class ScrollHandler {
         return background4;
     }*/
 
-    /*public ArrayList getboostlist() {
-        return boostlist;
-    }
 
-    public ArrayList getflipboostlist() {return flipboostlist;}
-
-    public ArrayList getinvboostlist() {
-        return invboostlist;
-    }
-
-    public ArrayList getinvflipboostlist() {
-        return invflipboostlist;
-    }*/
-
-    /*public void startlist(ArrayList<Boost> boostlist, boolean flipped, boolean horinv, int boostnumber) {
-        while (boostlist.size() < boostnumber) {   //first half of boosts (unflipped map passing)
-
-            int index = r.nextInt(coordslistsize);
-            if (!horinv) {    //2nd inverted half of map printed a mirror image of normal map boosts
-                x = (boostcoords.get(index).x - (w / boostcoords.get(index).z / 2));
-            } else {
-                x = (bgw + (bgw - boostcoords.get(index).x)) - (w / boostcoords.get(index).z / 2);
-            }
-            y = (boostcoords.get(index).y);
-            width = (w / boostcoords.get(index).z);
-            height = (h / boostcoords.get(index).z);
-
-            if (!flipped) {
-                tempBoost = new Boost(x, y - (h / boostcoords.get(index).z / 2), (int) width, (int) height);
-            } else {
-                tempBoost = new Boost(x, -y - (h / boostcoords.get(index).z / 2), (int) width, (int) height);
-            }
-            for (Boost i : boostlist) {
-                if (i.getX() == x) {
-                    same = true;
-                }
-            }
-            if (!same) {
-
-                boostlist.add(tempBoost);
-            }
-            same = false;
-        }
-    }*/
 /*
-    public ArrayList<Boost> updatelist(ArrayList<Boost> boostlist, boolean flipped, boolean horinv, int boostnumber) {
-        //System.out.println("list size : "+boostlist.size());
-        //System.out.println("New number: "+boostnumber);
-
-        for (int i = 0; i < boostnumber; i++) {
-
-            if (boostlist.get(i).isScrolledDown()) {
-                boostlist.get(i).boostReset();
-
-                same = true;
-                while (same) {   //keep going through loop until the boost that needs to be reset is not the same as another one
-                    same = false;
-
-                    int index = r.nextInt(coordslistsize);
-                    if (!horinv) {  //2nd half of list is inverted map ones
-                        x = (boostcoords.get(index).x - (w / boostcoords.get(index).z / 2));
-                    } else {
-                        x = (bgw + (bgw - boostcoords.get(index).x)) - (w / boostcoords.get(index).z / 2);
-                    }
-                    y = (boostcoords.get(index).y);
-                    width = (w / boostcoords.get(index).z);
-                    height = (h / boostcoords.get(index).z);
-
-                    for (Boost j : boostlist) {
-                        if (j.getX() == x + background2.getTailY()) {
-                            same = true;
-                        }
-                    }
-                    if (!same) {    //if boost isnt already in list add to random x, y using original coords added from rightmost background
-
-                        if (!flipped) {
-                            boostlist.set(i, new Boost(x + background2.getTailY(), y - (h / boostcoords.get(index).z / 2), (int) width, (int) height));
-                        } else {
-                            boostlist.set(i, new Boost(x + background2.getTailY(), -y - (h / boostcoords.get(index).z / 2), (int) width, (int) height));
-                        }
-                    }
-                }
-            }
-        }
-        return boostlist;
-    }
-
     public void onRestart() {
         /*
         background.onRestart(0, 0);

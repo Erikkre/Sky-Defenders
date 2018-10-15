@@ -21,7 +21,8 @@ public class AssetLoader {
     public static Random r = new Random();
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;
-    public static Texture bgPhoenix, bgAcid, bgFire, bgFlock, bgGold, bgLunar, bgThunder, bgWater, sprites, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
+    public static Animation[] phoenixAnimations, flockAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
+    public static Texture bgPhoenix, bgAcid, bgFire, bgFlock, bgGold, bgLunar, bgThunder, bgWater, phoenixBird, flockBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
             creditstexture, creditsdowntexture, exittexture, exitdowntexture, retrytexture, retrydowntexture, readytexture, readydowntexture,
             storytexture, storydowntexture, scoretexture, ratingtexture, topscoretexture, menutexture, menudowntexture, youvediedtexture,
             creditsbgtexture, deathmenubgtexture, instrtexture, instrdowntexture, gliderbgtexture, instrbgtexture, readybgtexture, nexttexture,
@@ -39,14 +40,14 @@ public class AssetLoader {
             p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31;
 
     public static Animation<TextureRegion> frontFlaps, rightSideFlaps, leftSideFlaps, backFlaps, flipflaps, frontViewFlaps;
-    public static TextureRegion gliderMid, gliderDown, gliderUp ,vertflipgliderMid, vertflipgliderDown, vertflipgliderUp,
-            frontGliderMid, frontGliderDown, frontGliderUp, frontGliderUpHigh, backgliderMid, backgliderDown, backgliderUp;
+    //public static TextureRegion gliderMid, gliderDown, gliderUp ,vertflipgliderMid, vertflipgliderDown, vertflipgliderUp,
+            //frontGliderMid, frontGliderDown, frontGliderUp, frontGliderUpHigh, backgliderMid, backgliderDown, backgliderUp;
 
     public static Preferences prefs;
 
     public static void load() {
-        menumusiciterator=r.nextInt(3);
-        musiciterator=r.nextInt(6);
+        menumusiciterator = r.nextInt(3);
+        musiciterator = r.nextInt(6);
 
         //button textures
         playtexture = new Texture(Gdx.files.internal("ui/play.png"));
@@ -171,7 +172,7 @@ public class AssetLoader {
         gliderbg = new TextureRegion(gliderbgtexture, gliderbgtexture.getWidth(), gliderbgtexture.getHeight());
         gliderbg.flip(false, true);
 
-        creditsbgtexture=new Texture(Gdx.files.internal("backgrounds/creditsbg.jpg"));
+        creditsbgtexture = new Texture(Gdx.files.internal("backgrounds/creditsbg.jpg"));
         creditsbgtexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         creditsbg = new TextureRegion(creditsbgtexture, creditsbgtexture.getWidth(), creditsbgtexture.getHeight());
         creditsbg.flip(false, true);
@@ -193,7 +194,7 @@ public class AssetLoader {
 
 
         //if button click: choose this map, load this list of locations to randomize boosts at *************************************
-        bgList=new ArrayList<TextureRegion>();
+        bgList = new ArrayList<TextureRegion>();
 
         bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix.jpg"));
         bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
@@ -201,10 +202,30 @@ public class AssetLoader {
         bgList.add(bgPhoenixtexture);
 
 
+        bgFlock = new Texture(Gdx.files.internal("backgrounds/levels/bgFlock.jpg"));
+        bgFlock.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgFlocktexture = new TextureRegion(bgFlock, bgFlock.getWidth(), bgFlock.getHeight());
+        bgFlocktexture.flip(false, true);
+        bgList.add(bgFlocktexture);
+
+        TextureRegion bgFlocktexture2 = new TextureRegion(bgFlock, bgFlock.getWidth(), bgFlock.getHeight());
+        bgList.add(bgFlocktexture2);
+
+
+        bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater.jpg"));
+        bgWater.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
+        bgWatertexture.flip(false, true);
+        bgList.add(bgWatertexture);
+
+        TextureRegion bgWatertexture2 = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
+        bgList.add(bgWatertexture2);
+
+
         bgAcid = new Texture(Gdx.files.internal("backgrounds/levels/bgAcid.jpg"));
         bgAcid.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
-        bgAcidtexture.flip(false,true);
+        bgAcidtexture.flip(false, true);
         bgList.add(bgAcidtexture);
 
         TextureRegion bgAcidtexture2 = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
@@ -221,24 +242,14 @@ public class AssetLoader {
         bgList.add(bgFiretexture2);
 
 
-        bgFlock = new Texture(Gdx.files.internal("backgrounds/levels/bgFlock.jpg"));
-        bgFlock.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgFlocktexture = new TextureRegion(bgFlock, bgFlock.getWidth(), bgFlock.getHeight());
-        bgFlocktexture.flip(false, true);
-        bgList.add(bgFlocktexture);
+        bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder.jpg"));
+        bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
+        bgThundertexture.flip(false, true);
+        bgList.add(bgThundertexture);
 
-        TextureRegion bgFlocktexture2 = new TextureRegion(bgFlock, bgFlock.getWidth(), bgFlock.getHeight());
-        bgList.add(bgFlocktexture2);
-
-
-        bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold.jpg"));
-        bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
-        bgGoldtexture.flip(false, true);
-        bgList.add(bgGoldtexture);
-
-        TextureRegion bgGoldtexture2 = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
-        bgList.add(bgGoldtexture2);
+        TextureRegion bgThundertexture2 = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
+        bgList.add(bgThundertexture2);
 
 
         bgLunar = new Texture(Gdx.files.internal("backgrounds/levels/bgLunar.jpg"));
@@ -251,25 +262,17 @@ public class AssetLoader {
         bgList.add(bgLunartexture2);
 
 
-        bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder.jpg"));
-        bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
-        bgThundertexture.flip(false, true);
-        bgList.add(bgThundertexture);
+        bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold.jpg"));
+        bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
+        bgGoldtexture.flip(false, true);
+        bgList.add(bgGoldtexture);
 
-        TextureRegion bgThundertexture2 = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
-        bgList.add(bgThundertexture2);
+        TextureRegion bgGoldtexture2 = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
+        bgList.add(bgGoldtexture2);
 
-        bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater.jpg"));
-        bgWater.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
-        bgWatertexture.flip(false, true);
-        bgList.add(bgWatertexture);
 
-        TextureRegion bgWatertexture2 = new TextureRegion(bgWater, bgWater.getWidth(), bgThunder.getHeight());
-        bgList.add(bgWatertexture2);
-
-        TextureRegion bgPhoenixtexture2 = new TextureRegion(bgPhoenix,bgPhoenix.getWidth(),bgPhoenix.getHeight());
+        TextureRegion bgPhoenixtexture2 = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
         bgPhoenixtexture2.flip(false, true);
         bgList.add(bgPhoenixtexture2);
 
@@ -307,53 +310,49 @@ public class AssetLoader {
         boostcoords=boostcoordslist;
 */
         //SPRITEWORK
-        gliderscaling=3;
+        gliderscaling = 1;
         boost = new Texture(Gdx.files.internal("sprites/boost.png"));
         boost.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        boosttexture= new TextureRegion(boost, boost.getWidth(), boost.getHeight());
+        boosttexture = new TextureRegion(boost, boost.getWidth(), boost.getHeight());
         boosttexture.flip(false, true);
         boostdowntexture = new Texture(Gdx.files.internal("ui/boostdown.png"));
         boostdowntexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        boostdown= new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
+        boostdown = new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
         boostdown.flip(false, true);
 
-        sprites = new Texture(Gdx.files.internal("sprites/phoenix.png"));
-        sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
+        phoenixBird = new Texture(Gdx.files.internal("sprites/phoenix.png"));
+        phoenixBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        phoenixAnimations = textureToSprite(phoenixBird);
 
-        TextureRegion[] front=new TextureRegion[0];
-        TextureRegion[] side=new TextureRegion[0];
-        TextureRegion[] back=new TextureRegion[0];
+        /*
+        flockBird = new Texture(Gdx.files.internal("sprites/flock.png"));
+        flockBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        flockAnimations = textureToSprite(flockBird);
 
-        for (int i=0;i<16;i++) {
-            TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
-            temp.flip(false, true);
-            positions.add(temp);
-            if (i == 5){
-                front =  positions.toArray(new TextureRegion[6]);
-                positions.clear();
-            } else if (i == 11){
-                side = positions.toArray(new TextureRegion[6]);
-                positions.clear();
-            } else if (i==15){
-                back = positions.toArray(new TextureRegion[4]);
-                positions.clear();
-            }
-        }
+        waterBird = new Texture(Gdx.files.internal("sprites/water.png"));
+        waterBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        waterAnimations = textureToSprite(waterBird);
 
-        frontFlaps= new Animation<TextureRegion>(0.15f, front);
-        frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        fireBird = new Texture(Gdx.files.internal("sprites/fire.png"));
+        fireBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        fireAnimations = textureToSprite(fireBird);
 
-        rightSideFlaps= new Animation<TextureRegion>(0.12f, side);
-        rightSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
-        for (TextureRegion i : side){
-            i.flip(true, false);
-        }
-        leftSideFlaps= new Animation<TextureRegion>(0.12f, side);
-        leftSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        acidBird = new Texture(Gdx.files.internal("sprites/acid.png"));
+        acidBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        acidAnimations = textureToSprite(acidBird);
 
-        backFlaps= new Animation<TextureRegion>(0.12f, back);
-        backFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        thunderBird = new Texture(Gdx.files.internal("sprites/thunder.png"));
+        thunderBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        thunderAnimations = textureToSprite(thunderBird);
+
+        lunarBird = new Texture(Gdx.files.internal("sprites/lunar.png"));
+        lunarBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        lunarAnimations = textureToSprite(lunarBird);
+
+        goldBird = new Texture(Gdx.files.internal("sprites/gold.png"));
+        goldBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        goldAnimations = textureToSprite(goldBird);
+*/
 
 /*
         //flip world
@@ -417,6 +416,52 @@ public class AssetLoader {
         }
     }
 
+    public static Animation[] textureToSprite (Texture texture) {
+        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
+
+        TextureRegion[] front = new TextureRegion[0];
+        TextureRegion[] side = new TextureRegion[0];
+        TextureRegion[] back = new TextureRegion[0];
+
+        for (int i = 0; i < 16; i++) {
+            TextureRegion temp = new TextureRegion(texture, 481 * i, 0, 481, 423);
+            positions.add(temp);
+            if (i == 5) {
+                front = positions.toArray(new TextureRegion[6]);
+                positions.clear();
+            } else if (i == 11) {
+                side = positions.toArray(new TextureRegion[6]);
+                positions.clear();
+                if (texture != phoenixBird) {
+                    break;
+                }
+            } else if (i == 15) {
+                back = positions.toArray(new TextureRegion[4]);
+                positions.clear();
+            }
+        }
+
+        frontFlaps = new Animation<TextureRegion>(0.15f, front);
+        frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        rightSideFlaps = new Animation<TextureRegion>(0.12f, side);
+        rightSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        for (TextureRegion i : side) {
+            i.flip(true, false);
+        }
+        leftSideFlaps = new Animation<TextureRegion>(0.12f, side);
+        leftSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        Animation[] animationList;
+        if (texture==phoenixBird){
+            backFlaps = new Animation<TextureRegion>(0.12f, back);
+            backFlaps.setPlayMode(Animation.PlayMode.LOOP);
+            animationList= new Animation[]{frontFlaps, rightSideFlaps, leftSideFlaps, backFlaps};
+        } else {
+            animationList = new Animation[]{frontFlaps, rightSideFlaps, leftSideFlaps};
+        }
+        return animationList;
+    }
     public static int getbgScaling(){
         return bgscaling;
     }
@@ -468,7 +513,22 @@ public class AssetLoader {
     public static void dispose() {
         // We must dispose of the texture when we are finished.
         bgPhoenix.dispose();
-        sprites.dispose();
+        bgWater.dispose();
+        bgAcid.dispose();
+        bgFire.dispose();
+        bgGold.dispose();
+        bgLunar.dispose();
+        bgThunder.dispose();
+        bgFlock.dispose();
+
+        phoenixBird.dispose();
+        acidBird.dispose();
+        waterBird.dispose();
+        fireBird.dispose();
+        flockBird.dispose();
+        thunderBird.dispose();
+        goldBird.dispose();
+        lunarBird.dispose();
         boost.dispose();
 
         playtexture.dispose();

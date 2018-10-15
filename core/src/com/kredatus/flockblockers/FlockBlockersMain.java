@@ -29,7 +29,7 @@ public class FlockBlockersMain extends Game {
     public void create() {
 
 
-        Gdx.app.log("GlideorDie", "created");
+        Gdx.app.log("CloudDefenders", "created");
         AssetLoader.load();
 
         setScreen(new SplashScreen(this));

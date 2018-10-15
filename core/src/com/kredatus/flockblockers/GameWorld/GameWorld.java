@@ -24,7 +24,7 @@ public class GameWorld {
     }
 
     private GameState currentState;
-    public GameWorld(int midPointY, int midPointX, float camwidth) {
+    public GameWorld(int midPointY, int midPointX, float camwidth, float camheight) {
         if (AssetLoader.getHighScore()==0){
 
             currentState= GameState.STORY;
@@ -33,8 +33,8 @@ public class GameWorld {
 
         this.camwidth=camwidth;
         this.midPointY=midPointY;
-        glider = new Glider(midPointX, midPointY, AssetLoader.frontFlaps.getKeyFrame(0).getRegionWidth()/AssetLoader.getgliderScaling(), AssetLoader.frontFlaps.getKeyFrame(0).getRegionHeight()/AssetLoader.getgliderScaling(), this);
-        scroller = new ScrollHandler(this);
+        glider = new Glider(0, 0, AssetLoader.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetLoader.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
+        scroller = new ScrollHandler(this, camwidth, camheight);
         AssetLoader.playnext(AssetLoader.menumusiclist);
         updatedboostnumber=orgboostnumber;
     }
@@ -47,32 +47,32 @@ public class GameWorld {
                 updateReady(runTime);
                 break;
             case RUNNING:
-                updateRunning(delta);
+                updateRunning(delta, runTime);
                 break;
             case STORY:
-                updateStory(delta);
+                updateStory(delta, runTime);
                 break;
             default:
                 break;
         }
     }
 
-    private void updateStory(float delta) {
-        scroller.update(updatedboostnumber);
+    private void updateStory(float delta, float runTime) {
+        scroller.update(updatedboostnumber, runTime);
     }
 
     private void updateReady(float runTime) {
         glider.updateReady(runTime);
     }
 
-    private void updateRunning(float delta) {
+    private void updateRunning(float delta, float runTime) {
         updatedboostnumber=(int)((-orgboostnumber*renderer.scorenumber/105f)+orgboostnumber);//keep rendering boosts until 130
         //System.out.println((int)((-renderer.scorenumber/5f)+orgboostnumber));
         if (delta > .15f) {
             delta = .15f;}
         //scroller.collides(glider, updatedboostnumber);
         glider.update(delta);
-        scroller.update(updatedboostnumber);
+        scroller.update(updatedboostnumber, runTime);
 
         if (Math.abs(glider.getPosition().y) > scroller.bgh) {
            // renderer.prepareSunshine();

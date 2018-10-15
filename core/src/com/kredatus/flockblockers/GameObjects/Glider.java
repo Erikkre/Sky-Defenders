@@ -30,7 +30,7 @@ public class Glider {
         this.width = width;
         this.height = height;
         this.world=world;
-        position = new Vector2(midPointX, starty);
+        position = new Vector2(midPointX, 0);
         velocity = new Vector2(5000, -200);
         acceleration = new Vector2(6000, originalyacc-1600);
         gamexvelocity = originalGamevelocity;
@@ -122,7 +122,7 @@ public class Glider {
             die();
                 }
         }
-        boundingCircle.set(position.x+width/2, position.y+height/2+5, height/2.1f);
+        boundingCircle.set(position.x+width/2, position.y+height/2, height/2.1f);
     }
 
     public boolean isAlive() {
