@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 import com.kredatus.flockblockers.TweenAccessors.SpriteAccessor;
+import com.kredatus.flockblockers.TweenAccessors.Value;
+import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -17,7 +19,7 @@ import aurelienribon.tweenengine.TweenManager;
 
 
 public class SplashScreen implements Screen {
-    private TweenManager manager;
+    private static TweenManager manager;
     private SpriteBatch batcher;
     private Sprite sprite, sunshine;
     private FlockBlockersMain game;
@@ -65,10 +67,16 @@ public class SplashScreen implements Screen {
                 .setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE)
                 .start(manager);
 
+
+
         //Tween.to(sprite, SpriteAccessor.ALPHA, 2f).target(30)
                 //.ease(TweenEquations.easeInOutQuad).repeatYoyo(1, .4f)
                 //.start(manager);
 
+    }
+
+    public static  TweenManager getManager() {
+        return manager;
     }
 
     @Override

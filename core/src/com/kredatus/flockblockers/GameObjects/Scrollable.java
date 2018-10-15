@@ -32,11 +32,15 @@ public class Scrollable {
     }
 
     public void update() {
+        y-=10;
         if (y + height < -GameScreen.camheight / 2) {
             isScrolledDown = true;
         }
     }
 
+    public void setX(float x) {
+        this.x = x;
+    }
 
     // Reset: Should Override in subclass for more specific behavior.
     public void reset(float newY, int bgNumber) {

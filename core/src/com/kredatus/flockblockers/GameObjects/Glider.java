@@ -122,7 +122,7 @@ public class Glider {
             die();
                 }
         }
-        boundingCircle.set(position.x+width/2, position.y+height/2, height/2.1f);
+        boundingCircle.set(position.x-width/2, position.y-height/2, height/2.1f);
     }
 
     public boolean isAlive() {

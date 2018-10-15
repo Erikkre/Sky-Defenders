@@ -3,9 +3,17 @@ package com.kredatus.flockblockers.GlideOrDieHelpers;
 import com.badlogic.gdx.math.Vector3;
 import com.kredatus.flockblockers.GameObjects.Background;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.Screens.SplashScreen;
+import com.kredatus.flockblockers.TweenAccessors.Value;
+import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import aurelienribon.tweenengine.Timeline;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.TweenManager;
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.
@@ -17,7 +25,7 @@ public class ScrollHandler {
     private Random r;
     // ScrollHandler will use the constants below to determine
     // how fast we need to scroll and also determine
-
+    private Value beta =new Value();
     // Capital letters are used by convention when naming constants.
     boolean same = false;
     /*private ArrayList<Boost> boostlist = new ArrayList<Boost>(), invboostlist = new ArrayList<Boost>(),
@@ -34,15 +42,29 @@ public class ScrollHandler {
     public int bgNumber;
     // Constructor receives a float that tells us where we need to create our
     // Grass and Pipe objects.
+    private TweenManager manager;
 
     public ScrollHandler(GameWorld gameWorld, float camwidth, float camheight) {
         this.gameWorld = gameWorld;
-        bgNumber=0;
-        System.out.println("-camwidth/2: "+ -camwidth/2);
-        background = new Background(-camwidth/2, -camheight/2, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
-        background2 = new Background(-camwidth/2, -camheight/2+bgh, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
+        bgNumber = 0;
+        System.out.println("-camwidth/2: " + -camwidth / 2);
+        beta.setValue(-camwidth / 2);
+        background = new Background(beta.getValue(), -camheight / 2, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
+        background2 = new Background(beta.getValue(), -camheight / 2 + bgh, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
         r = new Random();
+        this.manager= SplashScreen.getManager();
+        setupTweens(camwidth);
+    }
 
+    private void setupTweens(float camwidth){
+        Tween.registerAccessor(Value.class, new ValueAccessor());
+        (Timeline.createSequence()
+                .push(Tween.to(beta, -1, 5).target((camwidth-bgw)/2).ease(TweenEquations.easeInSine))
+                .push(Tween.to(beta, -1, 5).target(camwidth/2 - bgw).ease(TweenEquations.easeOutSine))
+                .push(Tween.to(beta, -1, 5).target((camwidth-bgw)/2).ease(TweenEquations.easeInSine))
+                .push(Tween.to(beta, -1, 5).target(-camwidth/2).ease(TweenEquations.easeOutSine))).repeat(Tween.INFINITY, 0)
+                .start(manager);
+    }
         /* //flipworld
         background3 = new Background(0, -bgh, bgw, bgh);
         background4 = new Background(background3.getTailY(), -bgh, bgw, bgh);*/
@@ -51,7 +73,7 @@ public class ScrollHandler {
         startlist(invboostlist, false, true, orgBoostnumber);
         startlist(flipboostlist, true, false, orgBoostnumber);
         startlist(invflipboostlist, true, true, orgBoostnumber); */   //start is same as restart only for boosts
-    }
+
 
     /*
     public void remove(ArrayList<Boost> boostlist, int i, int boostnumber){
@@ -67,11 +89,14 @@ public class ScrollHandler {
         }
     }*/
 
-    public void update(int boostnumber, float runTime) {
+    public void update(int boostnumber, float runTime, float delta) {
         // Update our objects
+
+        manager.update(delta);
+        background.setX(beta.getValue());
+        background2.setX(beta.getValue());
         background.update();
         background2.update();
-
                 /*
         background3.update();
         background4.update();

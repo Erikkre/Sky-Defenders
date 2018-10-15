@@ -21,6 +21,7 @@ import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.GlideOrDieHelpers.ScrollHandler;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 import com.kredatus.flockblockers.GlideOrDieHelpers.InputHandler;
+import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.ui.SimpleButton;
@@ -41,7 +42,7 @@ import static com.kredatus.flockblockers.Screens.GameScreen.camheight;
 public class GameRenderer {
 
     // Tween stuff
-    public TweenManager manager, sunshineManager, sunshineManager2;
+    public TweenManager manager;//, sunshineManager, sunshineManager2;
     private Value alpha = new Value(), beta = new Value(), charlie=new Value(), delta = new Value();
 
     //Buttons
@@ -122,7 +123,7 @@ public class GameRenderer {
         // Call helper methods to initialize instance variables
         initGameObjects();
         initAssets();
-        setupTweens();
+        //setupTweens();
         bigfont = new FreeTypeFontGenerator.FreeTypeFontParameter();
         smallfont = new FreeTypeFontGenerator.FreeTypeFontParameter();
         smallfontLengthSetup();
@@ -135,12 +136,12 @@ public class GameRenderer {
         //prepareSunshine();
     }
 
-    private void setupTweens() {
+    /*private void setupTweens() {
         Tween.registerAccessor(Value.class, new ValueAccessor());
         manager = new TweenManager();
         Tween.to(alpha, -1, 0).target(0).ease(TweenEquations.easeOutQuad)
                 .start(manager);
-    }
+    }*/
 
     private void initAssets() {
         bgPhoenix = AssetLoader.bgPhoenixtexture;
@@ -156,7 +157,7 @@ public class GameRenderer {
         //vertflipgliderMid = AssetLoader.vertflipgliderMid;
 
         frontFlaps = AssetLoader.frontFlaps;
-        flipflaps = AssetLoader.flipflaps;
+        //flipflaps = AssetLoader.flipflaps;
         //frontViewFlaps = null;
         //frontglidermid=AssetLoader.frontGliderMid;
         backFlaps=AssetLoader.backFlaps;
@@ -611,13 +612,13 @@ public class GameRenderer {
 
         } else if (myWorld.isMenu()) {
             drawBackground();
-            sunshineManager.update(delta);
+            //sunshineManager.update(delta);
             drawSpritesMenu(runTime);
             drawMenuUI();
 
         } else if (myWorld.isDeathMenu()) {
             drawBackground();
-            sunshineManager2.update(delta);
+            //sunshineManager2.update(delta);
             drawSpritesDeathMenu(runTime);
             drawDeathMenu();
 
@@ -644,7 +645,7 @@ public class GameRenderer {
         transitionColor.set(r / 255.0f, g / 255.0f, b / 255.0f, 1);
         alpha.setValue(1);
         Tween.registerAccessor(Value.class, new ValueAccessor());
-        manager = new TweenManager();
+        manager = SplashScreen.getManager();
         Tween.to(alpha, -1, duration).target(0)
                 .ease(TweenEquations.easeOutQuad).start(manager);
     }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.GlideOrDieHelpers.ScrollHandler;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
+import com.kredatus.flockblockers.Screens.SplashScreen;
 
 /**
  * Created by Mr. Kredatus on 8/5/2017.
@@ -58,7 +59,7 @@ public class GameWorld {
     }
 
     private void updateStory(float delta, float runTime) {
-        scroller.update(updatedboostnumber, runTime);
+        scroller.update(updatedboostnumber, runTime, delta);
     }
 
     private void updateReady(float runTime) {
@@ -72,7 +73,7 @@ public class GameWorld {
             delta = .15f;}
         //scroller.collides(glider, updatedboostnumber);
         glider.update(delta);
-        scroller.update(updatedboostnumber, runTime);
+        scroller.update(updatedboostnumber, runTime, delta);
 
         if (Math.abs(glider.getPosition().y) > scroller.bgh) {
            // renderer.prepareSunshine();
@@ -130,9 +131,9 @@ public class GameWorld {
     }
 
     public void ready() {
-        renderer.sunshineManager.killAll();
-        renderer.sunshineManager2.killAll();
-        renderer.manager.killAll();
+        //renderer.sunshineManager.killAll();
+        //renderer.sunshineManager2.killAll();
+        SplashScreen.getManager().killAll();
         AssetLoader.stopmusic(AssetLoader.menumusiclist);
         AssetLoader.playnext(AssetLoader.musiclist);
         currentState = GameState.READY;
