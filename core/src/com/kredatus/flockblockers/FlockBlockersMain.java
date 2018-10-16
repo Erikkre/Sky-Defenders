@@ -17,7 +17,6 @@ limitations under the License.
 package com.kredatus.flockblockers;
 
 import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.Game;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
@@ -27,7 +26,6 @@ import com.kredatus.flockblockers.Screens.SplashScreen;
 public class FlockBlockersMain extends Game {
     @Override
     public void create() {
-
 
         Gdx.app.log("CloudDefenders", "created");
         AssetLoader.load();

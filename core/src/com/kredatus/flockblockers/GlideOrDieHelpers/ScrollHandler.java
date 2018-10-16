@@ -59,12 +59,13 @@ public class ScrollHandler {
     private void setupTweens(float camwidth){
         Tween.registerAccessor(Value.class, new ValueAccessor());
         (Timeline.createSequence()
-                .push(Tween.to(beta, -1, 5).target((camwidth-bgw)/2).ease(TweenEquations.easeInSine))
-                .push(Tween.to(beta, -1, 5).target(camwidth/2 - bgw).ease(TweenEquations.easeOutSine))
-                .push(Tween.to(beta, -1, 5).target((camwidth-bgw)/2).ease(TweenEquations.easeInSine))
-                .push(Tween.to(beta, -1, 5).target(-camwidth/2).ease(TweenEquations.easeOutSine))).repeat(Tween.INFINITY, 0)
-                .start(manager);
+                .push(Tween.to(beta, -1, 15).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
+                .push(Tween.to(beta, -1, 15).target((camwidth/2)-bgw) .ease(TweenEquations.easeInOutSine))
+                .push(Tween.to(beta, -1, 15).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
+                .push(Tween.to(beta, -1, 15).target(-camwidth/2)     .ease(TweenEquations.easeInOutSine)))
+                .repeatYoyo(Tween.INFINITY, 0).start(manager);
     }
+
         /* //flipworld
         background3 = new Background(0, -bgh, bgw, bgh);
         background4 = new Background(background3.getTailY(), -bgh, bgw, bgh);*/
@@ -74,13 +75,11 @@ public class ScrollHandler {
         startlist(flipboostlist, true, false, orgBoostnumber);
         startlist(invflipboostlist, true, true, orgBoostnumber); */   //start is same as restart only for boosts
 
-
     /*
     public void remove(ArrayList<Boost> boostlist, int i, int boostnumber){
         if (boostlist.size() > boostnumber && boostlist.get(i).isScrolledDown()){
             boostlist.remove(i);}
     }
-
 
     public void specificupdate(ArrayList<Boost> boostlist, int boostnumber){
         for (int i = 0; i < boostlist.size(); i++) {
@@ -91,28 +90,25 @@ public class ScrollHandler {
 
     public void update(int boostnumber, float runTime, float delta) {
         // Update our objects
-
         manager.update(delta);
         background.setX(beta.getValue());
         background2.setX(beta.getValue());
         background.update();
         background2.update();
+
                 /*
         background3.update();
         background4.update();
         //System.out.println("Boost"+i+": "+boostlist.get(i).x+","+boostlist.get(i).y+" scrolled"+boostlist.get(i).isScrolledDown());
 
-        /*
         specificupdate(boostlist, boostnumber);
         specificupdate(invboostlist, boostnumber);
         specificupdate(flipboostlist, boostnumber);
         specificupdate(invflipboostlist, boostnumber);
-*/
 
         //System.out.println("size: "+boostlist.size()+" number: "+boostnumber);
         //System.out.println("boostnumber"+(boostlist.size()-1));
 
-        /*
         updatelist(boostlist, false, false, boostnumber);
         updatelist(invboostlist, false, true, boostnumber);
         updatelist(flipboostlist, true, false, boostnumber);
@@ -133,14 +129,15 @@ public class ScrollHandler {
             }
             background2.reset(background.getTailY(), bgNumber++);
         }
+    }
+
         /*
         if (background3.isScrolledDown()) {
             background3.reset(background4.getTailY());
         } else if (background4.isScrolledDown()) {
             background4.reset(background3.getTailY());
-        }*/
-    }
-/*
+        }
+
     // Return true if ANY boost hits the bird.
     public boolean collides(Glider glider, int boostnumber) {
         for (int i = 0; i < boostnumber; i++) {
@@ -187,7 +184,6 @@ public class ScrollHandler {
     public Background getBackground4() {
         return background4;
     }*/
-
 
 /*
     public void onRestart() {
