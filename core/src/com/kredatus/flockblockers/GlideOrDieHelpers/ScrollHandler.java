@@ -10,8 +10,10 @@ import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import java.util.ArrayList;
 import java.util.Random;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 
@@ -25,7 +27,7 @@ public class ScrollHandler {
     private Random r;
     // ScrollHandler will use the constants below to determine
     // how fast we need to scroll and also determine
-    private Value beta =new Value();
+    private Value beta =new Value(), charlie=new Value();
     // Capital letters are used by convention when naming constants.
     boolean same = false;
     /*private ArrayList<Boost> boostlist = new ArrayList<Boost>(), invboostlist = new ArrayList<Boost>(),
@@ -43,27 +45,50 @@ public class ScrollHandler {
     // Constructor receives a float that tells us where we need to create our
     // Grass and Pipe objects.
     private TweenManager manager;
+    private Timeline horizPosBg, vertPosBg;
+    TweenCallback callback;
 
-    public ScrollHandler(GameWorld gameWorld, float camwidth, float camheight) {
+    private boolean pastStoryIntro;
+
+    public ScrollHandler(GameWorld gameWorld, float camwidth, float camheight){
         this.gameWorld = gameWorld;
         bgNumber = 0;
         System.out.println("-camwidth/2: " + -camwidth / 2);
         beta.setValue(-camwidth / 2);
-        background = new Background(beta.getValue(), -camheight / 2, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
-        background2 = new Background(beta.getValue(), -camheight / 2 + bgh, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
+        charlie.setValue(-bgh+camheight/2);
+        background = new Background(beta.getValue(), charlie.getValue(), bgw, bgh, AssetLoader.bgList.get(bgNumber++));
+        background2 = new Background(beta.getValue(), charlie.getValue() + bgh, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
         r = new Random();
         this.manager= SplashScreen.getManager();
-        setupTweens(camwidth);
+        setupTweens(camwidth, camheight);
     }
 
-    private void setupTweens(float camwidth){
+    private void setupTweens(float camwidth, float camheight){
+        callback=new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                if (!pastStoryIntro){
+                    pastStoryIntro=true;
+                }
+            }
+        };
+
         Tween.registerAccessor(Value.class, new ValueAccessor());
-        (Timeline.createSequence()
+        (horizPosBg = Timeline.createSequence()
                 .push(Tween.to(beta, -1, 15).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
                 .push(Tween.to(beta, -1, 15).target((camwidth/2)-bgw) .ease(TweenEquations.easeInOutSine))
                 .push(Tween.to(beta, -1, 15).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
                 .push(Tween.to(beta, -1, 15).target(-camwidth/2)     .ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start(manager);
+
+        (vertPosBg = Timeline.createSequence()
+                .push(Tween.to(charlie, -1, 3).target(-bgh+camheight/2 -(bgh/2+camheight/2)/2).ease(TweenEquations.easeInCirc)    )
+                .push(Tween.to(charlie, -1, 3).target(-bgh+camheight/2 -(bgh/2+camheight/2)   ) .ease(TweenEquations.easeOutBack)     )
+                .push(Tween.to(charlie, -1, 7).target(-bgw/2).ease(TweenEquations.easeInOutSine).repeat(7, 0).setCallback(callback).setCallbackTriggers(TweenCallback.START)    )
+                .push(Tween.to(charlie, -1, 15).target(-camwidth/2)     .ease(TweenEquations.easeInElastic))
+                .push(Tween.to(charlie, -1, 7).target(-bgw/2).ease(TweenEquations.easeInOutSine).repeat(10, 0)    ))
+                .repeat(Tween.INFINITY, 0).start(manager);
+
     }
 
         /* //flipworld
@@ -89,14 +114,29 @@ public class ScrollHandler {
     }*/
 
     public void update(int boostnumber, float runTime, float delta) {
+
+
+
+        if(pastStoryIntro && gameWorld.isStory()){
+
+            pastStoryIntro=false;    //stop running once done
+
+        } else {
         // Update our objects
-        manager.update(delta);
+
+        vertPosBg.update(delta);
+        background.setY(charlie.getValue());
+        background2.setY(charlie.getValue());
+
+        horizPosBg.update(delta);
         background.setX(beta.getValue());
         background2.setX(beta.getValue());
+        }
+
         background.update();
         background2.update();
 
-                /*
+        /*
         background3.update();
         background4.update();
         //System.out.println("Boost"+i+": "+boostlist.get(i).x+","+boostlist.get(i).y+" scrolled"+boostlist.get(i).isScrolledDown());

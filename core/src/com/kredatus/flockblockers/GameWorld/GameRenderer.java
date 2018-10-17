@@ -60,7 +60,7 @@ public class GameRenderer {
     private Animation frontFlaps, leftSideFlaps, rightSideFlaps, flipflaps, frontViewFlaps, backFlaps;
     //private TextureRegion gliderMid, vertflipgliderMid;
     private int gliderscaling=AssetLoader.getgliderScaling();
-    private TextureRegion bgPhoenix, horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
+    private TextureRegion  horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
             creditsbg, deathmenubg, newHighscore, topscore, deathmenuscore, rating, youvedied, boostdown,
             gliderbg, instrbg, readybg, frontglidermid, worldStabilized;
     private ScrollHandler scroller;
@@ -144,7 +144,7 @@ public class GameRenderer {
     }*/
 
     private void initAssets() {
-        bgPhoenix = AssetLoader.bgPhoenixtexture;
+       //bgPhoenix = AssetLoader.bgPhoenixtexture;
         horflipbgtexture = AssetLoader.horflipbgtexture;
 
         //flipworld

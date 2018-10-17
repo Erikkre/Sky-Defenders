@@ -27,7 +27,7 @@ public class AssetLoader {
             storytexture, storydowntexture, scoretexture, ratingtexture, topscoretexture, menutexture, menudowntexture, youvediedtexture,
             creditsbgtexture, deathmenubgtexture, instrtexture, instrdowntexture, gliderbgtexture, instrbgtexture, readybgtexture, nexttexture,
             nextdowntexture, worldStabilizedtexture;
-    public static TextureRegion bgPhoenixtexture, bgAcidtexture, bgFiretexture, bgFlocktexture, bgGoldtexture, bgLunartexture, bgThundertexture, bgWatertexture, horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture,boostdown,logo, playdown,
+    public static TextureRegion  horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture,boostdown,logo, playdown,
             play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu, menudown,
             score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized;
 
@@ -196,15 +196,26 @@ public class AssetLoader {
         //if button click: choose this map, load this list of locations to randomize boosts at *************************************
         bgList = new ArrayList<TextureRegion>();
 
+        bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold.jpg"));
+        bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+
+        TextureRegion bgGoldtexture2 = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
+        bgList.add(bgGoldtexture2);
+
+
         bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix.jpg"));
         bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
+        TextureRegion bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
+        bgPhoenixtexture.flip(false, true);
         bgList.add(bgPhoenixtexture);
+
+        TextureRegion bgPhoenixtexture2 = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
+        bgList.add(bgPhoenixtexture2);
 
 
         bgFlock = new Texture(Gdx.files.internal("backgrounds/levels/bgFlock.jpg"));
         bgFlock.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgFlocktexture = new TextureRegion(bgFlock, bgFlock.getWidth(), bgFlock.getHeight());
+        TextureRegion bgFlocktexture = new TextureRegion(bgFlock, bgFlock.getWidth(), bgFlock.getHeight());
         bgFlocktexture.flip(false, true);
         bgList.add(bgFlocktexture);
 
@@ -214,7 +225,7 @@ public class AssetLoader {
 
         bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater.jpg"));
         bgWater.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
+        TextureRegion bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
         bgWatertexture.flip(false, true);
         bgList.add(bgWatertexture);
 
@@ -224,7 +235,7 @@ public class AssetLoader {
 
         bgAcid = new Texture(Gdx.files.internal("backgrounds/levels/bgAcid.jpg"));
         bgAcid.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
+        TextureRegion bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
         bgAcidtexture.flip(false, true);
         bgList.add(bgAcidtexture);
 
@@ -234,7 +245,7 @@ public class AssetLoader {
 
         bgFire = new Texture(Gdx.files.internal("backgrounds/levels/bgFire.jpg"));
         bgFire.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgFiretexture = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
+        TextureRegion bgFiretexture = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
         bgFiretexture.flip(false, true);
         bgList.add(bgFiretexture);
 
@@ -244,7 +255,7 @@ public class AssetLoader {
 
         bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder.jpg"));
         bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
+        TextureRegion bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
         bgThundertexture.flip(false, true);
         bgList.add(bgThundertexture);
 
@@ -254,7 +265,7 @@ public class AssetLoader {
 
         bgLunar = new Texture(Gdx.files.internal("backgrounds/levels/bgLunar.jpg"));
         bgLunar.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgLunartexture = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
+        TextureRegion bgLunartexture = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
         bgLunartexture.flip(false, true);
         bgList.add(bgLunartexture);
 
@@ -262,19 +273,12 @@ public class AssetLoader {
         bgList.add(bgLunartexture2);
 
 
-        bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold.jpg"));
-        bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
+
+        TextureRegion bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
         bgGoldtexture.flip(false, true);
         bgList.add(bgGoldtexture);
 
-        TextureRegion bgGoldtexture2 = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
-        bgList.add(bgGoldtexture2);
 
-
-        TextureRegion bgPhoenixtexture2 = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
-        bgPhoenixtexture2.flip(false, true);
-        bgList.add(bgPhoenixtexture2);
 
 /*
         coordslistsize=22;
