@@ -46,24 +46,28 @@ public class ScrollHandler {
     // Grass and Pipe objects.
     private TweenManager manager;
     private Timeline horizPosBg, vertPosBg;
-    TweenCallback callback;
-
+    private TweenCallback callback, stopAddingY;
+private float camheight;
     private boolean pastStoryIntro;
 
     public ScrollHandler(GameWorld gameWorld, float camwidth, float camheight){
         this.gameWorld = gameWorld;
+        this.camheight=camheight;
         bgNumber = 0;
-        System.out.println("-camwidth/2: " + -camwidth / 2);
+
         beta.setValue(-camwidth / 2);
-        charlie.setValue(-bgh+camheight/2);
+        charlie.setValue(-camheight/2);
         background = new Background(beta.getValue(), charlie.getValue(), bgw, bgh, AssetLoader.bgList.get(bgNumber++));
-        background2 = new Background(beta.getValue(), charlie.getValue() + bgh, bgw, bgh, AssetLoader.bgList.get(bgNumber++));
+        background2 = new Background(beta.getValue(), background.getTailY(), bgw, bgh, AssetLoader.bgList.get(bgNumber++));
         r = new Random();
         this.manager= SplashScreen.getManager();
+        System.out.println("charlie.getValue() " + charlie.getValue());
         setupTweens(camwidth, camheight);
     }
 
     private void setupTweens(float camwidth, float camheight){
+        final float camheight2=camheight;
+
         callback=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
@@ -73,20 +77,34 @@ public class ScrollHandler {
             }
         };
 
+        stopAddingY=new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                System.out.println("Reset");
+                //background.addedY= bgh;//charlie.getValue()-(-camheight2/2);
+                background2.addedY=0;
+                background2.reset(background.getTailY(), bgNumber++);
+
+            }
+        };
+
         Tween.registerAccessor(Value.class, new ValueAccessor());
         (horizPosBg = Timeline.createSequence()
-                .push(Tween.to(beta, -1, 15).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
-                .push(Tween.to(beta, -1, 15).target((camwidth/2)-bgw) .ease(TweenEquations.easeInOutSine))
-                .push(Tween.to(beta, -1, 15).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
-                .push(Tween.to(beta, -1, 15).target(-camwidth/2)     .ease(TweenEquations.easeInOutSine)))
+                .push(Tween.to(beta, -1, 10).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
+                .push(Tween.to(beta, -1, 10).target((camwidth/2)-bgw) .ease(TweenEquations.easeInOutSine))
+                .push(Tween.to(beta, -1, 10).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
+                .push(Tween.to(beta, -1, 10).target(-camwidth/2)     .ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start(manager);
-
-        (vertPosBg = Timeline.createSequence()
-                .push(Tween.to(charlie, -1, 3).target(-bgh+camheight/2 -(bgh/2+camheight/2)/2).ease(TweenEquations.easeInCirc)    )
-                .push(Tween.to(charlie, -1, 3).target(-bgh+camheight/2 -(bgh/2+camheight/2)   ) .ease(TweenEquations.easeOutBack)     )
-                .push(Tween.to(charlie, -1, 7).target(-bgw/2).ease(TweenEquations.easeInOutSine).repeat(7, 0).setCallback(callback).setCallbackTriggers(TweenCallback.START)    )
-                .push(Tween.to(charlie, -1, 15).target(-camwidth/2)     .ease(TweenEquations.easeInElastic))
-                .push(Tween.to(charlie, -1, 7).target(-bgw/2).ease(TweenEquations.easeInOutSine).repeat(10, 0)    ))
+System.out.println("First easing target: "+(-bgh+camheight/2 )  /2);
+        (vertPosBg = Timeline.createSequence()  //6 8 3 4 3 15 7
+                .push(Tween.to(charlie, -1, 6).target((-bgh)  /2).ease(TweenEquations.easeInCubic)    )
+                .push(Tween.to(charlie, -1, 8).target(-bgh ) .ease(TweenEquations.easeOutBack)     )
+                .push(Tween.to(charlie, -1, 3).target(-bgh+camheight/3).ease(TweenEquations.easeInOutSine))
+                .push(Tween.to(charlie, -1, 2).target(-bgh-camheight/3).ease(TweenEquations.easeInOutSine).repeatYoyo(2, 0).setCallback(callback).setCallbackTriggers(TweenCallback.START)    )
+                .push(Tween.to(charlie, -1, 3).target(-bgh).ease(TweenEquations.easeInOutSine))
+                .push(Tween.to(charlie, -1, 3).target(-bgh*2+camheight/4)     .ease(TweenEquations.easeInElastic))
+                .push(Tween.to(charlie, -1, 2).target(-bgw*2-camheight/4).ease(TweenEquations.easeInOutSine).repeatYoyo(2, 0))
+                .push((Tween.to(charlie,-1,2).target(-bgw*2-camheight/2).ease(TweenEquations.easeInCubic))        .setCallback(stopAddingY) ))
                 .repeat(Tween.INFINITY, 0).start(manager);
 
     }
@@ -115,23 +133,29 @@ public class ScrollHandler {
 
     public void update(int boostnumber, float runTime, float delta) {
 
-
-
-        if(pastStoryIntro && gameWorld.isStory()){
+        System.out.print("bg1y: "+background.y + " bg2y: "+background2.y);
+        System.out.println(" charlie values:" +charlie.getValue() + " addY bg1: "+background.addedY +" addY bg2: "+ background2.addedY);
+        /*if(pastStoryIntro && gameWorld.isStory()){
 
             pastStoryIntro=false;    //stop running once done
 
-        } else {
+        } else {*/
         // Update our objects
 
-        vertPosBg.update(delta);
-        background.setY(charlie.getValue());
-        background2.setY(charlie.getValue());
+            vertPosBg.update(delta);
+
+            if (background.y<background2.y){
+                background.setY(charlie.getValue());
+                background2.setY(background.getTailY());
+            } else {
+                background2.setY(charlie.getValue());
+                background.setY(background2.getTailY());
+            }
 
         horizPosBg.update(delta);
         background.setX(beta.getValue());
         background2.setX(beta.getValue());
-        }
+        //}
 
         background.update();
         background2.update();
@@ -155,19 +179,19 @@ public class ScrollHandler {
         updatelist(invflipboostlist, true, true, boostnumber);*/
         // Check if any of the boosts are scrolled left,
         // and reset accordingly
+        if (bgNumber==AssetLoader.bgList.size()){
+            //waveNumber+=1;
+            bgNumber=0;
+        }
+
 
         if (background.isScrolledDown()) {
-            if (bgNumber==AssetLoader.bgList.size()){
-                //waveNumber+=1;
-                bgNumber=0;
-            }
+            System.out.println("reset to getTailY");
             background.reset(background2.getTailY(), bgNumber++);
+            background2.addedY=bgh;
         } else if (background2.isScrolledDown()) {
-            if (bgNumber==AssetLoader.bgList.size()){
-                //waveNumber+=1;
-                bgNumber=0;
-            }
             background2.reset(background.getTailY(), bgNumber++);
+            background.addedY=bgh;
         }
     }
 

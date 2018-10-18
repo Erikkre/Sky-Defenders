@@ -196,12 +196,6 @@ public class AssetLoader {
         //if button click: choose this map, load this list of locations to randomize boosts at *************************************
         bgList = new ArrayList<TextureRegion>();
 
-        bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold.jpg"));
-        bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-
-        TextureRegion bgGoldtexture2 = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
-        bgList.add(bgGoldtexture2);
-
 
         bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix.jpg"));
         bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
@@ -272,11 +266,15 @@ public class AssetLoader {
         TextureRegion bgLunartexture2 = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
         bgList.add(bgLunartexture2);
 
-
-
+        bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold.jpg"));
+        bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         TextureRegion bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
         bgGoldtexture.flip(false, true);
         bgList.add(bgGoldtexture);
+
+
+        TextureRegion bgGoldtexture2 = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
+        bgList.add(bgGoldtexture2);
 
 
 

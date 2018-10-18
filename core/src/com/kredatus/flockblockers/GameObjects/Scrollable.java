@@ -16,12 +16,12 @@ import com.kredatus.flockblockers.Screens.GameScreen;
 public class Scrollable {
     // Protected is similar to private, but allows inheritance by subclasses.
     protected float x;
-    protected float y;
+    public float y;
     protected int width;
     protected int height;
     private boolean isScrolledDown;
     public TextureRegion texture;
-
+    public float addedY;
     public Scrollable(float x, float y, int width, int height, TextureRegion texture) {
         this.width = width;
         this.height = height;
@@ -42,7 +42,7 @@ public class Scrollable {
         this.x = x;
     }
     public void setY(float y) {
-        this.y = y;
+        this.y = y + addedY;
     }
 
     // Reset: Should Override in subclass for more specific behavior.
