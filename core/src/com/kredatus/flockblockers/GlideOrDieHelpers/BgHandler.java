@@ -21,11 +21,11 @@ import aurelienribon.tweenengine.TweenManager;
  * Created by Mr. Kredatus on 8/31/2017.
  */
 
-public class ScrollHandler {
-    // ScrollHandler will create all five objects that we need.
+public class BgHandler {
+    // BgHandler will create all five objects that we need.
     private Background background, background2, background3, background4;
     private Random r;
-    // ScrollHandler will use the constants below to determine
+    // BgHandler will use the constants below to determine
     // how fast we need to scroll and also determine
     private Value beta =new Value(), charlie=new Value();
     // Capital letters are used by convention when naming constants.
@@ -45,12 +45,12 @@ public class ScrollHandler {
     // Constructor receives a float that tells us where we need to create our
     // Grass and Pipe objects.
     private TweenManager manager;
-    private Timeline horizPosBg, vertPosBg;
-    private TweenCallback callback, stopAddingY;
+    public Timeline horizPosBg, vertPosBg;
+    private TweenCallback pastStoryIntro, bg2ToBg1Tail;
 private float camheight;
-    private boolean pastStoryIntro;
+    private boolean isPastStoryIntro;
 
-    public ScrollHandler(GameWorld gameWorld, float camwidth, float camheight){
+    public BgHandler(GameWorld gameWorld, float camwidth, float camheight){
         this.gameWorld = gameWorld;
         this.camheight=camheight;
         bgNumber = 0;
@@ -66,25 +66,24 @@ private float camheight;
     }
 
     private void setupTweens(float camwidth, float camheight){
-        final float camheight2=camheight;
-
-        callback=new TweenCallback() {
+        //final float camheight2=camheight;
+        pastStoryIntro=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                if (!pastStoryIntro){
-                    pastStoryIntro=true;
-                }
+               /* if (!isPastStoryIntro & gameWorld.isFirstTime){
+                    isPastStoryIntro=true;
+                    horizPosBg.pause();
+                    vertPosBg.pause();
+                }*/
             }
         };
 
-        stopAddingY=new TweenCallback() {
+        bg2ToBg1Tail=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                System.out.println("Reset");
-                //background.addedY= bgh;//charlie.getValue()-(-camheight2/2);
+                System.out.println("Reset bg2y to bg1y+3500, tail");
                 background2.addedY=0;
                 background2.reset(background.getTailY(), bgNumber++);
-
             }
         };
 
@@ -94,18 +93,18 @@ private float camheight;
                 .push(Tween.to(beta, -1, 10).target((camwidth/2)-bgw) .ease(TweenEquations.easeInOutSine))
                 .push(Tween.to(beta, -1, 10).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
                 .push(Tween.to(beta, -1, 10).target(-camwidth/2)     .ease(TweenEquations.easeInOutSine)))
-                .repeatYoyo(Tween.INFINITY, 0).start(manager);
+                .repeatYoyo(Tween.INFINITY, 0);
 System.out.println("First easing target: "+(-bgh+camheight/2 )  /2);
-        (vertPosBg = Timeline.createSequence()  //6 8 3 4 3 15 7
-                .push(Tween.to(charlie, -1, 6).target((-bgh)  /2).ease(TweenEquations.easeInCubic)    )
-                .push(Tween.to(charlie, -1, 8).target(-bgh ) .ease(TweenEquations.easeOutBack)     )
-                .push(Tween.to(charlie, -1, 3).target(-bgh+camheight/3).ease(TweenEquations.easeInOutSine))
-                .push(Tween.to(charlie, -1, 2).target(-bgh-camheight/3).ease(TweenEquations.easeInOutSine).repeatYoyo(2, 0).setCallback(callback).setCallbackTriggers(TweenCallback.START)    )
-                .push(Tween.to(charlie, -1, 3).target(-bgh).ease(TweenEquations.easeInOutSine))
-                .push(Tween.to(charlie, -1, 3).target(-bgh*2+camheight/4)     .ease(TweenEquations.easeInElastic))
-                .push(Tween.to(charlie, -1, 2).target(-bgw*2-camheight/4).ease(TweenEquations.easeInOutSine).repeatYoyo(2, 0))
-                .push((Tween.to(charlie,-1,2).target(-bgw*2-camheight/2).ease(TweenEquations.easeInCubic))        .setCallback(stopAddingY) ))
-                .repeat(Tween.INFINITY, 0).start(manager);
+        (vertPosBg = Timeline.createSequence()  //7 8 2 2 2 2
+                //.push(Tween.to(charlie, -1, 3).target((-bgh)  /2).ease(TweenEquations.easeInCubic)    )
+                .push((Tween.to(charlie, -1, 3).target(-bgh ) .ease(TweenEquations.easeOutBack)).               setCallback(pastStoryIntro))
+                .push(Tween.to(charlie, -1, 1).target(-bgh+camheight/2).ease(TweenEquations.easeInOutSine))
+                .push(Tween.to(charlie, -1, 3).target(-bgh-camheight/2).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))
+                .push(Tween.to(charlie, -1, 2).target(-bgh).ease(TweenEquations.easeInOutSine))
+                .push(Tween.to(charlie, -1, 2).target(-bgh*2+bgh/50)     .ease(TweenEquations.easeInElastic))
+                .push(Tween.to(charlie, -1, 2).target(-bgw*2-bgh/50).ease(TweenEquations.easeInOutSine).repeatYoyo(2, 0))
+                .push((Tween.to(charlie,-1,2).target(-bgw*2-camheight/2).ease(TweenEquations.easeInCubic))           .setCallback(bg2ToBg1Tail))                   )
+                .repeat(Tween.INFINITY, 0);
 
     }
 
@@ -132,16 +131,18 @@ System.out.println("First easing target: "+(-bgh+camheight/2 )  /2);
     }*/
 
     public void update(int boostnumber, float runTime, float delta) {
-
+/*if (!vertPosBg.isStarted()){
+            vertPosBg.start(manager);
+            horizPosBg.start(manager);
+        }*/
         System.out.print("bg1y: "+background.y + " bg2y: "+background2.y);
         System.out.println(" charlie values:" +charlie.getValue() + " addY bg1: "+background.addedY +" addY bg2: "+ background2.addedY);
-        /*if(pastStoryIntro && gameWorld.isStory()){
+        if(isPastStoryIntro ){
+                //stop running once done
 
-            pastStoryIntro=false;    //stop running once done
-
-        } else {*/
-        // Update our objects
-
+        } else {
+            // Update our objects
+        }
             vertPosBg.update(delta);
 
             if (background.y<background2.y){
@@ -186,12 +187,9 @@ System.out.println("First easing target: "+(-bgh+camheight/2 )  /2);
 
 
         if (background.isScrolledDown()) {
-            System.out.println("reset to getTailY");
+            System.out.println("reset bg1y to bg2y +3500");
             background.reset(background2.getTailY(), bgNumber++);
             background2.addedY=bgh;
-        } else if (background2.isScrolledDown()) {
-            background2.reset(background.getTailY(), bgNumber++);
-            background.addedY=bgh;
         }
     }
 

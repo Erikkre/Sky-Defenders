@@ -3,7 +3,7 @@ package com.kredatus.flockblockers.GameWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameObjects.Glider;
-import com.kredatus.flockblockers.GlideOrDieHelpers.ScrollHandler;
+import com.kredatus.flockblockers.GlideOrDieHelpers.BgHandler;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 
@@ -12,7 +12,7 @@ import com.kredatus.flockblockers.Screens.SplashScreen;
  */
 public class GameWorld {
     private Glider glider;
-    public ScrollHandler scroller;
+    public BgHandler bgHandler;
     //private boolean isAlive = true;
     private Rectangle ground;
     public double boost = 0;  //boostamount
@@ -23,11 +23,11 @@ public class GameWorld {
     public enum GameState {
         MENU, READY, RUNNING, STORY, CREDITS, DEATHMENU, INSTR, INSTR2
     }
-
+    public boolean isFirstTime;
     private GameState currentState;
     public GameWorld(int midPointY, int midPointX, float camwidth, float camheight) {
         if (AssetLoader.getHighScore()==0){
-
+            isFirstTime=true;
             currentState= GameState.STORY;
         } else {
             currentState = GameState.MENU;}
@@ -35,7 +35,7 @@ public class GameWorld {
         this.camwidth=camwidth;
         this.midPointY=midPointY;
         glider = new Glider(0, 0, AssetLoader.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetLoader.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
-        scroller = new ScrollHandler(this, camwidth, camheight);
+        bgHandler = new BgHandler(this, camwidth, camheight);
         AssetLoader.playnext(AssetLoader.menumusiclist);
         updatedboostnumber=orgboostnumber;
     }
@@ -59,7 +59,7 @@ public class GameWorld {
     }
 
     private void updateStory(float delta, float runTime) {
-        scroller.update(updatedboostnumber, runTime, delta);
+        bgHandler.update(updatedboostnumber, runTime, delta);
     }
 
     private void updateReady(float runTime) {
@@ -71,19 +71,19 @@ public class GameWorld {
         //System.out.println((int)((-renderer.scorenumber/5f)+orgboostnumber));
         if (delta > .15f) {
             delta = .15f;}
-        //scroller.collides(glider, updatedboostnumber);
+        //bgHandler.collides(glider, updatedboostnumber);
         glider.update(delta);
-        scroller.update(updatedboostnumber, runTime, delta);
+        bgHandler.update(updatedboostnumber, runTime, delta);
 
-        if (Math.abs(glider.getPosition().y) > scroller.bgh) {
+        if (Math.abs(glider.getPosition().y) > bgHandler.bgh) {
            // renderer.prepareSunshine();
             currentState = GameState.DEATHMENU;
             if (renderer.scorenumber > AssetLoader.getHighScore()) {
                 AssetLoader.setHighScore(renderer.scorenumber);
             }
 
-            //scroller.onRestart();
-            AssetLoader.frontViewFlaps.setFrameDuration(0.2f);
+            //bgHandler.onRestart();
+           // AssetLoader.frontViewFlaps.setFrameDuration(0.2f);
            //renderer.setCamPositionOriginal();
             renderer.prepareTransition(255, 255, 255, 1);
         }
@@ -97,8 +97,8 @@ public class GameWorld {
         return glider;
     }
 
-    public ScrollHandler getScroller() {
-        return scroller;
+    public BgHandler getbgHandler() {
+        return bgHandler;
     }
 
     public void start() {
@@ -121,7 +121,7 @@ public class GameWorld {
     public void backToMenu() {
         boost = 0;
         glider.onRestart();
-        //scroller.onRestart();
+        //bgHandler.onRestart();
         //renderer.setCamPositionOriginal();
         currentState = GameState.MENU;
         renderer.prepareTransition(0, 0, 0, 1f);}

@@ -218,7 +218,7 @@ public class Glider {
         acceleration.y = originalyacc-1600;
         gamexvelocity=originalGamevelocity;
         isAlive = true;
-        AssetLoader.frontViewFlaps.setFrameDuration(0.2f);
+        //AssetLoader.frontViewFlaps.setFrameDuration(0.2f);
         rotation=0;
     }
 

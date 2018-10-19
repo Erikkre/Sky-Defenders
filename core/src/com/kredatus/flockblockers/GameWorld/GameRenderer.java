@@ -12,13 +12,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kredatus.flockblockers.GameObjects.Background;
 //import com.kredatus.flockblockers.GameObjects.Boost;
 import com.kredatus.flockblockers.GameObjects.Glider;
-import com.kredatus.flockblockers.GlideOrDieHelpers.ScrollHandler;
+import com.kredatus.flockblockers.GlideOrDieHelpers.BgHandler;
 import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
 import com.kredatus.flockblockers.GlideOrDieHelpers.InputHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
@@ -32,8 +31,6 @@ import java.util.List;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
-
-import static com.kredatus.flockblockers.Screens.GameScreen.camheight;
 
 /**
  * Created by Mr. Kredatus on 8/5/2017.
@@ -63,7 +60,7 @@ public class GameRenderer {
     private TextureRegion  horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
             creditsbg, deathmenubg, newHighscore, topscore, deathmenuscore, rating, youvedied, boostdown,
             gliderbg, instrbg, readybg, frontglidermid, worldStabilized;
-    private ScrollHandler scroller;
+    private BgHandler bgHandler;
     private Background background, background2, background3, background4;
     //public ArrayList<Boost> boostlist, flipboostlist, invboostlist, invflipboostlist;
 
@@ -178,16 +175,16 @@ public class GameRenderer {
     }
 
     private void initGameObjects() {
-        scroller = myWorld.getScroller();
-        background = scroller.getBackground();
-        background2 = scroller.getBackground2();
-        //background3 = scroller.getBackground3();
-        //background4 = scroller.getBackground4();
+        bgHandler = myWorld.getbgHandler();
+        background = bgHandler.getBackground();
+        background2 = bgHandler.getBackground2();
+        //background3 = bgHandler.getBackground3();
+        //background4 = bgHandler.getBackground4();
 /*
-        boostlist = scroller.getboostlist();
-        flipboostlist = scroller.getflipboostlist();
-        invboostlist = scroller.getinvboostlist();
-        invflipboostlist = scroller.getinvflipboostlist();
+        boostlist = bgHandler.getboostlist();
+        flipboostlist = bgHandler.getflipboostlist();
+        invboostlist = bgHandler.getinvboostlist();
+        invflipboostlist = bgHandler.getinvflipboostlist();
 */
         glider = myWorld.getGlider();
     }
@@ -574,11 +571,16 @@ public class GameRenderer {
         batcher.enableBlending();
 
         if (myWorld.isStory()) {
+
             //System.out.println(glider.getPosition());
             //System.out.print("Cam position:" + cam.position);
             if (runTime<2){ //start of game intro
 //                System.out.println(cam.position);
             prepareTransition(0, 0, 0, 10f);}
+            if (!bgHandler.vertPosBg.isStarted()){
+                bgHandler.vertPosBg.start(manager);
+                bgHandler.horizPosBg.start(manager);
+            }
             drawBackground();
             /*
             cam.position.y+=10;

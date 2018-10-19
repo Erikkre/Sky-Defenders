@@ -1,13 +1,10 @@
 package com.kredatus.flockblockers.GameObjects;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
-import com.kredatus.flockblockers.GameObjects.Scrollable;
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.
  */
 /*
-public class Boost extends Scrollable {
+public class Boost extends Background {
     private Circle circle;
     public boolean isScored = false, isScrolledDown;
 
@@ -21,7 +18,7 @@ public class Boost extends Scrollable {
     }
 
     public void update() {
-        // Call the update method in the superclass (Scrollable)
+        // Call the update method in the superclass (Background)
         super.update();
 
     }

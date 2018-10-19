@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -39,7 +38,7 @@ public class AssetLoader {
     public static Vector3 p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19,
             p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31;
 
-    public static Animation<TextureRegion> frontFlaps, rightSideFlaps, leftSideFlaps, backFlaps, flipflaps, frontViewFlaps;
+    public static Animation<TextureRegion> frontFlaps, rightSideFlaps, leftSideFlaps, backFlaps, whiteTinyBirdAnimations, blackTinyBirdAnimations,greyTinyBirdAnimations;
     //public static TextureRegion gliderMid, gliderDown, gliderUp ,vertflipgliderMid, vertflipgliderDown, vertflipgliderUp,
             //frontGliderMid, frontGliderDown, frontGliderUp, frontGliderUpHigh, backgliderMid, backgliderDown, backgliderUp;
 
@@ -324,8 +323,17 @@ public class AssetLoader {
 
         phoenixBird = new Texture(Gdx.files.internal("sprites/phoenix.png"));
         phoenixBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        phoenixAnimations = textureToSprite(phoenixBird);
+        phoenixAnimations = birdTextureToSprite(phoenixBird);
 
+
+        Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
+        greyTinyBirdAnimations=tinyBirdTextureToAnimation(greyTinyBird);
+
+        Texture blackTinyBird = new Texture(Gdx.files.internal("sprites/blackTinyBird.png"));
+        blackTinyBirdAnimations=tinyBirdTextureToAnimation(blackTinyBird);
+
+        Texture whiteTinyBird = new Texture(Gdx.files.internal("sprites/whiteTinyBird.png"));
+        whiteTinyBirdAnimations=tinyBirdTextureToAnimation(whiteTinyBird);
         /*
         flockBird = new Texture(Gdx.files.internal("sprites/flock.png"));
         flockBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -418,7 +426,17 @@ public class AssetLoader {
         }
     }
 
-    public static Animation[] textureToSprite (Texture texture) {
+    private static Animation tinyBirdTextureToAnimation (Texture texture) {
+        TextureRegion[] positions = new TextureRegion[7];
+
+        for (int i = 0; i < 6; i++) {
+            TextureRegion temp = new TextureRegion(texture, 77 * i, 0, 77, 29);
+            positions[i] = (temp);
+        }
+        return new Animation<TextureRegion>(0.125f, positions);
+    }
+
+    public static Animation[] birdTextureToSprite (Texture texture) {
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
 
         TextureRegion[] front = new TextureRegion[0];
