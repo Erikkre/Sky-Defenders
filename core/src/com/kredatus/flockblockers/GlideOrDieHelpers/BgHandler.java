@@ -40,18 +40,16 @@ public class BgHandler {
     public int bgw = AssetLoader.bgPhoenix.getWidth();
     public int bgh = AssetLoader.bgPhoenix.getHeight();
     float x, y, width, height;
-    private GameWorld gameWorld;
     public int bgNumber;
     // Constructor receives a float that tells us where we need to create our
     // Grass and Pipe objects.
     private TweenManager manager;
     public Timeline horizPosBg, vertPosBg;
     private TweenCallback pastStoryIntro, bg2ToBg1Tail;
-private float camheight;
+    private float camheight;
     private boolean isPastStoryIntro;
 
-    public BgHandler(GameWorld gameWorld, float camwidth, float camheight){
-        this.gameWorld = gameWorld;
+    public BgHandler(float camwidth, float camheight){
         this.camheight=camheight;
         bgNumber = 0;
 
@@ -89,10 +87,10 @@ private float camheight;
 
         Tween.registerAccessor(Value.class, new ValueAccessor());
         (horizPosBg = Timeline.createSequence()
-                .push(Tween.to(beta, -1, 10).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
-                .push(Tween.to(beta, -1, 10).target((camwidth/2)-bgw) .ease(TweenEquations.easeInOutSine))
-                .push(Tween.to(beta, -1, 10).target(-bgw/2).ease(TweenEquations.easeInOutSine)    )
-                .push(Tween.to(beta, -1, 10).target(-camwidth/2)     .ease(TweenEquations.easeInOutSine)))
+                .push(Tween.to(beta, -1, 10).target(-bgw/2).ease(TweenEquations.easeInSine)    )
+                .push(Tween.to(beta, -1, 10).target((camwidth/2)-bgw) .ease(TweenEquations.easeNone))
+                .push(Tween.to(beta, -1, 10).target(-bgw/2).ease(TweenEquations.easeNone)    )
+                .push(Tween.to(beta, -1, 10).target(-camwidth/2)     .ease(TweenEquations.easeOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0);
 System.out.println("First easing target: "+(-bgh+camheight/2 )  /2);
         (vertPosBg = Timeline.createSequence()  //7 8 2 2 2 2
@@ -135,8 +133,8 @@ System.out.println("First easing target: "+(-bgh+camheight/2 )  /2);
             vertPosBg.start(manager);
             horizPosBg.start(manager);
         }*/
-        System.out.print("bg1y: "+background.y + " bg2y: "+background2.y);
-        System.out.println(" charlie values:" +charlie.getValue() + " addY bg1: "+background.addedY +" addY bg2: "+ background2.addedY);
+//        System.out.print("bg1y: "+background.y + " bg2y: "+background2.y);
+//        System.out.println(" charlie values:" +charlie.getValue() + " addY bg1: "+background.addedY +" addY bg2: "+ background2.addedY);
         if(isPastStoryIntro ){
                 //stop running once done
 
@@ -226,9 +224,7 @@ System.out.println("First easing target: "+(-bgh+camheight/2 )  /2);
         }
     }*/
 
-    private void addBoost(double increment) {
-        gameWorld.addBoost(increment);
-    }
+
 
     // The getters for our five instance variables
     public Background getBackground() {

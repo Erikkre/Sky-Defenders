@@ -25,6 +25,29 @@ public class GameWorld {
     }
     public boolean isFirstTime;
     private GameState currentState;
+
+    public static void addGold(int goldAddition) {
+        if (gold+goldAddition>=100){
+            gold += goldAddition;
+        } else {
+            gold=100;
+        }
+    }
+
+    public void setDiamonds(int diamonds) {
+        this.diamonds = diamonds;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public static int gold, diamonds, score;
+
     public GameWorld(int midPointY, int midPointX, float camwidth, float camheight) {
         if (AssetLoader.getHighScore()==0){
             isFirstTime=true;
@@ -35,7 +58,7 @@ public class GameWorld {
         this.camwidth=camwidth;
         this.midPointY=midPointY;
         glider = new Glider(0, 0, AssetLoader.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetLoader.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
-        bgHandler = new BgHandler(this, camwidth, camheight);
+        bgHandler = new BgHandler( camwidth, camheight);
         AssetLoader.playnext(AssetLoader.menumusiclist);
         updatedboostnumber=orgboostnumber;
     }

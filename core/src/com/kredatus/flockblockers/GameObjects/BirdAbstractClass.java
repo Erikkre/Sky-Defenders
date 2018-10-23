@@ -8,9 +8,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenAccessor;
+import aurelienribon.tweenengine.TweenManager;
 
 /**
  * Created by Erik Kredatus on 9/8/2018.
@@ -27,7 +32,7 @@ import java.util.Random;
 
  Gun upgrades work as: each can be upgraded once, to upgrade to level 2 must upgrade whole turret, see .excel file (Dmg, RoF, Pen)
 
-                                                                                                     Damage      Fire Rate     Penetration   Spread
+                                                                                                                                Damage      Fire Rate     Penetration   Spread
  (Fast Firing) knife thrower,    bow,        submachinegun,  assault rifle,    Machinegun,  Minigun, laser,  ion cannon        2           L             M
  (High Damage) spear thrower,    crossbow,   ballistae,  hunting rifle,  anti-tank sniper, cannon,      gauss cannon           4           S             L
  (Wide Spread) shuriken thrower, tripleShot, tripleCatapult, shotgun, blunderbuss, missile, Microwave emitter                  1           M             L             XL
@@ -40,52 +45,71 @@ public abstract class BirdAbstractClass {
     protected GameWorld world;
     protected float rotation;
     protected Circle boundingCircle;
-    protected static Vector2 position;
-    protected static Vector2 velocity;
-    protected Vector2 acceleration;
-    public float gamexvelocity;
+    protected float x, y, yVelocity;
+
+    private final float edge;
     protected int width, height;
     protected double camwidth, camheight;
     protected boolean isGone;
     public float  starty;
     protected boolean isAlive;
     protected Random r;
-    protected OrthographicCamera cam;
-    protected Animation frontFlaps, backFlaps, leftFlaps, rightFlaps;
-    protected int sizeVariance, coins, health, diamonds;
-    public BirdAbstractClass(OrthographicCamera cam) {
+    protected Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
+    protected int sizeVariance, coins, health, diamonds, counter;
+    private TweenManager manager;
 
-        position.set(r.nextInt((int)camwidth)+cam.position.x,r.nextInt((int)camheight)+cam.position.y);
+
+    public BirdAbstractClass( float delta, float camheight, float camwidth, TweenManager manager) {
+
+        x= r.nextInt((int)camwidth);
+        y= r.nextInt((int)camheight); //center of camera
         isAlive=true;
-        this.cam=cam;
-
-        this.camwidth = cam.viewportWidth;
-        this.camheight = cam.viewportHeight;
+        edge = (camwidth/2)-width/2;
+        this.camwidth = camwidth;
+        this.camheight = camheight;
         isGone = false;
         isAlive = true;
+        this.manager=manager;
         boundingCircle = new Circle();
-        
+        Tween.registerAccessor(float.class, new ValueAccessor());
+        setManager(delta, camwidth, manager, edge);
     };
+
+    public abstract void setManager(float delta, float camwidth, TweenManager manager, float edge);
+
+    //public abstract void fly(float delta) ;
 
     public void update(float delta){
-        velocity.add(acceleration.cpy().scl(delta));
-        position.add(velocity.cpy().scl(delta));
+        y+=yVelocity;
+        if (isAlive) {
+            if (health <= 0) {
+                die(delta);
+            }
 
-        if (position.y<cam.position.y+camheight/2){
-            fly(delta);
+            if (y > camheight / 2 - 0) { //0 being height of top of tower where score & diamonds are
+                health=0;
+                GameWorld.addGold(-coins);
+            }
+        } else {
+            manager.update(delta);
+            if (y+height/2<-(camheight/2) || x+width/2<(-camwidth/2) || x-width/2>camwidth/2){
+                
+            }
         }
-
 
     };
 
-    public abstract void fly(float delta) ;
+
 
     public void die(float delta){
-        velocity.y=30;
-        dead(delta);
+        manager.killTarget(this);
+        isAlive=false;
+        if (x>0){
+
+        }
     }
 
-    public final void load(String path){
+    public final void load(String path, float flapSpeed){
         Texture sprites = new Texture(Gdx.files.internal(path));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
@@ -95,6 +119,7 @@ public abstract class BirdAbstractClass {
         TextureRegion[] back=new TextureRegion[0];
 
         for (int i=0;i<16;i++) {
+
             TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
             temp.flip(false, true);
             positions.add(temp);
@@ -110,23 +135,24 @@ public abstract class BirdAbstractClass {
             }
         }
 
-        frontFlaps= new Animation<TextureRegion>(0.15f, front);
+        frontFlaps= new Animation<TextureRegion>(flapSpeed, front);
         frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-        rightFlaps= new Animation<TextureRegion>(0.12f, side);
+        rightFlaps= new Animation<TextureRegion>(flapSpeed, side);
         rightFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
         for (TextureRegion i : side){
             i.flip(true, false);
         }
-        leftFlaps= new Animation<TextureRegion>(0.12f, side);
+        leftFlaps= new Animation<TextureRegion>(flapSpeed, side);
         leftFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-        backFlaps= new Animation<TextureRegion>(0.12f, back);
+        backFlaps= new Animation<TextureRegion>(flapSpeed, back);
         backFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-        this.height=back[3].getRegionHeight();
-        this.width=back[0].getRegionWidth();
+        height=back[3].getRegionHeight();
+        width=back[0].getRegionWidth();
+        animation=frontFlaps;
     }
 
     public final void hit(Bullet bullet){
@@ -134,11 +160,7 @@ public abstract class BirdAbstractClass {
     }
 
     public void dead(float delta){
-        velocity.add(acceleration.cpy().scl(delta));
-        position.add(velocity.cpy().scl(delta));
-        if ( position.y+height>cam.position.y-(camheight/2) && position.x-width<cam.position.x+(camwidth/2) && position.x+width>cam.position.x-(camwidth/2)){
-            //delete
-        }
+
     }
 
 /*

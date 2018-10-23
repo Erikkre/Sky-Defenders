@@ -10,7 +10,7 @@ public class Boost extends Background {
 
     public Boost(float x, float y, int width, int height) {
         //super(x, y, width, height);
-        this.x = x;
+f        this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;

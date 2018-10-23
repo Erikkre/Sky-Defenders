@@ -1,40 +1,49 @@
 package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
+
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.TweenManager;
 
 /**
  * Created by Erik Kredatus on 9/8/2018.
  */
 
 public class PhoenixBird extends BirdAbstractClass {
-    public PhoenixBird( int sizeVariance, int health, OrthographicCamera cam){
-        super(cam);
+    public PhoenixBird(float delta, float camheight, float camwidth, TweenManager manager){
+        super(delta, camheight, camwidth, manager);
         this.diamonds=1;
         this.coins=7;
         this.health=100;
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
         this.height = height-sizeVariance+r.nextInt(sizeVariance*2);
-        super.load("sprites/phoenix.png");
-    }
+        super.load("sprites/phoenix.png", 0.15f);
+        animation=rightFlaps;
 
-    public void intro(float delta, int camHeight){
-        position=(new Vector2(0,-(camHeight/2) -height*2));
-        velocity.y=1000;
-        acceleration.y=-50;
-        while (position.y!=camHeight/2){
-
-        }
     }
 
     @Override
-    public void fly(float delta) {
+    public void setManager(float delta, float camwidth, TweenManager manager, float edge) {
+        final Animation[] list = {rightFlaps, frontFlaps, leftFlaps, frontFlaps};
 
+        final TweenCallback animationSwitch = new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                if (counter==2){
+                    counter=0;
+                }
+                animation = list[counter++];
+            }
+        };
+
+        (Tween.to(x, -1, 10).waypoint(edge).setCallback(animationSwitch)).delay(3).setCallback(animationSwitch).target(-edge).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
+                .ease(TweenEquations.easeOutBack).repeatYoyo(Tween.INFINITY, 0).start(manager);
     }
-    @Override
-    public void update(float delta) {
-
-    }
-
 }
+

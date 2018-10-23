@@ -1,25 +1,43 @@
 package com.kredatus.flockblockers.GameObjects.Birds;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
+
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.TweenManager;
+
 public class AcidBird extends BirdAbstractClass{
-    public AcidBird(OrthographicCamera cam){
-        super(cam);
-        this.health=7;
-        this.coins=15;
-        this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
-        this.height = height-sizeVariance+r.nextInt(sizeVariance*2);
-        super.load("sprites/acid.png");
-    }
-
-    @Override
-    public void fly(float delta) {
+    public AcidBird(float delta, float camheight, float camwidth, TweenManager manager){
+        super(delta, camheight, camwidth, manager);
+        yVelocity=4;
+        health=7;
+        coins=15;
+        this.width = this.width-sizeVariance+r.nextInt(sizeVariance*2);
+        this.height = this.height-sizeVariance+r.nextInt(sizeVariance*2);
+        super.load("sprites/acid.png", 0.15f);
+        animation=rightFlaps;
 
     }
 
     @Override
-    public void update(float delta) {
+    public void setManager(float delta, float camwidth, TweenManager manager, float edge) {
+        final Animation[] list = {rightFlaps, frontFlaps, leftFlaps, frontFlaps};
 
+        final TweenCallback animationSwitch = new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                if (counter==2){
+                    counter=0;
+                }
+                animation = list[counter++];
+            }
+        };
+
+        (Tween.to(x, -1, 10).waypoint(edge).setCallback(animationSwitch)).delay(3).setCallback(animationSwitch).target(-edge).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
+                .ease(TweenEquations.easeOutBack).repeatYoyo(Tween.INFINITY, 0).start(manager);
     }
 }
