@@ -1,8 +1,8 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
-import com.kredatus.flockblockers.Screens.GameScreen;
+import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Handlers.GameHandler;
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.
@@ -28,7 +28,7 @@ public class Background {
 
     public void update() {
 
-        if (y + height < -GameScreen.camheight / 2) {
+        if (y + height < -GameHandler.camHeight / 2) {
             isScrolledDown = true;
         }
     }
@@ -43,7 +43,7 @@ public class Background {
     // Reset: Should Override in subclass for more specific behavior.
     public void reset(float newY, int bgNumber) {
         y = newY;
-        texture=AssetLoader.bgList.get(bgNumber);
+        texture= AssetHandler.bgList.get(bgNumber);
         isScrolledDown = false;}
 
     public boolean isScrolledDown() {return isScrolledDown;}

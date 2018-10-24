@@ -6,10 +6,9 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
+import com.kredatus.flockblockers.Handlers.GameHandler;
+import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.TweenAccessors.SpriteAccessor;
-import com.kredatus.flockblockers.TweenAccessors.Value;
-import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -30,7 +29,7 @@ public class SplashScreen implements Screen {
 
     @Override
     public void show() {
-        sprite = new Sprite(AssetLoader.logo);
+        sprite = new Sprite(AssetHandler.logo);
         sprite.setColor(1, 1, 1, 0);
 
         float width = Gdx.graphics.getWidth();
@@ -43,12 +42,6 @@ public class SplashScreen implements Screen {
                 - (sprite.getHeight() / 2));
         setupTween();
         batcher = new SpriteBatch();
-
-/*
-        sunshine = new Sprite(AssetLoader.boosttexture);
-        sunshine.setColor(1, 1, 1, 0);
-        sunshine.setSize(AssetLoader.frontGliderMid.getRegionWidth()*2, AssetLoader.frontGliderMid.getRegionHeight()*2 );
-        sunshine.setPosition(1100/2-AssetLoader.frontGliderMid.getRegionWidth(), (1100* (height/width))/2-130);*/
     }
 
     private void setupTween() {
@@ -58,7 +51,7 @@ public class SplashScreen implements Screen {
         TweenCallback cb = new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                game.setScreen(new GameScreen());
+                game.setScreen(new GameHandler());
             }
         };
 //1.8 originally

@@ -3,8 +3,9 @@ package com.kredatus.flockblockers.GameWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameObjects.Glider;
-import com.kredatus.flockblockers.GlideOrDieHelpers.BgHandler;
-import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
+import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Handlers.BgHandler;
+import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 
 /**
@@ -13,11 +14,12 @@ import com.kredatus.flockblockers.Screens.SplashScreen;
 public class GameWorld {
     private Glider glider;
     public BgHandler bgHandler;
+    public BirdHandler birdHandler;
     //private boolean isAlive = true;
     private Rectangle ground;
     public double boost = 0;  //boostamount
-    public int updatedboostnumber, orgboostnumber=AssetLoader.getBoostnumber();
-    public float camwidth;
+    public int updatedboostnumber, orgboostnumber= AssetHandler.getBoostnumber();
+    public float camWidth;
     public float midPointY;
     private GameRenderer renderer;
     public enum GameState {
@@ -48,19 +50,21 @@ public class GameWorld {
 
     public static int gold, diamonds, score;
 
-    public GameWorld(int midPointY, int midPointX, float camwidth, float camheight) {
-        if (AssetLoader.getHighScore()==0){
+    public GameWorld(int midPointY, int midPointX, float camWidth, float camHeight) {
+        if (AssetHandler.getHighScore()==0){
             isFirstTime=true;
             currentState= GameState.STORY;
         } else {
             currentState = GameState.MENU;}
 
-        this.camwidth=camwidth;
+        this.camWidth=camWidth;
         this.midPointY=midPointY;
-        glider = new Glider(0, 0, AssetLoader.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetLoader.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
-        bgHandler = new BgHandler( camwidth, camheight);
-        AssetLoader.playnext(AssetLoader.menumusiclist);
+        glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
+        bgHandler = new BgHandler( camWidth, camHeight);
+        AssetHandler.playnext(AssetHandler.menumusiclist);
         updatedboostnumber=orgboostnumber;
+        birdHandler= new BirdHandler(camWidth, camHeight);
+
     }
 
     public void update(float delta, float runTime) {
@@ -82,7 +86,8 @@ public class GameWorld {
     }
 
     private void updateStory(float delta, float runTime) {
-        bgHandler.update(updatedboostnumber, runTime, delta);
+        bgHandler.update(runTime, delta);
+        birdHandler.update(runTime, delta);
     }
 
     private void updateReady(float runTime) {
@@ -96,17 +101,17 @@ public class GameWorld {
             delta = .15f;}
         //bgHandler.collides(glider, updatedboostnumber);
         glider.update(delta);
-        bgHandler.update(updatedboostnumber, runTime, delta);
+        bgHandler.update(runTime, delta);
 
         if (Math.abs(glider.getPosition().y) > bgHandler.bgh) {
            // renderer.prepareSunshine();
             currentState = GameState.DEATHMENU;
-            if (renderer.scorenumber > AssetLoader.getHighScore()) {
-                AssetLoader.setHighScore(renderer.scorenumber);
+            if (renderer.scorenumber > AssetHandler.getHighScore()) {
+                AssetHandler.setHighScore(renderer.scorenumber);
             }
 
             //bgHandler.onRestart();
-           // AssetLoader.frontViewFlaps.setFrameDuration(0.2f);
+           // AssetHandler.frontViewFlaps.setFrameDuration(0.2f);
            //renderer.setCamPositionOriginal();
             renderer.prepareTransition(255, 255, 255, 1);
         }
@@ -127,7 +132,7 @@ public class GameWorld {
     public void start() {
         currentState = GameState.RUNNING;
         boost=5;
-        AssetLoader.frontFlaps.setFrameDuration(0.12f);
+        AssetHandler.frontFlaps.setFrameDuration(0.12f);
     }
 
     public void restart() {
@@ -135,9 +140,9 @@ public class GameWorld {
         glider.onRestart();
         //renderer.setCamPositionOriginal();
         renderer.scorenumber=0;
-        AssetLoader.deathmenumusic.stop();
-        AssetLoader.playnext(AssetLoader.musiclist);
-        AssetLoader.frontFlaps.setFrameDuration(0.2f);
+        AssetHandler.deathmenumusic.stop();
+        AssetHandler.playnext(AssetHandler.musiclist);
+        AssetHandler.frontFlaps.setFrameDuration(0.2f);
         currentState = GameState.READY;
         renderer.prepareTransition(0, 0, 0, 1f);}
 
@@ -157,8 +162,8 @@ public class GameWorld {
         //renderer.sunshineManager.killAll();
         //renderer.sunshineManager2.killAll();
         SplashScreen.getManager().killAll();
-        AssetLoader.stopmusic(AssetLoader.menumusiclist);
-        AssetLoader.playnext(AssetLoader.musiclist);
+        AssetHandler.stopmusic(AssetHandler.menumusiclist);
+        AssetHandler.playnext(AssetHandler.musiclist);
         currentState = GameState.READY;
         renderer.prepareTransition(0, 0, 0, 1f);}
 

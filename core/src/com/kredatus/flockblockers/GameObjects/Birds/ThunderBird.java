@@ -15,11 +15,12 @@ import aurelienribon.tweenengine.TweenManager;
  */
 
 public class ThunderBird extends BirdAbstractClass {
-    public ThunderBird(float delta, float camheight, float camwidth, TweenManager manager){
-        super(delta, camheight, camwidth);
+    public ThunderBird( float camHeight, float camWidth, TweenManager manager){
+        super(camHeight, camWidth);
         this.yVel=3;
         this.coins=15;
         this.health=7;
+        this.sizeVariance=15;
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
         this.height = height-sizeVariance+r.nextInt(sizeVariance*2);
         super.load("sprites/thunder.png", 0.15f);
@@ -28,7 +29,7 @@ public class ThunderBird extends BirdAbstractClass {
     }
 
     @Override
-    public void setManager(float delta, float camwidth, float edge) {
+    public void setManager(float camWidth, float edge) {
         final Animation[] list = {rightFlaps, frontFlaps, leftFlaps, frontFlaps};
 
         final TweenCallback animationSwitch = new TweenCallback() {

@@ -1,4 +1,4 @@
-package com.kredatus.flockblockers.GlideOrDieHelpers;
+package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -22,11 +22,11 @@ public class InputHandler implements InputProcessor {
 
     private float scaleFactorX;
     private float scaleFactorY;
-    private int camwidth;
+    private int camWidth;
     // Ask for a reference to the glider when InputHandler is created.
-    public InputHandler(GameWorld myWorld, float scaleFactorX, float scaleFactorY, int camwidth, int camheight) {
+    public InputHandler(GameWorld myWorld, float scaleFactorX, float scaleFactorY, int camWidth, int camHeight) {
         // myBird now represents the gameWorld's bird.
-        this.camwidth=camwidth;
+        this.camWidth=camWidth;
         this.myWorld = myWorld;
         myGlider = myWorld.getGlider();
         this.scaleFactorX = scaleFactorX;
@@ -34,36 +34,36 @@ public class InputHandler implements InputProcessor {
 
 
         menuButtons = new ArrayList<SimpleButton>();
-        playButton = new SimpleButton(camwidth/2-AssetLoader.play.getRegionWidth()/2, camheight-AssetLoader.play.getRegionHeight()*1.1f,
-                AssetLoader.play.getRegionWidth(), AssetLoader.play.getRegionHeight(), AssetLoader.play, AssetLoader.playdown);
+        playButton = new SimpleButton(camWidth/2- AssetHandler.play.getRegionWidth()/2, camHeight- AssetHandler.play.getRegionHeight()*1.1f,
+                AssetHandler.play.getRegionWidth(), AssetHandler.play.getRegionHeight(), AssetHandler.play, AssetHandler.playdown);
         menuButtons.add(playButton);
-        storyButton = new SimpleButton(camwidth/4-AssetLoader.story.getRegionWidth()/5-AssetLoader.play.getRegionWidth()/4,  7.5f*camheight/9-3f*AssetLoader.instr.getRegionHeight()/5,
-                AssetLoader.story.getRegionWidth()/2.5f, AssetLoader.story.getRegionHeight()/2.5f, AssetLoader.story, AssetLoader.storydown);
+        storyButton = new SimpleButton(camWidth/4- AssetHandler.story.getRegionWidth()/5- AssetHandler.play.getRegionWidth()/4,  7.5f*camHeight/9-3f* AssetHandler.instr.getRegionHeight()/5,
+                AssetHandler.story.getRegionWidth()/2.5f, AssetHandler.story.getRegionHeight()/2.5f, AssetHandler.story, AssetHandler.storydown);
         menuButtons.add(storyButton);
-        instrButton = new SimpleButton(camwidth/4-AssetLoader.instr.getRegionWidth()/5-AssetLoader.play.getRegionWidth()/4, 8.5f*camheight/9-1.5f*(AssetLoader.instr.getRegionHeight()/5),
-                AssetLoader.instr.getRegionWidth()/2.5f, AssetLoader.instr.getRegionHeight()/2.5f, AssetLoader.instr, AssetLoader.instrdown);
+        instrButton = new SimpleButton(camWidth/4- AssetHandler.instr.getRegionWidth()/5- AssetHandler.play.getRegionWidth()/4, 8.5f*camHeight/9-1.5f*(AssetHandler.instr.getRegionHeight()/5),
+                AssetHandler.instr.getRegionWidth()/2.5f, AssetHandler.instr.getRegionHeight()/2.5f, AssetHandler.instr, AssetHandler.instrdown);
         menuButtons.add(instrButton);
-        creditsButton = new SimpleButton(AssetLoader.play.getRegionWidth()/4+3*camwidth/4-AssetLoader.credits.getRegionWidth()/5+5, 8.5f*camheight/9-1.5f*(AssetLoader.instr.getRegionHeight()/5),
-                AssetLoader.credits.getRegionWidth()/2.5f, AssetLoader.credits.getRegionHeight()/2.5f, AssetLoader.credits, AssetLoader.creditsdown);
+        creditsButton = new SimpleButton(AssetHandler.play.getRegionWidth()/4+3*camWidth/4- AssetHandler.credits.getRegionWidth()/5+5, 8.5f*camHeight/9-1.5f*(AssetHandler.instr.getRegionHeight()/5),
+                AssetHandler.credits.getRegionWidth()/2.5f, AssetHandler.credits.getRegionHeight()/2.5f, AssetHandler.credits, AssetHandler.creditsdown);
         menuButtons.add(creditsButton);
-        exitButton = new SimpleButton(AssetLoader.play.getRegionWidth()/4+3*camwidth/4-AssetLoader.exit.getRegionWidth()/5, 7.5f*camheight/9-3*(AssetLoader.instr.getRegionHeight()/5),
-                AssetLoader.exit.getRegionWidth()/2.5f, AssetLoader.exit.getRegionHeight()/2.5f, AssetLoader.exit, AssetLoader.exitdown);
+        exitButton = new SimpleButton(AssetHandler.play.getRegionWidth()/4+3*camWidth/4- AssetHandler.exit.getRegionWidth()/5, 7.5f*camHeight/9-3*(AssetHandler.instr.getRegionHeight()/5),
+                AssetHandler.exit.getRegionWidth()/2.5f, AssetHandler.exit.getRegionHeight()/2.5f, AssetHandler.exit, AssetHandler.exitdown);
         menuButtons.add(exitButton);
 
 
         deathButtons = new ArrayList<SimpleButton>();
-        retryButton = new SimpleButton(camwidth-AssetLoader.retry.getRegionWidth()/2.5f-10,camheight-AssetLoader.retry.getRegionHeight()/2.5f-10,
-                AssetLoader.retry.getRegionWidth()/2.5f, AssetLoader.retry.getRegionHeight()/2.5f, AssetLoader.retry, AssetLoader.retrydown);
+        retryButton = new SimpleButton(camWidth- AssetHandler.retry.getRegionWidth()/2.5f-10,camHeight- AssetHandler.retry.getRegionHeight()/2.5f-10,
+                AssetHandler.retry.getRegionWidth()/2.5f, AssetHandler.retry.getRegionHeight()/2.5f, AssetHandler.retry, AssetHandler.retrydown);
         deathButtons.add(retryButton);
-        menuButton = new SimpleButton(10,camheight-AssetLoader.menu.getRegionHeight()/2.5f,
-                AssetLoader.menu.getRegionWidth()/2.5f, AssetLoader.menu.getRegionHeight()/2.5f, AssetLoader.menu, AssetLoader.menudown);
+        menuButton = new SimpleButton(10,camHeight- AssetHandler.menu.getRegionHeight()/2.5f,
+                AssetHandler.menu.getRegionWidth()/2.5f, AssetHandler.menu.getRegionHeight()/2.5f, AssetHandler.menu, AssetHandler.menudown);
         deathButtons.add(menuButton);
 
 
-        readyButton = new SimpleButton(9*camwidth/10-AssetLoader.ready.getRegionWidth()/5,camheight/2-AssetLoader.ready.getRegionHeight()/5,
-                AssetLoader.ready.getRegionWidth()/2.5f, AssetLoader.ready.getRegionHeight()/2.5f, AssetLoader.ready, AssetLoader.readydown);
-        nextButton = new SimpleButton(camwidth-AssetLoader.next.getRegionWidth()/2.5f-10, camheight-AssetLoader.menu.getRegionHeight()/2.5f,
-                AssetLoader.next.getRegionWidth()/2.5f, AssetLoader.next.getRegionHeight()/2.5f, AssetLoader.next, AssetLoader.nextdown);
+        readyButton = new SimpleButton(9*camWidth/10- AssetHandler.ready.getRegionWidth()/5,camHeight/2- AssetHandler.ready.getRegionHeight()/5,
+                AssetHandler.ready.getRegionWidth()/2.5f, AssetHandler.ready.getRegionHeight()/2.5f, AssetHandler.ready, AssetHandler.readydown);
+        nextButton = new SimpleButton(camWidth- AssetHandler.next.getRegionWidth()/2.5f-10, camHeight- AssetHandler.menu.getRegionHeight()/2.5f,
+                AssetHandler.next.getRegionWidth()/2.5f, AssetHandler.next.getRegionHeight()/2.5f, AssetHandler.next, AssetHandler.nextdown);
     }
 
     @Override
@@ -142,8 +142,8 @@ public class InputHandler implements InputProcessor {
         } else if (myWorld.isDeathMenu()) {
             if (menuButton.isTouchUp(screenX, screenY)){
                 myWorld.backToMenu();
-                AssetLoader.deathmenumusic.stop();
-                AssetLoader.playnext(AssetLoader.menumusiclist);
+                AssetHandler.deathmenumusic.stop();
+                AssetHandler.playnext(AssetHandler.menumusiclist);
             } else if (retryButton.isTouchUp(screenX, screenY)){
                 myWorld.restart();
             }
@@ -151,7 +151,7 @@ public class InputHandler implements InputProcessor {
             myWorld.start();
 
         } else if ( myWorld.isStory() ) {
-            if (AssetLoader.getHighScore() != 0) {
+            if (AssetHandler.getHighScore() != 0) {
                 if (menuButton.isTouchUp(screenX, screenY)) {
                     myWorld.backToMenu();
                 }

@@ -15,11 +15,12 @@ import aurelienribon.tweenengine.TweenManager;
  */
 
 public class LunarBird extends BirdAbstractClass {
-    public LunarBird(float delta, float camheight, float camwidth, TweenManager manager){
-        super(delta, camheight, camwidth);
+    public LunarBird( float camHeight, float camWidth){
+        super(camHeight, camWidth);
         this.yVel=2;
         this.coins=50;
         this.health=7;
+        this.sizeVariance=15;
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
         this.height = height-sizeVariance+r.nextInt(sizeVariance*2);
         super.load("sprites/lunar.png", 0.15f);
@@ -28,7 +29,7 @@ public class LunarBird extends BirdAbstractClass {
     }
 
     @Override
-    public void setManager(float delta, float camwidth, float edge) {
+    public void setManager( float camWidth, float edge) {
         final Animation[] list = {rightFlaps, frontFlaps, leftFlaps, frontFlaps};
 
         final TweenCallback animationSwitch = new TweenCallback() {

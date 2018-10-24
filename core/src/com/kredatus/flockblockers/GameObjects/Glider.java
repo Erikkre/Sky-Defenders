@@ -3,7 +3,7 @@ package com.kredatus.flockblockers.GameObjects;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
-import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
+import com.kredatus.flockblockers.Handlers.AssetHandler;
 
 /**
  * Created by Mr. Kredatus on 8/26/2017.
@@ -20,7 +20,7 @@ public class Glider {
     public float midpointY, midpointX, starty;
     private boolean isAlive;
 
-    float bgh = AssetLoader.bgPhoenix.getHeight();
+    float bgh = AssetHandler.bgPhoenix.getHeight();
     float originalyacc=2000, originalGamevelocity=750;
     private GameWorld world;
     public Glider(float midPointX, float midPointY, int width, int height, GameWorld world) {
@@ -115,9 +115,9 @@ public class Glider {
         }
         if (isAlive && (Math.abs(position.y+height/2)  > bgh - midpointY-20 )) {
             if (velocity.y < 0 && isNegative() || velocity.y > 0 && isPositive()){
-            AssetLoader.stopmusic(AssetLoader.musiclist);
-            AssetLoader.deathmenumusic.play();
-            AssetLoader.splashdown.play();
+            AssetHandler.stopmusic(AssetHandler.musiclist);
+            AssetHandler.deathmenumusic.play();
+            AssetHandler.splashdown.play();
             //GameRenderer.splashdown=true;
             die();
                 }
@@ -146,7 +146,7 @@ public class Glider {
                 } else acceleration.y -= 1600;
                 velocity.y-=40;
             }
-            AssetLoader.swoop.play();
+            AssetHandler.swoop.play();
             world.boost--;
         }
     }
@@ -218,7 +218,7 @@ public class Glider {
         acceleration.y = originalyacc-1600;
         gamexvelocity=originalGamevelocity;
         isAlive = true;
-        //AssetLoader.frontViewFlaps.setFrameDuration(0.2f);
+        //AssetHandler.frontViewFlaps.setFrameDuration(0.2f);
         rotation=0;
     }
 

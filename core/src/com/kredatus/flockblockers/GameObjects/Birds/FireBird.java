@@ -15,8 +15,8 @@ import aurelienribon.tweenengine.TweenManager;
  */
 
 public class FireBird extends BirdAbstractClass {
-    FireBird(float delta, float camheight, float camwidth, TweenManager manager){
-        super(delta, camheight, camwidth);
+    FireBird(float camHeight, float camWidth, TweenManager manager){
+        super(camHeight, camWidth);
         this.yVel=4;
         this.coins=30;
         this.health=7;
@@ -30,7 +30,7 @@ public class FireBird extends BirdAbstractClass {
     }
 
     @Override
-    public void setManager(float delta, float camwidth, float edge) {
+    public void setManager(float camWidth, float edge) {
         final Animation[] list = {rightFlaps, frontFlaps, leftFlaps, frontFlaps};
 
         final TweenCallback animationSwitch = new TweenCallback() {

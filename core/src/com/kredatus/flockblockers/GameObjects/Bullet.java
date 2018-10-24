@@ -3,7 +3,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
-import com.kredatus.flockblockers.Screens.GameScreen;
+import com.kredatus.flockblockers.Handlers.GameHandler;
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.
@@ -27,8 +27,8 @@ public class Bullet  {
     }
 
     public void update() {
-        if (x + width < GameRenderer.getCameraPosition().x - GameScreen.camwidth / 2 || x - width > GameRenderer.getCameraPosition().x + GameScreen.camwidth / 2 ||
-                y + height < GameRenderer.getCameraPosition().y - GameScreen.camheight / 2 || y - height > GameRenderer.getCameraPosition().y - GameScreen.camheight / 2 ) {
+        if (x + width < GameRenderer.getCameraPosition().x - GameHandler.camWidth / 2 || x - width > GameRenderer.getCameraPosition().x + GameHandler.camWidth / 2 ||
+                y + height < GameRenderer.getCameraPosition().y - GameHandler.camHeight / 2 || y - height > GameRenderer.getCameraPosition().y - GameHandler.camHeight / 2 ) {
             isGone = true;}
     }
 

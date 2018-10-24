@@ -16,16 +16,19 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kredatus.flockblockers.GameObjects.Background;
 //import com.kredatus.flockblockers.GameObjects.Boost;
+import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Glider;
-import com.kredatus.flockblockers.GlideOrDieHelpers.BgHandler;
-import com.kredatus.flockblockers.GlideOrDieHelpers.AssetLoader;
-import com.kredatus.flockblockers.GlideOrDieHelpers.InputHandler;
+import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Handlers.BgHandler;
+import com.kredatus.flockblockers.Handlers.BirdHandler;
+import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import aurelienribon.tweenengine.Tween;
@@ -56,7 +59,7 @@ public class GameRenderer {
     public static Vector3 camposition;
     private Animation frontFlaps, leftSideFlaps, rightSideFlaps, flipflaps, frontViewFlaps, backFlaps;
     //private TextureRegion gliderMid, vertflipgliderMid;
-    private int gliderscaling=AssetLoader.getgliderScaling();
+    private int gliderscaling= AssetHandler.getgliderScaling();
     private TextureRegion  horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
             creditsbg, deathmenubg, newHighscore, topscore, deathmenuscore, rating, youvedied, boostdown,
             gliderbg, instrbg, readybg, frontglidermid, worldStabilized;
@@ -72,6 +75,9 @@ public class GameRenderer {
     public static FreeTypeFontGenerator gamefont, otherfont;
     public static BitmapFont font, titlefont, storyfont, instrfont, droidSerifFont;
 
+
+    public static ArrayList<BirdAbstractClass> birdsList;
+
     float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
             c0len, c1len, c2len, c3len, c4len, c5len, c6len, c7len, c8len, c9len, c10len, c11len, c12len, c13len, c14len,
             s0len, s1len, s2len, s3len, s4len, s5len, s6len, s7len, s8len, s9len, s10len, s11len, s12len, s13len, s14len;
@@ -80,12 +86,11 @@ public class GameRenderer {
             s0, s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14;
 
     private Color transitionColor;
-    private int viewWidth, viewHeight;
+    private int camWidth, camHeight;
 
-    public static float camwidth;
-    public GameRenderer(GameWorld world, int viewWidth, int viewHeight) {
-        this.viewWidth=viewWidth;
-        this.viewHeight=viewHeight;
+    public GameRenderer(GameWorld world, int camWidth, int camHeight) {
+        this.camWidth=camWidth;
+        this.camHeight=camHeight;
         myWorld = world;
 
         this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButtons();
@@ -97,17 +102,15 @@ public class GameRenderer {
 
         batcher = new SpriteBatch();
         cam = new OrthographicCamera();
-        cam.setToOrtho(false, viewWidth, viewHeight);
-        cam.position.set(new Vector3(0,0,0));
+        cam.setToOrtho(false, camWidth, camHeight);
+        cam.position.set(new Vector3(camWidth/2,camHeight/2,0));
         cam.update();
         batcher.setProjectionMatrix(cam.combined);
-        camwidth=cam.viewportWidth;
-        camposition = cam.position;
-        System.out.println("Height: "+cam.viewportHeight);
+        System.out.println("Height: "+camHeight);
         //cam.position.set(new Vector3(0,0,0));
-        //cam.position.x=9*camwidth/10;  //seems random but is 1/2(glider position in camwidth) + 2/5
+        //cam.position.x=9*camWidth/10;  //seems random but is 1/2(glider position in camWidth) + 2/5
         //cam.update();
-        //viewport = new FitViewport(viewWidth, viewHeight, cam);
+        //viewport = new FitViewport(camWidth, viewHeight, cam);
         //viewport.apply();
 
 
@@ -141,37 +144,39 @@ public class GameRenderer {
     }*/
 
     private void initAssets() {
-       //bgPhoenix = AssetLoader.bgPhoenixtexture;
-        horflipbgtexture = AssetLoader.horflipbgtexture;
+       //bgPhoenix = AssetHandler.bgPhoenixtexture;
+        horflipbgtexture = AssetHandler.horflipbgtexture;
 
         //flipworld
-        vertflipbgtexture = AssetLoader.vertflipbgtexture;
-        horvertflipbgtexture = AssetLoader.horvertflipbgtexture;
+        vertflipbgtexture = AssetHandler.vertflipbgtexture;
+        horvertflipbgtexture = AssetHandler.horvertflipbgtexture;
 
-        boosttexture = AssetLoader.boosttexture;
+        boosttexture = AssetHandler.boosttexture;
 
-        //gliderMid = AssetLoader.gliderMid;
-        //vertflipgliderMid = AssetLoader.vertflipgliderMid;
+        //gliderMid = AssetHandler.gliderMid;
+        //vertflipgliderMid = AssetHandler.vertflipgliderMid;
 
-        frontFlaps = AssetLoader.frontFlaps;
-        //flipflaps = AssetLoader.flipflaps;
+        birdsList=BirdHandler.birdsList;
+
+        frontFlaps = AssetHandler.frontFlaps;
+        //flipflaps = AssetHandler.flipflaps;
         //frontViewFlaps = null;
-        //frontglidermid=AssetLoader.frontGliderMid;
-        backFlaps=AssetLoader.backFlaps;
+        //frontglidermid=AssetHandler.frontGliderMid;
+        backFlaps= AssetHandler.backFlaps;
 
-        creditsbg = AssetLoader.creditsbg;
-        deathmenubg = AssetLoader.deathmenubg;
-        gliderbg = AssetLoader.gliderbg;
-        readybg = AssetLoader.readybg;
-        instrbg = AssetLoader.instrbg;
+        creditsbg = AssetHandler.creditsbg;
+        deathmenubg = AssetHandler.deathmenubg;
+        gliderbg = AssetHandler.gliderbg;
+        readybg = AssetHandler.readybg;
+        instrbg = AssetHandler.instrbg;
 
-        worldStabilized =AssetLoader.worldStabilized;
-        newHighscore = AssetLoader.newHighscore;
-        topscore = AssetLoader.topscore;
-        deathmenuscore = AssetLoader.score;
-        rating = AssetLoader.rating;
-        youvedied = AssetLoader.youvedied;
-        boostdown = AssetLoader.boostdown;
+        worldStabilized = AssetHandler.worldStabilized;
+        newHighscore = AssetHandler.newHighscore;
+        topscore = AssetHandler.topscore;
+        deathmenuscore = AssetHandler.score;
+        rating = AssetHandler.rating;
+        youvedied = AssetHandler.youvedied;
+        boostdown = AssetHandler.boostdown;
     }
 
     private void initGameObjects() {
@@ -296,14 +301,14 @@ public class GameRenderer {
     }
 
     public void drawInstr() {
-        instrfont.draw(batcher, "1. TAP THE SCREEN TO MAKE THE PHOENIX FLY AWAY FROM THE CLOSEST GROUND", cam.position.x - c0len / 2, viewHeight / 11);
-        instrfont.draw(batcher, "2. DO NOT CRASH PHOENIX INTO WATER/EDGES; HE WILL HAVE TO REVIVE", cam.position.x - c1len / 2, 2 * viewHeight / 11);
-        instrfont.draw(batcher, "3. GAIN POWER TO FLAP WINGS BY ABSORBING FIREBALLS, OR FRAGMENTS OF SOL", cam.position.x - c2len / 2, 3 * viewHeight / 11);
-        instrfont.draw(batcher, "4. LARGER FRAGMENTS THAT GATHER AT EDGES OF THE WORLD HAVE MORE POWER", cam.position.x - c3len / 2, 4 * viewHeight / 11);
-        instrfont.draw(batcher, "5. USABLE POWER TO FLAP WINGS-NUMBER AT TOP LEFT", cam.position.x - c4len / 2, 5 * viewHeight / 11);
-        instrfont.draw(batcher, "6. FLYING FURTHER INCREASES WORLD STABILITY-PERCENTAGE AT TOP RIGHT", cam.position.x - c5len / 2, 6 * viewHeight / 11);
-        instrfont.draw(batcher, "7. LESS FRAGMENTS APPEAR THE MORE THE PHOENIX STABILIZES THE WORLD", cam.position.x - c6len / 2, 7 * viewHeight / 11);
-        instrfont.draw(batcher, "8. IF STABILITY REACHES 100 THEN PHOENIX WILL HAVE SAVED THE WORLD", cam.position.x - c7len / 2, 8 * viewHeight / 11);
+        instrfont.draw(batcher, "1. TAP THE SCREEN TO MAKE THE PHOENIX FLY AWAY FROM THE CLOSEST GROUND", cam.position.x - c0len / 2, camHeight / 11);
+        instrfont.draw(batcher, "2. DO NOT CRASH PHOENIX INTO WATER/EDGES; HE WILL HAVE TO REVIVE", cam.position.x - c1len / 2, 2 * camHeight / 11);
+        instrfont.draw(batcher, "3. GAIN POWER TO FLAP WINGS BY ABSORBING FIREBALLS, OR FRAGMENTS OF SOL", cam.position.x - c2len / 2, 3 * camHeight / 11);
+        instrfont.draw(batcher, "4. LARGER FRAGMENTS THAT GATHER AT EDGES OF THE WORLD HAVE MORE POWER", cam.position.x - c3len / 2, 4 * camHeight / 11);
+        instrfont.draw(batcher, "5. USABLE POWER TO FLAP WINGS-NUMBER AT TOP LEFT", cam.position.x - c4len / 2, 5 * camHeight / 11);
+        instrfont.draw(batcher, "6. FLYING FURTHER INCREASES WORLD STABILITY-PERCENTAGE AT TOP RIGHT", cam.position.x - c5len / 2, 6 * camHeight / 11);
+        instrfont.draw(batcher, "7. LESS FRAGMENTS APPEAR THE MORE THE PHOENIX STABILIZES THE WORLD", cam.position.x - c6len / 2, 7 * camHeight / 11);
+        instrfont.draw(batcher, "8. IF STABILITY REACHES 100 THEN PHOENIX WILL HAVE SAVED THE WORLD", cam.position.x - c7len / 2, 8 * camHeight / 11);
     }
 
     private void drawBackground() {
@@ -339,7 +344,7 @@ public class GameRenderer {
 
     private void drawGlider(float runTime){
         /*if (glider.isAlive()){
-            //setCamPosition( glider.getPosition().x + viewWidth / 2.5f, glider.getPosition().y+glider.getHeight()/2);
+            //setCamPosition( glider.getPosition().x + camWidth / 2.5f, glider.getPosition().y+glider.getHeight()/2);
 
             if (glider.isNormalWorld()) {
                 if (glider.shouldntFlap()&& !myWorld.isReady()) {
@@ -368,16 +373,16 @@ public class GameRenderer {
         }else{
             /*if (splashdown) {
                 if (glider.isNormalWorld()){
-                    cam.position.x = glider.getPosition().x - viewWidth;
-                    cam.position.y = glider.getPosition().y - viewHeight;
+                    cam.position.x = glider.getPosition().x - camWidth;
+                    cam.position.y = glider.getPosition().y - camHeight;
                 }else{
-                    cam.position.x = glider.getPosition().x - viewWidth;
-                    cam.position.y = glider.getPosition().y + viewHeight;
+                    cam.position.x = glider.getPosition().x - camWidth;
+                    cam.position.y = glider.getPosition().y + camHeight;
                 }
                 prepareTransition(0, 0, 0, 3f);
-                setCamPosition( glider.getPosition().x + viewWidth / 2.5f, glider.getPosition().y);
+                setCamPosition( glider.getPosition().x + camWidth / 2.5f, glider.getPosition().y);
                 splashdown=false;}
-            AssetLoader.frontViewFlaps.setFrameDuration((glider.distanceAfterDeath() / 200 + 0.17f));
+            AssetHandler.frontViewFlaps.setFrameDuration((glider.distanceAfterDeath() / 200 + 0.17f));
             frontTexture = (TextureRegion) frontViewFlaps.getKeyFrame(runTime);
             batcher.draw(frontTexture, glider.getPosition().x, glider.getPosition().y, frontTexture.getRegionWidth() /gliderscaling/ 2.0f, frontTexture.getRegionHeight() /gliderscaling/ 2.0f,
                     frontTexture.getRegionWidth()/gliderscaling, frontTexture.getRegionHeight()/gliderscaling, 1, 1, glider.getRotation() - 90);
@@ -385,32 +390,32 @@ public class GameRenderer {
     }
 
     public void drawCreditsbg() {
-        if ((float)creditsbg.getRegionHeight()/(creditsbg.getRegionWidth())<viewHeight/viewWidth){
-            batcher.draw(creditsbg, 0, 5, viewWidth, viewWidth * ((float)creditsbg.getRegionHeight() / creditsbg.getRegionWidth()));
+        if ((float)creditsbg.getRegionHeight()/(creditsbg.getRegionWidth())<camHeight/camWidth){
+            batcher.draw(creditsbg, 0, 5, camWidth, camWidth * ((float)creditsbg.getRegionHeight() / creditsbg.getRegionWidth()));
         } else {
-            batcher.draw(creditsbg, cam.position.x- (viewHeight*((float)creditsbg.getRegionWidth() / creditsbg.getRegionHeight()))/2, 5, viewHeight*((float)creditsbg.getRegionWidth() / creditsbg.getRegionHeight()), viewHeight-80);}
+            batcher.draw(creditsbg, cam.position.x- (camHeight*((float)creditsbg.getRegionWidth() / creditsbg.getRegionHeight()))/2, 5, camHeight*((float)creditsbg.getRegionWidth() / creditsbg.getRegionHeight()), camHeight-80);}
     }
 
     public void drawInstrbg() {
-        if ((float)instrbg.getRegionHeight()/(instrbg.getRegionWidth())<viewHeight/viewWidth){
-            batcher.draw(instrbg, 0, 0, viewWidth, viewWidth * ((float)instrbg.getRegionHeight() / instrbg.getRegionWidth()));
+        if ((float)instrbg.getRegionHeight()/(instrbg.getRegionWidth())<camHeight/camWidth){
+            batcher.draw(instrbg, 0, 0, camWidth, camWidth * ((float)instrbg.getRegionHeight() / instrbg.getRegionWidth()));
         } else {
-            batcher.draw(instrbg, cam.position.x- (viewHeight*((float)instrbg.getRegionWidth() / instrbg.getRegionHeight()))/2, 0, viewHeight*((float)instrbg.getRegionWidth() / instrbg.getRegionHeight()), viewHeight-50);}
+            batcher.draw(instrbg, cam.position.x- (camHeight*((float)instrbg.getRegionWidth() / instrbg.getRegionHeight()))/2, 0, camHeight*((float)instrbg.getRegionWidth() / instrbg.getRegionHeight()), camHeight-50);}
     }
 
 /*
     public void prepareSunshine(){
-        beta.setValue(viewWidth*1.6f); //start val
+        beta.setValue(camWidth*1.6f); //start val
         Tween.registerAccessor(Value.class, new ValueAccessor());
         sunshineManager = new TweenManager();
         Tween.to(beta, -1, 6f).target(0)    //end val
                 .ease(TweenEquations.easeOutQuad).repeat(Tween.INFINITY,5f).start(sunshineManager);
 
         sunshineManager2= new TweenManager();
-        charlie.setValue(AssetLoader.frontGliderMid.getRegionWidth()/2);
+        charlie.setValue(AssetHandler.frontGliderMid.getRegionWidth()/2);
         Tween.to(charlie, -1, 10).target(0)    //end val
                 .ease(TweenEquations.easeInOutExpo).repeatYoyo(Tween.INFINITY,0).start(sunshineManager2);
-        delta.setValue(AssetLoader.frontGliderMid.getRegionHeight()/2);
+        delta.setValue(AssetHandler.frontGliderMid.getRegionHeight()/2);
         Tween.to(delta, -1, 10).target(0)    //end val
                 .ease(TweenEquations.easeInOutExpo).repeatYoyo(Tween.INFINITY,0).start(sunshineManager2);
     }
@@ -428,7 +433,7 @@ public class GameRenderer {
     private void drawSpritesDeathMenu(float runTime) {
         rotate += 1;
 
-        /*if (charlie.getValue()<previousvalue && turnback==false && charlie.getValue()<0.85*AssetLoader.frontGliderMid.getRegionWidth()/2){   //if bird going away and 0.2 of the way there and facing towards, face away
+        /*if (charlie.getValue()<previousvalue && turnback==false && charlie.getValue()<0.85*AssetHandler.frontGliderMid.getRegionWidth()/2){   //if bird going away and 0.2 of the way there and facing towards, face away
             turnback=true;
         } else if (charlie.getValue()> previousvalue && turnback==true){   //if bird coming and facing away, face towards
             turnback=false;
@@ -451,7 +456,7 @@ public class GameRenderer {
 
     private void drawSpritesMenu(float runTime) {
         rotate += 3;
-        batcher.draw(gliderbg, cam.position.x-beta.getValue(), viewHeight/2-50 -beta.getValue(), beta.getValue(), beta.getValue(),
+        batcher.draw(gliderbg, cam.position.x-beta.getValue(), camHeight/2-50 -beta.getValue(), beta.getValue(), beta.getValue(),
                 beta.getValue()*2, beta.getValue()*2, 1, 1, rotate);
         frontTexture = (TextureRegion) frontFlaps.getKeyFrame(runTime+0.5f);
 
@@ -461,69 +466,69 @@ public class GameRenderer {
     private void drawDeathMenu() {
         for (SimpleButton button : deathButtons) {
             button.draw(batcher);}
-        batcher.draw(deathmenubg, cam.position.x - deathmenubg.getRegionWidth() / 2 + 5, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight());
-        batcher.draw(deathmenuscore, cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 70,viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+5,
+        batcher.draw(deathmenubg, cam.position.x - deathmenubg.getRegionWidth() / 2 + 5, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight());
+        batcher.draw(deathmenuscore, cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 70,camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+5,
                 deathmenuscore.getRegionWidth() / 2, deathmenuscore.getRegionHeight() / 2);
-        font.draw(batcher, "" + scorenumber, cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 40, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+90);
-        batcher.draw(topscore, cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 20, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+130, topscore.getRegionWidth() / 2, topscore.getRegionHeight() / 2);
-        batcher.draw(rating, cam.position.x - deathmenubg.getRegionWidth() / 3 + 10, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+35, rating.getRegionWidth() / 2, rating.getRegionHeight() / 2);
+        font.draw(batcher, "" + scorenumber, cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 40, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+90);
+        batcher.draw(topscore, cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 20, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+130, topscore.getRegionWidth() / 2, topscore.getRegionHeight() / 2);
+        batcher.draw(rating, cam.position.x - deathmenubg.getRegionWidth() / 3 + 10, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+35, rating.getRegionWidth() / 2, rating.getRegionHeight() / 2);
 
-        droidSerifFont.draw(batcher, "%", cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 110, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+90);
-        droidSerifFont.draw(batcher, "%", cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 110 , viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+230);
+        droidSerifFont.draw(batcher, "%", cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 110, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+90);
+        droidSerifFont.draw(batcher, "%", cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 110 , camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+230);
 
-        batcher.draw(boostdown, cam.position.x - 40, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
-        batcher.draw(boostdown, cam.position.x - 135, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
-        batcher.draw(boostdown, cam.position.x - 230, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
-        batcher.draw(boostdown, cam.position.x - 325, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
-        batcher.draw(boostdown, cam.position.x - 420, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+        batcher.draw(boostdown, cam.position.x - 40, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+        batcher.draw(boostdown, cam.position.x - 135, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+        batcher.draw(boostdown, cam.position.x - 230, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+        batcher.draw(boostdown, cam.position.x - 325, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+        batcher.draw(boostdown, cam.position.x - 420, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
 
         if (scorenumber >= 20) {
-            batcher.draw(boosttexture, cam.position.x - 420, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+            batcher.draw(boosttexture, cam.position.x - 420, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
         }
         if (scorenumber >= 40) {
-            batcher.draw(boosttexture, cam.position.x - 325, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+            batcher.draw(boosttexture, cam.position.x - 325, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
         }
         if (scorenumber >= 60) {
-            batcher.draw(boosttexture, cam.position.x - 230, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+            batcher.draw(boosttexture, cam.position.x - 230, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
         }
         if (scorenumber >= 80) {
-            batcher.draw(boosttexture, cam.position.x - 135, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+            batcher.draw(boosttexture, cam.position.x - 135, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
         }
         if (scorenumber >= 100) {
-            batcher.draw(boosttexture, cam.position.x - 40, viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+            batcher.draw(boosttexture, cam.position.x - 40, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
         }
 
-        if (scorenumber==AssetLoader.getHighScore()){
-            font.draw(batcher,""+scorenumber, cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 40 , viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+230);
-            batcher.draw(newHighscore, cam.position.x - newHighscore.getRegionWidth() / 4, viewHeight -(newHighscore.getRegionHeight()/2)-10, newHighscore.getRegionWidth()/2, newHighscore.getRegionHeight()/2);
-        } else if (scorenumber< AssetLoader.getHighScore()) {
-            font.draw(batcher, "" + AssetLoader.getHighScore(), cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 40 , viewHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+230);
-            batcher.draw(youvedied, cam.position.x - youvedied.getRegionWidth() / 4, viewHeight - (youvedied.getRegionHeight() / 2) - 10, youvedied.getRegionWidth() / 2, youvedied.getRegionHeight() / 2);
+        if (scorenumber== AssetHandler.getHighScore()){
+            font.draw(batcher,""+scorenumber, cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 40 , camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+230);
+            batcher.draw(newHighscore, cam.position.x - newHighscore.getRegionWidth() / 4, camHeight -(newHighscore.getRegionHeight()/2)-10, newHighscore.getRegionWidth()/2, newHighscore.getRegionHeight()/2);
+        } else if (scorenumber< AssetHandler.getHighScore()) {
+            font.draw(batcher, "" + AssetHandler.getHighScore(), cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 40 , camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+230);
+            batcher.draw(youvedied, cam.position.x - youvedied.getRegionWidth() / 4, camHeight - (youvedied.getRegionHeight() / 2) - 10, youvedied.getRegionWidth() / 2, youvedied.getRegionHeight() / 2);
         }
         if (scorenumber>=100) {
-            batcher.draw(worldStabilized, cam.position.x - worldStabilized.getRegionWidth() / 4, viewHeight - (worldStabilized.getRegionHeight() / 2) - 10, worldStabilized.getRegionWidth() / 1.9f, worldStabilized.getRegionHeight() / 1.9f);
+            batcher.draw(worldStabilized, cam.position.x - worldStabilized.getRegionWidth() / 4, camHeight - (worldStabilized.getRegionHeight() / 2) - 10, worldStabilized.getRegionWidth() / 1.9f, worldStabilized.getRegionHeight() / 1.9f);
         }
     }
 
     /*private void drawWorldMenu(){
-        batcher.draw(bgRockies, viewWidth/4-150, viewHeight/3-100, 300, 200);
-        batcher.draw(bgCanyon, 2*viewWidth/4-150, viewHeight/3-100, 300, 200);
-        batcher.draw(bgThousandSuns, 3*viewWidth/4-150, viewHeight/3-100, 300, 200);
-        batcher.draw(bgSnow, viewWidth/4-150, 2*viewHeight/3-100, 300, 200);
-        batcher.draw(bgDesert, 2*viewWidth/4-150, 2*viewHeight/3-100, 300, 200);
-        batcher.draw(bgChicago, 3*viewWidth/4-150, 2*viewHeight/3-100, 300, 200);
+        batcher.draw(bgRockies, camWidth/4-150, camHeight/3-100, 300, 200);
+        batcher.draw(bgCanyon, 2*camWidth/4-150, camHeight/3-100, 300, 200);
+        batcher.draw(bgThousandSuns, 3*camWidth/4-150, camHeight/3-100, 300, 200);
+        batcher.draw(bgSnow, camWidth/4-150, 2*camHeight/3-100, 300, 200);
+        batcher.draw(bgDesert, 2*camWidth/4-150, 2*camHeight/3-100, 300, 200);
+        batcher.draw(bgChicago, 3*camWidth/4-150, 2*camHeight/3-100, 300, 200);
     }*/
 
     private void drawScore() {
-        scorenumber= (int) (glider.getPosition().x - viewWidth / 2)/2000;
-        font.draw(batcher, "STABILITY: " + scorenumber, cam.position.x + (viewWidth / 2) - scorelen, cam.position.y - viewHeight / 2 + 5);
-        droidSerifFont.draw(batcher, "%", cam.position.x + (viewWidth / 2) - 40, cam.position.y - viewHeight / 2 + 5);
-        font.draw(batcher, "POWER: " + (int)myWorld.boost, cam.position.x - (viewWidth / 2) + 5, cam.position.y - viewHeight / 2 + 5 );
+        scorenumber= (int) (glider.getPosition().x - camWidth / 2)/2000;
+        font.draw(batcher, "STABILITY: " + scorenumber, cam.position.x + (camWidth / 2) - scorelen, cam.position.y - camHeight / 2 + 5);
+        droidSerifFont.draw(batcher, "%", cam.position.x + (camWidth / 2) - 40, cam.position.y - camHeight / 2 + 5);
+        font.draw(batcher, "POWER: " + (int)myWorld.boost, cam.position.x - (camWidth / 2) + 5, cam.position.y - camHeight / 2 + 5 );
     }
     /*
         public void setCamPositionOriginal(){
-            cam.position.x=viewWidth/2;
-            cam.position.y=viewHeight/2;
+            cam.position.x=camWidth/2;
+            cam.position.y=camHeight/2;
             cam.update();
             batcher.setProjectionMatrix(cam.combined);
             camposition = cam.position;
@@ -538,28 +543,36 @@ public class GameRenderer {
         }
     */
 
-    public void drawStory(float runTime) {
+    public void drawStory(float runTime, float delta) {
         //System.out.println("Glider: "+glider.getPosition());
         //System.out.println("Cam: "+cam.position);
         //glider.getPosition().x+glider.getWidth()/2  glider.getPosition().y+glider.getHeight()/2
 
+        for (BirdAbstractClass i : birdsList) {
+            batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime), i.x - i.width / 2, i.y - i.height / 2,
+                    i.x - i.width / 2, i.y - i.height / 2, i.width, i.height, 1, 1,0);
+
+            System.out.println("x: "+(i.x - i.width / 2) + " y: "+ (i.y - i.height / 2));
+        }
+        //birdsList.get(0).update(delta);
+        /*
         batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-glider.getWidth()/2, glider.getPosition().y-glider.getHeight()/2,
-                glider.getPosition().x-glider.getWidth()/2,glider.getPosition().y-glider.getHeight()/2, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());
+                glider.getPosition().x-glider.getWidth()/2,glider.getPosition().y-glider.getHeight()/2, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());*/
 
         /*
-        storyfont.draw(batcher, "Stories are told of a hero that only appears in times of great chaos,", cam.position.x - s0len / 2, viewHeight / 15);
-        storyfont.draw(batcher, "an elemental deity known simply as The Phoenix. Since the dawn of", cam.position.x - s2len / 2, 2 * viewHeight / 15);
-        storyfont.draw(batcher, "time, its infinite lives and elemental power are fueled by its home", cam.position.x - s1len / 2, 3 * viewHeight / 15);
-        storyfont.draw(batcher, "star, Sol. After an impossible cosmic event, the universe has begun", cam.position.x - s3len / 2, 4 * viewHeight / 15);
-        storyfont.draw(batcher, "to collapse. Reality is folding in on itself, worlds are destabilizing", cam.position.x - s4len / 2, 5 * viewHeight / 15);
-        storyfont.draw(batcher, "and the Phoenix's purpose has been made clear. It must save the", cam.position.x - s5len / 2, 6 * viewHeight / 15);
-        storyfont.draw(batcher, "universe once more. Able to traverse all planes of reality, it uses Sol's", cam.position.x - s6len / 2, 7 * viewHeight / 15);
-        storyfont.draw(batcher, "power to stabilize the worlds it travels through. Only by absorbing", cam.position.x - s7len / 2, 8 * viewHeight / 15);
-        storyfont.draw(batcher, "faraway fragments of Sol is it able to keep flying further away from", cam.position.x - s8len / 2, 9 * viewHeight / 15);
-        storyfont.draw(batcher, "home. However, the closer it comes to saving a world, the less fragments", cam.position.x - s9len / 2, 10 * viewHeight / 15);
-        storyfont.draw(batcher, "appear there for the Phoenix to use. The Phoenix will stop at nothing", cam.position.x - s10len / 2, 11 * viewHeight / 15);
-        storyfont.draw(batcher, "to prevent the collapse of reality by travelling the universe and", cam.position.x - s11len / 2, 12 * viewHeight / 15);
-        storyfont.draw(batcher, "stabilizing every last world.", cam.position.x - s12len / 2, 13 * viewHeight / 15);*/
+        storyfont.draw(batcher, "Stories are told of a hero that only appears in times of great chaos,", cam.position.x - s0len / 2, camHeight / 15);
+        storyfont.draw(batcher, "an elemental deity known simply as The Phoenix. Since the dawn of", cam.position.x - s2len / 2, 2 * camHeight / 15);
+        storyfont.draw(batcher, "time, its infinite lives and elemental power are fueled by its home", cam.position.x - s1len / 2, 3 * camHeight / 15);
+        storyfont.draw(batcher, "star, Sol. After an impossible cosmic event, the universe has begun", cam.position.x - s3len / 2, 4 * camHeight / 15);
+        storyfont.draw(batcher, "to collapse. Reality is folding in on itself, worlds are destabilizing", cam.position.x - s4len / 2, 5 * camHeight / 15);
+        storyfont.draw(batcher, "and the Phoenix's purpose has been made clear. It must save the", cam.position.x - s5len / 2, 6 * camHeight / 15);
+        storyfont.draw(batcher, "universe once more. Able to traverse all planes of reality, it uses Sol's", cam.position.x - s6len / 2, 7 * camHeight / 15);
+        storyfont.draw(batcher, "power to stabilize the worlds it travels through. Only by absorbing", cam.position.x - s7len / 2, 8 * camHeight / 15);
+        storyfont.draw(batcher, "faraway fragments of Sol is it able to keep flying further away from", cam.position.x - s8len / 2, 9 * camHeight / 15);
+        storyfont.draw(batcher, "home. However, the closer it comes to saving a world, the less fragments", cam.position.x - s9len / 2, 10 * camHeight / 15);
+        storyfont.draw(batcher, "appear there for the Phoenix to use. The Phoenix will stop at nothing", cam.position.x - s10len / 2, 11 * camHeight / 15);
+        storyfont.draw(batcher, "to prevent the collapse of reality by travelling the universe and", cam.position.x - s11len / 2, 12 * camHeight / 15);
+        storyfont.draw(batcher, "stabilizing every last world.", cam.position.x - s12len / 2, 13 * camHeight / 15);*/
     }
 
     public void render(float delta, float runTime) {
@@ -589,9 +602,9 @@ public class GameRenderer {
 
 
 
-            drawStory(runTime);
+            drawStory(runTime, delta);
             /*
-            if (AssetLoader.getHighScore() == 0) {
+            if (AssetHandler.getHighScore() == 0) {
                 nextButton.draw(batcher);
             } else {
                 menuButton.draw(batcher);
@@ -605,8 +618,8 @@ public class GameRenderer {
         } else if (myWorld.isReady()) {
             drawBackground();
             //drawBoosts();
-            if (AssetLoader.getHighScore()<15){
-                batcher.draw(readybg, cam.position.x-viewWidth/2, -viewHeight/3f, readybg.getRegionWidth(), readybg.getRegionHeight());
+            if (AssetHandler.getHighScore()<15){
+                batcher.draw(readybg, cam.position.x-camWidth/2, -camHeight/3f, readybg.getRegionWidth(), readybg.getRegionHeight());
             }
             drawGlider(runTime);
             readyButton.draw(batcher);
@@ -640,7 +653,7 @@ public class GameRenderer {
 
         batcher.end();
         drawTransition(delta);
-        //System.out.println("gameRenderer edge:"+(cam.position.x - viewWidth / 2));
+        //System.out.println("gameRenderer edge:"+(cam.position.x - camWidth / 2));
     }
 
     public void prepareTransition(int r, int g, int b, float duration) {
@@ -659,7 +672,7 @@ public class GameRenderer {
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(transitionColor.r, transitionColor.g,transitionColor.b, alpha.getValue());
-            shapeRenderer.rect(glider.getPosition().x-viewWidth*5000, glider.getPosition().y-viewHeight*5000, viewWidth*10000, viewHeight*10000);
+            shapeRenderer.rect(glider.getPosition().x-camWidth*5000, glider.getPosition().y-camHeight*5000, camWidth*10000, camHeight*10000);
             shapeRenderer.end();
             Gdx.gl.glDisable(GL30.GL_BLEND);
         }

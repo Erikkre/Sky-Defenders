@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.Helpers.FloatAccessor;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 
 import java.util.ArrayList;
@@ -45,35 +46,37 @@ import aurelienribon.tweenengine.TweenManager;
 public abstract class BirdAbstractClass {
     protected GameWorld world;
     protected Circle boundingCircle;
-    protected float x, y, yVel, yAcc, xVel, rotation;
+    public float x, y, yVel, yAcc, xVel, rotation;
 
     private final float edge;
-    protected int width, height;
-    protected double camwidth, camheight;
+    public int width, height;
+    protected double camWidth, camHeight;
     public boolean isOffCam;
     public float  starty;
     protected boolean isAlive;
-    protected Random r;
-    protected Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
+    protected Random r =new Random();
+    public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
     protected int sizeVariance, coins, health, diamonds, counter;
     protected Tween xMotion;
 
-    public BirdAbstractClass( float delta, float camheight, float camwidth) {
-        x= r.nextInt((int)camwidth);
-        y= r.nextInt((int)camheight); //center of camera
+    public BirdAbstractClass( float camHeight, float camWidth) {
+        edge = (camWidth)-width/2;
+
+        x= width/2 + r.nextInt((int)edge-width/2);
+        y=0;
         isAlive=true;
-        edge = (camwidth/2)-width/2;
-        this.camwidth = camwidth;
-        this.camheight = camheight;
+
+        this.camWidth = camWidth;
+        this.camHeight = camHeight;
         isOffCam = false;
         isAlive = true;
         //this.manager=manager;
         boundingCircle = new Circle();
-        Tween.registerAccessor(float.class, new ValueAccessor());
-        setManager(delta, camwidth, edge);
+        Tween.registerAccessor(Float.class, new FloatAccessor());
+        setManager(camWidth, edge);
     };
 
-    public abstract void setManager(float delta, float camwidth, float edge);
+    public abstract void setManager(float camWidth, float edge);
 
     //public abstract void fly(float delta) ;
 
@@ -82,13 +85,13 @@ public abstract class BirdAbstractClass {
         xMotion.update(delta);
         //manager.update(delta);
         xVel=x-xVel;    //rate of change of x (next tweened value - last value)
-        rotation = -(float) Math.toDegrees(Math.atan(yVel / -xVel ));
+        //rotation = -(float) Math.toDegrees(Math.atan(yVel / -xVel ));
         y+=yVel;
         if (isAlive) {
             if (health <= 0) {
                 die();
             }
-            if (y > camheight / 2 - 0) { //0 being height of top of tower where score & diamonds are
+            if (y > camHeight - 0) { //0 being height of top of tower where score & diamonds are
                 health=0;
                 GameWorld.addGold(-coins);
                 isOffCam=true;
@@ -97,7 +100,7 @@ public abstract class BirdAbstractClass {
             yVel+=yAcc;
             x+=xVel;
 
-            if (y+height/2<-(camheight/2) || x+width/2<(-camwidth/2) || x-width/2>camwidth/2){
+            if (y+height/2<-(0) || x+width/2< 0 || x-width/2> camWidth){
                 isOffCam=true;
             }
         }
@@ -153,7 +156,7 @@ public abstract class BirdAbstractClass {
         rightFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
         for (TextureRegion i : side){
-            i.flip(true, false);
+            i.flip(true, true);
 
         }
         leftFlaps= new Animation<TextureRegion>(flapSpeed, side);

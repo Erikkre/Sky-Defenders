@@ -8,14 +8,15 @@ import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
-import aurelienribon.tweenengine.TweenManager;
+
 
 public class AcidBird extends BirdAbstractClass{
-    public AcidBird(float delta, float camheight, float camwidth, TweenManager manager){
-        super(delta, camheight, camwidth);
+    public AcidBird(float camHeight, float camWidth){
+        super(camHeight, camWidth);
         yVel=4;
         health=7;
         coins=15;
+        this.sizeVariance=15;
         width += -sizeVariance+ r.nextInt(sizeVariance*2);
         height += -sizeVariance+r.nextInt(sizeVariance*2);
         super.load("sprites/acid.png", 0.15f);
@@ -24,7 +25,7 @@ public class AcidBird extends BirdAbstractClass{
     }
 
     @Override
-    public void setManager(float delta, float camwidth, float edge) {
+    public void setManager(float camWidth, float edge) {
         final Animation[] list = {rightFlaps, frontFlaps, leftFlaps, frontFlaps};
 
         final TweenCallback animationSwitch = new TweenCallback() {

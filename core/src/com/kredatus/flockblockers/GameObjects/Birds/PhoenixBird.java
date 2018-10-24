@@ -16,33 +16,34 @@ import aurelienribon.tweenengine.TweenManager;
  */
 
 public class PhoenixBird extends BirdAbstractClass {
-    public PhoenixBird(float delta, float camheight, float camwidth, TweenManager manager){
-        super(delta, camheight, camwidth);
+    public PhoenixBird(float camHeight, float camWidth){
+        super(camHeight, camWidth);
         this.yVel=1;
         this.diamonds=1;
         this.coins=7;
         this.health=100;
-        this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
-        this.height = height-sizeVariance+r.nextInt(sizeVariance*2);
+        this.sizeVariance=15;
+        this.width += -sizeVariance+r.nextInt(sizeVariance*2);
+        this.height += -sizeVariance+r.nextInt(sizeVariance*2);
         super.load("sprites/phoenix.png", 0.15f);
         animation=rightFlaps;
 
     }
 
     @Override
-    public void setManager(float delta, float camwidth, float edge) {
+    public void setManager(float camWidth, float edge) {
         final Animation[] list = {rightFlaps, frontFlaps, leftFlaps, frontFlaps};
 
         final TweenCallback animationSwitch = new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                if (counter==2){
+                if (counter==3){
                     counter=0;
                 }
                 animation = list[counter++];
             }
         };
-        xMotion = (Tween.to(x, -1, 10).waypoint(edge).setCallback(animationSwitch)).delay(3).setCallback(animationSwitch).target(-edge).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
+        xMotion = (Tween.to(x, -1, 2).waypoint(edge).setCallback(animationSwitch)).delay(3).setCallback(animationSwitch).target(width/2).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
                 .ease(TweenEquations.easeOutBack).repeatYoyo(Tween.INFINITY, 0).start();
     }
 }

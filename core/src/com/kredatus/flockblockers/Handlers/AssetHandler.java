@@ -1,4 +1,4 @@
-package com.kredatus.flockblockers.GlideOrDieHelpers;
+package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -16,7 +16,7 @@ import java.util.Random;
  * Created by Mr. Kredatus on 8/27/2017.
  **/
 
-public class AssetLoader {
+public class AssetHandler {
     public static Random r = new Random();
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;

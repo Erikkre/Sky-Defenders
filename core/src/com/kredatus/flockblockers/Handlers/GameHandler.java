@@ -1,33 +1,36 @@
-package com.kredatus.flockblockers.Screens;
+package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
-import com.kredatus.flockblockers.GlideOrDieHelpers.InputHandler;
+import com.kredatus.flockblockers.Handlers.InputHandler;
+
+import aurelienribon.tweenengine.Tween;
 
 /**
  * Created by Mr. Kredatus on 8/5/2017.
  */
 
-public class GameScreen implements Screen {
+public class GameHandler implements Screen {
     private GameWorld world;
     private GameRenderer renderer;
     private float runTime;
-    public static int camwidth, midPointY, camheight, midPointX;
+    public static int camWidth, midPointY, camHeight, midPointX;
 
-    public GameScreen() {
+    public GameHandler() {
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
-        camheight=1920;
-        camwidth= (int) (camheight* (screenWidth/screenHeight)) ;
-        System.out.println("width: "+camwidth);
-        midPointY = camheight/2;
-        midPointX = camwidth/2;
+        camHeight=1920;
+        camWidth= (int) (camHeight* (screenWidth/screenHeight)) ;
+        System.out.println("width: "+camWidth);
+        midPointY = camHeight/2;
+        midPointX = camWidth/2;
 
-        world = new GameWorld(midPointY, midPointX, camwidth, camheight);
-        Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camwidth, screenHeight / camheight, camwidth, camheight));
-        renderer = new GameRenderer(world, camwidth, camheight);
+        Tween.setWaypointsLimit(10);
+        world = new GameWorld(midPointY, midPointX, camWidth, camHeight);
+        Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
+        renderer = new GameRenderer(world, camWidth, camHeight);
         world.setRenderer(renderer);
     }
 
@@ -45,25 +48,25 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         Gdx.app.log(Integer.toString(Gdx.graphics.getWidth()),Integer.toString(Gdx.graphics.getHeight()) );
-        Gdx.app.log("GameScreen", "show called");
+        Gdx.app.log("GameHandler", "show called");
     }
 
     @Override
     public void hide() {
 
-        Gdx.app.log("GameScreen", "hide called");
+        Gdx.app.log("GameHandler", "hide called");
     }
 
     @Override
     public void pause() {
 
-        Gdx.app.log("GameScreen", "pause called");
+        Gdx.app.log("GameHandler", "pause called");
     }
 
     @Override
     public void resume() {
 
-        Gdx.app.log("GameScreen", "resume called");
+        Gdx.app.log("GameHandler", "resume called");
     }
 
     @Override
