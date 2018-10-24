@@ -12,19 +12,19 @@ import aurelienribon.tweenengine.TweenManager;
 
 public class AcidBird extends BirdAbstractClass{
     public AcidBird(float delta, float camheight, float camwidth, TweenManager manager){
-        super(delta, camheight, camwidth, manager);
-        yVelocity=4;
+        super(delta, camheight, camwidth);
+        yVel=4;
         health=7;
         coins=15;
-        this.width = this.width-sizeVariance+r.nextInt(sizeVariance*2);
-        this.height = this.height-sizeVariance+r.nextInt(sizeVariance*2);
+        width += -sizeVariance+ r.nextInt(sizeVariance*2);
+        height += -sizeVariance+r.nextInt(sizeVariance*2);
         super.load("sprites/acid.png", 0.15f);
         animation=rightFlaps;
 
     }
 
     @Override
-    public void setManager(float delta, float camwidth, TweenManager manager, float edge) {
+    public void setManager(float delta, float camwidth, float edge) {
         final Animation[] list = {rightFlaps, frontFlaps, leftFlaps, frontFlaps};
 
         final TweenCallback animationSwitch = new TweenCallback() {
@@ -36,8 +36,7 @@ public class AcidBird extends BirdAbstractClass{
                 animation = list[counter++];
             }
         };
-
-        (Tween.to(x, -1, 10).waypoint(edge).setCallback(animationSwitch)).delay(3).setCallback(animationSwitch).target(-edge).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
-                .ease(TweenEquations.easeOutBack).repeatYoyo(Tween.INFINITY, 0).start(manager);
+        xMotion = (Tween.to(x, -1, 10).waypoint(edge).setCallback(animationSwitch)).delay(3).setCallback(animationSwitch).target(-edge).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
+                .ease(TweenEquations.easeOutBack).repeatYoyo(Tween.INFINITY, 0).start();
     }
 }

@@ -15,6 +15,7 @@ import java.util.Random;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenAccessor;
+import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 
 /**
@@ -43,69 +44,79 @@ import aurelienribon.tweenengine.TweenManager;
 
 public abstract class BirdAbstractClass {
     protected GameWorld world;
-    protected float rotation;
     protected Circle boundingCircle;
-    protected float x, y, yVelocity;
+    protected float x, y, yVel, yAcc, xVel, rotation;
 
     private final float edge;
     protected int width, height;
     protected double camwidth, camheight;
-    protected boolean isGone;
+    public boolean isOffCam;
     public float  starty;
     protected boolean isAlive;
     protected Random r;
     protected Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
     protected int sizeVariance, coins, health, diamonds, counter;
-    private TweenManager manager;
+    protected Tween xMotion;
 
-
-    public BirdAbstractClass( float delta, float camheight, float camwidth, TweenManager manager) {
-
+    public BirdAbstractClass( float delta, float camheight, float camwidth) {
         x= r.nextInt((int)camwidth);
         y= r.nextInt((int)camheight); //center of camera
         isAlive=true;
         edge = (camwidth/2)-width/2;
         this.camwidth = camwidth;
         this.camheight = camheight;
-        isGone = false;
+        isOffCam = false;
         isAlive = true;
-        this.manager=manager;
+        //this.manager=manager;
         boundingCircle = new Circle();
         Tween.registerAccessor(float.class, new ValueAccessor());
-        setManager(delta, camwidth, manager, edge);
+        setManager(delta, camwidth, edge);
     };
 
-    public abstract void setManager(float delta, float camwidth, TweenManager manager, float edge);
+    public abstract void setManager(float delta, float camwidth, float edge);
 
     //public abstract void fly(float delta) ;
 
     public void update(float delta){
-        y+=yVelocity;
+        xVel=x;
+        xMotion.update(delta);
+        //manager.update(delta);
+        xVel=x-xVel;    //rate of change of x (next tweened value - last value)
+        rotation = -(float) Math.toDegrees(Math.atan(yVel / -xVel ));
+        y+=yVel;
         if (isAlive) {
             if (health <= 0) {
-                die(delta);
+                die();
             }
-
             if (y > camheight / 2 - 0) { //0 being height of top of tower where score & diamonds are
                 health=0;
                 GameWorld.addGold(-coins);
+                isOffCam=true;
             }
         } else {
-            manager.update(delta);
+            yVel+=yAcc;
+            x+=xVel;
+
             if (y+height/2<-(camheight/2) || x+width/2<(-camwidth/2) || x-width/2>camwidth/2){
-                
+                isOffCam=true;
             }
         }
-
     };
 
 
 
-    public void die(float delta){
-        manager.killTarget(this);
+    public void die(){
+        xMotion.kill();
         isAlive=false;
-        if (x>0){
+        animation=frontFlaps;
+        animation.setFrameDuration(0.1f);
 
+        yAcc=-5;
+        yVel=40;
+        if (x>0){   //if dying on right side fall to left and vice versa
+            xVel=-2;
+        } else {
+            xVel=2;
         }
     }
 
@@ -143,6 +154,7 @@ public abstract class BirdAbstractClass {
 
         for (TextureRegion i : side){
             i.flip(true, false);
+
         }
         leftFlaps= new Animation<TextureRegion>(flapSpeed, side);
         leftFlaps.setPlayMode(Animation.PlayMode.LOOP);
@@ -204,4 +216,5 @@ public abstract class BirdAbstractClass {
         return boundingCircle;
     }
     */
+
 }

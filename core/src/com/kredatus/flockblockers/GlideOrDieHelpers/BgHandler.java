@@ -128,7 +128,7 @@ System.out.println("First easing target: "+(-bgh+camheight/2 )  /2);
         }
     }*/
 
-    public void update(int boostnumber, float runTime, float delta) {
+    public void update(float runTime, float delta) {
 /*if (!vertPosBg.isStarted()){
             vertPosBg.start(manager);
             horizPosBg.start(manager);

@@ -16,7 +16,8 @@ import aurelienribon.tweenengine.TweenManager;
 
 public class LunarBird extends BirdAbstractClass {
     public LunarBird(float delta, float camheight, float camwidth, TweenManager manager){
-        super(delta, camheight, camwidth, manager);
+        super(delta, camheight, camwidth);
+        this.yVel=2;
         this.coins=50;
         this.health=7;
         this.width = width-sizeVariance+r.nextInt(sizeVariance*2);
@@ -27,7 +28,7 @@ public class LunarBird extends BirdAbstractClass {
     }
 
     @Override
-    public void setManager(float delta, float camwidth, TweenManager manager, float edge) {
+    public void setManager(float delta, float camwidth, float edge) {
         final Animation[] list = {rightFlaps, frontFlaps, leftFlaps, frontFlaps};
 
         final TweenCallback animationSwitch = new TweenCallback() {
@@ -39,9 +40,8 @@ public class LunarBird extends BirdAbstractClass {
                 animation = list[counter++];
             }
         };
-
-        (Tween.to(x, -1, 10).waypoint(edge).setCallback(animationSwitch)).delay(3).setCallback(animationSwitch).target(-edge).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
-                .ease(TweenEquations.easeOutBack).repeatYoyo(Tween.INFINITY, 0).start(manager);
+        xMotion = (Tween.to(x, -1, 10).waypoint(edge).setCallback(animationSwitch)).delay(3).setCallback(animationSwitch).target(-edge).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
+                .ease(TweenEquations.easeOutBack).repeatYoyo(Tween.INFINITY, 0).start();
     }
 }
 
