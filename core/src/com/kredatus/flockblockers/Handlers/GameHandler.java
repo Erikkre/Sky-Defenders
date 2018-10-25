@@ -2,9 +2,11 @@ package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Handlers.InputHandler;
+import com.kredatus.flockblockers.Helpers.BirdAccessor;
 
 import aurelienribon.tweenengine.Tween;
 
@@ -26,6 +28,7 @@ public class GameHandler implements Screen {
         System.out.println("width: "+camWidth);
         midPointY = camHeight/2;
         midPointX = camWidth/2;
+
 
         Tween.setWaypointsLimit(10);
         world = new GameWorld(midPointY, midPointX, camWidth, camHeight);

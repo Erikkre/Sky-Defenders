@@ -1,23 +1,25 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
-import com.kredatus.flockblockers.Helpers.FloatAccessor;
-import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
+import com.kredatus.flockblockers.Helpers.BirdAccessor;
+
+
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
+import javax.xml.soap.Text;
+
+import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenAccessor;
-import aurelienribon.tweenengine.TweenEquations;
-import aurelienribon.tweenengine.TweenManager;
+
 
 /**
  * Created by Erik Kredatus on 9/8/2018.
@@ -48,7 +50,7 @@ public abstract class BirdAbstractClass {
     protected Circle boundingCircle;
     public float x, y, yVel, yAcc, xVel, rotation;
 
-    private final float edge;
+
     public int width, height;
     protected double camWidth, camHeight;
     public boolean isOffCam;
@@ -57,23 +59,17 @@ public abstract class BirdAbstractClass {
     protected Random r =new Random();
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
     protected int sizeVariance, coins, health, diamonds, counter;
-    protected Tween xMotion;
-
+    protected Timeline xMotion;
+    TextureRegion[] side;
     public BirdAbstractClass( float camHeight, float camWidth) {
-        edge = (camWidth)-width/2;
 
-        x= width/2 + r.nextInt((int)edge-width/2);
-        y=0;
         isAlive=true;
-
-        this.camWidth = camWidth;
-        this.camHeight = camHeight;
         isOffCam = false;
         isAlive = true;
         //this.manager=manager;
         boundingCircle = new Circle();
-        Tween.registerAccessor(Float.class, new FloatAccessor());
-        setManager(camWidth, edge);
+
+
     };
 
     public abstract void setManager(float camWidth, float edge);
@@ -106,8 +102,6 @@ public abstract class BirdAbstractClass {
         }
     };
 
-
-
     public void die(){
         xMotion.kill();
         isAlive=false;
@@ -129,22 +123,27 @@ public abstract class BirdAbstractClass {
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
 
         TextureRegion[] front=new TextureRegion[0];
-        TextureRegion[] side=new TextureRegion[0];
-        TextureRegion[] back=new TextureRegion[0];
+        List<TextureRegion> side =new TextureRegion[0];
+        TextureRegion[] leftSide=new TextureRegion[0];
+        TextureRegion[] back= new TextureRegion[0];
 
         for (int i=0;i<16;i++) {
-
             TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
-            temp.flip(false, true);
             positions.add(temp);
             if (i == 5) {
                 front =  positions.toArray(new TextureRegion[6]);
+
                 positions.clear();
             } else if (i == 11){
-                side = positions.toArray(new TextureRegion[6]);
+                side=new ArrayList((TextureRegion[]) Arrays.asList(positions));
+                leftSide = positions.toArray(new TextureRegion[6]);
+                for (TextureRegion j : leftSide){
+                    j.flip(true, false);
+                }
                 positions.clear();
             } else if (i==15){
                 back = positions.toArray(new TextureRegion[4]);
+
                 positions.clear();
             }
         }
@@ -155,11 +154,7 @@ public abstract class BirdAbstractClass {
         rightFlaps= new Animation<TextureRegion>(flapSpeed, side);
         rightFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-        for (TextureRegion i : side){
-            i.flip(true, true);
-
-        }
-        leftFlaps= new Animation<TextureRegion>(flapSpeed, side);
+        leftFlaps= new Animation<TextureRegion>(flapSpeed, leftSide);
         leftFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
         backFlaps= new Animation<TextureRegion>(flapSpeed, back);

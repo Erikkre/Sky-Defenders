@@ -550,9 +550,9 @@ public class GameRenderer {
 
         for (BirdAbstractClass i : birdsList) {
             batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime), i.x - i.width / 2, i.y - i.height / 2,
-                    i.x - i.width / 2, i.y - i.height / 2, i.width, i.height, 1, 1,0);
+                    i.x - i.width / 2, i.y - i.height / 2, i.width, i.height, 0.5f, 0.5f,0);
 
-            System.out.println("x: "+(i.x - i.width / 2) + " y: "+ (i.y - i.height / 2));
+            //System.out.println("x: "+(i.x - i.width / 2) + " y: "+ (i.y - i.height / 2));
         }
         //birdsList.get(0).update(delta);
         /*
@@ -672,7 +672,7 @@ public class GameRenderer {
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(transitionColor.r, transitionColor.g,transitionColor.b, alpha.getValue());
-            shapeRenderer.rect(glider.getPosition().x-camWidth*5000, glider.getPosition().y-camHeight*5000, camWidth*10000, camHeight*10000);
+            shapeRenderer.rect(-camWidth*5000, -camHeight*5000, camWidth*10000, camHeight*10000);
             shapeRenderer.end();
             Gdx.gl.glDisable(GL30.GL_BLEND);
         }

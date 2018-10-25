@@ -321,9 +321,9 @@ public class AssetHandler {
         boostdown = new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
         boostdown.flip(false, true);
 
-        phoenixBird = new Texture(Gdx.files.internal("sprites/phoenix.png"));
-        phoenixBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        phoenixAnimations = birdTextureToSprite(phoenixBird);
+        //phoenixBird = new Texture(Gdx.files.internal("sprites/phoenix.png"));
+        //phoenixBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        //phoenixAnimations = birdTextureToSprite(phoenixBird);
 
 
         Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
@@ -435,7 +435,7 @@ public class AssetHandler {
         }
         return new Animation<TextureRegion>(0.125f, positions);
     }
-
+/*
     public static Animation[] birdTextureToSprite (Texture texture) {
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
 
@@ -481,7 +481,8 @@ public class AssetHandler {
             animationList = new Animation[]{frontFlaps, rightSideFlaps, leftSideFlaps};
         }
         return animationList;
-    }
+
+    }*/
     public static int getbgScaling(){
         return bgscaling;
     }

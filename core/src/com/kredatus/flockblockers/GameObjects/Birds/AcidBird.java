@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 
 import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
@@ -37,7 +38,9 @@ public class AcidBird extends BirdAbstractClass{
                 animation = list[counter++];
             }
         };
-        xMotion = (Tween.to(x, -1, 10).waypoint(edge).setCallback(animationSwitch)).delay(3).setCallback(animationSwitch).target(-edge).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
-                .ease(TweenEquations.easeOutBack).repeatYoyo(Tween.INFINITY, 0).start();
+        (xMotion = Timeline.createSequence()
+                .push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutBack).setCallback(animationSwitch))
+                .push(Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeOutBack).setCallback(animationSwitch)))
+                .repeatYoyo(Tween.INFINITY, 0).start();
     }
 }
