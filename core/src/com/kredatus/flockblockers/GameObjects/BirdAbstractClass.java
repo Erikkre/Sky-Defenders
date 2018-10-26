@@ -6,8 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
-import com.kredatus.flockblockers.Helpers.BirdAccessor;
-
+import com.kredatus.flockblockers.TweenAccessors.Value;
 
 
 import java.util.ArrayList;
@@ -48,19 +47,20 @@ import aurelienribon.tweenengine.Tween;
 public abstract class BirdAbstractClass {
     protected GameWorld world;
     protected Circle boundingCircle;
-    public float x, y, yVel, yAcc, xVel, rotation;
+    public float preX, y, yVel, yAcc, xVel, rotation;
+    public Value x =new Value();
 
 
     public int width, height;
-    protected double camWidth, camHeight;
+    protected float camWidth, camHeight;
     public boolean isOffCam;
     public float  starty;
     protected boolean isAlive;
     protected Random r =new Random();
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
-    protected int sizeVariance, coins, health, diamonds, counter;
+    protected int sizeVariance, coins, health, diamonds, cnt=0;
     protected Timeline xMotion;
-    TextureRegion[] side;
+
     public BirdAbstractClass( float camHeight, float camWidth) {
 
         isAlive=true;
@@ -72,15 +72,15 @@ public abstract class BirdAbstractClass {
 
     };
 
-    public abstract void setManager(float camWidth, float edge);
+    public abstract void setManager(float camWidth);
 
     //public abstract void fly(float delta) ;
 
-    public void update(float delta){
-        xVel=x;
+    public void update(float delta, float runTime){
+        preX=x.getValue();
         xMotion.update(delta);
         //manager.update(delta);
-        xVel=x-xVel;    //rate of change of x (next tweened value - last value)
+        xVel=x.getValue()-preX;    //rate of change of x (next tweened value - last value)
         //rotation = -(float) Math.toDegrees(Math.atan(yVel / -xVel ));
         y+=yVel;
         if (isAlive) {
@@ -93,14 +93,18 @@ public abstract class BirdAbstractClass {
                 isOffCam=true;
             }
         } else {
+            System.out.println("HELLOOOOOOOOOOOO");
             yVel+=yAcc;
-            x+=xVel;
+            x.setValue(x.getValue()+xVel);
 
-            if (y+height/2<-(0) || x+width/2< 0 || x-width/2> camWidth){
+            if (y+height/2<-(0) || x.getValue()+width/2< 0 || x.getValue()-width/2> camWidth){
                 isOffCam=true;
             }
         }
-    };
+        specificUpdate(delta, runTime);
+    }
+
+    public abstract void specificUpdate(float delta, float runTime);
 
     public void die(){
         xMotion.kill();
@@ -110,48 +114,57 @@ public abstract class BirdAbstractClass {
 
         yAcc=-5;
         yVel=40;
-        if (x>0){   //if dying on right side fall to left and vice versa
+        if (x.getValue()>0){   //if dying on right side fall to left and vice versa
             xVel=-2;
         } else {
             xVel=2;
         }
     }
 
-    public final void load(String path, float flapSpeed){
+    public final Animation[] load(String path, float flapSpeed){
         Texture sprites = new Texture(Gdx.files.internal(path));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
+        ArrayList<TextureRegion> leftSidePositions = new ArrayList<TextureRegion>();
 
         TextureRegion[] front=new TextureRegion[0];
-        List<TextureRegion> side =new TextureRegion[0];
+        TextureRegion[] rightSide=new TextureRegion[0];
         TextureRegion[] leftSide=new TextureRegion[0];
         TextureRegion[] back= new TextureRegion[0];
 
         for (int i=0;i<16;i++) {
             TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
+
             positions.add(temp);
+
+            if (i>5&&i<=11){
+                TextureRegion flipTemp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
+                flipTemp.flip(true,false);
+                leftSidePositions.add(flipTemp);
+            }
             if (i == 5) {
                 front =  positions.toArray(new TextureRegion[6]);
+                positions.clear();
+
+            } else if (i == 11){
+                rightSide=positions.toArray(new TextureRegion[6]);
+                leftSide =leftSidePositions.toArray(new TextureRegion[6]);
 
                 positions.clear();
-            } else if (i == 11){
-                side=new ArrayList((TextureRegion[]) Arrays.asList(positions));
-                leftSide = positions.toArray(new TextureRegion[6]);
-                for (TextureRegion j : leftSide){
-                    j.flip(true, false);
-                }
-                positions.clear();
+                leftSidePositions.clear();
+
             } else if (i==15){
                 back = positions.toArray(new TextureRegion[4]);
-
                 positions.clear();
+
             }
         }
 
         frontFlaps= new Animation<TextureRegion>(flapSpeed, front);
         frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-        rightFlaps= new Animation<TextureRegion>(flapSpeed, side);
+        rightFlaps= new Animation<TextureRegion>(flapSpeed, rightSide);
         rightFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
         leftFlaps= new Animation<TextureRegion>(flapSpeed, leftSide);
@@ -162,7 +175,8 @@ public abstract class BirdAbstractClass {
 
         height=back[3].getRegionHeight();
         width=back[0].getRegionWidth();
-        animation=frontFlaps;
+
+        return new Animation[]{frontFlaps, leftFlaps, rightFlaps, backFlaps};
     }
 
     public final void hit(Bullet bullet){

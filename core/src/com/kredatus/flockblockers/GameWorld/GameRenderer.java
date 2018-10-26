@@ -549,8 +549,10 @@ public class GameRenderer {
         //glider.getPosition().x+glider.getWidth()/2  glider.getPosition().y+glider.getHeight()/2
 
         for (BirdAbstractClass i : birdsList) {
-            batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime), i.x - i.width / 2, i.y - i.height / 2,
-                    i.x - i.width / 2, i.y - i.height / 2, i.width, i.height, 0.5f, 0.5f,0);
+            float x=i.x.getValue() - i.width / 2, y=i.y - i.height / 2;
+
+            batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime), x, y,
+                    x, y, i.width, i.height, 1f, 1f,0);
 
             //System.out.println("x: "+(i.x - i.width / 2) + " y: "+ (i.y - i.height / 2));
         }

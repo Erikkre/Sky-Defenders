@@ -84,7 +84,7 @@ public class BgHandler {
             }
         };
 
-        Tween.registerAccessor(Value.class, new ValueAccessor());
+
         (horizPosBg = Timeline.createSequence()
                 .push(Tween.to(horiz, -1, 10).target(-bgw/2+camWidth/2).ease(TweenEquations.easeInSine)    )
                 .push(Tween.to(horiz, -1, 10).target((camWidth)-bgw) .ease(TweenEquations.easeNone))
