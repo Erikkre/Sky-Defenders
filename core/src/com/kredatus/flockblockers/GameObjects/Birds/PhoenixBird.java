@@ -26,8 +26,9 @@ Tween second;
         this.yVel=10;
         this.diamonds=1;
         this.coins=7;
-        this.health=100;
-        this.sizeVariance=15;
+
+        this.sizeVariance=200;
+        sizeRatio=1;
 
         animSeq = super.load("sprites/phoenix.png", 0.15f);
         frontFlaps=animSeq[0];
@@ -37,11 +38,19 @@ Tween second;
         animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
         edge = (camWidth)-width/2;
 
-        //this.width += -sizeVariance+r.nextInt(sizeVariance*2);
-        //this.height += -sizeVariance+r.nextInt(sizeVariance*2);
+
+        System.out.println("Height before: " + height+ " width: " + width);
+        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))/sizeRatio)/width;
+
+
+        width *=finalSizeRatio;
+        height *= finalSizeRatio;
+
+        System.out.println("Height after: " + height+ " width: " + width);
+        health=100;
 
         animation=rightFlaps;
-        x=(width/2 + r.nextInt((int)edge-width));
+        x=(width/2 + r.nextInt((int)(edge-width)));
 
         y=0;
         this.camWidth = camWidth;
@@ -58,22 +67,22 @@ Tween second;
         if (cnt==0&&x>(2*camWidth)/3) {
             System.out.println("1");
             animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
+            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
         } else if (cnt==1&&x<(2*camWidth)/3) {
             System.out.println("2");
             animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
+            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
         } else if (cnt==2&&x<(camWidth)/3) {
             System.out.println("3");
             animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
+            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
         } else if (cnt==3&&x>(camWidth)/3) {
             System.out.println("4");
             animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
+            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
         }
     }

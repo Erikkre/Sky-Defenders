@@ -593,7 +593,7 @@ public class GameRenderer {
 //                System.out.println(cam.position);
             prepareTransition(0, 0, 0, 10f);}
             if (!bgHandler.vertPosBg.isStarted()){
-                bgHandler.vertPosBg.start(manager);
+                //bgHandler.vertPosBg.start(manager);
                 bgHandler.horizPosBg.start(manager);
             }
             drawBackground();

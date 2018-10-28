@@ -78,7 +78,7 @@ public class BgHandler {
         bg2ToBg1Tail=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                System.out.println("Reset bg2y to bg1y+3500, tail");
+                //System.out.println("Reset bg2y to bg1y+3500, tail");
                 background2.addedY=0;
                 background2.reset(background.getTailY(), bgNumber++);
             }
@@ -91,20 +91,20 @@ public class BgHandler {
                 .push(Tween.to(horiz, -1, 10).target(-bgw/2+camWidth/2).ease(TweenEquations.easeNone)    )
                 .push(Tween.to(horiz, -1, 10).target(0)     .ease(TweenEquations.easeOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0);
-System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
+//System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
 
 
         (vertPosBg = Timeline.createSequence()  //7 8 2 2 2 2
                 //.push(Tween.to(vert, -1, 3).target((-bgh)  /2).ease(TweenEquations.easeInCubic)    )
-                .push((Tween.to(vert,-1, 3).target(-bgh+camHeight/2 ) .ease(TweenEquations.easeOutBack)).               setCallback(pastStoryIntro))
+                .push((Tween.to(vert,-1, 1).target(-bgh+camHeight/2 ) .ease(TweenEquations.easeOutBack)).               setCallback(pastStoryIntro))
                 .push(Tween.to(vert, -1, 1).target(-bgh+camHeight).ease(TweenEquations.easeInOutSine))
-                .push(Tween.to(vert, -1, 3).target(-bgh).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))
-                .push(Tween.to(vert, -1, 2).target(-bgh+camHeight/2).ease(TweenEquations.easeInOutSine))
-                .push(Tween.to(vert, -1, 2).target(-bgh*2+bgh/50+camHeight/2)     .ease(TweenEquations.easeInElastic))
-                .push(Tween.to(vert, -1, 2).target(-bgw*2-bgh/50+camHeight/2).ease(TweenEquations.easeInOutSine).repeatYoyo(2, 0))
-                .push((Tween.to(vert,-1,2).target(-bgw*2).ease(TweenEquations.easeInCubic))           .setCallback(bg2ToBg1Tail))                   )
-                .repeat(Tween.INFINITY, 0);
+                .push(Tween.to(vert, -1, 1).target(-bgh).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))
+                .push(Tween.to(vert, -1, 1).target(-bgh+camHeight/2).ease(TweenEquations.easeInOutSine))
+                .push(Tween.to(vert, -1, 1).target(-bgh*2+bgh/50+camHeight/2)     .ease(TweenEquations.easeInElastic))
+                .push((Tween.to(vert, -1, 1).target(-bgh*2-bgh/50+camHeight/2).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)))
+                .push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
+                .repeat(Tween.INFINITY, 0).start(manager);
 
     }
 

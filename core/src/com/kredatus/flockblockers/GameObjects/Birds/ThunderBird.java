@@ -37,7 +37,7 @@ public class ThunderBird extends BirdAbstractClass {
 
         animation = rightFlaps;
         edge = (camWidth) - width / 2;
-        x=(width / 2 + r.nextInt((int) edge - width));
+        x=(width / 2 + r.nextInt((int)( edge - width)));
         y = 0;
         this.camWidth = camWidth;
         this.camHeight = camHeight;

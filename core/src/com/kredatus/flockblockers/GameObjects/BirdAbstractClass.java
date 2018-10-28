@@ -50,11 +50,11 @@ import aurelienribon.tweenengine.TweenEquations;
 public abstract class BirdAbstractClass {
     protected GameWorld world;
     protected Circle boundingCircle;
-    public float preX, x, y, yVel, yAcc, xVel, rotation;
+    public float preX, x, y, yVel, yAcc, xVel, rotation, sizeRatio, finalSizeRatio;
 
 
 
-    public int width, height;
+    public float width, height;
     protected float camWidth, camHeight, edge;
     public boolean isOffCam;
     public float  starty;
