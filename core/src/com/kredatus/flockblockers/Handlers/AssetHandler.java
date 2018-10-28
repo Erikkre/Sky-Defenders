@@ -20,13 +20,13 @@ public class AssetHandler {
     public static Random r = new Random();
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;
-    public static Animation[] phoenixAnimations, flockAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
-    public static Texture  bgPhoenix,bgFlock,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, flockBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
+    public static Animation[] phoenixAnimations, nightAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
+    public static Texture  bgPhoenix,bgNight,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, nightBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
             creditstexture, creditsdowntexture, exittexture, exitdowntexture, retrytexture, retrydowntexture, readytexture, readydowntexture,
             storytexture, storydowntexture, scoretexture, ratingtexture, topscoretexture, menutexture, menudowntexture, youvediedtexture,
             creditsbgtexture, deathmenubgtexture, instrtexture, instrdowntexture, gliderbgtexture, instrbgtexture, readybgtexture, nexttexture,
             nextdowntexture, worldStabilizedtexture;
-    public static TextureRegion  bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgFlocktexture, bgFlocktexture2,bgGoldtexture, bgGoldtexture2,bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture,boostdown,logo, playdown,
+    public static TextureRegion  bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgNighttexture, bgNighttexture2,bgGoldtexture, bgGoldtexture2,bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture,boostdown,logo, playdown,
             play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu, menudown,
             score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized;
 
@@ -206,14 +206,14 @@ public class AssetHandler {
         bgList.add(bgPhoenixtexture2);
 
 
-         bgFlock = new Texture(Gdx.files.internal("backgrounds/levels/bgFlock.jpg"));
-        bgFlock.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgFlocktexture = new TextureRegion(bgFlock, bgFlock.getWidth(), bgFlock.getHeight());
-        bgFlocktexture.flip(false, true);
-        bgList.add(bgFlocktexture);
+         bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgBlack.jpg"));
+        bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
+        bgNighttexture.flip(false, true);
+        bgList.add(bgNighttexture);
 
-        bgFlocktexture2 = new TextureRegion(bgFlock, bgFlock.getWidth(), bgFlock.getHeight());
-        bgList.add(bgFlocktexture2);
+        bgNighttexture2 = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
+        bgList.add(bgNighttexture2);
 
 
          bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater.jpg"));
@@ -335,9 +335,9 @@ public class AssetHandler {
         Texture whiteTinyBird = new Texture(Gdx.files.internal("sprites/whiteTinyBird.png"));
         whiteTinyBirdAnimations=tinyBirdTextureToAnimation(whiteTinyBird);
         /*
-        flockBird = new Texture(Gdx.files.internal("sprites/flock.png"));
-        flockBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        flockAnimations = textureToSprite(flockBird);
+        nightBird = new Texture(Gdx.files.internal("sprites/Night.png"));
+        NightBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        NightAnimations = textureToSprite(NightBird);
 
         waterBird = new Texture(Gdx.files.internal("sprites/water.png"));
         waterBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -540,13 +540,13 @@ public class AssetHandler {
         bgGold.dispose();
         bgLunar.dispose();
         bgThunder.dispose();
-        bgFlock.dispose();
+        bgNight.dispose();
 
         phoenixBird.dispose();
         acidBird.dispose();
         waterBird.dispose();
         fireBird.dispose();
-        flockBird.dispose();
+        nightBird.dispose();
         thunderBird.dispose();
         goldBird.dispose();
         lunarBird.dispose();

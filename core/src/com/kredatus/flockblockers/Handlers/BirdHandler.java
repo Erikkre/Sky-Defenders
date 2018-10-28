@@ -10,10 +10,11 @@ import java.util.ArrayList;
 public class BirdHandler {
 
     public static ArrayList<BirdAbstractClass> birdsList = new ArrayList<BirdAbstractClass>();
-
+    public static String[] birdOrderList={"pB","wB","nB","aB","fB","tB","lB","gB"};
+    public static int[] birdNumberList=  { 1,   40,  30,  20,  20,  20,  10,  5  };
     public BirdHandler(BgHandler bgHandler, float camWidth, float camHeight){
 
-        if (bgHandler.getBackground().texture==AssetHandler.bgPhoenixtexture2){
+        if (bgHandler.getBackground().texture==AssetHandler.bgPhoenixtexture2||bgHandler.getBackground2().texture==AssetHandler.bgPhoenixtexture2){
 
         }
         PhoenixBird bird = new PhoenixBird( camHeight,camWidth);

@@ -15,11 +15,11 @@ import aurelienribon.tweenengine.TweenEquations;
  * Created by Erik Kredatus on 9/8/2018.
  */
 
-public class FlockBird extends BirdAbstractClass {
+public class NightBird extends BirdAbstractClass {
     private final float edge;
     final Animation[] animSeq = {frontFlaps, leftFlaps, frontFlaps, rightFlaps};
     final int[] animSeqList = {0,1,2,3};
-    public FlockBird( float camHeight, float camWidth){
+    public NightBird(float camHeight, float camWidth){
         super( camHeight, camWidth);
         this.yVel=1;
         this.diamonds=1;

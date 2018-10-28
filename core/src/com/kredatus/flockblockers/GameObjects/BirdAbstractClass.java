@@ -27,14 +27,15 @@ import aurelienribon.tweenengine.TweenEquations;
  * Created by Erik Kredatus on 9/8/2018.
  *
  *                  Health Speed  Size  Gold             Amount/Wave
- * FlockBird  =     3      S      S      8(480 / wave)   60
- * WaterBird  =     3      M      S      12(480)         40
- * AcidBird   =     7      F      M      15(300)         20
- * FireBird   =     7      F      S      15(300)         20
- * ThunderBird=     7      XF     M      15(300)         20
- * LunarBird  =     7      XF     S      50(500)         10
- * GoldBird   =     25     S      L      100(500)        5
- * PhoenixBird=     100    S      XL     7+Diamond       1
+ *
+ * WaterBird  =     1(S)   S      M      12(480)         40
+ * NightBird  =     1(S)   S      S      8(480 / wave)   30
+ * AcidBird   =     7(M)   M      M      15(300)         20
+ * FireBird   =     7(M)   M      S      15(300)         20
+ * ThunderBird=     7(M)   F      M      15(300)         20
+ * LunarBird  =     7(M)   XF     S      50(500)         10
+ * GoldBird   =     25(L)  S      L      100(500)        5
+ * PhoenixBird=     100(XL)S      XL     7+Diamond       1
 
  Gun upgrades work as: each can be upgraded once, to upgrade to level 2 must upgrade whole turret, see .excel file (Dmg, RoF, Pen)
 
@@ -48,7 +49,7 @@ import aurelienribon.tweenengine.TweenEquations;
  */
 
 public abstract class BirdAbstractClass {
-    protected GameWorld world;
+    //protected GameWorld world;
     protected Circle boundingCircle;
     public float preX, x, y, yVel, yAcc, xVel, rotation, sizeRatio, finalSizeRatio;
 

@@ -12,6 +12,7 @@ public class BirdAccessor implements TweenAccessor<BirdAbstractClass>{
         System.out.print(birdTarget.x);
         switch (tweenType){
             case (xMotion): birdTarget.x=newValues[0]; System.out.println(" set to "+newValues[0]);
+
         }
     }
 

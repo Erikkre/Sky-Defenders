@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.kredatus.flockblockers.GameObjects.Background;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
-import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -180,11 +179,10 @@ public class BgHandler {
         updatelist(invflipboostlist, true, true, boostnumber);*/
         // Check if any of the boosts are scrolled left,
         // and reset accordingly
-        if (bgNumber== AssetHandler.bgList.size()){
+        if (bgNumber== AssetHandler.bgList.size()) {
             //waveNumber+=1;
-            bgNumber=0;
+            bgNumber = 0;
         }
-
 
         if (background.isScrolledDown()) {
             System.out.println("reset bg1y to bg2y +3500");
