@@ -37,7 +37,7 @@ public class ThunderBird extends BirdAbstractClass {
 
         animation = rightFlaps;
         edge = (camWidth) - width / 2;
-        x.setValue(width / 2 + r.nextInt((int) edge - width));
+        x=(width / 2 + r.nextInt((int) edge - width));
         y = 0;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
@@ -50,24 +50,24 @@ public class ThunderBird extends BirdAbstractClass {
         if (cnt == 4) {
             cnt = 0;
         }
-        System.out.println(x.getValue());
+        System.out.println(x);
 
-        if (animSeqList[cnt] == 0 && x.getValue() > (5 * camWidth) / 6) {
+        if (animSeqList[cnt] == 0 && x > (5 * camWidth) / 6) {
             System.out.println("1");
             animation = animSeq[cnt++];
             width = ((TextureRegion) animation.getKeyFrame(runTime)).getRegionWidth();
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt] == 1 && x.getValue() < (5 * camWidth) / 6) {
+        } else if (animSeqList[cnt] == 1 && x < (5 * camWidth) / 6) {
             System.out.println("2");
             animation = animSeq[cnt++];
             width = ((TextureRegion) animation.getKeyFrame(runTime)).getRegionWidth();
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt] == 2 && x.getValue() < (camWidth) / 6) {
+        } else if (animSeqList[cnt] == 2 && x < (camWidth) / 6) {
             System.out.println("3");
             animation = animSeq[cnt++];
             width = ((TextureRegion) animation.getKeyFrame(runTime)).getRegionWidth();
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt] == 3 && x.getValue() > (camWidth) / 6) {
+        } else if (animSeqList[cnt] == 3 && x > (camWidth) / 6) {
             System.out.println("4");
             animation = animSeq[cnt++];
             width = ((TextureRegion) animation.getKeyFrame(runTime)).getRegionWidth();
@@ -88,7 +88,7 @@ public class ThunderBird extends BirdAbstractClass {
                     counter=0;
                 }
             }
-        };*/
+        };
 
         (xMotion = Timeline.createSequence()
                 .push(Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeInOutQuint))

@@ -91,10 +91,13 @@ public class BgHandler {
                 .push(Tween.to(horiz, -1, 10).target(-bgw/2+camWidth/2).ease(TweenEquations.easeNone)    )
                 .push(Tween.to(horiz, -1, 10).target(0)     .ease(TweenEquations.easeOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0);
-System.out.println("First easing target: "+(-bgh+camHeight/2 )  /2);
+System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
+
+
+
         (vertPosBg = Timeline.createSequence()  //7 8 2 2 2 2
                 //.push(Tween.to(vert, -1, 3).target((-bgh)  /2).ease(TweenEquations.easeInCubic)    )
-                .push((Tween.to(vert, -1, 3).target(-bgh+camHeight/2 ) .ease(TweenEquations.easeOutBack)).               setCallback(pastStoryIntro))
+                .push((Tween.to(vert,-1, 3).target(-bgh+camHeight/2 ) .ease(TweenEquations.easeOutBack)).               setCallback(pastStoryIntro))
                 .push(Tween.to(vert, -1, 1).target(-bgh+camHeight).ease(TweenEquations.easeInOutSine))
                 .push(Tween.to(vert, -1, 3).target(-bgh).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))
                 .push(Tween.to(vert, -1, 2).target(-bgh+camHeight/2).ease(TweenEquations.easeInOutSine))

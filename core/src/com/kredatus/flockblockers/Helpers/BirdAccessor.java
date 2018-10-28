@@ -3,7 +3,7 @@ package com.kredatus.flockblockers.Helpers;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 
 import aurelienribon.tweenengine.TweenAccessor;
-/*
+
 public class BirdAccessor implements TweenAccessor<BirdAbstractClass>{
     private final int xMotion=1;
 
@@ -25,4 +25,4 @@ public class BirdAccessor implements TweenAccessor<BirdAbstractClass>{
             default: assert false; return 0;
         }
     }
-}*/
+}

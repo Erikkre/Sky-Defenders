@@ -4,8 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 
 /**
@@ -13,15 +15,15 @@ import aurelienribon.tweenengine.TweenEquations;
  */
 
 public class PhoenixBird extends BirdAbstractClass {
-    private float edge;
+
 
     public Animation[] animSeq;
-    public final int[] animSeqList = {0,1,2,3};
-
+    //public final int[] animSeqList = {0,1,2,3};
+Tween second;
     public PhoenixBird(float camHeight, float camWidth){
         super(camHeight, camWidth);
 
-        this.yVel=1;
+        this.yVel=10;
         this.diamonds=1;
         this.coins=7;
         this.health=100;
@@ -33,13 +35,14 @@ public class PhoenixBird extends BirdAbstractClass {
         rightFlaps=animSeq[2];
         backFlaps=animSeq[3];
         animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        edge = (camWidth)-width/2;
 
         //this.width += -sizeVariance+r.nextInt(sizeVariance*2);
         //this.height += -sizeVariance+r.nextInt(sizeVariance*2);
 
         animation=rightFlaps;
-        edge = (camWidth)-width/2;
-        x.setValue(width/2 + r.nextInt((int)edge-width));
+        x=(width/2 + r.nextInt((int)edge-width));
+
         y=0;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
@@ -48,25 +51,26 @@ public class PhoenixBird extends BirdAbstractClass {
 
     @Override
     public void specificUpdate(float delta, float runTime) {
+        //second.update(delta);
         if (cnt==4) {cnt=0;}
-        System.out.println(x.getValue());
+        System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 
-        if (animSeqList[cnt]==0&&x.getValue()>(5*camWidth)/6) {
+        if (cnt==0&&x>(2*camWidth)/3) {
             System.out.println("1");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt]==1&&x.getValue()<(5*camWidth)/6) {
+        } else if (cnt==1&&x<(2*camWidth)/3) {
             System.out.println("2");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt]==2&&x.getValue()<(camWidth)/6) {
+        } else if (cnt==2&&x<(camWidth)/3) {
             System.out.println("3");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt]==3&&x.getValue()>(camWidth)/6) {
+        } else if (cnt==3&&x>(camWidth)/3) {
             System.out.println("4");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
@@ -76,26 +80,39 @@ public class PhoenixBird extends BirdAbstractClass {
 
     @Override
     public void setManager(float camWidth) {
-
-        /*
-        final TweenCallback animationSwitch = new TweenCallback() {
+        final TweenCallback endIntro= new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
 
-                animation = animSeq[counter++];
-                if (counter==4){
-                    counter=0;
-                }
+                intro.pause();intro.kill();intro=null;
+                xMotion=first;
+                first.start();
+            }
+        };
+
+        intro = Tween.to(this, 1, 2).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
+        xMotion=intro;
+
+
+        /*final TweenCallback endfirst= new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                second.pause();
+                first.start();
             }
         };*/
 
+        first =Tween.to(this, 1, 3).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
+        //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
+        /*
         (xMotion = Timeline.createSequence()
-                .push(   Tween.to(x, 1, 4).target(edge).ease(TweenEquations.easeOutQuint))
+                .push(   Tween.to(this, 1, 6).target(edge).ease(TweenEquations.easeInOutQuint))
+                .push(   Tween.to(this, 1, 6).target(width/2).ease(TweenEquations.easeOutQuint)).setCallback(tweenStart)
                 //.push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeNone).setCallback(animationSwitch))
-                .push(   Tween.to(x, 1, 4).target(width/2).ease(TweenEquations.easeInOutQuint))
-                .push(   Tween.to(x, 1, 4).target(x.getValue()).ease(TweenEquations.easeInQuint))
+
                 //.push(   Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeNone).setCallback(animationSwitch))    )
-                ).repeat( Tween.INFINITY, 0).start();
+                .repeat( Tween.INFINITY, 0)).start();
+*/
                 /*.push(delay(3).setCallback(animationSwitch))
                 .target(width/2).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
                 .target(edge).setCallback(animationSwitch).delay(3)

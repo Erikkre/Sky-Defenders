@@ -32,7 +32,7 @@ public class AcidBird extends BirdAbstractClass{
 
         animation=rightFlaps;
         edge = (camWidth)-width/2;
-        x.setValue(width/2 + r.nextInt((int)edge-width));
+        x=(width/2 + r.nextInt((int)edge-width));
         y=0;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
@@ -43,24 +43,24 @@ public class AcidBird extends BirdAbstractClass{
     @Override
     public void specificUpdate(float delta, float runTime) {
         if (cnt==4) {cnt=0;}
-        System.out.println(x.getValue());
+        System.out.println(x);
 
-        if (animSeqList[cnt]==0&&x.getValue()>(5*camWidth)/6) {
+        if (animSeqList[cnt]==0&&x>(5*camWidth)/6) {
             System.out.println("1");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt]==1&&x.getValue()<(5*camWidth)/6) {
+        } else if (animSeqList[cnt]==1&&x<(5*camWidth)/6) {
             System.out.println("2");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt]==2&&x.getValue()<(camWidth)/6) {
+        } else if (animSeqList[cnt]==2&&x<(camWidth)/6) {
             System.out.println("3");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt]==3&&x.getValue()>(camWidth)/6) {
+        } else if (animSeqList[cnt]==3&&x>(camWidth)/6) {
             System.out.println("4");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
@@ -83,12 +83,12 @@ public class AcidBird extends BirdAbstractClass{
             }
         };*/
 
-        (xMotion = Timeline.createSequence()
+        /*(xMotion = Timeline.createSequence()
                 .push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeInOutQuint))
                 //.push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeNone).setCallback(animationSwitch))
                 .push(   Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeInOutQuint))
                 //.push(   Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeNone).setCallback(animationSwitch))    )
-        ).repeat( Tween.INFINITY, 3);
+        ).repeat( Tween.INFINITY, 3);*/
                 /*.push(delay(3).setCallback(animationSwitch))
                 .target(width/2).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
                 .target(edge).setCallback(animationSwitch).delay(3)

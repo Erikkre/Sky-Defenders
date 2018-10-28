@@ -16,8 +16,11 @@ import java.util.Random;
 
 import javax.xml.soap.Text;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquations;
 
 
 /**
@@ -47,40 +50,45 @@ import aurelienribon.tweenengine.Tween;
 public abstract class BirdAbstractClass {
     protected GameWorld world;
     protected Circle boundingCircle;
-    public float preX, y, yVel, yAcc, xVel, rotation;
-    public Value x =new Value();
+    public float preX, x, y, yVel, yAcc, xVel, rotation;
+
 
 
     public int width, height;
-    protected float camWidth, camHeight;
+    protected float camWidth, camHeight, edge;
     public boolean isOffCam;
     public float  starty;
     protected boolean isAlive;
     protected Random r =new Random();
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
     protected int sizeVariance, coins, health, diamonds, cnt=0;
-    protected Timeline xMotion;
+    //protected Timeline xMotion;
+    protected Tween intro, first, xMotion;
 
-    public BirdAbstractClass( float camHeight, float camWidth) {
 
+    public BirdAbstractClass(float camHeight, float camWidth) {
         isAlive=true;
         isOffCam = false;
         isAlive = true;
         //this.manager=manager;
         boundingCircle = new Circle();
-
-
-    };
+    }
 
     public abstract void setManager(float camWidth);
 
     //public abstract void fly(float delta) ;
 
     public void update(float delta, float runTime){
-        preX=x.getValue();
+        preX=x;
+
         xMotion.update(delta);
+
+        //} else {
+        //    startTween.update(delta);
+        //}
+        //xMotion.update(delta);
         //manager.update(delta);
-        xVel=x.getValue()-preX;    //rate of change of x (next tweened value - last value)
+        xVel=x-preX;    //rate of change of x (next tweened value - last value)
         //rotation = -(float) Math.toDegrees(Math.atan(yVel / -xVel ));
         y+=yVel;
         if (isAlive) {
@@ -90,14 +98,14 @@ public abstract class BirdAbstractClass {
             if (y > camHeight - 0) { //0 being height of top of tower where score & diamonds are
                 health=0;
                 GameWorld.addGold(-coins);
-                isOffCam=true;
+                //isOffCam=true;
             }
         } else {
             System.out.println("HELLOOOOOOOOOOOO");
             yVel+=yAcc;
-            x.setValue(x.getValue()+xVel);
+            x=x+xVel;
 
-            if (y+height/2<-(0) || x.getValue()+width/2< 0 || x.getValue()-width/2> camWidth){
+            if (y+height/2<0 || x+width/2< 0 || x-width/2> camWidth){
                 isOffCam=true;
             }
         }
@@ -112,9 +120,9 @@ public abstract class BirdAbstractClass {
         animation=frontFlaps;
         animation.setFrameDuration(0.1f);
 
-        yAcc=-5;
-        yVel=40;
-        if (x.getValue()>0){   //if dying on right side fall to left and vice versa
+        yAcc=-0.7f;
+        yVel=15;
+        if (x>0){   //if dying on right side fall to left and vice versa
             xVel=-2;
         } else {
             xVel=2;
