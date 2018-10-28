@@ -6,15 +6,16 @@ import com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird;
 
 import java.util.ArrayList;
 
-import aurelienribon.tweenengine.Tween;
 
 public class BirdHandler {
 
     public static ArrayList<BirdAbstractClass> birdsList = new ArrayList<BirdAbstractClass>();
 
-    public BirdHandler(float camWidth, float camHeight){
+    public BirdHandler(BgHandler bgHandler, float camWidth, float camHeight){
 
+        if (bgHandler.getBackground().texture==AssetHandler.bgPhoenixtexture2){
 
+        }
         PhoenixBird bird = new PhoenixBird( camHeight,camWidth);
         birdsList.add(bird);
     }

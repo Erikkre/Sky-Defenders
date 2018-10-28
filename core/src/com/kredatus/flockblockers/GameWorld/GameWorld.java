@@ -63,7 +63,7 @@ public class GameWorld {
         bgHandler = new BgHandler( camWidth, camHeight);
         AssetHandler.playnext(AssetHandler.menumusiclist);
         updatedboostnumber=orgboostnumber;
-        birdHandler= new BirdHandler(camWidth, camHeight);
+        birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
 
     }
 
