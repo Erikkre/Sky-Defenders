@@ -206,7 +206,7 @@ public class AssetHandler {
         bgList.add(bgPhoenixtexture2);
 
 
-         bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgBlack.jpg"));
+         bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgNight.jpg"));
         bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
         bgNighttexture.flip(false, true);
