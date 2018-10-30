@@ -9,78 +9,95 @@ import java.util.TimerTask;
 
 
 public class BirdHandler {
-
     public static ArrayList<BirdAbstractClass> birdsList = new ArrayList<BirdAbstractClass>();
+    private BirdAbstractClass bird;
     public static String[] birdOrderList={"pB","wB","nB","aB","fB","tB","lB","gB"};
-    public static int[] birdNumberList=  { 1,   40,  30,  20,  20,  20,  10,  5  };
-    public int[] spawnIntervals;
-    public int waveNumber;
-    public Timer[] taskList;
-    public final int duration = 100;
-    public BirdHandler(BgHandler bgHandler, float camWidth, float camHeight){
-
+    private static int[] birdNumberList=  { 1,   40,  30,  20,  20,  20,  10,  5  };
+    private int[] spawnIntervals;
+    private int waveTypeCnt;
+    //public Timer[] taskList;
+    private Timer task;
+    private final int duration = 100;
+    private BgHandler bgHandler;
+    private float camWidth, camHeight;
+    public BirdHandler(BgHandler bgHandler, final float camWidth, final float camHeight){
+        this.bgHandler=bgHandler;
+        this.camHeight=camHeight;
+        this.camWidth =camWidth;
         //if (bgHandler.getBackground().texture==AssetHandler.bgPhoenixtexture2||bgHandler.getBackground2().texture==AssetHandler.bgPhoenixtexture2){
 
         //}
-
         //Probably want to spawn birds based off distance not time cuz lag
-
 
         for (int i=0;i<8;i++){
             spawnIntervals[i]=duration/birdNumberList[i];
         }
-        for (Timer i:taskList)
-            i.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    // Your database code here
-                }
-            }, 2 * 60 * 1000, 2 * 60 * 1000);
-        PhoenixBird bird = new PhoenixBird( camHeight,camWidth);
+  
+
+
+
         birdsList.add(bird);
     }
 
     public void update(float runTime, float delta) {
-        if (waveNumber%8==0){           //pB
+        if (  (((bgHandler.getBackground().y<-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2))    && task == null){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
+            if (task==null) {
+                task.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        bird = new PhoenixBird(camHeight, camWidth);
+                    }
+                }, 0, spawnIntervals[waveTypeCnt++] * 1000);
+            }
+        } else {
+
+        }
 
 
 
-            waveNumber++;
-        } else if (waveNumber%8==1){   //wB
 
 
 
-            waveNumber++;
-        }else if (waveNumber%8==2){   //nB
+        if        (waveTypeCnt%8==0){           //pB
 
 
 
-            waveNumber++;
-        }else if (waveNumber%8==3){   //aB
+            waveTypeCnt++;
+        } else if (waveTypeCnt%8==1){   //wB
 
 
 
-            waveNumber++;
-        }else if (waveNumber%8==4){   //fB
+            waveTypeCnt++;
+        }else if (waveTypeCnt%8==2){   //nB
 
 
 
-            waveNumber++;
-        }else if (waveNumber%8==5){   //tB
+            waveTypeCnt++;
+        }else if (waveTypeCnt%8==3){   //aB
 
 
 
-            waveNumber++;
-        }else if (waveNumber%8==6){   //lB
+            waveTypeCnt++;
+        }else if (waveTypeCnt%8==4){   //fB
 
 
 
-            waveNumber++;
-        }else if (waveNumber%8==7){   //gB
+            waveTypeCnt++;
+        }else if (waveTypeCnt%8==5){   //tB
 
 
 
-            waveNumber++;
+            waveTypeCnt++;
+        }else if (waveTypeCnt%8==6){   //lB
+
+
+
+            waveTypeCnt++;
+        }else if (waveTypeCnt%8==7){   //gB
+
+
+
+            waveTypeCnt++;
         }
 
 

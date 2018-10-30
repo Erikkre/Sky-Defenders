@@ -21,7 +21,7 @@ public class PhoenixBird extends BirdAbstractClass {
     //public final int[] animSeqList = {0,1,2,3};
 Tween second;
     public PhoenixBird(float camHeight, float camWidth){
-        super(camHeight, camWidth);
+        super();
 
         this.yVel=10;
         this.diamonds=1;

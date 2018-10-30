@@ -67,7 +67,7 @@ public abstract class BirdAbstractClass {
     protected Tween intro, first, xMotion;
 
 
-    public BirdAbstractClass(float camHeight, float camWidth) {
+    public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
         isAlive = true;
