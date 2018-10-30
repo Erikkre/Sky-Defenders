@@ -22,8 +22,8 @@ public class ThunderBird extends BirdAbstractClass {
     final Animation[] animSeq = {frontFlaps, leftFlaps, frontFlaps, rightFlaps};
     final int[] animSeqList = {0, 1, 2, 3};
 
-    public ThunderBird(float camHeight, float camWidth, TweenManager manager) {
-        super(camHeight, camWidth);
+    public ThunderBird(float camHeight, float camWidth) {
+        super();
         this.yVel = 1;
         this.diamonds = 1;
         this.coins = 7;

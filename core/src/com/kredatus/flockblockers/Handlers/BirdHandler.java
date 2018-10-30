@@ -1,7 +1,14 @@
 package com.kredatus.flockblockers.Handlers;
 
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
+import com.kredatus.flockblockers.GameObjects.Birds.AcidBird;
+import com.kredatus.flockblockers.GameObjects.Birds.FireBird;
+import com.kredatus.flockblockers.GameObjects.Birds.GoldBird;
+import com.kredatus.flockblockers.GameObjects.Birds.LunarBird;
+import com.kredatus.flockblockers.GameObjects.Birds.NightBird;
 import com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird;
+import com.kredatus.flockblockers.GameObjects.Birds.ThunderBird;
+import com.kredatus.flockblockers.GameObjects.Birds.WaterBird;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -9,14 +16,16 @@ import java.util.TimerTask;
 
 
 public class BirdHandler {
-    public static ArrayList<BirdAbstractClass> birdsList = new ArrayList<BirdAbstractClass>();
+    public  static Class[] birdList ={PhoenixBird.class,  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
+    public static ArrayList<BirdAbstractClass> activeBirdList = new ArrayList<BirdAbstractClass>();
+    public BirdAbstractClass[] test;
     private BirdAbstractClass bird;
-    public static String[] birdOrderList={"pB","wB","nB","aB","fB","tB","lB","gB"};
-    private static int[] birdNumberList=  { 1,   40,  30,  20,  20,  20,  10,  5  };
-    private int[] spawnIntervals;
+    //public static String[] birdOrderList={"pB","wB","nB","aB","fB","tB","lB","gB"};
+    private final static int[] birdNumberList=  { 1,   40,  30,  20,  20,  20,  10,  5  };
+    private int[] spawnIntervals=new int[8];
     private int waveTypeCnt;
     //public Timer[] taskList;
-    private Timer task;
+    private Timer task=new Timer();
     private final int duration = 100;
     private BgHandler bgHandler;
     private float camWidth, camHeight;
@@ -24,33 +33,33 @@ public class BirdHandler {
         this.bgHandler=bgHandler;
         this.camHeight=camHeight;
         this.camWidth =camWidth;
-        //if (bgHandler.getBackground().texture==AssetHandler.bgPhoenixtexture2||bgHandler.getBackground2().texture==AssetHandler.bgPhoenixtexture2){
-
-        //}
-        //Probably want to spawn birds based off distance not time cuz lag
-
+//        test[0]=new PhoenixBird(camHeight,camWidth);
         for (int i=0;i<8;i++){
             spawnIntervals[i]=duration/birdNumberList[i];
         }
-  
-
-
-
-        birdsList.add(bird);
+        //birdList.add(PhoenixBird.class);
+        //birdList= {PhoenixBird.class,  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
+        //test[0].
     }
 
     public void update(float runTime, float delta) {
-        if (  (((bgHandler.getBackground().y<-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2))    && task == null){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
-            if (task==null) {
-                task.scheduleAtFixedRate(new TimerTask() {
+        if (waveTypeCnt==8){waveTypeCnt=0;}
+        if (  (((bgHandler.getBackground().y<-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2))    && !task.toString().equals("running")){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
+            System.out.println("In loop");
+            task=new Timer("running");
+            task.scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
-                        bird = new PhoenixBird(camHeight, camWidth);
+                        try{
+                            activeBirdList.add((BirdAbstractClass) birdList[waveTypeCnt].newInstance());
+                        } catch (Exception e){
+                            System.out.println("Could not make new "+birdList[waveTypeCnt].toString()+" object spawn");
+                        }
                     }
-                }, 0, spawnIntervals[waveTypeCnt++] * 1000);
-            }
-        } else {
+                }, 1, spawnIntervals[waveTypeCnt++] * 1000);    //1000 for milliseconds
 
+        } else {
+            task=null;
         }
 
 
@@ -101,11 +110,11 @@ public class BirdHandler {
         }
 
 
-        for (int i =0 ; i < birdsList.size(); i++){
+        for (int i =0 ; i < activeBirdList.size(); i++){
             //System.out.println(birdsList.size());
-            birdsList.get(i).update(delta, runTime);
-            if (birdsList.get(i).isOffCam){
-                birdsList.remove(i);
+            activeBirdList.get(i).update(delta, runTime);
+            if (activeBirdList.get(i).isOffCam){
+                activeBirdList.remove(i);
                 //i=null; experiment performance putting this before, after or even removing it, or removing the .remove
             }
 

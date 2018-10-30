@@ -15,8 +15,8 @@ public class FireBird extends BirdAbstractClass {
     private final float edge;
     final Animation[] animSeq = {frontFlaps, leftFlaps, frontFlaps, rightFlaps};
     final int[] animSeqList = {0,1,2,3};
-    FireBird(float camHeight, float camWidth, TweenManager manager){
-        super(camHeight, camWidth);
+    public FireBird(float camHeight, float camWidth){
+        super();
         this.yVel=1;
         this.diamonds=1;
         this.coins=7;

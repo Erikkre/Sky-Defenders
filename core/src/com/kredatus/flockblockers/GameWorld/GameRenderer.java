@@ -156,7 +156,7 @@ public class GameRenderer {
         //gliderMid = AssetHandler.gliderMid;
         //vertflipgliderMid = AssetHandler.vertflipgliderMid;
 
-        birdsList=BirdHandler.birdsList;
+        birdsList=BirdHandler.activeBirdList;
 
         frontFlaps = AssetHandler.frontFlaps;
         //flipflaps = AssetHandler.flipflaps;

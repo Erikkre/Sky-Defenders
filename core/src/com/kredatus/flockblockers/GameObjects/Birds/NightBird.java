@@ -20,7 +20,7 @@ public class NightBird extends BirdAbstractClass {
     final Animation[] animSeq = {frontFlaps, leftFlaps, frontFlaps, rightFlaps};
     final int[] animSeqList = {0,1,2,3};
     public NightBird(float camHeight, float camWidth){
-        super( camHeight, camWidth);
+        super();
         this.yVel=1;
         this.diamonds=1;
         this.coins=7;
