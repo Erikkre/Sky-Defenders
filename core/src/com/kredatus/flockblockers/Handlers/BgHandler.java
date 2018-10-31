@@ -1,7 +1,10 @@
 package com.kredatus.flockblockers.Handlers;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.kredatus.flockblockers.GameObjects.Background;
+import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
@@ -42,10 +45,10 @@ public class BgHandler {
 
     private TweenManager manager;
     public Timeline horizPosBg, vertPosBg;
-    private TweenCallback pastStoryIntro, bg2ToBg1Tail;
+    private TweenCallback pastStoryIntro, bg2ToBg1Tail, shakeCamCallback;
     private float camHeight;
-    private boolean isPastStoryIntro;
-
+    private boolean isPastStoryIntro, isCameraShake;
+    OrthographicCamera cam = GameRenderer.cam;
     public BgHandler(float camWidth, float camHeight){
         this.camHeight=camHeight;
         bgNumber = 0;
@@ -57,6 +60,7 @@ public class BgHandler {
         r = new Random();
         this.manager= SplashScreen.getManager();
         //System.out.println("vert.getValue() " + vert.getValue());
+        isCameraShake=false;
         setupTweens(camWidth, camHeight);
     }
 
@@ -79,55 +83,46 @@ public class BgHandler {
                 //System.out.println("Reset bg2y to bg1y+3500, tail");
                 background2.addedY=0;
                 background2.reset(background.getTailY(), bgNumber++);
+                cam.normalizeUp();
+                cam.rotate(-(float)Math.atan2(cam.up.y, cam.up.x)* MathUtils.radiansToDegrees );
             }
         };
 
+        shakeCamCallback=new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                //System.out.println("Reset bg2y to bg1y+3500, tail");
+                background2.addedY=0;
+                background2.reset(background.getTailY(), bgNumber++);
+                //cam.normalizeUp();
+                GameRenderer.setRotate(-(float)Math.atan2(cam.up.y, cam.up.x) * MathUtils.radiansToDegrees );   //reset camera
+            }
+        };
 
         (horizPosBg = Timeline.createSequence()
                 .push(Tween.to(horiz, -1, 20).target((camWidth)-bgw) .ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start(manager);
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
-
-
         (vertPosBg = Timeline.createSequence()  //10 9 9 4.5 6.5 1, 8 and 15 repeats
-                .push((Tween.to(vert,-1, 10  ).target(  -bgh+( .5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(pastStoryIntro))//midpoint
+                .push((Tween.to(vert,-1, 10 ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(pastStoryIntro))//midpoint
                 .push(Tween.to(vert, -1, 1).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                          //0.733 camheight below
                 .push(Tween.to(vert, -1, 1).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))           //0.733 camheight above
-                .push(Tween.to(vert, -1, 4.5f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine))                                          //midpoint
+                .push(Tween.to(vert, -1,4.5f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine))                                          //midpoint
 
-                .push(Tween.to(vert, -1, 6.5f).target((-bgh*2)).ease(TweenEquations.easeInElastic))                                //top edge+bgh/50
-                .push((Tween.to(vert, -1, 1).target((-bgh*2+camHeight/2)-(bgh/100)).ease(TweenEquations.easeInOutSine).repeatYoyo(15, 0)).setCallback(bg2ToBg1Tail))      )       //top edge
-
+                .push(Tween.to(vert, -1, 6.5f).target((-bgh*2)).ease(TweenEquations.easeInElastic).setCallback(shakeCamCallback)     )                  //top edge+bgh/50
+                .push((Tween.to(vert, -1, 1).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(15, 0)).setCallback(bg2ToBg1Tail))      )       //top edge
 
                 //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
                 .repeat(Tween.INFINITY, 0).start(manager);
-
     }
 
-        /* //flipworld
-        background3 = new Background(0, -bgh, bgw, bgh);
-        background4 = new Background(background3.getTailY(), -bgh, bgw, bgh);*/
-
-        /*startlist(boostlist, false, false, orgBoostnumber);
-        startlist(invboostlist, false, true, orgBoostnumber);
-        startlist(flipboostlist, true, false, orgBoostnumber);
-        startlist(invflipboostlist, true, true, orgBoostnumber); */   //start is same as restart only for boosts
-
-    /*
-    public void remove(ArrayList<Boost> boostlist, int i, int boostnumber){
-        if (boostlist.size() > boostnumber && boostlist.get(i).isScrolledDown()){
-            boostlist.remove(i);}
+    private void shakeCamera(){
+        GameRenderer.setRotate((-(float)Math.atan2(cam.up.y,cam.up.x)*MathUtils.radiansToDegrees) + (-1+2*r.nextFloat())*5); //subtract last angle and add next one
     }
-
-    public void specificupdate(ArrayList<Boost> boostlist, int boostnumber){
-        for (int i = 0; i < boostlist.size(); i++) {
-            boostlist.get(i).update();
-            remove(boostlist, i, boostnumber);
-        }
-    }*/
 
     public void update(float runTime, float delta) {
+        if (isCameraShake){shakeCamera();}
 /*if (!vertPosBg.isStarted()){
             vertPosBg.start(manager);
             horizPosBg.start(manager);
@@ -158,25 +153,6 @@ public class BgHandler {
         background.update();
         background2.update();
 
-        /*
-        background3.update();
-        background4.update();
-        //System.out.println("Boost"+i+": "+boostlist.get(i).x+","+boostlist.get(i).y+" scrolled"+boostlist.get(i).isScrolledDown());
-
-        specificupdate(boostlist, boostnumber);
-        specificupdate(invboostlist, boostnumber);
-        specificupdate(flipboostlist, boostnumber);
-        specificupdate(invflipboostlist, boostnumber);
-
-        //System.out.println("size: "+boostlist.size()+" number: "+boostnumber);
-        //System.out.println("boostnumber"+(boostlist.size()-1));
-
-        updatelist(boostlist, false, false, boostnumber);
-        updatelist(invboostlist, false, true, boostnumber);
-        updatelist(flipboostlist, true, false, boostnumber);
-        updatelist(invflipboostlist, true, true, boostnumber);*/
-        // Check if any of the boosts are scrolled left,
-        // and reset accordingly
         if (bgNumber== AssetHandler.bgList.size()) {
             //waveNumber+=1;
             bgNumber = 0;
@@ -188,39 +164,6 @@ public class BgHandler {
             background2.addedY=bgh;
         }
     }
-
-        /*
-        if (background3.isScrolledDown()) {
-            background3.reset(background4.getTailY());
-        } else if (background4.isScrolledDown()) {
-            background4.reset(background3.getTailY());
-        }
-
-    // Return true if ANY boost hits the bird.
-    public boolean collides(Glider glider, int boostnumber) {
-        for (int i = 0; i < boostnumber; i++) {
-            if (boostlist.get(i).collides(glider) || invboostlist.get(i).collides(glider) || invflipboostlist.get(i).collides(glider) || flipboostlist.get(i).collides(glider)) {
-                collideboost(boostlist, glider, i);
-                collideboost(invboostlist, glider, i);
-                collideboost(flipboostlist, glider, i);
-                collideboost(invflipboostlist, glider, i);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /*
-    private void collideboost(ArrayList<Boost> boostlist, Glider glider, int i) {
-        if (!boostlist.get(i).isScored()
-                && boostlist.get(i).getX() + (boostlist.get(i).getWidth() / 2) < glider.getPosition().x + glider.getWidth()) {
-            boostlist.get(i).isScrolledDown = true;   //boost gets restarted if player hits it
-            boostlist.get(i).setScored(true);
-            System.out.println(Math.pow(boostlist.get(i).width, 1.4) / 250);
-            addBoost( Math.pow(boostlist.get(i).width, 1.4) / 250);
-            AssetHandler.fire.play();
-        }
-    }*/
 
 
 

@@ -206,6 +206,16 @@ public class AssetHandler {
         bgList.add(bgPhoenixtexture2);
 
 
+        bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater.jpg"));
+        bgWater.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
+        bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
+        bgWatertexture.flip(false, true);
+        bgList.add(bgWatertexture);
+
+        bgWatertexture2 = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
+        bgList.add(bgWatertexture2);
+
+
          bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgNight.jpg"));
         bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
         bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
@@ -214,16 +224,6 @@ public class AssetHandler {
 
         bgNighttexture2 = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
         bgList.add(bgNighttexture2);
-
-
-         bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater.jpg"));
-        bgWater.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Linear);
-        bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
-        bgWatertexture.flip(false, true);
-        bgList.add(bgWatertexture);
-
-        bgWatertexture2 = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
-        bgList.add(bgWatertexture2);
 
 
          bgAcid = new Texture(Gdx.files.internal("backgrounds/levels/bgAcid.jpg"));

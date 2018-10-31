@@ -50,7 +50,7 @@ public class GameRenderer {
     private List<SimpleButton> deathButtons;
     private SimpleButton readyButton, menuButton, nextButton;
     private GameWorld myWorld;
-    public OrthographicCamera cam;
+    public static OrthographicCamera cam;
     private FitViewport viewport;
     private ShapeRenderer shapeRenderer;
     boolean turnback=true;
@@ -142,7 +142,9 @@ public class GameRenderer {
         Tween.to(alpha, -1, 0).target(0).ease(TweenEquations.easeOutQuad)
                 .start(manager);
     }*/
-
+public static void setRotate(float angle){
+    cam.rotate(angle);
+}
     private void initAssets() {
        //bgPhoenix = AssetHandler.bgPhoenixtexture;
         horflipbgtexture = AssetHandler.horflipbgtexture;
