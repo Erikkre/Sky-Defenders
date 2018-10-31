@@ -39,8 +39,7 @@ public class BgHandler {
     public int bgh = AssetHandler.bgPhoenix.getHeight();
     float x, y, width, height;
     public int bgNumber;
-    // Constructor receives a float that tells us where we need to create our
-    // Grass and Pipe objects.
+
     private TweenManager manager;
     public Timeline horizPosBg, vertPosBg;
     private TweenCallback pastStoryIntro, bg2ToBg1Tail;
@@ -57,7 +56,7 @@ public class BgHandler {
         background2 = new Background(horiz.getValue(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
         r = new Random();
         this.manager= SplashScreen.getManager();
-        System.out.println("vert.getValue() " + vert.getValue());
+        //System.out.println("vert.getValue() " + vert.getValue());
         setupTweens(camWidth, camHeight);
     }
 
@@ -85,24 +84,23 @@ public class BgHandler {
 
 
         (horizPosBg = Timeline.createSequence()
-                .push(Tween.to(horiz, -1, 10).target(-bgw/2+camWidth/2).ease(TweenEquations.easeInSine)    )
-                .push(Tween.to(horiz, -1, 10).target((camWidth)-bgw) .ease(TweenEquations.easeNone))
-                .push(Tween.to(horiz, -1, 10).target(-bgw/2+camWidth/2).ease(TweenEquations.easeNone)    )
-                .push(Tween.to(horiz, -1, 10).target(0)     .ease(TweenEquations.easeOutSine)))
-                .repeatYoyo(Tween.INFINITY, 0);
+                .push(Tween.to(horiz, -1, 20).target((camWidth)-bgw) .ease(TweenEquations.easeInOutSine)))
+                .repeatYoyo(Tween.INFINITY, 0).start(manager);
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
 
 
-        (vertPosBg = Timeline.createSequence()  //7 8 2 2 2 2
-                //.push(Tween.to(vert, -1, 3).target((-bgh)  /2).ease(TweenEquations.easeInCubic)    )
-                .push((Tween.to(vert,-1, 1).target(-bgh+camHeight/2 ) .ease(TweenEquations.easeOutBack)).               setCallback(pastStoryIntro))
-                .push(Tween.to(vert, -1, 1).target(-bgh+camHeight).ease(TweenEquations.easeInOutSine))
-                .push(Tween.to(vert, -1, 1).target(-bgh).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))
-                .push(Tween.to(vert, -1, 1).target(-bgh+camHeight/2).ease(TweenEquations.easeInOutSine))
-                .push(Tween.to(vert, -1, 1).target(-bgh*2+bgh/50+camHeight/2)     .ease(TweenEquations.easeInElastic))
-                .push((Tween.to(vert, -1, 1).target(-bgh*2-bgh/50+camHeight/2).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)))
-                .push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
+        (vertPosBg = Timeline.createSequence()  //10 9 9 4.5 6.5 1, 8 and 15 repeats
+                .push((Tween.to(vert,-1, 10  ).target(  -bgh+( .5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(pastStoryIntro))//midpoint
+                .push(Tween.to(vert, -1, 1).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                          //0.733 camheight below
+                .push(Tween.to(vert, -1, 1).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))           //0.733 camheight above
+                .push(Tween.to(vert, -1, 4.5f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine))                                          //midpoint
+
+                .push(Tween.to(vert, -1, 6.5f).target((-bgh*2)).ease(TweenEquations.easeInElastic))                                //top edge+bgh/50
+                .push((Tween.to(vert, -1, 1).target((-bgh*2+camHeight/2)-(bgh/100)).ease(TweenEquations.easeInOutSine).repeatYoyo(15, 0)).setCallback(bg2ToBg1Tail))      )       //top edge
+
+
+                //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
                 .repeat(Tween.INFINITY, 0).start(manager);
 
     }
@@ -134,7 +132,7 @@ public class BgHandler {
             vertPosBg.start(manager);
             horizPosBg.start(manager);
         }*/
-//        System.out.print("bg1y: "+background.y + " bg2y: "+background2.y);
+        //System.out.print("bg1y: "+background.y + " bg2y: "+background2.y);
 //        System.out.println(" vert values:" +vert.getValue() + " addY bg1: "+background.addedY +" addY bg2: "+ background2.addedY);
         if(isPastStoryIntro ){
                 //stop running once done

@@ -43,8 +43,8 @@ public class BirdHandler {
     }
 
     public void update(float runTime, float delta) {
-        if (waveTypeCnt==8){waveTypeCnt=0;}
-        if (  (((bgHandler.getBackground().y<-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2))    && !task.toString().equals("running")){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
+        /*if (waveTypeCnt==8){waveTypeCnt=0;}
+        if (  (((bgHandler.getBackground().y <-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2))    && !task.toString().equals("running")){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
             System.out.println("In loop");
             task=new Timer("running");
             task.scheduleAtFixedRate(new TimerTask() {
@@ -56,7 +56,7 @@ public class BirdHandler {
                             System.out.println("Could not make new "+birdList[waveTypeCnt].toString()+" object spawn");
                         }
                     }
-                }, 1, spawnIntervals[waveTypeCnt++] * 1000);    //1000 for milliseconds
+                }, 3, spawnIntervals[waveTypeCnt] * 1000);    //1000 for milliseconds
 
         } else {
             task=null;
@@ -66,7 +66,7 @@ public class BirdHandler {
 
 
 
-
+/*
         if        (waveTypeCnt%8==0){           //pB
 
 
@@ -109,7 +109,7 @@ public class BirdHandler {
             waveTypeCnt++;
         }
 
-
+*/
         for (int i =0 ; i < activeBirdList.size(); i++){
             //System.out.println(birdsList.size());
             activeBirdList.get(i).update(delta, runTime);
