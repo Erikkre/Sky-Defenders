@@ -19,6 +19,8 @@ import aurelienribon.tweenengine.Tween;
 public class GameHandler implements Screen {
     private GameWorld world;
     private GameRenderer renderer;
+    private BgHandler bgHandler;
+    private BirdHandler birdHandler;
     private float runTime;
     public static int camWidth, midPointY, camHeight, midPointX;
 
@@ -37,9 +39,15 @@ public class GameHandler implements Screen {
 
         world = new GameWorld(midPointY, midPointX, camWidth, camHeight);
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
-        renderer = new GameRenderer(world, camWidth, camHeight);
+        bgHandler = new BgHandler( camWidth, camHeight);
+        renderer = new GameRenderer(world, camWidth, camHeight, bgHandler);
         world.setRenderer(renderer);
+
+        world.setBgHandler(bgHandler);
+        birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
+        world.setBirdHandler(birdHandler);
     }
+
 
     @Override
     public void render(float delta) {

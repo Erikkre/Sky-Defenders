@@ -21,11 +21,11 @@ public class GameWorld {
     public int updatedboostnumber, orgboostnumber= AssetHandler.getBoostnumber();
     public float camWidth;
     public float midPointY;
-    private GameRenderer renderer;
+    private static GameRenderer renderer;
     public enum GameState {
         MENU, READY, RUNNING, STORY, CREDITS, DEATHMENU, INSTR, INSTR2
     }
-    public boolean isFirstTime;
+    public static boolean isFirstTime;
     private GameState currentState;
 
     public static void addGold(int goldAddition) {
@@ -60,10 +60,10 @@ public class GameWorld {
         this.camWidth=camWidth;
         this.midPointY=midPointY;
         //glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
-        bgHandler = new BgHandler( camWidth, camHeight);
+
         AssetHandler.playnext(AssetHandler.menumusiclist);
         updatedboostnumber=orgboostnumber;
-        birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
+
 
     }
 
@@ -219,6 +219,16 @@ public class GameWorld {
         this.renderer = renderer;
     }
 
+    public void setBgHandler(BgHandler bgHandler) {
+        this.bgHandler = bgHandler;
+    }
+    public void setBirdHandler(BirdHandler BirdHandler) {
+        this.birdHandler = BirdHandler;
+    }
+
+    public static GameRenderer getRenderer() {
+        return renderer;
+    }
     public int getUpdatedboostnumber() {
         return updatedboostnumber;
     }

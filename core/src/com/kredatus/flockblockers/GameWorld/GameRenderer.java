@@ -63,7 +63,7 @@ public class GameRenderer {
     private TextureRegion  horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
             creditsbg, deathmenubg, newHighscore, topscore, deathmenuscore, rating, youvedied, boostdown,
             gliderbg, instrbg, readybg, frontglidermid, worldStabilized;
-    private BgHandler bgHandler;
+
     private Background background, background2, background3, background4;
     //public ArrayList<Boost> boostlist, flipboostlist, invboostlist, invflipboostlist;
 
@@ -87,8 +87,9 @@ public class GameRenderer {
 
     private Color transitionColor;
     private int camWidth, camHeight;
-
-    public GameRenderer(GameWorld world, int camWidth, int camHeight) {
+private BgHandler bgHandler;
+    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler) {
+        this.bgHandler=bgHandler;
         this.camWidth=camWidth;
         this.camHeight=camHeight;
         myWorld = world;
@@ -182,7 +183,7 @@ public static void setRotate(float angle){
     }
 
     private void initGameObjects() {
-        bgHandler = myWorld.getbgHandler();
+
         background = bgHandler.getBackground();
         background2 = bgHandler.getBackground2();
         //background3 = bgHandler.getBackground3();

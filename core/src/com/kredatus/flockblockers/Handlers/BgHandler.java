@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.kredatus.flockblockers.GameObjects.Background;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
@@ -45,11 +46,13 @@ public class BgHandler {
 
     private TweenManager manager;
     public Timeline horizPosBg, vertPosBg;
-    private TweenCallback pastStoryIntro, bg2ToBg1Tail, shakeCamCallback;
+    private TweenCallback startStoryIntro, bg2ToBg1Tail, shakeCamCallback;
     private float camHeight;
     private boolean isPastStoryIntro, isCameraShake;
     OrthographicCamera cam = GameRenderer.cam;
+    private GameRenderer renderer;
     public BgHandler(float camWidth, float camHeight){
+        this.renderer=renderer;
         this.camHeight=camHeight;
         bgNumber = 0;
 
@@ -62,18 +65,20 @@ public class BgHandler {
         //System.out.println("vert.getValue() " + vert.getValue());
         isCameraShake=false;
         setupTweens(camWidth, camHeight);
+        isPastStoryIntro=true;
     }
 
     private void setupTweens(float camWidth, float camHeight){
+        renderer=GameWorld.getRenderer();
         //final float camHeight2=camHeight;
-        pastStoryIntro=new TweenCallback() {
+        startStoryIntro=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-               /* if (!isPastStoryIntro & gameWorld.isFirstTime){
-                    isPastStoryIntro=true;
+               if (!isPastStoryIntro & GameWorld.isFirstTime){
+                    isPastStoryIntro=false;
                     horizPosBg.pause();
                     vertPosBg.pause();
-                }*/
+                }
             }
         };
 
@@ -83,8 +88,8 @@ public class BgHandler {
                 //System.out.println("Reset bg2y to bg1y+3500, tail");
                 background2.addedY=0;
                 background2.reset(background.getTailY(), bgNumber++);
-                cam.normalizeUp();
-                cam.rotate(-(float)Math.atan2(cam.up.y, cam.up.x)* MathUtils.radiansToDegrees );
+                //cam.normalizeUp();
+                renderer.setRotate(-(float)Math.atan2(cam.up.y, cam.up.x)* MathUtils.radiansToDegrees );
             }
         };
 
@@ -95,7 +100,7 @@ public class BgHandler {
                 background2.addedY=0;
                 background2.reset(background.getTailY(), bgNumber++);
                 //cam.normalizeUp();
-                GameRenderer.setRotate(-(float)Math.atan2(cam.up.y, cam.up.x) * MathUtils.radiansToDegrees );   //reset camera
+                renderer.setRotate(-(float)Math.atan2(cam.up.y, cam.up.x) * MathUtils.radiansToDegrees );   //reset camera
             }
         };
 
@@ -105,12 +110,12 @@ public class BgHandler {
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
         (vertPosBg = Timeline.createSequence()  //10 9 9 4.5 6.5 1, 8 and 15 repeats
-                .push((Tween.to(vert,-1, 10 ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(pastStoryIntro))//midpoint
-                .push(Tween.to(vert, -1, 1).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                          //0.733 camheight below
-                .push(Tween.to(vert, -1, 1).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))           //0.733 camheight above
-                .push(Tween.to(vert, -1,4.5f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine))                                          //midpoint
+                .push((Tween.to(vert,-1, 10 ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(startStoryIntro))//midpoint
+                .push(Tween.to(vert, -1, 1).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
+                .push(Tween.to(vert, -1, 1).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))                          //0.733 camheight above
+                .push(Tween.to(vert, -1,4.5f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine))                                            //midpoint
 
-                .push(Tween.to(vert, -1, 6.5f).target((-bgh*2)).ease(TweenEquations.easeInElastic).setCallback(shakeCamCallback)     )                  //top edge+bgh/50
+                .push(Tween.to(vert, -1, 6.5f).target((-bgh*2)).ease(TweenEquations.easeInElastic).setCallback(shakeCamCallback)     )                    //top edge+bgh/50
                 .push((Tween.to(vert, -1, 1).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(15, 0)).setCallback(bg2ToBg1Tail))      )       //top edge
 
                 //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
@@ -122,19 +127,16 @@ public class BgHandler {
     }
 
     public void update(float runTime, float delta) {
-        if (isCameraShake){shakeCamera();}
-/*if (!vertPosBg.isStarted()){
-            vertPosBg.start(manager);
-            horizPosBg.start(manager);
-        }*/
-        //System.out.print("bg1y: "+background.y + " bg2y: "+background2.y);
-//        System.out.println(" vert values:" +vert.getValue() + " addY bg1: "+background.addedY +" addY bg2: "+ background2.addedY);
-        if(isPastStoryIntro ){
-                //stop running once done
 
-        } else {
-            // Update our objects
-        }
+        if (isCameraShake){shakeCamera();}
+        if(isPastStoryIntro ){
+
+            //System.out.print("bg1y: "+background.y + " bg2y: "+background2.y);
+    //        System.out.println(" vert values:" +vert.getValue() + " addY bg1: "+background.addedY +" addY bg2: "+ background2.addedY);
+            
+                    //stop running once done
+
+            
             vertPosBg.update(delta);
 
             if (background.y<background2.y){
@@ -145,23 +147,28 @@ public class BgHandler {
                 background.setY(background2.getTailY());
             }
 
-        horizPosBg.update(delta);
-        background.setX(horiz.getValue());
-        background2.setX(horiz.getValue());
-        //}
+            horizPosBg.update(delta);
+            background.setX(horiz.getValue());
+            background2.setX(horiz.getValue());
+            //}
 
-        background.update();
-        background2.update();
+            background.update();
+            background2.update();
 
-        if (bgNumber== AssetHandler.bgList.size()) {
-            //waveNumber+=1;
-            bgNumber = 0;
-        }
+            if (bgNumber== AssetHandler.bgList.size()) {
+                //waveNumber+=1;
+                bgNumber = 0;
+            }
 
-        if (background.isScrolledDown()) {
-            System.out.println("reset bg1y to bg2y +3500");
-            background.reset(background2.getTailY(), bgNumber++);
-            background2.addedY=bgh;
+            if (background.isScrolledDown()) {
+                System.out.println("reset bg1y to bg2y +3500");
+                background.reset(background2.getTailY(), bgNumber++);
+                background2.addedY=bgh;
+            }
+
+
+        } else {
+            // Update our objects
         }
     }
 
