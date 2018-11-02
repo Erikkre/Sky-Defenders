@@ -125,7 +125,7 @@ public class BgHandler {
         float smallShakeMaxAngle=1f;
         int bigShakeMaxAngle=30;
         smallShake= Timeline.createSequence()
-                .push(Tween.to(shake,-1, .05f ).target((-1+2*r.nextFloat())*smallShakeMaxAngle).ease(TweenEquations.easeInOutSine))
+                .push(Tween.to(shake,-1, .03f ).target((-1+2*r.nextFloat())*smallShakeMaxAngle).ease(TweenEquations.easeInOutSine)) //camera shake between cities
                 .repeatYoyo(Tween.INFINITY, 0);
         bigShake=  Timeline.createSequence()
                 .push(Tween.to(shake,-1, .5f ).target((-1+2*r.nextFloat())*bigShakeMaxAngle).ease(TweenEquations.easeInOutSine))

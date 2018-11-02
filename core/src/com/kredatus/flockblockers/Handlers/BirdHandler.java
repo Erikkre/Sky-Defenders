@@ -25,7 +25,7 @@ public class BirdHandler {
     private int[] spawnIntervals=new int[8];
     private int waveTypeCnt;
     //public Timer[] taskList;
-    private Timer task=new Timer();
+    private Timer task;
     private final int duration = 100;
     private BgHandler bgHandler;
     private float camWidth, camHeight;
@@ -43,8 +43,8 @@ public class BirdHandler {
     }
 
     public void update(float runTime, float delta) {
-        /*if (waveTypeCnt==8){waveTypeCnt=0;}
-        if (  (((bgHandler.getBackground().y <-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2))    && !task.toString().equals("running")){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
+        if (waveTypeCnt==8){waveTypeCnt=0;}
+        if (  (((bgHandler.getBackground().y <-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2))    && (task==null||!task.toString().equals("running"))  ){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
             System.out.println("In loop");
             task=new Timer("running");
             task.scheduleAtFixedRate(new TimerTask() {
