@@ -41,6 +41,7 @@ public class GameHandler implements Screen {
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
         bgHandler = new BgHandler( camWidth, camHeight);
         renderer = new GameRenderer(world, camWidth, camHeight, bgHandler);
+        bgHandler.setRendererAndCam(renderer, renderer.cam);
         world.setRenderer(renderer);
 
         world.setBgHandler(bgHandler);

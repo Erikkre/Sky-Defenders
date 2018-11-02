@@ -143,8 +143,11 @@ private BgHandler bgHandler;
         Tween.to(alpha, -1, 0).target(0).ease(TweenEquations.easeOutQuad)
                 .start(manager);
     }*/
-public static void setRotate(float angle){
+
+public void setRotate(float angle){
     cam.rotate(angle);
+    cam.update();
+    batcher.setProjectionMatrix(cam.combined);
 }
     private void initAssets() {
        //bgPhoenix = AssetHandler.bgPhoenixtexture;

@@ -17,7 +17,7 @@ import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
-import aurelienribon.tweenengine.TweenManager;
+
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.
@@ -29,7 +29,7 @@ public class BgHandler {
     private Random r;
     // BgHandler will use the constants below to determine
     // how fast we need to scroll and also determine
-    private Value horiz =new Value(), vert=new Value();
+    private Value horiz =new Value(), vert=new Value(), shake=new Value();
     // Capital letters are used by convention when naming constants.
     boolean same = false;
     /*private ArrayList<Boost> boostlist = new ArrayList<Boost>(), invboostlist = new ArrayList<Boost>(),
@@ -44,24 +44,25 @@ public class BgHandler {
     float x, y, width, height;
     public int bgNumber;
 
-    private TweenManager manager;
-    public Timeline horizPosBg, vertPosBg;
+    //private TweenManager manager;
+    public Timeline horizPosBg, vertPosBg,smallShake, bigShake;
     private TweenCallback startStoryIntro, bg2ToBg1Tail, shakeCamCallback;
     private float camHeight;
     private boolean isPastStoryIntro, isCameraShake;
-    OrthographicCamera cam = GameRenderer.cam;
+    private OrthographicCamera cam;
     private GameRenderer renderer;
     public BgHandler(float camWidth, float camHeight){
-        this.renderer=renderer;
+
         this.camHeight=camHeight;
         bgNumber = 0;
 
         horiz.setValue(0);
         vert.setValue(0);
+        shake.setValue(0);
         background = new Background(horiz.getValue(), vert.getValue(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
         background2 = new Background(horiz.getValue(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
         r = new Random();
-        this.manager= SplashScreen.getManager();
+        //this.manager= SplashScreen.getManager();
         //System.out.println("vert.getValue() " + vert.getValue());
         isCameraShake=false;
         setupTweens(camWidth, camHeight);
@@ -69,7 +70,7 @@ public class BgHandler {
     }
 
     private void setupTweens(float camWidth, float camHeight){
-        renderer=GameWorld.getRenderer();
+
         //final float camHeight2=camHeight;
         startStoryIntro=new TweenCallback() {
             @Override
@@ -85,50 +86,68 @@ public class BgHandler {
         bg2ToBg1Tail=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                //System.out.println("Reset bg2y to bg1y+3500, tail");
+                System.out.println("Reset bg2y to bg1y+3500, tail");
                 background2.addedY=0;
                 background2.reset(background.getTailY(), bgNumber++);
                 //cam.normalizeUp();
-                renderer.setRotate(-(float)Math.atan2(cam.up.y, cam.up.x)* MathUtils.radiansToDegrees );
+                renderer.setRotate(-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees);
+                isCameraShake=false;
+                smallShake.pause();
             }
         };
 
         shakeCamCallback=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                //System.out.println("Reset bg2y to bg1y+3500, tail");
-                background2.addedY=0;
-                background2.reset(background.getTailY(), bgNumber++);
-                //cam.normalizeUp();
-                renderer.setRotate(-(float)Math.atan2(cam.up.y, cam.up.x) * MathUtils.radiansToDegrees );   //reset camera
+                isCameraShake=true;   //reset camera
+                if (!smallShake.isStarted()){smallShake.start();}else{ smallShake.resume();}
             }
         };
 
         (horizPosBg = Timeline.createSequence()
-                .push(Tween.to(horiz, -1, 20).target((camWidth)-bgw) .ease(TweenEquations.easeInOutSine)))
-                .repeatYoyo(Tween.INFINITY, 0).start(manager);
+                .push(Tween.to(horiz, -1, 20).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .repeatYoyo(Tween.INFINITY, 0).start();
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
         (vertPosBg = Timeline.createSequence()  //10 9 9 4.5 6.5 1, 8 and 15 repeats
-                .push((Tween.to(vert,-1, 10 ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(startStoryIntro))//midpoint
-                .push(Tween.to(vert, -1, 1).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
-                .push(Tween.to(vert, -1, 1).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))                          //0.733 camheight above
+                .push((Tween.to(vert,-1, 10f ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(startStoryIntro))//midpoint
+                .push(Tween.to(vert, -1, 9f).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
+                .push(Tween.to(vert, -1, 9f).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))                          //0.733 camheight above
                 .push(Tween.to(vert, -1,4.5f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine))                                            //midpoint
 
                 .push(Tween.to(vert, -1, 6.5f).target((-bgh*2)).ease(TweenEquations.easeInElastic).setCallback(shakeCamCallback)     )                    //top edge+bgh/50
                 .push((Tween.to(vert, -1, 1).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(15, 0)).setCallback(bg2ToBg1Tail))      )       //top edge
 
                 //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
-                .repeat(Tween.INFINITY, 0).start(manager);
+                .repeat(Tween.INFINITY, 0).start();
+
+
+        float smallShakeMaxAngle=1f;
+        int bigShakeMaxAngle=30;
+        smallShake= Timeline.createSequence()
+                .push(Tween.to(shake,-1, .05f ).target((-1+2*r.nextFloat())*smallShakeMaxAngle).ease(TweenEquations.easeInOutSine))
+                .repeatYoyo(Tween.INFINITY, 0);
+        bigShake=  Timeline.createSequence()
+                .push(Tween.to(shake,-1, .5f ).target((-1+2*r.nextFloat())*bigShakeMaxAngle).ease(TweenEquations.easeInOutSine))
+                .repeatYoyo(Tween.INFINITY, 0);
+
+
+
     }
 
-    private void shakeCamera(){
-        GameRenderer.setRotate((-(float)Math.atan2(cam.up.y,cam.up.x)*MathUtils.radiansToDegrees) + (-1+2*r.nextFloat())*5); //subtract last angle and add next one
+    private void shakeCamera(float delta){
+       // cam.normalizeUp();
+        //System.out.println("Last angle: "+(-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees) + " New Angle: "+shake.getValue());
+        renderer.setRotate((-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees) +shake.getValue() ); //subtract last angle and add next one
+//+ (-1+2*r.nextFloat())
     }
 
-    public void update(float runTime, float delta) {
+    public void update(float delta) {
+        if (isCameraShake){
+            smallShake.update(delta);
+            bigShake.update(delta);
+            shakeCamera(delta); }
 
-        if (isCameraShake){shakeCamera();}
         if(isPastStoryIntro ){
 
             //System.out.print("bg1y: "+background.y + " bg2y: "+background2.y);
@@ -183,6 +202,10 @@ public class BgHandler {
         return background2;
     }
 
+    public void setRendererAndCam(GameRenderer renderer, OrthographicCamera cam) {
+        this.renderer = renderer;
+        this.cam = cam;
+    }
     /*public Background getBackground3() {
         return background3;
     }

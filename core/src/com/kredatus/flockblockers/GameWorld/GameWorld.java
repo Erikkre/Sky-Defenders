@@ -86,7 +86,7 @@ public class GameWorld {
     }
 
     private void updateStory(float delta, float runTime) {
-        bgHandler.update(runTime, delta);
+        bgHandler.update(delta);
         birdHandler.update(runTime, delta);
     }
 
@@ -101,7 +101,7 @@ public class GameWorld {
             delta = .15f;}
         //bgHandler.collides(glider, updatedboostnumber);
         glider.update(delta);
-        bgHandler.update(runTime, delta);
+        bgHandler.update(delta);
 
         if (Math.abs(glider.getPosition().y) > bgHandler.bgh) {
            // renderer.prepareSunshine();
