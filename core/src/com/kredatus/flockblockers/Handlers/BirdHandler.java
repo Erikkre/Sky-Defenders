@@ -51,9 +51,10 @@ public class BirdHandler {
                     @Override
                     public void run() {
                         try{
-                            activeBirdList.add((BirdAbstractClass) birdList[waveTypeCnt].newInstance());
+                            activeBirdList.add((BirdAbstractClass) birdList[waveTypeCnt].getConstructor(float.class, float.class).newInstance(camHeight,camWidth ));
                         } catch (Exception e){
-                            System.out.println("Could not make new "+birdList[waveTypeCnt].toString()+" object spawn");
+                            System.out.println("Could not make new "+birdList[waveTypeCnt].toString()+" object spawn because of error" + e);
+                            e.printStackTrace();
                         }
                     }
                 }, 3, spawnIntervals[waveTypeCnt] * 1000);    //1000 for milliseconds
