@@ -9,9 +9,9 @@ public class BirdAccessor implements TweenAccessor<BirdAbstractClass>{
 
     @Override
     public void setValues(BirdAbstractClass birdTarget, int tweenType, float[] newValues) {
-        System.out.print(birdTarget.x);
+        //System.out.print(birdTarget.x);
         switch (tweenType){
-            case (xMotion): birdTarget.x=newValues[0]; System.out.println(" set to "+newValues[0]);
+            case (xMotion): birdTarget.x=newValues[0]; //System.out.println(" set to "+newValues[0]);
 
         }
     }

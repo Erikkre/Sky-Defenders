@@ -19,6 +19,7 @@ package com.kredatus.flockblockers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Game;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 

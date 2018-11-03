@@ -39,7 +39,7 @@ public class WaterBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
 
 
-        System.out.println("Height before: " + height+ " width: " + width);
+
         finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))/sizeRatio)/width;
 
 

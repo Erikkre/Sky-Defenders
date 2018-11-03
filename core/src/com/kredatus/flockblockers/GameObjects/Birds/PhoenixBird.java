@@ -23,7 +23,7 @@ Tween second;
     public PhoenixBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=10;
+        this.yVel=5;
         this.diamonds=1;
         this.coins=7;
 
@@ -39,14 +39,13 @@ Tween second;
         edge = (camWidth)-width/2;
 
 
-        System.out.println("Height before: " + height+ " width: " + width);
+        //System.out.println("Height before: " + height+ " width: " + width);
         finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))/sizeRatio)/width;
-
 
         width *=finalSizeRatio;
         height *= finalSizeRatio;
 
-        System.out.println("Height after: " + height+ " width: " + width);
+        //System.out.println("Height after: " + height+ " width: " + width);
         health=100;
 
         animation=rightFlaps;
@@ -62,7 +61,7 @@ Tween second;
     public void specificUpdate(float delta, float runTime) {
         //second.update(delta);
         if (cnt==4) {cnt=0;}
-        System.out.println("x: "+x+ " > "+(2*camWidth)/3);
+        //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 
         if (cnt==0&&x>(2*camWidth)/3) {
             System.out.println("1");
@@ -99,7 +98,7 @@ Tween second;
             }
         };
 
-        intro = Tween.to(this, 1, 2).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
+        intro = Tween.to(this, 1, 1).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
         xMotion=intro;
 
 
@@ -111,7 +110,7 @@ Tween second;
             }
         };*/
 
-        first =Tween.to(this, 1, 3).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
+        first =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
         //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
         /*
         (xMotion = Timeline.createSequence()

@@ -6,7 +6,7 @@ package com.kredatus.flockblockers.GameObjects;
 
 public class Tower {
 
-Tower(){
+public Tower(){
 
 }
 
