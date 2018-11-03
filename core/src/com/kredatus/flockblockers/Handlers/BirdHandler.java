@@ -29,7 +29,7 @@ public class BirdHandler {
     private final int duration = 100;
     private BgHandler bgHandler;
     private float camWidth, camHeight;
-    public BirdHandler(BgHandler bgHandler, final float camWidth, final float camHeight){
+    public BirdHandler(BgHandler bgHandler,  float camWidth, float camHeight){
         this.bgHandler=bgHandler;
         this.camHeight=camHeight;
         this.camWidth =camWidth;
@@ -51,7 +51,9 @@ public class BirdHandler {
                     @Override
                     public void run() {
                         try{
-                            activeBirdList.add((BirdAbstractClass) birdList[waveTypeCnt].getConstructor(float.class, float.class).newInstance(camHeight,camWidth ));
+                            Class<?> clazz = Class.forName("com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird");
+                            PhoenixBird newBird= (PhoenixBird) clazz.getConstructor(float.class, float.class).newInstance(camHeight,camWidth );
+                            //activeBirdList.add(newBird);
                         } catch (Exception e){
                             System.out.println("Could not make new "+birdList[waveTypeCnt].toString()+" object spawn because of error" + e);
                             e.printStackTrace();
