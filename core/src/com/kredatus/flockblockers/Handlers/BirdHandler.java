@@ -103,7 +103,7 @@ public class BirdHandler {
                             e.printStackTrace();
                         }
                     }
-                }, 3*1000, 3*1000);
+                }, spawnIntervals[waveTypeCnt] * 1000, spawnIntervals[waveTypeCnt] * 1000);
 
 
         /*
@@ -156,6 +156,7 @@ public class BirdHandler {
 
         } else {
             if (task!=null){
+                System.out.println("Timer nulled");
                 task=null;
                 waveTypeCnt++; //nextWave when timer reset
             }

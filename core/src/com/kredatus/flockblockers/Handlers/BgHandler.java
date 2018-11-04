@@ -110,13 +110,13 @@ public class BgHandler {
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
         (vertPosBg = Timeline.createSequence()  //10 9 9 4.5 6.5 1, 8 and 15 repeats
-                .push((Tween.to(vert,-1, 10f ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(startStoryIntro))//midpoint
-                .push(Tween.to(vert, -1, 9f).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
-                .push(Tween.to(vert, -1, 9f).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))                          //0.733 camheight above
-                .push(Tween.to(vert, -1,4.5f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine))                                            //midpoint
+                .push((Tween.to(vert,-1, 5f ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(startStoryIntro))//midpoint
+                .push(Tween.to(vert, -1, 4.5f).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
+                .push(Tween.to(vert, -1, 4.5f).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(8, 0))                          //0.733 camheight above
+                .push(Tween.to(vert, -1,2.25f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine))                                            //midpoint
 
-                .push(Tween.to(vert, -1, 6.5f).target((-bgh*2)).ease(TweenEquations.easeInElastic).setCallback(shakeCamCallback)     )                    //top edge+bgh/50
-                .push((Tween.to(vert, -1, 1).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(15, 0)).setCallback(bg2ToBg1Tail))      )       //top edge
+                .push(Tween.to(vert, -1, 3.25f).target((-bgh*2)).ease(TweenEquations.easeInElastic).setCallback(shakeCamCallback)     )                    //top edge+bgh/50
+                .push((Tween.to(vert, -1, 0.5f).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(15, 0)).setCallback(bg2ToBg1Tail))      )       //top edge
 
                 //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
                 .repeat(Tween.INFINITY, 0).start();
