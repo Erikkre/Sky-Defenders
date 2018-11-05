@@ -1,6 +1,6 @@
 package com.kredatus.flockblockers.GameObjects;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.Handlers.GameHandler;
@@ -10,26 +10,35 @@ import com.kredatus.flockblockers.Handlers.GameHandler;
  */
 
 public class Bullet  {
-    private Rectangle rectangle;
+    public Polygon boundingRect;
     public boolean isScored = false;
-    protected float x, y;
     protected int width, height;
     protected boolean isGone;
-    private static Vector2 position, velocity, acceleration;
-    protected float damage;
+    private Vector2 position, velocity;
+    protected float damage, camWidth, camHeight, rotation;
 
-    public Bullet(float x, float y, int width, int height) {
-        this.x = x;
-        this.y = y;
+    public Bullet(Vector2 position, Vector2 velocity, int width, int height, float camWidth, float camHeight) {
         this.width = width;
         this.height = height;
-        rectangle= new Rectangle(x+width/2, y+height/2, width, height);
+        this.position = position;
+        this.velocity = velocity;
+
+        this.camWidth = camWidth;
+        this.camHeight = camHeight;
+        boundingRect = new Polygon(new float[]{position.x - width / 2, position.y - height / 2, position.x + width / 2, position.y + height / 2});
+        boundingRect.setOrigin(0, 0);
+        rotation = -(float) Math.toDegrees(Math.atan(velocity.y / (-velocity.x) ));
+        boundingRect.setRotation(rotation);
     }
 
-    public void update() {
-        if (x + width < GameRenderer.getCameraPosition().x - GameHandler.camWidth / 2 || x - width > GameRenderer.getCameraPosition().x + GameHandler.camWidth / 2 ||
-                y + height < GameRenderer.getCameraPosition().y - GameHandler.camHeight / 2 || y - height > GameRenderer.getCameraPosition().y - GameHandler.camHeight / 2 ) {
-            isGone = true;}
+    public void update(float delta) {
+        position.add(velocity.cpy().scl(delta));
+        boundingRect.setPosition(position.x,position.y);
+
+        if (position.x + height <  - camWidth / 2 || position.x - height > camWidth / 2 ||
+                position.y + height < - camHeight / 2 || position.y - height > camHeight / 2 ) {
+            isGone = true;
+        }
     }
 
     public void boostReset() {
@@ -37,12 +46,7 @@ public class Bullet  {
         isScored=false;
     }
 
-    public boolean collides(Glider glider) {
-        if (x <= glider.getPosition().x + glider.getWidth()&& y-height<glider.getPosition().y+glider.getHeight()/2&&y+height*2>glider.getPosition().y) {
-            return Intersector.overlaps(glider.getBoundingCircle(), rectangle);
-        }
-        return false;
-    }
+
 
     public boolean isScored() {
         return isScored;

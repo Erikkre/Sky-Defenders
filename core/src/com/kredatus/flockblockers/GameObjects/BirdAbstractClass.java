@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
@@ -50,7 +52,7 @@ import aurelienribon.tweenengine.TweenEquations;
 
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
-    protected Circle boundingCircle;
+    protected Circle boundingCir;
     public float preX, x, y, yVel, yAcc, xVel, rotation, sizeRatio, finalSizeRatio;
 
 
@@ -71,12 +73,18 @@ public abstract class BirdAbstractClass {
         isAlive=true;
         isOffCam = false;
         //this.manager=manager;
-        boundingCircle = new Circle();
+        boundingCir = new Circle();
     }
 
     public abstract void setManager(float camWidth);
 
     //public abstract void fly(float delta) ;
+    public boolean collides(Bullet bullet) {
+        //if (x <= bird.x + bird.width && y-height<bird.y+bird.getHeight()/2 && y+height*2>bird.getPosition().y) {
+            return Intersector.overlapConvexPolygons(boundingCir, bullet.boundingRect);
+        //}
+        //return false;
+    }
 
     public void update(float delta, float runTime){
 
@@ -86,10 +94,10 @@ public abstract class BirdAbstractClass {
 
             xMotion.update(delta);
             xVel=x-preX;
-            if (xVel>0.2) {
-                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 8;
-            } else if (xVel<-0.2) {
-                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 8;
+            if (xVel>0.1) {
+                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 9;
+            } else if (xVel<-0.1) {
+                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 9;
             }
             if (health <= 0) {
                 die();
@@ -175,8 +183,8 @@ public abstract class BirdAbstractClass {
         return rotation;
     }
 
-    public Circle getBoundingCircle() {
-        return boundingCircle;
+    public Circle getboundingCir() {
+        return boundingCir;
     }
     */
 

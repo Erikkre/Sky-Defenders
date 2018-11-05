@@ -30,7 +30,7 @@ f        this.x = x;
 
     public boolean collides(Glider glider) {
         if (x <= glider.getPosition().x + glider.getWidth()&& y-height<glider.getPosition().y+glider.getHeight()/2&&y+height*2>glider.getPosition().y) {
-            return Intersector.overlaps(glider.getBoundingCircle(), circle);
+            return Intersector.overlaps(glider.getboundingCir(), circle);
         }
         return false;
     }

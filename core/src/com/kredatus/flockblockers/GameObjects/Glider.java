@@ -11,7 +11,7 @@ import com.kredatus.flockblockers.Handlers.AssetHandler;
 
 public class Glider {
     private float rotation;
-    private Circle boundingCircle;
+    private Circle boundingCir;
     private static Vector2 position, velocity, acceleration;
     public float gamexvelocity;
     protected int width;
@@ -37,7 +37,7 @@ public class Glider {
 
         isScrolledDown = false;
         isAlive = true;
-        boundingCircle = new Circle();
+        boundingCir = new Circle();
     }
 
     public void update(float delta) {
@@ -122,7 +122,7 @@ public class Glider {
             die();
                 }
         }
-        boundingCircle.set(position.x-width/2, position.y-height/2, height/2.1f);
+        boundingCir.set(position.x-width/2, position.y-height/2, height/2.1f);
     }
 
     public boolean isAlive() {
@@ -205,8 +205,8 @@ public class Glider {
         return rotation;
     }
 
-    public Circle getBoundingCircle() {
-        return boundingCircle;
+    public Circle getboundingCir() {
+        return boundingCir;
     }
 
     public void onRestart() {
