@@ -70,7 +70,6 @@ public abstract class BirdAbstractClass {
     public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
-        isAlive = true;
         //this.manager=manager;
         boundingCircle = new Circle();
     }
@@ -80,19 +79,18 @@ public abstract class BirdAbstractClass {
     //public abstract void fly(float delta) ;
 
     public void update(float delta, float runTime){
-        preX=x;
 
-        xMotion.update(delta);
-
-        //} else {
-        //    startTween.update(delta);
-        //}
-        //xMotion.update(delta);
-        //manager.update(delta);
-        xVel=x-preX;    //rate of change of x (next tweened value - last value)
-        //rotation = -(float) Math.toDegrees(Math.atan(yVel / -xVel ));
         y+=yVel;
         if (isAlive) {
+            preX=x;
+
+            xMotion.update(delta);
+            xVel=x-preX;
+            if (xVel>0.2) {
+                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 8;
+            } else if (xVel<-0.2) {
+                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 8;
+            }
             if (health <= 0) {
                 die();
             }
@@ -104,7 +102,7 @@ public abstract class BirdAbstractClass {
         } else {
 
             yVel+=yAcc;
-            x=x+xVel;
+            x+=xVel;
 
             if (y+height/2<0 || x+width/2< 0 || x-width/2> camWidth){
                 isOffCam=true;
@@ -121,12 +119,12 @@ public abstract class BirdAbstractClass {
         animation=frontFlaps;
         animation.setFrameDuration(0.1f);
 
-        yAcc=-0.7f;
+        yAcc=-0.8f;
         yVel=15;
-        if (x>0){   //if dying on right side fall to left and vice versa
-            xVel=-2;
+        if (x>camWidth/2){   //if dying on right side fall to left and vice versa
+            xVel=-3;
         } else {
-            xVel=2;
+            xVel=3;
         }
     }
 

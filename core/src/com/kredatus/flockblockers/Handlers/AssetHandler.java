@@ -323,13 +323,13 @@ public class AssetHandler {
 
 
         phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.15f);
-//        waterAnimations = birdTextureToAnimation("water.png", 0.15f);
-       // nightAnimations = birdTextureToAnimation("night.png", 0.15f);
- //       acidAnimations = birdTextureToAnimation("acid.png", 0.15f);
- //       fireAnimations = birdTextureToAnimation("fire.png", 0.15f);
-   //     thunderAnimations = birdTextureToAnimation("thunder.png", 0.15f);
-//        lunarAnimations = birdTextureToAnimation("lunar.png", 0.15f);
-    //    goldAnimations = birdTextureToAnimation("gold.png", 0.15f);
+        waterAnimations = birdTextureToAnimation("water.png", 0.15f);
+        nightAnimations = birdTextureToAnimation("night.png", 0.15f);
+        acidAnimations = birdTextureToAnimation("acid.png", 0.12f);
+        fireAnimations = birdTextureToAnimation("fire.png", 0.12f);
+        thunderAnimations = birdTextureToAnimation("thunder.png", 0.9f);
+        lunarAnimations = birdTextureToAnimation("lunar.png", 0.7f);
+        goldAnimations = birdTextureToAnimation("gold.png", 0.15f);
 
         Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
         greyTinyBirdAnimations=tinyBirdTextureToAnimation(greyTinyBird);

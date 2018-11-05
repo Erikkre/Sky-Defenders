@@ -22,13 +22,12 @@ public class PhoenixBird extends BirdAbstractClass {
 Tween second;
     public PhoenixBird(float camHeight, float camWidth){
         super();
-
-        this.yVel=5;
+        this.yVel=2;
         this.diamonds=1;
         this.coins=7;
 
-        this.sizeVariance=200;
-        sizeRatio=1;
+        this.sizeVariance=1;
+        sizeRatio=1f;
 
         animSeq = AssetHandler.phoenixAnimations;
         frontFlaps=animSeq[0];
@@ -38,19 +37,19 @@ Tween second;
         animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
         height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
         width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
-        edge = (camWidth)-width/2;
+
 
 
         //System.out.println("Height before: " + height+ " width: " + width);
-        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))/sizeRatio)/width;
+        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
 
         width *=finalSizeRatio;
         height *= finalSizeRatio;
-
+        edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=100;
 
-        animation=rightFlaps;
+        animation=rightFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));
 
         y=0;

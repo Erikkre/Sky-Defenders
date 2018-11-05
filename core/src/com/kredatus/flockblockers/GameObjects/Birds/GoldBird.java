@@ -15,20 +15,17 @@ import aurelienribon.tweenengine.TweenEquations;
  */
 
 public class GoldBird extends BirdAbstractClass {
-
-
     public Animation[] animSeq;
     //public final int[] animSeqList = {0,1,2,3};
     Tween second;
     public GoldBird(float camHeight, float camWidth){
         super();
-
-        this.yVel=5;
+        this.yVel=2;
         this.diamonds=1;
         this.coins=7;
 
-        this.sizeVariance=200;
-        sizeRatio=1;
+        this.sizeVariance=1;
+        sizeRatio=0.9f;
 
         animSeq = AssetHandler.goldAnimations;
         frontFlaps=animSeq[0];
@@ -36,19 +33,19 @@ public class GoldBird extends BirdAbstractClass {
         rightFlaps=animSeq[2];
         backFlaps=animSeq[3];
         animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
-        edge = (camWidth)-width/2;
-
+        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
+        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
 
         //System.out.println("Height before: " + height+ " width: " + width);
-        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))/sizeRatio)/width;
+        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
 
         width *=finalSizeRatio;
         height *= finalSizeRatio;
-
+        edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=100;
 
-        animation=rightFlaps;
+        animation=rightFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));
 
         y=0;

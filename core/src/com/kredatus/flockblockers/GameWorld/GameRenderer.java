@@ -28,6 +28,7 @@ import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class GameRenderer {
     public static BitmapFont font, titlefont, storyfont, instrfont, droidSerifFont;
 
 
-    public static ArrayList<BirdAbstractClass> birdsList;
+    public static ArrayDeque<BirdAbstractClass> activeBirdQueue;
 
     float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
             c0len, c1len, c2len, c3len, c4len, c5len, c6len, c7len, c8len, c9len, c10len, c11len, c12len, c13len, c14len,
@@ -164,7 +165,7 @@ public void setRotate(float angle){
         //gliderMid = AssetHandler.gliderMid;
         //vertflipgliderMid = AssetHandler.vertflipgliderMid;
 
-        birdsList=birdHandler.activeBirdList;
+        activeBirdQueue=birdHandler.activeBirdQueue;
 
         frontFlaps = AssetHandler.frontFlaps;
         //flipflaps = AssetHandler.flipflaps;
@@ -556,15 +557,14 @@ public void setRotate(float angle){
         //System.out.println("Cam: "+cam.position);
         //glider.getPosition().x+glider.getWidth()/2  glider.getPosition().y+glider.getHeight()/2
 
-        for (BirdAbstractClass i : birdsList) {
+        for (BirdAbstractClass i : activeBirdQueue) {
             float x=i.x - i.width / 2, y=i.y - i.height / 2;
 
             batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime), x, y,
-                    x, y, i.width, i.height, 1f, 1f,0);
-
+                    i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
             //System.out.println("x: "+(i.x - i.width / 2) + " y: "+ (i.y - i.height / 2));
         }
-        //birdsList.get(0).update(delta);
+        //activeBirdList.get(0).update(delta);
         /*
         batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-glider.getWidth()/2, glider.getPosition().y-glider.getHeight()/2,
                 glider.getPosition().x-glider.getWidth()/2,glider.getPosition().y-glider.getHeight()/2, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());*/

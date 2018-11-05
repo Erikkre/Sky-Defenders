@@ -46,13 +46,12 @@ public class BgHandler {
 
     //private TweenManager manager;
     public Timeline horizPosBg, vertPosBg,smallShake, bigShake;
-    private TweenCallback startStoryIntro, bg2ToBg1Tail, shakeCamCallback;
+    private TweenCallback startStoryIntroAndSpawns, bg2ToBg1Tail, shakeCamCallback, endBirdSpawn;
     private float camHeight;
-    private boolean isPastStoryIntro, isCameraShake;
+    public boolean isPastStoryIntro, isCameraShake, isBirdSpawning;
     private OrthographicCamera cam;
     private GameRenderer renderer;
     public BgHandler(float camWidth, float camHeight){
-
         this.camHeight=camHeight;
         bgNumber = 0;
 
@@ -70,16 +69,25 @@ public class BgHandler {
     }
 
     private void setupTweens(float camWidth, float camHeight){
-
         //final float camHeight2=camHeight;
-        startStoryIntro=new TweenCallback() {
+        startStoryIntroAndSpawns=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
                if (!isPastStoryIntro & GameWorld.isFirstTime){
                     isPastStoryIntro=false;
                     horizPosBg.pause();
                     vertPosBg.pause();
-                }
+                } else {
+                   isBirdSpawning=true;
+               }
+            }
+        };
+
+        endBirdSpawn=new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                    isBirdSpawning=false;
+                    System.out.println("end spawning");
             }
         };
 
@@ -88,6 +96,10 @@ public class BgHandler {
             public void onEvent(int i, BaseTween<?> baseTween) {
                 System.out.println("Reset bg2y to bg1y+3500, tail");
                 background2.addedY=0;
+                if (bgNumber== AssetHandler.bgList.size()) {
+                    //waveNumber+=1;
+                    bgNumber = 0;
+                }
                 background2.reset(background.getTailY(), bgNumber++);
                 //cam.normalizeUp();
                 renderer.setRotate(-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees);
@@ -109,20 +121,20 @@ public class BgHandler {
                 .repeatYoyo(Tween.INFINITY, 0).start();
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
-        (vertPosBg = Timeline.createSequence()  //10 9 9 4.5 6.5 1, 8 and 15 repeats
-                .push((Tween.to(vert,-1, 5f ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(startStoryIntro))//midpoint
-                .push(Tween.to(vert, -1, 4.5f).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
-                .push(Tween.to(vert, -1, 4.5f).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(8, 0))                          //0.733 camheight above
-                .push(Tween.to(vert, -1,2.25f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine))                                            //midpoint
+        (vertPosBg = Timeline.createSequence()  //5 4.5f 4.5f 2 7 .1, 8 and 60 repeats
+                .push((Tween.to(vert,-1, 5f ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(startStoryIntroAndSpawns))//midpoint
+                .push(Tween.to(vert, -1, 3f).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
+                .push(Tween.to(vert, -1, 3f).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))                          //0.733 camheight above
+                .push(Tween.to(vert, -1,2f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine).setCallback(endBirdSpawn)     )                                       //midpoint
 
-                .push(Tween.to(vert, -1, 3.25f).target((-bgh*2)).ease(TweenEquations.easeInElastic).setCallback(shakeCamCallback)     )                    //top edge+bgh/50
-                .push((Tween.to(vert, -1, 0.5f).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(15, 0)).setCallback(bg2ToBg1Tail))      )       //top edge
+                .push(Tween.to(vert, -1, 8).target((-bgh*2)).ease(TweenEquations.easeInElastic).setCallback(shakeCamCallback)     )                    //top edge+bgh/50
+                .push((Tween.to(vert, -1, 0.1f).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(60, 0)).setCallback(bg2ToBg1Tail))      )       //top edge
 
                 //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
                 .repeat(Tween.INFINITY, 0).start();
 
 
-        float smallShakeMaxAngle=1f;
+        float smallShakeMaxAngle=10f;
         int bigShakeMaxAngle=30;
         smallShake= Timeline.createSequence()
                 .push(Tween.to(shake,-1, .03f ).target((-1+2*r.nextFloat())*smallShakeMaxAngle).ease(TweenEquations.easeInOutSine)) //camera shake between cities
@@ -178,7 +190,6 @@ public class BgHandler {
                 //waveNumber+=1;
                 bgNumber = 0;
             }
-
             if (background.isScrolledDown()) {
                 System.out.println("reset bg1y to bg2y +3500");
                 background.reset(background2.getTailY(), bgNumber++);
@@ -188,6 +199,12 @@ public class BgHandler {
 
         } else {
             // Update our objects
+
+            //end with spawning again
+            isPastStoryIntro=true;
+            horizPosBg.resume();
+            vertPosBg.resume();
+            isBirdSpawning=true;
         }
     }
 

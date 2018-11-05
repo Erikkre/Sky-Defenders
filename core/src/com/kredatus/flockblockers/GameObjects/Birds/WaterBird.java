@@ -23,12 +23,12 @@ public class WaterBird extends BirdAbstractClass {
     public WaterBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=5;
+        this.yVel=2;
         this.diamonds=1;
         this.coins=7;
 
         this.sizeVariance=200;
-        sizeRatio=1;
+        sizeRatio=0.8f;
 
         animSeq = AssetHandler.waterAnimations;
         frontFlaps=animSeq[0];
@@ -36,15 +36,16 @@ public class WaterBird extends BirdAbstractClass {
         rightFlaps=animSeq[2];
         backFlaps=animSeq[3];
         animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
-        edge = (camWidth)-width/2;
+        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
+        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
 
 
         //System.out.println("Height before: " + height+ " width: " + width);
-        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))/sizeRatio)/width;
+        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
 
         width *=finalSizeRatio;
         height *= finalSizeRatio;
-
+        edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=100;
 
