@@ -50,7 +50,7 @@ public class GameRenderer {
     private List<SimpleButton> deathButtons;
     private SimpleButton readyButton, menuButton, nextButton;
     private GameWorld myWorld;
-    public static OrthographicCamera cam;
+    public OrthographicCamera cam;
     private FitViewport viewport;
     private ShapeRenderer shapeRenderer;
     boolean turnback=true;
@@ -88,7 +88,9 @@ public class GameRenderer {
     private Color transitionColor;
     private int camWidth, camHeight;
 private BgHandler bgHandler;
-    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler) {
+private BirdHandler birdHandler;
+    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler) {
+        this.birdHandler=birdHandler;
         this.bgHandler=bgHandler;
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -162,7 +164,7 @@ public void setRotate(float angle){
         //gliderMid = AssetHandler.gliderMid;
         //vertflipgliderMid = AssetHandler.vertflipgliderMid;
 
-        birdsList=BirdHandler.activeBirdList;
+        birdsList=birdHandler.activeBirdList;
 
         frontFlaps = AssetHandler.frontFlaps;
         //flipflaps = AssetHandler.flipflaps;

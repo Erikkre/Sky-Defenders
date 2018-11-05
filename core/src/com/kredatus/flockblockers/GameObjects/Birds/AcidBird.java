@@ -1,94 +1,122 @@
 package com.kredatus.flockblockers.GameObjects.Birds;
 
-
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
-
+import com.kredatus.flockblockers.Handlers.AssetHandler;
 
 import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 
+/**
+ * Created by Erik Kredatus on 9/8/2018.
+ */
 
-public class AcidBird extends BirdAbstractClass{
-    private final float edge;
-    final Animation[] animSeq = {frontFlaps, leftFlaps, frontFlaps, rightFlaps};
-    final int[] animSeqList = {0,1,2,3};
+public class AcidBird extends BirdAbstractClass {
+
+
+    public Animation[] animSeq;
+    //public final int[] animSeqList = {0,1,2,3};
+    Tween second;
     public AcidBird(float camHeight, float camWidth){
         super();
-        this.yVel=1;
+
+        this.yVel=5;
         this.diamonds=1;
         this.coins=7;
-        this.health=100;
-        this.sizeVariance=15;
 
-        super.load("sprites/phoenix.png", 0.15f);
+        this.sizeVariance=200;
+        sizeRatio=1;
 
-        this.width += -sizeVariance+r.nextInt(sizeVariance*2);
-        this.height += -sizeVariance+r.nextInt(sizeVariance*2);
+        animSeq = AssetHandler.acidAnimations;
+        frontFlaps=animSeq[0];
+        leftFlaps=animSeq[1];
+        rightFlaps=animSeq[2];
+        backFlaps=animSeq[3];
+        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        edge = (camWidth)-width/2;
+
+
+        //System.out.println("Height before: " + height+ " width: " + width);
+        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))/sizeRatio)/width;
+
+        width *=finalSizeRatio;
+        height *= finalSizeRatio;
+
+        //System.out.println("Height after: " + height+ " width: " + width);
+        health=100;
 
         animation=rightFlaps;
-        edge = (camWidth)-width/2;
         x=(width/2 + r.nextInt((int)(edge-width)));
+
         y=0;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
-        xMotion.start();
     }
 
     @Override
     public void specificUpdate(float delta, float runTime) {
+        //second.update(delta);
         if (cnt==4) {cnt=0;}
-        System.out.println(x);
+        //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 
-        if (animSeqList[cnt]==0&&x>(5*camWidth)/6) {
-            System.out.println("1");
+        if (cnt==0&&x>(2*camWidth)/3) {
             animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
+            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt]==1&&x<(5*camWidth)/6) {
-            System.out.println("2");
+        } else if (cnt==1&&x<(2*camWidth)/3) {
             animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
+            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt]==2&&x<(camWidth)/6) {
-            System.out.println("3");
+        } else if (cnt==2&&x<(camWidth)/3) {
             animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
+            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
-        } else if (animSeqList[cnt]==3&&x>(camWidth)/6) {
-            System.out.println("4");
+        } else if (cnt==3&&x>(camWidth)/3) {
             animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth();
+            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
         }
     }
 
     @Override
     public void setManager(float camWidth) {
-
-        /*
-        final TweenCallback animationSwitch = new TweenCallback() {
+        final TweenCallback endIntro= new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
 
-                animation = animSeq[counter++];
-                if (counter==4){
-                    counter=0;
-                }
+                intro.pause();intro.kill();intro=null;
+                xMotion=first;
+                first.start();
+            }
+        };
+
+        intro = Tween.to(this, 1, 1).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
+        xMotion=intro;
+
+
+        /*final TweenCallback endfirst= new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                second.pause();
+                first.start();
             }
         };*/
 
-        /*(xMotion = Timeline.createSequence()
-                .push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeInOutQuint))
+        first =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
+        //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
+        /*
+        (xMotion = Timeline.createSequence()
+                .push(   Tween.to(this, 1, 6).target(edge).ease(TweenEquations.easeInOutQuint))
+                .push(   Tween.to(this, 1, 6).target(width/2).ease(TweenEquations.easeOutQuint)).setCallback(tweenStart)
                 //.push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeNone).setCallback(animationSwitch))
-                .push(   Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeInOutQuint))
+
                 //.push(   Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeNone).setCallback(animationSwitch))    )
-        ).repeat( Tween.INFINITY, 3);*/
+                .repeat( Tween.INFINITY, 0)).start();
+*/
                 /*.push(delay(3).setCallback(animationSwitch))
                 .target(width/2).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
                 .target(edge).setCallback(animationSwitch).delay(3)

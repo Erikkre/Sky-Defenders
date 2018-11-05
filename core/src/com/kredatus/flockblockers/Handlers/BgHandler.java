@@ -202,9 +202,9 @@ public class BgHandler {
         return background2;
     }
 
-    public void setRendererAndCam(GameRenderer renderer, OrthographicCamera cam) {
+    public void setRendererAndCam(GameRenderer renderer) {
         this.renderer = renderer;
-        this.cam = cam;
+        this.cam = renderer.cam;
     }
     /*public Background getBackground3() {
         return background3;

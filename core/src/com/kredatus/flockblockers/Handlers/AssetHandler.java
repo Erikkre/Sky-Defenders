@@ -321,10 +321,15 @@ public class AssetHandler {
         boostdown = new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
         boostdown.flip(false, true);
 
-        //phoenixBird = new Texture(Gdx.files.internal("sprites/phoenix.png"));
-        //phoenixBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        //phoenixAnimations = birdTextureToSprite(phoenixBird);
 
+        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.15f);
+//        waterAnimations = birdTextureToAnimation("water.png", 0.15f);
+       // nightAnimations = birdTextureToAnimation("night.png", 0.15f);
+ //       acidAnimations = birdTextureToAnimation("acid.png", 0.15f);
+ //       fireAnimations = birdTextureToAnimation("fire.png", 0.15f);
+   //     thunderAnimations = birdTextureToAnimation("thunder.png", 0.15f);
+//        lunarAnimations = birdTextureToAnimation("lunar.png", 0.15f);
+    //    goldAnimations = birdTextureToAnimation("gold.png", 0.15f);
 
         Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
         greyTinyBirdAnimations=tinyBirdTextureToAnimation(greyTinyBird);
@@ -424,6 +429,64 @@ public class AssetHandler {
         if (!prefs.contains("highScore")) {
             prefs.putInteger("highScore", 0);
         }
+    }
+
+    public static final Animation[] birdTextureToAnimation(String path, float flapSpeed){
+        Texture sprites = new Texture(Gdx.files.internal("sprites/"+path));
+        sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+
+        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
+        ArrayList<TextureRegion> leftSidePositions = new ArrayList<TextureRegion>();
+
+        TextureRegion[] front=new TextureRegion[0];
+        TextureRegion[] rightSide=new TextureRegion[0];
+        TextureRegion[] leftSide=new TextureRegion[0];
+        TextureRegion[] back= new TextureRegion[0];
+
+        for (int i=0;i<16;i++) {
+            TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
+
+            positions.add(temp);
+
+            if (i>5&&i<=11){
+                TextureRegion flipTemp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
+                flipTemp.flip(true,false);
+                leftSidePositions.add(flipTemp);
+            }
+            if (i == 5) {
+                front =  positions.toArray(new TextureRegion[6]);
+                positions.clear();
+
+            } else if (i == 11){
+                rightSide=positions.toArray(new TextureRegion[6]);
+                leftSide =leftSidePositions.toArray(new TextureRegion[6]);
+
+                positions.clear();
+                leftSidePositions.clear();
+
+            } else if (i==15){
+                back = positions.toArray(new TextureRegion[4]);
+                positions.clear();
+
+            }
+        }
+
+        Animation frontFlaps= new Animation<TextureRegion>(flapSpeed, front);
+        frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        Animation rightFlaps= new Animation<TextureRegion>(flapSpeed, rightSide);
+        rightFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        Animation leftFlaps= new Animation<TextureRegion>(flapSpeed, leftSide);
+        leftFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        Animation backFlaps= new Animation<TextureRegion>(flapSpeed, back);
+        backFlaps.setPlayMode(Animation.PlayMode.LOOP);
+
+        //height=back[3].getRegionHeight();
+        //width=back[0].getRegionWidth();
+
+        return new Animation[]{frontFlaps, leftFlaps, rightFlaps, backFlaps};
     }
 
     private static Animation tinyBirdTextureToAnimation (Texture texture) {

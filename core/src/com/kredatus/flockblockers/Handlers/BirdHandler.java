@@ -20,20 +20,21 @@ import java.util.TimerTask;
 
 public class BirdHandler {
     //public  static Class[] birdList ={PhoenixBird.class,  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
-
-    public static ArrayList<BirdAbstractClass> activeBirdList = new ArrayList<BirdAbstractClass>();
+    public  ArrayList<BirdAbstractClass> birdList = new ArrayList<BirdAbstractClass>();
+    public  ArrayList<BirdAbstractClass> activeBirdList = new ArrayList<BirdAbstractClass>();
     public BirdAbstractClass[] test;
     private BirdAbstractClass bird;
     //public static String[] birdOrderList={"pB","wB","nB","aB","fB","tB","lB","gB"};
-    private final static int[] birdNumberList=  { 1,   40,  30,  20,  20,  20,  10,  5  };
+    private final static int[] birdNumberList=  { 80,   40,  30,  20,  20,  20,  10,  5  };
     private int[] spawnIntervals=new int[8];
     private int waveTypeCnt=0;
     //public Timer[] taskList;
     private Timer task=null;
     private final int duration = 100;
     private BgHandler bgHandler;
-    private static float camWidth, camHeight;
+    private float camWidth, camHeight;
     BirdAbstractClass birdToAdd;
+    boolean taskRunning;
     public BirdHandler(BgHandler bgHandler,  float camWidth, float camHeight) {
         this.bgHandler = bgHandler;
         this.camHeight = camHeight;
@@ -44,60 +45,36 @@ public class BirdHandler {
 
 
         for (int i = 0; i < 8; i++) {
-            if (i!=0){
+          //  if (i!=0){
                 spawnIntervals[i] = duration / birdNumberList[i];
-            } else {
-                spawnIntervals[0]= 1;
-            }
-
+         //   } else {
+          //      spawnIntervals[0]= 1;
+          //  }
+            task=new Timer();
+            taskRunning=false;
         }
 
         //birdList.add(PhoenixBird.class);
 
-                // post a Runnable to the rendering thread that processes the result
-
+        // post a Runnable to the rendering thread that processes the result
     }
 
     public void setUpTimer(){
         //birdToAdd=(BirdAbstractClass) PhoenixBird.in
-        task=new Timer();
-
 
                 task.scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
                         try {
-                            Gdx.app.postRunnable(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (waveTypeCnt == 0) {
-                                        birdToAdd = new PhoenixBird(camHeight, camWidth);
-                                    }
-                                    if (waveTypeCnt == 1) {
-                                        birdToAdd = new WaterBird(camHeight, camWidth);
-                                    }
-                                    if (waveTypeCnt == 2) {
-                                        birdToAdd = new NightBird(camHeight, camWidth);
-                                    }
-                                    if (waveTypeCnt == 3) {
-                                        birdToAdd = new AcidBird(camHeight, camWidth);
-                                    }
-                                    if (waveTypeCnt == 4) {
-                                        birdToAdd = new FireBird(camHeight, camWidth);
-                                    }
-                                    if (waveTypeCnt == 5) {
-                                        birdToAdd = new ThunderBird(camHeight, camWidth);
-                                    }
-                                    if (waveTypeCnt == 6) {
-                                        birdToAdd = new LunarBird(camHeight, camWidth);
-                                    }
-                                    if (waveTypeCnt == 7) {
-                                        birdToAdd = new GoldBird(camHeight, camWidth);
-                                    }
-                                    System.out.println(birdToAdd + " bird added");
-                                    activeBirdList.add(birdToAdd);
-                                }
-                            } );
+                        //    Gdx.app.postRunnable(new Runnable() {
+                             //   @Override
+                               // public void run() {
+                            if (birdList.size()>0) {
+                                activeBirdList.add(birdList.get(0));
+                                birdList.remove(0);
+                            }
+                               // }
+                            //} );
                         } catch (Exception e) {
                             System.out.println("Could not make new " + birdToAdd + " object spawn because of error " + e);
                             e.printStackTrace();
@@ -141,11 +118,48 @@ public class BirdHandler {
     public void update(float runTime, float delta) {
         if (waveTypeCnt==8){waveTypeCnt=0;}
         if (  (((bgHandler.getBackground().y <-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2)) ){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
-            if (task==null){
+            if (!taskRunning) {
+                //for the amount of birds in the wave,
+                if (waveTypeCnt == 0) {
+                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                        birdList.add(new PhoenixBird(camHeight, camWidth));
+                    }
+                } else if (waveTypeCnt == 1) {
+                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                        birdList.add(new WaterBird(camHeight, camWidth));
+                    }
+                } else if (waveTypeCnt == 2) {
+                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                        birdList.add(new NightBird(camHeight, camWidth));
+                    }
+                } else if (waveTypeCnt == 3) {
+                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                        birdList.add(new AcidBird(camHeight, camWidth));
+                    }
+                } else if (waveTypeCnt == 4) {
+                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                        birdList.add(new FireBird(camHeight, camWidth));
+                    }
+                } else if (waveTypeCnt == 5) {
+                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                        birdList.add(new ThunderBird(camHeight, camWidth));
+                    }
+                } else if (waveTypeCnt == 6) {
+                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                        birdList.add(new LunarBird(camHeight, camWidth));
+                    }
+                } else if (waveTypeCnt == 7) {
+                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                        birdList.add(new GoldBird(camHeight, camWidth));
+                    }
+                }
+                System.out.println(birdToAdd + " bird added");
 
                 System.out.println("Timer set");
                 setUpTimer();
+                taskRunning = true;
             }
+
             //System.out.println("In loop");
 
             //final PhoenixBird newBird= new PhoenixBird(camHeight,camWidth);
@@ -155,10 +169,11 @@ public class BirdHandler {
 
 
         } else {
-            if (task!=null){
-                System.out.println("Timer nulled");
-                task=null;
+            if (taskRunning){
+                System.out.println("Timer cancelled");
+                task.cancel();
                 waveTypeCnt++; //nextWave when timer reset
+                taskRunning=false;
             }
         }
 

@@ -102,7 +102,7 @@ public abstract class BirdAbstractClass {
                 //isOffCam=true;
             }
         } else {
-            System.out.println("HELLOOOOOOOOOOOO");
+
             yVel+=yAcc;
             x=x+xVel;
 
@@ -130,63 +130,7 @@ public abstract class BirdAbstractClass {
         }
     }
 
-    public final Animation[] load(String path, float flapSpeed){
-        Texture sprites = new Texture(Gdx.files.internal(path));
-        sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
-        ArrayList<TextureRegion> leftSidePositions = new ArrayList<TextureRegion>();
-
-        TextureRegion[] front=new TextureRegion[0];
-        TextureRegion[] rightSide=new TextureRegion[0];
-        TextureRegion[] leftSide=new TextureRegion[0];
-        TextureRegion[] back= new TextureRegion[0];
-
-        for (int i=0;i<16;i++) {
-            TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
-
-            positions.add(temp);
-
-            if (i>5&&i<=11){
-                TextureRegion flipTemp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
-                flipTemp.flip(true,false);
-                leftSidePositions.add(flipTemp);
-            }
-            if (i == 5) {
-                front =  positions.toArray(new TextureRegion[6]);
-                positions.clear();
-
-            } else if (i == 11){
-                rightSide=positions.toArray(new TextureRegion[6]);
-                leftSide =leftSidePositions.toArray(new TextureRegion[6]);
-
-                positions.clear();
-                leftSidePositions.clear();
-
-            } else if (i==15){
-                back = positions.toArray(new TextureRegion[4]);
-                positions.clear();
-
-            }
-        }
-
-        frontFlaps= new Animation<TextureRegion>(flapSpeed, front);
-        frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
-
-        rightFlaps= new Animation<TextureRegion>(flapSpeed, rightSide);
-        rightFlaps.setPlayMode(Animation.PlayMode.LOOP);
-
-        leftFlaps= new Animation<TextureRegion>(flapSpeed, leftSide);
-        leftFlaps.setPlayMode(Animation.PlayMode.LOOP);
-
-        backFlaps= new Animation<TextureRegion>(flapSpeed, back);
-        backFlaps.setPlayMode(Animation.PlayMode.LOOP);
-
-        height=back[3].getRegionHeight();
-        width=back[0].getRegionWidth();
-
-        return new Animation[]{frontFlaps, leftFlaps, rightFlaps, backFlaps};
-    }
 
     public final void hit(Bullet bullet){
         health-=bullet.damage;

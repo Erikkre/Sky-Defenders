@@ -3,9 +3,9 @@ package com.kredatus.flockblockers.GameObjects.Birds;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
+import com.kredatus.flockblockers.Handlers.AssetHandler;
 
 import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
@@ -23,14 +23,14 @@ public class WaterBird extends BirdAbstractClass {
     public WaterBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=10;
+        this.yVel=5;
         this.diamonds=1;
         this.coins=7;
 
         this.sizeVariance=200;
         sizeRatio=1;
 
-        animSeq = super.load("sprites/phoenix.png", 0.15f);
+        animSeq = AssetHandler.waterAnimations;
         frontFlaps=animSeq[0];
         leftFlaps=animSeq[1];
         rightFlaps=animSeq[2];
@@ -39,14 +39,13 @@ public class WaterBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
 
 
-
+        //System.out.println("Height before: " + height+ " width: " + width);
         finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))/sizeRatio)/width;
-
 
         width *=finalSizeRatio;
         height *= finalSizeRatio;
 
-        System.out.println("Height after: " + height+ " width: " + width);
+        //System.out.println("Height after: " + height+ " width: " + width);
         health=100;
 
         animation=rightFlaps;
@@ -62,25 +61,21 @@ public class WaterBird extends BirdAbstractClass {
     public void specificUpdate(float delta, float runTime) {
         //second.update(delta);
         if (cnt==4) {cnt=0;}
-        System.out.println("x: "+x+ " > "+(2*camWidth)/3);
+        //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 
         if (cnt==0&&x>(2*camWidth)/3) {
-            System.out.println("1");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
         } else if (cnt==1&&x<(2*camWidth)/3) {
-            System.out.println("2");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
         } else if (cnt==2&&x<(camWidth)/3) {
-            System.out.println("3");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
         } else if (cnt==3&&x>(camWidth)/3) {
-            System.out.println("4");
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
@@ -99,7 +94,7 @@ public class WaterBird extends BirdAbstractClass {
             }
         };
 
-        intro = Tween.to(this, 1, 2).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
+        intro = Tween.to(this, 1, 1).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
         xMotion=intro;
 
 
@@ -111,7 +106,7 @@ public class WaterBird extends BirdAbstractClass {
             }
         };*/
 
-        first =Tween.to(this, 1, 3).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
+        first =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
         //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
         /*
         (xMotion = Timeline.createSequence()
