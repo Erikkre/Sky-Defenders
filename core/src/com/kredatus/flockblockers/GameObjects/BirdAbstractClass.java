@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.TweenAccessors.Value;
@@ -52,10 +53,8 @@ import aurelienribon.tweenengine.TweenEquations;
 
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
-    protected Circle boundingCir;
+
     public float preX, x, y, yVel, yAcc, xVel, rotation, sizeRatio, finalSizeRatio;
-
-
 
     public float width, height;
     protected float camWidth, camHeight, edge;
@@ -67,13 +66,14 @@ public abstract class BirdAbstractClass {
     protected int sizeVariance, coins, health, diamonds, cnt=0;
     //protected Timeline xMotion;
     protected Tween intro, first, xMotion;
-
+    private Polygon boundingPoly;
 
     public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
         //this.manager=manager;
-        boundingCir = new Circle();
+        boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 3.5f,          x - width / 3f, y + height / 3.5f});//middle of front bird is below
+        boundingPoly  . setOrigin(0, 0);
     }
 
     public abstract void setManager(float camWidth);
@@ -81,17 +81,16 @@ public abstract class BirdAbstractClass {
     //public abstract void fly(float delta) ;
     public boolean collides(Bullet bullet) {
         //if (x <= bird.x + bird.width && y-height<bird.y+bird.getHeight()/2 && y+height*2>bird.getPosition().y) {
-            return Intersector.overlapConvexPolygons(boundingCir, bullet.boundingRect);
+            return Intersector.overlapConvexPolygons(boundingPoly, bullet.boundingRect);
         //}
-        //return false;
+
     }
 
     public void update(float delta, float runTime){
-
+        boundingPoly.setPosition(x, y);
         y+=yVel;
         if (isAlive) {
             preX=x;
-
             xMotion.update(delta);
             xVel=x-preX;
             if (xVel>0.1) {
@@ -99,6 +98,7 @@ public abstract class BirdAbstractClass {
             } else if (xVel<-0.1) {
                 rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 9;
             }
+            boundingPoly.setRotation(rotation);
             if (health <= 0) {
                 die();
             }
@@ -108,7 +108,6 @@ public abstract class BirdAbstractClass {
                 //isOffCam=true;
             }
         } else {
-
             yVel+=yAcc;
             x+=xVel;
 
@@ -121,7 +120,7 @@ public abstract class BirdAbstractClass {
 
     public abstract void specificUpdate(float delta, float runTime);
 
-    public void die(){
+    private void die(){
         xMotion.kill();
         isAlive=false;
         animation=frontFlaps;
@@ -136,15 +135,13 @@ public abstract class BirdAbstractClass {
         }
     }
 
-
-
     public final void hit(Bullet bullet){
         health-=bullet.damage;
     }
 
-    public void dead(float delta){
-
-    }
+  //  public void dead(float delta){
+//
+   // }
 
 /*
     public float distanceAfterDeath() {

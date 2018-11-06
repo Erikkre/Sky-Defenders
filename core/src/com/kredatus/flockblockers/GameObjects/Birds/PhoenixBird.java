@@ -27,7 +27,7 @@ Tween second;
         this.coins=7;
 
         this.sizeVariance=1;
-        sizeRatio=1f;
+        sizeRatio=0.8f;
 
         animSeq = AssetHandler.phoenixAnimations;
         frontFlaps=animSeq[0];

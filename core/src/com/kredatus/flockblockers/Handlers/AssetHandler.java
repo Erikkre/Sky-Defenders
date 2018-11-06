@@ -322,7 +322,7 @@ public class AssetHandler {
         boostdown.flip(false, true);
 
 
-        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.15f);
+        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.12f);
         waterAnimations = birdTextureToAnimation("water.png", 0.15f);
         nightAnimations = birdTextureToAnimation("night.png", 0.15f);
         acidAnimations = birdTextureToAnimation("acid.png", 0.12f);
