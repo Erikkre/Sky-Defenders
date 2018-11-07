@@ -557,13 +557,33 @@ public void setRotate(float angle){
         //System.out.println("Cam: "+cam.position);
         //glider.getPosition().x+glider.getWidth()/2  glider.getPosition().y+glider.getHeight()/2
 
+
+
+
+
         for (BirdAbstractClass i : activeBirdQueue) {
+
+
+
             float x=i.x - i.width / 2, y=i.y - i.height / 2;
 
             batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime), x, y,
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
+batcher.end();
+            //Gdx.gl.glEnable(GL30.GL_BLEND);
+           // Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+
+            shapeRenderer.setAutoShapeType(true);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(255,0,0, 1f);
+System.out.println("Shape x: "+ (i.boundingPoly.getX()- i.width / 2)+" Bird x: "+x);
+            shapeRenderer.polygon(i.boundingPoly.getTransformedVertices());        //
+            shapeRenderer.end();
+            batcher.begin();
+           // Gdx.gl.glDisable(GL30.GL_BLEND);
             //System.out.println("x: "+(i.x - i.width / 2) + " y: "+ (i.y - i.height / 2));
         }
+
         //activeBirdList.get(0).update(delta);
         /*
         batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-glider.getWidth()/2, glider.getPosition().y-glider.getHeight()/2,
@@ -590,7 +610,7 @@ public void setRotate(float angle){
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
 
         batcher.begin();
-        batcher.disableBlending();
+        //batcher.disableBlending();
         batcher.enableBlending();
 
         if (myWorld.isStory()) {
@@ -611,8 +631,8 @@ public void setRotate(float angle){
             batcher.setProjectionMatrix(cam.combined);*/
 
 
-
             drawStory(runTime, delta);
+
             /*
             if (AssetHandler.getHighScore() == 0) {
                 nextButton.draw(batcher);
@@ -676,16 +696,16 @@ public void setRotate(float angle){
     }
 
     private void drawTransition(float delta) {
-        if (alpha.getValue() > 0) {
-            manager.update(delta);
-            Gdx.gl.glEnable(GL30.GL_BLEND);
-            Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(transitionColor.r, transitionColor.g,transitionColor.b, alpha.getValue());
-            shapeRenderer.rect(-camWidth*5000, -camHeight*5000, camWidth*10000, camHeight*10000);
-            shapeRenderer.end();
-            Gdx.gl.glDisable(GL30.GL_BLEND);
-        }
+     //   if (alpha.getValue() > 0) {
+         //   manager.update(delta);
+          //  Gdx.gl.glEnable(GL30.GL_BLEND);
+          //  Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+           // shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+          //  shapeRenderer.setColor(transitionColor.r, transitionColor.g,transitionColor.b, alpha.getValue());
+          //  shapeRenderer.rect(-camWidth*5000, -camHeight*5000, camWidth*10000, camHeight*10000);
+          //  shapeRenderer.end();
+          //  Gdx.gl.glDisable(GL30.GL_BLEND);
+      //  }
     }
 
     public static Vector3 getCameraPosition() { return camposition; }

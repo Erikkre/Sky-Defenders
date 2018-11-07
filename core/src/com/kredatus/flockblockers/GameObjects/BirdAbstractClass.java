@@ -66,16 +66,21 @@ public abstract class BirdAbstractClass {
     protected int sizeVariance, coins, health, diamonds, cnt=0;
     //protected Timeline xMotion;
     protected Tween intro, first, xMotion;
-    private Polygon boundingPoly;
+    public Polygon boundingPoly;
 
     public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
         //this.manager=manager;
-        boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 3.5f,          x - width / 3f, y + height / 3.5f});//middle of front bird is below
-        boundingPoly  . setOrigin(0, 0);
+
+
     }
 
+    public void setBoundingPoly(float x, float y, float width, float height){
+        boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 3.5f,          x - width / 3f, y + height / 3.5f});//middle of front bird is below
+        //boundingPoly  . setOrigin(x, y);
+        //boundingPoly.dirty();
+    }
     public abstract void setManager(float camWidth);
 
     //public abstract void fly(float delta) ;
@@ -83,11 +88,11 @@ public abstract class BirdAbstractClass {
         //if (x <= bird.x + bird.width && y-height<bird.y+bird.getHeight()/2 && y+height*2>bird.getPosition().y) {
             return Intersector.overlapConvexPolygons(boundingPoly, bullet.boundingRect);
         //}
-
     }
 
     public void update(float delta, float runTime){
         boundingPoly.setPosition(x, y);
+
         y+=yVel;
         if (isAlive) {
             preX=x;
@@ -124,7 +129,7 @@ public abstract class BirdAbstractClass {
         xMotion.kill();
         isAlive=false;
         animation=frontFlaps;
-        animation.setFrameDuration(0.1f);
+        animation.setFrameDuration(0.05f);
 
         yAcc=-0.8f;
         yVel=15;
