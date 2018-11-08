@@ -1,29 +1,14 @@
 package com.kredatus.flockblockers.GameObjects;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
-import com.kredatus.flockblockers.TweenAccessors.Value;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
-import javax.xml.soap.Text;
-
-import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.TweenEquations;
 
 
 /**
@@ -87,9 +72,9 @@ public abstract class BirdAbstractClass {
     public abstract void setManager(float camWidth);
 
     //public abstract void fly(float delta) ;
-    public boolean collides(Bullet bullet) {
+    public boolean collides(Trajectile trajectile) {
         //if (x <= bird.x + bird.width && y-height<bird.y+bird.getHeight()/2 && y+height*2>bird.getPosition().y) {
-            return Intersector.overlapConvexPolygons(boundingPoly, bullet.boundingRect);
+            return Intersector.overlapConvexPolygons(boundingPoly, trajectile.boundingRect);
         //}
     }
 
@@ -146,8 +131,8 @@ public abstract class BirdAbstractClass {
         }
     }
 
-    public final void hit(Bullet bullet){
-        health-=bullet.damage;
+    public final void hit(Trajectile trajectile){
+        health-= trajectile.damage;
     }
 
   //  public void dead(float delta){

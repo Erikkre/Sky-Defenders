@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
  * Created by Mr. Kredatus on 8/31/2017.
  */
 
-public class Bullet  {
+public class Trajectile {
      public Polygon boundingRect;
      private boolean isScored = false;
      protected int width, height ;
@@ -14,7 +14,7 @@ public class Bullet  {
      private Vector2 position, velocity;
      private float camWidth, camHeight, rotation;
     public float damage;
-    public Bullet(Vector2 position, Vector2 velocity, int width, int height, float camWidth, float camHeight) {
+    public Trajectile(Vector2 position, Vector2 velocity, int width, int height, float camWidth, float camHeight, float damage) {
         this.width    = width    ;
         this.height   = height   ;
         this.position = position ;

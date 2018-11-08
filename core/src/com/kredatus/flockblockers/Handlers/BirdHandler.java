@@ -15,12 +15,15 @@ import com.kredatus.flockblockers.GameObjects.Birds.WaterBird;
 import java.util.ArrayDeque;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public class BirdHandler {
     //public  static Class[] birdList ={PhoenixBird.class,  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
     public ArrayDeque<BirdAbstractClass> birdQueue=new ArrayDeque<BirdAbstractClass>(41);
-    public ArrayDeque<BirdAbstractClass> activeBirdQueue=new ArrayDeque<BirdAbstractClass>(10);
+
+    public ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
+
     //public static String[] birdOrderList={"pB","wB","nB","aB","fB","tB","lB","gB"};
     private final static int[] birdNumberList=  { 1,   40,  30,  20,  20,  20,  10,  5  };
     private float[] spawnIntervals=new float[8];
@@ -33,6 +36,7 @@ public class BirdHandler {
     //BirdAbstractClass birdToAdd;
     boolean taskRunning;
     public BirdHandler(BgHandler bgHandler,  float camWidth, float camHeight) {
+
         this.bgHandler = bgHandler;
         this.camHeight = camHeight;
         this.camWidth = camWidth;
@@ -59,9 +63,9 @@ public class BirdHandler {
             @Override
             public void run() {
                 if (birdQueue.size() > 0) {
-                    activeBirdQueue.push(birdQueue.pop());
+                    activeBirdQueue.add(birdQueue.pop());
                 }
-                System.out.println(activeBirdQueue);
+                //System.out.println(activeBirdQueue);
             }
         };
     }
@@ -99,35 +103,35 @@ public class BirdHandler {
                 //for the amount of birds in the wave,
                 if (waveTypeCnt == 0) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.push(new PhoenixBird(camHeight, camWidth));
+                        birdQueue.add(new PhoenixBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 1) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.push(new WaterBird(camHeight, camWidth));
+                        birdQueue.add(new WaterBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 2) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.push(new NightBird(camHeight, camWidth));
+                        birdQueue.add(new NightBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 3) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.push(new AcidBird(camHeight, camWidth));
+                        birdQueue.add(new AcidBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 4) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.push(new FireBird(camHeight, camWidth));
+                        birdQueue.add(new FireBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 5) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.push(new ThunderBird(camHeight, camWidth));
+                        birdQueue.add(new ThunderBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 6) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.push(new LunarBird(camHeight, camWidth));
+                        birdQueue.add(new LunarBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 7) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.push(new GoldBird(camHeight, camWidth));
+                        birdQueue.add(new GoldBird(camHeight, camWidth));
                     }
                 }
                 setUpTask();

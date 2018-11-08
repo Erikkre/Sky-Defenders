@@ -31,6 +31,7 @@ import com.kredatus.flockblockers.ui.SimpleButton;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
@@ -77,7 +78,7 @@ public class GameRenderer {
     public static BitmapFont font, titlefont, storyfont, instrfont, droidSerifFont;
 
 
-    public static ArrayDeque<BirdAbstractClass> activeBirdQueue;
+    public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue;
 
     float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
             c0len, c1len, c2len, c3len, c4len, c5len, c6len, c7len, c8len, c9len, c10len, c11len, c12len, c13len, c14len,
