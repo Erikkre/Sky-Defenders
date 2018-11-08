@@ -573,10 +573,11 @@ batcher.end();
             //Gdx.gl.glEnable(GL30.GL_BLEND);
            // Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
-            shapeRenderer.setAutoShapeType(true);
+            //shapeRenderer.setAutoShapeType(true);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(255,0,0, 1f);
-System.out.println("Shape x: "+ (i.boundingPoly.getX()- i.width / 2)+" Bird x: "+x);
+
+            //i.boundingPoly.setPosition(i.x, i.y);
             shapeRenderer.polygon(i.boundingPoly.getTransformedVertices());        //
             shapeRenderer.end();
             batcher.begin();

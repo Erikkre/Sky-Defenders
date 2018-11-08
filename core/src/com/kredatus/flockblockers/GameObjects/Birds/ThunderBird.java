@@ -57,11 +57,13 @@ public class ThunderBird extends BirdAbstractClass {
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
+        setBoundingPoly(x,y,width,height);
     }
 
     @Override
     public void specificUpdate(float delta, float runTime) {
         //second.update(delta);
+
         if (cnt==4) {cnt=0;}
         //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 

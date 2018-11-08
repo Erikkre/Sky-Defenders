@@ -72,13 +72,16 @@ public abstract class BirdAbstractClass {
         isAlive=true;
         isOffCam = false;
         //this.manager=manager;
-
-
     }
 
-    public void setBoundingPoly(float x, float y, float width, float height){
-        boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 3.5f,          x - width / 3f, y + height / 3.5f});//middle of front bird is below
-        //boundingPoly  . setOrigin(x, y);
+    protected void setBoundingPoly(float x, float y, float width, float height){
+
+
+        boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 5f,          x - width / 3f, y + height / 5f});//middle of front bird is below
+        boundingPoly  . setOrigin(x, y);
+
+        System.out.print("x of poly set to" + x);
+
         //boundingPoly.dirty();
     }
     public abstract void setManager(float camWidth);
@@ -91,13 +94,16 @@ public abstract class BirdAbstractClass {
     }
 
     public void update(float delta, float runTime){
-        boundingPoly.setPosition(x, y);
+
 
         y+=yVel;
         if (isAlive) {
             preX=x;
             xMotion.update(delta);
+            System.out.println("Shape x: "+x);
+
             xVel=x-preX;
+            boundingPoly.translate(xVel, yVel);
             if (xVel>0.1) {
                 rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 9;
             } else if (xVel<-0.1) {

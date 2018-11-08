@@ -51,7 +51,7 @@ Tween second;
 
         animation=rightFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));
-
+        System.out.println("x of bird set to " + x);
         y=0;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
@@ -61,6 +61,9 @@ Tween second;
 
     @Override
     public void specificUpdate(float delta, float runTime) {
+
+
+
         //second.update(delta);
         if (cnt==4) {cnt=0;}
         //System.out.println("x: "+x+ " > "+(2*camWidth)/3);

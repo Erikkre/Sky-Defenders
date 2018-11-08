@@ -57,6 +57,7 @@ public class NightBird extends BirdAbstractClass {
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
+        setBoundingPoly(x,y,width,height);
     }
 
     @Override
