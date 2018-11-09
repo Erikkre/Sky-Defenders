@@ -12,7 +12,7 @@ import com.kredatus.flockblockers.GameObjects.Birds.ThunderBird;
 import com.kredatus.flockblockers.GameObjects.Birds.WaterBird;
 
 
-import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BirdHandler {
     //public  static Class[] birdList ={PhoenixBird.class,  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
-    public ArrayDeque<BirdAbstractClass> birdQueue=new ArrayDeque<BirdAbstractClass>(41);
+    public ArrayList<BirdAbstractClass> birdQueue=new ArrayList<BirdAbstractClass>(41);
 
     public ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
@@ -63,7 +63,7 @@ public class BirdHandler {
             @Override
             public void run() {
                 if (birdQueue.size() > 0) {
-                    activeBirdQueue.add(birdQueue.pop());
+                    activeBirdQueue.add(birdQueue.remove(0));
                 }
                 //System.out.println(activeBirdQueue);
             }

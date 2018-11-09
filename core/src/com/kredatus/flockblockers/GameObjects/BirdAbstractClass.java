@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 
 
+import java.util.Hashtable;
 import java.util.Random;
 
 import aurelienribon.tweenengine.Tween;
@@ -40,12 +41,13 @@ public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
     public float preX, x, y, yVel, yAcc, xVel, rotation, sizeRatio, finalSizeRatio;
-
+    public Hashtable xMotionTimePositions;
+    public double xMotionTime;
     public float width, height;
     protected float camWidth, camHeight, edge;
     public boolean isOffCam;
     public float  starty;
-    protected boolean isAlive;
+    protected boolean isAlive, firstxMotion=true;
     protected Random r =new Random();
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
     protected int sizeVariance, coins, health, diamonds, cnt=0;
@@ -72,9 +74,9 @@ public abstract class BirdAbstractClass {
     public abstract void setManager(float camWidth);
 
     //public abstract void fly(float delta) ;
-    public boolean collides(Trajectile trajectile) {
+    public boolean collides(Projectile projectile) {
         //if (x <= bird.x + bird.width && y-height<bird.y+bird.getHeight()/2 && y+height*2>bird.getPosition().y) {
-            return Intersector.overlapConvexPolygons(boundingPoly, trajectile.boundingRect);
+            return Intersector.overlapConvexPolygons(boundingPoly, projectile.boundingRect);
         //}
     }
 
@@ -85,6 +87,9 @@ public abstract class BirdAbstractClass {
         if (isAlive) {
             preX=x;
             xMotion.update(delta);
+
+
+
             System.out.println("Shape x: "+x);
 
             xVel=x-preX;
@@ -131,8 +136,8 @@ public abstract class BirdAbstractClass {
         }
     }
 
-    public final void hit(Trajectile trajectile){
-        health-= trajectile.damage;
+    public final void hit(Projectile projectile){
+        health-= projectile.dmg;
     }
 
   //  public void dead(float delta){
