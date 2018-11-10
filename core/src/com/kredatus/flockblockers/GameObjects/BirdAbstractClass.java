@@ -41,7 +41,7 @@ public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
     public float preX, x, y, yVel, yAcc, xVel, rotation, sizeRatio, finalSizeRatio;
-    public Hashtable xMotionTimePositions;
+    public Hashtable xMotionTimePositions=new Hashtable();
     public double xMotionTime;
     public float width, height;
     protected float camWidth, camHeight, edge;

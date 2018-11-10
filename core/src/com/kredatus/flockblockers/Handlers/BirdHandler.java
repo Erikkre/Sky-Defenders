@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BirdHandler {
     //public  static Class[] birdList ={PhoenixBird.class,  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
-    public ArrayList<BirdAbstractClass> birdQueue=new ArrayList<BirdAbstractClass>(41);
+    public ConcurrentLinkedQueue<BirdAbstractClass> birdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
     public ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
@@ -63,7 +63,7 @@ public class BirdHandler {
             @Override
             public void run() {
                 if (birdQueue.size() > 0) {
-                    activeBirdQueue.add(birdQueue.remove(0));
+                    activeBirdQueue.add(birdQueue.poll());  //removes it or returns null if empty
                 }
                 //System.out.println(activeBirdQueue);
             }
