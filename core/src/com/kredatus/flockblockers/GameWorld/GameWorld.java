@@ -3,9 +3,11 @@ package com.kredatus.flockblockers.GameWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameObjects.Glider;
+import com.kredatus.flockblockers.GameObjects.Turret;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
+import com.kredatus.flockblockers.Handlers.TurretHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 
 /**
@@ -15,6 +17,7 @@ public class GameWorld {
     private Glider glider;
     public BgHandler bgHandler;
     public BirdHandler birdHandler;
+    public TurretHandler turretHandler;
     //private boolean isAlive = true;
     private Rectangle ground;
     public double boost = 0;  //boostamount
@@ -70,7 +73,9 @@ public class GameWorld {
     public void update(float delta, float runTime) {
         switch (currentState) {
             case MENU:
+                break;
             case READY:
+                break;
             case DEATHMENU:
                 updateReady(runTime);
                 break;
@@ -88,6 +93,7 @@ public class GameWorld {
     private void updateStory(float delta, float runTime) {
         bgHandler.update(delta);
         birdHandler.update(runTime, delta);
+        turretHandler.update(delta);
     }
 
     private void updateReady(float runTime) {
@@ -225,7 +231,9 @@ public class GameWorld {
     public void setBirdHandler(BirdHandler BirdHandler) {
         this.birdHandler = BirdHandler;
     }
-
+    public void setTurretHandler(TurretHandler turretHandler) {
+        this.turretHandler = turretHandler;
+    }
     public static GameRenderer getRenderer() {
         return renderer;
     }

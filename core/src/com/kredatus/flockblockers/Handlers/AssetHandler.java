@@ -21,14 +21,18 @@ public class AssetHandler {
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;
     public static Animation[] phoenixAnimations, nightAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
-    public static Texture turret, bgPhoenix,bgNight,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, nightBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
+    public static Texture f0Texture, f1Texture,  f2Texture, f3Texture, f4Texture, f5Texture, f6Texture, f7Texture, f8Texture, f9Texture, bgPhoenix,bgNight,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, nightBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
             creditstexture, creditsdowntexture, exittexture, exitdowntexture, retrytexture, retrydowntexture, readytexture, readydowntexture,
             storytexture, storydowntexture, scoretexture, ratingtexture, topscoretexture, menutexture, menudowntexture, youvediedtexture,
             creditsbgtexture, deathmenubgtexture, instrtexture, instrdowntexture, gliderbgtexture, instrbgtexture, readybgtexture, nexttexture,
             nextdowntexture, worldStabilizedtexture;
-    public static TextureRegion gun, projectile, bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgNighttexture, bgNighttexture2,bgGoldtexture, bgGoldtexture2,bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture,boostdown,logo, playdown,
-            play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu, menudown,
-            score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized;
+    public static TextureRegion f0, f0Proj, f1, f1Proj, f2, f2Proj,f3, f3Proj,f4, f4Proj,f5, f5Proj,f6, f6Proj,f7, f7Proj,f8, f8Proj,f9, f9Proj,
+            s0, s0Proj,s1, s1Proj,s2, s2Proj,s3, s3Proj,s4, s4Proj,s5, s5Proj,s6, s6Proj,s7, s7Proj,s8, s8Proj,s9, s9Proj,
+            d0, d0Proj,d1, d1Proj,d2, d2Proj,d3, d3Proj,d4, d4Proj,d5, d5Proj,d6, d6Proj,d7, d7Proj,d8, d8Proj,d9, d9Proj,
+            bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgNighttexture, bgNighttexture2,bgGoldtexture, bgGoldtexture2,
+            bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture,
+            boosttexture,boostdown,logo, playdown, play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu,
+            menudown, score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized;
 
     public static ArrayList<Vector3> boostcoords;
     public static ArrayList<TextureRegion> bgList;
@@ -321,11 +325,11 @@ public class AssetHandler {
         boostdown = new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
         boostdown.flip(false, true);
 
-        turret= new Texture(Gdx.files.internal("turrets/FF1"));
-        turret.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        f0Texture= new Texture(Gdx.files.internal("sprites/turrets/FF0.png"));
+        f0Texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         //turret.flip(false, true);
-        gun = new TextureRegion(turret,0, 16,147,44);
-        projectile = new TextureRegion(turret,0, 0,147,16);
+        f0 = new TextureRegion(f0Texture,0, 16,147,44);
+        f0Proj = new TextureRegion(f0Texture,0, 0,147,16);
 
         phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.10f);
         waterAnimations = birdTextureToAnimation("water.png", 0.13f);

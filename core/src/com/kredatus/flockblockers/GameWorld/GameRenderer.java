@@ -18,10 +18,13 @@ import com.kredatus.flockblockers.GameObjects.Background;
 //import com.kredatus.flockblockers.GameObjects.Boost;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Glider;
+import com.kredatus.flockblockers.GameObjects.Projectile;
+import com.kredatus.flockblockers.GameObjects.Turret;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
+import com.kredatus.flockblockers.Handlers.TurretHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
@@ -79,7 +82,8 @@ public class GameRenderer {
 
 
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue;
-
+    public ArrayList<Turret> turretList;
+    public ArrayList<Projectile> projectileList;
     float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
             c0len, c1len, c2len, c3len, c4len, c5len, c6len, c7len, c8len, c9len, c10len, c11len, c12len, c13len, c14len,
             s0len, s1len, s2len, s3len, s4len, s5len, s6len, s7len, s8len, s9len, s10len, s11len, s12len, s13len, s14len;
@@ -91,11 +95,14 @@ public class GameRenderer {
     private int camWidth, camHeight;
 private BgHandler bgHandler;
 private BirdHandler birdHandler;
-    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler) {
+private TurretHandler turretHandler;
+    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TurretHandler turretHandler) {
         this.birdHandler=birdHandler;
         this.bgHandler=bgHandler;
+        this.turretHandler=turretHandler;
         this.camWidth=camWidth;
         this.camHeight=camHeight;
+
         myWorld = world;
 
         this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButtons();
@@ -167,12 +174,15 @@ public void setRotate(float angle){
         //vertflipgliderMid = AssetHandler.vertflipgliderMid;
 
         activeBirdQueue=birdHandler.activeBirdQueue;
+        turretList= turretHandler.turretList;
+        projectileList=turretHandler.projectileList;
+        //tinyBirdList=birdHandler.activeBirdQueue;
 
-        frontFlaps = AssetHandler.frontFlaps;
+        //frontFlaps = AssetHandler.frontFlaps;
         //flipflaps = AssetHandler.flipflaps;
         //frontViewFlaps = null;
         //frontglidermid=AssetHandler.frontGliderMid;
-        backFlaps= AssetHandler.backFlaps;
+        //backFlaps= AssetHandler.backFlaps;
 
         creditsbg = AssetHandler.creditsbg;
         deathmenubg = AssetHandler.deathmenubg;
@@ -190,8 +200,7 @@ public void setRotate(float angle){
     }
 
     private void initGameObjects() {
-        gun = AssetHandler.gun;
-        projectile =AssetHandler.projectile;
+
         background = bgHandler.getBackground();
         background2 = bgHandler.getBackground2();
         //background3 = bgHandler.getBackground3();
@@ -559,18 +568,14 @@ public void setRotate(float angle){
         //System.out.println("Cam: "+cam.position);
         //glider.getPosition().x+glider.getWidth()/2  glider.getPosition().y+glider.getHeight()/2
 
+        for (Turret i : turretList) {
+            batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,
+                    i.position.x, i.position.y, i.width, i.height, 1f, 1f, i.rotation);
+        }
 
-
-
-
-        for (BirdAbstractClass i : activeBirdQueue) {
-
-
-
-            float x=i.x - i.width / 2, y=i.y - i.height / 2;
-
-            batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime), x, y,
-                    i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
+        for (BirdAbstractClass j : activeBirdQueue) {
+            batcher.draw((TextureRegion) j.animation.getKeyFrame(runTime), j.x - j.width / 2, j.y - j.height / 2,
+                    j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
 batcher.end();
             //Gdx.gl.glEnable(GL30.GL_BLEND);
            // Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
@@ -580,7 +585,7 @@ batcher.end();
             shapeRenderer.setColor(255,0,0, 1f);
 
             //i.boundingPoly.setPosition(i.x, i.y);
-            shapeRenderer.polygon(i.boundingPoly.getTransformedVertices());        //
+            shapeRenderer.polygon(j.boundingPoly.getTransformedVertices());        //
             shapeRenderer.end();
             batcher.begin();
            // Gdx.gl.glDisable(GL30.GL_BLEND);

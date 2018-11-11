@@ -67,7 +67,7 @@ public abstract class BirdAbstractClass {
         boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 5f,          x - width / 3f, y + height / 5f});//middle of front bird is below
         boundingPoly  .  setOrigin(x, y);
 
-        System.out.print("x of poly set to" + x);
+        //System.out.print("x of poly set to" + x);
 
         //boundingPoly.dirty();
     }
@@ -94,10 +94,16 @@ public abstract class BirdAbstractClass {
 
             xVel=x-preX;
             boundingPoly.translate(xVel, yVel);
+            /*
             if (xVel>0.5) {
                 rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 9.5f;
             } else if (xVel<-0.5) {
                 rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 9.5f;
+            }*/
+            if (xVel>0) {
+                rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) - 90)/4;
+            } else if (xVel<-0) {
+                rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/4;
             }
             boundingPoly.setRotation(rotation);
             if (health <= 0) {
@@ -126,7 +132,7 @@ public abstract class BirdAbstractClass {
         isAlive=false;
         animation=frontFlaps;
         animation.setFrameDuration(0.05f);
-
+        rotation=0;
         yAcc=-0.8f;
         yVel=15;
         if (x>camWidth/2){   //if dying on right side fall to left and vice versa
