@@ -90,7 +90,7 @@ public abstract class BirdAbstractClass {
 
 
 
-            System.out.println("Shape x: "+x);
+            //System.out.println("Shape x: "+x);
 
             xVel=x-preX;
             boundingPoly.translate(xVel, yVel);

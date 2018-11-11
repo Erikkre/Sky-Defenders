@@ -22,7 +22,7 @@ public class Turret {
     public Vector2 position;
     private float camWidth, camHeight;
     public float dmg, pen, spr, rof;
-    public float rotation;
+    public float rotation=0;
     public Projectile projectile;
     Timer timer;
     TimerTask timerTask;
@@ -48,7 +48,7 @@ public Turret(char turretType, int lvl, Vector2 position, float camWidth, float 
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                TurretHandler.projectileList.add(new Projectile(dmg, rof, pen, position, width, height, camWidth, camHeight, rotation));
+                TurretHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
             }
         };//set task to run later using timer.schedule
     }
@@ -67,7 +67,7 @@ public Turret(char turretType, int lvl, Vector2 position, float camWidth, float 
             timer.scheduleAtFixedRate(timerTask, 0, (int) ((1/rof) * 1000));
             firing=true;
             System.out.println("started");
-        } else if (BirdHandler.activeBirdQueue.size()==0){
+        } else if (BirdHandler.activeBirdQueue.size()==0 && firing){
             firing=false;
             timerTask.cancel();
             System.out.println("cancelled");
@@ -86,7 +86,7 @@ private void turretSetup(char turretType, int lvl){
             spr = 1;
             rof = 1;
             switch (lvl) {
-                case(0):System.out.println("case f");texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
+                case(0):texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
                 case(1):texture=AssetHandler.f1;projTexture=AssetHandler.f1Proj;break;
                 case(2):texture=AssetHandler.f2;projTexture=AssetHandler.f2Proj;break;
                 case(3):texture=AssetHandler.f3;projTexture=AssetHandler.f3Proj;break;

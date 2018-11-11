@@ -61,14 +61,14 @@ Tween second;
 
     @Override
     public void specificUpdate(float delta, float runTime) {
-        if (xMotion==first&&firstxMotion){
+        /*if (xMotion==first&&firstxMotion){
             xMotionTimePositions.put(xMotion.getCurrentTime(), x);   //get all x positions
             System.out.print(xMotionTimePositions.toString());
-            if (xMotion.getCurrentTime()==0){
+            if (xMotion.getCurrentTime()==0){//this stops it immediately
                 firstxMotion=false;
                 System.out.println(xMotionTimePositions);
             }
-        }
+        }*/
 
 
         //second.update(delta);

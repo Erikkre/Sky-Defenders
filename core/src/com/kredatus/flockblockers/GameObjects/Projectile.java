@@ -1,4 +1,5 @@
 package com.kredatus.flockblockers.GameObjects;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
@@ -11,22 +12,24 @@ public class Projectile {
      private boolean isScored = false;
      protected int width, height ;
      private boolean isGone;
-     private Vector2 position, velocity;
+     private Vector2 position, velocity=new Vector2();
      private float camWidth, camHeight;
      private double rotation;
     public float dmg, rof, pen, vel;
-    public Projectile(float dmg, float rof, float pen, Vector2 position, int width, int height, float camWidth, float camHeight, double rotation) {
-        this.width    = width    ;
-        this.height   = height   ;
+    TextureRegion texture;
+    public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, double rotation) {
+        this.texture=texture;
+        this.width    = texture.getRegionWidth() ;
+        this.height   = texture.getRegionHeight() ;
         this.position = position ;
         this.vel      = pen;
         this.rotation = rotation;
         this.camWidth = camWidth ;
         this.camHeight= camHeight;
 
-        this.dmg=dmg; this.rof=rof; this.pen=pen;
+        this.dmg=dmg; this.pen=pen;
         //sin(rotation)=xVel/Velocity, pen=velocity
-        velocity.set((float)(pen*Math.sin(Math.toRadians(rotation))),(float)(pen*Math.cos(Math.toRadians(rotation))));
+        velocity.set((float)(vel*Math.sin(Math.toRadians(rotation))),(float)(vel*Math.cos(Math.toRadians(rotation))));
 
         boundingRect  = new Polygon(new float[]{position.x-width/2,position.y-height/2,         position.x+width/2,position.y-height/2,         position.x+width/2,position.y+height/2,         position.x-width/2,position.y+height/2});
         boundingRect  . setOrigin(position.x, position.y);
