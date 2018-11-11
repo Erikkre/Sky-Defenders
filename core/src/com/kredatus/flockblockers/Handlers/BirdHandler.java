@@ -10,6 +10,7 @@ import com.kredatus.flockblockers.GameObjects.Birds.NightBird;
 import com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird;
 import com.kredatus.flockblockers.GameObjects.Birds.ThunderBird;
 import com.kredatus.flockblockers.GameObjects.Birds.WaterBird;
+import com.kredatus.flockblockers.GameObjects.Projectile;
 
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class BirdHandler {
     //public  static Class[] birdList ={PhoenixBird.class,  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
     public ConcurrentLinkedQueue<BirdAbstractClass> birdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
-    public ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
+    public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
     //public static String[] birdOrderList={"pB","wB","nB","aB","fB","tB","lB","gB"};
     private final static int[] birdNumberList=  { 1,   40,  30,  20,  20,  20,  10,  5  };
@@ -142,83 +143,24 @@ public class BirdHandler {
                 taskRunning = true;
             }
 
-            //System.out.println("In loop");
-
-            //final PhoenixBird newBird= new PhoenixBird(camHeight,camWidth);
-
-            //final PhoenixBird newBird = new PhoenixBird(camHeight,camWidth);
-
-
-
         } else {
             if (taskRunning){
                 System.out.println("Timer cancelled");
-                /*try {
-
-                    task.wait();
-                } catch (Exception e){
-                    e.printStackTrace();
-               }*/
                 task.cancel();
                 waveTypeCnt++; //nextWave when timer reset
                 taskRunning=false;
             }
         }
 
-
-
-
-
-/*
-        if        (waveTypeCnt%8==0){           //pB
-
-
-
-            waveTypeCnt++;
-        } else if (waveTypeCnt%8==1){   //wB
-
-
-
-            waveTypeCnt++;
-        }else if (waveTypeCnt%8==2){   //nB
-
-
-
-            waveTypeCnt++;
-        }else if (waveTypeCnt%8==3){   //aB
-
-
-
-            waveTypeCnt++;
-        }else if (waveTypeCnt%8==4){   //fB
-
-
-
-            waveTypeCnt++;
-        }else if (waveTypeCnt%8==5){   //tB
-
-
-
-            waveTypeCnt++;
-        }else if (waveTypeCnt%8==6){   //lB
-
-
-
-            waveTypeCnt++;
-        }else if (waveTypeCnt%8==7){   //gB
-
-
-
-            waveTypeCnt++;
-        }
-
-*/
         for (BirdAbstractClass i : activeBirdQueue){
-            //System.out.println(birdsList.size());
+            for (Projectile j : TurretHandler.projectileList){
+                if (i.collides(j)){
+                    i.hit(j);
+                }
+            }
             i.update(delta, runTime);
             if (i.isOffCam){
                 activeBirdQueue.remove(i);
-                //i=null; experiment performance putting this before, after or even removing it, or removing the .remove
             }
 
         }

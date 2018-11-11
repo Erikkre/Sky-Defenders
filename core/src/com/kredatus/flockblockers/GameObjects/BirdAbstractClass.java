@@ -65,7 +65,7 @@ public abstract class BirdAbstractClass {
 
 
         boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 5f,          x - width / 3f, y + height / 5f});//middle of front bird is below
-        boundingPoly  . setOrigin(x, y);
+        boundingPoly  .  setOrigin(x, y);
 
         System.out.print("x of poly set to" + x);
 
@@ -94,10 +94,10 @@ public abstract class BirdAbstractClass {
 
             xVel=x-preX;
             boundingPoly.translate(xVel, yVel);
-            if (xVel>0.1) {
-                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 9;
-            } else if (xVel<-0.1) {
-                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 9;
+            if (xVel>0.5) {
+                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 9.5f;
+            } else if (xVel<-0.5) {
+                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 9.5f;
             }
             boundingPoly.setRotation(rotation);
             if (health <= 0) {

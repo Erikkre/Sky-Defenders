@@ -2,6 +2,7 @@ package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TurretHandler;
 
@@ -38,19 +39,36 @@ public Turret(char turretType, int lvl, Vector2 position, int width, int height,
     ai=true;
 
     turretSetup(turretType, lvl);
+    setTarget(BirdHandler.activeBirdQueue.peek());
+    setupFiring();
 }
     public void update(float delta){
-        if(ai){                                                                                                         //ask haoran for a better equation
-            rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
+
+
+        if(ai){
+            rotation=Math.toDegrees(Math.atan(       (targetBird.y-position.y)/(targetBird.x-position.x)        ));
+
+            //ask haoran for a better equation
+            //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
         } else {
-            rotation=(float)Math.toDegrees(Math.atan(InputHandler.point.y-position.y / InputHandler.point.x-position.x     ));//tan-1(y/x) is angle
+            rotation=Math.toDegrees(Math.atan(      (InputHandler.point.y-position.y) / (InputHandler.point.x-position.x)      ));//tan-1(y/x) is angle
+        }
+
+        if (BirdHandler.activeBirdQueue.size()>0 && !firing){
+            setupFiring();
+            timer.scheduleAtFixedRate(timerTask, 0, (int) ((1/rof) * 1000));
+            firing=true;
+        } else if (BirdHandler.activeBirdQueue.size()==0){
+            firing=false;
+            timerTask.cancel();
         }
     }
 
-    public void setTarget(float delta, float runTime){
-
+    public void setTarget(BirdAbstractClass targetBird){
+        this.targetBird=targetBird;
     }
-public void turretSetup(char turretType, int lvl){
+
+private void turretSetup(char turretType, int lvl){
     switch (turretType) {
         case ('f'): //fast firing
             dmg = 2;
@@ -79,11 +97,11 @@ public void turretSetup(char turretType, int lvl){
     }
 }
 
-    public void configureFirerate() {
+    public void setupFiring() {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                TurretHandler.projectileList.add(new Projectile(dmg,rof,pen, position, width, height, camWidth, camHeight));
+                TurretHandler.projectileList.add(new Projectile(dmg, rof, pen, position, width, height, camWidth, camHeight, rotation));
             }
         };//set task to run later using timer.schedule
 }

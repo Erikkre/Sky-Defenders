@@ -21,12 +21,12 @@ public class AssetHandler {
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;
     public static Animation[] phoenixAnimations, nightAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
-    public static Texture  bgPhoenix,bgNight,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, nightBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
+    public static Texture turret, bgPhoenix,bgNight,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, nightBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
             creditstexture, creditsdowntexture, exittexture, exitdowntexture, retrytexture, retrydowntexture, readytexture, readydowntexture,
             storytexture, storydowntexture, scoretexture, ratingtexture, topscoretexture, menutexture, menudowntexture, youvediedtexture,
             creditsbgtexture, deathmenubgtexture, instrtexture, instrdowntexture, gliderbgtexture, instrbgtexture, readybgtexture, nexttexture,
             nextdowntexture, worldStabilizedtexture;
-    public static TextureRegion  bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgNighttexture, bgNighttexture2,bgGoldtexture, bgGoldtexture2,bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture,boostdown,logo, playdown,
+    public static TextureRegion gun, projectile, bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgNighttexture, bgNighttexture2,bgGoldtexture, bgGoldtexture2,bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture,boostdown,logo, playdown,
             play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu, menudown,
             score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized;
 
@@ -321,15 +321,20 @@ public class AssetHandler {
         boostdown = new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
         boostdown.flip(false, true);
 
+        turret= new Texture(Gdx.files.internal("turrets/FF1"));
+        turret.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        //turret.flip(false, true);
+        gun = new TextureRegion(turret,0, 16,147,44);
+        projectile = new TextureRegion(turret,0, 0,147,16);
 
-        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.12f);
-        waterAnimations = birdTextureToAnimation("water.png", 0.15f);
-        nightAnimations = birdTextureToAnimation("night.png", 0.15f);
-        acidAnimations = birdTextureToAnimation("acid.png", 0.12f);
-        fireAnimations = birdTextureToAnimation("fire.png", 0.12f);
-        thunderAnimations = birdTextureToAnimation("thunder.png", 0.9f);
-        lunarAnimations = birdTextureToAnimation("lunar.png", 0.7f);
-        goldAnimations = birdTextureToAnimation("gold.png", 0.15f);
+        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.10f);
+        waterAnimations = birdTextureToAnimation("water.png", 0.13f);
+        nightAnimations = birdTextureToAnimation("night.png", 0.13f);
+        acidAnimations = birdTextureToAnimation("acid.png", 0.10f);
+        fireAnimations = birdTextureToAnimation("fire.png", 0.10f);
+        thunderAnimations = birdTextureToAnimation("thunder.png", 0.7f);
+        lunarAnimations = birdTextureToAnimation("lunar.png", 0.5f);
+        goldAnimations = birdTextureToAnimation("gold.png", 0.10f);
 
         Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
         greyTinyBirdAnimations=tinyBirdTextureToAnimation(greyTinyBird);
@@ -432,7 +437,7 @@ public class AssetHandler {
     }
 
     public static final Animation[] birdTextureToAnimation(String path, float flapSpeed){
-        Texture sprites = new Texture(Gdx.files.internal("sprites/"+path));
+        Texture sprites = new Texture(Gdx.files.internal("sprites/birds/"+path));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();

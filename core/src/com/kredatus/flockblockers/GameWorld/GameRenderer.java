@@ -64,7 +64,7 @@ public class GameRenderer {
     private int gliderscaling= AssetHandler.getgliderScaling();
     private TextureRegion  horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
             creditsbg, deathmenubg, newHighscore, topscore, deathmenuscore, rating, youvedied, boostdown,
-            gliderbg, instrbg, readybg, frontglidermid, worldStabilized;
+            gliderbg, instrbg, readybg, frontglidermid, worldStabilized, gun, projectile;
 
     private Background background, background2, background3, background4;
     //public ArrayList<Boost> boostlist, flipboostlist, invboostlist, invflipboostlist;
@@ -190,7 +190,8 @@ public void setRotate(float angle){
     }
 
     private void initGameObjects() {
-
+        gun = AssetHandler.gun;
+        projectile =AssetHandler.projectile;
         background = bgHandler.getBackground();
         background2 = bgHandler.getBackground2();
         //background3 = bgHandler.getBackground3();

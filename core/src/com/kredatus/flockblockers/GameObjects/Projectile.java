@@ -12,25 +12,26 @@ public class Projectile {
      protected int width, height ;
      private boolean isGone;
      private Vector2 position, velocity;
-     private float camWidth, camHeight, rotation;
+     private float camWidth, camHeight;
+     private double rotation;
     public float dmg, rof, pen, vel;
-    public Projectile(float dmg, float rof, float pen, Vector2 position, int width, int height, float camWidth, float camHeight) {
+    public Projectile(float dmg, float rof, float pen, Vector2 position, int width, int height, float camWidth, float camHeight, double rotation) {
         this.width    = width    ;
         this.height   = height   ;
         this.position = position ;
-        //this.velocity = velocity ;
         this.vel      = pen;
-
+        this.rotation = rotation;
         this.camWidth = camWidth ;
         this.camHeight= camHeight;
 
         this.dmg=dmg; this.rof=rof; this.pen=pen;
-
+        //sin(rotation)=xVel/Velocity, pen=velocity
+        velocity.set((float)(pen*Math.sin(Math.toRadians(rotation))),(float)(pen*Math.cos(Math.toRadians(rotation))));
 
         boundingRect  = new Polygon(new float[]{position.x-width/2,position.y-height/2,         position.x+width/2,position.y-height/2,         position.x+width/2,position.y+height/2,         position.x-width/2,position.y+height/2});
         boundingRect  . setOrigin(position.x, position.y);
-        rotation      = -(float) Math.toDegrees(Math.atan(velocity.y / (-velocity.x) ));
-        boundingRect  . setRotation(rotation);
+//        rotation      = -(float) Math.toDegrees(Math.atan(velocity.y / (-velocity.x) ));
+        boundingRect  . setRotation((float)rotation);
     }
 
     public void update(float delta) {
