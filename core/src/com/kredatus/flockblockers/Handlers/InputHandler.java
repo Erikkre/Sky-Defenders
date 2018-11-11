@@ -2,6 +2,7 @@ package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.ui.SimpleButton;
@@ -20,6 +21,7 @@ public class InputHandler implements InputProcessor {
     private List<SimpleButton> menuButtons, deathButtons;
     private SimpleButton playButton, storyButton, creditsButton, exitButton, retryButton, menuButton, readyButton, instrButton, nextButton;
 
+    public static Vector2 point;
     private float scaleFactorX;
     private float scaleFactorY;
     private int camWidth;
@@ -70,11 +72,10 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenX = scaleX(screenX);
         screenY = scaleY(screenY);
-
-        if (myWorld.isRunning())
+        if (myWorld.isRunning()) {
             myGlider.onClick();
-
-        else if (myWorld.isMenu()) {
+            point.set(screenX, screenY);
+        } else if (myWorld.isMenu()) {
             for (SimpleButton buttons : menuButtons) {
                 buttons.isTouchDown(screenX, screenY);}
 

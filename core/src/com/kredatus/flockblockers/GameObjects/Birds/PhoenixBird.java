@@ -66,6 +66,7 @@ Tween second;
             System.out.print(xMotionTimePositions.toString());
             if (xMotion.getCurrentTime()==0){
                 firstxMotion=false;
+                System.out.println(xMotionTimePositions);
             }
         }
 

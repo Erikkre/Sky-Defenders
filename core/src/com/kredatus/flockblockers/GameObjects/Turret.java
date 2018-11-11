@@ -1,6 +1,8 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.math.Vector2;
+import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TurretHandler;
 
 import java.util.Timer;
@@ -16,12 +18,13 @@ public class Turret {
     protected int width, height ;
     private boolean isGone;
     private Vector2 position;
-    private float camWidth, camHeight, rotation;
+    private float camWidth, camHeight;
     public float dmg, pen, spr, rof;
+    public double rotation;
     public Projectile projectile;
     Timer timer;
     TimerTask timerTask;
-
+    BirdAbstractClass targetBird;
 public Turret(char turretType, int lvl, Vector2 position, int width, int height, float camWidth, float camHeight){
     this.width    = width    ;
     this.height   = height   ;
@@ -36,7 +39,17 @@ public Turret(char turretType, int lvl, Vector2 position, int width, int height,
 
     turretSetup(turretType, lvl);
 }
+    public void update(float delta){
+        if(ai){                                                                                                         //ask haoran for a better equation
+            rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
+        } else {
+            rotation=(float)Math.toDegrees(Math.atan(InputHandler.point.y-position.y / InputHandler.point.x-position.x     ));//tan-1(y/x) is angle
+        }
+    }
 
+    public void setTarget(float delta, float runTime){
+
+    }
 public void turretSetup(char turretType, int lvl){
     switch (turretType) {
         case ('f'): //fast firing
