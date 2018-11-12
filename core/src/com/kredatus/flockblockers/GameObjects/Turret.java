@@ -54,8 +54,16 @@ public Turret(char turretType, int lvl, Vector2 position, float camWidth, float 
     }
 
     public void update(float delta){
-        if(ai&&targetBird!=null){
-            rotation=(float)Math.toDegrees(Math.atan(       (targetBird.y-position.y)/(targetBird.x-position.x)        ));
+        if (targetBird==null&&BirdHandler.activeBirdQueue.size()>0){  //recheck
+            setTarget(BirdHandler.activeBirdQueue.peek());
+        }
+        System.out.println("Turretposition = "+position);
+        if (ai&&targetBird!=null){
+            if (targetBird.x>position.x){
+                rotation = (float) Math.toDegrees(Math.atan((targetBird.y - position.y) / (targetBird.x - position.x))) + 180;
+            } else {
+                rotation = (float) Math.toDegrees(Math.atan((targetBird.y - position.y) / (targetBird.x - position.x)));
+            }
             //ask haoran for a better equation
             //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
         } else if (!ai) {

@@ -9,20 +9,18 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Projectile {
      public Polygon boundingRect;
-     private boolean isScored = false;
-     protected int width, height ;
-     private boolean isGone;
-     private Vector2 position, velocity=new Vector2();
-     private float camWidth, camHeight;
-     private double rotation;
-    public float dmg, rof, pen, vel;
-    TextureRegion texture;
-    public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, double rotation) {
+     public int width, height ;
+     public boolean isGone;
+     public Vector2 position, velocity=new Vector2();
+     public float camWidth, camHeight, rotation;
+     public float dmg, rof, pen, vel;
+     public TextureRegion texture;
+    public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, float rotation) {
         this.texture=texture;
         this.width    = texture.getRegionWidth() ;
         this.height   = texture.getRegionHeight() ;
         this.position = position ;
-        this.vel      = pen;
+        this.vel      = pen*150;
         this.rotation = rotation;
         this.camWidth = camWidth ;
         this.camHeight= camHeight;
@@ -34,29 +32,16 @@ public class Projectile {
         boundingRect  = new Polygon(new float[]{position.x-width/2,position.y-height/2,         position.x+width/2,position.y-height/2,         position.x+width/2,position.y+height/2,         position.x-width/2,position.y+height/2});
         boundingRect  . setOrigin(position.x, position.y);
 //        rotation      = -(float) Math.toDegrees(Math.atan(velocity.y / (-velocity.x) ));
-        boundingRect  . setRotation((float)rotation);
+        boundingRect  . setRotation(rotation);
     }
 
     public void update(float delta) {
         position.add(velocity.cpy().scl(delta));
         boundingRect.setPosition(position.x,position.y);
-
+        System.out.println(position);
         if    ( position.x + height < - camWidth  / 2 || position.x - height > camWidth  / 2  ||
                 position.y + height < - camHeight / 2 || position.y - height > camHeight / 2 )  {
             isGone = true;
         }
-    }
-
-    public void boostReset() {
-        isGone  =false;
-        isScored=false;
-    }
-
-    public boolean isScored() {
-           return isScored;
-    }
-
-    public void setScored(boolean b) {
-        isScored = b;
     }
 }

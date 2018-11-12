@@ -11,6 +11,7 @@ import com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird;
 import com.kredatus.flockblockers.GameObjects.Birds.ThunderBird;
 import com.kredatus.flockblockers.GameObjects.Birds.WaterBird;
 import com.kredatus.flockblockers.GameObjects.Projectile;
+import com.kredatus.flockblockers.GameObjects.Turret;
 
 
 import java.util.ArrayList;
@@ -153,18 +154,23 @@ public class BirdHandler {
         }
 
         for (BirdAbstractClass i : activeBirdQueue){
-            for (Projectile j : TurretHandler.projectileList){
-                if (i.collides(j)){
-                    i.hit(j);
-                }
-            }
             i.update(delta, runTime);
+
             if (i.isOffCam){
                 activeBirdQueue.remove(i);
             }
-
+            for (Projectile j : TurretHandler.projectileList){
+                j.update(delta);
+                if (j.isGone){
+                    TurretHandler.projectileList.remove(j);
+                } else if (i.collides(j)){
+                    i.hit(j);
+                    j.pen--;
+                    if (j.pen==0 ){
+                        TurretHandler.projectileList.remove(j);
+                    }
+                }
+            }
         }
-
     }
-
 }

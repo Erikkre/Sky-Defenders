@@ -83,7 +83,7 @@ public class GameRenderer {
 
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue;
     public ArrayList<Turret> turretList;
-    public ArrayList<Projectile> projectileList;
+    public ConcurrentLinkedQueue<Projectile> projectileList;
     float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
             c0len, c1len, c2len, c3len, c4len, c5len, c6len, c7len, c8len, c9len, c10len, c11len, c12len, c13len, c14len,
             s0len, s1len, s2len, s3len, s4len, s5len, s6len, s7len, s8len, s9len, s10len, s11len, s12len, s13len, s14len;
@@ -570,9 +570,13 @@ public void setRotate(float angle){
 
         for (Turret i : turretList) {
             batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,
-                    i.position.x, i.position.y, i.width, i.height, 1f, 1f, i.rotation);
+                    i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
         }
 
+        for (Projectile j : projectileList) {
+            batcher.draw(j.texture, j.position.x-j.width/2, j.position.y-j.height/2,
+                    j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
+        }
         for (BirdAbstractClass j : activeBirdQueue) {
             batcher.draw((TextureRegion) j.animation.getKeyFrame(runTime), j.x - j.width / 2, j.y - j.height / 2,
                     j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
