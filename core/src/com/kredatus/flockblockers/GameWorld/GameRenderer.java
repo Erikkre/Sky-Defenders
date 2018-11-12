@@ -570,16 +570,28 @@ public void setRotate(float angle){
 
         for (Turret i : turretList) {
             batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,
-                    i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
+                    i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.getRotation());
         }
 
         for (Projectile j : projectileList) {
             batcher.draw(j.texture, j.position.x-j.width/2, j.position.y-j.height/2,
                     j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
+            batcher.end();
+            //Gdx.gl.glEnable(GL30.GL_BLEND);
+            // Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+
+            //shapeRenderer.setAutoShapeType(true);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(255,0,0, 1f);
+
+            //i.boundingPoly.setPosition(i.x, i.y);
+            shapeRenderer.polygon(j.boundingRect.getTransformedVertices());        //
+            shapeRenderer.end();
+            batcher.begin();
         }
-        for (BirdAbstractClass j : activeBirdQueue) {
-            batcher.draw((TextureRegion) j.animation.getKeyFrame(runTime), j.x - j.width / 2, j.y - j.height / 2,
-                    j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
+        for (BirdAbstractClass k : activeBirdQueue) {
+            batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime), k.x - k.width / 2, k.y - k.height / 2,
+                    k.width/2, k.height/2, k.width, k.height, 1f, 1f, k.rotation);
 batcher.end();
             //Gdx.gl.glEnable(GL30.GL_BLEND);
            // Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
@@ -589,7 +601,7 @@ batcher.end();
             shapeRenderer.setColor(255,0,0, 1f);
 
             //i.boundingPoly.setPosition(i.x, i.y);
-            shapeRenderer.polygon(j.boundingPoly.getTransformedVertices());        //
+            shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());        //
             shapeRenderer.end();
             batcher.begin();
            // Gdx.gl.glDisable(GL30.GL_BLEND);

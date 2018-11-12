@@ -22,7 +22,7 @@ public class Turret {
     public Vector2 position;
     private float camWidth, camHeight;
     public float dmg, pen, spr, rof;
-    public float rotation=0;
+    private float rotation=0;
     public Projectile projectile;
     Timer timer;
     TimerTask timerTask;
@@ -48,7 +48,7 @@ public Turret(char turretType, int lvl, Vector2 position, float camWidth, float 
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                TurretHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
+                TurretHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight,  rotation));
             }
         };//set task to run later using timer.schedule
     }
@@ -57,7 +57,7 @@ public Turret(char turretType, int lvl, Vector2 position, float camWidth, float 
         if (targetBird==null&&BirdHandler.activeBirdQueue.size()>0){  //recheck
             setTarget(BirdHandler.activeBirdQueue.peek());
         }
-        System.out.println("Turretposition = "+position);
+        //System.out.println("Turretposition = "+position);
         if (ai&&targetBird!=null){
             if (targetBird.x>position.x){
                 rotation = (float) Math.toDegrees(Math.atan((targetBird.y - position.y) / (targetBird.x - position.x))) + 180;
@@ -152,6 +152,7 @@ private void turretSetup(char turretType, int lvl){
 
 }
 
-
-
+    public float getRotation() {
+        return rotation;
+    }
 }

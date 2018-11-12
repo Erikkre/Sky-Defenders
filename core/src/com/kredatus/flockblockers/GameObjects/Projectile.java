@@ -20,25 +20,27 @@ public class Projectile {
         this.width    = texture.getRegionWidth() ;
         this.height   = texture.getRegionHeight() ;
         this.position = position ;
-        this.vel      = pen*150;
+        this.vel      = pen*15;
         this.rotation = rotation;
         this.camWidth = camWidth ;
         this.camHeight= camHeight;
 
         this.dmg=dmg; this.pen=pen;
         //sin(rotation)=xVel/Velocity, pen=velocity
-        velocity.set((float)(vel*Math.sin(Math.toRadians(rotation))),(float)(vel*Math.cos(Math.toRadians(rotation))));
+
+        velocity.set(   (float)(vel*Math.cos(rotation)), (float)(vel*Math.sin(rotation))   );
 
         boundingRect  = new Polygon(new float[]{position.x-width/2,position.y-height/2,         position.x+width/2,position.y-height/2,         position.x+width/2,position.y+height/2,         position.x-width/2,position.y+height/2});
         boundingRect  . setOrigin(position.x, position.y);
 //        rotation      = -(float) Math.toDegrees(Math.atan(velocity.y / (-velocity.x) ));
         boundingRect  . setRotation(rotation);
+        System.out.println("Bullet fired");
     }
 
     public void update(float delta) {
         position.add(velocity.cpy().scl(delta));
-        boundingRect.setPosition(position.x,position.y);
-        System.out.println(position);
+        boundingRect.translate(velocity.x, velocity.y);
+        //System.out.println(position);
         if    ( position.x + height < - camWidth  / 2 || position.x - height > camWidth  / 2  ||
                 position.y + height < - camHeight / 2 || position.y - height > camHeight / 2 )  {
             isGone = true;
