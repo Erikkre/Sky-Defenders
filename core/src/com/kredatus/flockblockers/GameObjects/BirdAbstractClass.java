@@ -47,7 +47,7 @@ public abstract class BirdAbstractClass {
     protected float camWidth, camHeight, edge;
     public boolean isOffCam;
     public float  starty;
-    protected boolean isAlive, firstxMotion=true;
+    public boolean isAlive, firstxMotion=true;
     protected Random r =new Random();
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
     protected int sizeVariance, coins, health, diamonds, cnt=0;

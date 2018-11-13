@@ -58,45 +58,48 @@ public class Turret {
         };//set task to run later using timer.schedule
     }
 
+    public void setRotation(float xTarget, float yTarget){
+        rotation = (float) Math.toDegrees(Math.atan((yTarget - position.y) / (xTarget - position.x)));
+        if        (xTarget > position.x) {
+            rotation += 180;
+        } else if (yTarget > position.y) {
+            rotation += 360;
+        }
+    }
     public void update(float delta) {
         if (Gdx.input.isTouched()) {
-            float x =InputHandler.scaleX(Gdx.input.getX()); float y = -(InputHandler.scaleY(Gdx.input.getY())-1920);
-            rotation = (float) Math.toDegrees(Math.atan((y - position.y) / (x - position.x)));
-            if        (x > position.x) {
-                rotation += 180;
-            } else if (y > position.y) {
-                rotation += 360;
-            }
+            setRotation(InputHandler.scaleX(Gdx.input.getX()), -(InputHandler.scaleY(Gdx.input.getY())-1920));
+
             if (!firing) {
                 setupFiring();
-                timer.scheduleAtFixedRate(timerTask, (int) ((1 / (rof / 3)) * 1000), (int) ((1 / (rof / 3)) * 1000));
+                timer.scheduleAtFixedRate(timerTask, (int) (((1 / (rof / 3)) * 1000)/4), (int) ((1 / (rof / 3)) * 1000));
                 firing = true;
-                System.out.println("firing");
+                //System.out.println("firing");
             }
         } else {    //ai system
             if (BirdHandler.activeBirdQueue.size() > 0) {
-                if (!firing) {
-                    setupFiring();
-                    timer.scheduleAtFixedRate(timerTask, (int) ((1 / (rof / 3)) * 1000), (int) ((1 / (rof / 3)) * 1000));
-                    firing = true;
-                    System.out.println("firing");
-                    System.out.println(BirdHandler.activeBirdQueue.peek());
-                    setTarget(BirdHandler.activeBirdQueue.peek());
+
+                if (targetBird==null||!targetBird.isAlive) {
+                    setTarget(TurretHandler.targetBird);
+                    setRotation(targetBird.x, targetBird.y);
                 } else {
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
-                    rotation = (float) Math.toDegrees(Math.atan((targetBird.y - position.y) / (targetBird.x - position.x)));
-                    if (targetBird.x        > position.x) {
-                        rotation += 180;
-                    } else if (targetBird.y > position.y) {
-                        rotation += 360;
-                    }
+                    setRotation(targetBird.x, targetBird.y);
                 }
+                if (!firing){
+                    setupFiring();
+                    timer.scheduleAtFixedRate(timerTask, 0, (int) ((1 / (rof / 3)) * 1000));
+                    firing = true;
+                    //System.out.println("firing");
+
+                }
+
 
             } else if (firing) {
                 firing = false;
                 timerTask.cancel();
-                System.out.println("cancelled");
+                //System.out.println("cancelled");
             }
         }
     }
