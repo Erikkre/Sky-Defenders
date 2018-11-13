@@ -50,10 +50,7 @@ public class GameHandler implements Screen {
         renderer = new GameRenderer(world, camWidth, camHeight, bgHandler, birdHandler, turretHandler);
         bgHandler.setRendererAndCam(renderer);
         world.setRenderer(renderer);
-
-
     }
-
 
     @Override
     public void render(float delta) {
@@ -68,25 +65,22 @@ public class GameHandler implements Screen {
 
     @Override
     public void show() {
-        Gdx.app.log(Integer.toString(Gdx.graphics.getWidth()),Integer.toString(Gdx.graphics.getHeight()) );
+        Gdx.app.log( Integer.toString(Gdx.graphics.getWidth()),Integer.toString(Gdx.graphics.getHeight()) );
         Gdx.app.log("GameHandler", "show called");
     }
 
     @Override
     public void hide() {
-
         Gdx.app.log("GameHandler", "hide called");
     }
 
     @Override
     public void pause() {
-
         Gdx.app.log("GameHandler", "pause called");
     }
 
     @Override
     public void resume() {
-
         Gdx.app.log("GameHandler", "resume called");
     }
 

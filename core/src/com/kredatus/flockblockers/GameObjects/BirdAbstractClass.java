@@ -133,8 +133,8 @@ public abstract class BirdAbstractClass {
         animation=frontFlaps;
         animation.setFrameDuration(0.05f);
         rotation=0;
-        yAcc=-0.8f;
-        yVel=15;
+        yAcc=-1.3f;
+        yVel=25;
         if (x>camWidth/2){   //if dying on right side fall to left and vice versa
             xVel=-3;
         } else {

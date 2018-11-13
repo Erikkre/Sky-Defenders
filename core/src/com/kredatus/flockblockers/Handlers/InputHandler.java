@@ -22,8 +22,8 @@ public class InputHandler implements InputProcessor {
     private SimpleButton playButton, storyButton, creditsButton, exitButton, retryButton, menuButton, readyButton, instrButton, nextButton;
 
     public static Vector2 point;
-    private float scaleFactorX;
-    private float scaleFactorY;
+    private static float scaleFactorX;
+    private static float scaleFactorY;
     private int camWidth;
     // Ask for a reference to the glider when InputHandler is created.
     public InputHandler(GameWorld myWorld, float scaleFactorX, float scaleFactorY, int camWidth, int camHeight) {
@@ -74,7 +74,7 @@ public class InputHandler implements InputProcessor {
         screenY = scaleY(screenY);
         if (myWorld.isRunning()) {
             myGlider.onClick();
-            point.set(screenX, screenY);
+            //point.set(screenX, screenY);
         } else if (myWorld.isMenu()) {
             for (SimpleButton buttons : menuButtons) {
                 buttons.isTouchDown(screenX, screenY);}
@@ -194,11 +194,11 @@ public class InputHandler implements InputProcessor {
         return false;
     }
 
-    private int scaleX(int screenX) {
+    public static int scaleX(int screenX) {
         return (int) (screenX / scaleFactorX);
     }
 
-    private int scaleY(int screenY) {
+    public static int scaleY(int screenY) {
         return (int) (screenY / scaleFactorY);
     }
 

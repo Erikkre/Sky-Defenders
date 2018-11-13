@@ -19,7 +19,7 @@ public class Projectile {
         this.texture=texture;
         this.width    = texture.getRegionWidth() ;
         this.height   = texture.getRegionHeight() ;
-        this.position = position ;
+        this.position = position.cpy() ;
         this.vel      = pen*15;
         this.rotation = rotation;
         this.camWidth = camWidth ;
@@ -28,21 +28,25 @@ public class Projectile {
         this.dmg=dmg; this.pen=pen;
         //sin(rotation)=xVel/Velocity, pen=velocity
 
-        velocity.set(   (float)(vel*Math.cos(rotation)), (float)(vel*Math.sin(rotation))   );
+
+            velocity.set(   -(float)(vel*Math.cos(Math.toRadians(rotation))), -(float)(vel*Math.sin(Math.toRadians(rotation)))   );
+
+        //System.out.println("Velocity: "+velocity);
 
         boundingRect  = new Polygon(new float[]{position.x-width/2,position.y-height/2,         position.x+width/2,position.y-height/2,         position.x+width/2,position.y+height/2,         position.x-width/2,position.y+height/2});
         boundingRect  . setOrigin(position.x, position.y);
 //        rotation      = -(float) Math.toDegrees(Math.atan(velocity.y / (-velocity.x) ));
         boundingRect  . setRotation(rotation);
-        System.out.println("Bullet fired");
+        //System.out.println("Bullet fired");
     }
 
     public void update(float delta) {
-        position.add(velocity.cpy().scl(delta));
+        //System.out.println(this.toString()+"'s position: "+position);
+        position.add(velocity.cpy());   //.cpy.scl is so we scale copy not original
         boundingRect.translate(velocity.x, velocity.y);
         //System.out.println(position);
-        if    ( position.x + height < - camWidth  / 2 || position.x - height > camWidth  / 2  ||
-                position.y + height < - camHeight / 2 || position.y - height > camHeight / 2 )  {
+        if    ( position.x +  width/2 < 0 ||  position.x - width/2 > camWidth  ||
+                position.y + height/2 < 0 || position.y - height/2 > camHeight   )  {
             isGone = true;
         }
     }

@@ -98,7 +98,7 @@ public class BirdHandler {
 */
 
 
-    public void update(float runTime, float delta) {
+    public void update() {
         if (waveTypeCnt==8){waveTypeCnt=0;}
         if ( bgHandler.isBirdSpawning ){ //(((bgHandler.getBackground().y <-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2)) ){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
             if (!taskRunning) {
@@ -153,24 +153,6 @@ public class BirdHandler {
             }
         }
 
-        for (BirdAbstractClass i : activeBirdQueue){
-            i.update(delta, runTime);
 
-            if (i.isOffCam){
-                activeBirdQueue.remove(i);
-            }
-            for (Projectile j : TurretHandler.projectileList){
-                j.update(delta);
-                if (j.isGone){
-                    TurretHandler.projectileList.remove(j);
-                } else if (i.collides(j)){
-                    i.hit(j);
-                    j.pen--;
-                    if (j.pen==0 ){
-                        TurretHandler.projectileList.remove(j);
-                    }
-                }
-            }
-        }
     }
 }

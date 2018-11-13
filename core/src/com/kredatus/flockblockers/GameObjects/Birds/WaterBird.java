@@ -28,7 +28,7 @@ public class WaterBird extends BirdAbstractClass {
         this.coins=7;
 
         this.sizeVariance=200;
-        sizeRatio=0.8f;
+        sizeRatio=0.7f;
 
         animSeq = AssetHandler.waterAnimations;
         frontFlaps=animSeq[0];

@@ -92,8 +92,8 @@ public class GameWorld {
 
     private void updateStory(float delta, float runTime) {
         bgHandler.update(delta);
-        birdHandler.update(runTime, delta);
-        turretHandler.update(delta);
+        birdHandler.update();
+        turretHandler.update(delta, runTime);
     }
 
     private void updateReady(float runTime) {

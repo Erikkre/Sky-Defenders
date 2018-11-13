@@ -28,7 +28,7 @@ public class ThunderBird extends BirdAbstractClass {
         this.coins=7;
 
         this.sizeVariance=200;
-        sizeRatio=0.8f;
+        sizeRatio=0.7f;
 
         animSeq = AssetHandler.thunderAnimations;
         frontFlaps=animSeq[0];
