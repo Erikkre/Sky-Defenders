@@ -430,7 +430,7 @@ public class AssetHandler {
 
         musiclist = new Music[] { Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic2.mp3")),
                 Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic3.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic4.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic5.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic6.mp3"))};
-        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic2.mp3"))};
+        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic2.mp3")),Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic3.mp3"))};
         deathmenumusic = Gdx.audio.newMusic(Gdx.files.internal("music/deathmenuMusic.mp3"));
 
         // Create (or retrieve existing) preferences file

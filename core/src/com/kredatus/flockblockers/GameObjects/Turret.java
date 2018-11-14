@@ -24,9 +24,9 @@ public class Turret {
     public float dmg, pen, spr, rof;
     private float rotation;
     public Projectile projectile;
-    Timer timer;
-    TimerTask timerTask;
-    BirdAbstractClass targetBird;
+    private Timer timer;
+    private TimerTask timerTask;
+    private BirdAbstractClass targetBird;
     public TextureRegion texture, projTexture;
 
     public Turret(char turretType, int lvl, Vector2 position, float camWidth, float camHeight){
@@ -38,8 +38,8 @@ public class Turret {
 
         timer=new Timer();
         firing=false;
-
         turretSetup(turretType, lvl);
+
         if (position.x<camWidth/2){
             texture =  new TextureRegion(texture);
             texture.flip(false,true);
@@ -58,7 +58,7 @@ public class Turret {
         };//set task to run later using timer.schedule
     }
 
-    public void setRotation(float xTarget, float yTarget){
+    private void setRotation(float xTarget, float yTarget){
         rotation = (float) Math.toDegrees(Math.atan((yTarget - position.y) / (xTarget - position.x)));
         if        (xTarget > position.x) {
             rotation += 180;
@@ -66,19 +66,18 @@ public class Turret {
             rotation += 360;
         }
     }
+
     public void update(float delta) {
         if (Gdx.input.isTouched()) {
             setRotation(InputHandler.scaleX(Gdx.input.getX()), -(InputHandler.scaleY(Gdx.input.getY())-1920));
-
             if (!firing) {
                 setupFiring();
-                timer.scheduleAtFixedRate(timerTask, (int) (((1 / (rof / 3)) * 1000)/4), (int) ((1 / (rof / 3)) * 1000));
+                timer.scheduleAtFixedRate(timerTask, (int) (((1 / (rof / 3)) * 1000)/3), (int) ((1 / (rof / 3)) * 1000));
                 firing = true;
                 //System.out.println("firing");
             }
         } else {    //ai system
             if (BirdHandler.activeBirdQueue.size() > 0) {
-
                 if (targetBird==null||!targetBird.isAlive) {
                     setTarget(TurretHandler.targetBird);
                     setRotation(targetBird.x, targetBird.y);
@@ -92,10 +91,7 @@ public class Turret {
                     timer.scheduleAtFixedRate(timerTask, 0, (int) ((1 / (rof / 3)) * 1000));
                     firing = true;
                     //System.out.println("firing");
-
                 }
-
-
             } else if (firing) {
                 firing = false;
                 timerTask.cancel();
@@ -109,7 +105,6 @@ public class Turret {
     }
 
     private void turretSetup(char turretType, int lvl){
-
         switch (turretType) {
             case ('f'): //fast firing
                 dmg = 2;

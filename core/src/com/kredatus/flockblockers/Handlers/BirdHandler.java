@@ -25,6 +25,7 @@ public class BirdHandler {
     public ConcurrentLinkedQueue<BirdAbstractClass> birdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
+    public static ConcurrentLinkedQueue<BirdAbstractClass> deadBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
     //public static String[] birdOrderList={"pB","wB","nB","aB","fB","tB","lB","gB"};
     private final static int[] birdNumberList=  { 1,   40,  30,  20,  20,  20,  10,  5  };

@@ -81,7 +81,7 @@ public class GameRenderer {
     public static BitmapFont font, titlefont, storyfont, instrfont, droidSerifFont;
 
 
-    public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue;
+    public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,deadBirdQueue;
     public ArrayList<Turret> turretList;
     public ConcurrentLinkedQueue<Projectile> projectileList;
     float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
@@ -174,6 +174,7 @@ public void setRotate(float angle){
         //vertflipgliderMid = AssetHandler.vertflipgliderMid;
 
         activeBirdQueue=birdHandler.activeBirdQueue;
+        deadBirdQueue=birdHandler.deadBirdQueue;
         turretList= turretHandler.turretList;
         projectileList=turretHandler.projectileList;
         //tinyBirdList=birdHandler.activeBirdQueue;
@@ -574,42 +575,29 @@ public void setRotate(float angle){
         }
 
         for (Projectile j : projectileList) {
-
             batcher.draw(j.texture, j.position.x-j.width/2, j.position.y-j.height/2,
                     j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
-            batcher.end();
-            //Gdx.gl.glEnable(GL30.GL_BLEND);
-            // Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
-
-            //shapeRenderer.setAutoShapeType(true);
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(255,0,0, 1f);
-
-            //i.boundingPoly.setPosition(i.x, i.y);
-            shapeRenderer.polygon(j.boundingRect.getTransformedVertices());        //
-            shapeRenderer.end();
-            batcher.begin();
         }
         for (BirdAbstractClass k : activeBirdQueue) {
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1f, 1f, k.rotation);
-batcher.end();
-            //Gdx.gl.glEnable(GL30.GL_BLEND);
-           // Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
 
-            //shapeRenderer.setAutoShapeType(true);
+            /*batcher.end();
+
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(255,0,0, 1f);
 
-            //i.boundingPoly.setPosition(i.x, i.y);
-            shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());        //
+
+            shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());
             shapeRenderer.end();
-            batcher.begin();
-           // Gdx.gl.glDisable(GL30.GL_BLEND);
-            //System.out.println("x: "+(i.x - i.width / 2) + " y: "+ (i.y - i.height / 2));
+            batcher.begin();*/
+        }
+        for (BirdAbstractClass k : deadBirdQueue) {
+            batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime), k.x - k.width / 2, k.y - k.height / 2,
+                    k.width/2, k.height/2, k.width, k.height, 1f, 1f, k.rotation);
         }
 
-        //activeBirdList.get(0).update(delta);
+
         /*
         batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-glider.getWidth()/2, glider.getPosition().y-glider.getHeight()/2,
                 glider.getPosition().x-glider.getWidth()/2,glider.getPosition().y-glider.getHeight()/2, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());*/
