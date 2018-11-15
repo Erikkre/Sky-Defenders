@@ -14,6 +14,7 @@ import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameObjects.Turret;
 
 
+import java.sql.SQLSyntaxErrorException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,7 +34,7 @@ public class BirdHandler {
     private int waveTypeCnt=0;
     public TimerTask task;
     private Timer timer;
-    private final float duration = 8f;
+    private final float duration = 50;
     private BgHandler bgHandler;
     private float camWidth, camHeight;
     //BirdAbstractClass birdToAdd;
@@ -47,11 +48,11 @@ public class BirdHandler {
         //public  static Class[] birdList ={new PhoenixBird(camHeight, camWidth),  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
 
         for (int i = 0; i < 8; i++) {
-          //  if (i!=0){
+            if (i!=0){
                 spawnIntervals[i] = duration / birdNumberList[i];
-         //   } else {
-          //      spawnIntervals[0]= 1;
-          //  }
+            } else {
+                spawnIntervals[0]= 3;
+            }
         }
         timer=new Timer();
         taskRunning=false;
@@ -100,6 +101,7 @@ public class BirdHandler {
 
 
     public void update() {
+        System.out.println(waveTypeCnt);
         if (waveTypeCnt==8){waveTypeCnt=0;}
         if ( bgHandler.isBirdSpawning ){ //(((bgHandler.getBackground().y <-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2)) ){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
             if (!taskRunning) {
@@ -143,6 +145,7 @@ public class BirdHandler {
                //task.run();
                 //activeBirdQueue.remove(0);
                 taskRunning = true;
+                System.out.println("Timer started");
             }
 
         } else {

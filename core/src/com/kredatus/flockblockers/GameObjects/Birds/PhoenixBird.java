@@ -22,7 +22,7 @@ public class PhoenixBird extends BirdAbstractClass {
 Tween second;
     public PhoenixBird(float camHeight, float camWidth){
         super();
-        this.yVel=2;
+        this.yVel=0.5f;
         this.diamonds=1;
         this.coins=7;
 

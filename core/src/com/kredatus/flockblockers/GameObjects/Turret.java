@@ -78,20 +78,23 @@ public class Turret {
             }
         } else {    //ai system
             if (BirdHandler.activeBirdQueue.size() > 0) {
-                if (targetBird==null||!targetBird.isAlive) {
+
+                if ((targetBird==null||!targetBird.isAlive) &&TurretHandler.targetBird!=null) {
                     setTarget(TurretHandler.targetBird);
                     setRotation(targetBird.x, targetBird.y);
-                } else {
+                    if (!firing){
+                        setupFiring();
+                        timer.scheduleAtFixedRate(timerTask, 0, (int) ((1 / (rof / 3)) * 1000));
+                        firing = true;
+                        //System.out.println("firing");
+                    }
+                } else if (targetBird!=null){
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
                     setRotation(targetBird.x, targetBird.y);
+                    //System.out.println(targetBird.health);
                 }
-                if (!firing){
-                    setupFiring();
-                    timer.scheduleAtFixedRate(timerTask, 0, (int) ((1 / (rof / 3)) * 1000));
-                    firing = true;
-                    //System.out.println("firing");
-                }
+
             } else if (firing) {
                 firing = false;
                 timerTask.cancel();
@@ -159,7 +162,7 @@ public class Turret {
                 } break;
         }
 
-        for (int i=0;i<=lvl;i++){
+        for (int i=0;i<lvl;i++){
             dmg*=2;
             rof*=1.5f;
             pen*=1.4f;

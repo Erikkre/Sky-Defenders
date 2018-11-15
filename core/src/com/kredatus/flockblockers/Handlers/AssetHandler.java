@@ -200,7 +200,7 @@ public class AssetHandler {
         bgList = new ArrayList<TextureRegion>();
 
 
-         bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix.jpg"));
+         bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix2.jpg"));
         bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
         bgPhoenixtexture.flip(false, true);
@@ -210,7 +210,7 @@ public class AssetHandler {
         bgList.add(bgPhoenixtexture2);
 
 
-        bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater.jpg"));
+        bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater2.jpg"));
         bgWater.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
         bgWatertexture.flip(false, true);
@@ -220,7 +220,7 @@ public class AssetHandler {
         bgList.add(bgWatertexture2);
 
 
-         bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgNight.jpg"));
+         bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgNight2.jpg"));
         bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
         bgNighttexture.flip(false, true);
@@ -230,7 +230,7 @@ public class AssetHandler {
         bgList.add(bgNighttexture2);
 
 
-         bgAcid = new Texture(Gdx.files.internal("backgrounds/levels/bgAcid.jpg"));
+         bgAcid = new Texture(Gdx.files.internal("backgrounds/levels/bgAcid2.jpg"));
         bgAcid.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
         bgAcidtexture.flip(false, true);
@@ -240,7 +240,7 @@ public class AssetHandler {
         bgList.add(bgAcidtexture2);
 
 
-         bgFire = new Texture(Gdx.files.internal("backgrounds/levels/bgFire.jpg"));
+         bgFire = new Texture(Gdx.files.internal("backgrounds/levels/bgFire2.jpg"));
         bgFire.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgFiretexture = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
         bgFiretexture.flip(false, true);
@@ -250,7 +250,7 @@ public class AssetHandler {
         bgList.add(bgFiretexture2);
 
 
-         bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder.jpg"));
+         bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder2.jpg"));
         bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
         bgThundertexture.flip(false, true);
@@ -260,7 +260,7 @@ public class AssetHandler {
         bgList.add(bgThundertexture2);
 
 
-         bgLunar = new Texture(Gdx.files.internal("backgrounds/levels/bgLunar.jpg"));
+         bgLunar = new Texture(Gdx.files.internal("backgrounds/levels/bgLunar2.jpg"));
         bgLunar.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgLunartexture = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
         bgLunartexture.flip(false, true);
@@ -269,7 +269,7 @@ public class AssetHandler {
         bgLunartexture2 = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
         bgList.add(bgLunartexture2);
 
-         bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold.jpg"));
+         bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold2.jpg"));
         bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
         bgGoldtexture.flip(false, true);

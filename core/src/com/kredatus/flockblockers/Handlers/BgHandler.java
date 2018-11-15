@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.Handlers;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.brashmonkey.spriter.TweenedAnimation;
 import com.kredatus.flockblockers.GameObjects.Background;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
@@ -73,12 +74,13 @@ public class BgHandler {
         startStoryIntroAndSpawns=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-               if (!isPastStoryIntro & GameWorld.isFirstTime){
+               if (!isPastStoryIntro && GameWorld.isFirstTime){
                     isPastStoryIntro=false;
                     horizPosBg.pause();
                     vertPosBg.pause();
                 } else {
                    isBirdSpawning=true;
+                   System.out.println("start spawning");
                }
             }
         };
@@ -117,10 +119,39 @@ public class BgHandler {
         };
 
         (horizPosBg = Timeline.createSequence()
-                .push(Tween.to(horiz, -1, 20).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .push(Tween.to(horiz, -1, 15).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start();
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
+        if (GameWorld.isFirstTime){
+            (vertPosBg = Timeline.createSequence()  //5 4.5f 4.5f 2 7 .1, 8 and 60 repeats
+                    .push(Tween.to(vert,-1, 1f ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)      )//midpoint
+                    .push(Tween.to(vert, -1, 3f).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
+                    .push(Tween.to(vert, -1, 3f).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))                          //0.733 camheight above
+                    .push(Tween.to(vert, -1,2f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine).setCallback(endBirdSpawn)     )                                       //midpoint
+
+                    .push(Tween.to(vert, -1, 8).target((-bgh*2)).ease(TweenEquations.easeInElastic)     )                    //top edge+bgh/50
+                    .push((Tween.to(vert, -1, 0.1f).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(60, 0)).setCallback(bg2ToBg1Tail).setCallback(startStoryIntroAndSpawns))      )       //top edge
+
+                    //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
+                    .repeat(Tween.INFINITY, 0).start();
+        }
+
+        (vertPosBg = Timeline.createSequence()  //55 20 .01, 8 and 800 repeats
+                //.push(Tween.to(vert, -1, 13).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutQuart).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START)   )                 //center is 0.6 camheight below, cam is centered on -0.5 to everything
+                .push((Tween.to(vert, -1, 30).target(  -bgh-(.15f*camHeight)).ease(TweenEquations.easeOutSine)).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.BEGIN) ) //center is 0.65 camheight  above
+
+                .push((Tween.to(vert, -1, 20).target((-bgh*2)+(0.499f*camHeight)).ease(TweenEquations.easeInOutQuart)).setCallback(endBirdSpawn)     )  //cam center 0.001 above edge
+                .push(Tween.to(vert, -1, 0.02f).target((-bgh*2)+(0.501f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(400, 0)         )          //cam 0.001 below edge
+                .push((Tween.to(vert, -1, 10).target((-bgh*2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail))      )   //cam 0.03 below edge
+
+                //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
+                .repeat(Tween.INFINITY, 0).start();
+
+
+
+
+        /*
         (vertPosBg = Timeline.createSequence()  //5 4.5f 4.5f 2 7 .1, 8 and 60 repeats
                 .push((Tween.to(vert,-1, 1f ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(startStoryIntroAndSpawns))//midpoint
                 .push(Tween.to(vert, -1, 3f).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
@@ -132,12 +163,12 @@ public class BgHandler {
 
                 //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
                 .repeat(Tween.INFINITY, 0).start();
+*/
 
-
-        float smallShakeMaxAngle=10f;
+        float smallShakeMaxAngle=0.1f;
         int bigShakeMaxAngle=30;
         smallShake= Timeline.createSequence()
-                .push(Tween.to(shake,-1, .03f ).target((-1+2*r.nextFloat())*smallShakeMaxAngle).ease(TweenEquations.easeInOutSine)) //camera shake between cities
+                .push(Tween.to(shake,-1, .01f ).target((-1+2*r.nextFloat())*smallShakeMaxAngle).ease(TweenEquations.easeInOutSine)) //camera shake between cities
                 .repeatYoyo(Tween.INFINITY, 0);
         bigShake=  Timeline.createSequence()
                 .push(Tween.to(shake,-1, .5f ).target((-1+2*r.nextFloat())*bigShakeMaxAngle).ease(TweenEquations.easeInOutSine))

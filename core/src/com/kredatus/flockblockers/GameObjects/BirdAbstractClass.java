@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
 
@@ -45,7 +46,8 @@ public abstract class BirdAbstractClass {
     public double xMotionTime;
     public float width, height;
     protected float camWidth, camHeight, edge;
-    public boolean isOffCam;
+    public boolean isOffCam, isColliding;
+    public ArrayList<Projectile> hitBulletList = new ArrayList<Projectile>(30);
     public float  starty;
     public boolean isAlive, firstxMotion=true;
     protected Random r =new Random();

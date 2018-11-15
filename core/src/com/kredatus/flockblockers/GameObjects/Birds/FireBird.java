@@ -47,7 +47,7 @@ public class FireBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=100;
+        health=7;
 
         animation=rightFlaps;
         x=(width/2 + r.nextInt((int)(edge-width)));
