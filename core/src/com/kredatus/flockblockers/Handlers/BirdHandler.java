@@ -34,7 +34,7 @@ public class BirdHandler {
     private int waveTypeCnt=0;
     public TimerTask task;
     private Timer timer;
-    private final float duration = 50;
+    private final float duration = 40;
     private BgHandler bgHandler;
     private float camWidth, camHeight;
     //BirdAbstractClass birdToAdd;
@@ -51,7 +51,7 @@ public class BirdHandler {
             if (i!=0){
                 spawnIntervals[i] = duration / birdNumberList[i];
             } else {
-                spawnIntervals[0]= 3;
+                spawnIntervals[0]= 2;
             }
         }
         timer=new Timer();
@@ -140,8 +140,11 @@ public class BirdHandler {
                     }
                 }
                 setUpTask();
-                timer.scheduleAtFixedRate(task, 0, (int)(spawnIntervals[waveTypeCnt] * 1000));
-
+                if (waveTypeCnt == 0) {
+                    timer.schedule(task, 6000+(int) (spawnIntervals[waveTypeCnt] * 1000));
+                } else {
+                    timer.scheduleAtFixedRate(task, 6000, (int) (spawnIntervals[waveTypeCnt] * 1000));
+                }
                //task.run();
                 //activeBirdQueue.remove(0);
                 taskRunning = true;

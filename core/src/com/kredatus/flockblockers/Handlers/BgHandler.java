@@ -119,7 +119,7 @@ public class BgHandler {
         };
 
         (horizPosBg = Timeline.createSequence()
-                .push(Tween.to(horiz, -1, 15).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .push(Tween.to(horiz, -1, 40).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start();
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
@@ -136,7 +136,7 @@ public class BgHandler {
                     //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
                     .repeat(Tween.INFINITY, 0).start();
         }
-
+/*
         (vertPosBg = Timeline.createSequence()  //55 20 .01, 8 and 800 repeats
                 //.push(Tween.to(vert, -1, 13).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutQuart).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START)   )                 //center is 0.6 camheight below, cam is centered on -0.5 to everything
                 .push((Tween.to(vert, -1, 30).target(  -bgh-(.15f*camHeight)).ease(TweenEquations.easeOutSine)).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.BEGIN) ) //center is 0.65 camheight  above
@@ -148,22 +148,19 @@ public class BgHandler {
                 //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
                 .repeat(Tween.INFINITY, 0).start();
 
-
-
-
-        /*
+*/
         (vertPosBg = Timeline.createSequence()  //5 4.5f 4.5f 2 7 .1, 8 and 60 repeats
-                .push((Tween.to(vert,-1, 1f ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)).               setCallback(startStoryIntroAndSpawns))//midpoint
-                .push(Tween.to(vert, -1, 3f).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
-                .push(Tween.to(vert, -1, 3f).target(  -bgh-( .1f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))                          //0.733 camheight above
-                .push(Tween.to(vert, -1,2f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine).setCallback(endBirdSpawn)     )                                       //midpoint
+                .push((Tween.to(vert,-1, 5 ).target(-bgh-( .1f*camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns)      )//0.6 camheight  above, decide whether quad quint, circ or expo, all out
+                .push(Tween.to(vert, -1, 15).target(  -bgh+(1.2f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0))                          //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
+                //.push(Tween.to(vert, -1,3f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine).setCallback(endBirdSpawn)     )                                       //midpoint
 
-                .push(Tween.to(vert, -1, 8).target((-bgh*2)).ease(TweenEquations.easeInElastic)     )                    //top edge+bgh/50
-                .push((Tween.to(vert, -1, 0.1f).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(60, 0)).setCallback(bg2ToBg1Tail))      )       //top edge
+                .push((Tween.to(vert, -1, 7).target((-bgh*2)+(0.499f*camHeight)).ease(TweenEquations.easeInBack)).setCallback(endBirdSpawn)     )  //cam center 0.001 above edge, decide wether ease inoutsine
+                .push((Tween.to(vert, -1, 0.02f).target((-bgh*2)+(0.501f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(500, 0)))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
+                .push((Tween.to(vert, -1, 0.5f).target((-bgh*2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail))      )   //cam 0.03 below edge
 
                 //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
                 .repeat(Tween.INFINITY, 0).start();
-*/
+
 
         float smallShakeMaxAngle=0.1f;
         int bigShakeMaxAngle=30;
@@ -173,9 +170,6 @@ public class BgHandler {
         bigShake=  Timeline.createSequence()
                 .push(Tween.to(shake,-1, .5f ).target((-1+2*r.nextFloat())*bigShakeMaxAngle).ease(TweenEquations.easeInOutSine))
                 .repeatYoyo(Tween.INFINITY, 0);
-
-
-
     }
 
     private void shakeCamera(float delta){

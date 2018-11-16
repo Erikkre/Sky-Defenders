@@ -53,7 +53,7 @@ public class LunarBird extends BirdAbstractClass {
         animation=rightFlaps;
         x=(width/2 + r.nextInt((int)(edge-width)));
 
-        y=0;
+        y=-height/2;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);

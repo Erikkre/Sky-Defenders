@@ -48,7 +48,7 @@ public class GoldBird extends BirdAbstractClass {
         animation=rightFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));
 
-        y=0;
+        y=-height/2;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);

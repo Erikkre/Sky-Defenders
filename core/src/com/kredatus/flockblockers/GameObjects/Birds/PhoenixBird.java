@@ -52,7 +52,7 @@ Tween second;
         animation=rightFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));
         //System.out.println("x of bird set to " + x);
-        y=0;
+        y=-height/2;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);

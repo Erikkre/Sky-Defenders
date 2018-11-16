@@ -21,7 +21,7 @@ public class AssetHandler {
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;
     public static Animation[] phoenixAnimations, nightAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
-    public static Texture f0Texture, f1Texture,  f2Texture, f3Texture, f4Texture, f5Texture, f6Texture, f7Texture, f8Texture, f9Texture, bgPhoenix,bgNight,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, nightBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
+    public static Texture sprites, f0Texture, f1Texture,  f2Texture, f3Texture, f4Texture, f5Texture, f6Texture, f7Texture, f8Texture, f9Texture, bgPhoenix,bgNight,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, nightBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird, boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture,
             creditstexture, creditsdowntexture, exittexture, exitdowntexture, retrytexture, retrydowntexture, readytexture, readydowntexture,
             storytexture, storydowntexture, scoretexture, ratingtexture, topscoretexture, menutexture, menudowntexture, youvediedtexture,
             creditsbgtexture, deathmenubgtexture, instrtexture, instrdowntexture, gliderbgtexture, instrbgtexture, readybgtexture, nexttexture,
@@ -430,7 +430,7 @@ public class AssetHandler {
 
         musiclist = new Music[] { Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic2.mp3")),
                 Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic3.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic4.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic5.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic6.mp3"))};
-        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic2.mp3")),Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic3.mp3"))};
+        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic2.mp3"))};
         deathmenumusic = Gdx.audio.newMusic(Gdx.files.internal("music/deathmenuMusic.mp3"));
 
         // Create (or retrieve existing) preferences file
@@ -441,7 +441,7 @@ public class AssetHandler {
     }
 
     public static final Animation[] birdTextureToAnimation(String path, float flapSpeed){
-        Texture sprites = new Texture(Gdx.files.internal("sprites/birds/"+path));
+        sprites = new Texture(Gdx.files.internal("sprites/birds/"+path));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
@@ -614,14 +614,7 @@ public class AssetHandler {
         bgThunder.dispose();
         bgNight.dispose();
 
-        phoenixBird.dispose();
-        acidBird.dispose();
-        waterBird.dispose();
-        fireBird.dispose();
-        nightBird.dispose();
-        thunderBird.dispose();
-        goldBird.dispose();
-        lunarBird.dispose();
+        sprites.dispose();
         boost.dispose();
 
         playtexture.dispose();
