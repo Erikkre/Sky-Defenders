@@ -51,7 +51,7 @@ public class BirdHandler {
             if (i!=0){
                 spawnIntervals[i] = duration / birdNumberList[i];
             } else {
-                spawnIntervals[0]= 2;
+                spawnIntervals[0]=0;
             }
         }
         timer=new Timer();
@@ -101,7 +101,6 @@ public class BirdHandler {
 
 
     public void update() {
-        System.out.println(waveTypeCnt);
         if (waveTypeCnt==8){waveTypeCnt=0;}
         if ( bgHandler.isBirdSpawning ){ //(((bgHandler.getBackground().y <-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2)) ){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
             if (!taskRunning) {
@@ -141,9 +140,9 @@ public class BirdHandler {
                 }
                 setUpTask();
                 if (waveTypeCnt == 0) {
-                    timer.schedule(task, 6000+(int) (spawnIntervals[waveTypeCnt] * 1000));
+                    timer.schedule(task, 5000);
                 } else {
-                    timer.scheduleAtFixedRate(task, 6000, (int) (spawnIntervals[waveTypeCnt] * 1000));
+                    timer.scheduleAtFixedRate(task, 4500, (int) (spawnIntervals[waveTypeCnt] * 1000));
                 }
                //task.run();
                 //activeBirdQueue.remove(0);

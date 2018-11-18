@@ -22,8 +22,7 @@ public class GameWorld {
     private Rectangle ground;
     public double boost = 0;  //boostamount
     public int updatedboostnumber, orgboostnumber= AssetHandler.getBoostnumber();
-    public float camWidth;
-    public float midPointY;
+
     private static GameRenderer renderer;
     public enum GameState {
         MENU, READY, RUNNING, STORY, CREDITS, DEATHMENU, INSTR, INSTR2
@@ -53,15 +52,16 @@ public class GameWorld {
 
     public static int gold, diamonds, score;
 
-    public GameWorld(int midPointY, int midPointX, float camWidth, float camHeight) {
+    public GameWorld() {
         if (AssetHandler.getHighScore()==0){
             isFirstTime=true;
             currentState= GameState.STORY;
         } else {
-            currentState = GameState.MENU;}
+            currentState = GameState.MENU;
+        }
 
-        this.camWidth=camWidth;
-        this.midPointY=midPointY;
+        //this.camWidth=camWidth;
+        //this.midPointY=midPointY;
         //glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
 
         AssetHandler.playnext(AssetHandler.menumusiclist);

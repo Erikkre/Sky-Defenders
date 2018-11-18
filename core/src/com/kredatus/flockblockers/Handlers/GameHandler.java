@@ -38,7 +38,7 @@ public class GameHandler implements Screen {
         Tween.registerAccessor(BirdAbstractClass.class, new BirdAccessor());
         Tween.setWaypointsLimit(10);
 
-        world = new GameWorld(midPointY, midPointX, camWidth, camHeight);
+        world = new GameWorld();
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
         bgHandler = new BgHandler( camWidth, camHeight);
         birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);

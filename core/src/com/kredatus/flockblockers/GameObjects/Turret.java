@@ -58,18 +58,22 @@ public class Turret {
         };//set task to run later using timer.schedule
     }
 
-    private void setRotation(float xTarget, float yTarget){
-        rotation = (float) Math.toDegrees(Math.atan((yTarget - position.y) / (xTarget - position.x)));
-        if        (xTarget > position.x) {
+    private void setRotation(float xVel, float yVel, float yDistance, float xDistance){
+        float rotCompYDiff=xVel*((Math.abs(yDistance))/camHeight)*1.5f;
+        float rotCompXDiff=yVel*((Math.abs(xDistance))/camWidth)*5;   //smaller and should be constant
+        rotation = (float) Math.toDegrees(Math.atan(yDistance / xDistance)) + rotCompYDiff + rotCompXDiff; //the further it is the more ahead we aim when vel increases
+        System.out.println("Rot due to yDiff: "+rotCompYDiff  +", Rot due to xPos"+rotCompXDiff);
+        if        (xDistance+position.x > position.x) {
             rotation += 180;
-        } else if (yTarget > position.y) {
+        } else if (yDistance+position.y > position.y) {
             rotation += 360;
         }
+
     }
 
     public void update(float delta) {
         if (Gdx.input.isTouched()) {
-            setRotation(InputHandler.scaleX(Gdx.input.getX()), -(InputHandler.scaleY(Gdx.input.getY())-1920));
+            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY())-1920)-position.y, InputHandler.scaleX(Gdx.input.getX())-position.x);
             if (!firing) {
                 setupFiring();
                 timer.scheduleAtFixedRate(timerTask, (int) (((1 / (rof / 3)) * 1000)/3), (int) ((1 / (rof / 3)) * 1000));
@@ -81,7 +85,7 @@ public class Turret {
 
                 if ((targetBird==null||!targetBird.isAlive) &&TurretHandler.targetBird!=null) {
                     setTarget(TurretHandler.targetBird);
-                    setRotation(targetBird.x, targetBird.y);
+                    setRotation(targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
                     if (!firing){
                         setupFiring();
                         timer.scheduleAtFixedRate(timerTask, 0, (int) ((1 / (rof / 3)) * 1000));
@@ -91,7 +95,7 @@ public class Turret {
                 } else if (targetBird!=null){
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
-                    setRotation(targetBird.x, targetBird.y);
+                    setRotation( targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
                     //System.out.println(targetBird.health);
                 }
 
