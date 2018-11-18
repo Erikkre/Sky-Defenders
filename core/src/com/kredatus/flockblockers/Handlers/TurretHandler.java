@@ -17,7 +17,7 @@ public class TurretHandler {
     public static ConcurrentLinkedQueue<Projectile> projectileList=new ConcurrentLinkedQueue<Projectile>();
     public static ArrayList<Turret> turretList=new ArrayList<Turret>(1);
     public static BirdAbstractClass targetBird;
-    private float previousBirdHeight;
+    private float previousBirdHeight=-100;
     public TurretHandler(float camWidth, float camHeight){
         turretList.add(new Turret('f',0,new Vector2(camWidth-(148/2),camHeight-(61/2)*15),camWidth, camHeight));
         //turretList.add(new Turret('f',0,new Vector2(camWidth-(148/2),camHeight-(61/2)*30),camWidth, camHeight));
@@ -48,7 +48,7 @@ public class TurretHandler {
                 }
             }
         }
-        previousBirdHeight=0; //in case some birds are moved past lead bird before any bird dies, need to check top bird every time
+        previousBirdHeight=-100; //in case some birds are moved past lead bird before any bird dies, need to check top bird every time
 
 
 

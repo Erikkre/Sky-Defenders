@@ -52,7 +52,7 @@ Tween second;
         animation=rightFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));
         //System.out.println("x of bird set to " + x);
-        y=-height/2;
+        y=-height/4;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
@@ -105,7 +105,7 @@ Tween second;
                 first.start();
             }
         };
-
+//aseInOutQuint
         intro = Tween.to(this, 1, 1).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
         xMotion=intro;
 

@@ -103,9 +103,9 @@ public abstract class BirdAbstractClass {
                 rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 9.5f;
             }*/
             if (xVel>0) {
-                rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) - 90)/4;
+                rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) - 90)/7; //make xvel less important
             } else if (xVel<-0) {
-                rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/4;
+                rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/7;
             }
             boundingPoly.setRotation(rotation);
             if (health <= 0) {

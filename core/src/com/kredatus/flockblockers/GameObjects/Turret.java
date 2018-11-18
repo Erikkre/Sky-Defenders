@@ -16,14 +16,12 @@ import java.util.TimerTask;
  */
 
 public class Turret {
-    private boolean isScored = false, firing;
+    private boolean firing;
     public int width, height ;
-    private boolean isGone;
     public Vector2 position;
     private float camWidth, camHeight;
     public float dmg, pen, spr, rof;
     private float rotation;
-    public Projectile projectile;
     private Timer timer;
     private TimerTask timerTask;
     private BirdAbstractClass targetBird;
@@ -31,8 +29,6 @@ public class Turret {
 
     public Turret(char turretType, int lvl, Vector2 position, float camWidth, float camHeight){
         this.position = position ;
-        this.width=148;
-        this.height=61;
         this.camWidth = camWidth ;
         this.camHeight= camHeight;
 
@@ -53,22 +49,21 @@ public class Turret {
             @Override
             public void run() {
                 //System.out.println("Added pen of "+pen);
-                TurretHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight,  rotation));
+                TurretHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
             }
         };//set task to run later using timer.schedule
     }
 
     private void setRotation(float xVel, float yVel, float yDistance, float xDistance){
-        float rotCompYDiff=xVel*((Math.abs(yDistance))/camHeight)*1.5f;
+        float rotCompYDiff=((xVel*(Math.abs(yDistance)/(camHeight)))  *1.5f  )/(pen/1.5f);
         float rotCompXDiff=yVel*((Math.abs(xDistance))/camWidth)*5;   //smaller and should be constant
         rotation = (float) Math.toDegrees(Math.atan(yDistance / xDistance)) + rotCompYDiff + rotCompXDiff; //the further it is the more ahead we aim when vel increases
-        System.out.println("Rot due to yDiff: "+rotCompYDiff  +", Rot due to xPos"+rotCompXDiff);
+        System.out.println("Rot due to yDiff: " + rotCompYDiff + ", Rot due to xDiff: " + rotCompXDiff);
         if        (xDistance+position.x > position.x) {
             rotation += 180;
         } else if (yDistance+position.y > position.y) {
             rotation += 360;
         }
-
     }
 
     public void update(float delta) {
@@ -174,6 +169,8 @@ public class Turret {
                 spr+=1;
             }
         }
+        width=texture.getRegionWidth();
+        height=texture.getRegionHeight();
     }
 
     public float getRotation() {
