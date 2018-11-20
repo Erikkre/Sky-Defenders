@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kredatus.flockblockers.GameObjects.Background;
 //import com.kredatus.flockblockers.GameObjects.Boost;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
+import com.kredatus.flockblockers.GameObjects.Coin;
 import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameObjects.Turret;
@@ -594,6 +595,10 @@ public void setRotate(float angle){
         for (BirdAbstractClass k : deadBirdQueue) {
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1f, 1f, k.rotation);
+            for (Coin l: k.coinList){
+                batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x.getValue() - l.width / 2, l.y.getValue() - l.height / 2,
+                         l.width/2, l.height/2);
+            }
         }
 
 

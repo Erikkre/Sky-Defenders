@@ -3,8 +3,9 @@ package com.kredatus.flockblockers.GameObjects;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
+
 import com.kredatus.flockblockers.GameWorld.GameWorld;
+
 
 
 import java.util.ArrayList;
@@ -61,7 +62,6 @@ public abstract class BirdAbstractClass {
     public Polygon boundingPoly;
 
     public BirdAbstractClass() {
-
         isAlive=true;
         isOffCam = false;
         //this.manager=manager;
@@ -107,6 +107,11 @@ public abstract class BirdAbstractClass {
             boundingPoly.setRotation(rotation);
             if (health <= 0) {
                 coinList=new ArrayList<Coin>(coinNumber);
+                float rotationIncrement=360/coinNumber;
+                for (int i=0;i<coinNumber;i++){
+                    coinList.add(new Coin(camWidth,camHeight,x,y,rotationIncrement*i));
+                    System.out.println("Coin added");
+                }
                 die();
             }
             if (y > camHeight - 0) { //0 being height of top of tower where score & diamonds are
@@ -117,7 +122,11 @@ public abstract class BirdAbstractClass {
             yVel+=yAcc;
             x+=xVel;
             for (Coin i : coinList){
-
+                i.update(delta);
+                if (i.xMotion.isFinished()){
+                    GameWorld.addGold(1);
+                    coinList.remove(i);
+                }
             }
             if (y+height/2<0 || x+width/2< 0 || x-width/2> camWidth){
                 isOffCam=true;

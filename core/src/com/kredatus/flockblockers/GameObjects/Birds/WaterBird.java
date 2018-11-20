@@ -25,7 +25,7 @@ public class WaterBird extends BirdAbstractClass {
 
         this.yVel=2;
         this.diamonds=1;
-        this.coins=7;
+        this.coinNumber=7;
 
         this.sizeVariance=200;
         sizeRatio=0.7f;

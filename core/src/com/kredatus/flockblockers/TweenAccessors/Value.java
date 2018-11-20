@@ -6,7 +6,7 @@ package com.kredatus.flockblockers.TweenAccessors;
 
 public class Value {
 
-    private float val = 1;
+    private float val = 0;
 
     public float getValue() {
         return val;

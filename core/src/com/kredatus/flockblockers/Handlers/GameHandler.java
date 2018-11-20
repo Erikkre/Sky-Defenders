@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
-import com.kredatus.flockblockers.Helpers.BirdAccessor;
+import com.kredatus.flockblockers.TweenAccessors.BirdAccessor;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 

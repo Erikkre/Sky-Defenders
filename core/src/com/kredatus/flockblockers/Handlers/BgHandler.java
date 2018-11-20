@@ -151,7 +151,7 @@ public class BgHandler {
 */
         (vertPosBg = Timeline.createSequence()  //5 4.5f 4.5f 2 7 .1, 8 and 60 repeats
                 .push((Tween.to(vert,-1, 5 ).target(-bgh-( .1f*camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START)      )//0.6 camheight  above, decide whether quad quint, circ or expo, all out
-                .push(Tween.to(vert, -1, 15).target(  -bgh+(1.2f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0))                          //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
+                .push(Tween.to(vert, -1, 13).target(  -bgh+(1.2f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0))                          //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
                 //.push(Tween.to(vert, -1,3f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine).setCallback(endBirdSpawn)     )                                       //midpoint
 
                 .push((Tween.to(vert, -1, 7).target((-bgh*2)+(0.499f*camHeight)).ease(TweenEquations.easeInOutBack)).setCallback(endBirdSpawn)     )  //cam center 0.001 above edge, decide wether ease inoutsine

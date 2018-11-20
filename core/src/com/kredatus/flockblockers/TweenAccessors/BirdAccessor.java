@@ -1,4 +1,4 @@
-package com.kredatus.flockblockers.Helpers;
+package com.kredatus.flockblockers.TweenAccessors;
 
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 
