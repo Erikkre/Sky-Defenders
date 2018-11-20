@@ -137,7 +137,7 @@ public class GameWorld {
     public void start() {
         currentState = GameState.RUNNING;
         boost=5;
-        AssetHandler.frontFlaps.setFrameDuration(0.12f);
+        //AssetHandler.frontFlaps.setFrameDuration(0.12f);
     }
 
     public void restart() {
@@ -147,7 +147,7 @@ public class GameWorld {
         renderer.scorenumber=0;
         AssetHandler.deathmenumusic.stop();
         AssetHandler.playnext(AssetHandler.musiclist);
-        AssetHandler.frontFlaps.setFrameDuration(0.2f);
+        //AssetHandler.frontFlaps.setFrameDuration(0.2f);
         currentState = GameState.READY;
         renderer.prepareTransition(0, 0, 0, 1f);}
 
