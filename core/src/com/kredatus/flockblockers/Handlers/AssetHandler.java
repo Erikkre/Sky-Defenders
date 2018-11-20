@@ -32,7 +32,7 @@ public class AssetHandler {
             bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgNighttexture, bgNighttexture2,bgGoldtexture, bgGoldtexture2,
             bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture,
             boosttexture,boostdown,logo, playdown, play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu,
-            menudown, score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized;
+            menudown, score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized, coinSymbol;
 
     public static ArrayList<Vector3> boostcoords;
     public static ArrayList<TextureRegion> bgList;
@@ -42,7 +42,7 @@ public class AssetHandler {
     public static Vector3 p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19,
             p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31;
 
-    public static Animation<TextureRegion> frontFlaps, rightSideFlaps, leftSideFlaps, backFlaps, whiteTinyBirdAnimations, blackTinyBirdAnimations,greyTinyBirdAnimations;
+    public static Animation<TextureRegion> rightSideFlaps, leftSideFlaps, whiteTinyBirdAnimation, blackTinyBirdAnimation,greyTinyBirdAnimation, coinAnimation;
     //public static TextureRegion gliderMid, gliderDown, gliderUp ,vertflipgliderMid, vertflipgliderDown, vertflipgliderUp,
             //frontGliderMid, frontGliderDown, frontGliderUp, frontGliderUpHigh, backgliderMid, backgliderDown, backgliderUp;
 
@@ -331,6 +331,19 @@ public class AssetHandler {
         f0 = new TextureRegion(f0Texture,0, 16,147,44);
         f0Proj = new TextureRegion(f0Texture,0, 0,147,16);
 
+
+        Texture coinTexture=new Texture(Gdx.files.internal("sprites/coin.png"));
+        TextureRegion[] tempPos = new TextureRegion[16];
+        for (int i = 0; i < 17; i++) {
+            if (i<16){
+            TextureRegion temp = new TextureRegion(coinTexture, 128 * i, 0, 128, 128);
+            tempPos[i] = (temp);
+            } else {
+                coinSymbol= new TextureRegion(coinTexture, 128 * i, 0, 128, 128);
+            }
+        }
+        coinAnimation=new Animation<TextureRegion>(0.125f, tempPos);
+
         phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.10f);
         waterAnimations = birdTextureToAnimation("water.png", 0.13f);
         nightAnimations = birdTextureToAnimation("night.png", 0.13f);
@@ -341,13 +354,13 @@ public class AssetHandler {
         goldAnimations = birdTextureToAnimation("gold.png", 0.10f);
 
         Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
-        greyTinyBirdAnimations=tinyBirdTextureToAnimation(greyTinyBird);
+        greyTinyBirdAnimation=tinyBirdTextureToAnimation(greyTinyBird);
 
         Texture blackTinyBird = new Texture(Gdx.files.internal("sprites/blackTinyBird.png"));
-        blackTinyBirdAnimations=tinyBirdTextureToAnimation(blackTinyBird);
+        blackTinyBirdAnimation=tinyBirdTextureToAnimation(blackTinyBird);
 
         Texture whiteTinyBird = new Texture(Gdx.files.internal("sprites/whiteTinyBird.png"));
-        whiteTinyBirdAnimations=tinyBirdTextureToAnimation(whiteTinyBird);
+        whiteTinyBirdAnimation=tinyBirdTextureToAnimation(whiteTinyBird);
         /*
         nightBird = new Texture(Gdx.files.internal("sprites/Night.png"));
         NightBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -476,7 +489,6 @@ public class AssetHandler {
             } else if (i==15){
                 back = positions.toArray(new TextureRegion[4]);
                 positions.clear();
-
             }
         }
 
@@ -494,7 +506,6 @@ public class AssetHandler {
 
         //height=back[3].getRegionHeight();
         //width=back[0].getRegionWidth();
-
         return new Animation[]{frontFlaps, leftFlaps, rightFlaps, backFlaps};
     }
 

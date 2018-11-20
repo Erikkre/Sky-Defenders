@@ -24,14 +24,13 @@ import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
-import com.kredatus.flockblockers.Handlers.TurretHandler;
+import com.kredatus.flockblockers.Handlers.ImpactHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
 
-import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -95,11 +94,11 @@ public class GameRenderer {
     private int camWidth, camHeight;
 private BgHandler bgHandler;
 private BirdHandler birdHandler;
-private TurretHandler turretHandler;
-    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TurretHandler turretHandler) {
+private ImpactHandler impactHandler;
+    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, ImpactHandler impactHandler) {
         this.birdHandler=birdHandler;
         this.bgHandler=bgHandler;
-        this.turretHandler=turretHandler;
+        this.impactHandler = impactHandler;
         this.camWidth=camWidth;
         this.camHeight=camHeight;
 
@@ -175,8 +174,8 @@ public void setRotate(float angle){
 
         activeBirdQueue=birdHandler.activeBirdQueue;
         deadBirdQueue=birdHandler.deadBirdQueue;
-        turretList= turretHandler.turretList;
-        projectileList=turretHandler.projectileList;
+        turretList= impactHandler.turretList;
+        projectileList= impactHandler.projectileList;
         //tinyBirdList=birdHandler.activeBirdQueue;
 
         //frontFlaps = AssetHandler.frontFlaps;

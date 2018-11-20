@@ -140,7 +140,7 @@ public class BirdHandler {
                 }
                 setUpTask();
                 if (waveTypeCnt == 0) {
-                    timer.schedule(task, 5000);
+                    timer.schedule(task, 4500);
                 } else {
                     timer.scheduleAtFixedRate(task, 4500, (int) (spawnIntervals[waveTypeCnt] * 1000));
                 }

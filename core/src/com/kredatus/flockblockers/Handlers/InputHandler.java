@@ -72,6 +72,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenX = scaleX(screenX);
         screenY = scaleY(screenY);
+
         if (myWorld.isRunning()) {
             myGlider.onClick();
             //point.set(screenX, screenY);

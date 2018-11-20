@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
-import com.kredatus.flockblockers.Handlers.TurretHandler;
+import com.kredatus.flockblockers.Handlers.ImpactHandler;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,13 +31,12 @@ public class Turret {
         this.position = position ;
         this.camWidth = camWidth ;
         this.camHeight= camHeight;
-
         timer=new Timer();
         firing=false;
         turretSetup(turretType, lvl);
 
-        if (position.x<camWidth/2){
-            texture =  new TextureRegion(texture);
+        if (position.x<camWidth/2) {
+            texture = new TextureRegion(texture);
             texture.flip(false,true);
         }
         setTarget(BirdHandler.activeBirdQueue.peek());
@@ -49,16 +48,16 @@ public class Turret {
             @Override
             public void run() {
                 //System.out.println("Added pen of "+pen);
-                TurretHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
+                ImpactHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
             }
         };//set task to run later using timer.schedule
     }
 
     private void setRotation(float xVel, float yVel, float yDistance, float xDistance){
-        float rotCompYDiff=((xVel*(Math.abs(yDistance)/(camHeight)))  *1.5f  )/(pen/1.5f);
+        float rotCompYDiff=((xVel*(Math.abs(yDistance)/(camHeight*4)))  *1.5f  )/(pen/1.5f);
         float rotCompXDiff=yVel*((Math.abs(xDistance))/camWidth)*5;   //smaller and should be constant
         rotation = (float) Math.toDegrees(Math.atan(yDistance / xDistance)) + rotCompYDiff + rotCompXDiff; //the further it is the more ahead we aim when vel increases
-        System.out.println("Rot due to yDiff: " + rotCompYDiff + ", Rot due to xDiff: " + rotCompXDiff);
+        //System.out.println("Rot due to yDiff: " + rotCompYDiff + ", Rot due to xDiff: " + rotCompXDiff);
         if        (xDistance+position.x > position.x) {
             rotation += 180;
         } else if (yDistance+position.y > position.y) {
@@ -66,7 +65,7 @@ public class Turret {
         }
     }
 
-    public void update(float delta) {
+    public void update() {
         if (Gdx.input.isTouched()) {
             setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY())-1920)-position.y, InputHandler.scaleX(Gdx.input.getX())-position.x);
             if (!firing) {
@@ -78,8 +77,8 @@ public class Turret {
         } else {    //ai system
             if (BirdHandler.activeBirdQueue.size() > 0) {
 
-                if ((targetBird==null||!targetBird.isAlive) &&TurretHandler.targetBird!=null) {
-                    setTarget(TurretHandler.targetBird);
+                if ((targetBird==null||!targetBird.isAlive) && ImpactHandler.targetBird!=null) {
+                    setTarget(ImpactHandler.targetBird);
                     setRotation(targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
                     if (!firing){
                         setupFiring();
@@ -95,6 +94,7 @@ public class Turret {
                 }
 
             } else if (firing) {
+                System.out.println("Activebirdqueue empty");
                 firing = false;
                 timerTask.cancel();
                 //System.out.println("cancelled");

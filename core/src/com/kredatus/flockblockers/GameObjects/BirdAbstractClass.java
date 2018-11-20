@@ -3,15 +3,17 @@ package com.kredatus.flockblockers.GameObjects;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 
 
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
+import java.util.Vector;
 
 import aurelienribon.tweenengine.Tween;
-
+//import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 
 /**
  * Created by Erik Kredatus on 9/8/2018.
@@ -48,49 +50,42 @@ public abstract class BirdAbstractClass {
     protected float camWidth, camHeight, edge;
     public boolean isOffCam, isColliding;
     public ArrayList<Projectile> hitBulletList = new ArrayList<Projectile>(30);
+    public ArrayList<Coin> coinList;
     public float  starty;
     public boolean isAlive, firstxMotion=true;
     protected Random r =new Random();
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
-    protected int sizeVariance, coins, health, diamonds, cnt=0;
+    protected int sizeVariance, coinNumber, health, diamonds, cnt=0;
     //protected Timeline xMotion;
     protected Tween intro, first, xMotion;
     public Polygon boundingPoly;
 
     public BirdAbstractClass() {
+
         isAlive=true;
         isOffCam = false;
         //this.manager=manager;
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
-
-
-        boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 5f,          x - width / 3f, y + height / 5f});//middle of front bird is below
+         boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 5f,          x - width / 3f, y + height / 5f});//middle of front bird is below
         boundingPoly  .  setOrigin(x, y);
-
-        //System.out.print("x of poly set to" + x);
-
-        //boundingPoly.dirty();
     }
+
     public abstract void setManager(float camWidth);
 
-    //public abstract void fly(float delta) ;
     public boolean collides(Projectile projectile) {
-        //if (x <= bird.x + bird.width && y-height<bird.y+bird.getHeight()/2 && y+height*2>bird.getPosition().y) {
             return Intersector.overlapConvexPolygons(boundingPoly, projectile.boundingRect);
         //}
     }
 
     public void update(float delta, float runTime){
-
-
         y+=yVel;
+
         if (isAlive) {
+
             preX=x;
             xMotion.update(delta);
-
-
 
             //System.out.println("Shape x: "+x);
 
@@ -103,23 +98,27 @@ public abstract class BirdAbstractClass {
                 rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 9.5f;
             }*/
             if (xVel>0) {
-                rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) - 90)/7; //make xvel less important
-            } else if (xVel<-0) {
-                rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/7;
+                if (x>camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) - 90) / 1.5f; //gradually slow down
+                else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) - 90)/6;                      //quickly start up
+            } else if (xVel<0) {
+                if (x<camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) + 90) / 1.5f; //gradually slow down
+                else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/6;                      //quickly start up
             }
             boundingPoly.setRotation(rotation);
             if (health <= 0) {
+                coinList=new ArrayList<Coin>(coinNumber);
                 die();
             }
             if (y > camHeight - 0) { //0 being height of top of tower where score & diamonds are
                 health=0;
-                GameWorld.addGold(-coins);
-                //isOffCam=true;
+                GameWorld.addGold(-coinNumber);
             }
         } else {
             yVel+=yAcc;
             x+=xVel;
+            for (Coin i : coinList){
 
+            }
             if (y+height/2<0 || x+width/2< 0 || x-width/2> camWidth){
                 isOffCam=true;
             }
@@ -131,6 +130,7 @@ public abstract class BirdAbstractClass {
 
     private void die(){
         xMotion.kill();
+
         isAlive=false;
         animation=frontFlaps;
         animation.setFrameDuration(0.05f);

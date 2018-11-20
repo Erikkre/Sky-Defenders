@@ -24,7 +24,7 @@ Tween second;
         super();
         this.yVel=0.5f;
         this.diamonds=1;
-        this.coins=7;
+        this.coinNumber=7;
 
         this.sizeVariance=1;
         sizeRatio=0.8f;
@@ -49,7 +49,7 @@ Tween second;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=100;
 
-        animation=rightFlaps;// starting animation
+        animation=frontFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));
         //System.out.println("x of bird set to " + x);
         y=-height/4;
@@ -75,7 +75,7 @@ Tween second;
         if (cnt==4) {cnt=0;}
         //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 
-        if (cnt==0&&x>(2*camWidth)/3) {
+        /*if (cnt==0&&x>(2*camWidth)/3) {
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
@@ -91,7 +91,7 @@ Tween second;
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
-        }
+        }*/
     }
 
     @Override
@@ -118,7 +118,7 @@ Tween second;
             }
         };*/
 
-        first =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
+        first =Tween.to(this, 1, 3).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
         //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
         /*
         (xMotion = Timeline.createSequence()
