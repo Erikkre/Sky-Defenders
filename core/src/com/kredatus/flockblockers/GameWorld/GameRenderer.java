@@ -72,7 +72,7 @@ public class GameRenderer {
     private Background background, background2, background3, background4;
     //public ArrayList<Boost> boostlist, flipboostlist, invboostlist, invflipboostlist;
 
-    float rotate = 0, previousvalue;
+    float rotate = 0, previousvalue, deadBirdScale=1;
     int scorenumber = 0;
     //public static boolean splashdown = false;
     public static FreeTypeFontGenerator.FreeTypeFontParameter smallfont, bigfont, xsmallfont, xxsmallfont;
@@ -84,7 +84,7 @@ public class GameRenderer {
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,deadBirdQueue;
     public ArrayList<Turret> turretList;
     public ConcurrentLinkedQueue<Projectile> projectileList;
-    float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
+    private float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
             c0len, c1len, c2len, c3len, c4len, c5len, c6len, c7len, c8len, c9len, c10len, c11len, c12len, c13len, c14len,
             s0len, s1len, s2len, s3len, s4len, s5len, s6len, s7len, s8len, s9len, s10len, s11len, s12len, s13len, s14len;
     private GlyphLayout Highscore, endgame, tryAgain,  boost, score, startLevel, title,
@@ -594,12 +594,13 @@ public void setRotate(float angle){
         }
         for (BirdAbstractClass k : deadBirdQueue) {
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime), k.x - k.width / 2, k.y - k.height / 2,
-                    k.width/2, k.height/2, k.width, k.height, 1f, 1f, k.rotation);
+                    k.width/2, k.height/2, k.width, k.height, deadBirdScale, deadBirdScale, k.rotation);
             for (Coin l: k.coinList){
                 batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x.getValue() - l.width / 2, l.y.getValue() - l.height / 2,
                          l.width/2, l.height/2);
             }
         }
+
 
 
         /*

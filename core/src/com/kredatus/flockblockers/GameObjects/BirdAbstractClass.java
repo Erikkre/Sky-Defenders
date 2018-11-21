@@ -80,52 +80,59 @@ public abstract class BirdAbstractClass {
         //}
     }
 
-    public void update(float delta, float runTime){
-        y+=yVel;
-
-        if (isAlive) {
-            preX=x;
-            xMotion.update(delta);
-
-            //System.out.println("Shape x: "+x);
-
-            xVel=x-preX;
-            boundingPoly.translate(xVel, yVel);
-            /*
+    public void setRotation() {
+        if (xVel>0) {
+            if (x>camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) - 90) / 1.5f; //gradually slow down
+            else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) - 90)/6;                      //quickly start up
+        } else if (xVel<0) {
+            if (x<camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) + 90) / 1.5f; //gradually slow down
+            else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/6;                      //quickly start up
+        }
+        boundingPoly.setRotation(rotation);
+                  /*
             if (xVel>0.5) {
                 rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 9.5f;
             } else if (xVel<-0.5) {
                 rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 9.5f;
             }*/
-            if (xVel>0) {
-                if (x>camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) - 90) / 1.5f; //gradually slow down
-                else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) - 90)/6;                      //quickly start up
-            } else if (xVel<0) {
-                if (x<camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) + 90) / 1.5f; //gradually slow down
-                else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/6;                      //quickly start up
-            }
-            boundingPoly.setRotation(rotation);
+    }
+
+    public void setCoinList() {
+        coinList=new ConcurrentLinkedQueue<Coin>();
+        float rotationIncrement=360/coinNumber;
+        for (int i=0;i<coinNumber;i++){
+            coinList.add(new Coin(x,y,rotationIncrement*i));
+            System.out.println("Coin added at rotation"+rotationIncrement*i);
+        }
+    }
+
+    public void update(float delta, float runTime){
+        y+=yVel;
+        if (isAlive) {
+            preX=x;
+            xMotion.update(delta);
+            xVel=x-preX;
+            boundingPoly.translate(xVel, yVel);
+            setRotation();
+
             if (health <= 0) {
-                coinList=new ConcurrentLinkedQueue<Coin>();
-                float rotationIncrement=360/coinNumber;
-                for (int i=0;i<coinNumber;i++){
-                    coinList.add(new Coin(x,y,rotationIncrement*i));
-                    System.out.println("Coin added at rotation"+rotationIncrement*i);
-                }
+                setCoinList();
                 die();
             }
             if (y > camHeight - 0) { //0 being height of top of tower where score & diamonds are
-                health=0;
                 GameWorld.addGold(-coinNumber);
+                die();
             }
         } else {
             yVel+=yAcc;
             x+=xVel;
-            for (Coin i : coinList){
-                i.update(delta);
-                if (i.xMotion.isFinished()){
-                    GameWorld.addGold(1);
-                    coinList.remove(i);
+            if (coinList!=null){
+                for (Coin i : coinList){
+                    i.update(delta);
+                    if (i.xMotion.isFinished()){
+                        GameWorld.addGold(1);
+                        coinList.remove(i);
+                    }
                 }
             }
             if (y+height/2<0 || x+width/2< 0 || x-width/2> camWidth){

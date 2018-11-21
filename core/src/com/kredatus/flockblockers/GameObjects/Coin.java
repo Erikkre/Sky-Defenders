@@ -13,8 +13,8 @@ import aurelienribon.tweenengine.TweenEquations;
 public class Coin {
 
     private Vector2 dest=new Vector2(540,1800);
-    private Timeline xMotion, yMotion;
-    private float y1, x1, width, height;
+    public Timeline xMotion, yMotion;
+    public float y1, x1, width, height;
     public Value x=new Value(), y=new Value();
     public Animation animation;
 
