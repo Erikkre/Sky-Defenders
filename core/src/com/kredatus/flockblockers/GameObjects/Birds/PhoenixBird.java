@@ -24,7 +24,7 @@ Tween second;
         super();
         this.yVel=0.5f;
         this.diamonds=1;
-        this.coinNumber=7;
+        this.coinNumber=360;
 
         this.sizeVariance=1;
         sizeRatio=0.8f;

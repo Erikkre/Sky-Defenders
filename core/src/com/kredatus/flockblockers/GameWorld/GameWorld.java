@@ -65,8 +65,6 @@ public class GameWorld {
 
         AssetHandler.playnext(AssetHandler.menumusiclist);
         updatedboostnumber=orgboostnumber;
-
-
     }
 
     public void update(float delta, float runTime) {
@@ -107,14 +105,12 @@ public class GameWorld {
         //bgHandler.collides(glider, updatedboostnumber);
         glider.update(delta);
         bgHandler.update(delta);
-
         if (Math.abs(glider.getPosition().y) > bgHandler.bgh) {
            // renderer.prepareSunshine();
             currentState = GameState.DEATHMENU;
             if (renderer.scorenumber > AssetHandler.getHighScore()) {
                 AssetHandler.setHighScore(renderer.scorenumber);
             }
-
             //bgHandler.onRestart();
            // AssetHandler.frontViewFlaps.setFrameDuration(0.2f);
            //renderer.setCamPositionOriginal();

@@ -13,7 +13,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 
 public class ImpactHandler {
-
     public static ConcurrentLinkedQueue<Projectile> projectileList=new ConcurrentLinkedQueue<Projectile>();
     public static ArrayList<Turret> turretList=new ArrayList<Turret>(1);
     public static BirdAbstractClass targetBird;
@@ -21,26 +20,22 @@ public class ImpactHandler {
 
     public ImpactHandler(float camWidth, float camHeight){
         turretList.add(new Turret('f',0,new Vector2(camWidth-(148/2),camHeight-(61/2)*15),camWidth, camHeight));
-        //turretList.add(new Turret('f',0,new Vector2(camWidth-(148/2),camHeight-(61/2)*30),camWidth, camHeight));
-        //turretList.add(new Turret('f',0,new Vector2(camWidth-(148/2),camHeight-(61/2)*45),camWidth, camHeight));
+        turretList.add(new Turret('f',0,new Vector2(camWidth-(148/2),camHeight-(61/2)*30),camWidth, camHeight));
+        turretList.add(new Turret('f',0,new Vector2(camWidth-(148/2),camHeight-(61/2)*45),camWidth, camHeight));
 
-        //turretList.add(new Turret('f',0,new Vector2((148/2),camHeight-(61/2)*15),camWidth, camHeight));
-        //turretList.add(new Turret('f',0,new Vector2((148/2),camHeight-(61/2)*30),camWidth, camHeight));
-        //turretList.add(new Turret('f',0,new Vector2((148/2),camHeight-(61/2)*45),camWidth, camHeight));
+        turretList.add(new Turret('f',0,new Vector2((148/2),camHeight-(61/2)*15),camWidth, camHeight));
+        turretList.add(new Turret('f',0,new Vector2((148/2),camHeight-(61/2)*30),camWidth, camHeight));
+        turretList.add(new Turret('f',0,new Vector2((148/2),camHeight-(61/2)*45),camWidth, camHeight));
     }
 
-
-
     public void update(float delta, float runTime) {
-        for (Turret i : turretList){
+        for (Turret i : turretList) {
             i.update();
         }
-
-//System.out.println(BirdHandler.activeBirdQueue);
+        //System.out.println(BirdHandler.activeBirdQueue);
         for (BirdAbstractClass i : BirdHandler.activeBirdQueue) {
             i.update(delta, runTime);
             if (!i.isAlive) {
-
                 BirdHandler.deadBirdQueue.add(i);
                 BirdHandler.activeBirdQueue.remove(i);
             } else {
@@ -59,7 +54,6 @@ public class ImpactHandler {
             if (i.isGone || i.pen==0){
                 ImpactHandler.projectileList.remove(i);
             }
-
             for (BirdAbstractClass j : BirdHandler.activeBirdQueue) {
                 if (j.collides(i) && !j.hitBulletList.contains(i)) {  //if bird i is colliding with bullet j and was not already hit before
                     j.hit(i);
@@ -68,16 +62,11 @@ public class ImpactHandler {
                 }
             }
         }
-
-
-
         for (BirdAbstractClass i : BirdHandler.deadBirdQueue){
             i.update(delta, runTime);
-            if (i.isOffCam) {
+            if (i.isOffCam&&i.coinList.isEmpty()) {
                 BirdHandler.deadBirdQueue.remove(i);
             }
         }
-
-
     }
 }

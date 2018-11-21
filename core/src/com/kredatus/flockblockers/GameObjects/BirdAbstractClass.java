@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.Tween;
 //import com.badlogic.gdx.ai.steer.behaviors.Arrive;
@@ -51,7 +52,7 @@ public abstract class BirdAbstractClass {
     protected float camWidth, camHeight, edge;
     public boolean isOffCam, isColliding;
     public ArrayList<Projectile> hitBulletList = new ArrayList<Projectile>(30);
-    public ArrayList<Coin> coinList;
+    public ConcurrentLinkedQueue<Coin> coinList;
     public float  starty;
     public boolean isAlive, firstxMotion=true;
     protected Random r =new Random();
@@ -83,7 +84,6 @@ public abstract class BirdAbstractClass {
         y+=yVel;
 
         if (isAlive) {
-
             preX=x;
             xMotion.update(delta);
 
@@ -106,11 +106,11 @@ public abstract class BirdAbstractClass {
             }
             boundingPoly.setRotation(rotation);
             if (health <= 0) {
-                coinList=new ArrayList<Coin>(coinNumber);
+                coinList=new ConcurrentLinkedQueue<Coin>();
                 float rotationIncrement=360/coinNumber;
                 for (int i=0;i<coinNumber;i++){
-                    coinList.add(new Coin(camWidth,camHeight,x,y,rotationIncrement*i));
-                    System.out.println("Coin added");
+                    coinList.add(new Coin(x,y,rotationIncrement*i));
+                    System.out.println("Coin added at rotation"+rotationIncrement*i);
                 }
                 die();
             }

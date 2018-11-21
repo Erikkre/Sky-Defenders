@@ -10,12 +10,11 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 
-/**
+/*
  * Created by Erik Kredatus on 9/8/2018.
  */
 
 public class AcidBird extends BirdAbstractClass {
-
 
     public Animation[] animSeq;
     //public final int[] animSeqList = {0,1,2,3};
