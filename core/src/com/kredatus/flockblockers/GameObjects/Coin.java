@@ -22,8 +22,8 @@ public class Coin {
 
         this.x.setValue(x);
         this.y.setValue(y);
-        x1=x-(float)(Math.cos(Math.toRadians(rotation)))*150;
-        y1=y-(float)(Math.sin(Math.toRadians(rotation)))*150;
+        x1=x-(float)(Math.cos(Math.toRadians(rotation)))*100;
+        y1=y-(float)(Math.sin(Math.toRadians(rotation)))*100;
         System.out.println("First y: "+y1+", First x: "+x1);
         animation = AssetHandler.coinAnimation;
         width=((TextureRegion)animation.getKeyFrame(0)).getRegionWidth();
@@ -49,7 +49,7 @@ public class Coin {
     public void update(float delta){
         xMotion.update(delta);
         yMotion.update(delta);
-        System.out.println("Current y: "+y.getValue()+", Current x: " +x.getValue());
+        //System.out.println("Current y: "+y.getValue()+", Current x: " +x.getValue());
     }
 
 }

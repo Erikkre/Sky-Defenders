@@ -64,7 +64,7 @@ public class ImpactHandler {
         }
         for (BirdAbstractClass i : BirdHandler.deadBirdQueue){
             i.update(delta, runTime);
-            if (i.isOffCam&&i.coinList.isEmpty()) {
+            if (i.isOffCam&&i.coinList==null) {
                 BirdHandler.deadBirdQueue.remove(i);
             }
         }

@@ -11,6 +11,8 @@ import com.kredatus.flockblockers.GameWorld.GameWorld;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -45,7 +47,7 @@ import aurelienribon.tweenengine.Tween;
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
-    public float preX, x, y, yVel, yAcc, xVel, rotation, sizeRatio, finalSizeRatio;
+    public float preX, x, y, yVel, yAcc, xVel,yVelDeath, rotation, sizeRatio, finalSizeRatio;
     public Hashtable xMotionTimePositions=new Hashtable();
     public double xMotionTime;
     public float width, height;
@@ -57,15 +59,18 @@ public abstract class BirdAbstractClass {
     public boolean isAlive, firstxMotion=true;
     protected Random r =new Random();
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
-    protected int sizeVariance, coinNumber, health, diamonds, cnt=0;
+    protected int sizeVariance, coinNumber, health, diamonds, cnt=0, rotationCounter;
     //protected Timeline xMotion;
     protected Tween intro, first, xMotion;
     public Polygon boundingPoly;
-
+    private TimerTask task;
     public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
+        yAcc=-0.5f;
+        yVelDeath=25;
         //this.manager=manager;
+
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
@@ -98,17 +103,42 @@ public abstract class BirdAbstractClass {
     }
 
     public void setCoinList() {
-        coinList=new ConcurrentLinkedQueue<Coin>();
-        float rotationIncrement=360/coinNumber;
-        for (int i=0;i<coinNumber;i++){
-            coinList.add(new Coin(x,y,rotationIncrement*i));
-            System.out.println("Coin added at rotation"+rotationIncrement*i);
+        //(0.5*yAcc)
+        float determinant=-(yVelDeath*yVelDeath) - (4 * yAcc * y);     //a=yAcc, b=yDeathVel, distance/c = y, determinant = d = b^2 -4*a*c
+        float timeToOffCam;
+        if (determinant>=0){    // if
+            if ((-yVelDeath + Math.sqrt(determinant))/(2*yAcc)   >= (-yVelDeath - Math.sqrt(determinant))/(2*yAcc)){
+                timeToOffCam=(float)(-yVelDeath + Math.sqrt(determinant))/(2*yAcc);
+            } else {
+                timeToOffCam=(float)(-yVelDeath - Math.sqrt(determinant))/(2*yAcc);
+            }
+        } else {
+            //throw new RuntimeException();
         }
+        timeToOffCam=2;
+System.out.println("Time to hit offCam: "+timeToOffCam);
+        coinList=new ConcurrentLinkedQueue<Coin>();
+        final float rotationIncrement=360/coinNumber;
+        Timer timer = new Timer();
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                if (rotationCounter>coinNumber){
+                    task.cancel();
+                }
+                coinList.add(new Coin(x,y,rotationIncrement*rotationCounter++));
+                System.out.println("Coin added at rotation"+rotationIncrement*rotationCounter);
+            }
+        };
+
+        float timerIntervals=timeToOffCam/coinNumber;
+        timer.scheduleAtFixedRate(task, 0, (int)(timerIntervals * 1000));
     }
 
     public void update(float delta, float runTime){
-        y+=yVel;
+
         if (isAlive) {
+            y+=yVel;
             preX=x;
             xMotion.update(delta);
             xVel=x-preX;
@@ -124,7 +154,8 @@ public abstract class BirdAbstractClass {
                 die();
             }
         } else {
-            yVel+=yAcc;
+            y+=yVelDeath;
+            yVelDeath+=yAcc;
             x+=xVel;
             if (coinList!=null){
                 for (Coin i : coinList){
@@ -134,6 +165,7 @@ public abstract class BirdAbstractClass {
                         coinList.remove(i);
                     }
                 }
+
             }
             if (y+height/2<0 || x+width/2< 0 || x-width/2> camWidth){
                 isOffCam=true;
@@ -151,8 +183,6 @@ public abstract class BirdAbstractClass {
         animation=frontFlaps;
         animation.setFrameDuration(0.05f);
         rotation=0;
-        yAcc=-1.3f;
-        yVel=25;
         if (x>camWidth/2){   //if dying on right side fall to left and vice versa
             xVel=-3;
         } else {

@@ -597,10 +597,10 @@ public void setRotate(float angle){
                     k.width/2, k.height/2, k.width, k.height, deadBirdScale, deadBirdScale, k.rotation);
             for (Coin l: k.coinList){
                 batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x.getValue() - l.width / 2, l.y.getValue() - l.height / 2,
-                         l.width/2, l.height/2);
+                         l.width/4, l.height/4);
             }
         }
-
+        //deadBirdScale-=0.01;
 
 
         /*
