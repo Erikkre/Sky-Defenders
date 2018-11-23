@@ -594,13 +594,13 @@ public void setRotate(float angle){
         }
         for (BirdAbstractClass k : deadBirdQueue) {
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime), k.x - k.width / 2, k.y - k.height / 2,
-                    k.width/2, k.height/2, k.width, k.height, deadBirdScale, deadBirdScale, k.rotation);
+                    k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
             for (Coin l: k.coinList){
                 batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x.getValue() - l.width / 2, l.y.getValue() - l.height / 2,
-                         l.width/4, l.height/4);
+                         l.width/3, l.height/3);
             }
         }
-        //deadBirdScale-=0.01;
+
 
 
         /*

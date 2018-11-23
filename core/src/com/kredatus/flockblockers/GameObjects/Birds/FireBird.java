@@ -24,7 +24,7 @@ public class FireBird extends BirdAbstractClass {
         super();
 
         this.yVel=5;
-        this.diamonds=1;
+
         this.coinNumber=7;
 
         this.sizeVariance=200;

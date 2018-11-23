@@ -24,7 +24,7 @@ public class ThunderBird extends BirdAbstractClass {
         super();
 
         this.yVel=8;
-        this.diamonds=1;
+
         this.coinNumber=7;
 
         this.sizeVariance=200;

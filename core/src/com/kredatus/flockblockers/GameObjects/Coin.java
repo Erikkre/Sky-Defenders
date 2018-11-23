@@ -24,7 +24,7 @@ public class Coin {
         this.y.setValue(y);
         x1=x-(float)(Math.cos(Math.toRadians(rotation)))*100;
         y1=y-(float)(Math.sin(Math.toRadians(rotation)))*100;
-        System.out.println("First y: "+y1+", First x: "+x1);
+        //System.out.println("First y: "+y1+", First x: "+x1);
         animation = AssetHandler.coinAnimation;
         width=((TextureRegion)animation.getKeyFrame(0)).getRegionWidth();
         height=width;

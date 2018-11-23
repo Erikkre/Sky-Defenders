@@ -21,7 +21,7 @@ public class GoldBird extends BirdAbstractClass {
     public GoldBird(float camHeight, float camWidth){
         super();
         this.yVel=2;
-        this.diamonds=1;
+
         this.coinNumber=7;
 
         this.sizeVariance=1;

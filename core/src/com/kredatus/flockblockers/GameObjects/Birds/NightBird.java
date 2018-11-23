@@ -24,7 +24,7 @@ public class NightBird extends BirdAbstractClass {
         super();
 
         this.yVel=2;
-        this.diamonds=1;
+
         this.coinNumber=7;
 
         this.sizeVariance=200;

@@ -24,7 +24,7 @@ public class LunarBird extends BirdAbstractClass {
         super();
 
         this.yVel=10;
-        this.diamonds=1;
+
         this.coinNumber=7;
 
         this.sizeVariance=200;

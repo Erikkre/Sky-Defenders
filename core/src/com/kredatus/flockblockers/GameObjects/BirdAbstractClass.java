@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
+import com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 
 
@@ -35,7 +36,7 @@ import aurelienribon.tweenengine.Tween;
 
  Gun upgrades work as: each can be upgraded once, to upgrade to level 2 must upgrade whole turret, see .excel file (Dmg, RoF, Pen)
 
-                                                                                                                                Damage      Fire Rate     Penetration   Spread
+ Damage      Fire Rate     Penetration   Spread
  (Fast Firing) knife thrower,    bow,        submachinegun,  assault rifle,    Machinegun,  Minigun, laser,  ion cannon        2           L             M
  (High Damage) spear thrower,    crossbow,   ballistae,  hunting rifle,  anti-tank sniper, cannon,      gauss cannon           4           S             L
  (Wide Spread) shuriken thrower, tripleShot, tripleCatapult, shotgun, blunderbuss, missile, Microwave emitter                  1           M             L             XL
@@ -68,20 +69,20 @@ public abstract class BirdAbstractClass {
         isAlive=true;
         isOffCam = false;
         yAcc=-0.5f;
-        yVelDeath=25;
+        yVelDeath=15;
         //this.manager=manager;
 
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
-         boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 5f,          x - width / 3f, y + height / 5f});//middle of front bird is below
+        boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 5f,          x - width / 3f, y + height / 5f});//middle of front bird is below
         boundingPoly  .  setOrigin(x, y);
     }
 
     public abstract void setManager(float camWidth);
 
     public boolean collides(Projectile projectile) {
-            return Intersector.overlapConvexPolygons(boundingPoly, projectile.boundingRect);
+        return Intersector.overlapConvexPolygons(boundingPoly, projectile.boundingRect);
         //}
     }
 
@@ -93,7 +94,9 @@ public abstract class BirdAbstractClass {
             if (x<camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) + 90) / 1.5f; //gradually slow down
             else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/6;                      //quickly start up
         }
-        boundingPoly.setRotation(rotation);
+        if (isAlive) {
+            boundingPoly.setRotation(rotation);
+        }
                   /*
             if (xVel>0.5) {
                 rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 9.5f;
@@ -102,51 +105,69 @@ public abstract class BirdAbstractClass {
             }*/
     }
 
-    public void setCoinList() {
-        //(0.5*yAcc)
-        float determinant=-(yVelDeath*yVelDeath) - (4 * yAcc * y);     //a=yAcc, b=yDeathVel, distance/c = y, determinant = d = b^2 -4*a*c
-        float timeToOffCam;
-        if (determinant>=0){    // if
-            if ((-yVelDeath + Math.sqrt(determinant))/(2*yAcc)   >= (-yVelDeath - Math.sqrt(determinant))/(2*yAcc)){
-                timeToOffCam=(float)(-yVelDeath + Math.sqrt(determinant))/(2*yAcc);
-            } else {
-                timeToOffCam=(float)(-yVelDeath - Math.sqrt(determinant))/(2*yAcc);
+    public void setCoinList(float delta) {
+        coinList = new ConcurrentLinkedQueue<Coin>();
+
+        if (diamonds!=1) {  //if not a phoenix
+            final float rotationIncrement = 360 / coinNumber;
+            for (int i=0;i<coinNumber;i++) {
+                coinList.add(new Coin(x, y, rotationIncrement * rotationCounter++));
             }
         } else {
-            //throw new RuntimeException();
-        }
-        timeToOffCam=2;
-System.out.println("Time to hit offCam: "+timeToOffCam);
-        coinList=new ConcurrentLinkedQueue<Coin>();
-        final float rotationIncrement=360/coinNumber;
-        Timer timer = new Timer();
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                if (rotationCounter>coinNumber){
-                    task.cancel();
-                }
-                coinList.add(new Coin(x,y,rotationIncrement*rotationCounter++));
-                System.out.println("Coin added at rotation"+rotationIncrement*rotationCounter);
-            }
-        };
 
-        float timerIntervals=timeToOffCam/coinNumber;
-        timer.scheduleAtFixedRate(task, 0, (int)(timerIntervals * 1000));
+            //(0.5*yAcc)
+            float realYAcc = yAcc / 2;
+            float determinant = (yVelDeath * yVelDeath) - (4 * (realYAcc) * y);     //a=yAcc, b=yDeathVel, distance/c = y, determinant = d = b^2 -4*a*c
+            //System.out.println("Acc: " + realYAcc + ", VelDeath: " + yVelDeath + ", Distance: " + y);
+            float timeToOffCam;
+            if (determinant >= 0) {    // if
+                double root1 = (-yVelDeath + Math.sqrt(determinant)) / (2 * realYAcc);
+                double root2 = (-yVelDeath - Math.sqrt(determinant)) / (2 * realYAcc);
+                //System.out.print("Root1: " + root1 + ", Root2: " + root2);
+                if ((root2 <= root1 || root1 < 0) && root2 > 0) {
+                    timeToOffCam = (float) root2;
+                } else if ((root1 < root2 || root2 < 0) && root1 > 0) {
+                    timeToOffCam = (float) root1;
+                } else {
+                    throw new RuntimeException();
+                }
+            } else {
+                throw new RuntimeException();
+            }
+            //timeToOffCam=2;
+            //System.out.println("Time to hit offCam: " + timeToOffCam);
+
+
+            Timer timer = new Timer();
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    if (rotationCounter > coinNumber) {
+                        task.cancel();
+                    }
+                    rotationCounter++;
+                    coinList.add(new Coin(x, y, r.nextInt(360)));   //random spurting for phoenix
+                    //System.out.println("Coin added at rotation"+rotationIncrement*rotationCounter);
+                }
+            };
+
+            float timerIntervals = (timeToOffCam * delta * 1.05f) / coinNumber;  //because yacc and yvel are added every frameTimeDifference, we must multiply by delta to get seconds approximation
+            timer.scheduleAtFixedRate(task, 0, (int) (timerIntervals * 1000));
+        }
     }
 
     public void update(float delta, float runTime){
-
+        setRotation();
         if (isAlive) {
             y+=yVel;
             preX=x;
             xMotion.update(delta);
             xVel=x-preX;
             boundingPoly.translate(xVel, yVel);
-            setRotation();
+
 
             if (health <= 0) {
-                setCoinList();
+                setCoinList(delta);
                 die();
             }
             if (y > camHeight - 0) { //0 being height of top of tower where score & diamonds are
@@ -154,6 +175,8 @@ System.out.println("Time to hit offCam: "+timeToOffCam);
                 die();
             }
         } else {
+            width*=0.995;
+            height*=0.995;
             y+=yVelDeath;
             yVelDeath+=yAcc;
             x+=xVel;
@@ -181,7 +204,7 @@ System.out.println("Time to hit offCam: "+timeToOffCam);
 
         isAlive=false;
         animation=frontFlaps;
-        animation.setFrameDuration(0.05f);
+        animation.setFrameDuration(0.03f);
         rotation=0;
         if (x>camWidth/2){   //if dying on right side fall to left and vice versa
             xVel=-3;
@@ -194,9 +217,9 @@ System.out.println("Time to hit offCam: "+timeToOffCam);
         health-= projectile.dmg;
     }
 
-  //  public void dead(float delta){
+    //  public void dead(float delta){
 //
-   // }
+    // }
 
 /*
     public float distanceAfterDeath() {
