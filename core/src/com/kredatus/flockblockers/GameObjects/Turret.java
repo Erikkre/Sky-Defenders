@@ -16,8 +16,9 @@ import java.util.TimerTask;
  */
 
 public class Turret {
-    private boolean firing;
-    public int width, height ;
+    private boolean firing, startedTapping;
+    private boolean[] firingSpeeds = {false,false,false,false,false};
+    public int width, height, firingInterval;
     public Vector2 position;
     private float camWidth, camHeight;
     public float dmg, pen, spr, rof;
@@ -26,6 +27,7 @@ public class Turret {
     private TimerTask timerTask;
     private BirdAbstractClass targetBird;
     public TextureRegion texture, projTexture;
+    private double lastTapTime, lastTapInterval=1000, lastShotTime;
 
     public Turret(char turretType, int lvl, Vector2 position, float camWidth, float camHeight){
         this.position = position ;
@@ -41,6 +43,7 @@ public class Turret {
         }
         setTarget(BirdHandler.activeBirdQueue.peek());
         setupFiring();
+        firingInterval = (int) ((1 / (rof)) * 1000);
     }
 
     private void setupFiring() {
@@ -48,6 +51,7 @@ public class Turret {
             @Override
             public void run() {
                 //System.out.println("Added pen of "+pen);
+                lastShotTime=System.currentTimeMillis();
                 TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
             }
         };//set task to run later using timer.schedule
@@ -64,25 +68,75 @@ public class Turret {
             rotation += 360;
         }
     }
+    //private void setupManualFiring
 
     public void update() {
-        if (Gdx.input.isTouched()) {
-            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY())-1920)-position.y, InputHandler.scaleX(Gdx.input.getX())-position.x);
+        if (Gdx.input.justTouched()  && !startedTapping) {   //if tapped and not startedTapping yet
+            System.out.println("tapped and not startedTapping yet");
+            startedTapping = true;
+            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - 1920) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
+            setupFiring();
             if (!firing) {
-                setupFiring();
-                timer.scheduleAtFixedRate(timerTask, (int) (((1 / (rof / 3)) * 1000)/3), (int) ((1 / (rof / 3)) * 1000));
+                timer.scheduleAtFixedRate(timerTask, 0, firingInterval);
                 firing = true;
-                //System.out.println("firing");
+                System.out.println("firing");
+            }
+            lastTapTime=System.currentTimeMillis();
+        } else if (Gdx.input.justTouched() && startedTapping) {    //if tapped and startedTapping
+            System.out.println("tapped and startedTapping");
+
+            lastTapInterval=System.currentTimeMillis()-lastTapTime;
+            System.out.println("Last tap interval: "+lastTapInterval);
+
+            if (lastTapInterval>200 && !firingSpeeds[0]){
+                for (boolean i : firingSpeeds){
+                    i=false;
+                }
+                firingSpeeds[0]=true;
+            } else if (lastTapInterval>180 && !firingSpeeds[1]){
+                for (boolean i : firingSpeeds){
+                    i=false;
+                }
+                firingSpeeds[1]=true;
+            } else if (lastTapInterval>170 && !firingSpeeds[2]){
+                for (boolean i : firingSpeeds){
+                    i=false;
+                }
+                firingSpeeds[2]=true;
+            } else if (lastTapInterval>160 && !firingSpeeds[3]){
+                for (boolean i : firingSpeeds){
+                    i=false;
+                }
+                firingSpeeds[3]=true;
+            } else if (lastTapInterval>150 && !firingSpeeds[4]){
+                for (boolean i : firingSpeeds){
+                    i=false;
+                }
+                firingSpeeds[4]=true;
+            }
+            lastTapTime=System.currentTimeMillis();
+            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - 1920) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
+        } else if (startedTapping) {    //if not tapped and startedTapping
+            //System.out.println("System time: "+System.currentTimeMillis()+" , Last tap time: "+lastTapTime);
+            if (System.currentTimeMillis()-lastTapTime>500){
+                startedTapping=false;
+                System.out.println("Not tapping anymore");
+                if (firing) {
+                    System.out.println("Stop Firing manually");
+                    firing = false;
+                    timerTask.cancel();
+                    //System.out.println("cancelled");
+                }
             }
         } else {    //ai system
             if (BirdHandler.activeBirdQueue.size() > 0) {
 
-                if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null) {
+                if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null && TargetHandler.targetBird.y>0) {
                     setTarget(TargetHandler.targetBird);
                     setRotation(targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
                     if (!firing){
                         setupFiring();
-                        timer.scheduleAtFixedRate(timerTask, 0, (int) ((1 / (rof / 3)) * 1000));
+                        timer.scheduleAtFixedRate(timerTask, 0, firingInterval);
                         firing = true;
                         //System.out.println("firing");
                     }
@@ -94,7 +148,7 @@ public class Turret {
                 }
 
             } else if (firing) {
-                System.out.println("Activebirdqueue empty");
+                System.out.println("Activebirdqueue empty ai stop firing");
                 firing = false;
                 timerTask.cancel();
                 //System.out.println("cancelled");
@@ -112,7 +166,7 @@ public class Turret {
                 dmg = 2;
                 pen = 1;
                 spr = 1;
-                rof = 1;
+                rof = 0.3f; //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots
                 switch (lvl) {
                     case(0):texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
                     case(1):texture=AssetHandler.f1;projTexture=AssetHandler.f1Proj;break;
@@ -129,7 +183,7 @@ public class Turret {
                 dmg = 1;
                 pen = 1;
                 spr = 3;
-                rof = 0.5f;
+                rof = 0.18f;
                 switch (lvl) {
                     case(0):texture=AssetHandler.s0;projTexture=AssetHandler.s0Proj;break;
                     case(1):texture=AssetHandler.s1;projTexture=AssetHandler.s1Proj;break;
