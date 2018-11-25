@@ -25,7 +25,8 @@ import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
-import com.kredatus.flockblockers.Handlers.ImpactHandler;
+import com.kredatus.flockblockers.Handlers.TargetHandler;
+import com.kredatus.flockblockers.Handlers.TurretHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
@@ -67,7 +68,7 @@ public class GameRenderer {
     private int gliderscaling= AssetHandler.getgliderScaling();
     private TextureRegion  horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
             creditsbg, deathmenubg, newHighscore, topscore, deathmenuscore, rating, youvedied, boostdown,
-            gliderbg, instrbg, readybg, frontglidermid, worldStabilized, gun, projectile;
+            gliderbg, instrbg, readybg, frontglidermid, worldStabilized, gun, projectile, reticle;
 
     private Background background, background2, background3, background4;
     //public ArrayList<Boost> boostlist, flipboostlist, invboostlist, invflipboostlist;
@@ -95,11 +96,13 @@ public class GameRenderer {
     private int camWidth, camHeight;
 private BgHandler bgHandler;
 private BirdHandler birdHandler;
-private ImpactHandler impactHandler;
-    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, ImpactHandler impactHandler) {
+private TargetHandler targetHandler;
+private TurretHandler turretHandler;
+    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler) {
         this.birdHandler=birdHandler;
         this.bgHandler=bgHandler;
-        this.impactHandler = impactHandler;
+        this.targetHandler = targetHandler;
+        this.turretHandler=turretHandler;
         this.camWidth=camWidth;
         this.camHeight=camHeight;
 
@@ -170,13 +173,15 @@ public void setRotate(float angle){
 
         boosttexture = AssetHandler.boosttexture;
 
+        reticle=AssetHandler.reticle;
+
         //gliderMid = AssetHandler.gliderMid;
         //vertflipgliderMid = AssetHandler.vertflipgliderMid;
 
         activeBirdQueue=birdHandler.activeBirdQueue;
         deadBirdQueue=birdHandler.deadBirdQueue;
-        turretList= impactHandler.turretList;
-        projectileList= impactHandler.projectileList;
+        turretList= turretHandler.turretList;
+        projectileList= targetHandler.projectileList;
         //tinyBirdList=birdHandler.activeBirdQueue;
 
         //frontFlaps = AssetHandler.frontFlaps;
@@ -595,11 +600,12 @@ public void setRotate(float angle){
         for (BirdAbstractClass k : deadBirdQueue) {
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
-            for (Coin l: k.coinList){
-
+            if (k.coinList!=null) {
+                for (Coin l : k.coinList) {
                     batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x - l.width / 2, l.y - l.height / 2,
                             l.width / 3, l.height / 3);
 
+                }
             }
         }
 

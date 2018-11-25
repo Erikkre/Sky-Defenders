@@ -90,7 +90,7 @@ public class Coin {
             y=tweenY.getValue();
         } else {
             if (!firstMovementEndedX){
-                x=tweenX.getValue()+thisBird.x+thisBird.width/7.6f;
+                x=tweenX.getValue()+thisBird.x+thisBird.width/7.8f;
                 firstXMotion.update(delta);
             } else {
                 x=tweenX.getValue();

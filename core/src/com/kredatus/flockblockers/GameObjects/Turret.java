@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
-import com.kredatus.flockblockers.Handlers.ImpactHandler;
+import com.kredatus.flockblockers.Handlers.TargetHandler;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -48,7 +48,7 @@ public class Turret {
             @Override
             public void run() {
                 //System.out.println("Added pen of "+pen);
-                ImpactHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
+                TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
             }
         };//set task to run later using timer.schedule
     }
@@ -77,8 +77,8 @@ public class Turret {
         } else {    //ai system
             if (BirdHandler.activeBirdQueue.size() > 0) {
 
-                if ((targetBird==null||!targetBird.isAlive) && ImpactHandler.targetBird!=null) {
-                    setTarget(ImpactHandler.targetBird);
+                if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null) {
+                    setTarget(TargetHandler.targetBird);
                     setRotation(targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
                     if (!firing){
                         setupFiring();

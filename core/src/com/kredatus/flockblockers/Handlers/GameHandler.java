@@ -21,7 +21,8 @@ public class GameHandler implements Screen {
     private GameRenderer renderer;
     private BgHandler bgHandler;
     private BirdHandler birdHandler;
-    private ImpactHandler impactHandler;
+    private TargetHandler targetHandler;
+    private TurretHandler turretHandler;
     private float runTime;
     public static int camWidth, midPointY, camHeight, midPointX;
 
@@ -42,12 +43,11 @@ public class GameHandler implements Screen {
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
         bgHandler = new BgHandler( camWidth, camHeight);
         birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
-        impactHandler = new ImpactHandler(camWidth,camHeight);
-        world.setBirdHandler(birdHandler);
-        world.setBgHandler(bgHandler);
-        world.setImpactHandler(impactHandler);
+        targetHandler = new TargetHandler();
+        turretHandler = new TurretHandler(camWidth, camHeight);
+        world.setHandlers(bgHandler,birdHandler, targetHandler,turretHandler);
 
-        renderer = new GameRenderer(world, camWidth, camHeight, bgHandler, birdHandler, impactHandler);
+        renderer = new GameRenderer(world, camWidth, camHeight, bgHandler, birdHandler, targetHandler, turretHandler);
         bgHandler.setRendererAndCam(renderer);
         world.setRenderer(renderer);
     }

@@ -1,10 +1,10 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
-import com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 
 
@@ -14,7 +14,6 @@ import java.util.Hashtable;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.Tween;
@@ -59,21 +58,32 @@ public abstract class BirdAbstractClass {
     public float  starty;
     public boolean isAlive, firstxMotion=true;
     protected Random r =new Random();
-    public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, animation;
+    public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, deathFlaps, animation;
     protected int sizeVariance, coinNumber, health, diamonds, cnt=0, rotationCounter;
     //protected Timeline xMotion;
     protected Tween intro, first, xMotion;
     public Polygon boundingPoly;
     private TimerTask task;
-    BirdAbstractClass thisBird=this;
+    private BirdAbstractClass thisBird=this;
+    public Animation[] animSeq;
+
     public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
         yAcc=-0.5f;
         yVelDeath=15;
         //this.manager=manager;
+    }
 
-
+    protected void animSetup(){
+        frontFlaps=animSeq[0];
+        leftFlaps=animSeq[1];
+        rightFlaps=animSeq[2];
+        backFlaps=animSeq[3];
+        deathFlaps=animSeq[4];
+        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
+        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
@@ -177,8 +187,13 @@ public abstract class BirdAbstractClass {
             }
             specificUpdate(delta, runTime);
         } else {
-            width*=0.993;
-            height*=0.993;
+            if (diamonds==1){
+                width*=0.994;
+                height*=0.994;
+            } else {
+                width*=0.985;
+                height*=0.985;
+            }
             y+=yVelDeath;
             yVelDeath+=yAcc;
             x+=xVel;
@@ -203,9 +218,8 @@ public abstract class BirdAbstractClass {
         xMotion.kill();
 
         isAlive=false;
-        animation=frontFlaps;
-        animation.setFrameDuration(0.03f);
-        rotation=0;
+        animation=deathFlaps;
+
         if (x>camWidth/2){   //if dying on right side fall to left and vice versa
             xVel=-3;
         } else {

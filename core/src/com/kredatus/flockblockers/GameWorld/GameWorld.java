@@ -6,7 +6,8 @@ import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
-import com.kredatus.flockblockers.Handlers.ImpactHandler;
+import com.kredatus.flockblockers.Handlers.TargetHandler;
+import com.kredatus.flockblockers.Handlers.TurretHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 
 /**
@@ -16,7 +17,8 @@ public class GameWorld {
     private Glider glider;
     public BgHandler bgHandler;
     public BirdHandler birdHandler;
-    public ImpactHandler impactHandler;
+    public TargetHandler targetHandler;
+    public TurretHandler turretHandler;
     //private boolean isAlive = true;
     private Rectangle ground;
     public double boost = 0;  //boostamount
@@ -90,7 +92,8 @@ public class GameWorld {
     private void updateStory(float delta, float runTime) {
         bgHandler.update(delta);
         birdHandler.update();
-        impactHandler.update(delta, runTime);
+        targetHandler.update(delta, runTime);
+        turretHandler.update();
     }
 
     private void updateReady(float runTime) {
@@ -220,14 +223,17 @@ public class GameWorld {
         this.renderer = renderer;
     }
 
-    public void setBgHandler(BgHandler bgHandler) {
+    public void setHandlers(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler) {
         this.bgHandler = bgHandler;
+        this.birdHandler = birdHandler;
+        this.targetHandler = targetHandler;
+        this.turretHandler=turretHandler;
     }
     public void setBirdHandler(BirdHandler BirdHandler) {
-        this.birdHandler = BirdHandler;
+        ;
     }
-    public void setImpactHandler(ImpactHandler impactHandler) {
-        this.impactHandler = impactHandler;
+    public void setTargetHandler(TargetHandler targetHandler) {
+        this.targetHandler = targetHandler;
     }
     public static GameRenderer getRenderer() {
         return renderer;
