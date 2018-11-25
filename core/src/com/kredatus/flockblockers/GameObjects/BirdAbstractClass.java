@@ -65,12 +65,14 @@ public abstract class BirdAbstractClass {
     protected Tween intro, first, xMotion;
     public Polygon boundingPoly;
     private TimerTask task;
+    BirdAbstractClass thisBird=this;
     public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
         yAcc=-0.5f;
         yVelDeath=15;
         //this.manager=manager;
+
 
     }
 
@@ -111,7 +113,7 @@ public abstract class BirdAbstractClass {
         if (diamonds!=1) {  //if not a phoenix
             final float rotationIncrement = 360 / coinNumber;
             for (int i=0;i<coinNumber;i++) {
-                coinList.add(new Coin(x, y, rotationIncrement * rotationCounter++));
+                coinList.add(new Coin(x, y, rotationIncrement * rotationCounter++, thisBird, false));
             }
         } else {
 
@@ -146,7 +148,7 @@ public abstract class BirdAbstractClass {
                         task.cancel();
                     }
                     rotationCounter++;
-                    coinList.add(new Coin(x, y, r.nextInt(360)));   //random spurting for phoenix
+                    coinList.add(new Coin(x, y, r.nextInt(360), thisBird, true));   //random spurting for phoenix
                     //System.out.println("Coin added at rotation"+rotationIncrement*rotationCounter);
                 }
             };
@@ -165,7 +167,6 @@ public abstract class BirdAbstractClass {
             xVel=x-preX;
             boundingPoly.translate(xVel, yVel);
 
-
             if (health <= 0) {
                 setCoinList(delta);
                 die();
@@ -174,27 +175,26 @@ public abstract class BirdAbstractClass {
                 GameWorld.addGold(-coinNumber);
                 die();
             }
+            specificUpdate(delta, runTime);
         } else {
-            width*=0.995;
-            height*=0.995;
+            width*=0.993;
+            height*=0.993;
             y+=yVelDeath;
             yVelDeath+=yAcc;
             x+=xVel;
             if (coinList!=null){
                 for (Coin i : coinList){
                     i.update(delta);
-                    if (i.xMotion.isFinished()){
+                    if ((diamonds!=1 && i.secondYMotion.isFinished()) || (diamonds==1&&i.xMotion.isFinished())) {
                         GameWorld.addGold(1);
                         coinList.remove(i);
                     }
                 }
-
             }
             if (y+height/2<0 || x+width/2< 0 || x-width/2> camWidth){
                 isOffCam=true;
             }
         }
-        specificUpdate(delta, runTime);
     }
 
     public abstract void specificUpdate(float delta, float runTime);
@@ -262,5 +262,4 @@ public abstract class BirdAbstractClass {
         return boundingCir;
     }
     */
-
 }

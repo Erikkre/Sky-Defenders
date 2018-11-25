@@ -107,7 +107,7 @@ public class BirdHandler {
                 //for the amount of birds in the wave,
                 if (waveTypeCnt == 0) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new PhoenixBird(camHeight, camWidth));
+                        birdQueue.add(new WaterBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 1) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {

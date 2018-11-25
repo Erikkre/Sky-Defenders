@@ -62,6 +62,7 @@ public class WaterBird extends BirdAbstractClass {
     @Override
     public void specificUpdate(float delta, float runTime) {
         //second.update(delta);
+
         if (cnt==4) {cnt=0;}
         //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 
