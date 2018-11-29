@@ -17,9 +17,9 @@ import java.util.TimerTask;
 
 public class Turret {
     private boolean firing, startedTapping;
-    private boolean[] firingSpeedLevelCheck = {false,false,false,false,false};
-    private int[] firingSpeedLevels=new int[5], tapSpeedLevels = {10000, 200, 175, 165, 155, 0};   //#'s represent time in ms between each tap, each number is bottom point of 5 different tap speed levels i.e. infinity-200, 200-175, ... 155-0. used if tapped and startedTapping
-    public int width, height, baseFiringSpeedLevel, lastFiringSpeedLevel, firingSpdDecCounter=4;
+    private boolean[] firingSpeedLevelCheck = new boolean[10];
+    private int[] tapSpeedLevels = {10000, 300, 255, 215, 190, 175, 160, 155, 151, 147, 0}, firingSpeedLevels=new int[tapSpeedLevels.length-1];  //10 levels //#'s represent time in ms between each tap, each number is bottom point of 5 different tap speed levels i.e. infinity-200, 200-175, ... 155-0. used if tapped and startedTapping
+    public int width, height, baseFiringSpeedLevel, lastFiringSpeedLevel, firingSpdDecCounter=firingSpeedLevels.length-1;
     public Vector2 position;
     private float camWidth, camHeight;
     public float dmg, pen, spr, rof;
@@ -44,12 +44,13 @@ public class Turret {
         }
         setTarget(BirdHandler.activeBirdQueue.peek());
         setupFiring();
-        
+
         baseFiringSpeedLevel = (int) ((1 / (rof)) * 1000);
-        for (int i=1;i<=5;i++){
-            firingSpeedLevels[i-1]=baseFiringSpeedLevel/i;
+        firingSpeedLevels[0]=baseFiringSpeedLevel;
+        for (int i=1;i<firingSpeedLevels.length;i++){
+            firingSpeedLevels[i]=(int)(firingSpeedLevels[i-1]*0.9);
         }
-        System.out.println("Firing intervals: "+firingSpeedLevels[0]+", "+firingSpeedLevels[1]+", "+firingSpeedLevels[2]+", "+firingSpeedLevels[3]+", "+firingSpeedLevels[4]);
+        System.out.println("Firing intervals: "+firingSpeedLevels[0]+", "+firingSpeedLevels[1]+", "+firingSpeedLevels[2]+", "+firingSpeedLevels[3]+", "+firingSpeedLevels[4]+", "+firingSpeedLevels[5]+", "+firingSpeedLevels[6]+", "+firingSpeedLevels[7]+", "+firingSpeedLevels[8]+", "+firingSpeedLevels[9]);
     }
 
     private void setupFiring() {
@@ -95,14 +96,15 @@ public class Turret {
             lastTapTime=System.currentTimeMillis();
 
         } else if (Gdx.input.justTouched() && startedTapping) {    //if tapped and startedTapping
+            firingSpdDecCounter=firingSpeedLevels.length-1; //reset
             timeSinceLastTap=System.currentTimeMillis()-lastTapTime;
             lastTapTime=System.currentTimeMillis();
             System.out.println("tapped and startedTapping, Last tap interval: "+timeSinceLastTap);
 
-            for (int i=0;i<5;i++) {
+            for (int i=0;i<firingSpeedLevels.length;i++) {
                 if (timeSinceLastTap < tapSpeedLevels[i] && timeSinceLastTap > tapSpeedLevels[i + 1] && !firingSpeedLevelCheck[i]) {
                     System.out.println("Set different tap interval with timeSinceLastTap " + timeSinceLastTap + " < tapSpeedLevel " + tapSpeedLevels[i] + " && firingSpeedLevelCheck at " + i + " is " + firingSpeedLevelCheck[i]);
-                    for (int j = 0; j < 5; j++) {
+                    for (int j = 0; j < firingSpeedLevels.length; j++) {
                         firingSpeedLevelCheck[j] = false;
                     }
                     firingSpeedLevelCheck[i] = true;
@@ -124,10 +126,11 @@ public class Turret {
             
             setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - 1920) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
         } else if (startedTapping) {    //if not tapped and startedTapping, test why bullets arent slowing down
-
+            System.out.println("if "+firingSpdDecCounter+" > 0 && "+ (System.currentTimeMillis() - lastTapTime)+">"+tapSpeedLevels[firingSpdDecCounter]);
                 if (firingSpdDecCounter>0 && System.currentTimeMillis() - lastTapTime > tapSpeedLevels[firingSpdDecCounter]) {   //from 0ms to 155 to 200
+
                     lastFiringSpeedLevel = firingSpeedLevels[firingSpdDecCounter--];
-                    for (int j = 0; j < 5; j++) {
+                    for (int j = 0; j < firingSpeedLevels.length; j++) {
                         firingSpeedLevelCheck[j] = false;
                     }
                     firingSpeedLevelCheck[firingSpdDecCounter] = true;
@@ -141,6 +144,7 @@ public class Turret {
                     }
                     //firing = true;
                 } else if (System.currentTimeMillis()-lastTapTime>2000){
+                    firingSpdDecCounter=firingSpeedLevels.length-1;
                 startedTapping=false;
                 System.out.println("Not tapping anymore");
                 if (firing) {
@@ -153,7 +157,6 @@ public class Turret {
         } else {    //ai system
             System.out.println("AI system");
             if (BirdHandler.activeBirdQueue.size() > 0) {
-
                 if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null && TargetHandler.targetBird.y>0) {
                     System.out.println("Activebirdqueue not empty, set target &");
                     setTarget(TargetHandler.targetBird);
@@ -169,9 +172,8 @@ public class Turret {
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
                     setRotation( targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
-                    //System.out.println(targetBird.health);
+                    System.out.println("rotating to bird"); //*****DEBUG***** gun aims at bird but doesnt shoot, stuck outside of loop somewhere
                 }
-
             } else if (firing) {
                 System.out.println("Activebirdqueue empty ai stop firing");
                 firing = false;
@@ -191,7 +193,7 @@ public class Turret {
                 dmg = 2;
                 pen = 1;
                 spr = 1;
-                rof = 5f; //was 0.5f //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots
+                rof = 2f; //was 0.5f //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots
                 switch (lvl) {
                     case(0):texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
                     case(1):texture=AssetHandler.f1;projTexture=AssetHandler.f1Proj;break;
