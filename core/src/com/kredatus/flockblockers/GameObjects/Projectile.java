@@ -28,8 +28,7 @@ public class Projectile {
         this.dmg=dmg; this.pen=pen;
         //sin(rotation)=xVel/Velocity, pen=velocity
 
-
-            velocity.set(   -(float)(vel*Math.cos(Math.toRadians(rotation))), -(float)(vel*Math.sin(Math.toRadians(rotation)))   );
+        velocity.set(   -(float)(vel*Math.cos(Math.toRadians(rotation))), -(float)(vel*Math.sin(Math.toRadians(rotation)))   );
 
         //System.out.println("Velocity: "+velocity);
 

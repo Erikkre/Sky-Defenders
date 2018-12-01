@@ -31,8 +31,8 @@ public class Coin {
         height = width;
 
         if (phoenixCoin) {
-
-           x1= x - (float)(Math.cos(Math.toRadians(rotation)))*150;
+            x+=thisBird.width/7.7f;
+           x1= x - (float)(Math.cos(Math.toRadians(rotation)))*150 ;
            y1= y - (float)(Math.sin(Math.toRadians(rotation)))*150;
            tweenX.setValue(x);
            tweenY.setValue(y);
@@ -90,12 +90,11 @@ public class Coin {
             y=tweenY.getValue();
         } else {
             if (!firstMovementEndedX){
-                x=tweenX.getValue()+thisBird.x+thisBird.width/7.8f;
+                x=tweenX.getValue()+thisBird.x+thisBird.width/7.7f;
                 firstXMotion.update(delta);
             } else {
                 x=tweenX.getValue();
                 secondXMotion.update(delta);
-
             }
             if (!firstMovementEndedY){
                 y=tweenY.getValue()+thisBird.y;
