@@ -8,7 +8,6 @@ import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,27 +47,40 @@ public class Turret {
         setupFiring();
     }
 
+    public void restartFiring(){
+        if (firing){
+            stopFiring();
+            startFiring();
+        }
+    }
     public void dmgUp(){
         dmgUpCounter++;
         dmg*=1.2;
+        restartFiring();
     }
     public void penUp(){
         penUpCounter++;
         pen*=1.2;
+        restartFiring();
     }
     public void rofUp(){
+        restartFiring();
         rofUpCounter++;
         rof*=1.2;
+        restartFiring();
     }
     public void sprUp(){
         sprUpCounter++;
         spr++;
+        restartFiring();
     }
     public void aiUp(){
         aiUp++;
+        restartFiring();
     }
     public void lvlUp(){
         turretSetup(turretType,++lvl, false);
+        restartFiring();
     }
 
     private void setupFiring() {
@@ -82,17 +94,17 @@ public class Turret {
                         TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
                     } else if (spr==2) {
                         if (rotation >= 0 && rotation < 90) {
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x - (float) (15 * Math.cos(Math.toRadians(90 - rotation))), position.y - (float) (15 * Math.cos(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x + (float) (15 * Math.cos(Math.toRadians(90 - rotation))), position.y + (float) (15 * Math.cos(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x - (float) (25 * Math.cos(Math.toRadians(90-(rotation-180)))), position.y - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x + (float) (25 * Math.cos(Math.toRadians(90-(rotation-180)))), position.y + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
                         } else if (rotation>=90&&rotation<180){
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x - (float) (15 * Math.cos(Math.toRadians(rotation-90))), position.y - (float) (15 * Math.cos(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x + (float) (15 * Math.cos(Math.toRadians(rotation-90))), position.y + (float) (15 * Math.cos(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x - (float) (25 * Math.cos(Math.toRadians(rotation-270))), position.y - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x + (float) (25 * Math.cos(Math.toRadians(rotation-270))), position.y + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
                         } else if (rotation>=180&&rotation<270){
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x - (float) (15 * Math.cos(Math.toRadians(90-(rotation-180)))), position.y - (float) (15 * Math.cos(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x + (float) (15 * Math.cos(Math.toRadians(90-(rotation-180)))), position.y + (float) (15 * Math.cos(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x - (float) (25 * Math.cos(Math.toRadians(90-(rotation-180)))), position.y - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x + (float) (25 * Math.cos(Math.toRadians(90-(rotation-180)))), position.y + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
                         } else if (rotation>=270&&rotation<360){
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x - (float) (15 * Math.cos(Math.toRadians(rotation-270))), position.y - (float) (15 * Math.cos(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x + (float) (15 * Math.cos(Math.toRadians(rotation-270))), position.y + (float) (15 * Math.cos(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x - (float) (25 * Math.cos(Math.toRadians(rotation-270))), position.y - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x + (float) (25 * Math.cos(Math.toRadians(rotation-270))), position.y + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
                         }
                     }
                 } else {
@@ -118,7 +130,7 @@ public class Turret {
 
     private void startFiring() {
         setupFiring();
-        timer.scheduleAtFixedRate(timerTask, (int) (((1 / (rof / 3)) * 1000)/3), (int) ((1 / (rof / 3)) * 1000));
+        timer.scheduleAtFixedRate(timerTask, (int) (((1 / (rof / 3)) * 1000)/2), (int) ((1 / (rof / 3)) * 1000));
         firing = true;
     }
 
@@ -130,23 +142,24 @@ public class Turret {
     }
 
     public void update() {
+        //System.out.println(rotation);
         if (Gdx.input.isTouched()) {   //***************************************************if tapped and not startedTapping yet***********************************************************************************************
             setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - 1920) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
             if (!firing) {
                 startFiring();
             }
         } else {    //****************************************************************************************************ai system****************************************************************************************************
-            System.out.println("AI system");
+            //System.out.println("AI system");
             if (BirdHandler.activeBirdQueue.size() > 0) {
                 if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null && TargetHandler.targetBird.y>0) {
-                    System.out.println("Activebirdqueue not empty, set target &");
+                    //System.out.println("Activebirdqueue not empty, set target &");
                     setTarget(TargetHandler.targetBird);
                     setRotation(targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
                 } else if (targetBird!=null){
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
                     setRotation( targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
-                    System.out.println("rotating to bird"); //*****DEBUG***** gun aims at bird but doesnt shoot, stuck outside of loop somewhere
+                    //System.out.println("rotating to bird"); //*****DEBUG***** gun aims at bird but doesnt shoot, stuck outside of loop somewhere
                 }
                 if (!firing) {
                     startFiring();
@@ -184,9 +197,9 @@ public class Turret {
                 dmg = 1;
                 pen = 1;
                 spr = 3;
-                rof = 0.1f;
+                rof = 1f;
                     switch (lvl) {
-                        case(0):texture=AssetHandler.s0;projTexture=AssetHandler.s0Proj;break;
+                        case(0):texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;  //beware of slight changes
                         case(1):texture=AssetHandler.s1;projTexture=AssetHandler.s1Proj;break;
                         case(2):texture=AssetHandler.s2;projTexture=AssetHandler.s2Proj;break;
                         case(3):texture=AssetHandler.s3;projTexture=AssetHandler.s3Proj;break;
@@ -201,7 +214,7 @@ public class Turret {
                 dmg = 4;
                 pen = 2;
                 spr = 1;
-                rof = 0.05f;
+                rof = 0.5f;
                     switch (lvl) {
                         case(0):texture=AssetHandler.d0;projTexture=AssetHandler.d0Proj;break;
                         case(1):texture=AssetHandler.d1;projTexture=AssetHandler.d1Proj;break;

@@ -187,9 +187,9 @@ public abstract class BirdAbstractClass {
             }
             specificUpdate(delta, runTime);
         } else {
-            if (diamonds==1){
-                width*=0.994;
-                height*=0.994;
+            if (diamonds==1){   //is phoenix
+                width*=0.996;
+                height*=0.996;
             } else {
                 width*=0.985;
                 height*=0.985;
@@ -231,49 +231,4 @@ public abstract class BirdAbstractClass {
         health-= projectile.dmg;
     }
 
-    //  public void dead(float delta){
-//
-    // }
-
-/*
-    public float distanceAfterDeath() {
-        return Math.abs(position.y+height/2) - (bgh - midpointY);
-    }
-
-    public boolean isFlipWorld() {
-        return position.y < -bgh / 8;
-    }
-
-    public boolean isNormalWorld() {
-        return position.y > bgh / 8;
-    }
-
-    public boolean isPositive() {
-        return position.y >0;
-    }
-
-    public boolean isNegative() {
-        return position.y <0;
-    }
-
-    public Vector2 getPosition() {
-        return position;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public float getRotation() {
-        return rotation;
-    }
-
-    public Circle getboundingCir() {
-        return boundingCir;
-    }
-    */
 }
