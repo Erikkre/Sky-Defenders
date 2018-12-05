@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kredatus.flockblockers.GameObjects.Background;
 //import com.kredatus.flockblockers.GameObjects.Boost;
@@ -24,9 +25,11 @@ import com.kredatus.flockblockers.GameObjects.Turret;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
+import com.kredatus.flockblockers.Handlers.GameHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TurretHandler;
+import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
@@ -94,15 +97,20 @@ public class GameRenderer {
 
     private Color transitionColor;
     private int camWidth, camHeight;
-private BgHandler bgHandler;
-private BirdHandler birdHandler;
-private TargetHandler targetHandler;
-private TurretHandler turretHandler;
-    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler) {
+    private BgHandler bgHandler;
+    private BirdHandler birdHandler;
+    private TargetHandler targetHandler;
+    private TurretHandler turretHandler;
+    private UiHandler uiHandler;
+
+    Table table;
+    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, UiHandler uiHandler) {
         this.birdHandler=birdHandler;
         this.bgHandler=bgHandler;
         this.targetHandler = targetHandler;
         this.turretHandler=turretHandler;
+        this.uiHandler=uiHandler;
+
         this.camWidth=camWidth;
         this.camHeight=camHeight;
 
@@ -179,8 +187,8 @@ public void setRotate(float angle){
         //vertflipgliderMid = AssetHandler.vertflipgliderMid;
 
         activeBirdQueue=birdHandler.activeBirdQueue;
-        deadBirdQueue=birdHandler.deadBirdQueue;
-        turretList= turretHandler.turretList;
+        deadBirdQueue=  birdHandler.deadBirdQueue;
+        turretList=     turretHandler.turretList;
         projectileList= targetHandler.projectileList;
         //tinyBirdList=birdHandler.activeBirdQueue;
 
@@ -218,6 +226,7 @@ public void setRotate(float angle){
         invflipboostlist = bgHandler.getinvflipboostlist();
 */
         glider = myWorld.getGlider();
+        table=uiHandler.table;
     }
 
     private void smallfontLengthSetup() {
@@ -609,8 +618,6 @@ public void setRotate(float angle){
             }
         }
 
-
-
         /*
         batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-glider.getWidth()/2, glider.getPosition().y-glider.getHeight()/2,
                 glider.getPosition().x-glider.getWidth()/2,glider.getPosition().y-glider.getHeight()/2, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());*/
@@ -651,6 +658,7 @@ public void setRotate(float angle){
                 //bgHandler.horizPosBg.start(manager);
             //}
             drawBackground();
+            table.draw(batcher, 1);
             /*
             cam.position.y+=10;
             cam.update();

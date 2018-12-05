@@ -462,7 +462,7 @@ public class AssetHandler {
         TextureRegion[] front=new TextureRegion[0];
         TextureRegion[] rightSide=new TextureRegion[0];
         TextureRegion[] leftSide=new TextureRegion[0];
-        TextureRegion[] back= new TextureRegion[0];
+        TextureRegion[] back=new TextureRegion[0];
 
         for (int i=0;i<16;i++) {
             TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);

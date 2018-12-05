@@ -23,6 +23,7 @@ public class GameHandler implements Screen {
     private BirdHandler birdHandler;
     private TargetHandler targetHandler;
     private TurretHandler turretHandler;
+    public static UiHandler uiHandler;
     private float runTime;
     public static int camWidth, midPointY, camHeight, midPointX;
 
@@ -39,15 +40,16 @@ public class GameHandler implements Screen {
         Tween.registerAccessor(BirdAbstractClass.class, new BirdAccessor());
         Tween.setWaypointsLimit(10);
 
+        uiHandler=new UiHandler();
         world = new GameWorld();
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
         bgHandler = new BgHandler( camWidth, camHeight);
         birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
         targetHandler = new TargetHandler();
         turretHandler = new TurretHandler(camWidth, camHeight);
-        world.setHandlers(bgHandler,birdHandler, targetHandler,turretHandler);
+        world.setHandlers(bgHandler,birdHandler, targetHandler,turretHandler,uiHandler);
 
-        renderer = new GameRenderer(world, camWidth, camHeight, bgHandler, birdHandler, targetHandler, turretHandler);
+        renderer = new GameRenderer(world, camWidth, camHeight, bgHandler, birdHandler, targetHandler, turretHandler,uiHandler);
         bgHandler.setRendererAndCam(renderer);
         world.setRenderer(renderer);
     }

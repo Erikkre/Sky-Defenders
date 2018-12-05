@@ -8,6 +8,7 @@ import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TurretHandler;
+import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 
 /**
@@ -223,7 +224,7 @@ public class GameWorld {
         this.renderer = renderer;
     }
 
-    public void setHandlers(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler) {
+    public void setHandlers(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, UiHandler uiHandler) {
         this.bgHandler = bgHandler;
         this.birdHandler = birdHandler;
         this.targetHandler = targetHandler;
