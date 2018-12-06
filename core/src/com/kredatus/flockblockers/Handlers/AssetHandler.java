@@ -177,7 +177,7 @@ public class AssetHandler {
         gliderbg = new TextureRegion(gliderbgtexture, gliderbgtexture.getWidth(), gliderbgtexture.getHeight());
         gliderbg.flip(false, true);
 
-        creditsbgtexture = new Texture(Gdx.files.internal("backgrounds/creditsbg.jpg"));
+        /*creditsbgtexture = new Texture(Gdx.files.internal("backgrounds/creditsbg.jpg"));
         creditsbgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         creditsbg = new TextureRegion(creditsbgtexture, creditsbgtexture.getWidth(), creditsbgtexture.getHeight());
         creditsbg.flip(false, true);
@@ -195,7 +195,7 @@ public class AssetHandler {
         readybgtexture = new Texture(Gdx.files.internal("backgrounds/readybg.png"));
         readybgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         readybg = new TextureRegion(readybgtexture, readybgtexture.getWidth(), readybgtexture.getHeight());
-        readybg.flip(false, true);
+        readybg.flip(false, true);*/
 
 
         //if button click: choose this map, load this list of locations to randomize boosts at *************************************

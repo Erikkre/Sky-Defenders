@@ -658,7 +658,7 @@ public void setRotate(float angle){
                 //bgHandler.horizPosBg.start(manager);
             //}
             drawBackground();
-            table.draw(batcher, 1);
+           // table.draw(batcher, 1);
             /*
             cam.position.y+=10;
             cam.update();
