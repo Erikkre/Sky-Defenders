@@ -33,13 +33,13 @@ Tween second;
         animSetup();
 
         //System.out.println("Height before: " + height+ " width: " + width);
-        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
-
+        //finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
+        finalSizeRatio=1.5f;
         width *=finalSizeRatio;
-        height *= finalSizeRatio;
+        height*=finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=10;
+        health=20;
 
         animation=frontFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));

@@ -465,12 +465,12 @@ public class AssetHandler {
         TextureRegion[] back=new TextureRegion[0];
 
         for (int i=0;i<16;i++) {
-            TextureRegion temp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
+            TextureRegion temp = new TextureRegion(sprites, 240 * i, 0, 240, 211);
 
             positions.add(temp);
 
             if (i>5&&i<=11){
-                TextureRegion flipTemp = new TextureRegion(sprites, 481 * i, 0, 481, 423);
+                TextureRegion flipTemp = new TextureRegion(sprites, 240 * i, 0, 240, 211);
                 flipTemp.flip(true,false);
                 leftSidePositions.add(flipTemp);
             }
@@ -494,7 +494,7 @@ public class AssetHandler {
         Animation frontFlaps= new Animation<TextureRegion>(flapSpeed, front);
         frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-        Animation deathFlaps= new Animation(flapSpeed*0.3f, front);
+        Animation deathFlaps= new Animation(flapSpeed*0.25f, front);
         deathFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
         Animation rightFlaps= new Animation<TextureRegion>(flapSpeed, rightSide);

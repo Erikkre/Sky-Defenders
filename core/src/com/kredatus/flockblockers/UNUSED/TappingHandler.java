@@ -134,7 +134,7 @@ public class TappingHandler {
         if (Gdx.input.justTouched()  && !startedTapping) {   //****************************************************************************************if tapped and not startedTapping yet****************************************************************************************************
             System.out.println("tapped and not startedTapping yet");
             startedTapping = true;
-            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - 1920) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
+            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - camHeight) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
             if (!firing) {
                 startFiring(firingSpeedLevels.get(0));
             }
@@ -167,7 +167,7 @@ public class TappingHandler {
                 }
             }
             lastTapTime=System.currentTimeMillis();
-            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - 1920) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
+            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - camHeight) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
 
 
 

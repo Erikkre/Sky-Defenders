@@ -612,7 +612,7 @@ public void setRotate(float angle){
             if (k.coinList!=null) {
                 for (Coin l : k.coinList) {
                     batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x - l.width / 2, l.y - l.height / 2,
-                            l.width / 3, l.height / 3);
+                            l.width, l.height);
 
                 }
             }

@@ -22,32 +22,39 @@ import aurelienribon.tweenengine.Tween;
 /**
  * Created by Erik Kredatus on 9/8/2018.
  *
- *                  Health Speed  Size  Gold             Amount/Wave
+ * start with 1000 gold
+ *                  Health Speed  Size  Gold             Amount/Wave    Skin Shown   Flight Pattern
  *
- * WaterBird  =     1(S)   S      M      12(480)         40
- * NightBird  =     1(S)   S      S      8(480 / wave)   30
- * AcidBird   =     7(M)   M      M      15(300)         20
- * FireBird   =     7(M)   M      S      15(300)         20
- * ThunderBird=     7(M)   F      M      15(300)         20
- * LunarBird  =     7(M)   XF     S      50(500)         10
- * GoldBird   =     25(L)  S      L      100(500)        5
- * PhoenixBird=     100(XL)S      XL     7+Diamond       1
+ * WaterBird  =     1(S)   S      M      10(490)         49             BACK         Wave line with slight arrow shape, 7 per wave
+ * NightBird  =     1(S)   S      M      20(600 / wave)  30             FRONT         1 at a time randomnly                  Thunderbird for nightMap
+ * AcidBird   =     7(L)   M      M      15(300)         20             SIDE, FRONT  Side to side slowly
+ * FireBird   =     4(M)   M      S      15(300)         30             SIDE, FRONT  Side to Side slowly all at once           nightbird for firemap
+ * ThunderBird=     7(L)   F      M      15(300)         20             SIDE, FRONT  Side to side quickly               lunarbird for thundermap
+ * LunarBird  =     7(L)   XF     M      120(600)        5              BACK         Diagonal fast                      firebird for lunarmap
+ * GoldBird   =     25(XL)  S     L      120(600)        5              FRONT        Slowly side to side
+ * PhoenixBird=     150(XXL)S     XL     200+Diamond     1              FRONT,BACK,SIDE       Random positions tweened to (only front-Story intro has back, side, front) then out of map on end of time
 
- Gun upgrades work as: each can be upgraded once, to upgrade to level 2 must upgrade whole turret, see .excel file (Dmg, RoF, Pen)
 
- Damage      Fire Rate     Penetration   Spread
- (Fast Firing) knife thrower,    bow,        submachinegun,  assault rifle,    Machinegun,  Minigun, laser,  ion cannon        2           L             M
- (High Damage) spear thrower,    crossbow,   ballistae,  hunting rifle,  anti-tank sniper, cannon,      gauss cannon           4           S             L
- (Wide Spread) shuriken thrower, tripleShot, tripleCatapult, shotgun, blunderbuss, missile, Microwave emitter                  1           M             L             XL
+ 1 dia=1000 go, 5000 go=1 dia		90c/1000 0.09c/dia	$2/3000 0.07c/dia	$5/10000 0.05c/dia	90c/no ads
+ cost	500	1500	4500	13500	40500	121500	364500	1000 diamonds	3000 diamonds	10000 diamonds	Dmg	RoF	Pen
+ I	II	III	IV	V	VI	VII	VIII	IX	X	x2 each time	x1.5 each time	x1.4 each time
+ (Fast Firing)	knife thrower	bow	        Machine Pistol  assault rifle	machinegun	    Minigun	            AA Autocannon	    Laser	    Ion cannon	        ???	2	1/s	2 birds
+ (High Damage)	spear thrower	crossbow	Ballistae	    Hand Cannon	    sniper rifle	grenade launcher	anti-tank rifle	    Artillery	gauss cannon	    ???	4	0.1/s	3 birds
+ (Wide Spread)	dart thrower	tripleshot	MultiCatapult	shotgun	        blunderbuss	    Flamethrower	    Mortar	            Missile	    Microwave emitter	???	1	0.5/s	2 bird	3 shots +1 each time
 
- 1 Diamond=10000 Gold
- Powerups: Climate Cooling(5 diamonds), Overclock Turrets(15 diamonds), Nuclear Bomb (25 Diamonds)
+
+ Gold/s	score is gold/s/active playtime		gold is lost when bird passes through
+
+
+ Gun upgrades work as: each can be upgraded once, to upgrade to level 2 must upgrade turret's main stat, each upgrade is worth .2 of gun's value and does *1.2 of the stat (so main stat is more worth upgradng)  see .excel file (Dmg, RoF, Pen)
+
+ Powerups: Climate Cooling(10 diamonds), Overclock Turrets(30 diamonds), Nuclear Bomb (100 Diamonds)
  */
 
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
-    public float preX, x, y, yVel, yAcc, xVel,yVelDeath, rotation, sizeRatio, finalSizeRatio;
+    public float preX, x, y, yVel, yAcc, xVel,yVelDeath, rotation, sizeRatio, finalSizeRatio=1;
     public Hashtable xMotionTimePositions=new Hashtable();
     public double xMotionTime;
     public float width, height;
