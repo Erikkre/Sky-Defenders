@@ -609,11 +609,10 @@ public void setRotate(float angle){
         for (BirdAbstractClass k : deadBirdQueue) {
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
-            if (k.coinList!=null) {
+            if (!k.coinList.isEmpty()) {
                 for (Coin l : k.coinList) {
                     batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x - l.width / 2, l.y - l.height / 2,
                             l.width, l.height);
-
                 }
             }
         }

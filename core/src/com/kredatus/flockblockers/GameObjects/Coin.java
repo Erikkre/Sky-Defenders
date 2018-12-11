@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Handlers.GameHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import aurelienribon.tweenengine.BaseTween;
@@ -14,7 +15,7 @@ import aurelienribon.tweenengine.TweenEquations;
 
 public class Coin {
 
-    private Vector2 dest=new Vector2(540,1800);
+    private Vector2 dest=new Vector2(GameHandler.camWidth/2,9*GameHandler.camHeight/10);
     public float y1, x1, width, height, x,y;
     public Value tweenX=new Value(), tweenY=new Value();
     public Animation animation;

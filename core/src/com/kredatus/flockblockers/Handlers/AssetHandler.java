@@ -332,16 +332,19 @@ public class AssetHandler {
 
 
         Texture coinTexture=new Texture(Gdx.files.internal("sprites/coin.png"));
-        TextureRegion[] tempPos = new TextureRegion[16];
+        ArrayList<TextureRegion> tempPos = new ArrayList<TextureRegion>(16);
         for (int i = 0; i < 17; i++) {
             if (i<16){
-            TextureRegion temp = new TextureRegion(coinTexture, 128 * i, 0, 128, 128);
-            tempPos[i] = (temp);
+            TextureRegion temp = new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
+            tempPos.add(temp);
             } else {
-                coinSymbol= new TextureRegion(coinTexture, 128 * i, 0, 128, 128);
+                coinSymbol= new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
             }
         }
-        coinAnimation=new Animation<TextureRegion>(0.125f, tempPos);
+        System.out.print(tempPos);
+        coinAnimation=new Animation<TextureRegion>(0.03f, tempPos.toArray(new TextureRegion[16]));
+        coinAnimation.setPlayMode(Animation.PlayMode.LOOP); //REMEMBER THIS STEP
+
 
         phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.10f);
         waterAnimations = birdTextureToAnimation("water.png", 0.13f);
@@ -354,86 +357,15 @@ public class AssetHandler {
 
         Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
         greyTinyBirdAnimation=tinyBirdTextureToAnimation(greyTinyBird);
+        greyTinyBirdAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
         Texture blackTinyBird = new Texture(Gdx.files.internal("sprites/blackTinyBird.png"));
         blackTinyBirdAnimation=tinyBirdTextureToAnimation(blackTinyBird);
+        blackTinyBirdAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
         Texture whiteTinyBird = new Texture(Gdx.files.internal("sprites/whiteTinyBird.png"));
         whiteTinyBirdAnimation=tinyBirdTextureToAnimation(whiteTinyBird);
-        /*
-        nightBird = new Texture(Gdx.files.internal("sprites/Night.png"));
-        NightBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        NightAnimations = textureToSprite(NightBird);
-
-        waterBird = new Texture(Gdx.files.internal("sprites/water.png"));
-        waterBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        waterAnimations = textureToSprite(waterBird);
-
-        fireBird = new Texture(Gdx.files.internal("sprites/fire.png"));
-        fireBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        fireAnimations = textureToSprite(fireBird);
-
-        acidBird = new Texture(Gdx.files.internal("sprites/acid.png"));
-        acidBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        acidAnimations = textureToSprite(acidBird);
-
-        thunderBird = new Texture(Gdx.files.internal("sprites/thunder.png"));
-        thunderBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        thunderAnimations = textureToSprite(thunderBird);
-
-        lunarBird = new Texture(Gdx.files.internal("sprites/lunar.png"));
-        lunarBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        lunarAnimations = textureToSprite(lunarBird);
-
-        goldBird = new Texture(Gdx.files.internal("sprites/gold.png"));
-        goldBird.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        goldAnimations = textureToSprite(goldBird);
-*/
-
-/*
-        //flip world
-        vertflipgliderMid = new TextureRegion(sprites, 1020, 890, 379, 464);
-        vertflipgliderMid.flip(false, false);
-
-        vertflipgliderDown= new TextureRegion(sprites, 545, 890, 404, 464);
-        vertflipgliderDown.flip(false, false);
-
-        vertflipgliderUp= new TextureRegion(sprites, 1500, 890, 379, 464);
-        vertflipgliderUp.flip(false, false);
-
-        TextureRegion[] flipPositions = { vertflipgliderUp, vertflipgliderMid, vertflipgliderDown, vertflipgliderMid };
-        flipflaps= new Animation<TextureRegion>(0.12f, flipPositions);
-        flipflaps.setPlayMode(Animation.PlayMode.LOOP);
-
-        //inbetween worlds
-        frontGliderMid = new TextureRegion(sprites, 9, 38, 504, 259);
-        frontGliderMid.flip(false, true);
-
-        frontGliderDown= new TextureRegion(sprites, 520, 43, 414, 266);
-        frontGliderDown.flip(false, true);
-
-        frontGliderUp= new TextureRegion(sprites, 941, 45, 494, 242);
-        frontGliderUp.flip(false, true);
-
-        frontGliderUpHigh= new TextureRegion(sprites, 1439, 20, 454, 274);
-        frontGliderUpHigh.flip(false, true);
-
-        TextureRegion[] frontPositions = {  frontGliderDown, frontGliderUp, frontGliderUpHigh, frontGliderMid };
-        frontViewFlaps= new Animation<TextureRegion>(0.2f, frontPositions);
-        frontViewFlaps.setPlayMode(Animation.PlayMode.LOOP);
-
-        backgliderMid = new TextureRegion(sprites, 961, 1365, 503, 444);
-        backgliderMid.flip(false, true);
-
-        backgliderDown= new TextureRegion(sprites, 485, 1365, 484, 444);
-        backgliderDown.flip(false, true);
-
-        backgliderUp= new TextureRegion(sprites, 1465, 1365, 426, 444);
-        backgliderUp.flip(false, true);
-
-        TextureRegion[] backPositions = { backgliderUp, backgliderMid, backgliderDown, backgliderMid };
-        backflaps= new Animation<TextureRegion>(0.2f, backPositions);
-        backflaps.setPlayMode(Animation.PlayMode.LOOP);*/
+        whiteTinyBirdAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
         //SOUNDWORK
         fire = Gdx.audio.newSound(Gdx.files.internal("sound/fire.wav"));
@@ -512,13 +444,13 @@ public class AssetHandler {
     }
 
     private static Animation tinyBirdTextureToAnimation (Texture texture) {
-        TextureRegion[] positions = new TextureRegion[7];
+        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>(6);
 
         for (int i = 0; i < 6; i++) {
             TextureRegion temp = new TextureRegion(texture, 77 * i, 0, 77, 29);
-            positions[i] = (temp);
+            positions.add(temp);
         }
-        return new Animation<TextureRegion>(0.125f, positions);
+        return new Animation<TextureRegion>(0.125f, positions.toArray((new TextureRegion[6])));
     }
 /*
     public static Animation[] birdTextureToSprite (Texture texture) {
