@@ -14,7 +14,6 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 
 public class Coin {
-
     private Vector2 dest=new Vector2(GameHandler.camWidth/2,9*GameHandler.camHeight/10);
     public float y1, x1, width, height, x,y;
     public Value tweenX=new Value(), tweenY=new Value();
@@ -24,9 +23,9 @@ public class Coin {
     public BirdAbstractClass thisBird;
     public Tween firstXMotion, secondXMotion, firstYMotion, secondYMotion;
     public Timeline xMotion, yMotion;
+
     public Coin(float x, float y, float rotation, BirdAbstractClass thisBird, boolean phoenixCoin){
         this.phoenixCoin=phoenixCoin;
-
         animation = AssetHandler.coinAnimation;
         width = ((TextureRegion) animation.getKeyFrame(0)).getRegionWidth();
         height = width;
@@ -37,10 +36,11 @@ public class Coin {
            y1= y - (float)(Math.sin(Math.toRadians(rotation)))*150;
            tweenX.setValue(x);
            tweenY.setValue(y);
+
        } else {
             this.thisBird=thisBird;
-           x1 = (float) (Math.cos(Math.toRadians(rotation))) * thisBird.width/3;
-           y1 = (float) (Math.sin(Math.toRadians(rotation))) * thisBird.width/3;
+            x1 = (float) (Math.cos(Math.toRadians(rotation))) * thisBird.width/3;
+            y1 = (float) (Math.sin(Math.toRadians(rotation))) * thisBird.width/3;
        }
         setupTweens();
     }
@@ -56,6 +56,7 @@ public class Coin {
                     .push(Tween.to(tweenY, -1, 0.4f).target(y1).ease(TweenEquations.easeOutSine))
                     .push(Tween.to(tweenY, -1, 1.3f).target(dest.y).ease(TweenEquations.easeInQuint))
                     .start();
+
         } else {
             endFirstMovementX=new TweenCallback() {
                 @Override
@@ -65,6 +66,7 @@ public class Coin {
                     secondXMotion.start();
                 }
             };
+
             endFirstMovementY=new TweenCallback() {
                 @Override
                 public void onEvent(int i, BaseTween<?> baseTween) {
@@ -80,7 +82,6 @@ public class Coin {
             firstYMotion = Tween.to(tweenY, -1, 0.4f).target(y1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementY).start();
             secondYMotion= Tween.to(tweenY, -1, 1.3f).target(dest.y).ease(TweenEquations.easeNone);
         }
-
     }
 
     public void update(float delta){
@@ -107,4 +108,4 @@ public class Coin {
             }
         }
     }
-        }
+}
