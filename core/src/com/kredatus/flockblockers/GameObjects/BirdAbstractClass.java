@@ -23,7 +23,7 @@ import aurelienribon.tweenengine.Tween;
  * Created by Erik Kredatus on 9/8/2018.
  *
  * start with 1000 gold
- *                  Health Speed  Size  Gold             Amount/Wave    Skin Shown      Flight Pattern
+ *                  Health Speed  Size  Gold             Amount/Wave    Skin Shown      Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
  *
  * WaterBird  =     1(S)   S      M      10(490)         49             BACK            Wave line with slight arrow shape, 7 per wave
  * NightBird  =     1(S)   S      M      20(600 / wave)  30             FRONT           1 at a time randomnly                  Thunderbird for nightMap
