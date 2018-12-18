@@ -426,7 +426,7 @@ public class AssetHandler {
         Animation frontFlaps= new Animation<TextureRegion>(flapSpeed, front);
         frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-        Animation deathFlaps= new Animation(flapSpeed*0.25f, front);
+        Animation deathFlaps= new Animation(0.025f, front);
         deathFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
         Animation rightFlaps= new Animation<TextureRegion>(flapSpeed, rightSide);

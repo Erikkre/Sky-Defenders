@@ -85,7 +85,7 @@ public abstract class BirdAbstractClass {
 
 
     protected void setBoundingPoly(float x, float y, float width, float height){
-        boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 5f,          x - width / 3f, y + height / 5f});//middle of front bird is below
+        boundingPoly  = new Polygon(new float[]{x - width / 4.5f, y - height / 4,          x + width / 4.5f, y - height / 4,          x + width / 4.5f, y + height / 6f,          x - width / 4.5f, y + height / 6f});//middle of front bird is below
         boundingPoly  .  setOrigin(x, y);
     }
 

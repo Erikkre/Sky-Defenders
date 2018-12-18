@@ -13,7 +13,8 @@ public class TargetHandler {
     public static ConcurrentLinkedQueue<Projectile> projectileList=new ConcurrentLinkedQueue<Projectile>();
 
     public static BirdAbstractClass targetBird;
-    private float previousBirdHeight=-100;
+    private int minTargetingHeight=0;
+    private float previousBirdHeight=-minTargetingHeight;
 
   //  public TargetHandler(float camWidth, float camHeight){  }
 
@@ -32,7 +33,7 @@ public class TargetHandler {
                 }
             }
         }
-        previousBirdHeight=-100; //in case some birds are moved past lead bird before any bird dies, need to check top bird every time
+        previousBirdHeight=-minTargetingHeight; //in case some birds are moved past lead bird before any bird dies, need to check top bird every time
 
 
 
