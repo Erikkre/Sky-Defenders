@@ -611,8 +611,13 @@ public void setRotate(float angle){
                     k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
             if (!k.coinList.isEmpty()) {
                 for (Coin l : k.coinList) {
-                    batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x - l.width / 2, l.y - l.height / 2,
-                            l.width, l.height);
+                    if (l.firstMovementEndedX) {
+                        batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x - l.width / 2, l.y - l.height / 2,
+                                l.width, l.height);
+                    } else {
+                        batcher.draw((TextureRegion) l.animation.getKeyFrame(0), l.x - l.width / 2, l.y - l.height / 2,
+                                l.width, l.height);
+                    }
                 }
             }
         }

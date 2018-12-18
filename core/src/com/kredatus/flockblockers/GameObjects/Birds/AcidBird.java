@@ -27,7 +27,7 @@ public class AcidBird extends BirdAbstractClass {
         this.coinNumber=7;
 
         this.sizeVariance=200;
-        sizeRatio=0.8f;
+        sizeRatio=1;
 
         animSeq = AssetHandler.acidAnimations;
         animSetup();
@@ -50,6 +50,17 @@ public class AcidBird extends BirdAbstractClass {
         this.camHeight = camHeight;
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
+    }
+
+    protected void animSetup(){
+        frontFlaps=animSeq[0];
+        leftFlaps=animSeq[1];
+        rightFlaps=animSeq[2];
+        backFlaps=animSeq[3];
+        deathFlaps=animSeq[4];
+        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
+        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
     }
 
     @Override

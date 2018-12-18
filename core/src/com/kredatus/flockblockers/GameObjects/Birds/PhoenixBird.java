@@ -22,24 +22,24 @@ Tween second;
         super();
         yAcc=-0.1f;
         yVelDeath=10;
-        this.yVel=3f;
+        this.yVel=2;
         this.diamonds=1;
         this.coinNumber=200;
 
-        this.sizeVariance=1;
-        sizeRatio=0.8f;
+        this.sizeVariance=50;
+        sizeRatio=1.5f;
 
         animSeq = AssetHandler.phoenixAnimations;
         animSetup();
 
         //System.out.println("Height before: " + height+ " width: " + width);
-        //finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
-        finalSizeRatio=1.5f;
+        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
+
         width *=finalSizeRatio;
         height*=finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=20;
+        health=15;
 
         animation=frontFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));
@@ -51,6 +51,16 @@ Tween second;
         setBoundingPoly(x,y,width,height);
     }
 
+    protected void animSetup(){
+        frontFlaps=animSeq[0];
+        leftFlaps=animSeq[1];
+        rightFlaps=animSeq[2];
+        backFlaps=animSeq[3];
+        deathFlaps=animSeq[4];
+        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
+        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
+    }
     @Override
     public void specificUpdate(float delta, float runTime) {
         /*if (xMotion==first&&firstxMotion){

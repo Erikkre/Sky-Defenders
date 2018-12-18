@@ -28,6 +28,7 @@ public class Coin {
         this.phoenixCoin=phoenixCoin;
         animation = AssetHandler.coinAnimation;
         width = ((TextureRegion) animation.getKeyFrame(0)).getRegionWidth();
+
         height = width;
 
         if (phoenixCoin) {
@@ -39,8 +40,8 @@ public class Coin {
 
        } else {
             this.thisBird=thisBird;
-            x1 = (float) (Math.cos(Math.toRadians(rotation))) * thisBird.width/3;
-            y1 = (float) (Math.sin(Math.toRadians(rotation))) * thisBird.width/3;
+            x1 = (float) (Math.cos(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
+            y1 = (float) (Math.sin(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
        }
         setupTweens();
     }
@@ -49,12 +50,12 @@ public class Coin {
         if (phoenixCoin) {
             xMotion = Timeline.createSequence()
                     .push(Tween.to(tweenX, -1, 0.4f).target(x1).ease(TweenEquations.easeOutSine))
-                    .push(Tween.to(tweenX, -1, 1.3f).target(dest.x).ease(TweenEquations.easeInQuint))
+                    .push(Tween.to(tweenX, -1, 1.5f).target(dest.x).ease(TweenEquations.easeInQuint))
                     .start();
 
             yMotion = Timeline.createSequence()
                     .push(Tween.to(tweenY, -1, 0.4f).target(y1).ease(TweenEquations.easeOutSine))
-                    .push(Tween.to(tweenY, -1, 1.3f).target(dest.y).ease(TweenEquations.easeInQuint))
+                    .push(Tween.to(tweenY, -1, 1.5f).target(dest.y).ease(TweenEquations.easeInQuint))
                     .start();
 
         } else {
@@ -76,11 +77,11 @@ public class Coin {
                 }
             };
 
-            firstXMotion = Tween.to(tweenX, -1, 0.4f).target(x1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementX).start();
-            secondXMotion= Tween.to(tweenX, -1, 1.3f).target(dest.x).ease(TweenEquations.easeNone);
+            firstXMotion = Tween.to(tweenX, -1, 0.7f).target(x1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementX).start();
+            secondXMotion= Tween.to(tweenX, -1, 1.7f).target(dest.x).ease(TweenEquations.easeNone);
 
-            firstYMotion = Tween.to(tweenY, -1, 0.4f).target(y1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementY).start();
-            secondYMotion= Tween.to(tweenY, -1, 1.3f).target(dest.y).ease(TweenEquations.easeNone);
+            firstYMotion = Tween.to(tweenY, -1, 0.7f).target(y1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementY).start();
+            secondYMotion= Tween.to(tweenY, -1, 1.7f).target(dest.y).ease(TweenEquations.easeNone);
         }
     }
 
@@ -92,7 +93,7 @@ public class Coin {
             y=tweenY.getValue();
         } else {
             if (!firstMovementEndedX){
-                x=tweenX.getValue()+thisBird.x+thisBird.width/7.7f;
+                x=tweenX.getValue()+thisBird.x;//+thisBird.width/9.7f; //higher number=more to the left
                 firstXMotion.update(delta);
             } else {
                 x=tweenX.getValue();

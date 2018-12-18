@@ -27,11 +27,11 @@ public class BirdHandler {
 
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
     public static ConcurrentLinkedQueue<BirdAbstractClass> deadBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
-
-    //public static String[] birdOrderList={"pB","wB","nB","aB","fB","tB","lB","gB"};
-    private final static int[] birdNumberList=  { 1,   40,  30,  20,  20,  20,  10,  5  };
+                                                //0    1    2    3    4    5    6    7
+    //public static String[] birdOrderList=     {"pB","wB","nB","aB","fB","tB","lB","gB"};
+    private final static int[] birdNumberList=  { 1,   49,  30,  20,  30,  20,  5,  5  };
     private float[] spawnIntervals=new float[8];
-    private int waveTypeCnt=0;
+    private int waveTypeCnt=1;
     public TimerTask task;
     private Timer timer;
     private final float duration = 40;

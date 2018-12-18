@@ -27,8 +27,8 @@ public class LunarBird extends BirdAbstractClass {
 
         this.coinNumber=7;
 
-        this.sizeVariance=200;
-        sizeRatio=0.4f;
+        this.sizeVariance=100;
+        sizeRatio=1f;
 
         animSeq = AssetHandler.lunarAnimations;
         animSetup();
@@ -51,6 +51,17 @@ public class LunarBird extends BirdAbstractClass {
         this.camHeight = camHeight;
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
+    }
+
+    protected void animSetup(){
+        frontFlaps=animSeq[0];
+        leftFlaps=animSeq[1];
+        rightFlaps=animSeq[2];
+        backFlaps=animSeq[3];
+        deathFlaps=animSeq[4];
+        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
+        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
     }
 
     @Override

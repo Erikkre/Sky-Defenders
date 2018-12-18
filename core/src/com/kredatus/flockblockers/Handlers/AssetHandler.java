@@ -351,7 +351,7 @@ public class AssetHandler {
         nightAnimations = birdTextureToAnimation("night.png", 0.13f);
         acidAnimations = birdTextureToAnimation("acid.png", 0.10f);
         fireAnimations = birdTextureToAnimation("fire.png", 0.10f);
-        thunderAnimations = birdTextureToAnimation("thunder.png", 0.7f);
+        thunderAnimations = birdTextureToAnimation("thunder.png", 0.08f);
         lunarAnimations = birdTextureToAnimation("lunar.png", 0.5f);
         goldAnimations = birdTextureToAnimation("gold.png", 0.10f);
 

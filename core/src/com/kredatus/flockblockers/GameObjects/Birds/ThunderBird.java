@@ -23,12 +23,12 @@ public class ThunderBird extends BirdAbstractClass {
     public ThunderBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=8;
+        this.yVel=7;
 
         this.coinNumber=7;
 
-        this.sizeVariance=200;
-        sizeRatio=0.7f;
+        this.sizeVariance=100;
+        sizeRatio=1;
 
         animSeq = AssetHandler.thunderAnimations;
         animSetup();
@@ -40,18 +40,28 @@ public class ThunderBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=7;
+        health=1;
 
         animation=rightFlaps;
         x=(width/2 + r.nextInt((int)(edge-width)));
-
         y=-height/2;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
+
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
     }
 
+    protected void animSetup(){
+        frontFlaps=animSeq[0];
+        leftFlaps=animSeq[1];
+        rightFlaps=animSeq[2];
+        backFlaps=animSeq[3];
+        deathFlaps=animSeq[4];
+        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
+        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
+    }
     @Override
     public void specificUpdate(float delta, float runTime) {
         //second.update(delta);
@@ -90,7 +100,7 @@ public class ThunderBird extends BirdAbstractClass {
             }
         };
 
-        intro = Tween.to(this, 1, 1).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
+        intro = Tween.to(this, 1, 0.7f).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
         xMotion=intro;
 
 
@@ -102,20 +112,7 @@ public class ThunderBird extends BirdAbstractClass {
             }
         };*/
 
-        first =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
-        //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
-        /*
-        (xMotion = Timeline.createSequence()
-                .push(   Tween.to(this, 1, 6).target(edge).ease(TweenEquations.easeInOutQuint))
-                .push(   Tween.to(this, 1, 6).target(width/2).ease(TweenEquations.easeOutQuint)).setCallback(tweenStart)
-                //.push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeNone).setCallback(animationSwitch))
+        first =Tween.to(this, 1, 1).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
 
-                //.push(   Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeNone).setCallback(animationSwitch))    )
-                .repeat( Tween.INFINITY, 0)).start();
-*/
-                /*.push(delay(3).setCallback(animationSwitch))
-                .target(width/2).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
-                .target(edge).setCallback(animationSwitch).delay(3)
-                .ease(TweenEquations.easeOutBack)*/
     }
 }

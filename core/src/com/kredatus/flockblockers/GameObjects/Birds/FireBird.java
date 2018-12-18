@@ -28,7 +28,7 @@ public class FireBird extends BirdAbstractClass {
         this.coinNumber=7;
 
         this.sizeVariance=200;
-        sizeRatio=0.4f;
+        sizeRatio=0.6f;
 
         animSeq = AssetHandler.fireAnimations;
         animSetup();
@@ -40,7 +40,7 @@ public class FireBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=7;
+        health=4;
 
         animation=rightFlaps;
         x=(width/2 + r.nextInt((int)(edge-width)));
@@ -50,6 +50,17 @@ public class FireBird extends BirdAbstractClass {
         this.camHeight = camHeight;
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
+    }
+
+    protected void animSetup(){
+        frontFlaps=animSeq[0];
+        leftFlaps=animSeq[1];
+        rightFlaps=animSeq[2];
+        backFlaps=animSeq[3];
+        deathFlaps=animSeq[4];
+        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
+        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
     }
 
     @Override

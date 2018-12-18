@@ -24,13 +24,13 @@ import aurelienribon.tweenengine.Tween;
  *
  * start with 1000 gold
  *                  Health Speed  Size  Gold             Amount/Wave    Skin Shown      Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
- *
+ *                                                                                                              change stats with ctrl+shift+f to match spec
  * WaterBird  =     1(S)   S      M      10(490)         49             BACK            Wave line with slight arrow shape, 7 per wave
- * NightBird  =     1(S)   S      M      20(600 / wave)  30             FRONT           1 at a time randomnly                  Thunderbird for nightMap
+ * NightBird  =     1(S)   S      M      20(600 / wave)  30             FRONT           1 at a time randomnly
  * AcidBird   =     7(L)   M      M      15(300)         20             SIDE, FRONT     Side to side slowly
- * FireBird   =     4(M)   M      S      15(300)         30             SIDE, FRONT     Side to Side slowly all at once           nightbird for firemap
- * ThunderBird=     7(L)   F      M      15(300)         20             SIDE, FRONT     Side to side quickly               lunarbird for thundermap
- * LunarBird  =     7(L)   XF     M      120(600)        5              BACK            Diagonal fast                      firebird for lunarmap
+ * FireBird   =     4(M)   M      S      15(300)         30             SIDE, FRONT     Side to Side slowly all at once
+ * ThunderBird=     4(M)   F      M      15(300)         20             SIDE, FRONT     Side to side quickly
+ * LunarBird  =     4(M)   XF     M      120(600)        5              BACK            Diagonal fast
  * GoldBird   =     25(XL)  S     L      120(600)        5              FRONT           Slowly side to side
  * PhoenixBird=     150(XXL)S     XL     200+Diamond     1              FRONT,BACK,SIDE       Random positions tweened to (only front-Story intro has back, side, front) then out of map on end of time
 
@@ -61,7 +61,7 @@ public abstract class BirdAbstractClass {
     protected float camWidth, camHeight, edge;
     public boolean isOffCam, isColliding;
     public ArrayList<Projectile> hitBulletList = new ArrayList<Projectile>(30);
-    public ConcurrentLinkedQueue<Coin> coinList;
+    public ConcurrentLinkedQueue<Coin> coinList= new ConcurrentLinkedQueue<Coin>();
     public float  starty;
     public boolean isAlive, firstxMotion=true;
     protected Random r =new Random();
@@ -82,16 +82,7 @@ public abstract class BirdAbstractClass {
         //this.manager=manager;
     }
 
-    protected void animSetup(){
-        frontFlaps=animSeq[0];
-        leftFlaps=animSeq[1];
-        rightFlaps=animSeq[2];
-        backFlaps=animSeq[3];
-        deathFlaps=animSeq[4];
-        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
-        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
-        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
-    }
+
 
     protected void setBoundingPoly(float x, float y, float width, float height){
         boundingPoly  = new Polygon(new float[]{x - width / 3, y - height / 3,          x + width / 3, y - height / 3,          x + width / 3f, y + height / 5f,          x - width / 3f, y + height / 5f});//middle of front bird is below
@@ -125,7 +116,7 @@ public abstract class BirdAbstractClass {
     }
 
     public void setCoinList(float delta) {
-        coinList = new ConcurrentLinkedQueue<Coin>();
+
 
         if (diamonds!=1) {  //if not a phoenix
             final float rotationIncrement = 360 / coinNumber;

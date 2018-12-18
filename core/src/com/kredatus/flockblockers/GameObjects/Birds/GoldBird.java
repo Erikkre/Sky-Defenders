@@ -25,7 +25,7 @@ public class GoldBird extends BirdAbstractClass {
         this.coinNumber=50;
 
         this.sizeVariance=1;
-        sizeRatio=0.9f;
+        sizeRatio=1.3f;
 
         animSeq = AssetHandler.goldAnimations;
         animSetup();
@@ -46,6 +46,17 @@ public class GoldBird extends BirdAbstractClass {
         this.camHeight = camHeight;
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
+    }
+
+    protected void animSetup(){
+        frontFlaps=animSeq[0];
+        leftFlaps=animSeq[1];
+        rightFlaps=animSeq[2];
+        backFlaps=animSeq[3];
+        deathFlaps=animSeq[4];
+        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
+        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
     }
 
     @Override
