@@ -13,14 +13,14 @@ public class Projectile {
      public boolean isGone;
      public Vector2 position, velocity=new Vector2();
      public float camWidth, camHeight, rotation;
-     public float dmg, rof, pen, vel;
+     public float dmg, pen, vel;
      public TextureRegion texture;
     public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, float rotation) {
         this.texture=texture;
         this.width    = texture.getRegionWidth() ;
         this.height   = texture.getRegionHeight() ;
         this.position = position.cpy() ;
-        this.vel      = pen*15;
+        this.vel      = pen*3+1;
         this.rotation = rotation;
         this.camWidth = camWidth ;
         this.camHeight= camHeight;

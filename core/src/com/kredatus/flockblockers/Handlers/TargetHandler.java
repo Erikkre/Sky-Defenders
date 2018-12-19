@@ -39,14 +39,19 @@ public class TargetHandler {
 
         for (Projectile i : projectileList){    //could have dead bird higher than alive bird, so need separate loader, alive, dead lists
             i.update(delta);
-            if (i.isGone || i.pen==0){
+            if (i.isGone){
                 TargetHandler.projectileList.remove(i);
             }
             for (BirdAbstractClass j : BirdHandler.activeBirdQueue) {
                 if (j.collides(i) && !j.hitBulletList.contains(i)) {  //if bird i is colliding with bullet j and was not already hit before
                     j.hit(i);
                     i.pen--;
-                    j.hitBulletList.add(i);
+                    if (i.pen==0){
+                        TargetHandler.projectileList.remove(i);
+                    } else {
+                        j.hitBulletList.add(i);
+                    }
+
                 }
             }
         }
