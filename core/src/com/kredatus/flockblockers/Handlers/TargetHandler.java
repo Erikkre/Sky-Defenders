@@ -10,11 +10,11 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 
 public class TargetHandler {
-    public  ConcurrentLinkedQueue<Projectile> projectileList=new ConcurrentLinkedQueue<Projectile>();
+    public static ConcurrentLinkedQueue<Projectile> projectileList=new ConcurrentLinkedQueue<Projectile>();
 
     public static BirdAbstractClass targetBird;
-    private int minTargetingHeight=0;
-    private float previousBirdHeight=-minTargetingHeight;
+    public static int minTargetingHeight=0;
+    private float previousBirdHeight=minTargetingHeight;
 
   //  public TargetHandler(float camWidth, float camHeight){  }
 
@@ -33,7 +33,7 @@ public class TargetHandler {
                 }
             }
         }
-        previousBirdHeight=-minTargetingHeight; //in case some birds are moved past lead bird before any bird dies, need to check top bird every time
+        previousBirdHeight=minTargetingHeight; //in case some birds are moved past lead bird before any bird dies, need to check top bird every time
 
 
 
@@ -43,7 +43,7 @@ public class TargetHandler {
                 projectileList.remove(i);
             }
             for (BirdAbstractClass j : BirdHandler.activeBirdQueue) {
-                if (j.collides(i) && !j.hitBulletList.contains(i)) {  //if bird i is colliding with bullet j and was not already hit before
+                if (j.collides(i) && !j.hitBulletList.contains(i) && j.health>0) {  //if bird i is colliding with bullet j and was not already hit before
                     j.hit(i);
                     i.pen--;
                     if (i.pen==0){

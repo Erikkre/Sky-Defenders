@@ -66,13 +66,14 @@ public abstract class BirdAbstractClass {
     public boolean isAlive, firstxMotion=true;
     protected Random r =new Random();
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, deathFlaps, animation;
-    protected int sizeVariance, coinNumber, health, diamonds, cnt=0, rotationCounter;
+    protected int sizeVariance, coinNumber,  diamonds, cnt=0, rotationCounter;
     //protected Timeline xMotion;
     protected Tween intro, first, xMotion;
     public Polygon boundingPoly;
     private TimerTask task;
     private BirdAbstractClass thisBird=this;
     public Animation[] animSeq;
+public int health;
 
     public BirdAbstractClass() {
         isAlive=true;

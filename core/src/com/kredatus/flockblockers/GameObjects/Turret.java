@@ -17,18 +17,18 @@ import java.util.TimerTask;
 
 public class Turret {
     private boolean firing;
-    public int aiUp, dmgUpCounter, penUpCounter, rofUpCounter, sprUpCounter, width, height, spr;
+    public int aiUp, dmgUpCounter, penUpCounter, rofUpCounter, sprUpCounter, rotUpCounter, width, height, spr, rot=3;   //rot = rotationSpeed
     public Vector2 position;
     private float camWidth, camHeight;
     public float dmg, pen, rof;
-    private float rotation, spreadAngle=60;
+    private int rotation, targetRot, behindRotation, spreadAngle=60;
     private Timer timer;
     private TimerTask timerTask;
     private BirdAbstractClass targetBird;
     public TextureRegion texture, projTexture;
     char turretType;
-    int lvl = 0;
-
+    public int lvl = 0, firingInterval, timeSinceLastShot;
+    private double lastShotTime=0;
     public Turret(char turretType, Vector2 position, float camWidth, float camHeight){
         this.position =position ;
         this.camWidth =camWidth ;
@@ -37,7 +37,7 @@ public class Turret {
 
         timer=new Timer();
         firing=false;
-        turretSetup(turretType, lvl, true);
+        turretSetup(turretType, lvl);
 
         if (position.x<camWidth/2) {
             texture = new TextureRegion(texture);
@@ -69,6 +69,11 @@ public class Turret {
         rof*=1.2;
         restartFiring();
     }
+    public void rotUp(){
+        rotUpCounter++;
+        rot++;
+    }
+
     public void sprUp(){
         sprUpCounter++;
         spr++;
@@ -79,7 +84,7 @@ public class Turret {
         restartFiring();
     }
     public void lvlUp(){
-        turretSetup(turretType,++lvl, false);
+        turretSetup(turretType,++lvl);
         restartFiring();
     }
 
@@ -91,7 +96,7 @@ public class Turret {
                 //System.out.println("*******************************************Last shot time: "+lastShotTime+"**********************************************************");
                 if (turretType!='s') {
                     if (spr==1) {
-                        TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, rotation));
                     } else if (spr==2) {
                         if (rotation >= 0 && rotation < 90) {
                             TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(position.x - (float) (25 * Math.cos(Math.toRadians(90-(rotation-180)))), position.y - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation));
@@ -112,25 +117,20 @@ public class Turret {
                         TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, position, camWidth, camHeight, (rotation-(spreadAngle/2))+(spreadAngle/(spr+1))*i));
                     }
                 }
+                lastShotTime=System.currentTimeMillis();
             }
         };//set task to run later using timer.schedule
     }
 
-    private void setRotation(float xVel, float yVel, float yDistance, float xDistance){
-        float rotCompYDiff=((xVel*(Math.abs(yDistance)/(camHeight*4)))  *1.5f  )/(pen/1.5f);
-        float rotCompXDiff=yVel*((Math.abs(xDistance))/camWidth)*5;   //smaller and should be constant
-        rotation = (float) Math.toDegrees(Math.atan(yDistance / xDistance)) + rotCompYDiff + rotCompXDiff; //the further it is the more ahead we aim when vel increases
-        //System.out.println("Rot due to yDiff: " + rotCompYDiff + ", Rot due to xDiff: " + rotCompXDiff);
-        if        (xDistance+position.x > position.x) {
-            rotation += 180;
-        } else if (yDistance+position.y > position.y) {
-            rotation += 360;
-        }
-    }
 
     private void startFiring() {
         setupFiring();
-        timer.scheduleAtFixedRate(timerTask, (int) (((1 / (rof / 3)) * 1000)/2), (int) ((1 / (rof / 3)) * 1000));
+        timeSinceLastShot=(int) (System.currentTimeMillis()-lastShotTime);
+        if (timeSinceLastShot < firingInterval) {
+            timer.scheduleAtFixedRate(timerTask, firingInterval-timeSinceLastShot, firingInterval);
+        } else {
+            timer.scheduleAtFixedRate(timerTask, 0, firingInterval);
+        }
         firing = true;
     }
 
@@ -141,28 +141,83 @@ public class Turret {
         //System.out.println("cancelled");
     }
 
+    private void setRotation(float xVel, float yVel, float yDistance, float xDistance){
+        float rotCompYDiff=((xVel*(Math.abs(yDistance)/(camHeight*4)))  *1.5f  )/(pen/1.5f);
+        float rotCompXDiff=yVel*((Math.abs(xDistance))/camWidth)*5;   //smaller and should be constant
+        targetRot = (int) (Math.toDegrees(Math.atan(yDistance / xDistance)) + rotCompYDiff + rotCompXDiff); //the further it is the more ahead we aim when vel increases
+        //System.out.println("Rot due to yDiff: " + rotCompYDiff + ", Rot due to xDiff: " + rotCompXDiff);
+        if        (xDistance+position.x > position.x) {
+            targetRot += 180;
+        } else if (yDistance+position.y > position.y) {
+            targetRot += 360;
+        }
+    }
+
+    private void rotateToTarget(){
+        behindRotation=rotation-180;
+        if (behindRotation<0){
+            behindRotation+=360;
+        }
+
+        /*if ((targetRot > behindRotation && targetRot < rotation) ||
+                (rotation < 180 && (targetRot > behindRotation ||
+                        targetRot < rotation))  ){
+            rotation-=rot;
+            
+        } else if ((targetRot < behindRotation && targetRot > rotation) ||
+                (rotation > 180 && (targetRot < behindRotation ||
+                        targetRot > rotation))  ){
+            rotation+=rot;
+        }*/
+
+        if (Math.abs(rotation-targetRot)>3 ) {
+            if (rotation <= 180) {
+                if (targetRot >
+                        rotation && targetRot < behindRotation)
+                    rotation += rot;
+                else
+                    rotation -= rot;
+            } else {
+                if (targetRot <
+                        rotation && targetRot > behindRotation)
+                    rotation -= rot;
+                else
+                    rotation += rot;
+            }
+        }
+    }
+
+    public boolean rotationCloseToTarget(){
+        return Math.abs(rotation-targetRot)<12 || rotation+(360-targetRot)<12;
+    }
+
     public void update() {
         //System.out.println(rotation);
         if (Gdx.input.isTouched()) {   //***************************************************if tapped and not startedTapping yet***********************************************************************************************
             setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - camHeight) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
-            if (!firing) {
+            rotateToTarget();
+            if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
+            if (!firing && rotationCloseToTarget()) {
                 startFiring();
             }
         } else {    //****************************************************************************************************ai system****************************************************************************************************
             //System.out.println("AI system");
             if (BirdHandler.activeBirdQueue.size() > 0) {
-                if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null && TargetHandler.targetBird.y>0) {
+                if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null && TargetHandler.targetBird.y>TargetHandler.minTargetingHeight) {
                     //System.out.println("Activebirdqueue not empty, set target &");
                     setTarget(TargetHandler.targetBird);
                     setRotation(targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
+                    rotateToTarget();
+
                 } else if (targetBird!=null){
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
                     setRotation( targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
-                    //System.out.println("rotating to bird"); //*****DEBUG***** gun aims at bird but doesnt shoot, stuck outside of loop somewhere
-                }
-                if (!firing) {
-                    startFiring();
+                    rotateToTarget();
+                    if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
+                    if (!firing && rotationCloseToTarget()) {
+                        startFiring();
+                    }
                 }
             } else if (firing) {
                 stopFiring();
@@ -171,10 +226,10 @@ public class Turret {
     }
 
     public void setTarget(BirdAbstractClass targetBird){
-        this.targetBird=targetBird;
+        targetBird=targetBird;
     }
 
-    private void turretSetup(char turretType, int lvl, boolean justInitialized){
+    private void turretSetup(char turretType, int lvl){
         switch (turretType) {
             case ('f'): //fast firing
                 dmg = 2;
@@ -237,6 +292,8 @@ public class Turret {
                 spr+=2;
             }
         }
+
+        firingInterval=(int) ((1 / (rof / 3)) * 1000);
         width=texture.getRegionWidth();
         height=texture.getRegionHeight();
     }
