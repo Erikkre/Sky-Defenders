@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 
 public class TargetHandler {
-    public static ConcurrentLinkedQueue<Projectile> projectileList=new ConcurrentLinkedQueue<Projectile>();
+    public  ConcurrentLinkedQueue<Projectile> projectileList=new ConcurrentLinkedQueue<Projectile>();
 
     public static BirdAbstractClass targetBird;
     private int minTargetingHeight=0;
@@ -40,14 +40,14 @@ public class TargetHandler {
         for (Projectile i : projectileList){    //could have dead bird higher than alive bird, so need separate loader, alive, dead lists
             i.update(delta);
             if (i.isGone){
-                TargetHandler.projectileList.remove(i);
+                projectileList.remove(i);
             }
             for (BirdAbstractClass j : BirdHandler.activeBirdQueue) {
                 if (j.collides(i) && !j.hitBulletList.contains(i)) {  //if bird i is colliding with bullet j and was not already hit before
                     j.hit(i);
                     i.pen--;
                     if (i.pen==0){
-                        TargetHandler.projectileList.remove(i);
+                        projectileList.remove(i);
                     } else {
                         j.hitBulletList.add(i);
                     }
