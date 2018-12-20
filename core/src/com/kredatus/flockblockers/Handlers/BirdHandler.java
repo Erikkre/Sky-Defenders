@@ -31,7 +31,7 @@ public class BirdHandler {
     //public static String[] birdOrderList=     {"pB","wB","nB","aB","fB","tB","lB","gB"};
     private final static int[] birdNumberList=  { 1,   49,  30,  20,  30,  20,  5,  5  };
     private float[] spawnIntervals=new float[8];
-    private int waveTypeCnt=1;
+    private int waveTypeCnt=7;
     public TimerTask task;
     private Timer timer;
     private final float duration = 40;

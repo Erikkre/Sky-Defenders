@@ -26,13 +26,13 @@ import aurelienribon.tweenengine.Tween;
  *                  Health Speed  Size  Gold             Amount/Wave    Skin Shown      Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
  *                                                                                                              change stats with ctrl+shift+f to match spec
  * WaterBird  =     1(S)   S      M      10(490)         49             BACK            Wave line with slight arrow shape, 7 per wave
- * NightBird  =     1(S)   S      M      20(600 / wave)  30             FRONT           1 at a time randomnly
+ * NightBird  =     1(S)   M      M      20(600 / wave)  25             FRONT           1 at a time randomnly
  * AcidBird   =     7(L)   M      M      15(300)         20             SIDE, FRONT     Side to side slowly
- * FireBird   =     4(M)   M      S      15(300)         30             SIDE, FRONT     Side to Side slowly all at once
+ * FireBird   =     1(S)   M      S      15(300)         35             SIDE, FRONT     all at once
  * ThunderBird=     4(M)   F      M      15(300)         20             SIDE, FRONT     Side to side quickly
  * LunarBird  =     4(M)   XF     M      120(600)        5              BACK            Diagonal fast
  * GoldBird   =     25(XL)  S     L      120(600)        5              FRONT           Slowly side to side
- * PhoenixBird=     150(XXL)S     XL     200+Diamond     1              FRONT,BACK,SIDE       Random positions tweened to (only front-Story intro has back, side, front) then out of map on end of time
+ * PhoenixBird=     150(XXL)S     XL     200+Diamond     1              FRONT,BACK,SIDE       Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of time
 
 
  1 dia=1000 go, 5000 go=1 dia		90c/1000 0.09c/dia	$2/3000 0.07c/dia	$5/10000 0.05c/dia	90c/no ads
@@ -119,7 +119,7 @@ public int health;
     public void setCoinList(float delta) {
 
 
-        if (diamonds!=1) {  //if not a phoenix
+        if (yVel>2) {  //if not a phoenix or goldbird
             final float rotationIncrement = 360 / coinNumber;
             for (int i=0;i<coinNumber;i++) {
                 coinList.add(new Coin(x, y, rotationIncrement * rotationCounter++, thisBird, false));
@@ -199,7 +199,7 @@ public int health;
             if (coinList!=null){
                 for (Coin i : coinList){
                     i.update(delta);
-                    if ((diamonds!=1 && i.secondYMotion.isFinished()) || (diamonds==1&&i.xMotion.isFinished())) {
+                    if ((yVel>2 && i.secondYMotion.isFinished()) || (yVel<=2&&i.xMotion.isFinished())) {
                         GameWorld.addGold(1);
                         coinList.remove(i);
                     }

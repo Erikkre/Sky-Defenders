@@ -22,7 +22,7 @@ public class GoldBird extends BirdAbstractClass {
         super();
         this.yVel=2;
 
-        this.coinNumber=50;
+        this.coinNumber=60;
 
         this.sizeVariance=1;
         sizeRatio=1.3f;

@@ -34,7 +34,7 @@ public class AcidBird extends BirdAbstractClass {
 
 
         //System.out.println("Height before: " + height+ " width: " + width);
-        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
+        finalSizeRatio=1;//((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
 
         width *=finalSizeRatio;
         height *= finalSizeRatio;
