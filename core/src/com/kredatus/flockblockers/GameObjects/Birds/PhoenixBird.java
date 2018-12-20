@@ -39,7 +39,7 @@ Tween second;
         height*=finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=15;
+        health=150;
 
         animation=frontFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));

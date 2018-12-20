@@ -341,7 +341,6 @@ public class AssetHandler {
                 coinSymbol= new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
             }
         }
-        System.out.print(tempPos);
         coinAnimation=new Animation<TextureRegion>(0.03f, tempPos.toArray(new TextureRegion[16]));
         coinAnimation.setPlayMode(Animation.PlayMode.LOOP); //REMEMBER THIS STEP
 

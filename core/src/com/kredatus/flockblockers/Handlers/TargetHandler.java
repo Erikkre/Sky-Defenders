@@ -46,7 +46,7 @@ public class TargetHandler {
                 if (j.collides(i) && !j.hitBulletList.contains(i) && j.health>0) {  //if bird i is colliding with bullet j and was not already hit before
                     j.hit(i);
                     i.pen--;
-                    if (i.pen==0){
+                    if (i.pen<1){
                         projectileList.remove(i);
                     } else {
                         j.hitBulletList.add(i);

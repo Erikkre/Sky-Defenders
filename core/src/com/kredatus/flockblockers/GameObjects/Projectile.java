@@ -3,6 +3,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.Random;
+
 /**
  * Created by Mr. Kredatus on 8/31/2017.
  */
@@ -15,35 +17,39 @@ public class Projectile {
      public float camWidth, camHeight, rotation;
      public float dmg, pen, vel;
      public TextureRegion texture;
-    public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, float rotation) {
+     private Random r=new Random();
+    public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, float rotation, int acc) {
         this.texture=texture;
         this.width    = texture.getRegionWidth() ;
         this.height   = texture.getRegionHeight() ;
         this.position = position.cpy() ;
-        this.vel      = pen*3+1;
-        this.rotation = rotation;
+        this.vel      = pen*2+1;
+
+        this.rotation = rotation -(acc/2)+r.nextInt(acc);
+        if (this.rotation>360){
+            this.rotation-=360;
+        } else if (rotation<0) {
+            this.rotation+=360;
+        }
         this.camWidth = camWidth ;
         this.camHeight= camHeight;
 
         this.dmg=dmg; this.pen=pen;
         //sin(rotation)=xVel/Velocity, pen=velocity
 
-        velocity.set(   -(float)(vel*Math.cos(Math.toRadians(rotation))), -(float)(vel*Math.sin(Math.toRadians(rotation)))   );
+        velocity.set(    -(float)(vel*Math.cos(Math.toRadians(this.rotation))),    -(float)(vel*Math.sin(Math.toRadians(this.rotation)))   );
 
-        //System.out.println("Velocity: "+velocity);
 
         boundingRect  = new Polygon(new float[]{position.x-width/2,position.y-height/2,         position.x+width/2,position.y-height/2,         position.x+width/2,position.y+height/2,         position.x-width/2,position.y+height/2});
         boundingRect  . setOrigin(position.x, position.y);
 //        rotation      = -(float) Math.toDegrees(Math.atan(velocity.y / (-velocity.x) ));
-        boundingRect  . setRotation(rotation);
+        boundingRect  . setRotation(this.rotation);
         //System.out.println("Bullet fired");
     }
 
     public void update(float delta) {
-        //System.out.println(this.toString()+"'s position: "+position);
-        position.add(velocity.cpy());   //.cpy.scl is so we scale copy not original
+        position.add(velocity.cpy());
         boundingRect.translate(velocity.x, velocity.y);
-        //System.out.println(position);
         if    ( position.x +  width/2 < 0 ||  position.x - width/2 > camWidth  ||
                 position.y + height/2 < 0 || position.y - height/2 > camHeight   )  {
             isGone = true;

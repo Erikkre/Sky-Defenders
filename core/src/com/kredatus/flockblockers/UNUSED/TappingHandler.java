@@ -17,7 +17,7 @@ import java.util.TimerTask;
 /**
  * Created by Erik Kredatus on 9/9/2018.
  */
-
+/*
 public class TappingHandler {
     private boolean firing, startedTapping;
     private boolean[] firingSpeedLevelCheck = new boolean[10];
@@ -292,3 +292,4 @@ public class TappingHandler {
         return rotation;
     }
 }
+*/
