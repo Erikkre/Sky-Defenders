@@ -22,25 +22,28 @@ import aurelienribon.tweenengine.Tween;
 /**
  * Created by Erik Kredatus on 9/8/2018.
  *
+ * "defend your sky fortress and stop the bird invasion"
+ *
+ * change stats with ctrl+shift+f to match spec
  * start with 1000 gold
- *                  Health Speed  Size  Gold             Amount/Wave    Skin Shown      Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
- *                                                                                                              change stats with ctrl+shift+f to match spec
- * WaterBird  =     1(S)   S      M      10(490)         49             BACK            Wave line with slight arrow shape, 7 per wave
- * NightBird  =     1(S)   M      M      20(600 / wave)  25             FRONT           1 at a time randomnly
- * AcidBird   =     7(L)   M      M      15(300)         20             SIDE, FRONT     Side to side slowly
- * FireBird   =     1(S)   M      S      15(300)         35             SIDE, FRONT     all at once
- * ThunderBird=     4(M)   F      M      15(300)         20             SIDE, FRONT     Side to side quickly
- * LunarBird  =     4(M)   XF     M      120(600)        5              BACK            Diagonal fast
- * GoldBird   =     25(XL)  S     L      120(600)        5              FRONT           Slowly side to side
- * PhoenixBird=     150(XXL)S     XL     200+Diamond     1              FRONT,BACK,SIDE       Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of time
-
+ *
+ *                  Health Speed  Size   Gold            Amount/Wave    Skin Shown          Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
+ * WaterBird  =     1(S)    S     S      10(490)         33             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
+ * FireBird   =     1(S)    S     S      15(300)         35             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
+ * LunarBird  =     1(S)    S     S      12(360)         30             F S                 Side to side all at once
+ * AcidBird   =     4(L)    F     M      15(300)         15             B S F               Side to side slowly (make face front one side back the other)
+ * NightBird  =     4(M)    F     M      20(600 / wave)  10             F B                 1 at a time randomnly, sometimes back sometimes front, start slow end fast
+ * ThunderBird=     4(M)    F     M      15(300)         10             B S                 Diagonal side to side
+ * GoldBird   =     25(XL)  M     L      120(600)        5              F S                 Slowly side to side
+ * PhoenixBird=     150(XXL)M     XL     200+Diamond     1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
+Only add health to phoenix each round
 
  1 dia=1000 go, 5000 go=1 dia		90c/1000 0.09c/dia	$2/3000 0.07c/dia	$5/10000 0.05c/dia	90c/no ads
  cost	500	1500	4500	13500	40500	121500	364500	1000 diamonds	3000 diamonds	10000 diamonds
                 I	            II	        III	            IV	            V           	VI	                VII	                VIII	    IX	                X       Dmg	  RoF	  Pen         Spr
  (Fast Firing)	knife thrower	bow	        Machine Pistol  assault rifle	machinegun	    Minigun	            AA Autocannon	    Laser	    Ion cannon	        ???	    2	  1/s	  2 birds     +1 upgradeable
  (High Damage)	spear thrower	crossbow	Ballistae	    Hand Cannon	    sniper rifle	grenade launcher	anti-tank rifle	    Artillery	gauss cannon	    ???	    4	  0.1/s	  3 birds
- (Wide Spread)	dart thrower	tripleshot	MultiCatapult	shotgun	        blunderbuss	    Flamethrower	    Mortar	            Missile	    Microwave emitter	???	    1	  0.5/s	  2 bird	  3 shots +1 each time
+ (Wide Spread)	dart thrower	multishot	MultiCatapult	shotgun	        blunderbuss	    Flamethrower	    Mortar	            Missile	    Microwave emitter	???	    1	  0.5/s	  2 bird	  3 shots +1 each time
                                                                                                                                                                             *=2   *=1.5   *=1.4
 
  Gold/s	score is gold/s/active playtime		gold is lost when bird passes through
