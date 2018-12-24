@@ -29,17 +29,17 @@ import aurelienribon.tweenengine.Tween;
  *
  *                  Health Speed  Size   Gold            Amount/Wave    Skin Shown          Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
  * WaterBird  =     1(S)    S     S      10(490)         33             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
+ * ThunderBird=     1(S)    S     S      12(360)         30             F S B               Side to side all at once
  * FireBird   =     1(S)    S     S      15(300)         35             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
- * LunarBird  =     1(S)    S     S      12(360)         30             F S                 Side to side all at once
- * AcidBird   =     4(L)    F     M      15(300)         15             B S F               Side to side slowly (make face front one side back the other)
- * NightBird  =     4(M)    F     M      20(600 / wave)  10             F B                 1 at a time randomnly, sometimes back sometimes front, start slow end fast
- * ThunderBird=     4(M)    F     M      15(300)         10             B S                 Diagonal side to side
+ * AcidBird   =     4(L)    F     M      15(300)         15             B S F               Side to side fast (make face front one side back the other)
+ * NightBird  =     4(M)    F     M      20(600 / wave)  10             F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
+ * LunarBird  =     4(M)    F     M      15(300)         10             B S                 Diagonal side to side
  * GoldBird   =     25(XL)  M     L      120(600)        5              F S                 Slowly side to side
  * PhoenixBird=     150(XXL)M     XL     200+Diamond     1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
 Only add health to phoenix each round
 
- 1 dia=1000 go, 5000 go=1 dia		90c/1000 0.09c/dia	$2/3000 0.07c/dia	$5/10000 0.05c/dia	90c/no ads
- cost	500	1500	4500	13500	40500	121500	364500	1000 diamonds	3000 diamonds	10000 diamonds
+ 1 dia=1000 go, 5000 go=1 dia		90c/100 0.9c/dia	$2/300 0.7c/dia	$5/1000 0.5c/dia	$1.59/no ads
+ cost	        500	            1500	    4500	        13500	        40500	        121500          	364500	            1000 diamonds	3000 diamonds	10000 diamonds
                 I	            II	        III	            IV	            V           	VI	                VII	                VIII	    IX	                X       Dmg	  RoF	  Pen         Spr
  (Fast Firing)	knife thrower	bow	        Machine Pistol  assault rifle	machinegun	    Minigun	            AA Autocannon	    Laser	    Ion cannon	        ???	    2	  1/s	  2 birds     +1 upgradeable
  (High Damage)	spear thrower	crossbow	Ballistae	    Hand Cannon	    sniper rifle	grenade launcher	anti-tank rifle	    Artillery	gauss cannon	    ???	    4	  0.1/s	  3 birds
@@ -85,8 +85,6 @@ public int health;
         yVelDeath=10;
         //this.manager=manager;
     }
-
-
 
     protected void setBoundingPoly(float x, float y, float width, float height){
         boundingPoly  = new Polygon(new float[]{x - width / 4.5f, y - height / 4,          x + width / 4.5f, y - height / 4,          x + width / 4.5f, y + height / 6f,          x - width / 4.5f, y + height / 6f});//middle of front bird is below
