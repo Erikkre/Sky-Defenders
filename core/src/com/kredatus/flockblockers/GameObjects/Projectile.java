@@ -23,7 +23,7 @@ public class Projectile {
         this.width    = texture.getRegionWidth() ;
         this.height   = texture.getRegionHeight() ;
         this.position = position.cpy() ;
-        this.vel      = pen*2+1;
+        this.vel      = pen*2+3;
 
         this.rotation = rotation -(acc/2)+r.nextInt(acc);
         if (this.rotation>360){

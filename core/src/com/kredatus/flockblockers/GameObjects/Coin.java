@@ -47,35 +47,36 @@ public class Coin {
     }
 
     private void setupTweens(){
+        endFirstMovementX=new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                firstMovementEndedX=true;
+                tweenX.setValue(x);
+                if (secondXMotion!=null) secondXMotion.start();
+            }
+        };
+
+        endFirstMovementY=new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                firstMovementEndedY=true;
+                tweenY.setValue(y);
+                if (secondYMotion!=null) secondYMotion.start();
+            }
+        };
+
         if (phoenixCoin) {
             xMotion = Timeline.createSequence()
-                    .push(Tween.to(tweenX, -1, 0.4f).target(x1).ease(TweenEquations.easeOutSine))
+                    .push((Tween.to(tweenX, -1, 0.4f).target(x1).ease(TweenEquations.easeOutSine)).setCallback(endFirstMovementX))
                     .push(Tween.to(tweenX, -1, 1.5f).target(dest.x).ease(TweenEquations.easeInQuint))
                     .start();
 
             yMotion = Timeline.createSequence()
-                    .push(Tween.to(tweenY, -1, 0.4f).target(y1).ease(TweenEquations.easeOutSine))
+                    .push((Tween.to(tweenY, -1, 0.4f).target(y1).ease(TweenEquations.easeOutSine)).setCallback(endFirstMovementY))
                     .push(Tween.to(tweenY, -1, 1.5f).target(dest.y).ease(TweenEquations.easeInQuint))
                     .start();
 
         } else {
-            endFirstMovementX=new TweenCallback() {
-                @Override
-                public void onEvent(int i, BaseTween<?> baseTween) {
-                    firstMovementEndedX=true;
-                    tweenX.setValue(x);
-                    secondXMotion.start();
-                }
-            };
-
-            endFirstMovementY=new TweenCallback() {
-                @Override
-                public void onEvent(int i, BaseTween<?> baseTween) {
-                    firstMovementEndedY=true;
-                    tweenY.setValue(y);
-                    secondYMotion.start();
-                }
-            };
 
             firstXMotion = Tween.to(tweenX, -1, 0.7f).target(x1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementX).start();
             secondXMotion= Tween.to(tweenX, -1, 1.7f).target(dest.x).ease(TweenEquations.easeNone);

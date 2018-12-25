@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BirdHandler {
     //public  static Class[] birdList ={PhoenixBird.class,  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
-    public ConcurrentLinkedQueue<BirdAbstractClass> birdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
+    public static ConcurrentLinkedQueue<BirdAbstractClass> birdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
     public static ConcurrentLinkedQueue<BirdAbstractClass> deadBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
@@ -31,7 +31,7 @@ public class BirdHandler {
     //public static String[] birdOrderList=     {"pB","wB","nB","aB","fB","tB","lB","gB"};
     private final static int[] birdNumberList=  { 1,   49,  30,  20,  30,  20,  5,  5  };
     private float[] spawnIntervals=new float[8];
-    private int waveTypeCnt=7;
+    private int waveTypeCnt=0;
     public TimerTask task;
     private Timer timer;
     private final float duration = 40;

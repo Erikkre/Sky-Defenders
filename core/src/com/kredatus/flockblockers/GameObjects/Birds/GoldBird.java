@@ -36,7 +36,7 @@ public class GoldBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=25;
+        health=125;
 
         animation=rightFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));

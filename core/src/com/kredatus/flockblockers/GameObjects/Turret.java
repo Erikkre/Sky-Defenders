@@ -198,7 +198,7 @@ public class Turret {
         } else {    //****************************************************************************************************ai system****************************************************************************************************
             //System.out.println("AI system");
             if (BirdHandler.activeBirdQueue.size() > 0) {
-                if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null && !TargetHandler.targetBird.isOffCam) {
+                if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null && !TargetHandler.targetBird.isOffCam()) {
                     //System.out.println("Activebirdqueue not empty, set target &");
                     setTarget(TargetHandler.targetBird);
                     setRotation(targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);

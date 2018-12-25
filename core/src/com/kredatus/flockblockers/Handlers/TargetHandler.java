@@ -43,7 +43,7 @@ public class TargetHandler {
                 projectileList.remove(i);
             }
             for (BirdAbstractClass j : BirdHandler.activeBirdQueue) {
-                if (j.collides(i) && !j.hitBulletList.contains(i) && j.health>0) {  //if bird i is colliding with bullet j and was not already hit before
+                if ((j.y>minTargetingHeight) && j.collides(i) && !j.hitBulletList.contains(i) && j.health>0) {  //if bird i is colliding with bullet j and was not already hit before
                     j.hit(i);
                     i.pen--;
                     if (i.pen<1){
@@ -57,7 +57,7 @@ public class TargetHandler {
         }
         for (BirdAbstractClass i : BirdHandler.deadBirdQueue){
             i.update(delta, runTime);
-            if (i.isOffCam&&i.coinList==null) {
+            if (i.isOffCam()&&i.coinList==null) {
                 BirdHandler.deadBirdQueue.remove(i);
             }
         }

@@ -44,7 +44,7 @@ Tween second;
         animation=frontFlaps;// starting animation
         x=(width/2 + r.nextInt((int)(edge-width)));
         //System.out.println("x of bird set to " + x);
-        y=-height/4;
+        y=-height/3;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);

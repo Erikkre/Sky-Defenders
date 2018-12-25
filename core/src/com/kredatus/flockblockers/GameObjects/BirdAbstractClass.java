@@ -1,13 +1,10 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
 import com.kredatus.flockblockers.GameWorld.GameWorld;
-
-
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -28,8 +25,8 @@ import aurelienribon.tweenengine.Tween;
  * start with 1000 gold
  *
  *                  Health Speed  Size   Gold            Amount/Wave    Skin Shown          Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
- * WaterBird  =     1(S)    S     S      10(490)         33             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
  * ThunderBird=     1(S)    S     S      12(360)         30             F S B               Side to side all at once
+ * WaterBird  =     1(S)    S     S      10(490)         33             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
  * FireBird   =     1(S)    S     S      15(300)         35             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
  * AcidBird   =     4(L)    F     M      15(300)         15             B S F               Side to side fast (make face front one side back the other)
  * NightBird  =     4(M)    F     M      20(600 / wave)  10             F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
@@ -76,7 +73,7 @@ public abstract class BirdAbstractClass {
     private TimerTask task;
     private BirdAbstractClass thisBird=this;
     public Animation[] animSeq;
-public int health;
+    public int health;
 
     public BirdAbstractClass() {
         isAlive=true;
@@ -117,7 +114,7 @@ public int health;
             }*/
     }
 
-    public void setCoinList(float delta) {
+    private  void setCoinList(float delta) {
 
 
         if (yVel>2) {  //if not a phoenix or goldbird
@@ -127,10 +124,11 @@ public int health;
             }
         } else {
 
+
             //(0.5*yAcc)
             float realYAcc = yAcc / 2;
             float determinant = (yVelDeath * yVelDeath) - (4 * (realYAcc) * y);     //a=yAcc, b=yDeathVel, distance/c = y, determinant = d = b^2 -4*a*c
-            //System.out.println("Acc: " + realYAcc + ", VelDeath: " + yVelDeath + ", Distance: " + y);
+            System.out.println("Acc: " + realYAcc + ", VelDeath: " + yVelDeath + ", Distance: " + y + ", CamHeight: "+camHeight);
             float timeToOffCam;
             if (determinant >= 0) {    // if
                 double root1 = (-yVelDeath + Math.sqrt(determinant)) / (2 * realYAcc);
@@ -206,13 +204,14 @@ public int health;
                     }
                 }
             }
-            if (y+height/2<0 || x+width/2< 0 || x-width/2> camWidth){
-                isOffCam=true;
-            }
         }
     }
 
     public abstract void specificUpdate(float delta, float runTime);
+
+    public boolean isOffCam(){
+        return y+height/2<0 || x+width/2< 0 || x-width/2> camWidth;
+    }
 
     private void die(){
         xMotion.kill();
