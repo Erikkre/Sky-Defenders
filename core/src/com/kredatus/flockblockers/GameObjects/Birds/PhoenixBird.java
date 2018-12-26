@@ -22,12 +22,12 @@ Tween second;
         super();
         yAcc=-0.1f;
         yVelDeath=10;
-        this.yVel=2;
+        this.yVel=4;
         this.diamonds=1;
         this.coinNumber=200;
 
         this.sizeVariance=50;
-        sizeRatio=1.5f;
+        sizeRatio=1f;
 
         animSeq = AssetHandler.phoenixAnimations;
         animSetup();

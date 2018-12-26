@@ -22,7 +22,7 @@ public class AcidBird extends BirdAbstractClass {
     public AcidBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=5;
+        this.yVel=12;
 
         this.coinNumber=7;
 

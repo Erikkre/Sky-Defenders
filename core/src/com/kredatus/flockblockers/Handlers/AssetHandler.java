@@ -212,6 +212,16 @@ public class AssetHandler {
         bgList.add(bgPhoenixtexture2);
 
 
+        bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder2.jpg"));
+        bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
+        bgThundertexture.flip(false, true);
+        bgList.add(bgThundertexture);
+
+        bgThundertexture2 = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
+        bgList.add(bgThundertexture2);
+
+
         bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater2.jpg"));
         bgWater.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
@@ -222,27 +232,7 @@ public class AssetHandler {
         bgList.add(bgWatertexture2);
 
 
-         bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgNight2.jpg"));
-        bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
-        bgNighttexture.flip(false, true);
-        bgList.add(bgNighttexture);
-
-        bgNighttexture2 = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
-        bgList.add(bgNighttexture2);
-
-
-         bgAcid = new Texture(Gdx.files.internal("backgrounds/levels/bgAcid2.jpg"));
-        bgAcid.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
-        bgAcidtexture.flip(false, true);
-        bgList.add(bgAcidtexture);
-
-        bgAcidtexture2 = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
-        bgList.add(bgAcidtexture2);
-
-
-         bgFire = new Texture(Gdx.files.internal("backgrounds/levels/bgFire2.jpg"));
+        bgFire = new Texture(Gdx.files.internal("backgrounds/levels/bgFire2.jpg"));
         bgFire.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgFiretexture = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
         bgFiretexture.flip(false, true);
@@ -252,14 +242,24 @@ public class AssetHandler {
         bgList.add(bgFiretexture2);
 
 
-         bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder2.jpg"));
-        bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
-        bgThundertexture.flip(false, true);
-        bgList.add(bgThundertexture);
+        bgAcid = new Texture(Gdx.files.internal("backgrounds/levels/bgAcid2.jpg"));
+        bgAcid.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
+        bgAcidtexture.flip(false, true);
+        bgList.add(bgAcidtexture);
 
-        bgThundertexture2 = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
-        bgList.add(bgThundertexture2);
+        bgAcidtexture2 = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
+        bgList.add(bgAcidtexture2);
+
+
+         bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgNight2.jpg"));
+        bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
+        bgNighttexture.flip(false, true);
+        bgList.add(bgNighttexture);
+
+        bgNighttexture2 = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
+        bgList.add(bgNighttexture2);
 
 
          bgLunar = new Texture(Gdx.files.internal("backgrounds/levels/bgLunar2.jpg"));
@@ -344,15 +344,15 @@ public class AssetHandler {
         coinAnimation=new Animation<TextureRegion>(0.03f, tempPos.toArray(new TextureRegion[16]));
         coinAnimation.setPlayMode(Animation.PlayMode.LOOP); //REMEMBER THIS STEP
 
-
-        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.10f);
-        waterAnimations = birdTextureToAnimation("water.png", 0.13f);
-        nightAnimations = birdTextureToAnimation("night.png", 0.13f);
-        acidAnimations = birdTextureToAnimation("acid.png", 0.10f);
-        fireAnimations = birdTextureToAnimation("fire.png", 0.10f);
-        thunderAnimations = birdTextureToAnimation("thunder.png", 0.08f);
-        lunarAnimations = birdTextureToAnimation("lunar.png", 0.5f);
-        goldAnimations = birdTextureToAnimation("gold.png", 0.10f);
+        //a=all, f=front, s=side, b=back, s=front&side, t=side&back, o=front&back
+        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.10f, 'a');
+        waterAnimations   = birdTextureToAnimation("water.png", 0.13f, 'b');
+        nightAnimations   = birdTextureToAnimation("night.png", 0.13f, 'o');
+        acidAnimations    = birdTextureToAnimation("acid.png", 0.10f, 'a');
+        fireAnimations    = birdTextureToAnimation("fire.png", 0.10f, 'a');
+        thunderAnimations = birdTextureToAnimation("thunder.png", 0.08f, 't');
+        lunarAnimations   = birdTextureToAnimation("lunar.png", 0.5f, 'a');
+        goldAnimations    = birdTextureToAnimation("gold.png", 0.10f, 's');
 
         Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
         greyTinyBirdAnimation=tinyBirdTextureToAnimation(greyTinyBird);
@@ -383,41 +383,42 @@ public class AssetHandler {
         }
     }
 
-    public static final Animation[] birdTextureToAnimation(String path, float flapSpeed){
+    private static Animation[] birdTextureToAnimation(String path, float flapSpeed, char type){
         sprites = new Texture(Gdx.files.internal("sprites/birds/"+path));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
         ArrayList<TextureRegion> leftSidePositions = new ArrayList<TextureRegion>();
 
+
         TextureRegion[] front=new TextureRegion[0];
         TextureRegion[] rightSide=new TextureRegion[0];
         TextureRegion[] leftSide=new TextureRegion[0];
         TextureRegion[] back=new TextureRegion[0];
 
-        for (int i=0;i<16;i++) {
+
+        for (int i=0;i<22;i++) {
             TextureRegion temp = new TextureRegion(sprites, 240 * i, 0, 240, 211);
 
             positions.add(temp);
 
-            if (i>5&&i<=11){
+            if (i>=10&&i<=15){
                 TextureRegion flipTemp = new TextureRegion(sprites, 240 * i, 0, 240, 211);
                 flipTemp.flip(true,false);
                 leftSidePositions.add(flipTemp);
             }
-            if (i == 5) {
-                front =  positions.toArray(new TextureRegion[6]);
-                positions.clear();
 
-            } else if (i == 11){
+            if (i == 9) {
+                front =  positions.toArray(new TextureRegion[10]);
+                positions.clear();
+            } else if (i == 15){
                 rightSide=positions.toArray(new TextureRegion[6]);
                 leftSide =leftSidePositions.toArray(new TextureRegion[6]);
 
                 positions.clear();
                 leftSidePositions.clear();
-
-            } else if (i==15){
-                back = positions.toArray(new TextureRegion[4]);
+            } else if (i==21){
+                back = positions.toArray(new TextureRegion[6]);
                 positions.clear();
             }
         }
@@ -429,16 +430,14 @@ public class AssetHandler {
         deathFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
         Animation rightFlaps= new Animation<TextureRegion>(flapSpeed, rightSide);
-        rightFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        rightFlaps.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
         Animation leftFlaps= new Animation<TextureRegion>(flapSpeed, leftSide);
-        leftFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        leftFlaps.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
         Animation backFlaps= new Animation<TextureRegion>(flapSpeed, back);
-        backFlaps.setPlayMode(Animation.PlayMode.LOOP);
+        backFlaps.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
-        //height=back[3].getRegionHeight();
-        //width=back[0].getRegionWidth();
         return new Animation[]{frontFlaps, leftFlaps, rightFlaps, backFlaps, deathFlaps};
     }
 

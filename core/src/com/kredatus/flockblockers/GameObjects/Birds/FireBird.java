@@ -23,7 +23,7 @@ public class FireBird extends BirdAbstractClass {
     public FireBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=5;
+        this.yVel=2;
 
         this.coinNumber=7;
 

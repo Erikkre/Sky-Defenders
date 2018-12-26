@@ -23,7 +23,7 @@ public class NightBird extends BirdAbstractClass {
     public NightBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=2;
+        this.yVel=12;
 
         this.coinNumber=7;
 

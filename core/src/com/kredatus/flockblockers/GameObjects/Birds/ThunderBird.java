@@ -23,7 +23,7 @@ public class ThunderBird extends BirdAbstractClass {
     public ThunderBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=7;
+        this.yVel=2;
 
         this.coinNumber=7;
 

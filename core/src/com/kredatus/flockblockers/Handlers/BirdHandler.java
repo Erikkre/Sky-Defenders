@@ -28,13 +28,13 @@ public class BirdHandler {
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
     public static ConcurrentLinkedQueue<BirdAbstractClass> deadBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
                                                 //0    1    2    3    4    5    6    7
-    //public static String[] birdOrderList=     {"pB","wB","nB","aB","fB","tB","lB","gB"};
-    private final static int[] birdNumberList=  { 1,   49,  30,  20,  30,  20,  5,  5  };
+    //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
+    private final static int[] birdNumberList=  { 1,   30,  33,  35,  15,  10,  10,  5  };
     private float[] spawnIntervals=new float[8];
     private int waveTypeCnt=0;
     public TimerTask task;
     private Timer timer;
-    private final float duration = 40;
+    private final float duration = 30;
     private BgHandler bgHandler;
     private float camWidth, camHeight;
     //BirdAbstractClass birdToAdd;
@@ -99,7 +99,6 @@ public class BirdHandler {
         });
 */
 
-
     public void update() {
         if (waveTypeCnt==8){waveTypeCnt=0;}
         if ( bgHandler.isBirdSpawning ){ //(((bgHandler.getBackground().y <-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2)) ){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
@@ -111,23 +110,23 @@ public class BirdHandler {
                     }
                 } else if (waveTypeCnt == 1) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new WaterBird(camHeight, camWidth));
+                        birdQueue.add(new ThunderBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 2) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new NightBird(camHeight, camWidth));
+                        birdQueue.add(new WaterBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 3) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new AcidBird(camHeight, camWidth));
+                        birdQueue.add(new FireBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 4) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new FireBird(camHeight, camWidth));
+                        birdQueue.add(new AcidBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 5) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new ThunderBird(camHeight, camWidth));
+                        birdQueue.add(new NightBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 6) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {

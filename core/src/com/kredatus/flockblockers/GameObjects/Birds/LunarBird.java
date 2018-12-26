@@ -23,7 +23,7 @@ public class LunarBird extends BirdAbstractClass {
     public LunarBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=10;
+        this.yVel=12;
 
         this.coinNumber=7;
 
