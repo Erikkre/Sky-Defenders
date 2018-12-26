@@ -147,12 +147,12 @@ public class BirdHandler {
                //task.run();
                 //activeBirdQueue.remove(0);
                 taskRunning = true;
-                System.out.println("Timer started");
+                //System.out.println("Timer started");
             }
 
         } else {
             if (taskRunning){
-                System.out.println("Timer cancelled");
+                //System.out.println("Timer cancelled");
                 task.cancel();
                 waveTypeCnt++; //nextWave when timer reset
                 taskRunning=false;

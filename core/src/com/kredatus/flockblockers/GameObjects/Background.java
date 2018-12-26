@@ -28,7 +28,7 @@ public class Background {
 
     public void update() {
 
-        if (y + height < -GameHandler.camHeight / 2) {
+        if (y + height < -GameHandler.camHeight / 2) {  //-GameHandler.camHeight / 2 is a buffer of half the camera height
             isScrolledDown = true;
         }
     }
@@ -44,7 +44,8 @@ public class Background {
     public void reset(float newY, int bgNumber) {
         y = newY;
         texture= AssetHandler.bgList.get(bgNumber);
-        isScrolledDown = false;}
+        isScrolledDown = false;
+    }
 
     public boolean isScrolledDown() {return isScrolledDown;}
 
