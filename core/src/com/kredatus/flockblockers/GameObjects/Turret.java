@@ -43,6 +43,7 @@ public class Turret {
         if (position.x<camWidth/2) {
             texture = new TextureRegion(texture);
             texture.flip(false,true);
+            rotation=180;
         }
         setTarget(BirdHandler.activeBirdQueue.peek());
         setupFiring();
@@ -191,7 +192,7 @@ public class Turret {
         if (Gdx.input.isTouched()) {   //***************************************************if tapped and not startedTapping yet***********************************************************************************************
             setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - camHeight) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
             rotateToTarget();
-            if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
+            //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
             if (!firing && targetAquired) {
                 startFiring();
             }
@@ -209,7 +210,7 @@ public class Turret {
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
                     setRotation( targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
                     rotateToTarget();
-                    if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
+                    //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
                     if (!firing && targetAquired) {
                         startFiring();
                     }

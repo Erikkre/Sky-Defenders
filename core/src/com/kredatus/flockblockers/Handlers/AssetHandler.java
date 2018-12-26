@@ -344,15 +344,15 @@ public class AssetHandler {
         coinAnimation=new Animation<TextureRegion>(0.03f, tempPos.toArray(new TextureRegion[16]));
         coinAnimation.setPlayMode(Animation.PlayMode.LOOP); //REMEMBER THIS STEP
 
-        //a=all, f=front, s=side, b=back, s=front&side, t=side&back, o=front&back
-        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.10f, 'a');
-        waterAnimations   = birdTextureToAnimation("water.png", 0.13f, 'b');
-        nightAnimations   = birdTextureToAnimation("night.png", 0.13f, 'o');
-        acidAnimations    = birdTextureToAnimation("acid.png", 0.10f, 'a');
-        fireAnimations    = birdTextureToAnimation("fire.png", 0.10f, 'a');
-        thunderAnimations = birdTextureToAnimation("thunder.png", 0.08f, 't');
-        lunarAnimations   = birdTextureToAnimation("lunar.png", 0.5f, 'a');
-        goldAnimations    = birdTextureToAnimation("gold.png", 0.10f, 's');
+
+        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.06f);
+        waterAnimations   = birdTextureToAnimation("water.png", 0.07f);
+        nightAnimations   = birdTextureToAnimation("night.png", 0.05f);
+        acidAnimations    = birdTextureToAnimation("acid.png", 0.05f);
+        fireAnimations    = birdTextureToAnimation("fire.png", 0.07f);
+        thunderAnimations = birdTextureToAnimation("thunder.png", 0.07f);
+        lunarAnimations   = birdTextureToAnimation("lunar.png", 0.05f);
+        goldAnimations    = birdTextureToAnimation("gold.png", 0.06f);
 
         Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
         greyTinyBirdAnimation=tinyBirdTextureToAnimation(greyTinyBird);
@@ -383,7 +383,7 @@ public class AssetHandler {
         }
     }
 
-    private static Animation[] birdTextureToAnimation(String path, float flapSpeed, char type){
+    private static Animation[] birdTextureToAnimation(String path, float flapSpeed){
         sprites = new Texture(Gdx.files.internal("sprites/birds/"+path));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
@@ -398,35 +398,38 @@ public class AssetHandler {
 
 
         for (int i=0;i<22;i++) {
-            TextureRegion temp = new TextureRegion(sprites, 240 * i, 0, 240, 211);
-
+            TextureRegion temp;
+            if (i<11) {
+                temp = new TextureRegion(sprites, 300 * i, 0, 300, 247);
+            } else {
+                temp = new TextureRegion(sprites, 300 * (i-11), 247, 300, 247);
+            }
             positions.add(temp);
 
-            if (i>=10&&i<=15){
-                TextureRegion flipTemp = new TextureRegion(sprites, 240 * i, 0, 240, 211);
+            if (i<6){
+                TextureRegion flipTemp = new TextureRegion(sprites, 300 * i, 0, 300, 247);
                 flipTemp.flip(true,false);
                 leftSidePositions.add(flipTemp);
             }
 
-            if (i == 9) {
-                front =  positions.toArray(new TextureRegion[10]);
-                positions.clear();
-            } else if (i == 15){
+            if (i == 5){
                 rightSide=positions.toArray(new TextureRegion[6]);
                 leftSide =leftSidePositions.toArray(new TextureRegion[6]);
 
                 positions.clear();
                 leftSidePositions.clear();
-            } else if (i==21){
+            } else if (i == 11) {
                 back = positions.toArray(new TextureRegion[6]);
                 positions.clear();
+            } else if (i==21){
+                front =  positions.toArray(new TextureRegion[10]);
             }
         }
 
         Animation frontFlaps= new Animation<TextureRegion>(flapSpeed, front);
         frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-        Animation deathFlaps= new Animation(0.025f, front);
+        Animation deathFlaps= new Animation<TextureRegion>(0.025f, front);
         deathFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
         Animation rightFlaps= new Animation<TextureRegion>(flapSpeed, rightSide);

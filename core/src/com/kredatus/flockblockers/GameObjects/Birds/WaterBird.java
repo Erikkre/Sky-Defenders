@@ -21,7 +21,7 @@ public class WaterBird extends BirdAbstractClass {
     public WaterBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=2;
+        this.yVel=1;
         this.coinNumber=7;
 
         this.sizeVariance=100;

@@ -22,9 +22,9 @@ Tween second;
         super();
         yAcc=-0.1f;
         yVelDeath=10;
-        this.yVel=4;
+        this.yVel=3;
         this.diamonds=1;
-        this.coinNumber=200;
+        this.coinNumber=500;
 
         this.sizeVariance=50;
         sizeRatio=1f;

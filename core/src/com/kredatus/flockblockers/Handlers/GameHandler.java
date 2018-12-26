@@ -32,7 +32,7 @@ public class GameHandler implements Screen {
         float screenHeight = Gdx.graphics.getHeight();
         camHeight=1152;
         camWidth= (int) (camHeight* (screenWidth/screenHeight)) ;
-        System.out.println("width: "+camWidth);
+        //System.out.println("width: "+camWidth);
         midPointY = camHeight/2;
         midPointX = camWidth/2;
 
