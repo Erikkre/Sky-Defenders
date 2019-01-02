@@ -49,7 +49,7 @@ public class BgHandler {
     public Timeline horizPosBg, vertPosBg,smallShake, bigShake;
     private TweenCallback startStoryIntroAndSpawns, bg2ToBg1Tail, shakeCamCallback, endBirdSpawn;
     private float camHeight;
-    public boolean isPastStoryIntro, isCameraShake, isBirdSpawning;
+    public static boolean isPastStoryIntro, isCameraShake, isBirdSpawning;
     private OrthographicCamera cam;
     private GameRenderer renderer;
     public BgHandler(float camWidth, float camHeight){
@@ -182,7 +182,7 @@ public class BgHandler {
     }
 
     public void update(float delta) {
-        System.out.println("1: "+ Math.round(background.y) + " 2: "+Math.round(background2.y));
+        //System.out.println("1: "+ Math.round(background.y) + " 2: "+Math.round(background2.y));
 
         if (isCameraShake){
             smallShake.update(delta);
@@ -266,29 +266,5 @@ public class BgHandler {
         this.renderer = renderer;
         this.cam = renderer.cam;
     }
-    /*public Background getBackground3() {
-        return background3;
-    }
 
-    public Background getBackground4() {
-        return background4;
-    }*/
-
-/*
-    public void onRestart() {
-        /*
-        background.onRestart(0, 0);
-        background2.onRestart(background.getTailY(), 0);
-        background3.onRestart(0, -bgh);
-        background4.onRestart(background3.getTailY(), -bgh);
-
-        boostlist.clear();
-        flipboostlist.clear();
-        invboostlist.clear();
-        invflipboostlist.clear();
-        startlist(boostlist, false, false, orgBoostnumber);
-        startlist(invboostlist, false, true, orgBoostnumber);
-        startlist(flipboostlist, true, false, orgBoostnumber);
-        startlist(invflipboostlist, true, true, orgBoostnumber);
-    }*/
 }

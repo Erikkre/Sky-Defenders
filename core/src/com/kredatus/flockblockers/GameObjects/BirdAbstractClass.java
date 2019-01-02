@@ -31,7 +31,7 @@ import aurelienribon.tweenengine.Tween;
  * AcidBird   =     4(L)    12    M      24(360)         15             B S F               Side to side fast (make face front one side back the other)
  * NightBird  =     4(M)    12    M      38(380 / wave)  10             F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
  * LunarBird  =     4(M)    12    M      40(400)         10             B S                 Diagonal side to side
- * GoldBird   =     25(XL)  3     L      200(1000)       5              F S                 Slowly side to side
+ * GoldBird   =     35(XL)  3     L      200(1000)       5              F S                 Slowly side to side
  * PhoenixBird=     150(XXL)3     XL     500+Diamond     1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
 Only add health to phoenix each round
 
@@ -54,8 +54,8 @@ Only add health to phoenix each round
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
-    public float preX, x, y, yVel, yAcc, xVel,yVelDeath, rotation, sizeRatio, finalSizeRatio=1;
-    public Hashtable xMotionTimePositions=new Hashtable();
+    public float preX, preY, x, y, yVel, yAcc, xVel,yVelDeath, rotation, sizeRatio, finalSizeRatio=1, preTargetY;
+    //public Hashtable xMotionTimePositions=new Hashtable();
     public double xMotionTime;
     public float width, height;
     protected float camWidth, camHeight, edge;
@@ -68,12 +68,13 @@ public abstract class BirdAbstractClass {
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, deathFlaps, animation;
     protected int sizeVariance, coinNumber,  diamonds, cnt=0, rotationCounter;
     //protected Timeline xMotion;
-    protected Tween intro, first, xMotion;
+    protected Tween introX, first, firstX, firstY, currentX, currentY;
     public Polygon boundingPoly;
     private TimerTask task;
     private BirdAbstractClass thisBird=this;
     public Animation[] animSeq;
     public int health;
+
 
     public BirdAbstractClass() {
         isAlive=true;
@@ -116,14 +117,12 @@ public abstract class BirdAbstractClass {
 
     private  void setCoinList(float delta) {
 
-
         if (coinNumber<100) {  //if not a phoenix or goldbird
             final float rotationIncrement = 360 / coinNumber;
             for (int i=0;i<coinNumber;i++) {
                 coinList.add(new Coin(x, y, rotationIncrement * rotationCounter++, thisBird, false));
             }
         } else {
-
 
             //(0.5*yAcc)
             float realYAcc = yAcc / 2;
@@ -169,10 +168,20 @@ public abstract class BirdAbstractClass {
     public void update(float delta, float runTime){
         setRotation();
         if (isAlive) {
-            y+=yVel;
             preX=x;
-            xMotion.update(delta);
-            xVel=x-preX;
+            currentX.update(delta);
+            xVel= x-preX;
+            if (currentY!=null&&currentY.isStarted()){
+                preY=y;
+                currentY.update(delta);
+                System.out.println("currentY "+y);
+                yVel=y-preY;
+            } else {
+                System.out.println("intro sets "+y+" += "+yVel);
+                y+=yVel;
+            }
+
+
             boundingPoly.translate(xVel, yVel);
 
             if (health <= 0) {
@@ -185,6 +194,7 @@ public abstract class BirdAbstractClass {
             }
             specificUpdate(delta, runTime);
         } else {
+            System.out.println("dead");
             if (diamonds==1){   //is phoenix
                 width*=0.996;
                 height*=0.996;
@@ -214,8 +224,8 @@ public abstract class BirdAbstractClass {
     }
 
     private void die(){
-        xMotion.kill();
-
+        currentX.kill();
+        currentY.kill();
         isAlive=false;
         animation=deathFlaps;
 

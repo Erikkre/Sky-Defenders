@@ -6,13 +6,15 @@ import aurelienribon.tweenengine.TweenAccessor;
 
 public class BirdAccessor implements TweenAccessor<BirdAbstractClass>{
     private final int xMotion=1;
+    private final int yMotion=2;
+
 
     @Override
     public void setValues(BirdAbstractClass birdTarget, int tweenType, float[] newValues) {
 
         switch (tweenType){
             case (xMotion): birdTarget.x=newValues[0]; //System.out.print("bird set to: "+birdTarget.x);//birdTarget.boundingPoly.setPosition(birdTarget.x-birdTarget.width, birdTarget.y);//System.out.println(" set to "+newValues[0]);
-
+            case (yMotion): birdTarget.y=newValues[0];
         }
     }
 
@@ -20,8 +22,10 @@ public class BirdAccessor implements TweenAccessor<BirdAbstractClass>{
     public int getValues(BirdAbstractClass birdTarget, int tweenType, float[] newValues) {
         switch (tweenType) {
             case (xMotion):
-                //System.out.print(birdTarget.x);
                 newValues[0] = birdTarget.x; //System.out.println(" get to "+newValues[0]);
+                return 1;
+            case (yMotion):
+                newValues[0] = birdTarget.y; //System.out.println(" get to "+newValues[0]);
                 return 1;
             default: assert false; return 0;
         }

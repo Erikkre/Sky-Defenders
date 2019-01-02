@@ -13,17 +13,21 @@ public class TurretHandler {
     public static ArrayList<Turret> turretList=new ArrayList<Turret>(13);
 
     public TurretHandler(float camWidth, float camHeight){
-        turretList.add(new Turret('f',new Vector2((148/2),camHeight-(61/2)),camWidth, camHeight));
-        turretList.add(new Turret('f',new Vector2((148/2),camHeight-(61/2)*5),camWidth, camHeight));
-        turretList.add(new Turret('f',new Vector2((148/2),camHeight-(61/2)*10),camWidth, camHeight));
-        turretList.add(new Turret('f',new Vector2((148/2),camHeight-(61/2)*15),camWidth, camHeight));
-        turretList.add(new Turret('f',new Vector2((148/2),camHeight-(61/2)*20),camWidth, camHeight));
+        float unit=camWidth/7;
+        turretList.add(new Turret('f',new Vector2(unit*1,camHeight-(61/2)*2)));
+        turretList.add(new Turret('f',new Vector2(unit*2,camHeight-(61/2)*2)));
+        turretList.add(new Turret('f',new Vector2(unit*3,camHeight-(61/2)*2)));
+        turretList.add(new Turret('f',new Vector2(unit*4,camHeight-(61/2)*2)));
+        turretList.add(new Turret('f',new Vector2(unit*5,camHeight-(61/2)*2)));
+        turretList.add(new Turret('f',new Vector2(unit*6,camHeight-(61/2)*2)));
 
-        turretList.add(new Turret('f',new Vector2(camWidth-(148/2),camHeight-(61/2)),camWidth, camHeight));
-        turretList.add(new Turret('f',new Vector2(camWidth-(148/2),camHeight-(61/2)*5),camWidth, camHeight));
-        turretList.add(new Turret('f',new Vector2(camWidth-(148/2),camHeight-(61/2)*10),camWidth, camHeight));
-        turretList.add(new Turret('f',new Vector2(camWidth-(148/2),camHeight-(61/2)*15),camWidth, camHeight));
-        turretList.add(new Turret('f',new Vector2(camWidth-(148/2),camHeight-(61/2)*20),camWidth, camHeight));
+        turretList.add(new Turret('f',new Vector2(unit*1,camHeight-(61/2)*5)));
+        turretList.add(new Turret('f',new Vector2(unit*2,camHeight-(61/2)*5)));
+        turretList.add(new Turret('f',new Vector2(unit*3,camHeight-(61/2)*5)));
+        turretList.add(new Turret('f',new Vector2(unit*4,camHeight-(61/2)*5)));
+        turretList.add(new Turret('f',new Vector2(unit*5,camHeight-(61/2)*5)));
+        turretList.add(new Turret('f',new Vector2(unit*6,camHeight-(61/2)*5)));
+        /*
     int j=0;
         for (Turret i : turretList){
                 for (int k=0;k<j;k++){
@@ -32,7 +36,7 @@ public class TurretHandler {
                 j++;
             System.out.println(i.dmg);
             }
-
+*/
 
 
     }

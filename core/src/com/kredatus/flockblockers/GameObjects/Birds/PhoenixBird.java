@@ -1,9 +1,12 @@
 package com.kredatus.flockblockers.GameObjects.Birds;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Handlers.BgHandler;
+import com.kredatus.flockblockers.Handlers.BirdHandler;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -17,23 +20,25 @@ import aurelienribon.tweenengine.TweenEquations;
 public class PhoenixBird extends BirdAbstractClass {
 
     //public final int[] animSeqList = {0,1,2,3};
-Tween second;
+Tween outroY;
+
+public float targetY ;//, preTargetY;
     public PhoenixBird(float camHeight, float camWidth){
         super();
         yAcc=-0.1f;
         yVelDeath=10;
-        this.yVel=3;
+        yVel=3;
         this.diamonds=1;
         this.coinNumber=500;
 
-        this.sizeVariance=50;
-        sizeRatio=1f;
+        this.sizeVariance=1;
+        sizeRatio=1.3f;
 
         animSeq = AssetHandler.phoenixAnimations;
         animSetup();
 
         //System.out.println("Height before: " + height+ " width: " + width);
-        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
+        finalSizeRatio= ((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
 
         width *=finalSizeRatio;
         height*=finalSizeRatio;
@@ -48,6 +53,7 @@ Tween second;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
+
         setBoundingPoly(x,y,width,height);
     }
 
@@ -71,7 +77,12 @@ Tween second;
                 System.out.println(xMotionTimePositions);
             }
         }*/
-
+        if (!BgHandler.isBirdSpawning&&firstX.isStarted()){
+            firstX.kill();
+            firstY.kill();
+            outroY.start();
+            System.out.println("startOutro");
+        }
 
         //second.update(delta);
         if (cnt==4) {cnt=0;}
@@ -96,20 +107,45 @@ Tween second;
         }*/
     }
 
+
     @Override
-    public void setManager(float camWidth) {
-        final TweenCallback endIntro= new TweenCallback() {
+        public void setManager(final float camWidth) {
+
+            final TweenCallback newTargetX= new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
+                x=preX;
+                firstX.target(width/2+r.nextInt((int)(camWidth-width)));
 
-                intro.pause();intro.kill();intro=null;
-                xMotion=first;
-                first.start();
+                //System.out.println("newTargetX");
             }
         };
+        final TweenCallback newTargetY= new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                //System.out.println("y: "+y+" = preY: "+preY);
+                preTargetY=targetY;
+                targetY=height/2+r.nextInt((int)(camHeight-height));
+                firstY.target(targetY);
+
+            }
+        };
+
+            final TweenCallback endIntro= new TweenCallback() {
+                @Override
+                public void onEvent(int i, BaseTween<?> baseTween) {
+                    introX.kill();
+                    currentX=firstX;
+                    currentY=firstY;
+                    yVel=0;
+                    currentX.start();
+                    currentY.start();
+                    System.out.println("endintro");
+                }
+            };
 //aseInOutQuint
-        intro = Tween.to(this, 1, 1).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
-        xMotion=intro;
+        introX = Tween.to(this, 1, 2).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
+        currentX=introX;
 
 
         /*final TweenCallback endfirst= new TweenCallback() {
@@ -120,7 +156,13 @@ Tween second;
             }
         };*/
 
-        first =Tween.to(this, 1, 3).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
+        //type 1 is xmotion type 2 is y
+
+        firstX =(Tween.to(this, 1, 3).target(width/2+r.nextInt((int)(camWidth-width))).ease(TweenEquations.easeInOutQuint).setCallback(newTargetX).setCallbackTriggers(TweenCallback.END)).repeat(Tween.INFINITY,0);
+        targetY=height/2+r.nextInt((int)(camHeight-height));
+        firstY =(Tween.from(this, 2, 3).target(targetY).ease(TweenEquations.easeInOutQuint).setCallback(newTargetY).setCallbackTriggers(TweenCallback.END)).repeat(Tween.INFINITY,0);
+
+        outroY=Tween.to(this, 2, 3).target(camHeight).ease(TweenEquations.easeInSine);
         //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
         /*
         (xMotion = Timeline.createSequence()

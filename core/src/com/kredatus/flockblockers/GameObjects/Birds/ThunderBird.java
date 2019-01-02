@@ -23,12 +23,12 @@ public class ThunderBird extends BirdAbstractClass {
     public ThunderBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=2;
+        this.yVel=1;
 
         this.coinNumber=10;
 
-        this.sizeVariance=100;
-        sizeRatio=1;
+        this.sizeVariance=50;
+        sizeRatio=0.5f;
 
         animSeq = AssetHandler.thunderAnimations;
         animSetup();
@@ -93,15 +93,15 @@ public class ThunderBird extends BirdAbstractClass {
         final TweenCallback endIntro= new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-
-                intro.pause();intro.kill();intro=null;
-                xMotion=first;
-                first.start();
+                currentX.kill();
+                currentX=firstX;
+                yVel=0;
+                firstY.start();
             }
         };
 
-        intro = Tween.to(this, 1, 0.7f).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
-        xMotion=intro;
+        introX = Tween.to(this, 1, 0.7f).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
+        currentX=introX;
 
 
         /*final TweenCallback endfirst= new TweenCallback() {

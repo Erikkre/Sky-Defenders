@@ -327,8 +327,8 @@ public class AssetHandler {
         f0Texture= new Texture(Gdx.files.internal("sprites/turrets/FF0.png"));
         f0Texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         //turret.flip(false, true);
-        f0 = new TextureRegion(f0Texture,0, 16,147,44);
-        f0Proj = new TextureRegion(f0Texture,0, 0,147,16);
+        f0 = new TextureRegion(f0Texture,0, 11,100,30);
+        f0Proj = new TextureRegion(f0Texture,0, 0,100,10);
 
 
         Texture coinTexture=new Texture(Gdx.files.internal("sprites/coin.png"));

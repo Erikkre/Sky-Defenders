@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
+import com.kredatus.flockblockers.Handlers.GameHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 
@@ -30,10 +31,10 @@ public class Turret {
     char turretType;
     public int lvl = 0, firingInterval, timeSinceLastShot;
     private double lastShotTime=0;
-    public Turret(char turretType, Vector2 position, float camWidth, float camHeight){
+    public Turret(char turretType, Vector2 position){
         this.position =position ;
-        this.camWidth =camWidth ;
-        this.camHeight=camHeight;
+        this.camWidth = GameHandler.camWidth;
+        this.camHeight=GameHandler.camHeight;
         this.turretType= turretType;
 
         timer=new Timer();
