@@ -11,21 +11,23 @@ public class BirdAccessor implements TweenAccessor<BirdAbstractClass>{
 
     @Override
     public void setValues(BirdAbstractClass birdTarget, int tweenType, float[] newValues) {
-
         switch (tweenType){
-            case (xMotion): birdTarget.x=newValues[0]; //System.out.print("bird set to: "+birdTarget.x);//birdTarget.boundingPoly.setPosition(birdTarget.x-birdTarget.width, birdTarget.y);//System.out.println(" set to "+newValues[0]);
-            case (yMotion): birdTarget.y=newValues[0];
+            case xMotion: birdTarget.x=newValues[0]; //System.out.println("birdX: "+birdTarget.x+"set to: "+newValues[0])         birdTarget.boundingPoly.setPosition(birdTarget.x-birdTarget.width, birdTarget.y);//System.out.println(" set to "+newValues[0]);
+            break;
+            case yMotion: birdTarget.y=newValues[0];//System.out.println("birdY: "+birdTarget.y+"set to: "+newValues[0]);
+            break;
         }
     }
 
     @Override
     public int getValues(BirdAbstractClass birdTarget, int tweenType, float[] newValues) {
+
         switch (tweenType) {
             case (xMotion):
                 newValues[0] = birdTarget.x; //System.out.println(" get to "+newValues[0]);
                 return 1;
             case (yMotion):
-                newValues[0] = birdTarget.y; //System.out.println(" get to "+newValues[0]);
+                newValues[0] = birdTarget.y; //System.out.println("target y: "+newValues[0]+" set to "+birdTarget.y);
                 return 1;
             default: assert false; return 0;
         }

@@ -116,7 +116,6 @@ public abstract class BirdAbstractClass {
     }
 
     private  void setCoinList(float delta) {
-
         if (coinNumber<100) {  //if not a phoenix or goldbird
             final float rotationIncrement = 360 / coinNumber;
             for (int i=0;i<coinNumber;i++) {
@@ -166,21 +165,30 @@ public abstract class BirdAbstractClass {
     }
 
     public void update(float delta, float runTime){
-        setRotation();
+        if (coinNumber<100){
+            setRotation();
+        }
         if (isAlive) {
             preX=x;
-            currentX.update(delta);
             xVel= x-preX;
             if (currentY!=null&&currentY.isStarted()){
                 preY=y;
                 currentY.update(delta);
-                System.out.println("currentY "+y);
+                System.out.println("currentY tween: "+y);
                 yVel=y-preY;
             } else {
-                System.out.println("intro sets "+y+" += "+yVel);
+                System.out.println("y: "+y+" += "+yVel);
                 y+=yVel;
             }
-
+            if (currentX!=null&&currentX.isStarted()){
+                preX=x;
+                currentX.update(delta);
+                //System.out.println("currentX tween: "+x);
+                xVel=x-preX;
+            } else {
+                System.out.println("x: "+x+" += "+xVel);
+                x+=xVel;
+            }
 
             boundingPoly.translate(xVel, yVel);
 
@@ -189,7 +197,7 @@ public abstract class BirdAbstractClass {
                 die();
             }
             if (y > camHeight - 0) { //0 being height of top of tower where score & diamonds are
-                GameWorld.addGold(-coinNumber);
+                //whatever we hit -= the starting health of the bird hitting it
                 die();
             }
             specificUpdate(delta, runTime);

@@ -22,7 +22,7 @@ public class PhoenixBird extends BirdAbstractClass {
     //public final int[] animSeqList = {0,1,2,3};
 Tween outroY;
 
-public float targetY ;//, preTargetY;
+public float targetY, targetX;//, preTargetY;
     public PhoenixBird(float camHeight, float camWidth){
         super();
         yAcc=-0.1f;
@@ -42,15 +42,17 @@ public float targetY ;//, preTargetY;
 
         width *=finalSizeRatio;
         height*=finalSizeRatio;
-        edge = (camWidth)-width/2;
+        edge = (camWidth)-width/3;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=150;
 
         animation=frontFlaps;// starting animation
-        x=(width/2 + r.nextInt((int)(edge-width)));
-        //System.out.println("x of bird set to " + x);
+        x=(width/3 + r.nextInt((int)(edge-(2*width)/3)));
+        System.out.println("third of bird width: "+width/3);
         y=-height/3;
+        System.out.println("y of bird set to " + y);
         this.camWidth = camWidth;
+        System.out.println("camwidth: "+camWidth);
         this.camHeight = camHeight;
         setManager(camWidth);
 
@@ -69,113 +71,53 @@ public float targetY ;//, preTargetY;
     }
     @Override
     public void specificUpdate(float delta, float runTime) {
-        /*if (xMotion==first&&firstxMotion){
-            xMotionTimePositions.put(xMotion.getCurrentTime(), x);   //get all x positions
-            System.out.print(xMotionTimePositions.toString());
-            if (xMotion.getCurrentTime()==0){//this stops it immediately
-                firstxMotion=false;
-                System.out.println(xMotionTimePositions);
-            }
-        }*/
-        if (!BgHandler.isBirdSpawning&&firstX.isStarted()){
-            firstX.kill();
-            firstY.kill();
-            outroY.start();
+
+        if (!BgHandler.isBirdSpawning&&currentY!=outroY){
+            currentY.kill();
+            currentY=outroY.start();
             System.out.println("startOutro");
+        } else if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX){
+            System.out.println("Tween is finished******************************************************");
+            if (x<camWidth/2) targetX=camWidth/2+r.nextInt(  (int)((camWidth/2-width/3))  );
+            else              targetX=width/3+r.nextInt((int)(camWidth/2-width/3));
+
+            targetY=height/3+r.nextInt((int)(camHeight-height*3));
+            /*while (Math.abs(x-targetX)<200){
+                System.out.println("finding target: "+targetX+"far enough from "+x+"constraints are "+width/3+" and "+(camWidth-(width/3)));
+                if (x<camWidth/2)
+                targetX=width/2+r.nextInt((int)(t));
+            }*/
+            currentX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeOutSine)).start();
+            currentY =(Tween.to(this, 2, 2).target(targetY).ease(TweenEquations.easeOutSine)).start();
         }
-
-        //second.update(delta);
-        if (cnt==4) {cnt=0;}
-        //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
-
-        /*if (cnt==0&&x>(2*camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==1&&x<(2*camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==2&&x<(camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==3&&x>(camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        }*/
     }
-
 
     @Override
         public void setManager(final float camWidth) {
-
-            final TweenCallback newTargetX= new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                x=preX;
-                firstX.target(width/2+r.nextInt((int)(camWidth-width)));
-
-                //System.out.println("newTargetX");
-            }
-        };
-        final TweenCallback newTargetY= new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                //System.out.println("y: "+y+" = preY: "+preY);
-                preTargetY=targetY;
-                targetY=height/2+r.nextInt((int)(camHeight-height));
-                firstY.target(targetY);
-
-            }
-        };
 
             final TweenCallback endIntro= new TweenCallback() {
                 @Override
                 public void onEvent(int i, BaseTween<?> baseTween) {
                     introX.kill();
-                    currentX=firstX;
-                    currentY=firstY;
+                    currentX=firstX.start();
+                    currentY=firstY.start();
                     yVel=0;
-                    currentX.start();
-                    currentY.start();
                     System.out.println("endintro");
                 }
             };
 //aseInOutQuint
-        introX = Tween.to(this, 1, 2).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
+        introX = Tween.to(this, 1, 2).target(edge).ease(TweenEquations.easeInOutQuart).setCallback(endIntro).start();
         currentX=introX;
 
-
-        /*final TweenCallback endfirst= new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                second.pause();
-                first.start();
-            }
-        };*/
-
         //type 1 is xmotion type 2 is y
+        if (x<camWidth/2) targetX=camWidth/2+r.nextInt(  (int)((camWidth/2-width/3))  );
+        else              targetX=width/3+r.nextInt((int)(camWidth/2-width/3));
+        targetY=height/3+r.nextInt((int)(camHeight-height*3));
+        firstX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeOutSine));
+        //targetY=height/2+r.nextInt((int)(camHeight-height));
+        firstY =(Tween.to(this, 2, 2).target(targetY).ease(TweenEquations.easeOutSine));
 
-        firstX =(Tween.to(this, 1, 3).target(width/2+r.nextInt((int)(camWidth-width))).ease(TweenEquations.easeInOutQuint).setCallback(newTargetX).setCallbackTriggers(TweenCallback.END)).repeat(Tween.INFINITY,0);
-        targetY=height/2+r.nextInt((int)(camHeight-height));
-        firstY =(Tween.from(this, 2, 3).target(targetY).ease(TweenEquations.easeInOutQuint).setCallback(newTargetY).setCallbackTriggers(TweenCallback.END)).repeat(Tween.INFINITY,0);
+        outroY=Tween.to(this, 2, 3).target(camHeight+height/2).ease(TweenEquations.easeInQuint); //hit wall when not killed and end of spawning period
 
-        outroY=Tween.to(this, 2, 3).target(camHeight).ease(TweenEquations.easeInSine);
-        //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
-        /*
-        (xMotion = Timeline.createSequence()
-                .push(   Tween.to(this, 1, 6).target(edge).ease(TweenEquations.easeInOutQuint))
-                .push(   Tween.to(this, 1, 6).target(width/2).ease(TweenEquations.easeOutQuint)).setCallback(tweenStart)
-                //.push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeNone).setCallback(animationSwitch))
-
-                //.push(   Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeNone).setCallback(animationSwitch))    )
-                .repeat( Tween.INFINITY, 0)).start();
-*/
-                /*.push(delay(3).setCallback(animationSwitch))
-                .target(width/2).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
-                .target(edge).setCallback(animationSwitch).delay(3)
-                .ease(TweenEquations.easeOutBack)*/
     }
 }
