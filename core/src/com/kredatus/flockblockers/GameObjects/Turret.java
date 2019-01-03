@@ -148,9 +148,9 @@ public class Turret {
         float rotCompXDiff=yVel*((Math.abs(xDistance))/camWidth)*5;   //smaller and should be constant
         targetRot = (int) (Math.toDegrees(Math.atan(yDistance / xDistance)) + rotCompYDiff + rotCompXDiff); //the further it is the more ahead we aim when vel increases
         //System.out.println("Rot due to yDiff: " + rotCompYDiff + ", Rot due to xDiff: " + rotCompXDiff);
-        if        (xDistance+position.x > position.x) {
+        if        (xDistance > 0) { //(xDistance+position.x > position.x) {
             targetRot += 180;
-        } else if (yDistance+position.y > position.y) {
+        } else if (yDistance > 0) {
             targetRot += 360;
         }
     }

@@ -93,8 +93,7 @@ public class FireBird extends BirdAbstractClass {
         final TweenCallback endIntro= new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                currentX.kill();
-                currentX=firstX;
+                currentX=firstX.start();
                 yVel=0;
                 firstY.start();
             }
@@ -112,7 +111,7 @@ public class FireBird extends BirdAbstractClass {
             }
         };*/
 
-        first =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
+        firstX =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
         //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
         /*
         (xMotion = Timeline.createSequence()

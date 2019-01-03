@@ -25,14 +25,14 @@ import aurelienribon.tweenengine.Tween;
  * start with 1000 gold
  *
  *                  Health Speed  Size   Gold            Amount/Wave    Skin Shown          Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
- * ThunderBird=     1(S)    1     S      10(300)         30             F S B               Side to side all at once
- * WaterBird  =     1(S)    1     S      10(320)         32             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
- * FireBird   =     1(S)    1     S      10(340)         34             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
- * AcidBird   =     4(L)    12    M      24(360)         15             B S F               Side to side fast (make face front one side back the other)
- * NightBird  =     4(M)    12    M      38(380 / wave)  10             F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
- * LunarBird  =     4(M)    12    M      40(400)         10             B S                 Diagonal side to side
- * GoldBird   =     35(XL)  3     L      200(1000)       5              F S                 Slowly side to side
- * PhoenixBird=     150(XXL)3     XL     500+Diamond     1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
+ * ThunderBird=     1(S)    1     .5     10(300)         30             F S B               Side to side all at once
+ * WaterBird  =     1(S)    1     .6     10(320)         32             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
+ * FireBird   =     1(S)    1     .6     10(340)         34             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
+ * AcidBird   =     4(L)    12    .8     24(360)         15             B S F               Side to side fast (make face front one side back the other)
+ * NightBird  =     4(M)    12    .8     38(380 / wave)  10             F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
+ * LunarBird  =     4(M)    12    .8     40(400)         10             B S                 Diagonal side to side
+ * GoldBird   =     35(XL)  3     1      200(1000)       5              F S                 Slowly side to side
+ * PhoenixBird=     150(XXL)3     1.2    500+Diamond     1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
 Only add health to phoenix each round
 
  1 dia=1000 go, 5000 go=1 dia		90c/100 0.9c/dia	$2/300 0.7c/dia	$5/1000 0.5c/dia	$1.59/no ads
@@ -54,7 +54,7 @@ Only add health to phoenix each round
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
-    public float preX, preY, x, y, yVel, yAcc, xVel,yVelDeath, rotation, sizeRatio, finalSizeRatio=1, preTargetY;
+    public float preX, preY, x, y, yVel, yAcc, xVel,yVelDeath, sizeRatio, finalSizeRatio=1, preTargetY;
     //public Hashtable xMotionTimePositions=new Hashtable();
     public double xMotionTime;
     public float width, height;
@@ -75,7 +75,9 @@ public abstract class BirdAbstractClass {
     public Animation[] animSeq;
     public int health;
 
-
+    public float rotation, targetRot, behindRotation;
+    boolean isAtTargetRot;
+    
     public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
@@ -96,17 +98,65 @@ public abstract class BirdAbstractClass {
         //}
     }
 
+    private void rotateToTarget() {
+        behindRotation = rotation - 180;
+        if (behindRotation < 0) {
+            behindRotation += 360;
+        }
+
+        float rot =1f;
+        //1st case is if targetRot and rot are not 1 at 270-360 and 1 at 0-90 degrees, 2nd is rot at 0-90 targetRot at 270-360, 3rd is rot at 270-360 and targetRot at 0-90. rotlist is degree step of the turn, so if target within next degree of turn just do else part of the if statement below
+        if (Math.abs(rotation - targetRot)>1f) {
+            if (rotation < 180) {
+                if (targetRot > rotation && targetRot < behindRotation) {
+                    rotation += rot;
+                } else {
+                    rotation -= rot;
+
+                    if (rotation < 0) {
+                        rotation += 360;
+                    }
+                }
+            } else {
+                if (targetRot < rotation && targetRot > behindRotation) {
+                    rotation -= rot;
+                } else {
+                    rotation += rot;
+                    if (rotation > 360) {
+                        rotation -= 360;
+                    }
+                }
+            }
+        } else {
+            rotation=targetRot;
+        }
+
+            if (isAlive) {
+                boundingPoly.setRotation(rotation);
+            }
+
+    }
+
+
     public void setRotation() {
-        if (xVel>0) {
+        /*if (xVel>0) {
             if (x>camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) - 90) / 1.5f; //gradually slow down
             else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) - 90)/6;                      //quickly start up
         } else if (xVel<0) {
             if (x<camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) + 90) / 1.5f; //gradually slow down
             else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/6;                      //quickly start up
+        }*/
+
+        targetRot=(float) (Math.signum(-xVel)*5*Math.pow(Math.abs(xVel), 0.35)) ;   //y=5x^{0.4}
+        if (targetRot<0){
+            //if (targetRot<5) targetRot*=((5-targetRot)/2);
+            targetRot+=360;
+            if (targetRot<345) targetRot=345;
+        } else if (targetRot>15){
+            targetRot=15;
         }
-        if (isAlive) {
-            boundingPoly.setRotation(rotation);
-        }
+        //if (Math.abs(targetRot)<5) targetRot*=(1+(5-targetRot));
+        System.out.println("Rotation target: "+targetRot+" xvel: "+xVel);
                   /*
             if (xVel>0.5) {
                 rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 9.5f;
@@ -165,19 +215,18 @@ public abstract class BirdAbstractClass {
     }
 
     public void update(float delta, float runTime){
-        if (coinNumber<100){
+        //if (coinNumber<100){
             setRotation();
-        }
+            rotateToTarget();
+        //}
         if (isAlive) {
-            preX=x;
-            xVel= x-preX;
             if (currentY!=null&&currentY.isStarted()){
                 preY=y;
                 currentY.update(delta);
-                System.out.println("currentY tween: "+y);
+                //System.out.println("currentY tween: "+y);
                 yVel=y-preY;
             } else {
-                System.out.println("y: "+y+" += "+yVel);
+                //System.out.println("y: "+y+" += "+yVel);
                 y+=yVel;
             }
             if (currentX!=null&&currentX.isStarted()){
@@ -186,7 +235,7 @@ public abstract class BirdAbstractClass {
                 //System.out.println("currentX tween: "+x);
                 xVel=x-preX;
             } else {
-                System.out.println("x: "+x+" += "+xVel);
+                //System.out.println("x: "+x+" += "+xVel);
                 x+=xVel;
             }
 

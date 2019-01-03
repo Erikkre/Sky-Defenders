@@ -32,7 +32,7 @@ public float targetY, targetX;//, preTargetY;
         this.coinNumber=500;
 
         this.sizeVariance=1;
-        sizeRatio=1.3f;
+        sizeRatio=1.2f;
 
         animSeq = AssetHandler.phoenixAnimations;
         animSetup();
@@ -73,13 +73,18 @@ public float targetY, targetX;//, preTargetY;
     public void specificUpdate(float delta, float runTime) {
 
         if (!BgHandler.isBirdSpawning&&currentY!=outroY){
-            currentY.kill();
+            currentX.kill();
             currentY=outroY.start();
+            if (x>camWidth/2){   //if dying on right side fall to left and vice versa
+                xVel=-2;
+            } else {
+                xVel=2;
+            }
             System.out.println("startOutro");
         } else if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX){
             System.out.println("Tween is finished******************************************************");
-            if (x<camWidth/2) targetX=camWidth/2+r.nextInt(  (int)((camWidth/2-width/3))  );
-            else              targetX=width/3+r.nextInt((int)(camWidth/2-width/3));
+            if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );
+            else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
 
             targetY=height/3+r.nextInt((int)(camHeight-height*3));
             /*while (Math.abs(x-targetX)<200){
@@ -110,14 +115,14 @@ public float targetY, targetX;//, preTargetY;
         currentX=introX;
 
         //type 1 is xmotion type 2 is y
-        if (x<camWidth/2) targetX=camWidth/2+r.nextInt(  (int)((camWidth/2-width/3))  );
-        else              targetX=width/3+r.nextInt((int)(camWidth/2-width/3));
+        if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );
+        else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
         targetY=height/3+r.nextInt((int)(camHeight-height*3));
         firstX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeOutSine));
         //targetY=height/2+r.nextInt((int)(camHeight-height));
         firstY =(Tween.to(this, 2, 2).target(targetY).ease(TweenEquations.easeOutSine));
 
-        outroY=Tween.to(this, 2, 4).target(camHeight+height/2).ease(TweenEquations.easeInQuint); //hit wall when not killed and end of spawning period
+        outroY=Tween.to(this, 2, 2).target(camHeight+height/2).ease(TweenEquations.easeInExpo).delay(1); //hit wall when not killed and end of spawning period
 
     }
 }
