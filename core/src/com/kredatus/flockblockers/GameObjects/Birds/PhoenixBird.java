@@ -117,7 +117,7 @@ public float targetY, targetX;//, preTargetY;
         //targetY=height/2+r.nextInt((int)(camHeight-height));
         firstY =(Tween.to(this, 2, 2).target(targetY).ease(TweenEquations.easeOutSine));
 
-        outroY=Tween.to(this, 2, 3).target(camHeight+height/2).ease(TweenEquations.easeInQuint); //hit wall when not killed and end of spawning period
+        outroY=Tween.to(this, 2, 4).target(camHeight+height/2).ease(TweenEquations.easeInQuint); //hit wall when not killed and end of spawning period
 
     }
 }
