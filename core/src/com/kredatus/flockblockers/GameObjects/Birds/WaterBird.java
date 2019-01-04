@@ -23,6 +23,7 @@ public class WaterBird extends BirdAbstractClass {
 
         this.yVel=1;
         this.coinNumber=7;
+        origYVel=yVel;
 
         this.sizeVariance=20;
         sizeRatio=0.6f;
@@ -40,14 +41,16 @@ public class WaterBird extends BirdAbstractClass {
         health=1;
 
         animation=rightFlaps;
-        x=(width/2 + r.nextInt((int)(edge-width)));
+        origFlapSpeed=animation.getFrameDuration();
 
+        x=(width/2 + r.nextInt((int)(edge-width)));
         y=-height/3;
+
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
-
+        flapSpeedIntervals();
     }
     protected void animSetup(){
         frontFlaps=animSeq[0];

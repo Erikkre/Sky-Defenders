@@ -23,6 +23,7 @@ public class AcidBird extends BirdAbstractClass {
         super();
 
         this.yVel=12;
+        origYVel=yVel;
 
         this.coinNumber=7;
 
@@ -43,6 +44,7 @@ public class AcidBird extends BirdAbstractClass {
         health=7;
 
         animation=rightFlaps;
+        origFlapSpeed=animation.getFrameDuration();
         x=(width/2 + r.nextInt((int)(edge-width)));
 
         y=-height/3;
@@ -50,6 +52,7 @@ public class AcidBird extends BirdAbstractClass {
         this.camHeight = camHeight;
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
+        flapSpeedIntervals();
     }
 
     protected void animSetup(){

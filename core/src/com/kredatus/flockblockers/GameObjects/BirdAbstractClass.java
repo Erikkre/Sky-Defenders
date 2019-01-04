@@ -1,6 +1,7 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
@@ -73,17 +74,31 @@ public abstract class BirdAbstractClass {
     private TimerTask task;
     private BirdAbstractClass thisBird=this;
     public Animation[] animSeq;
-    public int health;
 
-    public float rotation, targetRot, behindRotation;
-    boolean isAtTargetRot;
-    
+    public int health;
+    public float targetRot, rotation, rotStep, unRotStep;
+
+    public float origYVel, origFlapSpeed;
+
+    protected boolean startRot, unRotate, rotate, fasterFlap;
+AnimationController
+    private ArrayList<Float> flapSpeedIntervals=new ArrayList<Float>();
+
     public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
         yAcc=-0.6f;
         yVelDeath=10;
+        rotStep=2.1f;
+        unRotStep=0.6f;
         //this.manager=manager;
+
+    }
+    protected void flapSpeedIntervals(){
+        for (float i=1.5f; i>=1;i-=0.1f){
+            flapSpeedIntervals.add(origFlapSpeed/i); //fast to slow
+        }
+
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
@@ -91,155 +106,22 @@ public abstract class BirdAbstractClass {
         boundingPoly  .  setOrigin(x, y);
     }
 
-    public abstract void setManager(float camWidth);
-
-    public boolean collides(Projectile projectile) {
-        return Intersector.overlapConvexPolygons(boundingPoly, projectile.boundingRect);
-        //}
-    }
-
-    private void rotateToTarget() {
-        behindRotation = rotation - 180;
-        if (behindRotation < 0) {
-            behindRotation += 360;
-        }
-
-        float rot =1f;
-        //1st case is if targetRot and rot are not 1 at 270-360 and 1 at 0-90 degrees, 2nd is rot at 0-90 targetRot at 270-360, 3rd is rot at 270-360 and targetRot at 0-90. rotlist is degree step of the turn, so if target within next degree of turn just do else part of the if statement below
-        if (Math.abs(rotation - targetRot)>1f) {
-            if (rotation < 180) {
-                if (targetRot > rotation && targetRot < behindRotation) {
-                    rotation += rot;
-                } else {
-                    rotation -= rot;
-
-                    if (rotation < 0) {
-                        rotation += 360;
-                    }
-                }
-            } else {
-                if (targetRot < rotation && targetRot > behindRotation) {
-                    rotation -= rot;
-                } else {
-                    rotation += rot;
-                    if (rotation > 360) {
-                        rotation -= 360;
-                    }
-                }
-            }
-        } else {
-            rotation=targetRot;
-        }
-
-            if (isAlive) {
-                boundingPoly.setRotation(rotation);
-            }
-
-    }
-
-
-    public void setRotation() {
-        /*if (xVel>0) {
-            if (x>camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) - 90) / 1.5f; //gradually slow down
-            else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) - 90)/6;                      //quickly start up
-        } else if (xVel<0) {
-            if (x<camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) + 90) / 1.5f; //gradually slow down
-            else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/6;                      //quickly start up
-        }*/
-
-        targetRot=(float) (Math.signum(-xVel)*5*Math.pow(Math.abs(xVel), 0.35)) ;   //y=5x^{0.4}
-        if (targetRot<0){
-            //if (targetRot<5) targetRot*=((5-targetRot)/2);
-            targetRot+=360;
-            if (targetRot<345) targetRot=345;
-        } else if (targetRot>15){
-            targetRot=15;
-        }
-        //if (Math.abs(targetRot)<5) targetRot*=(1+(5-targetRot));
-        System.out.println("Rotation target: "+targetRot+" xvel: "+xVel);
-                  /*
-            if (xVel>0.5) {
-                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 9.5f;
-            } else if (xVel<-0.5) {
-                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 9.5f;
-            }*/
-    }
-
-    private  void setCoinList(float delta) {
-        if (coinNumber<100) {  //if not a phoenix or goldbird
-            final float rotationIncrement = 360 / coinNumber;
-            for (int i=0;i<coinNumber;i++) {
-                coinList.add(new Coin(x, y, rotationIncrement * rotationCounter++, thisBird, false));
-            }
-        } else {
-
-            //(0.5*yAcc)
-            float realYAcc = yAcc / 2;
-            float determinant = (yVelDeath * yVelDeath) - (4 * (realYAcc) * y);     //a=yAcc, b=yDeathVel, distance/c = y, determinant = d = b^2 -4*a*c
-            //System.out.println("Acc: " + realYAcc + ", VelDeath: " + yVelDeath + ", Distance: " + y + ", CamHeight: "+camHeight);
-            float timeToOffCam;
-            if (determinant >= 0) {    // if
-                double root1 = (-yVelDeath + Math.sqrt(determinant)) / (2 * realYAcc);
-                double root2 = (-yVelDeath - Math.sqrt(determinant)) / (2 * realYAcc);
-                //System.out.print("Root1: " + root1 + ", Root2: " + root2);
-                if ((root2 <= root1 || root1 < 0) && root2 > 0) {
-                    timeToOffCam = (float) root2;
-                } else if ((root1 < root2 || root2 < 0) && root1 > 0) {
-                    timeToOffCam = (float) root1;
-                } else {
-                    throw new RuntimeException();
-                }
-            } else {
-                throw new RuntimeException();
-            }
-            //timeToOffCam=2;
-            //System.out.println("Time to hit offCam: " + timeToOffCam);
-
-
-            Timer timer = new Timer();
-            task = new TimerTask() {
-                @Override
-                public void run() {
-                    if (rotationCounter > coinNumber) {
-                        task.cancel();
-                    }
-                    rotationCounter++;
-                    coinList.add(new Coin(x, y, r.nextInt(360), thisBird, true));   //random spurting for phoenix
-                    //System.out.println("Coin added at rotation"+rotationIncrement*rotationCounter);
-                }
-            };
-
-            float timerIntervals = (timeToOffCam * delta * 1.05f) / coinNumber;  //because yacc and yvel are added every frameTimeDifference, we must multiply by delta to get seconds approximation
-            timer.scheduleAtFixedRate(task, 0, (int) (timerIntervals * 1000));
-        }
-    }
-
     public void update(float delta, float runTime){
-        //if (coinNumber<100){
-            setRotation();
-            rotateToTarget();
-        //}
-        if (isAlive) {
-            if (currentY!=null&&currentY.isStarted()){
-                preY=y;
-                currentY.update(delta);
-                //System.out.println("currentY tween: "+y);
-                yVel=y-preY;
-            } else {
-                //System.out.println("y: "+y+" += "+yVel);
-                y+=yVel;
-            }
-            if (currentX!=null&&currentX.isStarted()){
-                preX=x;
-                currentX.update(delta);
-                //System.out.println("currentX tween: "+x);
-                xVel=x-preX;
-            } else {
-                //System.out.println("x: "+x+" += "+xVel);
-                x+=xVel;
-            }
 
-            boundingPoly.translate(xVel, yVel);
+
+        if (isAlive) {
+            setPositionAndVelocity(delta);
+            //System.out.println(xVel);
+            setAndRotateToTargetRot();
+                                                                        //as speed goes up fraction goes down, at 0.1 (10x speed) flap at 0.5*origFlapSpeed so twice as fast
+            if (yVel>origYVel&& !fasterFlap){
+                fasterFlap=true;
+                animation.setFrameDuration(flapSpeedIntervals.get((int)((origYVel/yVel)*flapSpeedIntervals.size())));
+                System.out.println(animation.getFrameDuration());
+            }  else if (yVel<=origYVel && fasterFlap){
+                fasterFlap=false;
+                animation.setFrameDuration(origFlapSpeed);//base with yvelocity at original velocity, we flap standard speed. but with faster velocity we have shorter frame duration so faster flapping
+            }
 
             if (health <= 0) {
                 setCoinList(delta);
@@ -250,8 +132,9 @@ public abstract class BirdAbstractClass {
                 die();
             }
             specificUpdate(delta, runTime);
+
         } else {
-            System.out.println("dead");
+            //System.out.println("dead");
             if (diamonds==1){   //is phoenix
                 width*=0.996;
                 height*=0.996;
@@ -274,12 +157,6 @@ public abstract class BirdAbstractClass {
         }
     }
 
-    public abstract void specificUpdate(float delta, float runTime);
-
-    public boolean isOffCam(){
-        return y+height/2<0 || x+width/2< 0 || x-width/2> camWidth;
-    }
-
     private void die(){
         currentX.kill();
         currentY.kill();
@@ -292,6 +169,189 @@ public abstract class BirdAbstractClass {
             xVel=2;
         }
     }
+
+    public boolean isOffCam(){
+        return y+height/2<0 || x+width/2< 0 || x-width/2> camWidth;
+    }
+
+    public abstract void setManager(float camWidth);
+
+    public boolean collides(Projectile projectile) {
+        return Intersector.overlapConvexPolygons(boundingPoly, projectile.boundingRect);
+        //}
+    }
+
+    private float rotationToTargetRot(float rotation, float targetRot, float angleStep) {
+        float behindRotation = rotation - 180;
+        if (behindRotation < 0) {
+            behindRotation += 360;
+        }
+
+            if (rotation < 180) {
+                if (targetRot > rotation && targetRot < behindRotation) {
+                    rotation += angleStep;
+                } else {
+                    rotation -= angleStep;
+
+                    if (rotation < 0) {
+                        rotation += 360;
+                    }
+                }
+            } else {
+                if (targetRot < rotation && targetRot > behindRotation) {
+                    rotation -= angleStep;
+                } else {
+                    rotation += angleStep;
+                    if (rotation > 360) {
+                        rotation -= 360;
+                    }
+                }
+        }
+        return rotation;
+    }
+        /*
+        if (isUnrotating){
+            if (rotation>180&&rotation<359){
+                rotation+=rotSpeed/100;
+                //System.out.println("startRot left to unstartRot");
+            } else if (rotation<180&&rotation>1){
+                rotation-=rotSpeed/100;
+                //System.out.println("startRot right to unstartRot");
+            } else if (Math.abs(xVel)<0.5){
+                isUnrotating=false;
+            }
+        }
+        */
+ 
+
+
+    public void setTargetRot() {
+        /*if (xVel>0) {
+            if (x>camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) - 90) / 1.5f; //gradually slow down
+            else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) - 90)/6;                      //quickly start up
+        } else if (xVel<0) {
+            if (x<camWidth/3) rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel / 300))) + 90) / 1.5f; //gradually slow down
+            else rotation = ((float) Math.toDegrees(Math.atan(yVel / (xVel))) + 90)/6;                      //quickly start up
+        }*/
+
+        /*
+        targetRot=(float) (Math.signum(-xVel)*5*Math.pow(Math.abs(xVel), 0.35)) ;   //y=5x^{0.4}
+        if (targetRot<0){
+            //if (targetRot<5) targetRot*=((5-targetRot)/2);
+            targetRot+=360;
+        }
+
+        if (targetRot<345&&targetRot>180)      targetRot=345;
+        else if (targetRot>15&&targetRot<180)  targetRot=15;
+*/
+        //if (Math.abs(targetRot)<5) targetRot*=(1+(5-targetRot));
+        //System.out.println("Rotation target: "+targetRot+" xvel: "+xVel);
+                  /*
+            if (xVel>0.5) {
+                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 - 9.5f;
+            } else if (xVel<-0.5) {
+                rotation = (float) (Math.toDegrees(-Math.atan(-1 / xVel))) / 7 + 9.5f;
+            }*/
+    }
+
+    private  void setCoinList(float delta) {
+        if (coinNumber<100) {  //if not a phoenix or goldbird
+            final float rotationIncrement = 360 / coinNumber;
+            for (int i=0;i<coinNumber;i++) {
+                coinList.add(new Coin(x, y, rotationIncrement * rotationCounter++, thisBird, false));
+            }
+        } else {
+            //(0.5*yAcc)
+            float realYAcc = yAcc / 2;
+            float determinant = (yVelDeath * yVelDeath) - (4 * (realYAcc) * y);     //a=yAcc, b=yDeathVel, distance/c = y, determinant = d = b^2 -4*a*c
+            //System.out.println("Acc: " + realYAcc + ", VelDeath: " + yVelDeath + ", Distance: " + y + ", CamHeight: "+camHeight);
+            float timeToOffCam;
+            if (determinant >= 0) {    // if
+                double root1 = (-yVelDeath + Math.sqrt(determinant)) / (2 * realYAcc);
+                double root2 = (-yVelDeath - Math.sqrt(determinant)) / (2 * realYAcc);
+                //System.out.print("Root1: " + root1 + ", Root2: " + root2);
+                if ((root2 <= root1 || root1 < 0) && root2 > 0) {
+                    timeToOffCam = (float) root2;
+                } else if ((root1 < root2 || root2 < 0) && root1 > 0) {
+                    timeToOffCam = (float) root1;
+                } else {
+                    throw new RuntimeException();
+                }
+            } else {
+                throw new RuntimeException();
+            }
+            //timeToOffCam=2;
+            //System.out.println("Time to hit offCam: " + timeToOffCam);
+
+            Timer timer = new Timer();
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    if (rotationCounter > coinNumber) {
+                        task.cancel();
+                    }
+                    rotationCounter++;
+                    coinList.add(new Coin(x, y, r.nextInt(360), thisBird, true));   //random spurting for phoenix
+                    //System.out.println("Coin added at rotation"+rotationIncrement*rotationCounter);
+                }
+            };
+            float timerIntervals = (timeToOffCam * delta * 1.05f) / coinNumber;  //because yacc and yvel are added every frameTimeDifference, we must multiply by delta to get seconds approximation
+            timer.scheduleAtFixedRate(task, 0, (int) (timerIntervals * 1000));
+        }
+    }
+
+    public void setAndRotateToTargetRot(){
+        if (startRot){
+            startRot=false;
+            targetRot=-xVel*3;
+            if (targetRot<0){
+                targetRot+=360;
+            }
+            rotate=true;
+        }
+        if (rotate) {  //if rotation is not 0 for any reason then startRot back
+            if (Math.abs(rotation - targetRot)>rotStep){
+                rotation=rotationToTargetRot(rotation,targetRot,rotStep);   //moves rotation to targetRot by angleStep
+            } else {
+                rotation=targetRot;
+                rotate=false;
+                unRotate=true;
+            }
+        }
+        if (unRotate){
+            if (Math.abs(rotation)>unRotStep) {
+                rotation = rotationToTargetRot(rotation, 0, unRotStep);
+            } else {
+                rotation=0;
+                unRotate=false;
+            }
+        }
+        boundingPoly.setRotation(rotation);
+    }
+
+    public void setPositionAndVelocity(float delta){
+        if (currentY!=null&&currentY.isStarted()){
+            preY=y;
+            currentY.update(delta);
+            //System.out.println("currentY tween: "+y);
+            yVel=y-preY;
+        } else {
+            //System.out.println("y: "+y+" += "+yVel);
+            y+=yVel;
+        }
+        if (currentX!=null&&currentX.isStarted()){
+            preX=x;
+            currentX.update(delta);
+            //System.out.println("currentX tween: "+x);
+            xVel=x-preX;
+        } else {
+            //System.out.println("x: "+x+" += "+xVel);
+            x+=xVel;
+        }
+        boundingPoly.translate(xVel, yVel);
+    }
+
+    public abstract void specificUpdate(float delta, float runTime);
 
     public final void hit(Projectile projectile){
         health-= projectile.dmg;

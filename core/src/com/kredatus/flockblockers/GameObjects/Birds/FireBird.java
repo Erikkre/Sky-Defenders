@@ -24,6 +24,7 @@ public class FireBird extends BirdAbstractClass {
         super();
 
         this.yVel=1;
+        origYVel=yVel;
 
         this.coinNumber=10;
 
@@ -43,6 +44,7 @@ public class FireBird extends BirdAbstractClass {
         health=4;
 
         animation=rightFlaps;
+        origFlapSpeed=animation.getFrameDuration();
         x=(width/2 + r.nextInt((int)(edge-width)));
 
         y=-height/3;
@@ -50,6 +52,7 @@ public class FireBird extends BirdAbstractClass {
         this.camHeight = camHeight;
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
+        flapSpeedIntervals();
     }
 
     protected void animSetup(){

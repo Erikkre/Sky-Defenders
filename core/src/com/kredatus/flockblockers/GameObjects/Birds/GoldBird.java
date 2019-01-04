@@ -21,6 +21,7 @@ public class GoldBird extends BirdAbstractClass {
     public GoldBird(float camHeight, float camWidth){
         super();
         this.yVel=3;
+        origYVel=yVel;
 
         this.coinNumber=200;
 
@@ -39,6 +40,8 @@ public class GoldBird extends BirdAbstractClass {
         health=125;
 
         animation=rightFlaps;// starting animation
+        origFlapSpeed=animation.getFrameDuration();
+
         x=(width/2 + r.nextInt((int)(edge-width)));
 
         y=-height/3;
@@ -46,6 +49,7 @@ public class GoldBird extends BirdAbstractClass {
         this.camHeight = camHeight;
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
+        flapSpeedIntervals();
     }
 
     protected void animSetup(){

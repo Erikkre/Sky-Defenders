@@ -24,6 +24,7 @@ public class NightBird extends BirdAbstractClass {
         super();
 
         this.yVel=12;
+        origYVel=yVel;
 
         this.coinNumber=7;
 
@@ -44,6 +45,7 @@ public class NightBird extends BirdAbstractClass {
         health=1;
 
         animation=rightFlaps;
+        origFlapSpeed=animation.getFrameDuration();
         x=(width/2 + r.nextInt((int)(edge-width)));
 
         y=-height/3;
@@ -51,6 +53,8 @@ public class NightBird extends BirdAbstractClass {
         this.camHeight = camHeight;
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
+        origFlapSpeed=animation.getFrameDuration();
+        flapSpeedIntervals();
     }
 
     protected void animSetup(){

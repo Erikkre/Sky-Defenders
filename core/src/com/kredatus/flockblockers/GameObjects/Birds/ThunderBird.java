@@ -24,6 +24,7 @@ public class ThunderBird extends BirdAbstractClass {
         super();
 
         this.yVel=1;
+        origYVel=yVel;
 
         this.coinNumber=10;
 
@@ -43,6 +44,8 @@ public class ThunderBird extends BirdAbstractClass {
         health=1;
 
         animation=rightFlaps;
+        origFlapSpeed=animation.getFrameDuration();
+
         x=(width/2 + r.nextInt((int)(edge-width)));
         y=-height/3;
         this.camWidth = camWidth;
@@ -50,6 +53,7 @@ public class ThunderBird extends BirdAbstractClass {
 
         setManager(camWidth);
         setBoundingPoly(x,y,width,height);
+        flapSpeedIntervals();
     }
 
     protected void animSetup(){
