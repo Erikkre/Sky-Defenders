@@ -29,7 +29,7 @@ public class BirdHandler {
     public static ConcurrentLinkedQueue<BirdAbstractClass> deadBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
                                                 //0    1    2    3    4    5    6    7
     //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
-    private final static int[] birdNumberList=  { 1,   30,  33,  35,  15,  10,  10,  5  };
+    private final static int[] birdNumberList=  { 1,   50,  33,  35,  15,  10,  10,  5  };
     private float[] spawnIntervals=new float[8];
     private int waveTypeCnt=0;
     public TimerTask task;
@@ -48,11 +48,9 @@ public class BirdHandler {
         //public  static Class[] birdList ={new PhoenixBird(camHeight, camWidth),  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
 
         for (int i = 0; i < 8; i++) {
-            if (i!=0){
-                spawnIntervals[i] = duration / birdNumberList[i];
-            } else {
-                spawnIntervals[0]=0;
-            }
+            if (i==0) spawnIntervals[i]=0;
+            else if (i==1) spawnIntervals[i]=0.7f;
+            else spawnIntervals[i] = duration / birdNumberList[i];
         }
         timer=new Timer();
         taskRunning=false;
@@ -73,31 +71,6 @@ public class BirdHandler {
             }
         };
     }
-                //timer.scheduleAtFixedRate(task, 0, (int)(spawnIntervals[waveTypeCnt] * 1000));
-                //task.run();
-        /*
-        Gdx.app.postRunnable(new Runnable() {
-            public void run() {
-        final BirdAbstractClass birdToAdd = (BirdAbstractClass) birdList[waveTypeCnt].getConstructor().newInstance();
-                Class<?> clazz = Class.forName("com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird");
-        timer=new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    //PhoenixBird newBird= new PhoenixBird(camHeight,camWidth);
-                    //Class<?> clazz = Class.forName("com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird");
-
-                    activeBirdList.add(birdToAdd);
-                } catch (Exception e) {
-                    System.out.println("Could not make new " + birdList[waveTypeCnt].toString() + " object spawn because of error" + e);
-                    e.printStackTrace();
-                }
-            }
-        }, spawnIntervals[waveTypeCnt] * 1000, spawnIntervals[waveTypeCnt] * 1000);    //1000 for milliseconds
-            }
-        });
-*/
 
     public void update() {
         if (waveTypeCnt==8){waveTypeCnt=0;}
@@ -139,7 +112,7 @@ public class BirdHandler {
                 }
                 setUpTask();
                 if (waveTypeCnt == 0) {
-                    timer.schedule(task, 4500);
+                    timer.schedule(task, 4000);
                 } else {
                     timer.scheduleAtFixedRate(task, 4500, (int) (spawnIntervals[waveTypeCnt] * 1000));
                 }

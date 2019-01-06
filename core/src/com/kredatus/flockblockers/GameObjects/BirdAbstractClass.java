@@ -78,17 +78,17 @@ public abstract class BirdAbstractClass {
     public int health;
     public float targetRot, rotation, rotStep, unRotStep;
 
-    public float origYVel, origFlapSpeed;
+    public float origYVel, origFlapSpeed, lastYSpeedAtFlapChange;
 
     protected boolean startRot, unRotate, rotate, fasterFlap;
-AnimationController
+    //public AnimationController animControl = AnimationController();
     private ArrayList<Float> flapSpeedIntervals=new ArrayList<Float>();
 
     public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
-        yAcc=-0.6f;
-        yVelDeath=10;
+        yAcc=-1f;
+        yVelDeath=15;
         rotStep=2.1f;
         unRotStep=0.6f;
         //this.manager=manager;
@@ -97,8 +97,9 @@ AnimationController
     protected void flapSpeedIntervals(){
         for (float i=1.5f; i>=1;i-=0.1f){
             flapSpeedIntervals.add(origFlapSpeed/i); //fast to slow
-        }
 
+        }
+        System.out.println(flapSpeedIntervals.toString());
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
@@ -116,11 +117,13 @@ AnimationController
                                                                         //as speed goes up fraction goes down, at 0.1 (10x speed) flap at 0.5*origFlapSpeed so twice as fast
             if (yVel>origYVel&& !fasterFlap){
                 fasterFlap=true;
+                lastYSpeedAtFlapChange=yVel;
                 animation.setFrameDuration(flapSpeedIntervals.get((int)((origYVel/yVel)*flapSpeedIntervals.size())));
-                System.out.println(animation.getFrameDuration());
-            }  else if (yVel<=origYVel && fasterFlap){
+                System.out.println("Heighten"+animation.getFrameDuration());
+            }  else if (yVel<lastYSpeedAtFlapChange && yVel<= origFlapSpeed && fasterFlap){
                 fasterFlap=false;
                 animation.setFrameDuration(origFlapSpeed);//base with yvelocity at original velocity, we flap standard speed. but with faster velocity we have shorter frame duration so faster flapping
+                System.out.println("Lower"+animation.getFrameDuration());
             }
 
             if (health <= 0) {
@@ -158,8 +161,9 @@ AnimationController
     }
 
     private void die(){
-        currentX.kill();
-        currentY.kill();
+        if (currentX!=null) currentX.kill();
+        if (currentY!=null) currentY.kill();
+
         isAlive=false;
         animation=deathFlaps;
 
@@ -303,7 +307,7 @@ AnimationController
     public void setAndRotateToTargetRot(){
         if (startRot){
             startRot=false;
-            targetRot=-xVel*3;
+            targetRot=-xVel*4+ (Math.signum(-xVel)*2);
             if (targetRot<0){
                 targetRot+=360;
             }

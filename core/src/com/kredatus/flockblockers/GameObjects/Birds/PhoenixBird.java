@@ -25,12 +25,13 @@ Tween outroY;
 public float targetY, targetX;//, preTargetY;
     public PhoenixBird(float camHeight, float camWidth){
         super();
-        yAcc=-0.1f;
+        yAcc=-0.2f;
         yVelDeath=10;
-        yVel=3;
+        yVel=1;
         diamonds=1;
         coinNumber=500;
         origYVel=yVel;
+        health=150;
 
         sizeVariance=1;
         sizeRatio=1.2f;
@@ -45,7 +46,7 @@ public float targetY, targetX;//, preTargetY;
         height*=finalSizeRatio;
         edge = (camWidth)-width/3;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=150;
+
 
         animation=frontFlaps;// starting animation
         origFlapSpeed=animation.getFrameDuration();
@@ -87,7 +88,7 @@ public float targetY, targetX;//, preTargetY;
             System.out.println("startOutro");
         } else if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX){
             System.out.println("Tween is finished******************************************************");
-            if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );
+            if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );  //if on left go to right if on right go left
             else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
 
             targetY=height/3+r.nextInt((int)(camHeight-height*3));
@@ -99,25 +100,22 @@ public float targetY, targetX;//, preTargetY;
             currentX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeOutSine)).start();
             currentY =(Tween.to(this, 2, 2).target(targetY).ease(TweenEquations.easeOutSine)).start();
             startRot=true;
+        } else if (introX!=null&&introX.isFinished()){
+            introX=null;
+            startRot=true;
+            System.out.println("startRot");
         }
     }
 
     @Override
         public void setManager(final float camWidth) {
-        final TweenCallback firstRotate= new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                startRot=true;
-                System.out.println("start First");
-            }
-        };
+
             final TweenCallback endIntro= new TweenCallback() {
                 @Override
                 public void onEvent(int i, BaseTween<?> baseTween) {
                     currentX=firstX.start();
                     currentY=firstY.start();
                     yVel=0;
-
                 }
             };
 //aseInOutQuint
@@ -128,7 +126,7 @@ public float targetY, targetX;//, preTargetY;
         if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );
         else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
         targetY=height/3+r.nextInt((int)(camHeight-height*3));
-        firstX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeOutSine)).setCallback(firstRotate).setCallbackTriggers(TweenCallback.START);
+        firstX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeOutSine));
         //targetY=height/2+r.nextInt((int)(camHeight-height));
         firstY =(Tween.to(this, 2, 2).target(targetY).ease(TweenEquations.easeOutSine));
 

@@ -33,8 +33,8 @@ public class Coin {
 
         if (phoenixCoin) {
             x+=thisBird.width/7.7f;
-           x1= x - (float)(Math.cos(Math.toRadians(rotation)))*150 ;
-           y1= y - (float)(Math.sin(Math.toRadians(rotation)))*150;
+           x1= x - (float)(Math.cos(Math.toRadians(rotation)))*50 ;
+           y1= y - (float)(Math.sin(Math.toRadians(rotation)))*50;
            tweenX.setValue(x);
            tweenY.setValue(y);
 
@@ -67,13 +67,13 @@ public class Coin {
 
         if (phoenixCoin) {
             xMotion = Timeline.createSequence()
-                    .push((Tween.to(tweenX, -1, 0.4f).target(x1).ease(TweenEquations.easeOutSine)).setCallback(endFirstMovementX))
-                    .push(Tween.to(tweenX, -1, 1.5f).target(dest.x).ease(TweenEquations.easeInQuint))
+                    .push((Tween.to(tweenX, -1, 0.1f).target(x1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementX))
+                    .push(Tween.to(tweenX, -1, 0.9f).target(dest.x).ease(TweenEquations.easeNone))
                     .start();
 
             yMotion = Timeline.createSequence()
-                    .push((Tween.to(tweenY, -1, 0.4f).target(y1).ease(TweenEquations.easeOutSine)).setCallback(endFirstMovementY))
-                    .push(Tween.to(tweenY, -1, 1.5f).target(dest.y).ease(TweenEquations.easeInQuint))
+                    .push((Tween.to(tweenY, -1, 0.1f).target(y1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementY))
+                    .push(Tween.to(tweenY, -1, 0.9f).target(dest.y).ease(TweenEquations.easeNone))
                     .start();
 
         } else {

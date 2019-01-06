@@ -234,7 +234,7 @@ public class Turret {
                 dmg = 1.5f;
                 pen = 1;
                 spr = 1;
-                rof = 1.8f; //was 0.5f //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots
+                rof = 1.5f; //was 0.5f //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots
                 /*
                     switch (lvl) {
                         case(0):texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
@@ -253,7 +253,7 @@ public class Turret {
                 dmg = 0.5f;
                 pen = 1;
                 spr = 3;
-                rof = 1.1f;/*
+                rof = 1f;/*
                     switch (lvl) {
                         case(0):texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;  //beware of slight changes
                         case(1):texture=AssetHandler.s1;projTexture=AssetHandler.s1Proj;break;
@@ -271,7 +271,7 @@ public class Turret {
                 dmg = 4;
                 pen = 4;
                 spr = 1;
-                rof = 0.7f;/*
+                rof = 0.5f;/*
                     switch (lvl) {
                         case(0):texture=AssetHandler.d0;projTexture=AssetHandler.d0Proj;break;
                         case(1):texture=AssetHandler.d1;projTexture=AssetHandler.d1Proj;break;

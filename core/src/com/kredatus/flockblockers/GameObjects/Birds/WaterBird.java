@@ -95,7 +95,6 @@ public class WaterBird extends BirdAbstractClass {
             public void onEvent(int i, BaseTween<?> baseTween) {
                 currentX=firstX.start();
                 yVel=0;
-                firstY.start();
             }
         };
 
