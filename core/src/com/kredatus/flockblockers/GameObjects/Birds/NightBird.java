@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -29,7 +30,7 @@ public class NightBird extends BirdAbstractClass {
         this.coinNumber=7;
 
         this.sizeVariance=50;
-        sizeRatio=0.8f;
+        sizeRatio=0.6f;
 
         animSeq = AssetHandler.nightAnimations;
         animSetup();
@@ -99,8 +100,8 @@ public class NightBird extends BirdAbstractClass {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
                 currentX=firstX.start();
-                yVel=0;
-                firstY.start();
+                //yVel=0;
+                //firstY.start();
             }
         };
 
@@ -108,28 +109,9 @@ public class NightBird extends BirdAbstractClass {
         currentX=introX;
 
 
-        /*final TweenCallback endfirst= new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                second.pause();
-                first.start();
-            }
-        };*/
+
 
         firstX =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
-        //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
-        /*
-        (xMotion = Timeline.createSequence()
-                .push(   Tween.to(this, 1, 6).target(edge).ease(TweenEquations.easeInOutQuint))
-                .push(   Tween.to(this, 1, 6).target(width/2).ease(TweenEquations.easeOutQuint)).setCallback(tweenStart)
-                //.push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeNone).setCallback(animationSwitch))
 
-                //.push(   Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeNone).setCallback(animationSwitch))    )
-                .repeat( Tween.INFINITY, 0)).start();
-*/
-                /*.push(delay(3).setCallback(animationSwitch))
-                .target(width/2).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
-                .target(edge).setCallback(animationSwitch).delay(3)
-                .ease(TweenEquations.easeOutBack)*/
     }
 }

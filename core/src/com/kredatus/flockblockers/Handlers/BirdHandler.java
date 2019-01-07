@@ -1,6 +1,8 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Birds.AcidBird;
 import com.kredatus.flockblockers.GameObjects.Birds.FireBird;
@@ -27,18 +29,20 @@ public class BirdHandler {
 
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
     public static ConcurrentLinkedQueue<BirdAbstractClass> deadBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
+
                                                 //0    1    2    3    4    5    6    7
     //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
-    private final static int[] birdNumberList=  { 1,   50,  33,  35,  15,  10,  10,  5  };
+    private final static int[] birdNumberList=  { 1,   30,  30,  30,  15,  10,  10,  5  };
     private float[] spawnIntervals=new float[8];
     private int waveTypeCnt=0;
     public TimerTask task;
     private Timer timer;
-    private final float duration = 30;
+    private final float duration = 40;
     private BgHandler bgHandler;
     private float camWidth, camHeight;
     //BirdAbstractClass birdToAdd;
     boolean taskRunning;
+
     public BirdHandler(BgHandler bgHandler,  float camWidth, float camHeight) {
 
         this.bgHandler = bgHandler;
@@ -49,7 +53,7 @@ public class BirdHandler {
 
         for (int i = 0; i < 8; i++) {
             if (i==0) spawnIntervals[i]=0;
-            else if (i==1) spawnIntervals[i]=0.7f;
+            else if (i==1||i==3) spawnIntervals[i]=0.01f;
             else spawnIntervals[i] = duration / birdNumberList[i];
         }
         timer=new Timer();
@@ -61,15 +65,30 @@ public class BirdHandler {
 
     public void setUpTask() {
         //birdToAdd=(BirdAbstractClass) PhoenixBird.in
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                if (birdQueue.size() > 0) {
-                    activeBirdQueue.add(birdQueue.poll());  //removes it or returns null if empty
+        if (waveTypeCnt !=2) {//if not waterbird
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    if (birdQueue.size() > 0) {
+                        activeBirdQueue.add(birdQueue.poll());  //removes it or returns null if empty
+                    }
+                    //System.out.println(activeBirdQueue);
                 }
-                //System.out.println(activeBirdQueue);
-            }
-        };
+            };
+        } else {
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    if (birdQueue.size() > 0) {
+                        activeBirdQueue.add(birdQueue.poll());  //removes it or returns null if empty
+                        activeBirdQueue.add(birdQueue.poll());
+                        activeBirdQueue.add(birdQueue.poll());
+                        activeBirdQueue.add(birdQueue.poll());
+                        activeBirdQueue.add(birdQueue.poll());
+                    }
+                }
+            };
+        }
     }
 
     public void update() {
@@ -86,8 +105,19 @@ public class BirdHandler {
                         birdQueue.add(new ThunderBird(camHeight, camWidth));
                     }
                 } else if (waveTypeCnt == 2) {
-                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new WaterBird(camHeight, camWidth));
+                    float height = ((TextureRegion) AssetHandler.waterAnimations[3].getKeyFrames()[3]).getRegionHeight();
+                    //float width  =((TextureRegion)AssetHandler.waterAnimations[3].getKeyFrames()[0]).getRegionWidth();
+                    for (int i = 0; i < birdNumberList[waveTypeCnt] / 5; i++) {
+                        birdQueue.add(new WaterBird(camHeight, camWidth, (camWidth / 6) * 1, (-height / 3) * 2f));
+                        birdQueue.add(new WaterBird(camHeight, camWidth, (camWidth / 6) * 2, (-height / 3) * 1.5f));
+                        birdQueue.add(new WaterBird(camHeight, camWidth, (camWidth / 6) * 3,          (-height / 3)    ));
+                        birdQueue.add(new WaterBird(camHeight, camWidth, (camWidth / 6) * 4, (-height / 3) * 1.5f));
+                        birdQueue.add(new WaterBird(camHeight, camWidth, (camWidth / 6) * 5, (-height / 3) * 2));
+
+                        /*waterArrowHeads.add(new WaterBird(camHeight, camWidth, (camWidth/6)*3));
+                        waterArrowHeads.add(new WaterBird(camHeight, camWidth, (camWidth/6)*2));
+                        waterRound.add(waterArrowHeads);
+                        waterArrowHeads.clear();*/
                     }
                 } else if (waveTypeCnt == 3) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
@@ -110,9 +140,17 @@ public class BirdHandler {
                         birdQueue.add(new GoldBird(camHeight, camWidth));
                     }
                 }
+
                 setUpTask();
+
                 if (waveTypeCnt == 0) {
                     timer.schedule(task, 4000);
+                } else if (waveTypeCnt == 2) {  //if waterbird
+                    timer.scheduleAtFixedRate(task, 4500, (int) ((duration / (birdNumberList[waveTypeCnt] / 5)) * 1000) / 2);   //  duration/amount of waves/2
+                } else if (waveTypeCnt == 3) {  //if fire spawn all at once in blob
+                    for (int i=0; i<birdNumberList[3]; i++){
+                        activeBirdQueue.add(birdQueue.poll());
+                    }
                 } else {
                     timer.scheduleAtFixedRate(task, 4500, (int) (spawnIntervals[waveTypeCnt] * 1000));
                 }

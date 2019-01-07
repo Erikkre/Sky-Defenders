@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;

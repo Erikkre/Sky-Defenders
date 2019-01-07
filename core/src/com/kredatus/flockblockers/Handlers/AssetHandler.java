@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Gdx;
@@ -345,17 +346,17 @@ public class AssetHandler {
         coinAnimation.setPlayMode(Animation.PlayMode.LOOP); //REMEMBER THIS STEP
 
 
-        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.06f);
+        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.05f);
 
-        thunderAnimations = birdTextureToAnimation("thunder.png", 0.09f);
-        waterAnimations   = birdTextureToAnimation("water.png", 0.09f);
-        fireAnimations    = birdTextureToAnimation("fire.png", 0.09f);
+        thunderAnimations = birdTextureToAnimation("thunder.png", 0.05f);
+        waterAnimations   = birdTextureToAnimation("water.png", 0.05f);
+        fireAnimations    = birdTextureToAnimation("fire.png", 0.08f);
 
-        nightAnimations   = birdTextureToAnimation("night.png", 0.04f);
-        acidAnimations    = birdTextureToAnimation("acid.png", 0.04f);
-        lunarAnimations   = birdTextureToAnimation("lunar.png", 0.04f);
+        nightAnimations   = birdTextureToAnimation("night.png", 0.03f);
+        acidAnimations    = birdTextureToAnimation("acid.png", 0.03f);
+        lunarAnimations   = birdTextureToAnimation("lunar.png", 0.03f);
 
-        goldAnimations    = birdTextureToAnimation("gold.png", 0.06f);
+        goldAnimations    = birdTextureToAnimation("gold.png", 0.05f);
 
         Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
         greyTinyBirdAnimation=tinyBirdTextureToAnimation(greyTinyBird);
@@ -432,7 +433,7 @@ public class AssetHandler {
         Animation frontFlaps= new Animation<TextureRegion>(flapSpeed, front);
         frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
-        Animation deathFlaps= new Animation<TextureRegion>(0.025f, front);
+        Animation deathFlaps= new Animation<TextureRegion>(0.015f, front);
         deathFlaps.setPlayMode(Animation.PlayMode.LOOP);
 
         Animation rightFlaps= new Animation<TextureRegion>(flapSpeed, rightSide);

@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -23,13 +24,13 @@ public class FireBird extends BirdAbstractClass {
     public FireBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=1;
+        yVel=1f;
         origYVel=yVel;
 
-        this.coinNumber=10;
+        coinNumber=10;
 
-        this.sizeVariance=50;
-        sizeRatio=0.6f;
+        sizeVariance=150;
+        sizeRatio=0.4f;
 
         animSeq = AssetHandler.fireAnimations;
         animSetup();
@@ -41,13 +42,23 @@ public class FireBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=4;
+        health=2;
 
-        animation=rightFlaps;
+        double temp=r.nextGaussian();
+        if (temp<-0.7 || temp >0.7) animation=animSeq[r.nextInt(4)];    //less of a chance for it to be side or back of bird, within standard deviation higher chance of front
+        else animation=frontFlaps;
         origFlapSpeed=animation.getFrameDuration();
-        x=(width/2 + r.nextInt((int)(edge-width)));
 
-        y=-height/3;
+        x=0;
+        y=1;
+
+        while (x<width/2||x>edge) {
+            x = (float) ((camWidth / 2) + (r.nextGaussian() * ((camWidth / 4) - (width / 2)))); //gaussian is between -1 and 1 as a bellcurve around 0
+        }
+        while (y>0 || y<-height*4) {
+            y = (float) (-height * 2 + r.nextGaussian() * (height ));
+        }
+
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
@@ -68,66 +79,11 @@ public class FireBird extends BirdAbstractClass {
 
     @Override
     public void specificUpdate(float delta, float runTime) {
-        //second.update(delta);
-        if (cnt==4) {cnt=0;}
-        //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 
-        if (cnt==0&&x>(2*camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==1&&x<(2*camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==2&&x<(camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==3&&x>(camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        }
     }
 
     @Override
     public void setManager(float camWidth) {
-        final TweenCallback endIntro= new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                currentX=firstX.start();
-                yVel=0;
-                firstY.start();
-            }
-        };
 
-        introX = Tween.to(this, 1, 1).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
-        currentX=introX;
-
-
-        /*final TweenCallback endfirst= new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                second.pause();
-                first.start();
-            }
-        };*/
-
-        firstX =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
-        //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
-        /*
-        (xMotion = Timeline.createSequence()
-                .push(   Tween.to(this, 1, 6).target(edge).ease(TweenEquations.easeInOutQuint))
-                .push(   Tween.to(this, 1, 6).target(width/2).ease(TweenEquations.easeOutQuint)).setCallback(tweenStart)
-                //.push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeNone).setCallback(animationSwitch))
-
-                //.push(   Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeNone).setCallback(animationSwitch))    )
-                .repeat( Tween.INFINITY, 0)).start();
-*/
-                /*.push(delay(3).setCallback(animationSwitch))
-                .target(width/2).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
-                .target(edge).setCallback(animationSwitch).delay(3)
-                .ease(TweenEquations.easeOutBack)*/
     }
 }

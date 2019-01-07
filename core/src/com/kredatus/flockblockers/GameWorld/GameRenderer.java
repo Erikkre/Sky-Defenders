@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
@@ -105,6 +106,8 @@ public class GameRenderer {
 
     Table table;
     public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, UiHandler uiHandler) {
+
+
         this.birdHandler=birdHandler;
         this.bgHandler=bgHandler;
         this.targetHandler = targetHandler;
@@ -593,7 +596,7 @@ public void setRotate(float angle){
                     j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
         }
         for (BirdAbstractClass k : activeBirdQueue) {
-            batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime), k.x - k.width / 2, k.y - k.height / 2,
+            batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1f, 1f, k.rotation);
 
             /*batcher.end();
@@ -607,7 +610,7 @@ public void setRotate(float angle){
             batcher.begin();*/
         }
         for (BirdAbstractClass k : deadBirdQueue) {
-            batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime), k.x - k.width / 2, k.y - k.height / 2,
+            batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
             if (!k.coinList.isEmpty()) {
                 for (Coin l : k.coinList) {

@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -24,24 +25,24 @@ import aurelienribon.tweenengine.Tween;
  *
  * change stats with ctrl+shift+f to match spec
  * start with 1000 gold
- *
+ * damage of guns is based on size, spread = good against small, fast = good for med, high damage = good for bosses
  *                  Health Speed  Size   Gold            Amount/Wave    Skin Shown          Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
- * ThunderBird=     1(S)    1     .5     10(300)         30             F S B               Side to side all at once
- * WaterBird  =     1(S)    1     .6     10(320)         32             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
- * FireBird   =     1(S)    1     .6     10(340)         34             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
- * AcidBird   =     4(L)    12    .8     24(360)         15             B S F               Side to side fast (make face front one side back the other)
- * NightBird  =     4(M)    12    .8     38(380 / wave)  10             F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
- * LunarBird  =     4(M)    12    .8     40(400)         10             B S                 Diagonal side to side
+ * ThunderBird=     2(S)    1-2.5 .4     10(300)         30             F S B               Side to side all at once
+ * WaterBird  =     2(S)    2     .5     10(320)         30             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
+ * FireBird   =     2(S)    1     .4     10(340)         30             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
+ * AcidBird   =     4(L)    9    .5     24(360)          15             B S F               Side to side fast (make face front one side back the other)
+ * NightBird  =     4(M)    9    .5     38(380 / wave)   10             F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
+ * LunarBird  =     4(M)    9    .5     40(400)          10             B S                 Diagonal side to side
  * GoldBird   =     35(XL)  3     1      200(1000)       5              F S                 Slowly side to side
  * PhoenixBird=     150(XXL)3     1.2    500+Diamond     1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
 Only add health to phoenix each round
 
- 1 dia=1000 go, 5000 go=1 dia		90c/100 0.9c/dia	$2/300 0.7c/dia	$5/1000 0.5c/dia	$1.59/no ads
+ 1 dia=1000 go, 5000 go=1 dia		90c/100 0.9c/dia	$2/300 0.7c/dia	$5/1000 0.5c/dia	$2/no ads
  cost	        500	            1500	    4500	        13500	        40500	        121500          	364500	            1000 diamonds	3000 diamonds	10000 diamonds
                 I	            II	        III	            IV	            V           	VI	                VII	                VIII	    IX	                X       Dmg	  RoF	  Pen         Spr
- (Fast Firing)	knife thrower	bow	        Machine Pistol  assault rifle	machinegun	    Minigun	            AA Autocannon	    Laser	    Ion cannon	        ???	    2	  1/s	  2 birds     +1 upgradeable
+ (Fast Firing)	knife thrower	bow	        Machine Pistol  assault rifle	machinegun	    Minigun	            AA Autocannon	    Laser	    Ion cannon	        ???	    1	  1/s	  2 birds     +1 upgradeable (last upgrade cuz pretty op, maybe lower fire rate)
  (High Damage)	spear thrower	crossbow	Ballistae	    Hand Cannon	    sniper rifle	grenade launcher	anti-tank rifle	    Artillery	gauss cannon	    ???	    4	  0.1/s	  3 birds
- (Wide Spread)	dart thrower	multishot	MultiCatapult	shotgun	        blunderbuss	    Flamethrower	    Mortar	            Missile	    Microwave emitter	???	    1	  0.5/s	  2 bird	  3 shots +1 each time
+ (Wide Spread)	dart thrower	multishot	MultiCatapult	shotgun	        blunderbuss	    Flamethrower	    Mortar	            Missile	    Microwave emitter	???	    0.5   0.5/s	  2 bird	  3 shots +1 each time
                                                                                                                                                                             *=2   *=1.5   *=1.4
 
  Gold/s	score is gold/s/active playtime		gold is lost when bird passes through
@@ -84,6 +85,7 @@ public abstract class BirdAbstractClass {
     //public AnimationController animControl = AnimationController();
     private ArrayList<Float> flapSpeedIntervals=new ArrayList<Float>();
 
+    public float flapRandomFactor;
     public BirdAbstractClass() {
         isAlive=true;
         isOffCam = false;
@@ -92,6 +94,7 @@ public abstract class BirdAbstractClass {
         rotStep=2.1f;
         unRotStep=0.6f;
         //this.manager=manager;
+        flapRandomFactor=r.nextFloat()*0.5f;
 
     }
     protected void flapSpeedIntervals(){
@@ -99,7 +102,7 @@ public abstract class BirdAbstractClass {
             flapSpeedIntervals.add(origFlapSpeed/i); //fast to slow
 
         }
-        System.out.println(flapSpeedIntervals.toString());
+        //System.out.println(flapSpeedIntervals.toString());
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
@@ -108,7 +111,6 @@ public abstract class BirdAbstractClass {
     }
 
     public void update(float delta, float runTime){
-
 
         if (isAlive) {
             setPositionAndVelocity(delta);
@@ -123,7 +125,7 @@ public abstract class BirdAbstractClass {
             }  else if (yVel<lastYSpeedAtFlapChange && yVel<= origFlapSpeed && fasterFlap){
                 fasterFlap=false;
                 animation.setFrameDuration(origFlapSpeed);//base with yvelocity at original velocity, we flap standard speed. but with faster velocity we have shorter frame duration so faster flapping
-                System.out.println("Lower"+animation.getFrameDuration());
+                System.out.println("Lower"   +animation.getFrameDuration());
             }
 
             if (health <= 0) {
@@ -158,6 +160,58 @@ public abstract class BirdAbstractClass {
                 }
             }
         }
+    }
+
+    public void setAndRotateToTargetRot(){
+        if (startRot){
+            startRot=false;
+            targetRot=-xVel*4+ (Math.signum(-xVel)*2);
+            System.out.println("TargetRot: "+targetRot);
+            if (targetRot<0){
+                targetRot+=360;
+            }
+            rotate=true;
+        }
+        if (rotate) {  //if rotation is not 0 for any reason then startRot back
+            if (Math.abs(rotation - targetRot)>rotStep){
+                rotation=rotationToTargetRot(rotation,targetRot,rotStep);   //moves rotation to targetRot by angleStep
+            } else {
+                rotation=targetRot;
+                rotate=false;
+                unRotate=true;
+            }
+        }
+        if (unRotate){
+            if (Math.abs(rotation)>unRotStep) {
+                rotation = rotationToTargetRot(rotation, 0, unRotStep);
+            } else {
+                rotation=0;
+                unRotate=false;
+            }
+        }
+        boundingPoly.setRotation(rotation);
+    }
+
+    public void setPositionAndVelocity(float delta){
+        if (currentY!=null&&currentY.isStarted()){
+            preY=y;
+            currentY.update(delta);
+            //System.out.println("currentY tween: "+y);
+            yVel=y-preY;
+        } else {
+            //System.out.println("y: "+y+" += "+yVel);
+            y+=yVel;
+        }
+        if (currentX!=null&&currentX.isStarted()){
+            preX=x;
+            currentX.update(delta);
+            //System.out.println("currentX tween: "+x);
+            xVel=x-preX;
+        } else {
+            //System.out.println("x: "+x+" += "+xVel);
+            x+=xVel;
+        }
+        boundingPoly.translate(xVel, yVel);
     }
 
     private void die(){
@@ -304,56 +358,7 @@ public abstract class BirdAbstractClass {
         }
     }
 
-    public void setAndRotateToTargetRot(){
-        if (startRot){
-            startRot=false;
-            targetRot=-xVel*4+ (Math.signum(-xVel)*2);
-            if (targetRot<0){
-                targetRot+=360;
-            }
-            rotate=true;
-        }
-        if (rotate) {  //if rotation is not 0 for any reason then startRot back
-            if (Math.abs(rotation - targetRot)>rotStep){
-                rotation=rotationToTargetRot(rotation,targetRot,rotStep);   //moves rotation to targetRot by angleStep
-            } else {
-                rotation=targetRot;
-                rotate=false;
-                unRotate=true;
-            }
-        }
-        if (unRotate){
-            if (Math.abs(rotation)>unRotStep) {
-                rotation = rotationToTargetRot(rotation, 0, unRotStep);
-            } else {
-                rotation=0;
-                unRotate=false;
-            }
-        }
-        boundingPoly.setRotation(rotation);
-    }
 
-    public void setPositionAndVelocity(float delta){
-        if (currentY!=null&&currentY.isStarted()){
-            preY=y;
-            currentY.update(delta);
-            //System.out.println("currentY tween: "+y);
-            yVel=y-preY;
-        } else {
-            //System.out.println("y: "+y+" += "+yVel);
-            y+=yVel;
-        }
-        if (currentX!=null&&currentX.isStarted()){
-            preX=x;
-            currentX.update(delta);
-            //System.out.println("currentX tween: "+x);
-            xVel=x-preX;
-        } else {
-            //System.out.println("x: "+x+" += "+xVel);
-            x+=xVel;
-        }
-        boundingPoly.translate(xVel, yVel);
-    }
 
     public abstract void specificUpdate(float delta, float runTime);
 

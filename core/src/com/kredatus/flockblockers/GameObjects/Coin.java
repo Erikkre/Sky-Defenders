@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -33,8 +34,8 @@ public class Coin {
 
         if (phoenixCoin) {
             x+=thisBird.width/7.7f;
-           x1= x - (float)(Math.cos(Math.toRadians(rotation)))*50 ;
-           y1= y - (float)(Math.sin(Math.toRadians(rotation)))*50;
+           x1= x - (float)(Math.cos(Math.toRadians(rotation)))*75 ;
+           y1= y - (float)(Math.sin(Math.toRadians(rotation)))*75;
            tweenX.setValue(x);
            tweenY.setValue(y);
 

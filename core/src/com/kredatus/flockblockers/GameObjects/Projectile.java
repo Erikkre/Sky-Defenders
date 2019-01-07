@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameObjects;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
@@ -25,7 +26,7 @@ public class Projectile {
         this.position = position.cpy() ;
         this.vel      = pen*2+4;
 
-        this.rotation = rotation -(acc/2)+r.nextInt(acc);
+        this.rotation = rotation -(acc/2)+r.nextInt(acc);   //accuracy
         if (this.rotation>360){
             this.rotation-=360;
         } else if (rotation<0) {
@@ -37,7 +38,7 @@ public class Projectile {
         this.dmg=dmg; this.pen=pen;
         //sin(rotation)=xVel/Velocity, pen=velocity
 
-        velocity.set(    -(float)(vel*Math.cos(Math.toRadians(this.rotation))),    -(float)(vel*Math.sin(Math.toRadians(this.rotation)))   );
+        velocity.set(     -(float)(vel*Math.cos(Math.toRadians(this.rotation))),    -(float)(vel*Math.sin(Math.toRadians(this.rotation)))    );
 
 
         boundingRect  = new Polygon(new float[]{position.x-width/2,position.y-height/2,         position.x+width/2,position.y-height/2,         position.x+width/2,position.y+height/2,         position.x-width/2,position.y+height/2});

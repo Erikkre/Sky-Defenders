@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.Gdx;
@@ -231,7 +232,7 @@ public class Turret {
     private void turretSetup(char turretType, int lvl){
         switch (turretType) {
             case ('f'): //fast firing
-                dmg = 1.5f;
+                dmg = 1f;
                 pen = 1;
                 spr = 1;
                 rof = 1.5f; //was 0.5f //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots

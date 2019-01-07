@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.Gdx;
@@ -31,7 +32,7 @@ public float targetY, targetX;//, preTargetY;
         diamonds=1;
         coinNumber=500;
         origYVel=yVel;
-        health=150;
+        health=5;
 
         sizeVariance=1;
         sizeRatio=1.2f;

@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -29,7 +30,7 @@ public class LunarBird extends BirdAbstractClass {
         this.coinNumber=40;
 
         this.sizeVariance=50;
-        sizeRatio=0.8f;
+        sizeRatio=0.6f;
 
         animSeq = AssetHandler.lunarAnimations;
         animSetup();
