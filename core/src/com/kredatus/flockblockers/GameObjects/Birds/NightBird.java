@@ -24,13 +24,13 @@ public class NightBird extends BirdAbstractClass {
     public NightBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=12;
+        //yVel=10;
         origYVel=yVel;
 
-        this.coinNumber=7;
+        coinNumber=7;
 
-        this.sizeVariance=50;
-        sizeRatio=0.6f;
+        sizeVariance=50;
+        sizeRatio=0.7f;
 
         animSeq = AssetHandler.nightAnimations;
         animSetup();
@@ -43,13 +43,13 @@ public class NightBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=1;
+        health=2;
 
-        animation=rightFlaps;
+        animation=animSeq[r.nextInt(2)];
         origFlapSpeed=animation.getFrameDuration();
         x=(width/2 + r.nextInt((int)(edge-width)));
 
-        y=-height/3;
+        y=-6*height;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
@@ -60,58 +60,30 @@ public class NightBird extends BirdAbstractClass {
 
     protected void animSetup(){
         frontFlaps=animSeq[0];
-        leftFlaps=animSeq[1];
-        rightFlaps=animSeq[2];
         backFlaps=animSeq[3];
         deathFlaps=animSeq[4];
-        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        animSeq= new Animation[]{frontFlaps,backFlaps};
         height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
         width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
     }
 
     @Override
     public void specificUpdate(float delta, float runTime) {
-        //second.update(delta);
-        if (cnt==4) {cnt=0;}
-        //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 
-        if (cnt==0&&x>(2*camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==1&&x<(2*camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==2&&x<(camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==3&&x>(camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        }
     }
 
     @Override
     public void setManager(float camWidth) {
+
         final TweenCallback endIntro= new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                currentX=firstX.start();
-                //yVel=0;
-                //firstY.start();
+                currentY=firstY.start();
             }
         };
 
-        introX = Tween.to(this, 1, 1).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
-        currentX=introX;
-
-
-
-
-        firstX =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
+        currentY = Tween.to(this, 2, 2f).target(height).ease(TweenEquations.easeOutBack).setCallback(endIntro).start();
+        firstY =Tween.to(this, 2, 1.5f).target(camHeight+height/2).ease(TweenEquations.easeInBack).delay(2);
 
     }
 }

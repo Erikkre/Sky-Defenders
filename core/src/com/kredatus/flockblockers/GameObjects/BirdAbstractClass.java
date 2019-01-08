@@ -30,9 +30,9 @@ import aurelienribon.tweenengine.Tween;
  * ThunderBird=     2(S)    1-2.5 .4     10(300)         30             F S B               Side to side all at once
  * WaterBird  =     2(S)    2     .5     10(320)         30             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
  * FireBird   =     2(S)    1     .4     10(340)         30             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
- * AcidBird   =     4(L)    9    .5     24(360)          15             B S F               Side to side fast (make face front one side back the other)
- * NightBird  =     4(M)    9    .5     38(380 / wave)   10             F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
- * LunarBird  =     4(M)    9    .5     40(400)          10             B S                 Diagonal side to side
+ * AcidBird   =     4(L)    9     .7     24(360)         15             B S F               Side to side fast (make face front one side back the other)
+ * NightBird  =     4(M)    9     .7     38(380 / wave)  10             F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
+ * LunarBird  =     4(M)    9     .7     40(400)         10             B S                 Diagonal side to side
  * GoldBird   =     35(XL)  3     1      200(1000)       5              F S                 Slowly side to side
  * PhoenixBird=     150(XXL)3     1.2    500+Diamond     1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
 Only add health to phoenix each round
@@ -70,7 +70,7 @@ public abstract class BirdAbstractClass {
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, deathFlaps, animation;
     protected int sizeVariance, coinNumber,  diamonds, cnt=0, rotationCounter;
     //protected Timeline xMotion;
-    protected Tween introX, first, firstX, firstY, currentX, currentY;
+    protected Tween introX, introY, first, firstX, firstY, currentX, currentY;
     public Polygon boundingPoly;
     private TimerTask task;
     private BirdAbstractClass thisBird=this;

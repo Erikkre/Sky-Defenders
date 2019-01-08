@@ -18,7 +18,7 @@ import java.util.TimerTask;
  */
 
 public class Turret {
-    private boolean firing, targetAquired;
+    public boolean firing, targetAquired;
     private int[] rotList =new int[] {1,2,5, 10, 20}, accList=new int[] {28, 22, 16, 10, 2};
     public int dmgUpCounter, penUpCounter, rofUpCounter, sprUpCounter, rotUpCounter, accUpCounter, width, height, spr, acc=accList[0], rot=rotList[0];   //rot = rotationSpeed
     public Vector2 position;
@@ -32,6 +32,9 @@ public class Turret {
     char turretType;
     public int lvl = 0, firingInterval, timeSinceLastShot;
     private double lastShotTime=0;
+
+    public boolean firingStoppedByGamePause;
+
     public Turret(char turretType, Vector2 position){
         this.position =position ;
         this.camWidth = GameHandler.camWidth;
@@ -126,9 +129,11 @@ public class Turret {
     }
 
 
-    private void startFiring() {
+    public void startFiring() {
         setupFiring();
-        timeSinceLastShot=(int) (System.currentTimeMillis()-lastShotTime);
+        if (!firingStoppedByGamePause) timeSinceLastShot=(int) (System.currentTimeMillis()-lastShotTime);
+        else timeSinceLastShot=(int) ((System.currentTimeMillis()-GameHandler.timeOfResume)+(GameHandler.timeOfPause-lastShotTime));    //gets time since last shot in game time without real life pause
+        System.out.println("Time since last shot: "+timeSinceLastShot+", firing interval: "+firingInterval);
         if (timeSinceLastShot < firingInterval) {
             timer.scheduleAtFixedRate(timerTask, firingInterval-timeSinceLastShot, firingInterval);
         } else {
@@ -138,7 +143,7 @@ public class Turret {
     }
 
 
-    private void stopFiring(){
+    public void stopFiring(){
         firing = false;
         timerTask.cancel();
         //System.out.println("cancelled");

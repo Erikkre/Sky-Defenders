@@ -20,7 +20,6 @@ import aurelienribon.tweenengine.TweenEquations;
 
 public class PhoenixBird extends BirdAbstractClass {
 
-    //public final int[] animSeqList = {0,1,2,3};
 Tween outroY;
 
 public float targetY, targetX;//, preTargetY;

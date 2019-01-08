@@ -32,8 +32,8 @@ public class AcidBird extends BirdAbstractClass {
 
         coinNumber=7;
 
-        sizeVariance=150;
-        sizeRatio=0.6f;
+        sizeVariance=50;
+        sizeRatio=0.7f;
 
         animSeq = AssetHandler.acidAnimations;
         animSetup();
@@ -76,8 +76,8 @@ public class AcidBird extends BirdAbstractClass {
     @Override
     public void specificUpdate(float delta, float runTime) {
         if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX) {
-            if (x>camWidth/2) {currentX = Tween.to(this, 1, 1.3f + r.nextFloat()).target(width / 2+r.nextInt((int)width)).ease(TweenEquations.easeInOutSine).start(); targetRot=angle; rotate=true;}
-            else {currentX = Tween.to(this, 1, 1.3f + r.nextFloat()).target(edge-r.nextInt((int)width)).ease(TweenEquations.easeInOutSine).start(); targetRot=360-angle; rotate=true;}
+            if (x>camWidth/2) {currentX = Tween.to(this, 1, 1f + r.nextFloat()).target(width / 2+r.nextInt((int)width)).ease(TweenEquations.easeInOutSine).start(); targetRot=angle; rotate=true;}
+            else {currentX = Tween.to(this, 1, 1f + r.nextFloat()).target(edge-r.nextInt((int)width)).ease(TweenEquations.easeInOutSine).start(); targetRot=360-angle; rotate=true;}
         }
 
         if (cnt==4) {cnt=0;}
@@ -124,12 +124,12 @@ public class AcidBird extends BirdAbstractClass {
             animation=leftFlaps;
             cnt=2;
             animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
-            firstX =Tween.to(this, 1, 1.3f).target(edge).ease(TweenEquations.easeInOutSine);
+            firstX =Tween.to(this, 1, 1f).target(edge).ease(TweenEquations.easeInOutSine);
         } else {
             targetRot=360-angle; rotate=true;
             animation=rightFlaps;
             animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
-            firstX =Tween.to(this, 1, 1.3f).target(width/2).ease(TweenEquations.easeInOutSine);
+            firstX =Tween.to(this, 1, 1f).target(width/2).ease(TweenEquations.easeInOutSine);
         }
         origFlapSpeed=animation.getFrameDuration();
 

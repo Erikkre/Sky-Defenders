@@ -24,13 +24,13 @@ public class LunarBird extends BirdAbstractClass {
     public LunarBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=12;
+        this.yVel=10;
         origYVel=yVel;
 
         this.coinNumber=40;
 
         this.sizeVariance=50;
-        sizeRatio=0.6f;
+        sizeRatio=0.7f;
 
         animSeq = AssetHandler.lunarAnimations;
         animSetup();
@@ -43,7 +43,7 @@ public class LunarBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
 
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=7;
+        health=4;
 
         animation=rightFlaps;
         origFlapSpeed=animation.getFrameDuration();

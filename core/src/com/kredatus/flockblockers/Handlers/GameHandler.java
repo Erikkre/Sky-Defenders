@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
+import com.kredatus.flockblockers.GameObjects.Turret;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.TweenAccessors.BirdAccessor;
@@ -27,6 +28,8 @@ public class GameHandler implements Screen {
     public static UiHandler uiHandler;
     private float runTime;
     public static int camWidth, midPointY, camHeight, midPointX;
+    public boolean isPaused=false;
+    public static double timeOfPause, timeOfResume;
 
     public GameHandler() {
         float screenWidth = Gdx.graphics.getWidth();
@@ -57,13 +60,16 @@ public class GameHandler implements Screen {
 
     @Override
     public void render(float delta) {
-        runTime += delta;
-        world.update(delta, runTime);
-        renderer.render(delta, runTime);
+        if (!isPaused) {
+            runTime += delta;
+            world.update(delta, runTime);
+            renderer.render(delta, runTime);
+        }
     }
 
     @Override
     public void resize(int width, int height) {
+
     }
 
     @Override
@@ -80,11 +86,36 @@ public class GameHandler implements Screen {
     @Override
     public void pause() {
         Gdx.app.log("GameHandler", "pause called");
+        isPaused=true;
+
+        timeOfPause=System.currentTimeMillis();
+        for (Turret i : turretHandler.turretList){
+            if (i.firing) {
+                i.stopFiring();
+                i.firingStoppedByGamePause = true;
+            }
+        }
+
+        birdHandler.pause();
+
     }
 
     @Override
     public void resume() {
         Gdx.app.log("GameHandler", "resume called");
+        isPaused=false;
+
+        timeOfResume=System.currentTimeMillis();    //has to be before turrets restart firing so know how much longer left of interval before fire next shot
+
+        for (Turret i : turretHandler.turretList){
+            if (i.firingStoppedByGamePause){
+                i.startFiring();
+                i.firingStoppedByGamePause=false;
+            }
+        }
+
+        birdHandler.resume();
+
     }
 
     @Override
