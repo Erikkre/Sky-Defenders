@@ -18,21 +18,19 @@ import aurelienribon.tweenengine.TweenEquations;
 
 public class AcidBird extends BirdAbstractClass {
 
-    //public final int[] animSeqList = {0,1,2,3};
     int angle=25;
-
     public AcidBird(float camHeight, float camWidth){
         super();
 
         rotStep=1.4f;
-        unRotStep=1.9f;
+        unRotStep=1.0f;
 
-        yVel=9;
+        yVel=5;
         origYVel=yVel;
 
         coinNumber=7;
 
-        sizeVariance=50;
+        sizeVariance=40;
         sizeRatio=0.7f;
 
         animSeq = AssetHandler.acidAnimations;
@@ -55,7 +53,7 @@ public class AcidBird extends BirdAbstractClass {
             x = (float) ((camWidth / 2) + (r.nextGaussian() * ((camWidth / 4) - (width / 2)))); //gaussian is between -1 and 1 as a bellcurve around 0
         }
 
-        y=-height/3;
+        y=-height/3 - r.nextFloat()*height*2;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
@@ -75,27 +73,25 @@ public class AcidBird extends BirdAbstractClass {
 
     @Override
     public void specificUpdate(float delta, float runTime) {
-        if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX) {
-            if (x>camWidth/2) {currentX = Tween.to(this, 1, 1f + r.nextFloat()).target(width / 2+r.nextInt((int)width)).ease(TweenEquations.easeInOutSine).start(); targetRot=angle; rotate=true;}
-            else {currentX = Tween.to(this, 1, 1f + r.nextFloat()).target(edge-r.nextInt((int)width)).ease(TweenEquations.easeInOutSine).start(); targetRot=360-angle; rotate=true;}
+        if (BgHandler.isBirdSpawning&&currentX.isFinished()) {
+            if (x>camWidth/2) {currentX = Tween.to(this, 1, 1f + r.nextFloat()).target(width / 2+r.nextInt((int)(width/2))).ease(TweenEquations.easeInOutSine).start(); targetRot=angle; rotate=true;}
+            else {currentX = Tween.to(this, 1, 1f + r.nextFloat()).target(edge-r.nextInt((int)(width/2))).ease(TweenEquations.easeInOutSine).start(); targetRot=360-angle; rotate=true;}
         }
 
         if (cnt==4) {cnt=0;}
-        //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
-
-        if (cnt==0&&x>(3*camWidth)/4 &&currentX!=introX) {
+        if (cnt==0&&x>(2*camWidth)/3 ) {
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
-        } else if (cnt==1&&x<(3*camWidth)/4) {
+        } else if (cnt==1&&x<(2*camWidth)/3) {
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
-        } else if (cnt==2&&x<(camWidth)/4) {
+        } else if (cnt==2&&x<(camWidth)/3) {
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
-        } else if (cnt==3&&x>(camWidth)/4) {
+        } else if (cnt==3&&x>(camWidth)/3) {
             animation = animSeq[cnt++];
             width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
             //edge = (camWidth)-width/2;
@@ -104,33 +100,21 @@ public class AcidBird extends BirdAbstractClass {
 
     @Override
     public void setManager(final float camWidth) {
-        final TweenCallback endIntro= new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                currentX=firstX.start();
-                if (x> camWidth /2) { targetRot=angle; rotate=true;}
-                else { targetRot=360-angle; rotate=true;}
-            }
-        };
-
         float[] tempList = {width/2, edge};
         float firstTarget =tempList[r.nextInt(2)];
-        introX = Tween.to(this, 1, 0.7f).target(firstTarget).ease(TweenEquations.easeInOutSine).start().setCallback(endIntro);
-        currentX=introX;
 
 
         if (firstTarget==width/2){
             targetRot=angle; rotate=true;
             animation=leftFlaps;
             cnt=2;
-            animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
-            firstX =Tween.to(this, 1, 1f).target(edge).ease(TweenEquations.easeInOutSine);
         } else {
             targetRot=360-angle; rotate=true;
             animation=rightFlaps;
-            animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
-            firstX =Tween.to(this, 1, 1f).target(width/2).ease(TweenEquations.easeInOutSine);
         }
+        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+
+        currentX = Tween.to(this, 1, 0.7f).target(firstTarget).ease(TweenEquations.easeInOutSine).start();
         origFlapSpeed=animation.getFrameDuration();
 
     }

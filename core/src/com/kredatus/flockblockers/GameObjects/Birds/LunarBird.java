@@ -5,31 +5,39 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Handlers.BgHandler;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
+import aurelienribon.tweenengine.equations.Circ;
+import aurelienribon.tweenengine.equations.Linear;
+import aurelienribon.tweenengine.equations.Quint;
+import aurelienribon.tweenengine.equations.Sine;
 
 /**
  * Created by Erik Kredatus on 9/8/2018.
  */
 
 public class LunarBird extends BirdAbstractClass {
-
-
-
-    //public final int[] animSeqList = {0,1,2,3};
-    Tween second;
+    private final int angle = 45;
+    private int camHeightSeventh=1;
+    float randomizedTime, waitingTime = 0.9f, minDashTime = 0.7f; //dashtime is up to 0.33f greater than minDashTime
+    private Tween wait1SecondX, wait1SecondY;
+    private TweenEquation tweenEquation = Circ.INOUT;
     public LunarBird(float camHeight, float camWidth){
         super();
 
-        this.yVel=10;
+        rotStep=5f;
+        unRotStep=3f;
+        yVel=10;
         origYVel=yVel;
 
-        this.coinNumber=40;
+        coinNumber=40;
 
-        this.sizeVariance=50;
+        sizeVariance=50;
         sizeRatio=0.7f;
 
         animSeq = AssetHandler.lunarAnimations;
@@ -49,7 +57,7 @@ public class LunarBird extends BirdAbstractClass {
         origFlapSpeed=animation.getFrameDuration();
         x=(width/2 + r.nextInt((int)(edge-width)));
 
-        y=-height/3;
+        y=-height/3 - r.nextFloat()*height*2;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
@@ -58,78 +66,63 @@ public class LunarBird extends BirdAbstractClass {
     }
 
     protected void animSetup(){
-        frontFlaps=animSeq[0];
         leftFlaps=animSeq[1];
         rightFlaps=animSeq[2];
         backFlaps=animSeq[3];
         deathFlaps=animSeq[4];
-        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+
         height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
         width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
     }
 
     @Override
     public void specificUpdate(float delta, float runTime) {
-        //second.update(delta);
-        if (cnt==4) {cnt=0;}
-        //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 
-        if (cnt==0&&x>(2*camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==1&&x<(2*camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==2&&x<(camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==3&&x>(camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
+        if (currentX.isFinished()){
+
+            if (currentX==wait1SecondX) {
+                randomizedTime= minDashTime + r.nextFloat()/3;
+                if (x>camWidth/2) {animation=leftFlaps; currentX = Tween.to(this, 1, randomizedTime).target(width / 2+r.nextInt((int)(width/2))).ease(tweenEquation).start(); targetRot=angle; rotate=true;}
+                else              {animation=rightFlaps; currentX = Tween.to(this, 1, randomizedTime).target(edge-r.nextInt((int)(width/2))).ease(tweenEquation).start(); targetRot=360-angle; rotate=true;}
+
+            } else {
+                animation=backFlaps;
+                currentX = wait1SecondX = Tween.to(this, 0, waitingTime).start();
+            }
         }
+
+        if (currentY.isFinished()){
+            
+            if (currentY==wait1SecondY) {
+                currentY = Tween.to(this, 2, randomizedTime).target((camHeight/7)*camHeightSeventh++).ease(tweenEquation).start();
+
+            } else {
+                currentY = wait1SecondY = Tween.to(this, 0, waitingTime).start();
+            }
+        }
+
+
     }
 
     @Override
-    public void setManager(float camWidth) {
-        final TweenCallback endIntro= new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                currentX=firstX.start();
-                yVel=0;
-                firstY.start();
-            }
-        };
-
-        introX = Tween.to(this, 1, 1).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
-        currentX=introX;
+    public void setManager(final float camWidth) {
 
 
-        /*final TweenCallback endfirst= new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                second.pause();
-                first.start();
-            }
-        };*/
+        float[] tempList = {width/2, edge};
+        float firstTarget =tempList[r.nextInt(2)];
 
-        firstX =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
-        //Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeOutQuint).setCallback(tweenStart).start();
-        /*
-        (xMotion = Timeline.createSequence()
-                .push(   Tween.to(this, 1, 6).target(edge).ease(TweenEquations.easeInOutQuint))
-                .push(   Tween.to(this, 1, 6).target(width/2).ease(TweenEquations.easeOutQuint)).setCallback(tweenStart)
-                //.push(   Tween.to(this, 1, 4).target(edge).ease(TweenEquations.easeNone).setCallback(animationSwitch))
+        if (firstTarget==width/2){
+            targetRot=angle; rotate=true;
+            animation=leftFlaps;
+            cnt=2;
+        } else {
+            targetRot=360-angle; rotate=true;
+            animation=rightFlaps;
+        }
 
-                //.push(   Tween.to(this, 1, 4).target(width/2).ease(TweenEquations.easeNone).setCallback(animationSwitch))    )
-                .repeat( Tween.INFINITY, 0)).start();
-*/
-                /*.push(delay(3).setCallback(animationSwitch))
-                .target(width/2).setCallback(animationSwitch).delay(3).setCallback(animationSwitch)
-                .target(edge).setCallback(animationSwitch).delay(3)
-                .ease(TweenEquations.easeOutBack)*/
+        currentX = Tween.to(this, 1, minDashTime).target(firstTarget).ease(tweenEquation).start();
+        currentY = Tween.to(this, 2, minDashTime).target((camHeight/7)*camHeightSeventh++).ease(tweenEquation).start();
+        origFlapSpeed=animation.getFrameDuration();
+
     }
 }

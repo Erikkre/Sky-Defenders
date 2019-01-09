@@ -27,15 +27,16 @@ import aurelienribon.tweenengine.Tween;
  * start with 1000 gold
  * damage of guns is based on size, spread = good against small, fast = good for med, high damage = good for bosses
  *                  Health Speed  Size   Gold            Amount/Wave    Skin Shown          Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
- * ThunderBird=     2(S)    1-2.5 .4     10(300)         30             F S B               Side to side all at once
- * WaterBird  =     2(S)    2     .5     10(320)         30             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
- * FireBird   =     2(S)    1     .4     10(340)         30             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
- * AcidBird   =     4(L)    9     .7     24(360)         15             B S F               Side to side fast (make face front one side back the other)
- * NightBird  =     4(M)    9     .7     38(380 / wave)  10             F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
- * LunarBird  =     4(M)    9     .7     40(400)         10             B S                 Diagonal side to side
- * GoldBird   =     35(XL)  3     1      200(1000)       5              F S                 Slowly side to side
- * PhoenixBird=     150(XXL)3     1.2    500+Diamond     1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
-Only add health to phoenix each round
+ * ThunderBird=     2(S)    1-2.5 .5     1(20)           20             F S B               Side to side all at once
+ * WaterBird  =     2(S)    2     .5     1(20)           20             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
+ * FireBird   =     2(S)    1     .5     1(25)           25             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
+ * AcidBird   =     4(L)    5     .7     3(30)           10             B S F               Side to side fast (make face front one side back the other)
+ * NightBird  =     4(M)    12    .7     4(32)           8              F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
+ * LunarBird  =     4(M)    12    .7     5(35)           7              B S                 Diagonal side to side
+ * GoldBird   =     15(XL)  3     .9     25(75)          3              F S                 Random Positions but stay from beginning to end
+ * PhoenixBird=     60(XXL)3     1.2     100||diamond    1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
+Only add health to phoenix each round   after you hit multiples of 500 gold/phoenix add chance to drop that multiple of diamonds instead
+                                        i.e. 1 diamond OR 500 gold (1 Dia=1000 Go)
 
  1 dia=1000 go, 5000 go=1 dia		90c/100 0.9c/dia	$2/300 0.7c/dia	$5/1000 0.5c/dia	$2/no ads
  cost	        500	            1500	    4500	        13500	        40500	        121500          	364500	            1000 diamonds	3000 diamonds	10000 diamonds
@@ -106,7 +107,7 @@ public abstract class BirdAbstractClass {
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
-        boundingPoly  = new Polygon(new float[]{x - width / 4.5f, y - height / 4,          x + width / 4.5f, y - height / 4,          x + width / 3.5f, y + height / 6f,          x - width / 3.5f, y + height / 6f}); //trapezoid to reach bid wings
+        boundingPoly  = new Polygon(new float[]{x - width / 4.5f, y - height / 4,          x + width / 4.5f, y - height / 4,          x + width / 3f, y + height / 6f,          x - width / 3f, y + height / 6f}); //trapezoid to reach bid wings
         boundingPoly  .  setOrigin(x, y);
     }
 

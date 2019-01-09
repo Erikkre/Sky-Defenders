@@ -203,7 +203,7 @@ public class BgHandler {
                 //System.out.println(BirdHandler.birdQueue+ ", ActiveBirdQueue: "+BirdHandler.activeBirdQueue+"************************************************");
                  (vertPosBg = Timeline.createSequence()  //5 4.5f 4.5f 2 7 .1, 8 and 60 repeats
                          .push((Tween.to(vert, -1, 7).target((-bgh*2)+(0.499f*camHeight)).ease(TweenEquations.easeInOutSine)).setCallback(endBirdSpawn)     )  //cam center 0.001 above edge, decide wether ease inoutsine
-                         .push((Tween.to(vert, -1, 0.02f).target((-bgh*2)+(0.501f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(300, 0)))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
+                         .push((Tween.to(vert, -1, 0.02f).target((-bgh*2)+(0.501f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
                          .push((Tween.to(vert, -1, 0.5f).target((-bgh*2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail))      )   //cam 0.03 below edge
 
                          .push((Tween.to(vert,-1, 5 ).target(-bgh-( .1f*camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START)      )//0.6 camheight  above, decide whether quad quint, circ or expo, all out

@@ -12,12 +12,8 @@ import com.kredatus.flockblockers.GameObjects.Birds.NightBird;
 import com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird;
 import com.kredatus.flockblockers.GameObjects.Birds.ThunderBird;
 import com.kredatus.flockblockers.GameObjects.Birds.WaterBird;
-import com.kredatus.flockblockers.GameObjects.Projectile;
-import com.kredatus.flockblockers.GameObjects.Turret;
 
 
-import java.sql.SQLSyntaxErrorException;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -32,9 +28,9 @@ public class BirdHandler {
 
                                                 //0    1    2    3    4    5    6    7
     //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
-    public final int[] birdNumberList=  { 1,   30,  30,  30,  15,  10,  10,  5  };
+    public final int[] birdNumberList=          { 1,   30,  30,  30,  20,  15,  10,  5  };
     private float[] spawnIntervals=new float[8];
-    public int waveTypeCnt=5;
+    public int waveTypeCnt=0;
     public TimerTask task;
     public Timer timer;
     public final float duration = 40;
@@ -55,7 +51,9 @@ public class BirdHandler {
         for (int i = 0; i < 8; i++) {
             if (i==0) spawnIntervals[i]=0;
             else if (i==1||i==3) spawnIntervals[i]=0.01f;
+            else if ((i==5||i==6)&&spawnIntervals[i]>8) spawnIntervals[i]=8;
             else spawnIntervals[i] = duration / birdNumberList[i];
+
         }
         timer=new Timer();
         taskRunning=false;

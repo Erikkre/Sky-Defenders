@@ -35,10 +35,10 @@ public class ThunderBird extends BirdAbstractClass {
         yVel=  1 + r.nextFloat()*1.5f;
         origYVel=yVel;
 
-        this.coinNumber=10;
+        coinNumber=10;
 
-        this.sizeVariance=100;
-        sizeRatio=0.4f;
+        sizeVariance=100;
+        sizeRatio=0.5f;
 
         animSeq = AssetHandler.thunderAnimations;
         animSetup();
@@ -56,7 +56,7 @@ public class ThunderBird extends BirdAbstractClass {
         origFlapSpeed=animation.getFrameDuration();
 
         x=(width/2 + r.nextInt((int)(edge-width)));
-        y=-height/3;
+        y=-height/3 - r.nextFloat()*height*2;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
 

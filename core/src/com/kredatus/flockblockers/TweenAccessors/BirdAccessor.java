@@ -17,6 +17,7 @@ public class BirdAccessor implements TweenAccessor<BirdAbstractClass>{
             break;
             case yMotion: birdTarget.y=newValues[0];//System.out.println("birdY: "+birdTarget.y+"set to: "+newValues[0]);
             break;
+            default: assert false; break;
         }
     }
 

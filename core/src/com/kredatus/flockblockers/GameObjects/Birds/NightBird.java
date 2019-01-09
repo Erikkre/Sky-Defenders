@@ -17,10 +17,7 @@ import aurelienribon.tweenengine.TweenEquations;
 
 public class NightBird extends BirdAbstractClass {
 
-
-
     //public final int[] animSeqList = {0,1,2,3};
-    Tween second;
     public NightBird(float camHeight, float camWidth){
         super();
 
@@ -49,7 +46,7 @@ public class NightBird extends BirdAbstractClass {
         origFlapSpeed=animation.getFrameDuration();
         x=(width/2 + r.nextInt((int)(edge-width)));
 
-        y=-6*height;
+        y=-5*height- r.nextFloat()*height*2;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
@@ -82,8 +79,8 @@ public class NightBird extends BirdAbstractClass {
             }
         };
 
-        currentY = Tween.to(this, 2, 2f).target(height).ease(TweenEquations.easeOutBack).setCallback(endIntro).start();
-        firstY =Tween.to(this, 2, 1.5f).target(camHeight+height/2).ease(TweenEquations.easeInBack).delay(2);
+        currentY = Tween.to(this, 2, 2.5f).target(height).ease(TweenEquations.easeOutBack).setCallback(endIntro).start();
+        firstY =Tween.to(this, 2, 2.5f).target(camHeight+height/2).ease(TweenEquations.easeInBack).delay(0.5f);
 
     }
 }

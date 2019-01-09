@@ -29,9 +29,9 @@ public float targetY, targetX;//, preTargetY;
         yVelDeath=10;
         yVel=1;
         diamonds=1;
-        coinNumber=500;
+        coinNumber=100;
         origYVel=yVel;
-        health=5;
+        health=125;
 
         sizeVariance=1;
         sizeRatio=1.2f;
@@ -52,11 +52,11 @@ public float targetY, targetX;//, preTargetY;
         origFlapSpeed=animation.getFrameDuration();
 
         x=(width/3 + r.nextInt((int)(edge-(2*width)/3)));
-        System.out.println("third of bird width: "+width/3);
+
         y=-height/3;
-        System.out.println("y of bird set to " + y);
+
         this.camWidth = camWidth;
-        System.out.println("camwidth: "+camWidth);
+
         this.camHeight = camHeight;
         setManager(camWidth);
 

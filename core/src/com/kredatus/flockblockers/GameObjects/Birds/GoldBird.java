@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Handlers.BgHandler;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -16,17 +17,20 @@ import aurelienribon.tweenengine.TweenEquations;
  */
 
 public class GoldBird extends BirdAbstractClass {
+    Tween outroY;
+    public float targetY, targetX;//, preTargetY;
 
-    //public final int[] animSeqList = {0,1,2,3};
     public GoldBird(float camHeight, float camWidth){
         super();
-        this.yVel=3;
+        yAcc=-0.2f;
+        yVelDeath=10;
+        yVel=1;
         origYVel=yVel;
 
-        this.coinNumber=200;
+        coinNumber=25;
 
-        this.sizeVariance=50;
-        sizeRatio=1f;
+        sizeVariance=60;
+        sizeRatio=0.9f;
 
         animSeq = AssetHandler.goldAnimations;
         animSetup();
@@ -35,16 +39,16 @@ public class GoldBird extends BirdAbstractClass {
 
         width *=finalSizeRatio;
         height *= finalSizeRatio;
-        edge = (camWidth)-width/2;
+        edge = (camWidth)-width/3;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=35;
+        health=15;
 
-        animation=rightFlaps;// starting animation
+        animation=frontFlaps;// starting animation
         origFlapSpeed=animation.getFrameDuration();
 
-        x=(width/2 + r.nextInt((int)(edge-width)));
+        x=(width/3 + r.nextInt((int)(edge-(2*width)/3)));
 
-        y=-height/3;
+        y=-height/3 - r.nextFloat()*height*2;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
@@ -52,7 +56,7 @@ public class GoldBird extends BirdAbstractClass {
         flapSpeedIntervals();
     }
 
-    protected void animSetup(){
+    private void animSetup(){
         frontFlaps=animSeq[0];
         leftFlaps=animSeq[1];
         rightFlaps=animSeq[2];
@@ -62,46 +66,64 @@ public class GoldBird extends BirdAbstractClass {
         height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
         width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
     }
-
     @Override
     public void specificUpdate(float delta, float runTime) {
-        //second.update(delta);
-        if (cnt==4) {cnt=0;}
-        //System.out.println("x: "+x+ " > "+(2*camWidth)/3);
 
-        if (cnt==0&&x>(2*camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==1&&x<(2*camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==2&&x<(camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
-        } else if (cnt==3&&x>(camWidth)/3) {
-            animation = animSeq[cnt++];
-            width=((TextureRegion)animation.getKeyFrame(runTime)).getRegionWidth()*finalSizeRatio;
-            //edge = (camWidth)-width/2;
+        if (!BgHandler.isBirdSpawning&&currentY!=outroY){
+            currentX.kill();
+            currentY=outroY.start();
+            if (x>camWidth/2){   //if dying on right side fall to left and vice versa
+                xVel=-2;
+            } else {
+                xVel=2;
+            }
+            //System.out.println("startOutro");
+        } else if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX){
+            //System.out.println("Tween is finished******************************************************");
+            if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );  //if on left go to right if on right go left
+            else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
+
+            targetY=height/3+r.nextInt((int)(camHeight-height*3));
+            /*while (Math.abs(x-targetX)<200){
+                System.out.println("finding target: "+targetX+"far enough from "+x+"constraints are "+width/3+" and "+(camWidth-(width/3)));
+                if (x<camWidth/2)
+                targetX=width/2+r.nextInt((int)(t));
+            }*/
+            float randTimeAddition = r.nextFloat();
+            currentX =(Tween.to(this, 1, 2+randTimeAddition).target(targetX).ease(TweenEquations.easeOutSine)).start();
+            currentY =(Tween.to(this, 2, 2+randTimeAddition).target(targetY).ease(TweenEquations.easeOutSine)).start();
+            startRot=true;
+        } else if (introX!=null&&introX.isFinished()){
+            introX=null;
+            startRot=true;
+            //System.out.println("startRot");
         }
     }
 
     @Override
-    public void setManager(float camWidth) {
+    public void setManager(final float camWidth) {
+
         final TweenCallback endIntro= new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
                 currentX=firstX.start();
+                currentY=firstY.start();
+                yVel=0;
             }
         };
-
-        introX = Tween.to(this, 1, 1).target(edge).ease(TweenEquations.easeInOutQuint).start().setCallback(endIntro);
+//aseInOutQuint
+        introX = Tween.to(this, 1, 2).target(edge).ease(TweenEquations.easeOutQuart).setCallback(endIntro).start();
         currentX=introX;
 
+        //type 1 is xmotion type 2 is y
+        if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );
+        else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
+        targetY=height/3+r.nextInt((int)(camHeight-height*3));
+        firstX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeOutSine));
+        //targetY=height/2+r.nextInt((int)(camHeight-height));
+        firstY =(Tween.to(this, 2, 2).target(targetY).ease(TweenEquations.easeOutSine));
 
-        firstX =Tween.to(this, 1, 2).target(width/2).ease(TweenEquations.easeInOutQuint).repeatYoyo(Tween.INFINITY,0);
+        outroY=Tween.to(this, 2, 2).target(camHeight+height/2).ease(TweenEquations.easeInExpo).delay(1); //hit wall when not killed and end of spawning period
 
     }
 }
