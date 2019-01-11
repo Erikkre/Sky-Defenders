@@ -28,9 +28,9 @@ public class BirdHandler {
 
                                                 //0    1    2    3    4    5    6    7
     //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
-    public final int[] birdNumberList=          { 1,   30,  30,  30,  20,  15,  10,  5  };
+    public final int[] birdNumberList=          { 1,   20,  20,  25,  10,  8,  7,  3  };
     private float[] spawnIntervals=new float[8];
-    public int waveTypeCnt=0;
+    public int waveTypeCnt=2;
     public TimerTask task;
     public Timer timer;
     public final float duration = 40;

@@ -30,7 +30,7 @@ public class GoldBird extends BirdAbstractClass {
         coinNumber=25;
 
         sizeVariance=60;
-        sizeRatio=0.9f;
+        sizeRatio=0.8f;
 
         animSeq = AssetHandler.goldAnimations;
         animSetup();

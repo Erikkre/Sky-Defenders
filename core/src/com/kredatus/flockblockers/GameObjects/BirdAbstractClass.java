@@ -27,14 +27,14 @@ import aurelienribon.tweenengine.Tween;
  * start with 1000 gold
  * damage of guns is based on size, spread = good against small, fast = good for med, high damage = good for bosses
  *                  Health Speed  Size   Gold            Amount/Wave    Skin Shown          Flight Pattern          FOR TEXTURES COMBINE PHOENIX ONES AND MAKE NEW FOR EACH TYPE AND PUT IN birdsOriginal(8k wide), cut up for birdsOriginalCutForUse, shrink for actual game
- * ThunderBird=     2(S)    1-2.5 .5     1(20)           20             F S B               Side to side all at once
- * WaterBird  =     2(S)    2     .5     1(20)           20             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
- * FireBird   =     2(S)    1     .5     1(25)           25             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
- * AcidBird   =     4(L)    5     .7     3(30)           10             B S F               Side to side fast (make face front one side back the other)
- * NightBird  =     4(M)    12    .7     4(32)           8              F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
- * LunarBird  =     4(M)    12    .7     5(35)           7              B S                 Diagonal side to side
- * GoldBird   =     15(XL)  3     .9     25(75)          3              F S                 Random Positions but stay from beginning to end
- * PhoenixBird=     60(XXL)3     1.2     100||diamond    1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
+ * ThunderBird=     2(S)    1-2.5 .4     1(20)           20             F S B               Side to side all at once
+ * WaterBird  =     2(S)    2     .4     1(20)           20             B                   Wave line with slight arrow shape, 11 per wave, add 1 wave every 2 rounds
+ * FireBird   =     2(S)    1     .4     1(25)           25             S B F               all at once, some looking forwards some back, occasionally some go to either side sideways, all move as 1 mass
+ * AcidBird   =     4(L)    5     .6    3(30)           10             B S F               Side to side fast (make face front one side back the other)
+ * NightBird  =     4(M)    12    .6    4(32)           8              F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
+ * LunarBird  =     4(M)    12    .6    5(35)           7              B S                 Diagonal side to side
+ * GoldBird   =     15(XL)  3     .8     25(75)          3              F S                 Random Positions but stay from beginning to end
+ * PhoenixBird=     60(XXL) 3     1      100||diamond    1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
 Only add health to phoenix each round   after you hit multiples of 500 gold/phoenix add chance to drop that multiple of diamonds instead
                                         i.e. 1 diamond OR 500 gold (1 Dia=1000 Go)
 
@@ -99,9 +99,8 @@ public abstract class BirdAbstractClass {
 
     }
     protected void flapSpeedIntervals(){
-        for (float i=1.5f; i>=1;i-=0.1f){
+        for (float i=1.6f; i>=1;i-=0.05f){
             flapSpeedIntervals.add(origFlapSpeed/i); //fast to slow
-
         }
         //System.out.println(flapSpeedIntervals.toString());
     }

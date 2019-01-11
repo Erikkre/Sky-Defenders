@@ -22,7 +22,7 @@ public class WaterBird extends BirdAbstractClass {
     public WaterBird(float camHeight, float camWidth, float xPosition, float yPosition){
         super();
         yVel=2;
-        coinNumber=7;
+        coinNumber=1;
         origYVel=yVel;
 
         sizeVariance=100;

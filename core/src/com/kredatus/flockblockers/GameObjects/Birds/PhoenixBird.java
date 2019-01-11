@@ -31,10 +31,10 @@ public float targetY, targetX;//, preTargetY;
         diamonds=1;
         coinNumber=100;
         origYVel=yVel;
-        health=125;
+        health=60;
 
         sizeVariance=1;
-        sizeRatio=1.2f;
+        sizeRatio=1f;
 
         animSeq = AssetHandler.phoenixAnimations;
         animSetup();

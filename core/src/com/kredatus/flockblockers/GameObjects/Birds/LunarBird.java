@@ -35,10 +35,10 @@ public class LunarBird extends BirdAbstractClass {
         yVel=10;
         origYVel=yVel;
 
-        coinNumber=40;
+        coinNumber=5;
 
         sizeVariance=50;
-        sizeRatio=0.7f;
+        sizeRatio=0.65f;
 
         animSeq = AssetHandler.lunarAnimations;
         animSetup();

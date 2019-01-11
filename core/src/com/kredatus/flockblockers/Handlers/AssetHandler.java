@@ -404,14 +404,14 @@ public class AssetHandler {
         for (int i=0;i<22;i++) {
             TextureRegion temp;
             if (i<11) {
-                temp = new TextureRegion(sprites, 300 * i, 0, 300, 247);
+                temp = new TextureRegion(sprites, 372 * i, 0, 372, 325);
             } else {
-                temp = new TextureRegion(sprites, 300 * (i-11), 247, 300, 247);
+                temp = new TextureRegion(sprites, 372 * (i-11), 325, 372, 325);
             }
             positions.add(temp);
 
             if (i<6){
-                TextureRegion flipTemp = new TextureRegion(sprites, 300 * i, 0, 300, 247);
+                TextureRegion flipTemp = new TextureRegion(sprites, 372 * i, 0, 373, 325);
                 flipTemp.flip(true,false);
                 leftSidePositions.add(flipTemp);
             }

@@ -27,7 +27,7 @@ public class FireBird extends BirdAbstractClass {
         yVel=1f;
         origYVel=yVel;
 
-        coinNumber=10;
+        coinNumber=1;
 
         sizeVariance=150;
         sizeRatio=0.5f;

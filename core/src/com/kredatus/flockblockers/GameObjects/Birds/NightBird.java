@@ -24,10 +24,10 @@ public class NightBird extends BirdAbstractClass {
         //yVel=10;
         origYVel=yVel;
 
-        coinNumber=7;
+        coinNumber=4;
 
         sizeVariance=50;
-        sizeRatio=0.7f;
+        sizeRatio=0.65f;
 
         animSeq = AssetHandler.nightAnimations;
         animSetup();
@@ -40,7 +40,7 @@ public class NightBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=2;
+        health=4;
 
         animation=animSeq[r.nextInt(2)];
         origFlapSpeed=animation.getFrameDuration();

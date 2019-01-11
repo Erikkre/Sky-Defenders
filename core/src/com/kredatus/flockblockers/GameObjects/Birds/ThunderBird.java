@@ -35,7 +35,7 @@ public class ThunderBird extends BirdAbstractClass {
         yVel=  1 + r.nextFloat()*1.5f;
         origYVel=yVel;
 
-        coinNumber=10;
+        coinNumber=1;
 
         sizeVariance=100;
         sizeRatio=0.5f;

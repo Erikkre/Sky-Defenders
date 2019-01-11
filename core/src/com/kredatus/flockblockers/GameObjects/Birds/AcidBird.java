@@ -28,10 +28,10 @@ public class AcidBird extends BirdAbstractClass {
         yVel=5;
         origYVel=yVel;
 
-        coinNumber=7;
+        coinNumber=3;
 
         sizeVariance=40;
-        sizeRatio=0.7f;
+        sizeRatio=0.65f;
 
         animSeq = AssetHandler.acidAnimations;
         animSetup();
