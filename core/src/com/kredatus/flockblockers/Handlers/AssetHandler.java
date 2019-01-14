@@ -203,14 +203,7 @@ public class AssetHandler {
         bgList = new ArrayList<TextureRegion>();
 
 
-         bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix2.jpg"));
-        bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
-        bgPhoenixtexture.flip(false, true);
-        bgList.add(bgPhoenixtexture);
 
-        bgPhoenixtexture2 = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
-        bgList.add(bgPhoenixtexture2);
 
 
         bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder2.jpg"));
@@ -221,6 +214,17 @@ public class AssetHandler {
 
         bgThundertexture2 = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
         bgList.add(bgThundertexture2);
+
+
+        bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix2.jpg"));
+        bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
+        bgPhoenixtexture.flip(false, true);
+        bgList.add(bgPhoenixtexture);
+
+        bgPhoenixtexture2 = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
+        bgList.add(bgPhoenixtexture2);
+
 
 
         bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater2.jpg"));
@@ -404,14 +408,14 @@ public class AssetHandler {
         for (int i=0;i<22;i++) {
             TextureRegion temp;
             if (i<11) {
-                temp = new TextureRegion(sprites, 372 * i, 0, 372, 325);
+                temp = new TextureRegion(sprites, 372 * i, 0, 372, 306);
             } else {
-                temp = new TextureRegion(sprites, 372 * (i-11), 325, 372, 325);
+                temp = new TextureRegion(sprites, 372 * (i-11), 306, 372, 306);
             }
             positions.add(temp);
 
             if (i<6){
-                TextureRegion flipTemp = new TextureRegion(sprites, 372 * i, 0, 373, 325);
+                TextureRegion flipTemp = new TextureRegion(sprites, 372 * i, 0, 373, 306);
                 flipTemp.flip(true,false);
                 leftSidePositions.add(flipTemp);
             }
