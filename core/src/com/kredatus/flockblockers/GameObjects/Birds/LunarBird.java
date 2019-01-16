@@ -68,11 +68,11 @@ public class LunarBird extends BirdAbstractClass {
     protected void animSetup(){
         leftFlaps=animSeq[1];
         rightFlaps=animSeq[2];
-        backFlaps=animSeq[3];
+        frontFlaps=animSeq[0];
         deathFlaps=animSeq[4];
 
-        height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
-        width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
+        height=((TextureRegion)frontFlaps.getKeyFrames()[3]).getRegionHeight();
+        width=((TextureRegion)frontFlaps.getKeyFrames()[0]).getRegionWidth();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class LunarBird extends BirdAbstractClass {
                 else              {animation=rightFlaps; currentX = Tween.to(this, 1, randomizedTime).target(edge-r.nextInt((int)(width/2))).ease(tweenEquation).start(); targetRot=360-angle; rotate=true;}
 
             } else {
-                animation=backFlaps;
+                animation=frontFlaps;
                 currentX = wait1SecondX = Tween.to(this, 0, waitingTime).start();
             }
         }

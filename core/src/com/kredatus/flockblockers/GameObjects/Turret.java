@@ -133,7 +133,7 @@ public class Turret {
         setupFiring();
         if (!firingStoppedByGamePause) timeSinceLastShot=(int) (System.currentTimeMillis()-lastShotTime);
         else timeSinceLastShot=(int) ((System.currentTimeMillis()-GameHandler.timeOfResume)+(GameHandler.timeOfPause-lastShotTime));    //gets time since last shot in game time without real life pause
-        System.out.println("Time since last shot: "+timeSinceLastShot+", firing interval: "+firingInterval);
+        //System.out.println("Time since last shot: "+timeSinceLastShot+", firing interval: "+firingInterval);
         if (timeSinceLastShot < firingInterval) {
             timer.scheduleAtFixedRate(timerTask, firingInterval-timeSinceLastShot, firingInterval);
         } else {
