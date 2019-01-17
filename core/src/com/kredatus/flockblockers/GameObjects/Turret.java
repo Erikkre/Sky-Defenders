@@ -299,7 +299,7 @@ public class Turret {
             rof*= (turretType!='d' ? 1.2 : 1.06);//if not d then rof=1.2 else rof=1.06
 
             pen*= (turretType!='d' ? 1.4 : 1.25);
-            if (turretType=='s') spr+=3; spreadAngle+=1;
+            if (turretType=='s') {spr+=3; spreadAngle+=1;}
         }
 
         firingInterval=(int) ((1 / (rof / 3)) * 1000);

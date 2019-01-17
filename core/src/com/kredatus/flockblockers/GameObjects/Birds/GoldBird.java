@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -24,7 +25,7 @@ public class GoldBird extends BirdAbstractClass {
         super();
         yAcc=-0.2f;
         yVelDeath=10;
-        yVel=1;
+        yVel=1*globalSpeedMultiplier;
         origYVel=yVel;
 
         coinNumber=25;
@@ -42,6 +43,7 @@ public class GoldBird extends BirdAbstractClass {
         edge = (camWidth)-width/3;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=15;
+        if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         animation=frontFlaps;// starting animation
         origFlapSpeed=animation.getFrameDuration();

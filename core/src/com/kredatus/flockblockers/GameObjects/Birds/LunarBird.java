@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -32,7 +33,7 @@ public class LunarBird extends BirdAbstractClass {
 
         rotStep=5f;
         unRotStep=3f;
-        yVel=10;
+        yVel=10*globalSpeedMultiplier;
         origYVel=yVel;
 
         coinNumber=5;
@@ -52,6 +53,7 @@ public class LunarBird extends BirdAbstractClass {
 
         //System.out.println("Height after: " + height+ " width: " + width);
         health=4;
+        if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         animation=rightFlaps;
         origFlapSpeed=animation.getFrameDuration();
@@ -66,7 +68,7 @@ public class LunarBird extends BirdAbstractClass {
     }
 
     protected void animSetup(){
-        leftFlaps=animSeq[1];
+        leftFlaps= animSeq[1];
         rightFlaps=animSeq[2];
         frontFlaps=animSeq[0];
         deathFlaps=animSeq[4];

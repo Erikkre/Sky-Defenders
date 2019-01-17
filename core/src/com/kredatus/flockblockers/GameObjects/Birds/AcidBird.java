@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -25,7 +26,7 @@ public class AcidBird extends BirdAbstractClass {
         rotStep=1.4f;
         unRotStep=1.0f;
 
-        yVel=5;
+        yVel=5*globalSpeedMultiplier;
         origYVel=yVel;
 
         coinNumber=3;
@@ -45,7 +46,7 @@ public class AcidBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=4;
-
+        if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
 
         x=0;

@@ -4,6 +4,7 @@ package com.kredatus.flockblockers.GameObjects.Birds;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -27,11 +28,12 @@ public float targetY, targetX;//, preTargetY;
         super();
         yAcc=-0.2f;
         yVelDeath=10;
-        yVel=1;
+        yVel=1*globalSpeedMultiplier;
         diamonds=1;
         coinNumber=100;
         origYVel=yVel;
         health=60;
+        if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         sizeVariance=1;
         sizeRatio=1f;
@@ -125,6 +127,7 @@ public float targetY, targetX;//, preTargetY;
         //type 1 is xmotion type 2 is y
         if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );
         else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
+
         targetY=height/3+r.nextInt((int)(camHeight-height*3));
         firstX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeOutSine));
         //targetY=height/2+r.nextInt((int)(camHeight-height));

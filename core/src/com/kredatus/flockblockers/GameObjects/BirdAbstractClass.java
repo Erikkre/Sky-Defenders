@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 
 import java.util.ArrayList;
@@ -57,6 +58,8 @@ Only add health to phoenix each round   after you hit multiples of 500 gold/phoe
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
+    protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 1.0f;
+
     public float preX, preY, x, y, yVel, yAcc, xVel,yVelDeath, sizeRatio, finalSizeRatio=1, preTargetY;
     //public Hashtable xMotionTimePositions=new Hashtable();
     public double xMotionTime;
@@ -77,7 +80,7 @@ public abstract class BirdAbstractClass {
     private BirdAbstractClass thisBird=this;
     public Animation[] animSeq;
 
-    public int health;
+    public float health;
     public float targetRot, rotation, rotStep, unRotStep;
 
     public float origYVel, origFlapSpeed, lastYSpeedAtFlapChange;
@@ -88,6 +91,8 @@ public abstract class BirdAbstractClass {
 
     public float flapRandomFactor;
     public BirdAbstractClass() {
+        if (FlockBlockersMain.fastTest) {globalSpeedMultiplier = 3f; globalHealthMultiplier=0.1f;}
+
         isAlive=true;
         isOffCam = false;
         yAcc=-1f;
@@ -106,7 +111,7 @@ public abstract class BirdAbstractClass {
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
-        boundingPoly  = new Polygon(new float[]{x - width / 4.5f, y - height / 4,          x + width / 4.5f, y - height / 4,          x + width / 3f, y + height / 6f,          x - width / 3f, y + height / 6f}); //trapezoid to reach bid wings
+        boundingPoly  = new Polygon(new float[]{x - width / 4.5f, y - height / 4,          x + width / 4.5f, y - height / 4,          x + width / 2.5f, y + height / 6f,          x - width / 2.5f, y + height / 6f}); //trapezoid to reach bid wings
         boundingPoly  .  setOrigin(x, y);
     }
 

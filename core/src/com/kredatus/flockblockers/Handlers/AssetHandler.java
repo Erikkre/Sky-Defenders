@@ -203,16 +203,6 @@ public class AssetHandler {
         bgList = new ArrayList<TextureRegion>();
 
 
-        bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgNight2.jpg"));
-        bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
-        bgNighttexture.flip(false, true);
-        bgList.add(bgNighttexture);
-
-        bgNighttexture2 = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
-        bgList.add(bgNighttexture2);
-
-
         bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix2.jpg"));
         bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
@@ -261,6 +251,16 @@ public class AssetHandler {
 
         bgAcidtexture2 = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
         bgList.add(bgAcidtexture2);
+
+
+        bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgNight2.jpg"));
+        bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
+        bgNighttexture.flip(false, true);
+        bgList.add(bgNighttexture);
+
+        bgNighttexture2 = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
+        bgList.add(bgNighttexture2);
 
 
         bgLunar = new Texture(Gdx.files.internal("backgrounds/levels/bgLunar2.jpg"));
@@ -347,11 +347,11 @@ public class AssetHandler {
         coinAnimation.setPlayMode(Animation.PlayMode.LOOP); //REMEMBER THIS STEP
 
 
-        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.05f);
+        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.06f);
 
-        thunderAnimations = birdTextureToAnimation("thunder.png", 0.05f);
-        waterAnimations   = birdTextureToAnimation("water.png", 0.05f);
-        fireAnimations    = birdTextureToAnimation("fire.png", 0.08f);
+        thunderAnimations = birdTextureToAnimation("thunder.png", 0.06f);
+        waterAnimations   = birdTextureToAnimation("water.png", 0.06f);
+        fireAnimations    = birdTextureToAnimation("fire.png", 0.06f);
 
         nightAnimations   = birdTextureToAnimation("night.png", 0.03f);
         acidAnimations    = birdTextureToAnimation("acid.png", 0.03f);

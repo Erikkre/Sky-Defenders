@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.brashmonkey.spriter.TweenedAnimation;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Background;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
@@ -155,16 +156,27 @@ public class BgHandler {
                 .repeat(Tween.INFINITY, 0).start();
 
 */
-        (vertPosBg = Timeline.createSequence()  //5 4.5f 4.5f 2 7 .1, 8 and 60 repeats
-                .push((Tween.to(vert,-1, 5 ).target(-bgh-( .1f*camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START)      )//0.6 camheight  above, decide whether quad quint, circ or expo, all out
-                .push((Tween.to(vert, -1, 13).target(  -bgh+(1.2f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0)).setCallback(endBirdSpawn)      )                         //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
+        if (!FlockBlockersMain.fastTest) {
+            (vertPosBg = Timeline.createSequence()  //5 13 7   0.02 0.5 , 3 and 1 repeats
+                    .push((Tween.to(vert, -1, 5).target(-bgh - (.1f * camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns))//0.6 camheight  above, decide whether quad quint, circ or expo, all out
+                    .push((Tween.to(vert, -1, 13).target(-bgh + (1.2f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0)).setCallback(endBirdSpawn))                         //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
 
-                .push(Tween.to(vert, -1, 7).target((-bgh*2)+(0.499f*camHeight)).ease(TweenEquations.easeInOutSine)     )  //cam center 0.001 above edge, decide wether ease inoutsine
-                .push((Tween.to(vert, -1, 0.02f).target((-bgh*2)+(0.501f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
-                .push((Tween.to(vert, -1, 0.5f).target((-bgh*2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail))      )   //cam 0.03 below edge
+                    .push(Tween.to(vert, -1, 7).target((-bgh * 2) + (0.499f * camHeight)).ease(TweenEquations.easeInOutSine))  //cam center 0.001 above edge, decide wether ease inoutsine
+                    .push((Tween.to(vert, -1, 0.02f).target((-bgh * 2) + (0.501f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)))  //         ) //cam 0.001 below edge
+                    .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail)))   //cam 0.03 below edge
 
-                .repeat(Tween.INFINITY, 0).start();
+                    .repeat(Tween.INFINITY, 0).start();
+        } else {
+            (vertPosBg = Timeline.createSequence()  //2 4  6   0.02 0.5 . 3 and 1 repeats
+                    .push((Tween.to(vert, -1, 2).target(-bgh - (.1f * camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns))//0.6 camheight  above, decide whether quad quint, circ or expo, all out
+                    .push((Tween.to(vert, -1, 4).target(-bgh + (1.2f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0)).setCallback(endBirdSpawn))                         //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
 
+                    .push(Tween.to(vert, -1, 6).target((-bgh * 2) + (0.499f * camHeight)).ease(TweenEquations.easeInOutSine))  //cam center 0.001 above edge, decide wether ease inoutsine
+                    .push((Tween.to(vert, -1, 0.02f).target((-bgh * 2) + (0.501f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
+                    .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail)))   //cam 0.03 below edge
+
+                    .repeat(Tween.INFINITY, 0).start();
+        }
 
         float smallShakeMaxAngle=0.1f;
         int bigShakeMaxAngle=30;
@@ -201,15 +213,30 @@ public class BgHandler {
             if (isBirdSpawning && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty()){
                 //vertPosBg.pause();
                 //System.out.println(BirdHandler.birdQueue+ ", ActiveBirdQueue: "+BirdHandler.activeBirdQueue+"************************************************");
-                 (vertPosBg = Timeline.createSequence()  //5 4.5f 4.5f 2 7 .1, 8 and 60 repeats
-                         .push((Tween.to(vert, -1, 7).target((-bgh*2)+(0.499f*camHeight)).ease(TweenEquations.easeInOutSine)).setCallback(endBirdSpawn)     )  //cam center 0.001 above edge, decide wether ease inoutsine
-                         .push((Tween.to(vert, -1, 0.02f).target((-bgh*2)+(0.501f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
-                         .push((Tween.to(vert, -1, 0.5f).target((-bgh*2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail))      )   //cam 0.03 below edge
+                if (!FlockBlockersMain.fastTest) {
+                    (vertPosBg = Timeline.createSequence()  //5 13 7   0.02 0.5 , 3 and 1 repeats
 
-                         .push((Tween.to(vert,-1, 5 ).target(-bgh-( .1f*camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START)      )//0.6 camheight  above, decide whether quad quint, circ or expo, all out
-                         .push(Tween.to(vert, -1, 8).target(  -bgh+(1.2f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(5, 0))                          //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
+                            .push((Tween.to(vert, -1, 7).target((-bgh * 2) + (0.499f * camHeight)).ease(TweenEquations.easeInOutSine)).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START))  //cam center 0.001 above edge, decide wether ease inoutsine
+                            .push(Tween.to(vert, -1, 0.02f).target((-bgh * 2) + (0.501f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
+                            .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail))   //cam 0.03 below edge
 
-                         .repeat(Tween.INFINITY, 0).start();
+                            .push((Tween.to(vert, -1, 5).target(-bgh - (.1f * camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns))//0.6 camheight  above, decide whether quad quint, circ or expo, all out
+                            .push(Tween.to(vert, -1, 13).target(-bgh + (1.2f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0))    )                   //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
+                            .repeat(Tween.INFINITY, 0).start();
+
+                } else {
+                    (vertPosBg = Timeline.createSequence()   //2  4 6   0.02 0.5 . 3 and 1 repeats
+
+                            .push((Tween.to(vert, -1, 6).target((-bgh * 2) + (0.499f * camHeight)).ease(TweenEquations.easeInOutSine)).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START))  //cam center 0.001 above edge, decide wether ease inoutsine
+                            .push(Tween.to(vert, -1, 0.02f).target((-bgh * 2) + (0.501f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
+                            .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail))   //cam 0.03 below edge
+
+                            .push((Tween.to(vert, -1, 2).target(-bgh - (.1f * camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns))//0.6 camheight  above, decide whether quad quint, circ or expo, all out
+                            .push(Tween.to(vert, -1, 4).target(-bgh + (1.2f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0))    )                   //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
+                            .repeat(Tween.INFINITY, 0).start();
+
+                }
+
                 isBirdSpawning=false;
             }
             vertPosBg.update(delta);

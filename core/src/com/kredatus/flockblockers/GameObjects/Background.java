@@ -11,8 +11,8 @@ import com.kredatus.flockblockers.Handlers.GameHandler;
 
 public class Background {
     // Protected is similar to private, but allows inheritance by subclasses.
-    protected float x;
-    public float y;
+
+    public float x, y;
     protected int width;
     protected int height;
     private boolean isScrolledDown;

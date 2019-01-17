@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
@@ -41,6 +42,7 @@ public class NightBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=4;
+        if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         animation=animSeq[r.nextInt(2)];
         origFlapSpeed=animation.getFrameDuration();
@@ -79,8 +81,8 @@ public class NightBird extends BirdAbstractClass {
             }
         };
 
-        currentY = Tween.to(this, 2, 2.5f).target(height).ease(TweenEquations.easeOutBack).setCallback(endIntro).start();
-        firstY =Tween.to(this, 2, 2.5f).target(camHeight+height/2).ease(TweenEquations.easeInBack).delay(0.5f);
+        currentY = Tween.to(this, 2, 2.5f/globalSpeedMultiplier).target(height).ease(TweenEquations.easeOutBack).setCallback(endIntro).start();
+        firstY =Tween.to(this, 2, 2.5f/globalSpeedMultiplier).target(camHeight+height/2).ease(TweenEquations.easeInBack).delay(0.5f);
 
     }
 }

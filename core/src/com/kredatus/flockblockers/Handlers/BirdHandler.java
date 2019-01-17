@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.Handlers;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Birds.AcidBird;
 import com.kredatus.flockblockers.GameObjects.Birds.FireBird;
@@ -30,7 +31,7 @@ public class BirdHandler {
     //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
     public final int[] birdNumberList=          { 1,   20,  20,  25,  10,  8,   7,   3  };
     private float[] spawnIntervals=new float[8];
-    public int waveTypeCnt=5;
+    public int waveTypeCnt=0;
     public TimerTask task;
     public Timer timer;
     public final float duration = 40;
@@ -44,7 +45,7 @@ public class BirdHandler {
 
         this.bgHandler = bgHandler;
         this.camHeight = camHeight;
-        this.camWidth = camWidth;
+        this.camWidth  = camWidth ;
 
         //public  static Class[] birdList ={new PhoenixBird(camHeight, camWidth),  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
 
@@ -54,6 +55,7 @@ public class BirdHandler {
             else if ((i==5||i==6)&&spawnIntervals[i]>8) spawnIntervals[i]=8;
             else spawnIntervals[i] = duration / birdNumberList[i];
 
+            if ( FlockBlockersMain.fastTest) spawnIntervals[i] = 0.01f;
         }
         timer=new Timer();
         taskRunning=false;
@@ -144,15 +146,16 @@ public class BirdHandler {
                 setUpTask();
 
                 if (waveTypeCnt == 0) {
-                    timer.schedule(task, 4000);
+                    timer.schedule(task, 500);
                 } else if (waveTypeCnt == 2) {  //if waterbird
-                    timer.scheduleAtFixedRate(task, 4500, (int) ((duration / (birdNumberList[waveTypeCnt] / 5)) * 1000) / 2);   //  duration/amount of waves/2
+                    if (!FlockBlockersMain.fastTest) timer.scheduleAtFixedRate(task, 500, (int) ((duration / (birdNumberList[waveTypeCnt] / 5)) * 1000) / 2);   //  duration/amount of waves/2
+                    else timer.scheduleAtFixedRate(task,0,1);
                 } else if (waveTypeCnt == 3) {  //if fire spawn all at once in blob
                     for (int i=0; i<birdNumberList[3]; i++){
                         activeBirdQueue.add(birdQueue.poll());
                     }
                 } else {
-                    timer.scheduleAtFixedRate(task, 4500, (int) (spawnIntervals[waveTypeCnt] * 1000));
+                    timer.scheduleAtFixedRate(task, 500, (int) (spawnIntervals[waveTypeCnt] * 1000));
                 }
                //task.run();
                 //activeBirdQueue.remove(0);

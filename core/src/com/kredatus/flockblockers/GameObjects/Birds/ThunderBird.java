@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.GameObjects.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -32,7 +33,7 @@ public class ThunderBird extends BirdAbstractClass {
         rotStep=1.4f;
         unRotStep=1.9f;
 
-        yVel=  1 + r.nextFloat()*1.5f;
+        yVel=  (1 + r.nextFloat()*1.5f)*globalSpeedMultiplier;
         origYVel=yVel;
 
         coinNumber=1;
@@ -51,6 +52,7 @@ public class ThunderBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=1;
+        if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         animation=frontFlaps;
         origFlapSpeed=animation.getFrameDuration();
