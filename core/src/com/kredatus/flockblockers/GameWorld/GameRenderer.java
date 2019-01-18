@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -105,6 +106,8 @@ public class GameRenderer {
     private UiHandler uiHandler;
 
     Table table;
+
+    private ShaderProgram flashShader;
     public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, UiHandler uiHandler) {
 
 
@@ -214,6 +217,8 @@ public void setRotate(float angle){
         rating = AssetHandler.rating;
         youvedied = AssetHandler.youvedied;
         boostdown = AssetHandler.boostdown;
+
+        flashShader = AssetHandler.flashShader;
     }
 
     private void initGameObjects() {
@@ -596,9 +601,23 @@ public void setRotate(float angle){
                     j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
         }
         for (BirdAbstractClass k : activeBirdQueue) {
+            if (k.justHit){
+                k.justHit=false;
+                k.startFlashing();
+            }
+            if (k.isFlashing){
+                batcher.setColor(1,1,1,k.flashValue.getValue());
+                batcher.setShader(flashShader);
+            }
+
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1f, 1f, k.rotation);
 
+            if (k.isFlashing){
+                batcher.setColor(1,1,1,1);
+                batcher.setShader(null);
+                k.flashTween.update(delta);
+            }
             /*batcher.end();
 
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -610,8 +629,21 @@ public void setRotate(float angle){
             batcher.begin();*/
         }
         for (BirdAbstractClass k : deadBirdQueue) {
+            if (k.justHit){
+                k.justHit=false;
+                k.startFlashing();
+            }
+            if (k.isFlashing){
+                //batcher.setColor(1,1,1,k.flashValue.getValue());
+                batcher.setShader(flashShader);
+            }
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
+            if (k.isFlashing){
+                //batcher.setColor(1,1,1,1);
+                batcher.setShader(null);
+                k.flashTween.update(delta);
+            }
             if (!k.coinList.isEmpty()) {
                 for (Coin l : k.coinList) {
                     if (l.firstMovementEndedX) {

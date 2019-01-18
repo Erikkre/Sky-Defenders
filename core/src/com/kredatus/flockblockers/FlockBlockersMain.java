@@ -15,9 +15,6 @@ public class FlockBlockersMain extends Game {
 
     @Override
     public void create() {
-
-
-
         Gdx.app.log("CloudDefenders", "created");
         AssetHandler.load();
         setScreen(new SplashScreen(this));

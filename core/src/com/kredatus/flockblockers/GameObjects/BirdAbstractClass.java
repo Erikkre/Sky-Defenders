@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Polygon;
 
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -16,7 +17,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquations;
 //import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 
 /**
@@ -90,7 +94,13 @@ public abstract class BirdAbstractClass {
     private ArrayList<Float> flapSpeedIntervals=new ArrayList<Float>();
 
     public float flapRandomFactor;
+
+    public boolean justHit, isFlashing;
+    public Value flashValue = new Value();
+    public Tween flashTween;
+
     public BirdAbstractClass() {
+
         if (FlockBlockersMain.fastTest) {globalSpeedMultiplier = 3f; globalHealthMultiplier=0.1f;}
 
         isAlive=true;
@@ -101,7 +111,6 @@ public abstract class BirdAbstractClass {
         unRotStep=0.6f;
         //this.manager=manager;
         flapRandomFactor=r.nextFloat()*0.5f;
-
     }
     protected void flapSpeedIntervals(){
         for (float i=1.6f; i>=1;i-=0.05f){
@@ -369,6 +378,23 @@ public abstract class BirdAbstractClass {
 
     public final void hit(Projectile projectile){
         health-= projectile.dmg;
+        justHit=true;
+    }
+
+
+    public void startFlashing() {
+        if (flashTween!=null)flashTween.kill();
+        TweenCallback endFlashing = new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                isFlashing = false;
+                flashTween=null;
+            }
+        };
+
+        flashValue.setValue(1);
+        isFlashing = true;
+        flashTween = Tween.to(flashValue, -1, 0.3f).target(0).ease(TweenEquations.easeInExpo).setCallback(endFlashing).start();
     }
 
 }

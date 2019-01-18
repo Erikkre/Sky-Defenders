@@ -8,9 +8,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -51,6 +53,7 @@ public class AssetHandler {
 
     public static Preferences prefs;
 
+    public static ShaderProgram flashShader;
     public static void load() {
         menumusiciterator = r.nextInt(3);
         musiciterator = r.nextInt(6);
@@ -386,6 +389,11 @@ public class AssetHandler {
         if (!prefs.contains("highScore")) {
             prefs.putInteger("highScore", 0);
         }
+
+        flashShader = new ShaderProgram(Gdx.files.internal(
+                "shaders"+File.separator+"flash-vert.glsl").readString(),
+                Gdx.files.internal("shaders"+ File.separator+"flash-frag.glsl").readString());
+
     }
 
     private static Animation[] birdTextureToAnimation(String path, float flapSpeed){
