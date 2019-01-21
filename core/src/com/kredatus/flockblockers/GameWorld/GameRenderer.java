@@ -23,6 +23,7 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Coin;
 import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.GameObjects.Projectile;
+import com.kredatus.flockblockers.GameObjects.TinyBird;
 import com.kredatus.flockblockers.GameObjects.Turret;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -30,6 +31,7 @@ import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.GameHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
+import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.TurretHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
@@ -88,6 +90,7 @@ public class GameRenderer {
 
 
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,deadBirdQueue;
+    public static ConcurrentLinkedQueue<TinyBird> tinyBirdQueue;
     public ArrayList<Turret> turretList;
     public ConcurrentLinkedQueue<Projectile> projectileList;
     private float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
@@ -101,6 +104,7 @@ public class GameRenderer {
     private int camWidth, camHeight;
     private BgHandler bgHandler;
     private BirdHandler birdHandler;
+    private TinyBirdHandler tinyBirdHandler;
     private TargetHandler targetHandler;
     private TurretHandler turretHandler;
     private UiHandler uiHandler;
@@ -108,9 +112,9 @@ public class GameRenderer {
     Table table;
 
     private ShaderProgram flashShader;
-    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, UiHandler uiHandler) {
+    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, TinyBirdHandler tinyBirdHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, UiHandler uiHandler) {
 
-
+        this.tinyBirdHandler=tinyBirdHandler;
         this.birdHandler=birdHandler;
         this.bgHandler=bgHandler;
         this.targetHandler = targetHandler;
@@ -194,6 +198,7 @@ public void setRotate(float angle){
 
         activeBirdQueue=birdHandler.activeBirdQueue;
         deadBirdQueue=  birdHandler.deadBirdQueue;
+        tinyBirdQueue= tinyBirdHandler.tinyBirdQueue;
         turretList=     turretHandler.turretList;
         projectileList= targetHandler.projectileList;
         //tinyBirdList=birdHandler.activeBirdQueue;

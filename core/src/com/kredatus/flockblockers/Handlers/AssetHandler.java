@@ -25,7 +25,7 @@ public class AssetHandler {
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;
     public static Animation[] phoenixAnimations, nightAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
-    public static Texture sprites, f0Texture, f1Texture,  f2Texture, f3Texture, f4Texture, f5Texture, f6Texture, f7Texture, f8Texture, f9Texture,
+    public static Texture sprites, texture, f0Texture, f1Texture,  f2Texture, f3Texture, f4Texture, f5Texture, f6Texture, f7Texture, f8Texture, f9Texture,
             bgPhoenix,bgNight,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, nightBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird,
             boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture, creditstexture, creditsdowntexture, exittexture, exitdowntexture,
             retrytexture, retrydowntexture, readytexture, readydowntexture, storytexture, storydowntexture, scoretexture, ratingtexture, topscoretexture, menutexture,
@@ -47,7 +47,9 @@ public class AssetHandler {
     public static Vector3 p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19,
             p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31;
 
-    public static Animation<TextureRegion> rightSideFlaps, leftSideFlaps, whiteTinyBirdAnimation, blackTinyBirdAnimation,greyTinyBirdAnimation, coinAnimation;
+    public static Animation<TextureRegion> rightSideFlaps, leftSideFlaps,
+            tinyAnim1, tinyAnim2,tinyAnim3, tinyAnim4, tinyAnim5, tinyAnim6,tinyAnim7,tinyAnim8,
+            coinAnimation;
     //public static TextureRegion gliderMid, gliderDown, gliderUp ,vertflipgliderMid, vertflipgliderDown, vertflipgliderUp,
             //frontGliderMid, frontGliderDown, frontGliderUp, frontGliderUpHigh, backgliderMid, backgliderDown, backgliderUp;
 
@@ -59,81 +61,81 @@ public class AssetHandler {
         musiciterator = r.nextInt(6);
 
         //button textures
-        playtexture = new Texture(Gdx.files.internal("ui/play.png"));
+        playtexture = new Texture(Gdx.files.internal("ui"+File.separator+"play.png"));
         playtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        playdowntexture = new Texture(Gdx.files.internal("ui/playdown.png"));
+        playdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"playdown.png"));
         playdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         playdown = new TextureRegion(playdowntexture, 0, 0, 347, 220);
         play = new TextureRegion(playtexture, 0, 0, 347, 220);
         play.flip(false, true);
         playdown.flip(false, true);
 
-        creditstexture = new Texture(Gdx.files.internal("ui/credits.png"));
+        creditstexture = new Texture(Gdx.files.internal("ui"+File.separator+"credits.png"));
         creditstexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        creditsdowntexture = new Texture(Gdx.files.internal("ui/creditsdown.png"));
+        creditsdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"creditsdown.png"));
         creditsdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         credits = new TextureRegion(creditstexture, 0, 0, 536, 221);
         credits.flip(false, true);
         creditsdown = new TextureRegion(creditsdowntexture, 0, 0, 536, 221);
         creditsdown.flip(false, true);
 
-        exittexture = new Texture(Gdx.files.internal("ui/exit.png"));
+        exittexture = new Texture(Gdx.files.internal("ui"+File.separator+"exit.png"));
         exittexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        exitdowntexture = new Texture(Gdx.files.internal("ui/exitdown.png"));
+        exitdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"exitdown.png"));
         exitdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         exit = new TextureRegion(exittexture, 0, 0, 350, 221);
         exit.flip(false, true);
         exitdown = new TextureRegion(exitdowntexture, 0, 0, 350, 221);
         exitdown.flip(false, true);
 
-        retrytexture = new Texture(Gdx.files.internal("ui/retry.png"));
+        retrytexture = new Texture(Gdx.files.internal("ui"+File.separator+"retry.png"));
         retrytexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        retrydowntexture = new Texture(Gdx.files.internal("ui/retrydown.png"));
+        retrydowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"retrydown.png"));
         retrydowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         retry = new TextureRegion(retrytexture, 0, 0, 465, 222);
         retry.flip(false, true);
         retrydown = new TextureRegion(retrydowntexture, 0, 0, 465, 222);
         retrydown.flip(false, true);
 
-        readytexture = new Texture(Gdx.files.internal("ui/ready.png"));
+        readytexture = new Texture(Gdx.files.internal("ui"+File.separator+"ready.png"));
         readytexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        readydowntexture = new Texture(Gdx.files.internal("ui/readydown.png"));
+        readydowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"readydown.png"));
         readydowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         ready = new TextureRegion(readytexture, 0, 0, 495, 222);
         ready.flip(false, true);
         readydown = new TextureRegion(readydowntexture, 0, 0, 495, 222);
         readydown.flip(false, true);
 
-        storytexture = new Texture(Gdx.files.internal("ui/story.png"));
+        storytexture = new Texture(Gdx.files.internal("ui"+File.separator+"story.png"));
         storytexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        storydowntexture = new Texture(Gdx.files.internal("ui/storydown.png"));
+        storydowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"storydown.png"));
         storydowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         story = new TextureRegion(storytexture, 0, 0, 426, 221);
         story.flip(false, true);
         storydown = new TextureRegion(storydowntexture, 0, 0, 426, 221);
         storydown.flip(false, true);
 
-        instrtexture = new Texture(Gdx.files.internal("ui/instr.png"));
+        instrtexture = new Texture(Gdx.files.internal("ui"+File.separator+"instr.png"));
         instrtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        instrdowntexture = new Texture(Gdx.files.internal("ui/instrdown.png"));
+        instrdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"instrdown.png"));
         instrdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         instr = new TextureRegion(instrtexture, instrtexture.getWidth(), instrtexture.getHeight());
         instr.flip(false, true);
         instrdown = new TextureRegion(instrdowntexture, instrdowntexture.getWidth(), instrdowntexture.getHeight());
         instrdown.flip(false, true);
 
-        menutexture = new Texture(Gdx.files.internal("ui/menu.png"));
+        menutexture = new Texture(Gdx.files.internal("ui"+File.separator+"menu.png"));
         menutexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        menudowntexture = new Texture(Gdx.files.internal("ui/menudown.png"));
+        menudowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"menudown.png"));
         menudowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         menu = new TextureRegion(menutexture, 0, 0, 409, 221);
         menu.flip(false, true);
         menudown = new TextureRegion(menudowntexture, 0, 0, 409, 221);
         menudown.flip(false, true);
 
-        nexttexture = new Texture(Gdx.files.internal("ui/next.png"));
+        nexttexture = new Texture(Gdx.files.internal("ui"+File.separator+"next.png"));
         nexttexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        nextdowntexture = new Texture(Gdx.files.internal("ui/nextdown.png"));
+        nextdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"nextdown.png"));
         nextdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         nextdown = new TextureRegion(nextdowntexture, 0, 0, 347, 220);
         next = new TextureRegion(nexttexture, 0, 0, 347, 220);
@@ -141,62 +143,62 @@ public class AssetHandler {
         nextdown.flip(false, true);
 
         //non-button textures *************************************************************************************************
-        worldStabilizedtexture = new Texture(Gdx.files.internal("ui/worldStabilized.png"));
+        worldStabilizedtexture = new Texture(Gdx.files.internal("ui"+File.separator+"worldStabilized.png"));
         worldStabilizedtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         worldStabilized = new TextureRegion(worldStabilizedtexture, worldStabilizedtexture.getWidth(), worldStabilizedtexture.getHeight());
         worldStabilized.flip(false, true);
 
-        logoTexture = new Texture(Gdx.files.internal("backgrounds/companyLogo.jpg"));
+        logoTexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"companyLogo.jpg"));
         logoTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         logo = new TextureRegion(logoTexture, 0, 0, 1100, 800);
 
-        newHighscoretexture = new Texture(Gdx.files.internal("ui/newHighscore.png"));
+        newHighscoretexture = new Texture(Gdx.files.internal("ui"+File.separator+"newHighscore.png"));
         newHighscoretexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         newHighscore = new TextureRegion(newHighscoretexture, 0, 0, 644, 184);
         newHighscore.flip(false, true);
 
-        youvediedtexture = new Texture(Gdx.files.internal("ui/youveDied.png"));
+        youvediedtexture = new Texture(Gdx.files.internal("ui"+File.separator+"youveDied.png"));
         youvediedtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         youvedied = new TextureRegion(youvediedtexture, 0, 0, 782, 182);
         youvedied.flip(false, true);
 
-        scoretexture = new Texture(Gdx.files.internal("ui/score.png"));
+        scoretexture = new Texture(Gdx.files.internal("ui"+File.separator+"score.png"));
         scoretexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         score = new TextureRegion(scoretexture, 0, 0, 446, 221);
         score.flip(false, true);
 
-        ratingtexture = new Texture(Gdx.files.internal("ui/rating.png"));
+        ratingtexture = new Texture(Gdx.files.internal("ui"+File.separator+"rating.png"));
         ratingtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         rating = new TextureRegion(ratingtexture, 0, 0, 507, 221);
         rating.flip(false, true);
 
-        topscoretexture = new Texture(Gdx.files.internal("ui/topscore.png"));
+        topscoretexture = new Texture(Gdx.files.internal("ui"+File.separator+"topscore.png"));
         topscoretexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         topscore = new TextureRegion(topscoretexture, 0, 0, 680, 221);
         topscore.flip(false, true);
 
         //BACKGROUNDS **************************************************************************************************************
-        gliderbgtexture = new Texture(Gdx.files.internal("backgrounds/gliderbg.png"));
+        gliderbgtexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"gliderbg.png"));
         gliderbgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         gliderbg = new TextureRegion(gliderbgtexture, gliderbgtexture.getWidth(), gliderbgtexture.getHeight());
         gliderbg.flip(false, true);
 
-        /*creditsbgtexture = new Texture(Gdx.files.internal("backgrounds/creditsbg.jpg"));
+        /*creditsbgtexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"creditsbg.jpg"));
         creditsbgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         creditsbg = new TextureRegion(creditsbgtexture, creditsbgtexture.getWidth(), creditsbgtexture.getHeight());
         creditsbg.flip(false, true);
 
-        deathmenubgtexture = new Texture(Gdx.files.internal("backgrounds/deathmenubg.png"));
+        deathmenubgtexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"deathmenubg.png"));
         deathmenubgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         deathmenubg = new TextureRegion(deathmenubgtexture, deathmenubgtexture.getWidth(), deathmenubgtexture.getHeight());
         deathmenubg.flip(false, true);
 
-        instrbgtexture = new Texture(Gdx.files.internal("backgrounds/instrbg.png"));
+        instrbgtexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"instrbg.png"));
         instrbgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         instrbg = new TextureRegion(instrbgtexture, instrbgtexture.getWidth(), instrbgtexture.getHeight());
         instrbg.flip(false, true);
 
-        readybgtexture = new Texture(Gdx.files.internal("backgrounds/readybg.png"));
+        readybgtexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"readybg.png"));
         readybgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         readybg = new TextureRegion(readybgtexture, readybgtexture.getWidth(), readybgtexture.getHeight());
         readybg.flip(false, true);*/
@@ -206,7 +208,7 @@ public class AssetHandler {
         bgList = new ArrayList<TextureRegion>();
 
 
-        bgPhoenix = new Texture(Gdx.files.internal("backgrounds/levels/bgPhoenix2.jpg"));
+        bgPhoenix = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgPhoenix2.jpg"));
         bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
         bgPhoenixtexture.flip(false, true);
@@ -216,7 +218,7 @@ public class AssetHandler {
         bgList.add(bgPhoenixtexture2);
 
 
-        bgThunder = new Texture(Gdx.files.internal("backgrounds/levels/bgThunder2.jpg"));
+        bgThunder = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgThunder2.jpg"));
         bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
         bgThundertexture.flip(false, true);
@@ -226,7 +228,7 @@ public class AssetHandler {
         bgList.add(bgThundertexture2);
 
 
-        bgWater = new Texture(Gdx.files.internal("backgrounds/levels/bgWater2.jpg"));
+        bgWater = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgWater2.jpg"));
         bgWater.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
         bgWatertexture.flip(false, true);
@@ -236,7 +238,7 @@ public class AssetHandler {
         bgList.add(bgWatertexture2);
 
 
-        bgFire = new Texture(Gdx.files.internal("backgrounds/levels/bgFire2.jpg"));
+        bgFire = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgFire2.jpg"));
         bgFire.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgFiretexture = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
         bgFiretexture.flip(false, true);
@@ -246,7 +248,7 @@ public class AssetHandler {
         bgList.add(bgFiretexture2);
 
 
-        bgAcid = new Texture(Gdx.files.internal("backgrounds/levels/bgAcid2.jpg"));
+        bgAcid = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgAcid2.jpg"));
         bgAcid.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
         bgAcidtexture.flip(false, true);
@@ -256,7 +258,7 @@ public class AssetHandler {
         bgList.add(bgAcidtexture2);
 
 
-        bgNight = new Texture(Gdx.files.internal("backgrounds/levels/bgNight2.jpg"));
+        bgNight = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgNight2.jpg"));
         bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
         bgNighttexture.flip(false, true);
@@ -266,7 +268,7 @@ public class AssetHandler {
         bgList.add(bgNighttexture2);
 
 
-        bgLunar = new Texture(Gdx.files.internal("backgrounds/levels/bgLunar2.jpg"));
+        bgLunar = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgLunar2.jpg"));
         bgLunar.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgLunartexture = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
         bgLunartexture.flip(false, true);
@@ -276,7 +278,7 @@ public class AssetHandler {
         bgList.add(bgLunartexture2);
 
 
-        bgGold = new Texture(Gdx.files.internal("backgrounds/levels/bgGold2.jpg"));
+        bgGold = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgGold2.jpg"));
         bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
         bgGoldtexture.flip(false, true);
@@ -320,23 +322,23 @@ public class AssetHandler {
 */
         //SPRITEWORK
         gliderscaling = 1;
-        boost = new Texture(Gdx.files.internal("sprites/boost.png"));
+        boost = new Texture(Gdx.files.internal("sprites"+File.separator+"boost.png"));
         boost.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         boosttexture = new TextureRegion(boost, boost.getWidth(), boost.getHeight());
         boosttexture.flip(false, true);
-        boostdowntexture = new Texture(Gdx.files.internal("ui/boostdown.png"));
+        boostdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"boostdown.png"));
         boostdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         boostdown = new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
         boostdown.flip(false, true);
 
-        f0Texture= new Texture(Gdx.files.internal("sprites/turrets/FF0.png"));
+        f0Texture= new Texture(Gdx.files.internal("sprites"+File.separator+"turrets"+File.separator+"FF0.png"));
         f0Texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         //turret.flip(false, true);
         f0 = new TextureRegion(f0Texture,0, 11,100,30);
         f0Proj = new TextureRegion(f0Texture,0, 0,100,10);
 
 
-        Texture coinTexture=new Texture(Gdx.files.internal("sprites/coin.png"));
+        Texture coinTexture=new Texture(Gdx.files.internal("sprites"+File.separator+"coin.png"));
         ArrayList<TextureRegion> tempPos = new ArrayList<TextureRegion>(16);
         for (int i = 0; i < 17; i++) {
             if (i<16){
@@ -362,27 +364,26 @@ public class AssetHandler {
 
         goldAnimations    = birdTextureToAnimation("gold.png", 0.05f);
 
-        Texture greyTinyBird = new Texture(Gdx.files.internal("sprites/greyTinyBird.png"));
-        greyTinyBirdAnimation=tinyBirdTextureToAnimation(greyTinyBird);
-        greyTinyBirdAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
-        Texture blackTinyBird = new Texture(Gdx.files.internal("sprites/blackTinyBird.png"));
-        blackTinyBirdAnimation=tinyBirdTextureToAnimation(blackTinyBird);
-        blackTinyBirdAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        tinyAnim1=tinyBirdTextureToAnimation("1");
+        tinyAnim2=tinyBirdTextureToAnimation("2");
+        tinyAnim3=tinyBirdTextureToAnimation("3");
+        tinyAnim4=tinyBirdTextureToAnimation("4");
+        tinyAnim5=tinyBirdTextureToAnimation("5");
+        tinyAnim6=tinyBirdTextureToAnimation("6");
+        tinyAnim7=tinyBirdTextureToAnimation("7");
+        tinyAnim8=tinyBirdTextureToAnimation("8");
 
-        Texture whiteTinyBird = new Texture(Gdx.files.internal("sprites/whiteTinyBird.png"));
-        whiteTinyBirdAnimation=tinyBirdTextureToAnimation(whiteTinyBird);
-        whiteTinyBirdAnimation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
         //SOUNDWORK
-        fire = Gdx.audio.newSound(Gdx.files.internal("sound/fire.wav"));
-        splashdown = Gdx.audio.newSound(Gdx.files.internal("sound/splashdown.wav"));
-        swoop = Gdx.audio.newSound(Gdx.files.internal("sound/swoop.wav"));
+        fire = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"fire.wav"));
+        splashdown = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"splashdown.wav"));
+        swoop = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"swoop.wav"));
 
-        musiclist = new Music[] { Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic2.mp3")),
-                Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic3.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic4.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic5.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/bgMusic6.mp3"))};
-        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music/menuMusic2.mp3"))};
-        deathmenumusic = Gdx.audio.newMusic(Gdx.files.internal("music/deathmenuMusic.mp3"));
+        musiclist = new Music[] { Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic2.mp3")),
+                Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic3.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic4.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic5.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic6.mp3"))};
+        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"menuMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"menuMusic2.mp3"))};
+        deathmenumusic = Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"deathmenuMusic.mp3"));
 
         // Create (or retrieve existing) preferences file
         prefs = Gdx.app.getPreferences("GlideorDie");
@@ -406,8 +407,8 @@ public class AssetHandler {
 
     }
 
-    private static Animation[] birdTextureToAnimation(String path, float flapSpeed){
-        sprites = new Texture(Gdx.files.internal("sprites/birds/"+path));
+    private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed){
+        sprites = new Texture(Gdx.files.internal("sprites"+File.separator+"birds"+File.separator+""+path));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
         ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
@@ -467,14 +468,17 @@ public class AssetHandler {
         return new Animation[]{frontFlaps, leftFlaps, rightFlaps, backFlaps, deathFlaps};
     }
 
-    private static Animation tinyBirdTextureToAnimation (Texture texture) {
-        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>(6);
+    private static Animation<TextureRegion> tinyBirdTextureToAnimation (String shadeNumber) {
+        texture = new Texture(Gdx.files.internal("sprites"+File.separator+"tinyBirds"+File.separator+"tinyBird"+shadeNumber+".png"));
+        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>(9);
 
-        for (int i = 0; i < 6; i++) {
-            TextureRegion temp = new TextureRegion(texture, 77 * i, 0, 77, 29);
+        for (int i = 0; i < 9; i++) {
+            TextureRegion temp = new TextureRegion(texture, 73 * i, 0, 73, 27);
             positions.add(temp);
         }
-        return new Animation<TextureRegion>(0.125f, positions.toArray((new TextureRegion[6])));
+        Animation animation = new Animation<TextureRegion>(0.09f, positions.toArray((new TextureRegion[9])));
+        animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        return animation;
     }
 /*
     public static Animation[] birdTextureToSprite (Texture texture) {
@@ -613,6 +617,7 @@ public class AssetHandler {
         readydowntexture.dispose();
         nexttexture.dispose();
         nextdowntexture.dispose();
+        texture.dispose();
 
         splashdown.dispose();
         swoop.dispose();
