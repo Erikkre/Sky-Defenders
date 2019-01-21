@@ -606,17 +606,22 @@ public void setRotate(float angle){
                 k.startFlashing();
             }
             if (k.isFlashing){
-                batcher.setColor(1,1,1,k.flashValue.getValue());
+                //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
                 batcher.setShader(flashShader);
-            }
 
+                //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
+                flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.getValue());
+                //flashShader.begin();
+            }
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1f, 1f, k.rotation);
-
             if (k.isFlashing){
-                batcher.setColor(1,1,1,1);
+
+                //batcher.setColor(1,1,1,1);
                 batcher.setShader(null);
+                //flashShader.end();
                 k.flashTween.update(delta);
+
             }
             /*batcher.end();
 
@@ -634,8 +639,12 @@ public void setRotate(float angle){
                 k.startFlashing();
             }
             if (k.isFlashing){
-                //batcher.setColor(1,1,1,k.flashValue.getValue());
+                //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
+                //flashShader.begin();
                 batcher.setShader(flashShader);
+                //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
+                flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.getValue());
+
             }
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
@@ -643,6 +652,7 @@ public void setRotate(float angle){
                 //batcher.setColor(1,1,1,1);
                 batcher.setShader(null);
                 k.flashTween.update(delta);
+                //flashShader.end();
             }
             if (!k.coinList.isEmpty()) {
                 for (Coin l : k.coinList) {

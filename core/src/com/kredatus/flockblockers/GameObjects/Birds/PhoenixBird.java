@@ -89,7 +89,7 @@ public float targetY, targetX;//, preTargetY;
             }
             System.out.println("startOutro");
         } else if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX){
-            System.out.println("Tween is finished******************************************************");
+            //System.out.println("Tween is finished******************************************************");
             if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );  //if on left go to right if on right go left
             else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
 

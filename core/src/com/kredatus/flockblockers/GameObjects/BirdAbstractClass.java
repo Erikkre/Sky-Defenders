@@ -96,7 +96,7 @@ public abstract class BirdAbstractClass {
     public float flapRandomFactor;
 
     public boolean justHit, isFlashing;
-    public Value flashValue = new Value();
+    public Value flashOpacityValue = new Value();
     public Tween flashTween;
 
     public BirdAbstractClass() {
@@ -135,11 +135,11 @@ public abstract class BirdAbstractClass {
                 fasterFlap=true;
                 lastYSpeedAtFlapChange=yVel;
                 animation.setFrameDuration(flapSpeedIntervals.get((int)((origYVel/yVel)*flapSpeedIntervals.size())));
-                System.out.println("Heighten"+animation.getFrameDuration());
+                //System.out.println("Heighten"+animation.getFrameDuration());
             }  else if (yVel<lastYSpeedAtFlapChange && yVel<= origFlapSpeed && fasterFlap){
                 fasterFlap=false;
                 animation.setFrameDuration(origFlapSpeed);//base with yvelocity at original velocity, we flap standard speed. but with faster velocity we have shorter frame duration so faster flapping
-                System.out.println("Lower"   +animation.getFrameDuration());
+                //System.out.println("Lower"   +animation.getFrameDuration());
             }
 
             if (health <= 0) {
@@ -180,7 +180,7 @@ public abstract class BirdAbstractClass {
         if (startRot){
             startRot=false;
             targetRot=-xVel*4+ (Math.signum(-xVel)*2);
-            System.out.println("TargetRot: "+targetRot);
+            //System.out.println("TargetRot: "+targetRot);
             if (targetRot<0){
                 targetRot+=360;
             }
@@ -372,15 +372,12 @@ public abstract class BirdAbstractClass {
         }
     }
 
-
-
     public abstract void specificUpdate(float delta, float runTime);
 
     public final void hit(Projectile projectile){
         health-= projectile.dmg;
         justHit=true;
     }
-
 
     public void startFlashing() {
         if (flashTween!=null)flashTween.kill();
@@ -392,9 +389,9 @@ public abstract class BirdAbstractClass {
             }
         };
 
-        flashValue.setValue(1);
+        flashOpacityValue.setValue(1f);
         isFlashing = true;
-        flashTween = Tween.to(flashValue, -1, 0.3f).target(0).ease(TweenEquations.easeInExpo).setCallback(endFlashing).start();
+        flashTween = Tween.to(flashOpacityValue, -1, 0.6f).target(0f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();
     }
 
 }

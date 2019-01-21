@@ -390,9 +390,19 @@ public class AssetHandler {
             prefs.putInteger("highScore", 0);
         }
 
+        ShaderProgram.pedantic = false;
         flashShader = new ShaderProgram(Gdx.files.internal(
                 "shaders"+File.separator+"flash-vert.glsl").readString(),
                 Gdx.files.internal("shaders"+ File.separator+"flash-frag.glsl").readString());
+       //flashShader.begin();
+        if (!flashShader.isCompiled()) {
+            System.err.println(flashShader.getLog());
+            System.exit(0);
+        }
+
+        if (flashShader.getLog().length()!=0){
+            System.out.println(flashShader.getLog());
+        }
 
     }
 
@@ -609,6 +619,7 @@ public class AssetHandler {
         fire.dispose();
         deathmenumusic.dispose();
 
+        flashShader.dispose();
         for (Music music : musiclist){
             music.dispose();
         }
