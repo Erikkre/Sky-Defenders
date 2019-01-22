@@ -18,8 +18,10 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 //import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 
@@ -84,24 +86,37 @@ public abstract class BirdAbstractClass {
     private BirdAbstractClass thisBird=this;
     public Animation[] animSeq;
 
-    public float health;
+    public float origHealth, health;
     public float targetRot, rotation, rotStep, unRotStep;
 
     public float origYVel, origFlapSpeed, lastYSpeedAtFlapChange;
 
     protected boolean startRot, unRotate, rotate, fasterFlap;
     //public AnimationController animControl = AnimationController();
-    private ArrayList<Float> flapSpeedIntervals=new ArrayList<Float>();
+    protected ArrayList<Float> flashLengths=new ArrayList<Float>(),flapSpeedIntervals=new ArrayList<Float>();
 
-    public float flapRandomFactor;
+    public float flapRandomFactor,currentFlashLength;
 
-    public boolean justHit, isFlashing;
+    public boolean isFlashing;
     public Value flashOpacityValue = new Value();
     public Tween flashTween;
+    public TweenCallback endFlashing;
+
+    /*TweenEquation[] tweenEquations = {TweenEquations.easeOutExpo}; /*,TweenEquations.easeOutQuint,TweenEquations.easeOutQuart,
+            TweenEquations.easeOutCubic,TweenEquations.easeOutQuad,TweenEquations.easeOutSine,
+            TweenEquations.easeNone};*/
 
     public BirdAbstractClass() {
-
         if (FlockBlockersMain.fastTest) {globalSpeedMultiplier = 3f; globalHealthMultiplier=0.1f;}
+
+        if (flashTween!=null)flashTween.kill();
+        endFlashing = new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                isFlashing = false;
+                flashTween = null;
+            }
+        };
 
         isAlive=true;
         isOffCam = false;
@@ -111,6 +126,9 @@ public abstract class BirdAbstractClass {
         unRotStep=0.6f;
         //this.manager=manager;
         flapRandomFactor=r.nextFloat()*0.5f;
+
+
+
     }
     protected void flapSpeedIntervals(){
         for (float i=1.6f; i>=1;i-=0.05f){
@@ -294,8 +312,6 @@ public abstract class BirdAbstractClass {
             }
         }
         */
- 
-
 
     public void setTargetRot() {
         /*if (xVel>0) {
@@ -375,23 +391,19 @@ public abstract class BirdAbstractClass {
     public abstract void specificUpdate(float delta, float runTime);
 
     public final void hit(Projectile projectile){
-        health-= projectile.dmg;
-        justHit=true;
-    }
-
-    public void startFlashing() {
-        if (flashTween!=null)flashTween.kill();
-        TweenCallback endFlashing = new TweenCallback() {
-            @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {
-                isFlashing = false;
-                flashTween=null;
-            }
-        };
-
-        flashOpacityValue.setValue(1f);
+        health -= projectile.dmg;
         isFlashing = true;
-        flashTween = Tween.to(flashOpacityValue, -1, 0.6f).target(0f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();
-    }
+        flashOpacityValue.setValue(1f);//always start from white flash to distinguish from bg
+        if (projectile.dmg<origHealth&&health>0){
+            currentFlashLength=flashLengths.get((int)((projectile.dmg/origHealth)*flashLengths.size()));
+            flashTween = Tween.to(flashOpacityValue, -1, currentFlashLength).target(0f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();
+        } else {
+            //currentFlashLength=flashLengths.get(flashLengths.size()-1); //else make flash black (-1f-0f)
+            flashOpacityValue.setValue(1f);    //make a death shader effect
 
+                    //.push(Tween.to(flashOpacityValue, -1, 0.3f).target(1f).ease(TweenEquations.easeOutExpo))
+                    flashTween = Tween.to(flashOpacityValue, -1, 2f).target(-1f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();
+        }
+        //System.out.println(currentFlashLength);
+    }
 }

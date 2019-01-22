@@ -10,6 +10,8 @@ import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 
+import java.util.ArrayList;
+
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -24,15 +26,17 @@ public class PhoenixBird extends BirdAbstractClass {
 Tween outroY;
 
 public float targetY, targetX;//, preTargetY;
-    public PhoenixBird(float camHeight, float camWidth){
+    public PhoenixBird(float camHeight, float camWidth, ArrayList flashLengths){
         super();
+        this.flashLengths=flashLengths;
+        this.flashLengths=flashLengths;
         yAcc=-0.2f;
         yVelDeath=10;
         yVel=1*globalSpeedMultiplier;
         diamonds=1;
         coinNumber=100;
         origYVel=yVel;
-        health=60;
+        health=60;origHealth=health;
         if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         sizeVariance=1;
@@ -87,7 +91,7 @@ public float targetY, targetX;//, preTargetY;
             } else {
                 xVel=2;
             }
-            System.out.println("startOutro");
+            //System.out.println("startOutro");
         } else if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX){
             //System.out.println("Tween is finished******************************************************");
             if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );  //if on left go to right if on right go left
@@ -105,7 +109,7 @@ public float targetY, targetX;//, preTargetY;
         } else if (introX!=null&&introX.isFinished()){
             introX=null;
             startRot=true;
-            System.out.println("startRot");
+            //System.out.println("startRot");
         }
     }
 

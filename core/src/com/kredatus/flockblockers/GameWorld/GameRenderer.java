@@ -112,7 +112,8 @@ public class GameRenderer {
     Table table;
 
     private ShaderProgram flashShader;
-    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, TinyBirdHandler tinyBirdHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, UiHandler uiHandler) {
+    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, TinyBirdHandler tinyBirdHandler,
+                        BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, UiHandler uiHandler) {
 
         this.tinyBirdHandler=tinyBirdHandler;
         this.birdHandler=birdHandler;
@@ -606,10 +607,7 @@ public void setRotate(float angle){
                     j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
         }
         for (BirdAbstractClass k : activeBirdQueue) {
-            if (k.justHit){
-                k.justHit=false;
-                k.startFlashing();
-            }
+
             if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
                 batcher.setShader(flashShader);
@@ -639,10 +637,6 @@ public void setRotate(float angle){
             batcher.begin();*/
         }
         for (BirdAbstractClass k : deadBirdQueue) {
-            if (k.justHit){
-                k.justHit=false;
-                k.startFlashing();
-            }
             if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
                 //flashShader.begin();

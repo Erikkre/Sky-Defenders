@@ -8,6 +8,8 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 
+import java.util.ArrayList;
+
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -28,8 +30,9 @@ public class LunarBird extends BirdAbstractClass {
     float randomizedTime, waitingTime = 0.9f, minDashTime = 0.7f; //dashtime is up to 0.33f greater than minDashTime
     private Tween wait1SecondX, wait1SecondY;
     private TweenEquation tweenEquation = Circ.INOUT;
-    public LunarBird(float camHeight, float camWidth){
+    public LunarBird(float camHeight, float camWidth, ArrayList flashLengths){
         super();
+this.flashLengths=flashLengths;
 
         rotStep=5f;
         unRotStep=3f;
@@ -52,7 +55,7 @@ public class LunarBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
 
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=4;
+        health=4;origHealth=health;
         if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         animation=rightFlaps;

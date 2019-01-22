@@ -8,6 +8,8 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 
+import java.util.ArrayList;
+
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -21,8 +23,9 @@ public class GoldBird extends BirdAbstractClass {
     Tween outroY;
     public float targetY, targetX;//, preTargetY;
 
-    public GoldBird(float camHeight, float camWidth){
+    public GoldBird(float camHeight, float camWidth, ArrayList flashLengths){
         super();
+this.flashLengths=flashLengths;
         yAcc=-0.2f;
         yVelDeath=10;
         yVel=1*globalSpeedMultiplier;
@@ -42,7 +45,7 @@ public class GoldBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/3;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=15;
+        health=15;origHealth=health;
         if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         animation=frontFlaps;// starting animation

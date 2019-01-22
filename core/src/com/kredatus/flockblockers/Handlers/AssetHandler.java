@@ -352,15 +352,15 @@ public class AssetHandler {
         coinAnimation.setPlayMode(Animation.PlayMode.LOOP); //REMEMBER THIS STEP
 
 
-        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.06f);
+        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.05f);
 
         thunderAnimations = birdTextureToAnimation("thunder.png", 0.06f);
         waterAnimations   = birdTextureToAnimation("water.png", 0.06f);
         fireAnimations    = birdTextureToAnimation("fire.png", 0.06f);
 
-        nightAnimations   = birdTextureToAnimation("night.png", 0.03f);
-        acidAnimations    = birdTextureToAnimation("acid.png", 0.03f);
-        lunarAnimations   = birdTextureToAnimation("lunar.png", 0.03f);
+        nightAnimations   = birdTextureToAnimation("night.png", 0.04f);
+        acidAnimations    = birdTextureToAnimation("acid.png", 0.04f);
+        lunarAnimations   = birdTextureToAnimation("lunar.png", 0.04f);
 
         goldAnimations    = birdTextureToAnimation("gold.png", 0.05f);
 
@@ -382,7 +382,7 @@ public class AssetHandler {
 
         musiclist = new Music[] { Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic2.mp3")),
                 Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic3.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic4.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic5.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic6.mp3"))};
-        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"menuMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"menuMusic2.mp3"))};
+        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"menuMusic.mp3"))};//, Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"menuMusic2.mp3"))};
         deathmenumusic = Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"deathmenuMusic.mp3"));
 
         // Create (or retrieve existing) preferences file
@@ -564,15 +564,15 @@ public class AssetHandler {
             list[musiciterator].play();
             list[musiciterator].setLooping(true);
         } else{ //menumusic
-            if (menumusiciterator<1){
+            /*if (menumusiciterator<1){
                 menumusiciterator++;
                 list[menumusiciterator].play();
                 list[menumusiciterator].setLooping(true);
-            } else{
+            } else{*/
                 menumusiciterator=0;
                 list[menumusiciterator].play();
                 list[menumusiciterator].setLooping(true);
-            }
+            //)
         }
     }
 

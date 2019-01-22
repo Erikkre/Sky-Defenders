@@ -8,6 +8,8 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 
+import java.util.ArrayList;
+
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -20,8 +22,9 @@ import aurelienribon.tweenengine.TweenEquations;
 public class AcidBird extends BirdAbstractClass {
 
     int angle=25;
-    public AcidBird(float camHeight, float camWidth){
+    public AcidBird(float camHeight, float camWidth, ArrayList flashLengths){
         super();
+this.flashLengths=flashLengths;
 
         rotStep=1.4f;
         unRotStep=1.0f;
@@ -45,7 +48,7 @@ public class AcidBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=4;
+        health=4;origHealth=health;
         if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
 

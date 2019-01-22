@@ -8,6 +8,7 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import aurelienribon.tweenengine.BaseTween;
@@ -27,8 +28,9 @@ public class ThunderBird extends BirdAbstractClass {
     Random r = new Random();
     Tween second;
     int angle=35;
-    public ThunderBird(float camHeight, float camWidth){
+    public ThunderBird(float camHeight, float camWidth, ArrayList flashLengths){
         super();
+this.flashLengths=flashLengths;
 
         rotStep=1.4f;
         unRotStep=1.9f;
@@ -51,7 +53,7 @@ public class ThunderBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=1;
+        health=1;origHealth=health;
         if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         animation=frontFlaps;

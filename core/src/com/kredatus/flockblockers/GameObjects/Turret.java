@@ -256,7 +256,7 @@ public class Turret {
                     } break;*/
                 texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
             case ('s'):
-                dmg = 0.5f;
+                dmg = 0.3f;
                 pen = 1;
                 spr = 3;
                 rof = 1f;/*

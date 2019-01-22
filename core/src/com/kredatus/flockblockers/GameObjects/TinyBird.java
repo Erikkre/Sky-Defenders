@@ -24,11 +24,11 @@ public class TinyBird {
 
         width *=finalSizeRatio;
         height*=finalSizeRatio;
-        edge = (camWidth)-width/3;
+        //edge = (camWidth)-width/3;
         //System.out.println("Height after: " + height+ " width: " + width);
 
 
 
-        x=(width/3 + r.nextInt((int)(edge-(2*width)/3)));
+        //x=(width/3 + r.nextInt((int)(edge-(2*width)/3)));
     }
 }

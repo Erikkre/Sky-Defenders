@@ -26,6 +26,7 @@ public class GameHandler implements Screen {
     private BirdHandler birdHandler;
     private TargetHandler targetHandler;
     private TurretHandler turretHandler;
+    private TinyBirdHandler tinyBirdHandler;
     public static UiHandler uiHandler;
     private float runTime;
     public static int camWidth, midPointY, camHeight, midPointX;
@@ -52,9 +53,10 @@ public class GameHandler implements Screen {
         birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
         targetHandler = new TargetHandler();
         turretHandler = new TurretHandler(camWidth, camHeight);
+        tinyBirdHandler = new TinyBirdHandler();
         world.setHandlers(bgHandler,birdHandler, targetHandler,turretHandler,uiHandler);
 
-        renderer = new GameRenderer(world, camWidth, camHeight, bgHandler, birdHandler, targetHandler, turretHandler,uiHandler);
+        renderer = new GameRenderer(world, camWidth, camHeight, bgHandler, tinyBirdHandler, birdHandler, targetHandler, turretHandler,uiHandler);
         bgHandler.setRendererAndCam(renderer);
         world.setRenderer(renderer);
     }

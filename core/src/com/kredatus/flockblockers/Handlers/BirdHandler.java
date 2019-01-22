@@ -15,6 +15,7 @@ import com.kredatus.flockblockers.GameObjects.Birds.ThunderBird;
 import com.kredatus.flockblockers.GameObjects.Birds.WaterBird;
 
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -31,7 +32,7 @@ public class BirdHandler {
     //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
     public final int[] birdNumberList=          { 1,   20,  20,  25,  10,  8,   7,   3  };
     private float[] spawnIntervals=new float[8];
-    public int waveTypeCnt=0;
+    public int waveTypeCnt=3;
     public TimerTask task;
     public Timer timer;
     public final float duration = 40;
@@ -40,6 +41,8 @@ public class BirdHandler {
     //BirdAbstractClass birdToAdd;
     boolean taskRunning;
     public double lastBirdSpawnTime;
+
+    private ArrayList<Float> flashLengths=new ArrayList<Float>();
 
     public BirdHandler(BgHandler bgHandler,  float camWidth, float camHeight) {
 
@@ -62,6 +65,16 @@ public class BirdHandler {
 
         //birdList.add(PhoenixBird.class);
         // post a Runnable to the rendering thread that processes the result
+
+        flashLengths();
+    }
+
+
+    private void flashLengths() {
+        for (double i = 0.4f; i <= 6; i += 0.1f) { //  5.6/0.05=66 positions, maxes out at a 13 second flash
+            flashLengths.add((float) (Math.pow(flashLengths.size(), 0.7) / 3f + 0.3f));//desmos:y=\left(x^{0.5}+0.3\right)
+            //else flashLengths.add(   (float) (                (-(Math.pow(-(flashLengths.size()-25),1.32))/50) +1.8f    ));
+        }
     }
 
     public void setUpTask() {
@@ -100,46 +113,46 @@ public class BirdHandler {
                 //for the amount of birds in the wave,
                 if (waveTypeCnt == 0) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new PhoenixBird(camHeight, camWidth));
+                        birdQueue.add(new PhoenixBird(camHeight, camWidth, flashLengths));
                     }
                 } else if (waveTypeCnt == 1) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new ThunderBird(camHeight, camWidth));
+                        birdQueue.add(new ThunderBird(camHeight, camWidth, flashLengths));
                     }
                 } else if (waveTypeCnt == 2) {
                     float height = ((TextureRegion) AssetHandler.waterAnimations[3].getKeyFrames()[3]).getRegionHeight();
                     //float width  =((TextureRegion)AssetHandler.waterAnimations[3].getKeyFrames()[0]).getRegionWidth();
                     for (int i = 0; i < birdNumberList[waveTypeCnt] / 5; i++) {
-                        birdQueue.add(new WaterBird(camHeight, camWidth, (camWidth / 6) * 1, (-height / 3) * 2f));
-                        birdQueue.add(new WaterBird(camHeight, camWidth, (camWidth / 6) * 2, (-height / 3) * 1.5f));
-                        birdQueue.add(new WaterBird(camHeight, camWidth, (camWidth / 6) * 3,          (-height / 3)    ));
-                        birdQueue.add(new WaterBird(camHeight, camWidth, (camWidth / 6) * 4, (-height / 3) * 1.5f));
-                        birdQueue.add(new WaterBird(camHeight, camWidth, (camWidth / 6) * 5, (-height / 3) * 2));
+                        birdQueue.add(new WaterBird(camHeight, camWidth,  (camWidth / 6) * 1, (-height / 3) * 2f,  flashLengths));
+                        birdQueue.add(new WaterBird(camHeight, camWidth,  (camWidth/ 6) * 2, (-height / 3) * 1.5f, flashLengths));
+                        birdQueue.add(new WaterBird(camHeight, camWidth,  (camWidth/ 6) * 3,          (-height / 3),        flashLengths));
+                        birdQueue.add(new WaterBird(camHeight, camWidth,  (camWidth/ 6) * 4, (-height / 3) * 1.5f, flashLengths));
+                        birdQueue.add(new WaterBird(camHeight, camWidth,  (camWidth/ 6) * 5, (-height / 3) * 2,    flashLengths));
 
-                        /*waterArrowHeads.add(new WaterBird(camHeight, camWidth, (camWidth/6)*3));
-                        waterArrowHeads.add(new WaterBird(camHeight, camWidth, (camWidth/6)*2));
+                        /*waterArrowHeads.add(new WaterBird(camHeight, camWidth, flashLengths, (camWidth, flashLengths/6)*3));
+                        waterArrowHeads.add(new WaterBird(camHeight, camWidth, flashLengths, (camWidth, flashLengths/6)*2));
                         waterRound.add(waterArrowHeads);
                         waterArrowHeads.clear();*/
                     }
                 } else if (waveTypeCnt == 3) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new FireBird(camHeight, camWidth));
+                        birdQueue.add(new FireBird(camHeight, camWidth, flashLengths));
                     }
                 } else if (waveTypeCnt == 4) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new AcidBird(camHeight, camWidth));
+                        birdQueue.add(new AcidBird(camHeight, camWidth, flashLengths));
                     }
                 } else if (waveTypeCnt == 5) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new NightBird(camHeight, camWidth));
+                        birdQueue.add(new NightBird(camHeight, camWidth, flashLengths));
                     }
                 } else if (waveTypeCnt == 6) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new LunarBird(camHeight, camWidth));
+                        birdQueue.add(new LunarBird(camHeight, camWidth, flashLengths));
                     }
                 } else if (waveTypeCnt == 7) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new GoldBird(camHeight, camWidth));
+                        birdQueue.add(new GoldBird(camHeight, camWidth, flashLengths));
                     }
                 }
 

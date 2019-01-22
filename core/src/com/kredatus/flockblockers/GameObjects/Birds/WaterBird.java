@@ -7,6 +7,8 @@ import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
+import java.util.ArrayList;
+
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
@@ -20,8 +22,9 @@ public class WaterBird extends BirdAbstractClass {
 
     //public final int[] animSeqList = {0,1,2,3};
     Tween second;
-    public WaterBird(float camHeight, float camWidth, float xPosition, float yPosition){
+    public WaterBird(float camHeight, float camWidth, float xPosition, float yPosition, ArrayList flashLengths){
         super();
+this.flashLengths=flashLengths;
         yVel=2*globalSpeedMultiplier;
         coinNumber=1;
         origYVel=yVel;
@@ -39,7 +42,7 @@ public class WaterBird extends BirdAbstractClass {
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=2;
+        health=2;origHealth=health;
         if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         animation=backFlaps;
