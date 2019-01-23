@@ -54,7 +54,7 @@ public float targetY, targetX;//, preTargetY;
         //System.out.println("Height after: " + height+ " width: " + width);
 
 
-        animation=frontFlaps;// starting animation
+        animation=rightFlaps;// starting animation
         origFlapSpeed=animation.getFrameDuration();
 
         x=(width/3 + r.nextInt((int)(edge-(2*width)/3)));
@@ -76,13 +76,15 @@ public float targetY, targetX;//, preTargetY;
         rightFlaps=animSeq[2];
         backFlaps=animSeq[3];
         deathFlaps=animSeq[4];
-        animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        //animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
         height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
         width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
     }
     @Override
     public void specificUpdate(float delta, float runTime) {
-
+        if ( Math.abs(xVel)<2 && animation!= frontFlaps) animation=frontFlaps;
+        else if (xVel>2&&x<camWidth/2)animation=rightFlaps;
+        else if (xVel<-2&&x>camWidth/2) animation=leftFlaps;
         if (!BgHandler.isBirdSpawning&&currentY!=outroY){
             currentX.kill();
             currentY=outroY.start();
@@ -94,8 +96,8 @@ public float targetY, targetX;//, preTargetY;
             //System.out.println("startOutro");
         } else if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX){
             //System.out.println("Tween is finished******************************************************");
-            if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );  //if on left go to right if on right go left
-            else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
+            if (x<camWidth/2) {targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  ); }  //if on left go to right if on right go left
+            else              {targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));                    }
 
             targetY=height/3+r.nextInt((int)(camHeight-height*3));
             /*while (Math.abs(x-targetX)<200){
@@ -103,7 +105,7 @@ public float targetY, targetX;//, preTargetY;
                 if (x<camWidth/2)
                 targetX=width/2+r.nextInt((int)(t));
             }*/
-            currentX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeOutSine)).start();
+            currentX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeInOutSine)).start();
             currentY =(Tween.to(this, 2, 2).target(targetY).ease(TweenEquations.easeOutSine)).start();
             startRot=true;
         } else if (introX!=null&&introX.isFinished()){
@@ -122,6 +124,7 @@ public float targetY, targetX;//, preTargetY;
                     currentX=firstX.start();
                     currentY=firstY.start();
                     yVel=0;
+                    animation=leftFlaps;
                 }
             };
 //aseInOutQuint
@@ -133,7 +136,7 @@ public float targetY, targetX;//, preTargetY;
         else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
 
         targetY=height/3+r.nextInt((int)(camHeight-height*3));
-        firstX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeOutSine));
+        firstX =(Tween.to(this, 1, 2).target(targetX).ease(TweenEquations.easeInOutSine));
         //targetY=height/2+r.nextInt((int)(camHeight-height));
         firstY =(Tween.to(this, 2, 2).target(targetY).ease(TweenEquations.easeOutSine));
 
