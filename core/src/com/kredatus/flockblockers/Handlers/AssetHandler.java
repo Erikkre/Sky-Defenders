@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -37,7 +38,8 @@ public class AssetHandler {
             bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgNighttexture, bgNighttexture2,bgGoldtexture, bgGoldtexture2,
             bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture,
             boosttexture,boostdown,logo, playdown, play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu,
-            menudown, score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized, coinSymbol, reticle;
+            menudown, score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized, coinSymbol, reticle,
+            bgCloudSeparatorTexture, bgCloudSeparatorTexture2;
 
     public static ArrayList<Vector3> boostcoords;
     public static ArrayList<TextureRegion> bgList;
@@ -204,90 +206,82 @@ public class AssetHandler {
         readybg.flip(false, true);*/
 
 
-        //if button click: choose this map, load this list of locations to randomize boosts at *************************************
-        bgList = new ArrayList<TextureRegion>();
+
+
+        Texture bgCloudSeparator= new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"halfCloudSeparator.jpg"));
+        bgCloudSeparator.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        bgCloudSeparatorTexture = new TextureRegion(bgCloudSeparator, bgCloudSeparator.getWidth(), bgCloudSeparator.getHeight());
+        bgCloudSeparatorTexture2= new TextureRegion(bgCloudSeparator, bgCloudSeparator.getWidth(), bgCloudSeparator.getHeight());
+        bgCloudSeparatorTexture2.flip(false,true);
 
 
         bgPhoenix = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgPhoenix2.jpg"));
         bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
         bgPhoenixtexture.flip(false, true);
-        bgList.add(bgPhoenixtexture);
-
         bgPhoenixtexture2 = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
-        bgList.add(bgPhoenixtexture2);
 
 
         bgThunder = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgThunder2.jpg"));
         bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
         bgThundertexture.flip(false, true);
-        bgList.add(bgThundertexture);
-
         bgThundertexture2 = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
-        bgList.add(bgThundertexture2);
 
 
         bgWater = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgWater2.jpg"));
         bgWater.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
         bgWatertexture.flip(false, true);
-        bgList.add(bgWatertexture);
-
         bgWatertexture2 = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
-        bgList.add(bgWatertexture2);
 
 
         bgFire = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgFire2.jpg"));
         bgFire.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgFiretexture = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
         bgFiretexture.flip(false, true);
-        bgList.add(bgFiretexture);
-
         bgFiretexture2 = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
-        bgList.add(bgFiretexture2);
 
 
         bgAcid = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgAcid2.jpg"));
         bgAcid.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
         bgAcidtexture.flip(false, true);
-        bgList.add(bgAcidtexture);
-
         bgAcidtexture2 = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
-        bgList.add(bgAcidtexture2);
 
 
         bgNight = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgNight2.jpg"));
         bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
         bgNighttexture.flip(false, true);
-        bgList.add(bgNighttexture);
-
         bgNighttexture2 = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
-        bgList.add(bgNighttexture2);
 
 
         bgLunar = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgLunar2.jpg"));
         bgLunar.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgLunartexture = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
         bgLunartexture.flip(false, true);
-        bgList.add(bgLunartexture);
-
         bgLunartexture2 = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
-        bgList.add(bgLunartexture2);
 
 
         bgGold = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgGold2.jpg"));
         bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
         bgGoldtexture.flip(false, true);
-        bgList.add(bgGoldtexture);
-
-
         bgGoldtexture2 = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
-        bgList.add(bgGoldtexture2);
-/*
+
+
+        bgList = new ArrayList<TextureRegion>();    //3 times each to ensure speedy movement upwards, slower thru cities faster thru clouds
+        Collections.addAll(bgList, bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
+                bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
+                bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
+                bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
+                bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
+                bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
+                bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
+                bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2);
+
+                /*
         coordslistsize=22;
         boostnumber=20; //14 boosts for 2 map sizes: 50% random chance of each boost being rendered in its coordinate
         ArrayList<Vector3> boostcoordslist = new ArrayList<Vector3>();      //there will be 7 variables for this map

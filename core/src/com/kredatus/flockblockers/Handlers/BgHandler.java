@@ -42,8 +42,8 @@ public class BgHandler {
     int h = AssetHandler.boost.getHeight();
     //private Boost tempBoost;
     //private int orgBoostnumber = AssetHandler.getBoostnumber(), coordslistsize=AssetHandler.getcoordslistsize();
-    public int bgw = AssetHandler.bgPhoenix.getWidth();
-    public int bgh = AssetHandler.bgPhoenix.getHeight();
+    public int bgw;
+    public int bgh, separatorHeight;    //height of separator is different, and there are 2 combined with eachother
     float x, y, width, height;
     public int bgNumber;
 
@@ -62,8 +62,8 @@ public class BgHandler {
         horiz.setValue(0);
         vert.setValue(0);
         shake.setValue(0);
-        background = new Background(horiz.getValue(), vert.getValue(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
-        background2 = new Background(horiz.getValue(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
+        background = new Background(horiz.getValue(), vert.getValue(), AssetHandler.bgList.get(bgNumber).getRegionWidth(), AssetHandler.bgList.get(bgNumber).getRegionHeight(), AssetHandler.bgList.get(bgNumber++));
+        background2 = new Background(horiz.getValue(), background.getTailY(), AssetHandler.bgList.get(bgNumber).getRegionWidth(), AssetHandler.bgList.get(bgNumber).getRegionHeight(), AssetHandler.bgList.get(bgNumber++));
 
         //this.manager= SplashScreen.getManager();
         //System.out.println("vert.getValue() " + vert.getValue());
@@ -267,7 +267,7 @@ public class BgHandler {
             if (background.isScrolledDown()) {
                     //System.out.println("reset 1 to 2 +bgh, 1 is "+background.y+", 1 bgh is "+background.getHeight());
                     background.reset(background2.getTailY(), bgNumber++);
-                    background2.addedY = bgh;
+                    background2.addedY = background.height;
             }
         } else {
             // Update our objects (do phoenixBird intro)

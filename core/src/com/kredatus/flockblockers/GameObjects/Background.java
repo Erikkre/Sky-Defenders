@@ -14,7 +14,7 @@ public class Background {
 
     public float x, y;
     protected int width;
-    protected int height;
+    public int height;
     private boolean isScrolledDown;
     public TextureRegion texture;
     public float addedY;
@@ -45,6 +45,8 @@ public class Background {
     public void reset(float newY, int bgNumber) {
         y = newY;
         texture= AssetHandler.bgList.get(bgNumber);
+        width=texture.getRegionWidth();
+        height=texture.getRegionHeight();
         isScrolledDown = false;
     }
 
