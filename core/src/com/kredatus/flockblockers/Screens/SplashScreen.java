@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.Handlers.GameHandler;
+import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.TweenAccessors.SpriteAccessor;
 

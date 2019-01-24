@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
-import com.kredatus.flockblockers.Handlers.GameHandler;
+import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import aurelienribon.tweenengine.BaseTween;

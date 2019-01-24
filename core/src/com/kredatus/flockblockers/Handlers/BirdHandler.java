@@ -35,7 +35,7 @@ public class BirdHandler {
     public int waveTypeCnt=0;
     public TimerTask task;
     public Timer timer;
-    public final float duration = 40;
+    public float duration = 30 ;
     private BgHandler bgHandler;
     private float camWidth, camHeight;
     //BirdAbstractClass birdToAdd;
@@ -49,6 +49,7 @@ public class BirdHandler {
         this.bgHandler = bgHandler;
         this.camHeight = camHeight;
         this.camWidth  = camWidth ;
+
 
         //public  static Class[] birdList ={new PhoenixBird(camHeight, camWidth),  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
 

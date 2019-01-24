@@ -4,12 +4,11 @@ package com.kredatus.flockblockers.Handlers;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
-import com.brashmonkey.spriter.TweenedAnimation;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Background;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
-import com.kredatus.flockblockers.Screens.SplashScreen;
+import com.kredatus.flockblockers.Helpers.InvertedTweenEquations;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
@@ -43,26 +42,27 @@ public class BgHandler {
     //private Boost tempBoost;
     //private int orgBoostnumber = AssetHandler.getBoostnumber(), coordslistsize=AssetHandler.getcoordslistsize();
     public int bgw= AssetHandler.bgPhoenixtexture.getRegionWidth();
-    public int bgh = AssetHandler.bgPhoenixtexture.getRegionHeight(), separatorHeight;    //height of separator is different, and there are 2 combined with eachother
+    public int bgh = AssetHandler.bgPhoenixtexture.getRegionHeight(), separatorHeight=AssetHandler.bgCloudSeparatorTexture.getRegionHeight();    //height of separator is different, and there are 2 combined with eachother
     float x, y, width, height;
     public int bgNumber;
 
     //private TweenManager manager;
     public Timeline horizPosBg, vertPosBg,smallShake, bigShake;
-    private TweenCallback startStoryIntroAndSpawns, bg2ToBg1Tail, shakeCamCallback, endBirdSpawn;
+    private TweenCallback startStoryIntroAndSpawns, backgroundStackReset, shakeCamCallback, endBirdSpawn;
     private float camHeight;
     public static boolean isPastStoryIntro, isCameraShake, isBirdSpawning;
     private OrthographicCamera cam;
     private GameRenderer renderer;
+    private int bgStackStartYHeight;
     public BgHandler(float camWidth, float camHeight){
-
+        bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
         this.camHeight=camHeight;
         bgNumber = 0;
 
         horiz.setValue(0);
-        vert.setValue(0);
-        shake.setValue(0);
-        background = new Background(horiz.getValue(), vert.getValue(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
+        vert.setValue(-bgStackStartYHeight);//everything is done in negative (camera goes up by that amount
+        shake.setValue(0);                              //but in reality its the bg's lowering by that much
+        background = new Background(horiz.getValue(), vert.getValue(), bgw, separatorHeight, AssetHandler.bgList.get(bgNumber++));
         background2 = new Background(horiz.getValue(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
 
         //this.manager= SplashScreen.getManager();
@@ -70,20 +70,21 @@ public class BgHandler {
         isCameraShake=false;
         setupTweens(camWidth, camHeight);
         isPastStoryIntro=true;
+        isBirdSpawning=true;    //start spawning
     }
 
     private void setupTweens(float camWidth, float camHeight){
         //final float camHeight2=camHeight;
         startStoryIntroAndSpawns=new TweenCallback() {
             @Override
-            public void onEvent(int i, BaseTween<?> baseTween) {;
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                System.out.println("Start Spawning");
                if (!isPastStoryIntro && GameWorld.isFirstTime){
                     isPastStoryIntro=false;
                     horizPosBg.pause();
                     vertPosBg.pause();
                 } else {
                    isBirdSpawning=true;
-                   //System.out.println("start spawning");
                }
             }
         };
@@ -92,21 +93,24 @@ public class BgHandler {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
                     isBirdSpawning=false;
-                    //System.out.println("end spawning");
+                    System.out.println("end spawning");
             }
         };
 
-        bg2ToBg1Tail=new TweenCallback() {
+        backgroundStackReset=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                    //System.out.println("Reset 2 to 1+bgh");
-                    background2.addedY = 0;
+                    System.out.println("Reset stack");
+
                     if (bgNumber == AssetHandler.bgList.size()) {
                         //waveNumber+=1;
                         bgNumber = 0;
                     }
-                    background2.reset(background.getTailY(), bgNumber++);
-                    vert.setValue(0);
+                    if (background.addedY>background2.addedY)background.reset(background2.getTailY(), bgNumber++);
+                    else background2.reset(background.getTailY(), bgNumber++);
+                background2.addedY = 0;
+                background.addedY = 0;
+                    //vert.setValue(-bgStackStartYHeight);
                     //cam.normalizeUp();
                     renderer.setRotate(-(float) Math.atan2(cam.up.x, cam.up.y) * MathUtils.radiansToDegrees);
                     isCameraShake = false;
@@ -125,11 +129,11 @@ public class BgHandler {
         };
 
         (horizPosBg = Timeline.createSequence()
-                .push(Tween.to(horiz, -1, 25).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .push(Tween.to(horiz, -1, 12.5f).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start();
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
-        if (GameWorld.isFirstTime){
+        /*if (GameWorld.isFirstTime){
             (vertPosBg = Timeline.createSequence()  //5 4.5f 4.5f 2 7 .1, 8 and 60 repeats
                     .push(Tween.to(vert,-1, 1f ).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine)      )//midpoint
                     .push(Tween.to(vert, -1, 3f).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutSine))                                           //0.733 camheight below
@@ -137,11 +141,11 @@ public class BgHandler {
                     .push(Tween.to(vert, -1,2f).target(-bgh+(.5f*camHeight)).ease(TweenEquations.easeInOutSine).setCallback(endBirdSpawn)     )                                       //midpoint
 
                     .push(Tween.to(vert, -1, 8).target((-bgh*2)).ease(TweenEquations.easeInElastic)     )                    //top edge+bgh/50
-                    .push((Tween.to(vert, -1, 0.1f).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)).setCallback(bg2ToBg1Tail).setCallback(startStoryIntroAndSpawns))      )       //top edge
+                    .push((Tween.to(vert, -1, 0.1f).target((-bgh*2+camHeight/80)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)).setCallback(backgroundStackReset).setCallback(startStoryIntroAndSpawns))      )       //top edge
 
-                    //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
+                    //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(backgroundStackReset))                   )
                     .repeat(Tween.INFINITY, 0).start();
-        }
+        }*/
 
 /*
         (vertPosBg = Timeline.createSequence()  //55 20 .01, 8 and 800 repeats
@@ -150,32 +154,33 @@ public class BgHandler {
 
                 .push((Tween.to(vert, -1, 20).target((-bgh*2)+(0.499f*camHeight)).ease(TweenEquations.easeInOutQuart)).setCallback(endBirdSpawn)     )  //cam center 0.001 above edge
                 .push(Tween.to(vert, -1, 0.02f).target((-bgh*2)+(0.501f*camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(400, 0)         )          //cam 0.001 below edge
-                .push((Tween.to(vert, -1, 10).target((-bgh*2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail))      )   //cam 0.03 below edge
+                .push((Tween.to(vert, -1, 10).target((-bgh*2)).ease(TweenEquations.easeInSine)).setCallback(backgroundStackReset))      )   //cam 0.03 below edge
 
-                //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(bg2ToBg1Tail))                   )
+                //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(backgroundStackReset))                   )
                 .repeat(Tween.INFINITY, 0).start();
 
 */
+
         if (!FlockBlockersMain.fastTest) {
-            (vertPosBg = Timeline.createSequence()  //5 13 7   0.02 0.5 , 3 and 1 repeats
-                    .push((Tween.to(vert, -1, 5).target(-bgh - (.1f * camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns))//0.6 camheight  above, decide whether quad quint, circ or expo, all out
-                    .push((Tween.to(vert, -1, 13).target(-bgh + (1.2f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0)).setCallback(endBirdSpawn))                         //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
+            //System.out.println("First target: "+-(separatorHeight+bgh+bgh-1)+", separator height: "+separatorHeight+", bgh: "+bgh);
+            (vertPosBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
+            .push((((Tween.to(vert, -1, 20).delay(1.2f).target(-(separatorHeight+bgh+bgh)).ease(InvertedTweenEquations.QuadInOutVeryGradual).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+            )).repeat(3,0)).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.COMPLETE)//complete is after repetitions done, end is after each repetition
 
-                    .push(Tween.to(vert, -1, 7).target((-bgh * 2) + (0.499f * camHeight)).ease(TweenEquations.easeInOutSine))  //cam center 0.001 above edge, decide wether ease inoutsine
-                    .push((Tween.to(vert, -1, 0.02f).target((-bgh * 2) + (0.501f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)))  //         ) //cam 0.001 below edge
-                    .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail)))   //cam 0.03 below edge
+            .push(Tween.to(vert, -1, 5).target(vert.getValue()).setCallback(startStoryIntroAndSpawns)) //start spawning after wave done
+            //pause in clouds after waves over to have the effect of travelling to different bird type areas, only going horizontally
+            ).repeat(Tween.INFINITY, 0).start();
 
-                    .repeat(Tween.INFINITY, 0).start();
+
         } else {
-            (vertPosBg = Timeline.createSequence()  //2 4  6   0.02 0.5 . 3 and 1 repeats
-                    .push((Tween.to(vert, -1, 2).target(-bgh - (.1f * camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns))//0.6 camheight  above, decide whether quad quint, circ or expo, all out
-                    .push((Tween.to(vert, -1, 4).target(-bgh + (1.2f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0)).setCallback(endBirdSpawn))                         //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
 
-                    .push(Tween.to(vert, -1, 6).target((-bgh * 2) + (0.499f * camHeight)).ease(TweenEquations.easeInOutSine))  //cam center 0.001 above edge, decide wether ease inoutsine
-                    .push((Tween.to(vert, -1, 0.02f).target((-bgh * 2) + (0.501f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0)))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
-                    .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail)))   //cam 0.03 below edge
+            (vertPosBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
+                    .push((((Tween.to(vert, -1, 5).delay(1.2f).target(-(separatorHeight+bgh+bgh)).ease(InvertedTweenEquations.QuadInOutVeryGradual).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+                    )).repeat(3,0).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.COMPLETE))//complete is after repetitions done, end is after each repetition
 
-                    .repeat(Tween.INFINITY, 0).start();
+                    .push(Tween.to(vert, -1, 5).target(bgStackStartYHeight).setCallback(startStoryIntroAndSpawns)) //start spawning after wave done
+                    //pause in clouds after waves over to have the effect of travelling to different bird type areas, only going horizontally
+            ).repeat(Tween.INFINITY, 0).start();
         }
 
         float smallShakeMaxAngle=0.1f;
@@ -206,11 +211,11 @@ public class BgHandler {
         if(isPastStoryIntro ){
 
 
-    //        System.out.println(" vert values:" +vert.getValue() + " addY bg1: "+background.addedY +" addY bg2: "+ background2.addedY);
+            System.out.println(" vert values:" + Math.round(vert.getValue()) + " bg1: "+background.y +" bg2: "+ background2.y + " bg1 added: "+background.addedY+" bg2 added: "+background2.addedY);
             
                     //stop running once done
 
-            if (isBirdSpawning && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty()){
+            /*if (isBirdSpawning && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty()){
                 //vertPosBg.pause();
                 //System.out.println(BirdHandler.birdQueue+ ", ActiveBirdQueue: "+BirdHandler.activeBirdQueue+"************************************************");
                 if (!FlockBlockersMain.fastTest) {
@@ -218,7 +223,7 @@ public class BgHandler {
 
                             .push((Tween.to(vert, -1, 7).target((-bgh * 2) + (0.499f * camHeight)).ease(TweenEquations.easeInOutSine)).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START))  //cam center 0.001 above edge, decide wether ease inoutsine
                             .push(Tween.to(vert, -1, 0.02f).target((-bgh * 2) + (0.501f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
-                            .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail))   //cam 0.03 below edge
+                            .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(backgroundStackReset))   //cam 0.03 below edge
 
                             .push((Tween.to(vert, -1, 5).target(-bgh - (.1f * camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns))//0.6 camheight  above, decide whether quad quint, circ or expo, all out
                             .push(Tween.to(vert, -1, 13).target(-bgh + (1.2f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0))    )                   //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
@@ -229,7 +234,7 @@ public class BgHandler {
 
                             .push((Tween.to(vert, -1, 6).target((-bgh * 2) + (0.499f * camHeight)).ease(TweenEquations.easeInOutSine)).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START))  //cam center 0.001 above edge, decide wether ease inoutsine
                             .push(Tween.to(vert, -1, 0.02f).target((-bgh * 2) + (0.501f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
-                            .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(bg2ToBg1Tail))   //cam 0.03 below edge
+                            .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(backgroundStackReset))   //cam 0.03 below edge
 
                             .push((Tween.to(vert, -1, 2).target(-bgh - (.1f * camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns))//0.6 camheight  above, decide whether quad quint, circ or expo, all out
                             .push(Tween.to(vert, -1, 4).target(-bgh + (1.2f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0))    )                   //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
@@ -238,18 +243,18 @@ public class BgHandler {
                 }
 
                 isBirdSpawning=false;
-            }
+            }*/
             vertPosBg.update(delta);
 
 
             if (background.y<background2.y){
-                //System.out.println("background.y<background2.y");
+
                 background.setY(vert.getValue());
-                background2.setY(background.getTailY());
+                background2.setYToTail(background.getTailY());
             } else {
-                //System.out.println("background2.y<background.y");
+
                 background2.setY(vert.getValue());
-                background.setY(background2.getTailY());
+                background.setYToTail(background2.getTailY());
             }
 
             horizPosBg.update(delta);
@@ -264,11 +269,23 @@ public class BgHandler {
                 //waveNumber+=1;
                 bgNumber = 0;
             }
-            if (background.isScrolledDown()) {
-                    //System.out.println("reset 1 to 2 +bgh, 1 is "+background.y+", 1 bgh is "+background.getHeight());
+
+            if (background.addedY<3000 && background2.addedY<3000) {//in case the tween lags, we make sure reset stack is called back instead of whats below
+                if (background.isScrolledDown()) {
+                    System.out.println("reset 1 to 2 +bgh, 1 is " + background.y + ", set to " + background2.getTailY());
+                    background2.addedY += background.height + background.addedY;
                     background.reset(background2.getTailY(), bgNumber++);
-                    background2.addedY = background.height;
+
+                    System.out.println("bgNumber is now " + bgNumber);
+                } else if (background2.isScrolledDown()) {
+                    System.out.println("reset 2 to 1 +bgh, 2 is " + background2.y + ", set to " + background.getTailY());
+                    background.addedY += background2.height + background2.addedY;
+                    background2.reset(background.getTailY(), bgNumber++);
+
+                    System.out.println("bgNumber is now " + bgNumber);
+                }
             }
+
         } else {
             // Update our objects (do phoenixBird intro)
 

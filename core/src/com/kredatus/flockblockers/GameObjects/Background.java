@@ -3,7 +3,6 @@ package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
-import com.kredatus.flockblockers.Handlers.GameHandler;
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.
@@ -29,7 +28,8 @@ public class Background {
 
     public void update() {
 
-        if (y + height < -GameHandler.camHeight / 2) {  //-GameHandler.camHeight / 2 is a buffer of half the camera height
+        if (y + height < 0) {  //-GameHandler.camHeight / 2 is a buffer of half the camera height
+            height=texture.getRegionHeight();
             isScrolledDown = true;
         }
     }
@@ -40,17 +40,21 @@ public class Background {
     public void setY(float y) {
         this.y = y + addedY;
     }
+    public void setYToTail(float y) {
+        this.y = y;
+    }
 
     // Reset: Should Override in subclass for more specific behavior.
     public void reset(float newY, int bgNumber) {
         y = newY;
+
         texture= AssetHandler.bgList.get(bgNumber);
-        width=texture.getRegionWidth();
         height=texture.getRegionHeight();
         isScrolledDown = false;
     }
 
-    public boolean isScrolledDown() {return isScrolledDown;}
+    public boolean isScrolledDown() {
+        return isScrolledDown;}
 
     public float getTailY() {return y + height;}
 

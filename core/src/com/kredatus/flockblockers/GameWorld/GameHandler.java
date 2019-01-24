@@ -1,5 +1,5 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
-package com.kredatus.flockblockers.Handlers;
+package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -9,6 +9,13 @@ import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Turret;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.Handlers.BgHandler;
+import com.kredatus.flockblockers.Handlers.BirdHandler;
+import com.kredatus.flockblockers.Handlers.InputHandler;
+import com.kredatus.flockblockers.Handlers.TargetHandler;
+import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
+import com.kredatus.flockblockers.Handlers.TurretHandler;
+import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.TweenAccessors.BirdAccessor;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
@@ -36,7 +43,7 @@ public class GameHandler implements Screen {
     public GameHandler() {
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
-        camHeight=1600;
+        camHeight=1300;
         camWidth= (int) (camHeight* (screenWidth/screenHeight)) ;
         //System.out.println("width: "+camWidth);
         midPointY = camHeight/2;

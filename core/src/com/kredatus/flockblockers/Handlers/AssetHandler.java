@@ -39,7 +39,7 @@ public class AssetHandler {
             bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture,
             boosttexture,boostdown,logo, playdown, play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu,
             menudown, score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized, coinSymbol, reticle,
-            bgCloudSeparatorTexture, bgCloudSeparatorTexture2;
+            bgCloudSeparatorTexture ;
 
     public static ArrayList<Vector3> boostcoords;
     public static ArrayList<TextureRegion> bgList;
@@ -208,11 +208,9 @@ public class AssetHandler {
 
 
 
-        Texture bgCloudSeparator= new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"halfCloudSeparator.jpg"));
+        Texture bgCloudSeparator= new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"cloudSeparator.jpg"));
         bgCloudSeparator.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         bgCloudSeparatorTexture = new TextureRegion(bgCloudSeparator, bgCloudSeparator.getWidth(), bgCloudSeparator.getHeight());
-        bgCloudSeparatorTexture2= new TextureRegion(bgCloudSeparator, bgCloudSeparator.getWidth(), bgCloudSeparator.getHeight());
-        bgCloudSeparatorTexture2.flip(false,true);
 
 
         bgPhoenix = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgPhoenix2.jpg"));
@@ -272,14 +270,14 @@ public class AssetHandler {
 
 
         bgList = new ArrayList<TextureRegion>();    //3 times each to ensure speedy movement upwards, slower thru cities faster thru clouds
-        Collections.addAll(bgList, bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
-                bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
-                bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
-                bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
-                bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
-                bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
-                bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2,
-                bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2, bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture, bgCloudSeparatorTexture2);
+        Collections.addAll(bgList, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2,
+                bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2,
+                bgCloudSeparatorTexture,  bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture,  bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture,  bgWatertexture, bgWatertexture2,
+                bgCloudSeparatorTexture,  bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture,  bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture,  bgFiretexture, bgFiretexture2,
+                bgCloudSeparatorTexture,  bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture,  bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture,  bgAcidtexture, bgAcidtexture2,
+                bgCloudSeparatorTexture,  bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture,  bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture,  bgNighttexture, bgNighttexture2,
+                bgCloudSeparatorTexture,  bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture,  bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture,  bgLunartexture, bgLunartexture2,
+                bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2);
 
                 /*
         coordslistsize=22;
