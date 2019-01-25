@@ -65,12 +65,12 @@ public class FireBird extends BirdAbstractClass {
         newXWithinWidth();  //starting x, y coords
         newYWithinHeight();
 
-        FireBird[] fireBirdList = new FireBird[0];
+        BirdAbstractClass[] fireBirdList = new BirdAbstractClass[0];
         if (!BirdHandler.birdQueue.isEmpty()) fireBirdList =  BirdHandler.birdQueue.toArray(fireBirdList);
 
         do  {
             newBirdOverlaps=false;
-            for (FireBird i : fireBirdList) {   //check each already spawned bird for overlap
+            for (BirdAbstractClass i : fireBirdList) {   //check each already spawned bird for overlap
                 if (x > i.x - width / 2.5f && x < i.x + width / 2.5f && y > i.y - height / 2.5f && y < i.y + height / 2.5f) {
                     newBirdOverlaps = true; //if within x+-width/3 or y+-height/3, randomly change y or x
                     int xOrYchange=r.nextInt(2);

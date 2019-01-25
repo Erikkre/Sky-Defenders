@@ -42,6 +42,44 @@ public abstract class InvertedTweenEquations extends TweenEquation {
             return "InvertedTweenEquations.QuadInOutVeryGradual";
         }
     };
+
+                       //
+                      //
+                   //
+              //
+        //
+     //
+    //  larger#=more gradual
+    public static final InvertedTweenEquations QuartInOut1 = new InvertedTweenEquations() {
+        public final float compute(float t) {
+            if (t < 0.2286F) return 6.4f * -(float)Math.pow(0.5F - t, 4) + 0.4f;//6.4\left(-\left(0.5-x\right)^4\right)+0.4
+            else if (t > 0.7714F) return -6.4f * -(float)Math.pow(0.5F - t, 4) + 0.6f;//y=-6.4\left(-\left(0.5-x\right)^4\right)+0.6
+            else return 0.4964f * (t - 0.5f) + 0.5f; //y=0.49633\left(x-0.5\right)+0.5
+        }
+        public String toString() {
+            return "InvertedTweenEquations.QuartInOutGradual";
+        }
+    };
+    public static final InvertedTweenEquations QuartInOut2 = new InvertedTweenEquations() {
+        public final float compute(float t) {
+            if (t < 0.18244F) return 51.2f * -(float)Math.pow(0.5F - t, 7) + 0.4f;//6.4\left(-\left(0.5-x\right)^4\right)+0.4
+            else if (t > 0.8176F) return 51.2f * -(float)Math.pow(0.5F - t, 7) + 0.6f;//y=-6.4\left(-\left(0.5-x\right)^4\right)+0.6
+            else return 0.367409f * (t - 0.5f) + 0.5f; //y=0.49633\left(x-0.5\right)+0.5
+        }
+        public String toString() {
+            return "InvertedTweenEquations.QuartInOutVeryGradual";
+        }
+    };
+    public static final InvertedTweenEquations QuartInOut2LongerMiddle = new InvertedTweenEquations() {
+        public final float compute(float t) {
+            if (t < 0.13865F) return 179.2f * -(float)Math.pow(0.5F - t, 9) + 0.35f;//y=179.2\left(-\left(0.5-x\right)^9\right)+0.35
+            else if (t > 0.8614F) return 179.2f * -(float)Math.pow(0.5F - t, 9) + 0.65f;//y=179.2\left(-\left(0.5-x\right)^9\right)+0.65
+            else return 0.4672f * (t - 0.5f) + 0.5f; //y=0.467201\left(x-0.5\right)+0.5
+        }
+        public String toString() {
+            return "InvertedTweenEquations.QuartInOutVeryGradual";
+        }
+    };
     public InvertedTweenEquations() {
     }
 }

@@ -35,7 +35,7 @@ public class BirdHandler {
     public int waveTypeCnt=0;
     public TimerTask task;
     public Timer timer;
-    public float duration = 30 ;
+    public float duration = 60 ;
     private BgHandler bgHandler;
     private float camWidth, camHeight;
     //BirdAbstractClass birdToAdd;
@@ -160,16 +160,16 @@ public class BirdHandler {
                 setUpTask();
 
                 if (waveTypeCnt == 0) {
-                    timer.schedule(task, 500);
+                    timer.schedule(task, 1000);
                 } else if (waveTypeCnt == 2) {  //if waterbird
-                    if (!FlockBlockersMain.fastTest) timer.scheduleAtFixedRate(task, 500, (int) ((duration / (birdNumberList[waveTypeCnt] / 5)) * 1000) / 2);   //  duration/amount of waves/2
+                    if (!FlockBlockersMain.fastTest) timer.scheduleAtFixedRate(task, 2000, (int) ((duration / (birdNumberList[waveTypeCnt] / 5)) * 1000) / 2);   //  duration/amount of waves/2
                     else timer.scheduleAtFixedRate(task,0,1);
                 } else if (waveTypeCnt == 3) {  //if fire spawn all at once in blob
                     for (int i=0; i<birdNumberList[3]; i++){
                         activeBirdQueue.add(birdQueue.poll());
                     }
                 } else {
-                    timer.scheduleAtFixedRate(task, 500, (int) (spawnIntervals[waveTypeCnt] * 1000));
+                    timer.scheduleAtFixedRate(task, 2000, (int) (spawnIntervals[waveTypeCnt] * 1000));
                 }
                //task.run();
                 //activeBirdQueue.remove(0);
@@ -201,12 +201,12 @@ public class BirdHandler {
             if (waveTypeCnt == 2) {  //if waterbird
                 spawningInterval=(int) (((duration / (birdNumberList[waveTypeCnt] / 5)) * 1000) / 2);
                 if (timeSinceLastBirdSpawn < spawningInterval) timer.scheduleAtFixedRate(task, spawningInterval-timeSinceLastBirdSpawn, spawningInterval);   //  duration/amount of waves/2
-                else timer.scheduleAtFixedRate(task, 4500, spawningInterval);
+                else timer.scheduleAtFixedRate(task, 2000, spawningInterval);
 
             } else {    //if any bird but water fire or phoenix
                 spawningInterval= (int) (spawnIntervals[waveTypeCnt] * 1000);
                 if (timeSinceLastBirdSpawn < spawningInterval) timer.scheduleAtFixedRate(task, spawningInterval-timeSinceLastBirdSpawn, spawningInterval);
-                else timer.scheduleAtFixedRate(task, 4500, spawningInterval);   //will never really happen because if the birds are spawning the time since the last bird should be shorter than the time it takes for it to spawn
+                else timer.scheduleAtFixedRate(task, 2000, spawningInterval);   //will never really happen because if the birds are spawning the time since the last bird should be shorter than the time it takes for it to spawn
 
             }
         }
