@@ -82,19 +82,20 @@ this.flashLengths=flashLengths;
 
     @Override
     public void specificUpdate(float delta, float runTime) {
-
         if (currentX.isFinished()){
 
             if (currentX==wait1SecondX) {
                 randomizedTime= minDashTime + r.nextFloat()/3;
-                if (x>camWidth/2) {animation=leftFlaps; currentX = Tween.to(this, 1, randomizedTime).target(width / 2+r.nextInt((int)(width/2))).ease(tweenEquation).start(); targetRot=angle; rotate=true;}
-                else              {animation=rightFlaps; currentX = Tween.to(this, 1, randomizedTime).target(edge-r.nextInt((int)(width/2))).ease(tweenEquation).start(); targetRot=360-angle; rotate=true;}
+                if (x>camWidth/2) { currentX = Tween.to(this, 1, randomizedTime).target(width / 2+r.nextInt((int)(width/2))).ease(tweenEquation).start(); targetRot=angle; rotate=true;}
+                else              { currentX = Tween.to(this, 1, randomizedTime).target(edge-r.nextInt((int)(width/2))).ease(tweenEquation).start(); targetRot=360-angle; rotate=true;}
 
             } else {
-                animation=frontFlaps;
                 currentX = wait1SecondX = Tween.to(this, 0, waitingTime).start();
             }
         }
+        if ( ((xVel>0 && xVel<3.5 && x>camWidth/2)||(xVel<0 && xVel>-3.5 && x<camWidth/2))&& animation!= frontFlaps) animation=frontFlaps;
+        else if (xVel>1&&x<camWidth/2)animation=rightFlaps;
+        else if (xVel<-1&&x>camWidth/2) animation=leftFlaps;
 
         if (currentY.isFinished()){
             
@@ -105,8 +106,6 @@ this.flashLengths=flashLengths;
                 currentY = wait1SecondY = Tween.to(this, 0, waitingTime).start();
             }
         }
-
-
     }
 
     @Override

@@ -20,12 +20,12 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 
-
 /**
  * Created by Mr. Kredatus on 8/31/2017.
  */
 
 public class BgHandler {
+    private  boolean endWaveBgMotion;
     // BgHandler will create all five objects that we need.
     private Background background, background2, background3, background4;
     private Random r = new Random();
@@ -70,7 +70,6 @@ public class BgHandler {
         isCameraShake=false;
         setupTweens(camWidth, camHeight);
         isPastStoryIntro=true;
-
     }
 
     private void setupTweens(float camWidth, float camHeight){
@@ -164,7 +163,7 @@ public class BgHandler {
         if (!FlockBlockersMain.fastTest) {
             System.out.println("First target: "+-(separatorHeight+bgh+bgh)+", separator height: "+separatorHeight+", bgh: "+bgh);
             (vertPosBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
-            .push((((Tween.to(vert, -1, 20).delay(1.2f).targetRelative(-(separatorHeight+bgh+bgh)).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+            .push((((Tween.to(vert, -1, 15).delay(1.2f).targetRelative(-(separatorHeight+bgh+bgh)).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
             )).repeat(2,0))//complete is after repetitions done, end is after each repetition
 
             .push(Tween.to(vert, -1, 5).target(vert.getValue()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
@@ -202,56 +201,48 @@ public class BgHandler {
 
     public void update(float delta) {
         //System.out.println("1: "+ Math.round(background.y) + " 2: "+Math.round(background2.y));
-
         if (isCameraShake){
             smallShake.update(delta);
             bigShake.update(delta);
             shakeCamera(delta); }
 
         if(isPastStoryIntro ){
-
-
             //System.out.println(" vert values:" + Math.round(vert.getValue()) + " bg1: "+background.y +" bg2: "+ background2.y + " bg1 added: "+background.addedY+" bg2 added: "+background2.addedY);
                     //stop running once done
 
-            /*if (isBirdSpawning && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty()){
+            //if end of wave close or 1 background away from ending dont end wave quickly, bgNumber multiples of 9 are wave end bg's
+            if (isBirdSpawning && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty() && !(bgNumber%9==0) && !((bgNumber+1)%9==0) ) {
+                endWaveBgMotion = true;
+                isBirdSpawning = false;
+            }
+
+            if (endWaveBgMotion && vertPosBg.isFinished() ) {   //check if we need to keep ending wave quickly or new wave begins
                 //vertPosBg.pause();
                 //System.out.println(BirdHandler.birdQueue+ ", ActiveBirdQueue: "+BirdHandler.activeBirdQueue+"************************************************");
-                if (!FlockBlockersMain.fastTest) {
-                    (vertPosBg = Timeline.createSequence()  //5 13 7   0.02 0.5 , 3 and 1 repeats
+                if ( !(bgNumber%9==0) && !((bgNumber+1)%9==0) && !((bgNumber-1)%9==0) ){
+                    if (!FlockBlockersMain.fastTest) {
+                        (vertPosBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
+                                .push((((Tween.to(vert, -1, 15).delay(1.2f).targetRelative(-(separatorHeight + bgh + bgh)).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+                                )).repeat(2, 0))//complete is after repetitions done, end is after each repetition
+                                .push(Tween.to(vert, -1, 5).target(vert.getValue()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
+                        ).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START).repeat(Tween.INFINITY, 0).start();
+                    } else {
+                        (vertPosBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
+                                .push((((Tween.to(vert, -1, 15).delay(1.2f).targetRelative(-(separatorHeight + bgh + bgh)).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+                                )).repeat(2, 0))//complete is after repetitions done, end is after each repetition
+                                .push(Tween.to(vert, -1, 5).target(vert.getValue()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
+                        ).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START).repeat(Tween.INFINITY, 0).start();
+                    }
+            }
+            }
 
-                            .push((Tween.to(vert, -1, 7).target((-bgh * 2) + (0.499f * camHeight)).ease(TweenEquations.easeInOutSine)).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START))  //cam center 0.001 above edge, decide wether ease inoutsine
-                            .push(Tween.to(vert, -1, 0.02f).target((-bgh * 2) + (0.501f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
-                            .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(backgroundStackReset))   //cam 0.03 below edge
-
-                            .push((Tween.to(vert, -1, 5).target(-bgh - (.1f * camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns))//0.6 camheight  above, decide whether quad quint, circ or expo, all out
-                            .push(Tween.to(vert, -1, 13).target(-bgh + (1.2f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0))    )                   //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
-                            .repeat(Tween.INFINITY, 0).start();
-
-                } else {
-                    (vertPosBg = Timeline.createSequence()   //2  4 6   0.02 0.5 . 3 and 1 repeats
-
-                            .push((Tween.to(vert, -1, 6).target((-bgh * 2) + (0.499f * camHeight)).ease(TweenEquations.easeInOutSine)).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START))  //cam center 0.001 above edge, decide wether ease inoutsine
-                            .push(Tween.to(vert, -1, 0.02f).target((-bgh * 2) + (0.501f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(1, 0))//.setCallback(startStoryIntroAndSpawns)         ) //cam 0.001 below edge
-                            .push((Tween.to(vert, -1, 0.5f).target((-bgh * 2)).ease(TweenEquations.easeInSine)).setCallback(backgroundStackReset))   //cam 0.03 below edge
-
-                            .push((Tween.to(vert, -1, 2).target(-bgh - (.1f * camHeight)).ease(TweenEquations.easeOutExpo)).setCallback(startStoryIntroAndSpawns))//0.6 camheight  above, decide whether quad quint, circ or expo, all out
-                            .push(Tween.to(vert, -1, 4).target(-bgh + (1.2f * camHeight)).ease(TweenEquations.easeInOutSine).repeatYoyo(3, 0))    )                   //0.7 camheight below    //actual amount of times repeated is 1+count, so odd counts end at origin
-                            .repeat(Tween.INFINITY, 0).start();
-
-                }
-
-                isBirdSpawning=false;
-            }*/
             vertPosBg.update(delta);
 
 
             if (background.y<background2.y){
-
                 background.setY(vert.getValue());
                 background2.setYToTail(background.getTailY());
             } else {
-
                 background2.setY(vert.getValue());
                 background.setYToTail(background2.getTailY());
             }
@@ -259,7 +250,6 @@ public class BgHandler {
             horizPosBg.update(delta);
             background.setX(horiz.getValue());
             background2.setX(horiz.getValue());
-            //}
 
             background.update();
             background2.update();
@@ -284,7 +274,6 @@ public class BgHandler {
                     System.out.println("bgNumber is now " + bgNumber);
                 }
             }
-
         } else {
             // Update our objects (do phoenixBird intro)
 
@@ -295,8 +284,6 @@ public class BgHandler {
             isBirdSpawning=true;
         }
     }
-
-
 
     // The getters for our five instance variables
     public Background getBackground() {
