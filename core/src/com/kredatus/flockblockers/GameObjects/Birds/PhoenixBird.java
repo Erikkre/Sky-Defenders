@@ -35,7 +35,7 @@ public float targetY, targetX;//, preTargetY;
         diamonds=1;
         coinNumber=100;
         origYVel=yVel;
-        health=60;origHealth=health;
+        health=3;origHealth=health;
         if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         sizeVariance=1;

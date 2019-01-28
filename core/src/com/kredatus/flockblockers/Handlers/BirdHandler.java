@@ -32,7 +32,7 @@ public class BirdHandler {
     //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
     public final int[] birdNumberList=          { 1,   20,  20,  25,  10,  8,   7,   3  };
     private float[] spawnIntervals=new float[8];
-    public int waveTypeCnt=2;
+    public int waveTypeCnt=0;
     public TimerTask task;
     public Timer timer;
     public float duration = 45 ;
@@ -116,10 +116,12 @@ public class BirdHandler {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
                         birdQueue.add(new PhoenixBird(camHeight, camWidth, flashLengths));
                     }
+                    //System.out.println("add birds");
                 } else if (waveTypeCnt == 1) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
                         birdQueue.add(new ThunderBird(camHeight, camWidth, flashLengths));
                     }
+                    //System.out.println("add birds");
                 } else if (waveTypeCnt == 2) {
                     float height = ((TextureRegion) AssetHandler.waterAnimations[3].getKeyFrames()[3]).getRegionHeight();
                     //float width  =((TextureRegion)AssetHandler.waterAnimations[3].getKeyFrames()[0]).getRegionWidth();
