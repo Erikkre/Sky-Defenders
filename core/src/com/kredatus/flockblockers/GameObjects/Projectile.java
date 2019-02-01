@@ -14,9 +14,9 @@ public class Projectile {
      public Polygon boundingRect;
      public int width, height ;
      public boolean isGone;
-     public Vector2 position, velocity=new Vector2();
+     public Vector2 position, vel=new Vector2();
      public float camWidth, camHeight, rotation;
-     public float dmg, pen, vel;
+     public float dmg, pen, spd;
      public TextureRegion texture;
      private Random r=new Random();
     public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, float rotation, int acc) {
@@ -24,7 +24,7 @@ public class Projectile {
         this.width    = texture.getRegionWidth() ;
         this.height   = texture.getRegionHeight() ;
         this.position = position.cpy() ;
-        this.vel      = pen*2+4;
+        this.spd      = pen*2+4;
 
         this.rotation = rotation -(acc/2)+r.nextInt(acc);   //accuracy
         if (this.rotation>360){
@@ -36,21 +36,21 @@ public class Projectile {
         this.camHeight= camHeight;
 
         this.dmg=dmg; this.pen=pen;
-        //sin(rotation)=xVel/Velocity, pen=velocity
+        //sin(rotation)=xspd/spd, pen=spd
 
-        velocity.set(     -(float)(vel*Math.cos(Math.toRadians(this.rotation))),    -(float)(vel*Math.sin(Math.toRadians(this.rotation)))    );
+        vel.set(     -(float)(spd*Math.cos(Math.toRadians(this.rotation))),    -(float)(spd*Math.sin(Math.toRadians(this.rotation)))    );
 
 
         boundingRect  = new Polygon(new float[]{position.x-width/2,position.y-height/2,         position.x+width/2,position.y-height/2,         position.x+width/2,position.y+height/2,         position.x-width/2,position.y+height/2});
         boundingRect  . setOrigin(position.x, position.y);
-//        rotation      = -(float) Math.toDegrees(Math.atan(velocity.y / (-velocity.x) ));
+//        rotation      = -(float) Math.toDegrees(Math.atan(spd.y / (-spd.x) ));
         boundingRect  . setRotation(this.rotation);
         //System.out.println("Bullet fired");
     }
 
     public void update(float delta) {
-        position.add(velocity.cpy());
-        boundingRect.translate(velocity.x, velocity.y);
+        position.add(vel.cpy());
+        boundingRect.translate(vel.x, vel.y);
         if    ( position.x +  width/2 < 0 ||  position.x - width/2 > camWidth  ||
                 position.y + height/2 < 0 || position.y - height/2 > camHeight   )  {
             isGone = true;

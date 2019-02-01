@@ -8,6 +8,7 @@ import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
+import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.TurretHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
@@ -21,6 +22,7 @@ public class GameWorld {
     public BirdHandler birdHandler;
     public TargetHandler targetHandler;
     public TurretHandler turretHandler;
+    public TinyBirdHandler tinyBirdHandler;
     //private boolean isAlive = true;
     private Rectangle ground;
     public double boost = 0;  //boostamount
@@ -96,6 +98,7 @@ public class GameWorld {
         birdHandler.update();
         turretHandler.update();
         targetHandler.update(delta, runTime);
+        tinyBirdHandler.update(delta);
     }
 
     private void updateReady(float runTime) {
@@ -225,11 +228,12 @@ public class GameWorld {
         this.renderer = renderer;
     }
 
-    public void setHandlers(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, UiHandler uiHandler) {
+    public void setHandlers(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler) {
         this.bgHandler = bgHandler;
         this.birdHandler = birdHandler;
         this.targetHandler = targetHandler;
         this.turretHandler=turretHandler;
+        this.tinyBirdHandler=tinyBirdHandler;
     }
     public void setBirdHandler(BirdHandler BirdHandler) {
         ;

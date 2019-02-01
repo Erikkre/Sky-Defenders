@@ -56,12 +56,13 @@ public class GameHandler implements Screen {
         uiHandler=new UiHandler();
         world = new GameWorld();
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
+        tinyBirdHandler = new TinyBirdHandler();
         bgHandler = new BgHandler( camWidth, camHeight);
         birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
         targetHandler = new TargetHandler();
         turretHandler = new TurretHandler(camWidth, camHeight);
-        tinyBirdHandler = new TinyBirdHandler();
-        world.setHandlers(bgHandler,birdHandler, targetHandler,turretHandler,uiHandler);
+
+        world.setHandlers(bgHandler,birdHandler, targetHandler,turretHandler,tinyBirdHandler,uiHandler);
 
         renderer = new GameRenderer(world, camWidth, camHeight, bgHandler, tinyBirdHandler, birdHandler, targetHandler, turretHandler,uiHandler);
         bgHandler.setRendererAndCam(renderer);

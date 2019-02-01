@@ -12,8 +12,8 @@ import com.kredatus.flockblockers.Handlers.AssetHandler;
 public class Glider {
     private float rotation;
     private Circle boundingCir;
-    private static Vector2 position, velocity, acceleration;
-    public float gamexvelocity;
+    private static Vector2 position, vel, acceleration;
+    public float gamexvel;
     protected int width;
     protected int height;
     protected boolean isScrolledDown;
@@ -21,7 +21,7 @@ public class Glider {
     private boolean isAlive;
 
     float bgh = AssetHandler.bgPhoenix.getHeight();
-    float originalyacc=2000, originalGamevelocity=750;
+    float originalyacc=2000, originalGamevel=750;
     private GameWorld world;
     public Glider(float midPointX, float midPointY, int width, int height, GameWorld world) {
         this.midpointY = midPointY;
@@ -31,9 +31,9 @@ public class Glider {
         this.height = height;
         this.world=world;
         position = new Vector2(midPointX, 0);
-        velocity = new Vector2(5000, -200);
+        vel = new Vector2(5000, -200);
         acceleration = new Vector2(6000, originalyacc-1600);
-        gamexvelocity = originalGamevelocity;
+        gamexvel = originalGamevel;
 
         isScrolledDown = false;
         isAlive = true;
@@ -42,40 +42,40 @@ public class Glider {
 
     public void update(float delta) {
 
-        //gamexvelocity -= 0.13;
-        //System.out.println("gv: "+ gamexvelocity + " sv: "+velocity.x);
+        //gamexvel -= 0.13;
+        //System.out.println("gv: "+ gamexvel + " sv: "+vel.x);
         if (isAlive()){
             if (betweenWorlds()) {      //between worlds
-                if ( isPositive() ) {  //if partly in normal world
+                if ( isPositionitive() ) {  //if partly in normal world
                     acceleration.y -= (originalyacc * ((float) Math.pow(position.y, 2))) / (((float) Math.pow(position.y, 2)) + ((float) Math.pow(originalyacc, 2)));
                 } else { //if partly in flip world
                     acceleration.y += (originalyacc * ((float) Math.pow(position.y, 2))) / (((float) Math.pow(position.y, 2)) + ((float) Math.pow(originalyacc, 2)));
                 }
             }
-            if (velocity.y > 600) {
-                velocity.y = 600;
+            if (vel.y > 600) {
+                vel.y = 600;
             }
-            if (velocity.y < -600) {
-                velocity.y = -600;
+            if (vel.y < -600) {
+                vel.y = -600;
             }
 
-            //if (gamexvelocity<350){
-            //    gamexvelocity=350;
+            //if (gamexvel<350){
+            //    gamexvel=350;
             //}
 
-            if (isPositive()) {
+            if (isPositionitive()) {
                 if (acceleration.y < -originalyacc) {
                     acceleration.y = -originalyacc;
                 }
 
-                velocity.add(acceleration.cpy().scl(delta));
-                position.add(velocity.cpy().scl(delta));
+                vel.add(acceleration.cpy().scl(delta));
+                position.add(vel.cpy().scl(delta));
 
                 if (acceleration.y < originalyacc) {
                     acceleration.y += (originalyacc - acceleration.y) / 50;
                 }
-                if (velocity.x > gamexvelocity) {
-                    velocity.x -= (velocity.x - gamexvelocity) / 30;
+                if (vel.x > gamexvel) {
+                    vel.x -= (vel.x - gamexvel) / 30;
                 }
                 if (acceleration.x > 0) {
                     acceleration.x -= (acceleration.x) / 20;
@@ -85,36 +85,36 @@ public class Glider {
                 if (acceleration.y >  originalyacc) {
                     acceleration.y =  originalyacc;
                 }
-                velocity.add(acceleration.cpy().scl(delta));
-                position.add(velocity.cpy().scl(delta));
+                vel.add(acceleration.cpy().scl(delta));
+                position.add(vel.cpy().scl(delta));
 
                 if (acceleration.y > - originalyacc) {
                     acceleration.y -= ( originalyacc + acceleration.y) / 50;
                 }
-                if (velocity.x  > gamexvelocity) {
-                    velocity.x -= (velocity.x - gamexvelocity) / 30;
+                if (vel.x  > gamexvel) {
+                    vel.x -= (vel.x - gamexvel) / 30;
                 }
                 if (acceleration.x > 0) {
                     acceleration.x -= (acceleration.x) / 20;
                 }
             }
-            rotation = -(float) Math.toDegrees(Math.atan(velocity.y / (-velocity.x*1.5)));
+            rotation = -(float) Math.toDegrees(Math.atan(vel.y / (-vel.x*1.5)));
         } else {    //if drowning
-            if (isPositive()) {
-                velocity.add(acceleration.cpy().scl(delta));
-                position.add(velocity.cpy().scl(delta));
-                velocity.y += 0.5;
-                velocity.x += 0.1;
+            if (isPositionitive()) {
+                vel.add(acceleration.cpy().scl(delta));
+                position.add(vel.cpy().scl(delta));
+                vel.y += 0.5;
+                vel.x += 0.1;
             } else {
-                velocity.add(acceleration.cpy().scl(delta));
-                position.add(velocity.cpy().scl(delta));
-                velocity.y -= 0.5;
-                velocity.x += 0.1;
+                vel.add(acceleration.cpy().scl(delta));
+                position.add(vel.cpy().scl(delta));
+                vel.y -= 0.5;
+                vel.x += 0.1;
             }
-            rotation = -(float) Math.toDegrees(Math.atan(velocity.y / (-velocity.x) ));
+            rotation = -(float) Math.toDegrees(Math.atan(vel.y / (-vel.x) ));
         }
         if (isAlive && (Math.abs(position.y+height/2)  > bgh - midpointY-20 )) {
-            if (velocity.y < 0 && isNegative() || velocity.y > 0 && isPositive()){
+            if (vel.y < 0 && isNegative() || vel.y > 0 && isPositionitive()){
             AssetHandler.stopmusic(AssetHandler.musiclist);
             AssetHandler.deathmenumusic.play();
             AssetHandler.splashdown.play();
@@ -132,19 +132,19 @@ public class Glider {
     public void onClick() {
         if (isAlive && world.boost>=1.0) {
             if (position.y < 0) {//+ is away from ground  -i is towards (flipworld)
-                if (velocity.y < -40) {   //if falling
-                    acceleration.y += 1900 + (-velocity.y * 2);
-                    acceleration.x -= velocity.y;
-                    velocity.y+=80;
+                if (vel.y < -40) {   //if falling
+                    acceleration.y += 1900 + (-vel.y * 2);
+                    acceleration.x -= vel.y;
+                    vel.y+=80;
                 } else acceleration.y += 1700;
-                velocity.y+=40;
+                vel.y+=40;
             } else {//- is away from ground  + is towards
-                if (velocity.y > 40) {   //if falling
-                    acceleration.y -= 1900 + (velocity.y * 2);
-                    acceleration.x += velocity.y;
-                    velocity.y-=80;
+                if (vel.y > 40) {   //if falling
+                    acceleration.y -= 1900 + (vel.y * 2);
+                    acceleration.x += vel.y;
+                    vel.y-=80;
                 } else acceleration.y -= 1600;
-                velocity.y-=40;
+                vel.y-=40;
             }
             AssetHandler.swoop.play();
             world.boost--;
@@ -153,12 +153,12 @@ public class Glider {
 
     public void die() {
         isAlive = false;
-        if (isPositive()){
+        if (isPositionitive()){
             acceleration.set(Math.abs(acceleration.x), Math.abs(acceleration.y)/2);
-            velocity.set(velocity.x / 30, velocity.y / 80);
+            vel.set(vel.x / 30, vel.y / 80);
         } else {
             acceleration.set(-Math.abs(acceleration.x), -Math.abs(acceleration.y)/2);
-            velocity.set(velocity.x / 30, velocity.y / 80);
+            vel.set(vel.x / 30, vel.y / 80);
         }
     }
 
@@ -181,7 +181,7 @@ public class Glider {
         return position.y > bgh / 8;
     }
 
-    public boolean isPositive() {
+    public boolean isPositionitive() {
         return position.y >0;
     }
 
@@ -212,11 +212,11 @@ public class Glider {
     public void onRestart() {
         position.x=midpointX;
         position.y = starty;
-        velocity.x=5000;
-        velocity.y=-200;
+        vel.x=5000;
+        vel.y=-200;
         acceleration.x = 6000;
         acceleration.y = originalyacc-1600;
-        gamexvelocity=originalGamevelocity;
+        gamexvel=originalGamevel;
         isAlive = true;
         //AssetHandler.frontViewFlaps.setFrameDuration(0.2f);
         rotation=0;

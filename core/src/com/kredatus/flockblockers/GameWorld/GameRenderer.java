@@ -68,7 +68,7 @@ public class GameRenderer {
     boolean turnback=true;
     private SpriteBatch batcher;
     private Glider glider;
-    public static Vector3 camposition;
+    public static Vector3 campos;
     private Animation frontFlaps, leftSideFlaps, rightSideFlaps, flipflaps, frontViewFlaps, backFlaps;
     //private TextureRegion gliderMid, vertflipgliderMid;
     private int gliderscaling= AssetHandler.getgliderScaling();
@@ -579,7 +579,7 @@ public void setRotate(float angle){
             cam.position.y=camHeight/2;
             cam.update();
             batcher.setProjectionMatrix(cam.combined);
-            camposition = cam.position;
+            campos = cam.position;
         }
 
         public void setCamPosition(float x,float y){
@@ -587,7 +587,7 @@ public void setRotate(float angle){
             cam.position.y=y;
             cam.update();
             batcher.setProjectionMatrix(cam.combined);
-            camposition = cam.position;
+            campos = cam.position;
         }
     */
 
@@ -595,12 +595,15 @@ public void setRotate(float angle){
         //System.out.println("Glider: "+glider.getPosition());
         //System.out.println("Cam: "+cam.position);
         //glider.getPosition().x+glider.getWidth()/2  glider.getPosition().y+glider.getHeight()/2
-
+        //if (!tinyBirdQueue.isEmpty())System.out.println(tinyBirdQueue.peek().vel.y);
+        for (TinyBird i : tinyBirdQueue){
+            batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime+i.flapRandomFactor), i.pos.x-i.width/2, i.pos.y-i.height/2,
+                    i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
+        }
         for (Turret i : turretList) {
             batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.getRotation());
         }
-
         for (Projectile j : projectileList) {
             batcher.draw(j.texture, j.position.x-j.width/2, j.position.y-j.height/2,
                     j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
@@ -630,7 +633,6 @@ public void setRotate(float angle){
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(255,0,0, 1f);
 
-
             shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());
             shapeRenderer.end();
             batcher.begin();*/
@@ -642,7 +644,6 @@ public void setRotate(float angle){
                 batcher.setShader(flashShader);
                 //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
                 flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.getValue());
-
             }
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
@@ -700,9 +701,9 @@ public void setRotate(float angle){
             if (runTime<2){ //start of game intro
 //                System.out.println(cam.position);
             prepareTransition(0, 0, 0, 10f);}
-            //if (!bgHandler.vertPosBg.isStarted()){
-                //bgHandler.vertPosBg.start(manager);
-                //bgHandler.horizPosBg.start(manager);
+            //if (!bgHandler.vertPositionBg.isStarted()){
+                //bgHandler.vertPositionBg.start(manager);
+                //bgHandler.horizPositionBg.start(manager);
             //}
             drawBackground();
            // table.draw(batcher, 1);
@@ -789,7 +790,7 @@ public void setRotate(float angle){
       //  }
     }
 
-    public static Vector3 getCameraPosition() { return camposition; }
+    public static Vector3 getCameraPosition() { return campos; }
 
     public static void dispose(){
         font.dispose();

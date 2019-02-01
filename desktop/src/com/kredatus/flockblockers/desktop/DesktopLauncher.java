@@ -10,7 +10,7 @@ public class DesktopLauncher {
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		config.width=540; config.height=960;
+		config.width=562; config.height=1000;
 		new LwjglApplication(new FlockBlockersMain(), config);
 	}
 }

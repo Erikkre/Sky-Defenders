@@ -25,7 +25,7 @@ public class AssetHandler {
     public static Random r = new Random();
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;
-    public static Animation[] phoenixAnimations, nightAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
+    public static Animation[] tinyAnims, phoenixAnimations, nightAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
     public static Texture sprites, texture, f0Texture, f1Texture,  f2Texture, f3Texture, f4Texture, f5Texture, f6Texture, f7Texture, f8Texture, f9Texture,
             bgPhoenix,bgNight,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, nightBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird,
             boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture, creditstexture, creditsdowntexture, exittexture, exitdowntexture,
@@ -50,7 +50,7 @@ public class AssetHandler {
             p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31;
 
     public static Animation<TextureRegion> rightSideFlaps, leftSideFlaps,
-            tinyAnim1, tinyAnim2,tinyAnim3, tinyAnim4, tinyAnim5, tinyAnim6,tinyAnim7,tinyAnim8,
+            tinyAnim1, tinyAnim2,tinyAnim3, tinyAnim4, tinyAnim5, tinyAnim6,tinyAnim7,tinyAnim8,tinyAnim9,tinyAnim10,tinyAnim11,
             coinAnimation;
     //public static TextureRegion gliderMid, gliderDown, gliderUp ,vertflipgliderMid, vertflipgliderDown, vertflipgliderUp,
             //frontGliderMid, frontGliderDown, frontGliderUp, frontGliderUpHigh, backgliderMid, backgliderDown, backgliderUp;
@@ -332,16 +332,16 @@ public class AssetHandler {
 
 
         Texture coinTexture=new Texture(Gdx.files.internal("sprites"+File.separator+"coin.png"));
-        ArrayList<TextureRegion> tempPos = new ArrayList<TextureRegion>(16);
+        ArrayList<TextureRegion> tempPosition = new ArrayList<TextureRegion>(16);
         for (int i = 0; i < 17; i++) {
             if (i<16){
             TextureRegion temp = new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
-            tempPos.add(temp);
+            tempPosition.add(temp);
             } else {
                 coinSymbol= new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
             }
         }
-        coinAnimation=new Animation<TextureRegion>(0.03f, tempPos.toArray(new TextureRegion[16]));
+        coinAnimation=new Animation<TextureRegion>(0.03f, tempPosition.toArray(new TextureRegion[16]));
         coinAnimation.setPlayMode(Animation.PlayMode.LOOP); //REMEMBER THIS STEP
 
 
@@ -366,7 +366,10 @@ public class AssetHandler {
         tinyAnim6=tinyBirdTextureToAnimation("6");
         tinyAnim7=tinyBirdTextureToAnimation("7");
         tinyAnim8=tinyBirdTextureToAnimation("8");
-
+        tinyAnim9=tinyBirdTextureToAnimation("9");
+        tinyAnim10=tinyBirdTextureToAnimation("10");
+        tinyAnim11=tinyBirdTextureToAnimation("11");
+        tinyAnims=new Animation[]{tinyAnim1,tinyAnim2,tinyAnim3,tinyAnim4,tinyAnim5,tinyAnim6,tinyAnim7,tinyAnim8, tinyAnim9, tinyAnim10, tinyAnim11};
 
         //SOUNDWORK
         fire = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"fire.wav"));
@@ -404,7 +407,7 @@ public class AssetHandler {
         sprites = new Texture(Gdx.files.internal("sprites"+File.separator+"birds"+File.separator+""+path));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 
-        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
+        ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>();
         ArrayList<TextureRegion> leftSidePositions = new ArrayList<TextureRegion>();
 
 
@@ -421,7 +424,7 @@ public class AssetHandler {
             } else {
                 temp = new TextureRegion(sprites, 372 * (i-11), 306, 372, 306);
             }
-            positions.add(temp);
+            poss.add(temp);
 
             if (i<6){
                 TextureRegion flipTemp = new TextureRegion(sprites, 372 * i, 0, 373, 306);
@@ -430,16 +433,16 @@ public class AssetHandler {
             }
 
             if (i == 5){
-                rightSide=positions.toArray(new TextureRegion[6]);
+                rightSide=poss.toArray(new TextureRegion[6]);
                 leftSide =leftSidePositions.toArray(new TextureRegion[6]);
 
-                positions.clear();
+                poss.clear();
                 leftSidePositions.clear();
             } else if (i == 11) {
-                back = positions.toArray(new TextureRegion[6]);
-                positions.clear();
+                back = poss.toArray(new TextureRegion[6]);
+                poss.clear();
             } else if (i==21){
-                front =  positions.toArray(new TextureRegion[10]);
+                front =  poss.toArray(new TextureRegion[10]);
             }
         }
 
@@ -463,19 +466,19 @@ public class AssetHandler {
 
     private static Animation<TextureRegion> tinyBirdTextureToAnimation (String shadeNumber) {
         texture = new Texture(Gdx.files.internal("sprites"+File.separator+"tinyBirds"+File.separator+"tinyBird"+shadeNumber+".png"));
-        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>(9);
+        ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>(9);
 
         for (int i = 0; i < 9; i++) {
-            TextureRegion temp = new TextureRegion(texture, 73 * i, 0, 73, 27);
-            positions.add(temp);
+            TextureRegion temp = new TextureRegion(texture, 37 * i, 0, 37, 14);
+            poss.add(temp);
         }
-        Animation animation = new Animation<TextureRegion>(0.09f, positions.toArray((new TextureRegion[9])));
+        Animation animation = new Animation<TextureRegion>(0.1f, poss.toArray((new TextureRegion[9])));
         animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         return animation;
     }
 /*
     public static Animation[] birdTextureToSprite (Texture texture) {
-        ArrayList<TextureRegion> positions = new ArrayList<TextureRegion>();
+        ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>();
 
         TextureRegion[] front = new TextureRegion[0];
         TextureRegion[] side = new TextureRegion[0];
@@ -483,19 +486,19 @@ public class AssetHandler {
 
         for (int i = 0; i < 16; i++) {
             TextureRegion temp = new TextureRegion(texture, 481 * i, 0, 481, 423);
-            positions.add(temp);
+            poss.add(temp);
             if (i == 5) {
-                front = positions.toArray(new TextureRegion[6]);
-                positions.clear();
+                front = poss.toArray(new TextureRegion[6]);
+                poss.clear();
             } else if (i == 11) {
-                side = positions.toArray(new TextureRegion[6]);
-                positions.clear();
+                side = poss.toArray(new TextureRegion[6]);
+                poss.clear();
                 if (texture != phoenixBird) {
                     break;
                 }
             } else if (i == 15) {
-                back = positions.toArray(new TextureRegion[4]);
-                positions.clear();
+                back = poss.toArray(new TextureRegion[4]);
+                poss.clear();
             }
         }
 

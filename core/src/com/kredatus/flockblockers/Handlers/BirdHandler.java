@@ -1,7 +1,6 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
@@ -14,12 +13,10 @@ import com.kredatus.flockblockers.GameObjects.Birds.PhoenixBird;
 import com.kredatus.flockblockers.GameObjects.Birds.ThunderBird;
 import com.kredatus.flockblockers.GameObjects.Birds.WaterBird;
 
-
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
 
 public class BirdHandler {
     //public  static Class[] birdList ={PhoenixBird.class,  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
@@ -41,21 +38,18 @@ public class BirdHandler {
     //BirdAbstractClass birdToAdd;
     boolean taskRunning;
     public double lastBirdSpawnTime;
-
     private ArrayList<Float> flashLengths=new ArrayList<Float>();
 
     public BirdHandler(BgHandler bgHandler,  float camWidth, float camHeight) {
-
         this.bgHandler = bgHandler;
         this.camHeight = camHeight;
         this.camWidth  = camWidth ;
 
-
         //public  static Class[] birdList ={new PhoenixBird(camHeight, camWidth),  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
 
         for (int i = 0; i < 8; i++) {
-            if (i==0) spawnIntervals[i]=0;
-            else if (i==1||i==3) spawnIntervals[i]=0.05f;
+            if (i==0||i==3) spawnIntervals[i]=0;    //if phoenix or fire spawn immediately (0 is like null, it throws error if used, cant have 0ms interval)
+            else if (i==1) spawnIntervals[i]=0.55f; //if thunder
             else if ((i==5||i==6)&&spawnIntervals[i]>8) spawnIntervals[i]=8;
             else spawnIntervals[i] = duration / birdNumberList[i];
 
@@ -63,16 +57,14 @@ public class BirdHandler {
         }
         timer=new Timer();
         taskRunning=false;
-
         //birdList.add(PhoenixBird.class);
         // post a Runnable to the rendering thread that processes the result
 
         flashLengths();
     }
 
-
     private void flashLengths() {
-        for (double i = 0.4f; i <= 6; i += 0.1f) { //  5.6/0.05=66 positions, maxes out at a 13 second flash
+        for (double i = 0.4f; i <= 6; i += 0.1f) { //  5.6/0.05=66 poss, maxes out at a 13 second flash
             flashLengths.add((float) (Math.pow(flashLengths.size(), 0.7) / 3f + 0.3f));//desmos:y=\left(x^{0.5}+0.3\right)
             //else flashLengths.add(   (float) (                (-(Math.pow(-(flashLengths.size()-25),1.32))/50) +1.8f    ));
         }
@@ -158,16 +150,13 @@ public class BirdHandler {
                         birdQueue.add(new GoldBird(camHeight, camWidth, flashLengths));
                     }
                 }
-
                 setUpTask();
 
-                if (waveTypeCnt == 0) {
-                    timer.schedule(task, 1000);
-                } else if (waveTypeCnt == 2) {  //if waterbird
+                if (waveTypeCnt == 2) {  //if waterbird
                     if (!FlockBlockersMain.fastTest) timer.scheduleAtFixedRate(task, 2000, (int) ((duration / (birdNumberList[waveTypeCnt] / 5)) * 1000) / 2);   //  duration/amount of waves/2
                     else timer.scheduleAtFixedRate(task,0,1);
-                } else if (waveTypeCnt == 3) {  //if fire spawn all at once in blob
-                    for (int i=0; i<birdNumberList[3]; i++){
+                } else if (waveTypeCnt == 3 || waveTypeCnt == 0) {  //if fire or phoenix spawn all at once in blob
+                    for (int i=0; i<birdNumberList[waveTypeCnt]; i++){
                         activeBirdQueue.add(birdQueue.poll());
                     }
                 } else {
@@ -195,7 +184,6 @@ public class BirdHandler {
 
     public void resume(){
         if (waveTypeCnt!=3 && waveTypeCnt!=0 && bgHandler.isBirdSpawning) {//if not fire or phoenix, restart
-
             setUpTask();
             int timeSinceLastBirdSpawn= (int) (System.currentTimeMillis() - lastBirdSpawnTime);
             int spawningInterval;
@@ -204,14 +192,11 @@ public class BirdHandler {
                 spawningInterval=(int) (((duration / (birdNumberList[waveTypeCnt] / 5)) * 1000) / 2);
                 if (timeSinceLastBirdSpawn < spawningInterval) timer.scheduleAtFixedRate(task, spawningInterval-timeSinceLastBirdSpawn, spawningInterval);   //  duration/amount of waves/2
                 else timer.scheduleAtFixedRate(task, 2000, spawningInterval);
-
             } else {    //if any bird but water fire or phoenix
                 spawningInterval= (int) (spawnIntervals[waveTypeCnt] * 1000);
                 if (timeSinceLastBirdSpawn < spawningInterval) timer.scheduleAtFixedRate(task, spawningInterval-timeSinceLastBirdSpawn, spawningInterval);
                 else timer.scheduleAtFixedRate(task, 2000, spawningInterval);   //will never really happen because if the birds are spawning the time since the last bird should be shorter than the time it takes for it to spawn
-
             }
         }
-
     }
 }

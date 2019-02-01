@@ -7,7 +7,9 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
 import com.kredatus.flockblockers.FlockBlockersMain;
+import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ import aurelienribon.tweenengine.TweenEquations;
  * NightBird  =     4(M)    12    .6    4(32)           8              F B                 1 at a time randomly, sometimes back sometimes front, start slow end fast
  * LunarBird  =     4(M)    12    .6    5(35)           7              B S                 Diagonal side to side
  * GoldBird   =     15(XL)  3     .8     25(75)          3              F S                 Random Positions but stay from beginning to end
- * PhoenixBird=     60(XXL) 3     1      100||diamond    1              F B S               Random positions tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
+ * PhoenixBird=     60(XXL) 3     1      100||diamond    1              F B S               Random poss tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
 Only add health to phoenix each round   after you hit multiples of 500 gold/phoenix add chance to drop that multiple of diamonds instead
                                         i.e. 1 diamond OR 500 gold (1 Dia=1000 Go)
 
@@ -99,7 +101,7 @@ public abstract class BirdAbstractClass {
 
     public boolean isFlashing;
     public Value flashOpacityValue = new Value();
-    public Tween flashTween;
+    public Tween flashTween, outroY;
     public TweenCallback endFlashing;
 
     /*TweenEquation[] tweenEquations = {TweenEquations.easeOutExpo}; /*,TweenEquations.easeOutQuint,TweenEquations.easeOutQuart,
@@ -107,6 +109,8 @@ public abstract class BirdAbstractClass {
             TweenEquations.easeNone};*/
 
     public BirdAbstractClass() {
+        outroY=Tween.to(this, 2, 2).target(GameHandler.camHeight*1.2f).ease(TweenEquations.easeInExpo); //hit wall when not killed at end of spawning period
+
         if (FlockBlockersMain.fastTest) {globalSpeedMultiplier = 3f; globalHealthMultiplier=0.1f;}
 
         if (flashTween!=null)flashTween.kill();
@@ -145,7 +149,17 @@ public abstract class BirdAbstractClass {
     public void update(float delta, float runTime){
 
         if (isAlive) {
-            setPositionAndVelocity(delta);
+            if (!BgHandler.isBirdSpawning&&currentY!=outroY) {
+                currentX.kill();
+                currentY = outroY.start();
+                if (x > camWidth / 2) {   //if dying on right side fall to left and vice versa
+                    xVel = -2;
+                } else {
+                    xVel = 2;
+                }
+                animation = backFlaps;
+            }
+            setPositionAndVel(delta);
             //System.out.println(xVel);
             setAndRotateToTargetRot();
                                                                         //as speed goes up fraction goes down, at 0.1 (10x speed) flap at 0.5*origFlapSpeed so twice as fast
@@ -156,7 +170,7 @@ public abstract class BirdAbstractClass {
                 //System.out.println("Heighten"+animation.getFrameDuration());
             }  else if (yVel<lastYSpeedAtFlapChange && yVel<= origFlapSpeed && fasterFlap){
                 fasterFlap=false;
-                animation.setFrameDuration(origFlapSpeed);//base with yvelocity at original velocity, we flap standard speed. but with faster velocity we have shorter frame duration so faster flapping
+                animation.setFrameDuration(origFlapSpeed);//base with yvel at original vel, we flap standard speed. but with faster vel we have shorter frame duration so faster flapping
                 //System.out.println("Lower"   +animation.getFrameDuration());
             }
 
@@ -224,7 +238,7 @@ public abstract class BirdAbstractClass {
         boundingPoly.setRotation(rotation);
     }
 
-    public void setPositionAndVelocity(float delta){
+    public void setPositionAndVel(float delta){
         if (currentY!=null&&currentY.isStarted()){
             preY=y;
             currentY.update(delta);

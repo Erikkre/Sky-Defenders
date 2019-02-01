@@ -20,7 +20,6 @@ import aurelienribon.tweenengine.TweenEquations;
  */
 
 public class GoldBird extends BirdAbstractClass {
-    Tween outroY;
     public float targetY, targetX;//, preTargetY;
 
     public GoldBird(float camHeight, float camWidth, ArrayList flashLengths){
@@ -74,16 +73,8 @@ this.flashLengths=flashLengths;
     @Override
     public void specificUpdate(float delta, float runTime) {
 
-        if (!BgHandler.isBirdSpawning&&currentY!=outroY){
-            currentX.kill();
-            currentY=outroY.start();
-            if (x>camWidth/2){   //if dying on right side fall to left and vice versa
-                xVel=-2;
-            } else {
-                xVel=2;
-            }
-            //System.out.println("startOutro");
-        } else if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX){
+        //System.out.println("startOutro");
+        if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX){
             //System.out.println("Tween is finished******************************************************");
             if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );  //if on left go to right if on right go left
             else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
@@ -128,7 +119,6 @@ this.flashLengths=flashLengths;
         //targetY=height/2+r.nextInt((int)(camHeight-height));
         firstY =(Tween.to(this, 2, 2).target(targetY).ease(TweenEquations.easeOutSine));
 
-        outroY=Tween.to(this, 2, 2).target(camHeight+height/2).ease(TweenEquations.easeInExpo).delay(1); //hit wall when not killed and end of spawning period
 
     }
 }

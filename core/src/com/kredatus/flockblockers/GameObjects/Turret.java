@@ -19,7 +19,7 @@ import java.util.TimerTask;
 
 public class Turret {
     public boolean firing, targetAquired;
-    private int[] rotList =new int[] {1,2,5, 10, 20}, accList=new int[] {28, 22, 16, 10, 2};
+    private int[] rotList =new int[] {1,2,5, 10, 20}, accList=new int[] {28, 22, 16, 10, 2};    //rotation rates, accuracy disparity in degrees (divide by 2), so highest innacuracy is 14 lowest is 1 degree off from target
     public int dmgUpCounter, penUpCounter, rofUpCounter, sprUpCounter, rotUpCounter, accUpCounter, width, height, spr, acc=accList[0], rot=rotList[0];   //rot = rotationSpeed
     public Vector2 position;
     private float camWidth, camHeight;
@@ -214,7 +214,7 @@ public class Turret {
 
                 } else if (targetBird!=null&&targetBird.isAlive){
                     //ask haoran for a better equation
-                    //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is velocity but needs to be better scaled
+                    //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is vel but needs to be better scaled
                     setRotation( targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
                     rotateToTarget();
                     //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);

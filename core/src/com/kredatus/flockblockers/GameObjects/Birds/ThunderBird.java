@@ -35,7 +35,7 @@ this.flashLengths=flashLengths;
         rotStep=1.4f;
         unRotStep=1.9f;
 
-        yVel=  (1 + r.nextFloat()*1.5f)*globalSpeedMultiplier;
+        yVel=  (0.6f*globalSpeedMultiplier); // + r.nextFloat()*.5f);
         origYVel=yVel;
 
         coinNumber=1;
@@ -53,7 +53,7 @@ this.flashLengths=flashLengths;
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=1;origHealth=health;
+        health=2;origHealth=health;
         if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
         animation=frontFlaps;
@@ -71,23 +71,24 @@ this.flashLengths=flashLengths;
 
     protected void animSetup(){
         frontFlaps=animSeq[0];
-        /*leftFlaps=animSeq[1];
+        leftFlaps=animSeq[1];
         rightFlaps=animSeq[2];
-        backFlaps=animSeq[3];*/
+        backFlaps=animSeq[3];
         deathFlaps=animSeq[4];
         //animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
         height=((TextureRegion)frontFlaps.getKeyFrames()[3]).getRegionHeight();
         width=((TextureRegion)frontFlaps.getKeyFrames()[0]).getRegionWidth();
     }
+
     @Override
     public void specificUpdate(float delta, float runTime) {
         //second.update(delta);
-
+        if ( ((xVel>0 && xVel<2.5 && x>camWidth/2)||(xVel<0 && xVel>-2.5 && x<camWidth/2))&& animation!= frontFlaps) animation=frontFlaps;
+        else if (xVel>1.5&&x<camWidth/2)animation=rightFlaps;
+        else if (xVel<-1.5&&x>camWidth/2) animation=leftFlaps;
          if (BgHandler.isBirdSpawning&&currentX.isFinished()&&currentX!=introX) {
-
             if (x>camWidth/2) {currentX = Tween.to(this, 1, 0.7f + r.nextFloat()).target(width / 2+r.nextInt((int)width)).ease(TweenEquations.easeInOutSine).start(); targetRot=angle; rotate=true;}
             else {currentX = Tween.to(this, 1, 0.7f + r.nextFloat()).target(edge-r.nextInt((int)width)).ease(TweenEquations.easeInOutSine).start(); targetRot=360-angle; rotate=true;}
-
          }
          /*
         if (cnt==4) {cnt=0;}
