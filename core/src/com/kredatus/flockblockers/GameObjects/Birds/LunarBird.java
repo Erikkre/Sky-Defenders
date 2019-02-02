@@ -32,7 +32,7 @@ public class LunarBird extends BirdAbstractClass {
     private TweenEquation tweenEquation = Circ.INOUT;
     public LunarBird(float camHeight, float camWidth, ArrayList flashLengths){
         super();
-this.flashLengths=flashLengths;
+        this.flashLengths=flashLengths;
 
         rotStep=5f;
         unRotStep=3f;
@@ -70,9 +70,10 @@ this.flashLengths=flashLengths;
         flapSpeedIntervals();
     }
 
-    protected void animSetup(){
-        leftFlaps= animSeq[1];
+    private void animSetup(){
+        leftFlaps =animSeq[1];
         rightFlaps=animSeq[2];
+        backFlaps =animSeq[3];
         frontFlaps=animSeq[0];
         deathFlaps=animSeq[4];
 
@@ -111,7 +112,6 @@ this.flashLengths=flashLengths;
     @Override
     public void setManager(final float camWidth) {
 
-
         float[] tempList = {width/2, edge};
         float firstTarget =tempList[r.nextInt(2)];
 
@@ -127,6 +127,5 @@ this.flashLengths=flashLengths;
         currentX = Tween.to(this, 1, minDashTime).target(firstTarget).ease(tweenEquation).start();
         currentY = Tween.to(this, 2, minDashTime).target((camHeight/7)*camHeightSeventh++).ease(tweenEquation).start();
         origFlapSpeed=animation.getFrameDuration();
-
     }
 }

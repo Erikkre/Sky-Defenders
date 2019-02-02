@@ -3,6 +3,8 @@ package com.kredatus.flockblockers.Handlers;
 
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Projectile;
+import com.kredatus.flockblockers.GameWorld.GameRenderer;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 

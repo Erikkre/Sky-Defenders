@@ -243,17 +243,16 @@ public void setRotate(float angle){
     }
 
     private void smallfontLengthSetup() {
-        smallfont.size = 48;
+        smallfont.size = 32;
         smallfont.minFilter = Texture.TextureFilter.Linear;
         smallfont.magFilter = Texture.TextureFilter.MipMapNearestLinear;
         //smallfont.characters = "'0123456789.:?!,-%ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; //score and boost
-        smallfont.flip = true;
         smallfont.borderWidth = 2;
-        smallfont.color = Color.ORANGE;
+        smallfont.color = Color.WHITE;
         smallfont.borderColor = Color.BLACK;
         smallfont.shadowColor = Color.BLACK;
-        smallfont.shadowOffsetX = 4;
-        smallfont.shadowOffsetY = 2;
+        //smallfont.shadowOffsetX = 4;
+        //smallfont.shadowOffsetY = 2;
         gamefont = new FreeTypeFontGenerator(Gdx.files.internal("font/blowbrush.ttf"));
         otherfont = new FreeTypeFontGenerator(Gdx.files.internal("font/DroidSerif-Bold.ttf"));
         droidSerifFont= otherfont.generateFont(smallfont);
@@ -266,7 +265,7 @@ public void setRotate(float angle){
         boost = new GlyphLayout(font, "Boost: 99");
         boostTextLen = boost.width;
 
-        score = new GlyphLayout(font, "STABILITY: 1069 ");
+        score = new GlyphLayout(font, "Gold: 100");
         scorelen = score.width;
     }
 
@@ -568,10 +567,10 @@ public void setRotate(float angle){
     }*/
 
     private void drawScore() {
-        scorenumber= (int) (glider.getPosition().x - camWidth / 2)/2000;
-        font.draw(batcher, "STABILITY: " + scorenumber, cam.position.x + (camWidth / 2) - scorelen, cam.position.y - camHeight / 2 + 5);
-        droidSerifFont.draw(batcher, "%", cam.position.x + (camWidth / 2) - 40, cam.position.y - camHeight / 2 + 5);
-        font.draw(batcher, "POWER: " + (int)myWorld.boost, cam.position.x - (camWidth / 2) + 5, cam.position.y - camHeight / 2 + 5 );
+        //scorenumber=
+        font.draw(batcher, "Gold: " + GameWorld.gold, (camWidth / 2) - scorelen, 9*camHeight/10);
+        //droidSerifFont.draw(batcher, "%", cam.position.x + (camWidth / 2) - 40, cam.position.y - camHeight / 2 + 5);
+        //font.draw(batcher, "POWER: " + (int)myWorld.boost, cam.position.x - (camWidth / 2) + 5, cam.position.y - camHeight / 2 + 5 );
     }
     /*
         public void setCamPositionOriginal(){
@@ -714,7 +713,7 @@ public void setRotate(float angle){
 
 
             drawStory(runTime, delta);
-
+            drawScore();
             /*
             if (AssetHandler.getHighScore() == 0) {
                 nextButton.draw(batcher);

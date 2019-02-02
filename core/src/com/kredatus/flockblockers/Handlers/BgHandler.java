@@ -1,6 +1,7 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
@@ -58,12 +59,12 @@ public class BgHandler {
     private int bgStackStartYHeight;
 
     public BgHandler(float camWidth, float camHeight){
-        bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
+        //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
         this.camHeight=camHeight;
         bgNumber = 0;
-        System.out.print("Start height of bg1: "+-bgStackStartYHeight);
+        //System.out.print("Start height of bg1: "+-bgStackStartYHeight);
         horiz.setValue(0);
-        vert.setValue(-bgStackStartYHeight);//everything is done in negative (camera goes up by that amount
+        vert.setValue(0);//everything is done in negative (camera goes up by that amount
         shake.setValue(0);                              //but in reality its the bg's lowering by that much
         background = new Background(horiz.getValue(), vert.getValue(), bgw, separatorHeight, AssetHandler.bgList.get(bgNumber++));
         background2 = new Background(horiz.getValue(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
@@ -157,6 +158,7 @@ public class BgHandler {
         backgroundStackReset=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
+                TinyBirdHandler.addVertValueToBirdsSurvivingWavePart(vert.getValue());
                 TinyBirdHandler.addTinyBirdsNextCity(camWidth, camHeight);
                 System.out.println("Reset stack");
                 stackJustReset=true;

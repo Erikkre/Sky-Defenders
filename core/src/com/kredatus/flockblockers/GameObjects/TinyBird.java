@@ -3,33 +3,36 @@ package com.kredatus.flockblockers.GameObjects;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.kredatus.flockblockers.Handlers.BgHandler.bgh;
+import static com.kredatus.flockblockers.Handlers.BgHandler.bgw;
+import static com.kredatus.flockblockers.Handlers.BgHandler.separatorHeight;
+
 public class TinyBird {
-    public float width, height, camWidth, camHeight;
+    public float width, height, camWidth, camHeight, addedY;
     protected float sizeRatio, finalSizeRatio;
     private int sizeVariance;
     public Animation animation;
     public float flapRandomFactor;
 
-    public Vector2 pos = new Vector2(), vel=new Vector2(), posChange = new Vector2();
+    public Vector2 pos = new Vector2(), vel=new Vector2(), posChange;
     public float  rotation;
 
     public boolean inCamView;
 
     private Random r = new Random();
-    public TinyBird(Animation animation, ArrayList<Float> flapSpeedIntervals, float camWidth, float camHeight){
+    public TinyBird(ArrayList<Float> flapSpeedIntervals, float camWidth, float camHeight){
+
         flapRandomFactor=r.nextFloat()*0.5f;
 
         this.camHeight=camHeight;
         this.camWidth=camWidth;
 
-        this.animation=animation;
-        height=((TextureRegion)animation.getKeyFrames()[0]).getRegionHeight();
-        width=((TextureRegion)animation.getKeyFrames()[0]).getRegionWidth();
 
         float minSpeed= -1.6f, speedRange = 3.2f;
         vel.x=-0.5f+r.nextFloat();
@@ -49,25 +52,31 @@ public class TinyBird {
         //edge = (camWidth)-width/3;
         //System.out.println("Height after: " + height+ " width: " + width);
 
-        pos.x=BgHandler.bgw/2 - BgHandler.bgw/4 + r.nextInt((BgHandler.bgw/2));
-        pos.y=  r.nextFloat()*(BgHandler.bgh*2+BgHandler.separatorHeight)  + (camHeight);   //spawn all tiny birds all over next part of wave               * (BgHandler.bgh / 6)
+        pos.x= bgw/2 - bgw/4 + r.nextInt((bgw/2));
+        pos.y=  r.nextFloat()*(bgh*2 + separatorHeight)  + (camHeight);   //spawn all tiny birds all over next part of wave               * (BgHandler.bgh / 6)
 
         //if yvel>0 set to anywhere between 100ms per frame to 30ms by multiplying by yVel/(possible y vel:range-min), so as to use percentage of maximum speed to get flap speed relative to yMovement speed
 
-        animation.setFrameDuration(flapSpeedIntervals.get( (int) (((vel.y-minSpeed)/(speedRange))*flapSpeedIntervals.size())));
-        System.out.println(flapSpeedIntervals.get((int) (((vel.y-minSpeed)/(speedRange))*flapSpeedIntervals.size())));
+        if ( (pos.y>separatorHeight&&pos.y<(bgh/2) +separatorHeight) || (pos.y>separatorHeight+bgh*(1.5f)&&pos.y<separatorHeight+(bgh*2)) ) animation= AssetHandler.tinyAnims[4+r.nextInt(5)];
+        else if (pos.y>separatorHeight+(bgh/2)&&pos.y<separatorHeight+(bgh*1.5f)) animation= AssetHandler.tinyAnims[6+r.nextInt(4)];
+        else if ((pos.y>separatorHeight+(bgh*2)&&pos.y<separatorHeight+((bgh*2)+separatorHeight)) || (pos.y>camHeight&&pos.y<separatorHeight)) animation= AssetHandler.tinyAnims[r.nextInt(6)];
 
+
+        height=((TextureRegion)animation.getKeyFrames()[0]).getRegionHeight();
+        width=((TextureRegion)animation.getKeyFrames()[0]).getRegionWidth();
+
+        animation.setFrameDuration(flapSpeedIntervals.get( (int) (((vel.y-minSpeed)/(speedRange))*flapSpeedIntervals.size())));
+        //System.out.println("vel.y: "+vel.y+", vel.y-minSpeed: "+(vel.y-minSpeed)+", flapSpeed: "+flapSpeedIntervals.get( (int) (((vel.y-minSpeed)/(speedRange))*flapSpeedIntervals.size())));
         posChange=pos.cpy();
     }
 
-
     public boolean isGone() {
-        return pos.y -  height/2 < -camWidth/2;
+        return pos.y < 0;
     }
 
     public void update(float delta){
         if (!inCamView&&pos.y +  height/2 < camHeight) inCamView=true;
-        pos.set(BgHandler.horiz.getValue()+posChange.cpy().x, BgHandler.vert.getValue()+posChange.cpy().y);
+        pos.set(BgHandler.horiz.getValue()+posChange.cpy().x, BgHandler.vert.getValue()+posChange.cpy().y+addedY);
         if (inCamView)posChange.add(vel.cpy());
     }
 }

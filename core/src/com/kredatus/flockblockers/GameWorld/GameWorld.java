@@ -36,11 +36,7 @@ public class GameWorld {
     private GameState currentState;
 
     public static void addGold(int goldAddition) {
-        if (gold+goldAddition>=100){
             gold += goldAddition;
-        } else {
-            gold=100;
-        }
     }
 
     public void setDiamonds(int diamonds) {

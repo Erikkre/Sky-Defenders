@@ -80,7 +80,7 @@ public abstract class BirdAbstractClass {
     public boolean isAlive, firstxMotion=true;
     protected Random r =new Random();
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, deathFlaps, animation;
-    protected int sizeVariance, coinNumber,  diamonds, cnt=0, rotationCounter;
+    public int sizeVariance, coinNumber,  diamonds, cnt=0, rotationCounter;
     //protected Timeline xMotion;
     protected Tween introX, introY, first, firstX, firstY, currentX, currentY;
     public Polygon boundingPoly;
@@ -199,7 +199,7 @@ public abstract class BirdAbstractClass {
             if (coinList!=null){
                 for (Coin i : coinList){
                     i.update(delta);
-                    if ((coinNumber<100 && i.secondYMotion.isFinished()) || (coinNumber>100&&i.xMotion.isFinished())) {
+                    if ((coinNumber<100 && i.secondYMotion.isFinished()) || (coinNumber>=100&&i.xMotion.isFinished())) {
                         GameWorld.addGold(1);
                         coinList.remove(i);
                     }
