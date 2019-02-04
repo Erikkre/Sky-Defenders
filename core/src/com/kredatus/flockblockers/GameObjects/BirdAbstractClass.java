@@ -61,6 +61,8 @@ Only add health to phoenix each round   after you hit multiples of 500 gold/phoe
  Gun upgrades work as: each can be upgraded once, to upgrade to level 2 must upgrade turret's main stat, each upgrade is worth .2 of gun's value and does *1.2 of the stat (so main stat is more worth upgradng)  see .excel file (Dmg, RoF, Pen)
 
  Powerups: Climate Cooling(10 diamonds), Overclock Turrets(30 diamonds), Nuclear Bomb (100 Diamonds)
+
+ Birds will be targeting a hot air balloon with 5 racks of turrets under it (5 4 3 2 1 = 15 gun slots)
  */
 
 public abstract class BirdAbstractClass {
