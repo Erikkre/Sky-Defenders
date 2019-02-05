@@ -1,5 +1,5 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
-package com.kredatus.flockblockers.GameObjects.Birds;
+package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,11 +9,6 @@ import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 
 import java.util.ArrayList;
-
-import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.TweenEquations;
 
 /**
  * Created by Erik Kredatus on 9/8/2018.

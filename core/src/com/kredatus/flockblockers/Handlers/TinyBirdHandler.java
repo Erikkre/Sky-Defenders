@@ -17,14 +17,14 @@ public class TinyBirdHandler {
     }
 
     public static void addTinyBirdsNextCity(float camWidth, float camHeight){
-        for (int i=0;i<birdAmount+r.nextInt(15);i++){   //10-25 tinyBirds
+        for (int i=0;i<birdAmount+r.nextInt(50);i++){   //10-25 tinyBirds
             tinyBirdQueue.add(new TinyBird(flapSpeedIntervals, camWidth, camHeight));
         }
     }
 
     protected void flapSpeedIntervals(){
         float decInterval =0.010f;
-        for (float i=0.090f; i>=0.020f;i-=decInterval){
+        for (float i=0.110f; i>=0.020;i-=decInterval){
              //slow to fast (number is ms/frame)
              flapSpeedIntervals.add(i);
         }
@@ -38,7 +38,6 @@ public class TinyBirdHandler {
     }
 
     public void update(float delta){
-
         for (TinyBird i : tinyBirdQueue){
             i.update(delta);
             if (i.isGone()) tinyBirdQueue.remove(i);

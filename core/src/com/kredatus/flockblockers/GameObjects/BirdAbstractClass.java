@@ -132,9 +132,6 @@ public abstract class BirdAbstractClass {
         unRotStep=0.6f;
         //this.manager=manager;
         flapRandomFactor=r.nextFloat()*0.5f;
-
-
-
     }
     protected void flapSpeedIntervals(){
         for (float i=1.6f; i>=1;i-=0.05f){

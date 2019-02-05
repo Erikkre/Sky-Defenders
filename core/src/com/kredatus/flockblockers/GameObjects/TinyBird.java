@@ -17,7 +17,7 @@ public class TinyBird {
     public float width, height, camWidth, camHeight, addedY;
     protected float sizeRatio, finalSizeRatio;
     private int sizeVariance;
-    public Animation animation;
+    public Animation<TextureRegion> animation;
     public float flapRandomFactor;
 
     public Vector2 pos = new Vector2(), vel=new Vector2(), posChange;
@@ -27,12 +27,10 @@ public class TinyBird {
 
     private Random r = new Random();
     public TinyBird(ArrayList<Float> flapSpeedIntervals, float camWidth, float camHeight){
-
         flapRandomFactor=r.nextFloat()*0.5f;
 
         this.camHeight=camHeight;
         this.camWidth=camWidth;
-
 
         float minSpeed= -1.6f, speedRange = 3.2f;
         vel.x=-0.5f+r.nextFloat();
@@ -44,11 +42,6 @@ public class TinyBird {
         sizeVariance=15;    //its 37 wide so 22-52 will be its size before sizeRatio shrinks it
         sizeRatio=0.90f;
 
-        //System.out.println("Height before: " + height+ " width: " + width);
-        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
-
-        width *=finalSizeRatio;
-        height*=finalSizeRatio;
         //edge = (camWidth)-width/3;
         //System.out.println("Height after: " + height+ " width: " + width);
 
@@ -57,15 +50,23 @@ public class TinyBird {
 
         //if yvel>0 set to anywhere between 100ms per frame to 30ms by multiplying by yVel/(possible y vel:range-min), so as to use percentage of maximum speed to get flap speed relative to yMovement speed
 
-        if ( (pos.y>separatorHeight&&pos.y<(bgh/2) +separatorHeight) || (pos.y>separatorHeight+bgh*(1.5f)&&pos.y<separatorHeight+(bgh*2)) ) animation= AssetHandler.tinyAnims[4+r.nextInt(5)];
-        else if (pos.y>separatorHeight+(bgh/2)&&pos.y<separatorHeight+(bgh*1.5f)) animation= AssetHandler.tinyAnims[6+r.nextInt(4)];
-        else if ((pos.y>separatorHeight+(bgh*2)&&pos.y<separatorHeight+((bgh*2)+separatorHeight)) || (pos.y>camHeight&&pos.y<separatorHeight)) animation= AssetHandler.tinyAnims[r.nextInt(6)];
+        float frameDuration=flapSpeedIntervals.get( (int) (((vel.y-minSpeed)/(speedRange))*flapSpeedIntervals.size()));
+        if      ((pos.y>separatorHeight&&pos.y<(bgh/2) +separatorHeight) || (pos.y>separatorHeight+bgh*(1.5f)&&pos.y<separatorHeight+(bgh*2))) animation = new Animation<TextureRegion>(frameDuration,(TextureRegion[]) AssetHandler.tinyAnims[4+r.nextInt(5)].getKeyFrames());
+        else if ( pos.y>separatorHeight+(bgh/2)&&pos.y<separatorHeight+(bgh*1.5f)) animation = new Animation<TextureRegion>(frameDuration,(TextureRegion[]) AssetHandler.tinyAnims[6+r.nextInt(4)].getKeyFrames());
+        else if ((pos.y>separatorHeight+(bgh*2)&&pos.y<separatorHeight+((bgh*2)+separatorHeight)) || (pos.y>camHeight&&pos.y<separatorHeight)) animation = new Animation<TextureRegion>(frameDuration,(TextureRegion[]) AssetHandler.tinyAnims[r.nextInt(6)].getKeyFrames());
+
+        animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
 
-        height=((TextureRegion)animation.getKeyFrames()[0]).getRegionHeight();
-        width=((TextureRegion)animation.getKeyFrames()[0]).getRegionWidth();
+        height=(animation.getKeyFrames()[0]).getRegionHeight();
+        width=(animation.getKeyFrames()[0]).getRegionWidth();
+        //System.out.println("Height before: " + height+ " width: " + width);
+        finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
 
-        animation.setFrameDuration(flapSpeedIntervals.get( (int) (((vel.y-minSpeed)/(speedRange))*flapSpeedIntervals.size())));
+        width *=finalSizeRatio;
+        height*=finalSizeRatio;
+
+
         //System.out.println("vel.y: "+vel.y+", vel.y-minSpeed: "+(vel.y-minSpeed)+", flapSpeed: "+flapSpeedIntervals.get( (int) (((vel.y-minSpeed)/(speedRange))*flapSpeedIntervals.size())));
         posChange=pos.cpy();
     }

@@ -1,7 +1,6 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
-package com.kredatus.flockblockers.GameObjects.Birds;
+package com.kredatus.flockblockers.Birds;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;

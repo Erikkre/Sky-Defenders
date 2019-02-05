@@ -1,5 +1,5 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
-package com.kredatus.flockblockers.GameObjects.Birds;
+package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,22 +18,24 @@ import aurelienribon.tweenengine.TweenEquations;
  * Created by Erik Kredatus on 9/8/2018.
  */
 
-public class WaterBird extends BirdAbstractClass {
+public class NightBird extends BirdAbstractClass {
 
     //public final int[] animSeqList = {0,1,2,3};
-    Tween second;
-    public WaterBird(float camHeight, float camWidth, float xPosition, float yPosition, ArrayList flashLengths){
+    public NightBird(float camHeight, float camWidth, ArrayList flashLengths){
         super();
 this.flashLengths=flashLengths;
-        yVel=2*globalSpeedMultiplier;
-        coinNumber=1;
+
+        //yVel=10;
         origYVel=yVel;
 
-        sizeVariance=100;
-        sizeRatio=0.5f;
+        coinNumber=4;
 
-        animSeq = AssetHandler.waterAnimations;
+        sizeVariance=50;
+        sizeRatio=0.65f;
+
+        animSeq = AssetHandler.nightAnimations;
         animSetup();
+
 
         //System.out.println("Height before: " + height+ " width: " + width);
         finalSizeRatio=((width-sizeVariance+r.nextInt(sizeVariance*2))*sizeRatio)/width;
@@ -42,36 +44,48 @@ this.flashLengths=flashLengths;
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=2;origHealth=health;
+        health=4;origHealth=health;
         if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
 
-        animation=backFlaps;
+        animation=animSeq[r.nextInt(2)];
         origFlapSpeed=animation.getFrameDuration();
+        x=(width/2 + r.nextInt((int)(edge-width)));
 
-        x=xPosition;
-        y=yPosition;
-
+        y=-5*height- r.nextFloat()*height*2;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
-
+        setManager(camWidth);
         setBoundingPoly(x,y,width,height);
+        origFlapSpeed=animation.getFrameDuration();
         flapSpeedIntervals();
     }
 
     protected void animSetup(){
+        frontFlaps=animSeq[0];
         backFlaps=animSeq[3];
         deathFlaps=animSeq[4];
-        //animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
+        animSeq= new Animation[]{frontFlaps,backFlaps};
         height=((TextureRegion)backFlaps.getKeyFrames()[3]).getRegionHeight();
         width=((TextureRegion)backFlaps.getKeyFrames()[0]).getRegionWidth();
     }
+
     @Override
     public void specificUpdate(float delta, float runTime) {
-        //second.update(delta);
 
     }
 
     @Override
     public void setManager(float camWidth) {
+
+        final TweenCallback endIntro= new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                currentY=firstY.start();
+            }
+        };
+
+        currentY = Tween.to(this, 2, 2.5f/globalSpeedMultiplier).target(height).ease(TweenEquations.easeOutBack).setCallback(endIntro).start();
+        firstY =Tween.to(this, 2, 2.5f/globalSpeedMultiplier).target(camHeight+height/2).ease(TweenEquations.easeInBack).delay(0.5f);
+
     }
 }
