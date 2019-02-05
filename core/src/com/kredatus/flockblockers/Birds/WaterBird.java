@@ -54,7 +54,7 @@ public class WaterBird extends BirdAbstractClass {
         flapSpeedIntervals();
     }
 
-    protected void animSetup(){
+    private void animSetup(){
         backFlaps=animSeq[3];
         deathFlaps=animSeq[4];
         //animSeq= new Animation[]{frontFlaps,leftFlaps,frontFlaps,rightFlaps};
