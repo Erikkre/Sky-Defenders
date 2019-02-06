@@ -57,7 +57,7 @@ public class BgHandler {
     //private TweenManager manager;
     public Timeline horizPositionBg, vertPositionBg,smallShake, bigShake;
     private TweenCallback startStoryIntroAndSpawns, backgroundStackReset, shakeCamCallback, endBirdSpawn;
-    private float camHeight, vertBgNextCloudPosition;
+    public static float camHeight, bgStackHeight=separatorHeight+bgh+bgh;
     public static boolean isPastStoryIntro, isCameraShake, isBirdSpawning, stackJustReset;
     private OrthographicCamera cam;
     private GameRenderer renderer;
@@ -72,9 +72,10 @@ public class BgHandler {
         horiz.setValue(0);
         vert.setValue(0);//everything is done in negative (camera goes up by that amount
         shake.setValue(0);                              //but in reality its the bg's lowering by that much
+        LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber));
         background = new Background(horiz.getValue(), vert.getValue(), bgw, separatorHeight, AssetHandler.bgList.get(bgNumber++));
+        LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber));//lights for new backgrounds
         background2 = new Background(horiz.getValue(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
-        vertBgNextCloudPosition=-(separatorHeight+bgh+bgh);
 
         //this.manager= SplashScreen.getManager();
         //System.out.println("vert.getValue() " + vert.getValue());
@@ -174,8 +175,8 @@ public class BgHandler {
                     //waveNumber+=1;
                     bgNumber = 0;
                 }
-                if (background.addedY>background2.addedY)background.reset(background2.getTailY(), bgNumber++);
-                else background2.reset(background.getTailY(), bgNumber++);
+                if (background.addedY>background2.addedY){LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber)); background.reset(background2.getTailY(), bgNumber++);}//lights for new backgrounds
+                else {LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber)); background2.reset(background.getTailY(), bgNumber++);}
                 background2.addedY = 0;
                 background.addedY = 0;
                 //vert.setValue(-bgStackStartYHeight);
@@ -195,9 +196,9 @@ public class BgHandler {
 
     private void  regularVertBgMotion(){
         if (!FlockBlockersMain.fastTest) {
-            System.out.println("First target: "+vertBgNextCloudPosition+", separator height: "+separatorHeight+", bgh: "+bgh);
+            System.out.println("First target: "+bgStackHeight+", separator height: "+separatorHeight+", bgh: "+bgh);
             (vertPositionBg = Timeline.createSequence()  //15 sec duration
-                    .push((((Tween.to(vert, -1, 15).delay(1.2f).targetRelative(vertBgNextCloudPosition).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+                    .push((((Tween.to(vert, -1, 35).delay(1.2f).targetRelative(-bgStackHeight).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     )).repeat(2,0))//complete is after repetitions done, end is after each repetition
 
                     .push(Tween.to(vert, -1, 5).targetRelative(vert.getValue()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
@@ -205,9 +206,9 @@ public class BgHandler {
             ).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START).repeat(Tween.INFINITY, 0).start();
 
         } else {
-            System.out.println("First target: "+vertBgNextCloudPosition+", separator height: "+separatorHeight+", bgh: "+bgh);
+            System.out.println("First target: "+bgStackHeight+", separator height: "+separatorHeight+", bgh: "+bgh);
             (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
-                    .push((((Tween.to(vert, -1, 5).delay(1.2f).targetRelative(vertBgNextCloudPosition).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+                    .push((((Tween.to(vert, -1, 5).delay(1.2f).targetRelative(-bgStackHeight).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     )).repeat(2,0))//complete is after repetitions done, end is after each repetition
 
                     .push(Tween.to(vert, -1, 5).targetRelative(vert.getValue()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
@@ -233,7 +234,7 @@ public class BgHandler {
             //System.out.println(" vert values:" + Math.round(vert.getValue()) + " bg1: "+background.y +" bg2: "+ background2.y + " bg1 added: "+background.addedY+" bg2 added: "+background2.addedY);
                     //stop running once done
 
-            //if(vert.getValue()<vertBgNextCloudPosition+35)backgroundStackReset();
+            //if(vert.getValue()<bgStackHeight+35)backgroundStackReset();
             vertPositionBg.update(delta);
             //if end of wave close or 1 background away from ending dont end wave quickly, bgNumber multiples of 10 are wave end bg's
             //System.out.println(isBirdSpawning +" "+ BirdHandler.birdQueue.isEmpty() +" "+ BirdHandler.activeBirdQueue.isEmpty() +" "+ !(bgNumber%10==0) +" "+ !((bgNumber+1)%10==0));
@@ -294,12 +295,14 @@ public class BgHandler {
                 if (background.isScrolledDown()) {
                     //System.out.println("reset 1 to 2 +bgh, 1 is " + background.y + ", set to " + background2.getTailY());
                     background2.addedY += background.height + background.addedY;
+                    LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber));//new light sources for new bg
                     background.reset(background2.getTailY(), bgNumber++);
 
                     //System.out.println("bgNumber is now " + bgNumber);
                 } else if (background2.isScrolledDown()) {
                     //System.out.println("reset 2 to 1 +bgh, 2 is " + background2.y + ", set to " + background.getTailY());
                     background.addedY += background2.height + background2.addedY;
+                    LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber));
                     background2.reset(background.getTailY(), bgNumber++);
 
                     //System.out.println("bgNumber is now " + bgNumber);

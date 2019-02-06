@@ -11,7 +11,7 @@ import com.kredatus.flockblockers.Screens.SplashScreen;
 
 
 public class FlockBlockersMain extends Game {
-    public static final boolean fastTest = false, dontPauseOnUnfocus = false;
+    public static final boolean fastTest = false, dontPauseOnUnfocus = true;
 
     @Override
     public void create() {

@@ -32,6 +32,7 @@ import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
+import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.TurretHandler;
@@ -774,8 +775,8 @@ public void setRotate(float angle){
             drawInstr();
             menuButton.draw(batcher);
         }
-        //rayHandler.setCombinedMatrix(cam);
 
+        LightHandler.render();
         batcher.end();
         drawTransition(delta);
         //System.out.println("gameRenderer edge:"+(cam.position.x - camWidth / 2));
