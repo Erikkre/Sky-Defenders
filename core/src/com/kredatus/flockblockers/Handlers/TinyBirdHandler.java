@@ -17,7 +17,7 @@ public class TinyBirdHandler {
     }
 
     public static void addTinyBirdsNextCity(float camWidth, float camHeight){
-        for (int i=0;i<birdAmount+r.nextInt(50);i++){   //10-25 tinyBirds
+        for (int i=0;i<birdAmount+r.nextInt(150);i++){   //100-250 tinyBirds
             tinyBirdQueue.add(new TinyBird(flapSpeedIntervals, camWidth, camHeight));
         }
     }

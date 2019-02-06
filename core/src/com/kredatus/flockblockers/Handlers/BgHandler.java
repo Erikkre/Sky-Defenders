@@ -2,9 +2,13 @@
 package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.World;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Background;
 import com.kredatus.flockblockers.GameObjects.TinyBird;
@@ -22,6 +26,7 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
+import box2dLight.RayHandler;
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.
@@ -57,6 +62,7 @@ public class BgHandler {
     private OrthographicCamera cam;
     private GameRenderer renderer;
     private int bgStackStartYHeight;
+    public static RayHandler rayHandler;
 
     public BgHandler(float camWidth, float camHeight){
         //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
@@ -76,6 +82,8 @@ public class BgHandler {
         setupTweens(camWidth, camHeight);
         isPastStoryIntro=true;
         //isBirdSpawning=true;
+
+
         TinyBirdHandler.addTinyBirdsNextCity(camWidth,camHeight);
     }
 
@@ -213,7 +221,7 @@ public class BgHandler {
         renderer.setRotate((-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees) +shake.getValue() ); //subtract last angle and add next one
 //+ (-1+2*r.nextFloat())
     }
-
+//PointLight
     public void update(float delta) {
         //System.out.println("1: "+ Math.round(background.y) + " 2: "+Math.round(background2.y));
         if (isCameraShake){
@@ -260,8 +268,6 @@ public class BgHandler {
                     //System.out.println("regular motion");
                 }
             }
-
-
 
 
             if (background.y<background2.y){
@@ -323,5 +329,4 @@ public class BgHandler {
         this.renderer = renderer;
         this.cam = renderer.cam;
     }
-
 }

@@ -7,6 +7,7 @@ import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
+import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.TurretHandler;
@@ -23,6 +24,8 @@ public class GameWorld {
     public TargetHandler targetHandler;
     public TurretHandler turretHandler;
     public TinyBirdHandler tinyBirdHandler;
+    public UiHandler uiHandler;
+    private LightHandler lightHandler;
     //private boolean isAlive = true;
     private Rectangle ground;
     public double boost = 0;  //boostamount
@@ -53,7 +56,15 @@ public class GameWorld {
 
     public static int gold, diamonds, score;
 
-    public GameWorld() {
+    public GameWorld(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler) {
+        this.bgHandler = bgHandler;
+        this.birdHandler = birdHandler;
+        this.targetHandler = targetHandler;
+        this.turretHandler=turretHandler;
+        this.tinyBirdHandler=tinyBirdHandler;
+        this.uiHandler=uiHandler;
+        this.lightHandler=lightHandler;
+
         if (AssetHandler.getHighScore()==0){
             isFirstTime=true;
             currentState= GameState.STORY;
@@ -95,6 +106,7 @@ public class GameWorld {
         turretHandler.update();
         targetHandler.update(delta, runTime);
         tinyBirdHandler.update(delta);
+        lightHandler.update();
     }
 
     private void updateReady(float runTime) {
@@ -224,24 +236,5 @@ public class GameWorld {
         this.renderer = renderer;
     }
 
-    public void setHandlers(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler) {
-        this.bgHandler = bgHandler;
-        this.birdHandler = birdHandler;
-        this.targetHandler = targetHandler;
-        this.turretHandler=turretHandler;
-        this.tinyBirdHandler=tinyBirdHandler;
-    }
-    public void setBirdHandler(BirdHandler BirdHandler) {
-        ;
-    }
-    public void setTargetHandler(TargetHandler targetHandler) {
-        this.targetHandler = targetHandler;
-    }
-    public static GameRenderer getRenderer() {
-        return renderer;
-    }
-    public int getUpdatedboostnumber() {
-        return updatedboostnumber;
-    }
 
 }

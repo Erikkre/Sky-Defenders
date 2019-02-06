@@ -12,6 +12,7 @@ import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
+import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.TurretHandler;
@@ -29,12 +30,13 @@ import aurelienribon.tweenengine.Tween;
 public class GameHandler implements Screen {
     private GameWorld world;
     private GameRenderer renderer;
-    private BgHandler bgHandler;
+    public BgHandler bgHandler;
     private BirdHandler birdHandler;
     private TargetHandler targetHandler;
     private TurretHandler turretHandler;
     private TinyBirdHandler tinyBirdHandler;
-    public static UiHandler uiHandler;
+    public UiHandler uiHandler;
+    public LightHandler lightHandler;
     private float runTime;
     public static int camWidth, midPointY, camHeight, midPointX;
     public boolean isPaused=false;
@@ -54,18 +56,20 @@ public class GameHandler implements Screen {
         Tween.setWaypointsLimit(10);
 
         uiHandler=new UiHandler();
-        world = new GameWorld();
-        Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
         tinyBirdHandler = new TinyBirdHandler();
-        bgHandler = new BgHandler( camWidth, camHeight);
+        bgHandler = new BgHandler(camWidth, camHeight);
         birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
         targetHandler = new TargetHandler();
         turretHandler = new TurretHandler(camWidth, camHeight);
+        lightHandler= new LightHandler(bgHandler);
 
-        world.setHandlers(bgHandler,birdHandler, targetHandler,turretHandler,tinyBirdHandler,uiHandler);
+        world = new GameWorld(bgHandler,birdHandler, targetHandler,turretHandler,tinyBirdHandler,uiHandler, lightHandler);
+        Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
 
-        renderer = new GameRenderer(world, camWidth, camHeight, bgHandler, tinyBirdHandler, birdHandler, targetHandler, turretHandler,uiHandler);
+        renderer = new GameRenderer(world, camWidth, camHeight);
         bgHandler.setRendererAndCam(renderer);
+        lightHandler.setCam(renderer);
+
         world.setRenderer(renderer);
     }
 

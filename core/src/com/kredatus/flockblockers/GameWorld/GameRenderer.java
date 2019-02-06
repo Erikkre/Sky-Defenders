@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -116,21 +117,21 @@ public class GameRenderer {
 
     private ShaderProgram flashShader;
 
-    RayHandler rayHandler;
-    public GameRenderer(GameWorld world, int camWidth, int camHeight, BgHandler bgHandler, TinyBirdHandler tinyBirdHandler,
-                        BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, UiHandler uiHandler) {
 
-        this.tinyBirdHandler=tinyBirdHandler;
-        this.birdHandler=birdHandler;
-        this.bgHandler=bgHandler;
-        this.targetHandler = targetHandler;
-        this.turretHandler=turretHandler;
-        this.uiHandler=uiHandler;
+    public GameRenderer(GameWorld world, int camWidth, int camHeight) {
+        myWorld = world;
+
+        this.tinyBirdHandler=myWorld.tinyBirdHandler;
+        this.birdHandler=myWorld.birdHandler;
+        this.bgHandler=myWorld.bgHandler;
+        this.targetHandler =myWorld. targetHandler;
+        this.turretHandler=myWorld.turretHandler;
+        this.uiHandler=myWorld.uiHandler;
 
         this.camWidth=camWidth;
         this.camHeight=camHeight;
 
-        myWorld = world;
+
 
         this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButtons();
         this.deathButtons = ((InputHandler) Gdx.input.getInputProcessor()).getDeathButtons();
@@ -189,10 +190,7 @@ public void setRotate(float angle){
 }
     private void initAssets() {
 
-        World world = new World(new Vector2(0,0),false);
-        rayHandler = new RayHandler(world);
-        rayHandler.setCombinedMatrix(cam);
-        new PointLight(rayHandler,10, new Color(0xffff00ff),10,0,0);
+
        //bgPhoenix = AssetHandler.bgPhoenixtexture;
         horflipbgtexture = AssetHandler.horflipbgtexture;
 
@@ -699,11 +697,14 @@ public void setRotate(float angle){
     public void render(float delta, float runTime) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        Gdx.gl20.glClearColor(0.25f, 0.25f, 0.25f, 1);
+        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batcher.begin();
-        batcher.disableBlending();
-        rayHandler.updateAndRender();
-        batcher.enableBlending();
+
+        //batcher.disableBlending();
+
+        //batcher.enableBlending();
 
         if (myWorld.isStory()) {
 
@@ -773,6 +774,7 @@ public void setRotate(float angle){
             drawInstr();
             menuButton.draw(batcher);
         }
+        //rayHandler.setCombinedMatrix(cam);
 
         batcher.end();
         drawTransition(delta);
@@ -804,6 +806,7 @@ public void setRotate(float angle){
     public static Vector3 getCameraPosition() { return campos; }
 
     public static void dispose(){
+        //rayHandler.dispose();
         font.dispose();
         gamefont.dispose();
         otherfont.dispose();
