@@ -47,9 +47,9 @@ public class LightHandler {
         System.out.println("new bg light");
         if (bgLights.size()==3) {bgLights.poll(); System.out.println("take out light");} //get rid of last passed light unless is empty because just starting
 
-        if (texture==AssetHandler.bgCloudSeparatorTexture) {bgLights.add(newPointLight(new Color(255f/255f,255f/255f,255f/255f, 1f),2000));System.out.println("Add cloudLight");}
-        else if (texture==AssetHandler.bgPhoenixtexture)   {bgLights.add(newPointLight(new Color(255f/255f,237f/255f,137f/255f, .7f),2001));System.out.println("Add 1st phoenixLight");}
-        else if (texture==AssetHandler.bgPhoenixtexture2)  {bgLights.add(newPointLight(new Color(255f/255f,237f/255f,137f/255f, .7f),2002));System.out.println("Add 2nd phoenixLight");}
+        if (texture==AssetHandler.bgCloudSeparatorTexture) {bgLights.add(newPointLight(new Color(255f/255f,255f/255f,255f/255f, 0.85f),2500));System.out.println("Add cloudLight");}
+        else if (texture==AssetHandler.bgPhoenixtexture)   {bgLights.add(newPointLight(new Color(255f/255f,237f/255f,137f/255f, .65f),2501));System.out.println("Add 1st phoenixLight");}
+        else if (texture==AssetHandler.bgPhoenixtexture2)  {bgLights.add(newPointLight(new Color(255f/255f,237f/255f,137f/255f, .65f),2502));System.out.println("Add 2nd phoenixLight");}
         else if (texture==AssetHandler.bgThundertexture)    bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 0.1f),2001));
         else if (texture==AssetHandler.bgThundertexture2)   bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2002));
         else if (texture==AssetHandler.bgWatertexture)      bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2001));
@@ -75,9 +75,9 @@ public class LightHandler {
         float bgVert=BgHandler.vert.getValue();
         float bgHoriz=BgHandler.horiz.getValue();
         for (Light i : bgLights){
-            if (i.getDistance()==2000) {i.setPosition(cloudLightPos.x+bgHoriz, cloudLightPos.x+bgVert);}//System.out.println("update clouds");}
-            else if (i.getDistance()==2001){ i.setPosition(sun1LightPos.x+bgHoriz,sun1LightPos.y+bgVert);}//System.out.println("update sun1");}
-            else if (i.getDistance()==2002){ i.setPosition(sun2LightPos.x+bgHoriz,sun2LightPos.y+bgVert);} //System.out.println("update sun2");}
+            if (i.getDistance()==2500) {i.setPosition(cloudLightPos.x+bgHoriz, cloudLightPos.x+bgVert);}//System.out.println("update clouds");}
+            else if (i.getDistance()==2501){ i.setPosition(sun1LightPos.x+bgHoriz,sun1LightPos.y+bgVert);}//System.out.println("update sun1");}
+            else if (i.getDistance()==2502){ i.setPosition(sun2LightPos.x+bgHoriz,sun2LightPos.y+bgVert);} //System.out.println("update sun2");}
         }
         rayHandler.update();   //the render part might need to be put at the end of the render cycle in gameRenderer
     }
