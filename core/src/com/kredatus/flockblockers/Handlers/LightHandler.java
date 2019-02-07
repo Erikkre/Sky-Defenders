@@ -1,33 +1,35 @@
 package com.kredatus.flockblockers.Handlers;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kredatus.flockblockers.CustomLights.CustomChainLight;
+import com.kredatus.flockblockers.CustomLights.CustomConeLight;
+import com.kredatus.flockblockers.CustomLights.CustomPointLight;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
+
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import box2dLight.ConeLight;
-import box2dLight.DirectionalLight;
+import box2dLight.ChainLight;
 import box2dLight.Light;
-import box2dLight.PointLight;
 import box2dLight.RayHandler;
 
 public class LightHandler {
     private OrthographicCamera cam;
-    private BgHandler bgHandler;
-    public static ConcurrentLinkedQueue<Light> bgLights=new ConcurrentLinkedQueue<Light>();
-    public static World world = new World(new Vector2(0,0),false);//fake world to input to the rayhandler
-    private static RayHandler rayHandler=new RayHandler(world);;
-    private static final Vector2 cloudLightPos= new Vector2(0.5f*BgHandler.bgw,.154454f*BgHandler.bgStackHeight),
-            sun1LightPos= new Vector2(0.59082f*BgHandler.bgw,0.517933f*BgHandler.bgStackHeight),
-            sun2LightPos=new Vector2(0.59082f*BgHandler.bgw,.791747f*BgHandler.bgStackHeight);
+    public static ConcurrentLinkedQueue<Light> bgLights = new ConcurrentLinkedQueue<Light>();   //max number of lights probably
+    public static World world = new World(new Vector2(0, 0), false);//fake world to input to the rayhandler
+    public static RayHandler rayHandler = new RayHandler(world);
 
-    public LightHandler(BgHandler bgHandler){
+    private static final float cloudYPos=0.154454f * BgHandler.bgStackHeight, cloudAboveStackYPos=cloudYPos+BgHandler.bgStackHeight, bgw = BgHandler.bgw;
+    private static final Vector2
+            sun1LightPos = new Vector2(0.59082f * bgw, 0.517933f * BgHandler.bgStackHeight),
+            sun2LightPos = new Vector2(0.59082f * bgw, .791747f * BgHandler.bgStackHeight);
+    private static final float[] firstCloudLightVerts  = {0.25f*bgw,cloudYPos, 0.50f*bgw,cloudYPos, 0.75f*bgw,cloudYPos}, cloudLightVerts = {0.25f*bgw,cloudAboveStackYPos, 0.50f*bgw,cloudAboveStackYPos, 0.75f*bgw,cloudAboveStackYPos};
 
+    public LightHandler() {
+        bgLights.add(newChainLight(255, 255, 255, 0.85f, 2500, 1, firstCloudLightVerts));
+        System.out.println("Start out in a cloud light always, then do all rest of lights +1 more cloud light whenever you add");
 
         rayHandler.setAmbientLight(1f);   //light everywhere outside of our set lights
 
@@ -35,53 +37,82 @@ public class LightHandler {
         //bgLights.add(new DirectionalLight(rayHandler,30, new Color(233,33,33,0.5f), 90));
     }
 
+    private static CustomChainLight newChainLight(int r, int g, int b, float a, int lightDistance, int dirDeg, float[] chainVertices) {
+        CustomChainLight newChainLight = new CustomChainLight(r, g, b, a, lightDistance, dirDeg, chainVertices );
+        newChainLight.setSoft(false);   //no need for softness as not hitting obstacles
+        newChainLight.setStaticLight(false); //static lights dont interact with obstacles, redudes cpu load by 90%
+        newChainLight.setXray(false);    //beams go through obstacles, reduces CPU burden of light about 70%
+        return newChainLight;
+    }
+
     //(multiply width by bgh and height by *bgStackHeight respectively) positions of bg light sources are 0.5 x .154454 for clouds, .59082 x 0.517933 for first sun, .59082 x .791747 for second sun
-    private static PointLight newPointLight(Color color, float lightDistance){
-        PointLight newPointLight = new PointLight(rayHandler,30, color, lightDistance, 0,0);
+    private static CustomPointLight newPointLight(int r, int g, int b, float a, int lightDistance, Vector2 origPos) {
+        CustomPointLight newPointLight = new CustomPointLight(r, g, b, a, lightDistance, origPos);
         newPointLight.setSoft(false);   //no need for softness as not hitting obstacles
         newPointLight.setStaticLight(false); //static lights dont interact with obstacles, redudes cpu load by 90%
         newPointLight.setXray(false);    //beams go through obstacles, reduces CPU burden of light about 70%
         return newPointLight;
     }
-    public static void newBgLighting(TextureRegion texture){    //there will always be 2 light sources on the screen between the bg's and glowing cloud separators
-        System.out.println("new bg light");
-        if (bgLights.size()==3) {bgLights.poll(); System.out.println("take out light");} //get rid of last passed light unless is empty because just starting
 
-        if (texture==AssetHandler.bgCloudSeparatorTexture) {bgLights.add(newPointLight(new Color(255f/255f,255f/255f,255f/255f, 0.85f),2500));System.out.println("Add cloudLight");}
-        else if (texture==AssetHandler.bgPhoenixtexture)   {bgLights.add(newPointLight(new Color(255f/255f,237f/255f,137f/255f, .65f),2501));System.out.println("Add 1st phoenixLight");}
-        else if (texture==AssetHandler.bgPhoenixtexture2)  {bgLights.add(newPointLight(new Color(255f/255f,237f/255f,137f/255f, .65f),2502));System.out.println("Add 2nd phoenixLight");}
-        else if (texture==AssetHandler.bgThundertexture)    bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 0.1f),2001));
-        else if (texture==AssetHandler.bgThundertexture2)   bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2002));
-        else if (texture==AssetHandler.bgWatertexture)      bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2001));
-        else if (texture==AssetHandler.bgWatertexture2)     bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2002));
-        else if (texture==AssetHandler.bgFiretexture)       bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2001));
-        else if (texture==AssetHandler.bgFiretexture2)      bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2002));
-        else if (texture==AssetHandler.bgAcidtexture)       bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2001));
-        else if (texture==AssetHandler.bgAcidtexture2)      bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2002));
-        else if (texture==AssetHandler.bgNighttexture)      bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2001));
-        else if (texture==AssetHandler.bgNighttexture2)     bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2002));
-        else if (texture==AssetHandler.bgLunartexture)      bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2001));
-        else if (texture==AssetHandler.bgLunartexture2)     bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2002));
-        else if (texture==AssetHandler.bgGoldtexture)       bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2001));
-        else if (texture==AssetHandler.bgGoldtexture2)      bgLights.add(newPointLight(new Color(255f/255f,33f/255f,33f/255f, 1f),2002));
+    public static void newBgLighting(int bgNumber) {
+        for (Light i : bgLights) { //if bg is reset we have to add - height of bg back to lights that are still in play when vert resets
+            if (i instanceof CustomPointLight)      ((CustomPointLight) i).origPos.set(((CustomPointLight) i).origPos.x, ((CustomPointLight) i).origPos.y  -BgHandler.bgStackHeight);
+
+            else if (i instanceof CustomChainLight) ((CustomChainLight) i).origVerts = new float[]{((CustomChainLight) i).origVerts[0],((CustomChainLight) i).origVerts[1]-BgHandler.bgStackHeight,
+                    ((CustomChainLight) i).origVerts[2],((CustomChainLight) i).origVerts[3]-BgHandler.bgStackHeight,((CustomChainLight) i).origVerts[4],((CustomChainLight) i).origVerts[5]-BgHandler.bgStackHeight};
+
+            else                                    ((CustomConeLight) i).origPos.set(((CustomConeLight) i).origPos.x, ((CustomConeLight) i).origPos.y - BgHandler.bgStackHeight);
+        }
+        bgLights.add(newChainLight(255, 255, 255, 0.85f, 2500, 1, cloudLightVerts));   //add cloudLights no matter what
+        if (bgNumber < 9) {
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun1LightPos));
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun2LightPos));
+        } else if (bgNumber < 18) {
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun1LightPos));
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun2LightPos));
+        } else if (bgNumber < 27) {
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun1LightPos));
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun2LightPos));
+        } else if (bgNumber < 36) {
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun1LightPos));
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun2LightPos));
+        } else if (bgNumber < 45) {
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun1LightPos));
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun2LightPos));
+        } else if (bgNumber < 54) {
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun1LightPos));
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun2LightPos));
+        } else if (bgNumber < 63) {
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun1LightPos));
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun2LightPos));
+        } else if (bgNumber < 72) {
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun1LightPos));
+            bgLights.add(newPointLight(255, 237, 137, 0.65f, 2500, sun2LightPos));
+        }
     }
 
-    public void setCam(GameRenderer renderer){
-        cam=renderer.cam;
+    public void setCam(GameRenderer renderer) {
+        cam = renderer.cam;
         rayHandler.setCombinedMatrix(cam);
     }
 
-    public void  update(){
-        float bgVert=BgHandler.vert.getValue();
-        float bgHoriz=BgHandler.horiz.getValue();
-        for (Light i : bgLights){
-            if (i.getDistance()==2500) {i.setPosition(cloudLightPos.x+bgHoriz, cloudLightPos.x+bgVert);}//System.out.println("update clouds");}
-            else if (i.getDistance()==2501){ i.setPosition(sun1LightPos.x+bgHoriz,sun1LightPos.y+bgVert);}//System.out.println("update sun1");}
-            else if (i.getDistance()==2502){ i.setPosition(sun2LightPos.x+bgHoriz,sun2LightPos.y+bgVert);} //System.out.println("update sun2");}
+    public boolean isOffCam(Light l) {
+        return l.getY() + l.getDistance()/2 < 0; //if light yPos+radius is lower than 0, delete it
+    }
+
+    public void update() {
+        float bgVert = BgHandler.vert.getValue();
+        float bgHoriz = BgHandler.horiz.getValue();
+        for (Light i : bgLights) {
+            if (isOffCam(i)){ bgLights.remove(i);}
+            else if (i instanceof CustomPointLight)  i.setPosition(((CustomPointLight) i).origPos.x + bgHoriz, ((CustomPointLight) i).origPos.y + bgVert);
+            else if (i instanceof ChainLight)        {i.setPosition(((CustomChainLight) i).origVerts[0] + bgHoriz, ((CustomChainLight) i).origVerts[1] + bgVert);System.out.println(i.getPosition());}
+            else                                     i.setPosition(((CustomConeLight) i).origPos.x + bgHoriz, ((CustomConeLight) i).origPos.y + bgVert);
         }
         rayHandler.update();   //the render part might need to be put at the end of the render cycle in gameRenderer
     }
-    public static void  render(){
+
+    public static void render() {
         rayHandler.render();
     }
 }

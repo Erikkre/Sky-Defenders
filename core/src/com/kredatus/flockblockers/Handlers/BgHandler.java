@@ -72,9 +72,8 @@ public class BgHandler {
         horiz.setValue(0);
         vert.setValue(0);//everything is done in negative (camera goes up by that amount
         shake.setValue(0);                              //but in reality its the bg's lowering by that much
-        LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber));
+        LightHandler.newBgLighting(bgNumber);
         background = new Background(horiz.getValue(), vert.getValue(), bgw, separatorHeight, AssetHandler.bgList.get(bgNumber++));
-        LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber));//lights for new backgrounds
         background2 = new Background(horiz.getValue(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
 
         //this.manager= SplashScreen.getManager();
@@ -175,8 +174,9 @@ public class BgHandler {
                     //waveNumber+=1;
                     bgNumber = 0;
                 }
-                if (background.addedY>background2.addedY){LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber)); background.reset(background2.getTailY(), bgNumber++);}//lights for new backgrounds
-                else {LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber)); background2.reset(background.getTailY(), bgNumber++);}
+                LightHandler.newBgLighting(bgNumber);
+                if (background.addedY>background2.addedY){ background.reset(background2.getTailY(), bgNumber++);}//lights for new backgrounds
+                else { background2.reset(background.getTailY(), bgNumber++);}
                 background2.addedY = 0;
                 background.addedY = 0;
                 //vert.setValue(-bgStackStartYHeight);
@@ -295,14 +295,12 @@ public class BgHandler {
                 if (background.isScrolledDown()) {
                     //System.out.println("reset 1 to 2 +bgh, 1 is " + background.y + ", set to " + background2.getTailY());
                     background2.addedY += background.height + background.addedY;
-                    LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber));//new light sources for new bg
                     background.reset(background2.getTailY(), bgNumber++);
 
                     //System.out.println("bgNumber is now " + bgNumber);
                 } else if (background2.isScrolledDown()) {
                     //System.out.println("reset 2 to 1 +bgh, 2 is " + background2.y + ", set to " + background.getTailY());
                     background.addedY += background2.height + background2.addedY;
-                    LightHandler.newBgLighting(AssetHandler.bgList.get(bgNumber));
                     background2.reset(background.getTailY(), bgNumber++);
 
                     //System.out.println("bgNumber is now " + bgNumber);
