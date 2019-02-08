@@ -10,7 +10,7 @@ import box2dLight.PointLight;
 public class CustomPointLight extends PointLight{
     public Vector2 origPos;
     public CustomPointLight(int r, int g, int b, float a, int lightDistance, Vector2 origPos){
-        super(LightHandler.rayHandler, 30, new Color(r/255f,g/255f,b/255f,a), lightDistance, origPos.x,origPos.y);
+        super(LightHandler.rayHandler, 25, new Color(r/255f,g/255f,b/255f,a), lightDistance, origPos.x,origPos.y);
         this.origPos=origPos;
     }
 }

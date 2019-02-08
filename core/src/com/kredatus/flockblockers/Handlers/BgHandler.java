@@ -57,7 +57,7 @@ public class BgHandler {
     //private TweenManager manager;
     public Timeline horizPositionBg, vertPositionBg,smallShake, bigShake;
     private TweenCallback startStoryIntroAndSpawns, backgroundStackReset, shakeCamCallback, endBirdSpawn;
-    public static float camHeight, bgStackHeight=separatorHeight+bgh+bgh;
+    public static float camHeight, camWidth, bgStackHeight=separatorHeight+bgh+bgh;
     public static boolean isPastStoryIntro, isCameraShake, isBirdSpawning, stackJustReset;
     private OrthographicCamera cam;
     private GameRenderer renderer;
@@ -67,12 +67,13 @@ public class BgHandler {
     public BgHandler(float camWidth, float camHeight){
         //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
         this.camHeight=camHeight;
-        bgNumber = 0;
+        this.camWidth=camWidth;
+        bgNumber = 0;//9*BirdHandler.waveTypeCnt;
         //System.out.print("Start height of bg1: "+-bgStackStartYHeight);
         horiz.setValue(0);
         vert.setValue(0);//everything is done in negative (camera goes up by that amount
         shake.setValue(0);                              //but in reality its the bg's lowering by that much
-        LightHandler.newBgLighting(bgNumber);
+
         background = new Background(horiz.getValue(), vert.getValue(), bgw, separatorHeight, AssetHandler.bgList.get(bgNumber++));
         background2 = new Background(horiz.getValue(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
 
@@ -82,7 +83,6 @@ public class BgHandler {
         setupTweens(camWidth, camHeight);
         isPastStoryIntro=true;
         //isBirdSpawning=true;
-
 
         TinyBirdHandler.addTinyBirdsNextCity(camWidth,camHeight);
     }
@@ -122,7 +122,7 @@ public class BgHandler {
         };
 
         (horizPositionBg = Timeline.createSequence()
-                .push(Tween.to(horiz, -1, 20f).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .push(Tween.to(horiz, -1, 15f).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start();
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
@@ -189,7 +189,6 @@ public class BgHandler {
                 //}
             }
         };
-
         regularVertBgMotion();
     }
 
@@ -198,7 +197,7 @@ public class BgHandler {
         if (!FlockBlockersMain.fastTest) {
             System.out.println("First target: "+bgStackHeight+", separator height: "+separatorHeight+", bgh: "+bgh);
             (vertPositionBg = Timeline.createSequence()  //15 sec duration
-                    .push((((Tween.to(vert, -1, 35).delay(1.2f).targetRelative(-bgStackHeight).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+                    .push((((Tween.to(vert, -1, 15).delay(1.2f).targetRelative(-bgStackHeight).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     )).repeat(2,0))//complete is after repetitions done, end is after each repetition
 
                     .push(Tween.to(vert, -1, 5).targetRelative(vert.getValue()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
