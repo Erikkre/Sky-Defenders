@@ -28,22 +28,29 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             cloudBottomRightPos = new Vector2(3*bgw/4, cloudBottomY),
             cloudTopLeftPos  = new Vector2(  bgw/4, cloudTopY),
             cloudTopRightPos = new Vector2(3*bgw/4, cloudTopY),
-            sunPos = new Vector2(0.59082f * bgw, 0.517933f * bgStackHeight),
+
             cityL1 = new Vector2(0               * bgw, 0.50173544157f * bgStackHeight),//cityLight1
             cityL2 = new Vector2(0.14990234375f  * bgw, 0.45545699961f * bgStackHeight),
             cityL3 = new Vector2(0.16015625f     * bgw, 0.4103355187f  * bgStackHeight),
-            cityL4 = new Vector2(0.21142578125f  * bgw, 0.57713073659f * bgStackHeight),
-            cityL5 = new Vector2(0.30322265625f  * bgw, 0.51716158889f * bgStackHeight),
-            cityL6 = new Vector2(0.46533203125f  * bgw, 0.49691477053f * bgStackHeight),
-            cityL7 = new Vector2(0.53759765625f  * bgw, 0.37929039722f * bgStackHeight),
-            cityL8 = new Vector2(0.685546875f    * bgw, 0.49903586579f * bgStackHeight),
-            cityL9 = new Vector2(0.87744140625f  * bgw, 0.49942151947f * bgStackHeight),
-            cityL10 = new Vector2(0.94091796875f * bgw, 0.55630543771f * bgStackHeight),
-            cityL11 = new Vector2(0.9853515625f  * bgw, 0.40397223293f * bgStackHeight);
+                    cityL4 = new Vector2(0.16015625f     * bgw, 0.4103355187f  * bgStackHeight),
+            cityL5 = new Vector2(0.21142578125f  * bgw, 0.57713073659f * bgStackHeight),
+                    cityL6 = new Vector2(0.16015625f     * bgw, 0.4103355187f  * bgStackHeight),
+            cityL7 = new Vector2(0.30322265625f  * bgw, 0.51716158889f * bgStackHeight),
+            cityL8 = new Vector2(0.46533203125f  * bgw, 0.49691477053f * bgStackHeight),
+                    cityL9 = new Vector2(0.16015625f     * bgw, 0.4103355187f  * bgStackHeight),
+            cityL10 = new Vector2(0.53759765625f  * bgw, 0.37929039722f * bgStackHeight),
+            sunPos = new Vector2( 0.59082f        * bgw,      0.517933f * bgStackHeight),
+                    cityL11 = new Vector2(0.16015625f     * bgw, 0.4103355187f  * bgStackHeight),
+            cityL12 = new Vector2(0.685546875f    * bgw, 0.49903586579f * bgStackHeight),
+                    cityL13 = new Vector2(0.16015625f     * bgw, 0.4103355187f  * bgStackHeight),
+            cityL14 = new Vector2(0.87744140625f  * bgw, 0.49942151947f * bgStackHeight),
+            cityL15 = new Vector2(0.94091796875f  * bgw, 0.55630543771f * bgStackHeight),
+                    cityL16 = new Vector2(0.16015625f     * bgw, 0.4103355187f  * bgStackHeight),
+            cityL17 = new Vector2(0.9853515625f  * bgw, 0.40397223293f * bgStackHeight);
 
     //PARAMETER CONFIG
-    private static int cloudRayDist=3000, sunRayDist=2300;
-    private static float cloudRayIntensity=1.0f, sunRayIntensity=0.95f;
+    private static int cloudDia=3300, sunDia=2300, sDia=50,mDia=100,mlDia=200, LDia=300, xlDia=450, xxlDia=650, xxxlDia=1000;
+    private static float cloudA=0.9f, sunA=0.95f,sAlpha=0.5f,mAlpha=0.7f,mlAlpha=0.8f,lAlpha=0.9f,xlAlpha=0.95f, xxlAlpha=1.0f;
 
     public LightHandler(BgHandler bgHandler) {
 
@@ -51,8 +58,8 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         rayHandler.setAmbientLight(0.5f);   //light everywhere outside of our set lights
         rayHandler.setGammaCorrection(true);    //play with all the options to see what fits best
         newBgLighting(bgHandler.bgNumber);
-        bgLights.add(newPointLight(255,255,255,cloudRayIntensity,cloudRayDist,cloudBottomLeftPos)); System.out.println("cloud");
-        bgLights.add(newPointLight(255,255,255,cloudRayIntensity,cloudRayDist,cloudBottomRightPos));System.out.println("cloud");
+        bgLights.add(newPointLight(255,255,255,cloudA,cloudDia,cloudBottomLeftPos)); System.out.println("cloud");
+        bgLights.add(newPointLight(255,255,255,cloudA,cloudDia,cloudBottomRightPos));System.out.println("cloud");
         //bgLights.add(new DirectionalLight(rayHandler,30, new Color(233,33,33,0.5f), 90)); //directional light is like ambient light but with direction (for shadows)
     }
 
@@ -93,112 +100,118 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             else                                    ((CustomConeLight) i).origPos = new Vector2(((CustomConeLight) i).origPos.x, ((CustomConeLight) i).origPos.y - bgStackHeight);
         }
 
-        bgLights.add(newPointLight(255, 255, 255, cloudRayIntensity, cloudRayDist, cloudTopLeftPos));  System.out.println("cloud"); //add cloudLights no matter what
-        bgLights.add(newPointLight(255, 255, 255, cloudRayIntensity, cloudRayDist, cloudTopRightPos)); System.out.println("cloud");
+        bgLights.add(newPointLight(255, 255, 255, cloudA, cloudDia, cloudTopLeftPos));  System.out.println("cloud"); //add cloudLights no matter what
+        bgLights.add(newPointLight(255, 255, 255, cloudA, cloudDia, cloudTopRightPos)); System.out.println("cloud");
         if (bgNumber < 9) {
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, sunPos));    System.out.println("phoenix"); //puts in invertedBgSun and mirrored sun
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL1));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, 100, cityL2));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, 100, cityL3));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, 100, cityL4));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, 100, cityL5));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, 100, cityL6));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, 100, cityL7));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, 100, cityL8));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, 100, cityL9));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, 100, cityL10));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, 100, cityL11));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, sunPos));    System.out.println("phoenix"); //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL1));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL2));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL3));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL4));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL5));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL6));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL7));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL8));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL9));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL10));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL11));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL12));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL13));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL14));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL15));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL16));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, 100, cityL16));
         } else if (bgNumber < 18) {
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL11));    System.out.println("thunder"); //puts in invertedBgSun and mirrored sun
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL1));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL2));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL3));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL4));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL5));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL6));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL7));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL8));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL9));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL10));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL11));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL11));    System.out.println("thunder"); //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL1));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL2));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL3));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL4));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL5));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL6));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL7));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL8));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL9));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL10));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL11));
         } else if (bgNumber < 27) {
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, sunPos));    System.out.println("water"); //puts in invertedBgSun and mirrored sun
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL1));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL2));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL3));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL4));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL5));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL6));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL7));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL8));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL9));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL10));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL11));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, sunPos));    System.out.println("water"); //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL1));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL2));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL3));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL4));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL5));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL6));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL7));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL8));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL9));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL10));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL11));
         } else if (bgNumber < 36) {
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, sunPos));    System.out.println("fire"); //puts in invertedBgSun and mirrored sun
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL1));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL2));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL3));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL4));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL5));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL6));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL7));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL8));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL9));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL10));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL11));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, sunPos));    System.out.println("fire"); //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL1));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL2));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL3));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL4));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL5));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL6));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL7));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL8));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL9));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL10));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL11));
         } else if (bgNumber < 45) {
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, sunPos));    System.out.println("acid"); //puts in invertedBgSun and mirrored sun
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL1));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL2));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL3));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL4));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL5));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL6));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL7));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL8));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL9));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL10));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL11));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, sunPos));    System.out.println("acid"); //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL1));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL2));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL3));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL4));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL5));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL6));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL7));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL8));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL9));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL10));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL11));
         } else if (bgNumber < 54) {
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, sunPos));    System.out.println("night"); //puts in invertedBgSun and mirrored sun
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL1));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL2));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL3));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL4));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL5));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL6));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL7));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL8));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL9));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL10));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL11));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, sunPos));    System.out.println("night"); //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL1));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL2));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL3));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL4));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL5));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL6));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL7));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL8));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL9));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL10));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL11));
         } else if (bgNumber < 63) {
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, sunPos));    System.out.println("lunar"); //puts in invertedBgSun and mirrored sun
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL1));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL2));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL3));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL4));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL5));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL6));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL7));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL8));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL9));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL10));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL11));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, sunPos));    System.out.println("lunar"); //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL1));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL2));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL3));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL4));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL5));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL6));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL7));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL8));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL9));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL10));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL11));
         } else if (bgNumber < 72) {
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, sunPos));    System.out.println("gold"); //puts in invertedBgSun and mirrored sun
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL1));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL2));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL3));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL4));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL5));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL6));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL7));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL8));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL9));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL10));
-            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunRayIntensity, sunRayDist, cityL11));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, sunPos));    System.out.println("gold"); //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL1));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL2));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL3));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL4));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL5));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL6));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL7));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL8));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL9));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL10));
+            Collections.addAll(bgLights, newPointLightMirrored(255, 237, 137, sunA, sunDia, cityL11));
         }
         System.out.println("Size of bgLights list: "+bgLights.size());
     }
