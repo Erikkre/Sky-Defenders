@@ -13,4 +13,8 @@ public class CustomPointLight extends PointLight{
         super(LightHandler.rayHandler, 25, new Color(r/255f,g/255f,b/255f,a), lightDistance, origPos.x,origPos.y);
         this.origPos=origPos;
     }
+    public CustomPointLight(Color color, int lightDistance, Vector2 origPos){
+        super(LightHandler.rayHandler, 25, color, lightDistance, origPos.x,origPos.y);
+        this.origPos=origPos;
+    }
 }
