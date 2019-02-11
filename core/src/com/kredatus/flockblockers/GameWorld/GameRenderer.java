@@ -726,16 +726,16 @@ public void setRotate(float angle){
             cam.update();
             batcher.setProjectionMatrix(cam.combined);*/
             batcher.end();
-
+            //batcher.begin();
             LightHandler.renderBack();
-
+            //batcher.end();
             batcher.begin();
             drawStory(runTime, delta);
 
 
             //batcher.flush();
 
-            batcher.flush();
+            //batcher.flush();
             drawScore();
             /*
             if (AssetHandler.getHighScore() == 0) {
@@ -784,9 +784,9 @@ public void setRotate(float angle){
             drawInstr();
             menuButton.draw(batcher);
         }
-
-        LightHandler.renderFront();
         batcher.end();
+        LightHandler.renderFront();//make usre having outside of batcher does nothing
+
         drawTransition(delta);
         //System.out.println("gameRenderer edge:"+(cam.position.x - camWidth / 2));
     }

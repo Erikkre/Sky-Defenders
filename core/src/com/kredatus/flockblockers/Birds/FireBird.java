@@ -24,7 +24,7 @@ public class FireBird extends BirdAbstractClass {
         super();
         this.flashLengths=flashLengths;
 
-        yVel=1f*globalSpeedMultiplier;
+        yVel=0.85f*globalSpeedMultiplier;
         origYVel=yVel;
 
         coinNumber=1;

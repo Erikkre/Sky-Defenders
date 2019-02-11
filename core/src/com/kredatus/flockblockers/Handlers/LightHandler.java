@@ -232,7 +232,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 220, 221, 226, lA, sDia, cityP15));
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, mA, xxxlDia, cityP17));
-        } else if (bgNumber < 63) {
+        } else if (bgNumber < 63) {//lunar
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 230, 49, 252, sunA, sunDia, sunPos));    //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 230, 49, 252, mA, xsDia, cityP1));
             Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  230, 49, 252, sA, xxlDia, cityC2));     //cone
@@ -251,7 +251,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 230, 49, 252, lA, sDia, cityP15));
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 230, 49, 252, mA, xxxlDia, cityP17));
-        } else if (bgNumber < 72) {
+        } else if (bgNumber < 72) {//gold
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, sunA, sunDia, sunPos));    //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 67, mA, xsDia, cityP1));
             Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 255, 67, sA, xxlDia, cityC2));     //cone

@@ -149,7 +149,7 @@ public abstract class BirdAbstractClass {
 
         if (isAlive) {
             if (!BgHandler.isBirdSpawning&&currentY!=outroY) {
-                currentX.kill();
+                if (currentX!=null)currentX.kill();
                 currentY = outroY.start();
                 if (x > camWidth / 2) {   //if dying on right side fall to left and vice versa
                     xVel = -2;
