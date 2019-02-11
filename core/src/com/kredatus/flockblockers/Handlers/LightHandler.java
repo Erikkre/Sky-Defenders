@@ -39,7 +39,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             cityP8 = new Vector2(0.46533203125f  * bgw, 0.50617045892f * bgStackHeight),
             cityP9 = new Vector2(0.53515625f     * bgw, 0.62032394909f  * bgStackHeight),
             cityP10 =new Vector2(0.54052734375f  * bgw, 0.51851137678f * bgStackHeight),
-            sunPos = new Vector2(0.59082f       * bgw, 0.482067f * bgStackHeight),
+            sunPos = new Vector2(0.59082f       * bgw, 0.51f * bgStackHeight),
             cityP11 = new Vector2(0.595703125f   * bgw, 0.59679907443f  * bgStackHeight),
             cityP12 = new Vector2(0.685546875f   * bgw, 0.50096413421f * bgStackHeight),
             cityP13 = new Vector2(0.70258984375f * bgw, 0.59660624759f  * bgStackHeight),
