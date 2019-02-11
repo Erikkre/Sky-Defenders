@@ -121,7 +121,7 @@ public class BgHandler {
         };
 
         (horizPositionBg = Timeline.createSequence()
-                .push(Tween.to(horiz, -1, 20f).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .push(Tween.to(horiz, -1, 25f).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start();
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 

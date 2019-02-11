@@ -134,7 +134,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP12));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP13));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP14));  //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, sA, xsDia, cityP15));
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, lA, sDia, cityP15));
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 237, 137, mA, xxxlDia, cityP17));
         } else if (bgNumber < 18) {//thunder
@@ -153,7 +153,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP12));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP13));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP14));  //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 170, 140, sA, xsDia, cityP15));
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 170, 140, lA, sDia, cityP15));
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 170, 140, mA, xxxlDia, cityP17));
         } else if (bgNumber < 27) {//water
@@ -172,7 +172,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP12));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP13));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP14));  //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 43, 158, 238, sA, xsDia, cityP15));
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 43, 158, 238, lA, sDia, cityP15));
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 43, 158, 238, mA, xxxlDia, cityP17));
         } else if (bgNumber < 36) {//fire
@@ -191,7 +191,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP12));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP13));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP14));  //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 227, 133, 37, sA, xsDia, cityP15));
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 227, 133, 37, lA, sDia, cityP15));
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 227, 133, 37, mA, xxxlDia, cityP17));
         } else if (bgNumber < 45) {//acid
@@ -210,7 +210,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP12));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP13));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP14));  //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 94, 252, 177, sA, xsDia, cityP15));
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 94, 252, 177, lA, sDia, cityP15));
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 94, 252, 177, mA, xxxlDia, cityP17));
         } else if (bgNumber < 54) {//night
@@ -229,7 +229,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP12));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP13));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP14));  //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 220, 221, 226, sA, xsDia, cityP15));
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 220, 221, 226, lA, sDia, cityP15));
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, mA, xxxlDia, cityP17));
         } else if (bgNumber < 63) {
@@ -248,7 +248,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP12));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP13));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP14));  //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 230, 49, 252, sA, xsDia, cityP15));
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 230, 49, 252, lA, sDia, cityP15));
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 230, 49, 252, mA, xxxlDia, cityP17));
         } else if (bgNumber < 72) {
@@ -267,7 +267,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP12));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP13));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP14));  //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 67, sA, xsDia, cityP15));
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 67, lA, sDia, cityP15));
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, mA, xxxlDia, cityP17));
         }
