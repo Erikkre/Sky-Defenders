@@ -701,9 +701,9 @@ public void setRotate(float angle){
         Gdx.gl20.glClearColor(0.25f, 0.25f, 0.25f, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batcher.begin();
 
         //batcher.disableBlending();
+        batcher.begin();
 
         //batcher.enableBlending();
 
@@ -719,14 +719,23 @@ public void setRotate(float angle){
                 //bgHandler.horizPositionBg.start(manager);
             //}
             drawBackground();
+
            // table.draw(batcher, 1);
             /*
             cam.position.y+=10;
             cam.update();
             batcher.setProjectionMatrix(cam.combined);*/
+            batcher.end();
 
+            LightHandler.renderBack();
 
+            batcher.begin();
             drawStory(runTime, delta);
+
+
+            //batcher.flush();
+
+            batcher.flush();
             drawScore();
             /*
             if (AssetHandler.getHighScore() == 0) {
@@ -776,7 +785,7 @@ public void setRotate(float angle){
             menuButton.draw(batcher);
         }
 
-        LightHandler.render();
+        LightHandler.renderFront();
         batcher.end();
         drawTransition(delta);
         //System.out.println("gameRenderer edge:"+(cam.position.x - camWidth / 2));
@@ -807,7 +816,7 @@ public void setRotate(float angle){
     public static Vector3 getCameraPosition() { return campos; }
 
     public static void dispose(){
-        //rayHandler.dispose();
+        //foreRayHandler.dispose();
         font.dispose();
         gamefont.dispose();
         otherfont.dispose();
