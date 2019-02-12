@@ -4,7 +4,6 @@ package com.kredatus.flockblockers.Handlers;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kredatus.flockblockers.CustomLights.CustomChainLight;
 import com.kredatus.flockblockers.CustomLights.CustomConeLight;
 import com.kredatus.flockblockers.CustomLights.CustomPointLight;
@@ -31,18 +30,18 @@ public class LightHandler { //consider making barlight and mirroring on each sid
 //2 3 and 4 wrong pos vert and horiz
             cityP1 = new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//cityPight1
             cityC2 = new Vector2(0.15380859375f  * bgw, 0.54454300039f * bgStackHeight),//coneLight
-            cityP3 = new Vector2(0.16064453125f  * bgw, 0.58927882761f  * bgStackHeight),
-            cityP4 = new Vector2(0.193359375f    * bgw, 0.59429232549f  * bgStackHeight),
+            cityP3 = new Vector2(0.16064453125f  * bgw, 0.58927882761f * bgStackHeight),
+            cityP4 = new Vector2(0.193359375f    * bgw, 0.59429232549f * bgStackHeight),
             cityP5 = new Vector2(0.21142578125f  * bgw, 0.42267643656f * bgStackHeight),
-            cityP6 = new Vector2(0.24609375f     * bgw, 0.54512148091f  * bgStackHeight),
+            cityP6 = new Vector2(0.24609375f     * bgw, 0.54512148091f * bgStackHeight),
             cityP7 = new Vector2(0.30322265625f  * bgw, 0.48438102583f * bgStackHeight),
             cityP8 = new Vector2(0.46533203125f  * bgw, 0.50617045892f * bgStackHeight),
-            cityP9 = new Vector2(0.53515625f     * bgw, 0.62032394909f  * bgStackHeight),
+            cityP9 = new Vector2(0.53515625f     * bgw, 0.62032394909f * bgStackHeight),
             cityP10 =new Vector2(0.54052734375f  * bgw, 0.51851137678f * bgStackHeight),
-            sunPos = new Vector2(0.59082f       * bgw, 0.51f * bgStackHeight),
-            cityP11 = new Vector2(0.595703125f   * bgw, 0.59679907443f  * bgStackHeight),
+            sunPos = new Vector2(0.59082f        * bgw, 0.51f          * bgStackHeight),
+            cityP11 = new Vector2(0.595703125f   * bgw, 0.59679907443f * bgStackHeight),
             cityP12 = new Vector2(0.685546875f   * bgw, 0.50096413421f * bgStackHeight),
-            cityP13 = new Vector2(0.70258984375f * bgw, 0.59660624759f  * bgStackHeight),
+            cityP13 = new Vector2(0.70258984375f * bgw, 0.59660624759f * bgStackHeight),
             cityP14 = new Vector2(0.87744140625f * bgw, 0.50057848053f * bgStackHeight),
             cityP15 = new Vector2(0.94091796875f * bgw, 0.44369456229f * bgStackHeight),
             cityP16 = new Vector2(0.955078125f   * bgw, 0.54512148091f * bgStackHeight),
@@ -53,6 +52,10 @@ public class LightHandler { //consider making barlight and mirroring on each sid
     private static float cloudA=0.95f, sunA=0.85f,xxsA=0.4f, xsA= 0.5f, sA=0.6f,mA=0.73f,lA=0.83f,xlA=0.9f,xxlA=0.95f, xxxlA=1.0f;
 
     public LightHandler(BgHandler bgHandler) {
+                                    // 0    1    2    3    4    5    6    7
+        BirdHandler.waveTypeCnt=4; // "pB","tB","wB","fB","aB","nB","lB","gB"
+
+
         //foreRayHandler.useDiffuseLight(true); //smoother but makes everywhere but light dark
         foreRayHandler.setAmbientLight(0.50f);   //light everywhere outside of our set lights
         backRayHandler.setAmbientLight(0.90f);
@@ -65,6 +68,8 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         bgLights.add(newPointLight(foreRayHandler, 255,255,255,cloudA,cloudDia,cloudBottomLeftPos)); System.out.println("cloud");
         bgLights.add(newPointLight(foreRayHandler, 255,255,255,cloudA,cloudDia,cloudBottomRightPos));System.out.println("cloud");
         //bgLights.add(new DirectionalLight(foreRayHandler,30, new Color(233,33,33,0.5f), 90)); //directional light is like ambient light but with direction (for shadows)
+
+
     }
 
     /*private static CustomChainLight[] newBarLight(int r, int g, int b, float a, int lightDistance, int dirDeg, float[] chainVertices) {
