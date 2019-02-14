@@ -68,7 +68,7 @@ public class BgHandler {
         this.camHeight=camHeight;
         this.camWidth =camWidth;
                           // 0    1    2    3    4    5    6    7
-        bgNumber = 9 * 4;// "pB","tB","wB","fB","aB","nB","lB","gB"
+        bgNumber = 9 * 0;// "pB","tB","wB","fB","aB","nB","lB","gB"
         //System.out.print("Start height of bg1: "+-bgStackStartYHeight);
         horiz.setValue(0);
         vert.setValue(0);//everything is done in negative (camera goes up by that amount
@@ -84,7 +84,7 @@ public class BgHandler {
         isPastStoryIntro=true;
         //isBirdSpawning=true;
 
-        TinyBirdHandler.addTinyBirdsNextCity(camWidth,camHeight);
+//        TinyBirdHandler.addTinyBirdsNextCity(camWidth,camHeight);
     }
 
     private void setupTweens(final float camWidth, final float camHeight){
@@ -120,7 +120,7 @@ public class BgHandler {
         };
 
         (horizPositionBg = Timeline.createSequence()
-                .push(Tween.to(horiz, -1, 30f).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .push(Tween.to(horiz, -1, 10f).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start();
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
@@ -200,7 +200,7 @@ public class BgHandler {
 
                     .push(Tween.to(vert, -1, 5).targetRelative(vert.getValue()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
                     //pause in clouds after waves over to have the effect of travelling to different bird type areas, only going horizontally
-            ).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START).repeat(Tween.INFINITY, 0).start();
+            ).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START).repeat(Tween.INFINITY, 0);//.start();
 
         } else {
             System.out.println("First target: "+bgStackHeight+", separator height: "+separatorHeight+", bgh: "+bgh);
