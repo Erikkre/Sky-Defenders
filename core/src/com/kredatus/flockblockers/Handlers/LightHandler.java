@@ -27,64 +27,62 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             cloudBottomRightPos = new Vector2(5*bgw/6, cloudBottomY),
             cloudTopLeftPos  = new Vector2(  bgw/6, cloudTopY),
             cloudTopRightPos = new Vector2(5*bgw/6, cloudTopY),
-//2 3 and 4 wrong pos vert and horiz
-cityP1 = new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//cityPight1
-        cityC2 = new Vector2(0.15380859375f  * bgw, 0.54454300039f * bgStackHeight),//coneLight
-        cityP3 = new Vector2(0.16064453125f  * bgw, 0.58927882761f * bgStackHeight),
-        cityP4 = new Vector2(0.193359375f    * bgw, 0.59429232549f * bgStackHeight),
-        cityP5 = new Vector2(0.21142578125f  * bgw, 0.42267643656f * bgStackHeight),
-        cityP6 = new Vector2(0.24609375f     * bgw, 0.54512148091f * bgStackHeight),
-        cityP7 = new Vector2(0.30322265625f  * bgw, 0.48438102583f * bgStackHeight),
-        cityP8 = new Vector2(0.46533203125f  * bgw, 0.50617045892f * bgStackHeight),
-        cityP9 = new Vector2(0.53515625f     * bgw, 0.62032394909f * bgStackHeight),
-        cityP10 =new Vector2(0.54052734375f  * bgw, 0.51851137678f * bgStackHeight),
-        sunPos = new Vector2(0.59282f        * bgw, 0.525f         * bgStackHeight),
-        cityP11 = new Vector2(0.595703125f   * bgw, 0.59679907443f * bgStackHeight),
-        cityP12 = new Vector2(0.685546875f   * bgw, 0.50096413421f * bgStackHeight),
-        cityP13 = new Vector2(0.70258984375f * bgw, 0.59660624759f * bgStackHeight),
-        cityP14 = new Vector2(0.87744140625f * bgw, 0.50057848053f * bgStackHeight),
-        cityP15 = new Vector2(0.94091796875f * bgw, 0.44369456229f * bgStackHeight),
-        cityP16 = new Vector2(0.955078125f   * bgw, 0.54512148091f * bgStackHeight),
-        cityP17 = new Vector2(0.9953515625f  * bgw, 0.60302776707f * bgStackHeight);
-
-    private static final float[] firstCloudLightVerts  = {0f*bgw,cloudBottomY, 0.50f*bgw,cloudBottomY, 1f*bgw,cloudBottomY}, cloudLightVerts = {0.25f*bgw,cloudTopY, 0.50f*bgw,cloudTopY, 0.75f*bgw,cloudTopY};
+    //2 3 and 4 wrong pos vert and horiz
+    cityP1         =  new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//cityPight1
+            cityC2 =  new Vector2(0.15380859375f  * bgw, 0.54454300039f * bgStackHeight),//coneLight
+            cityP3 =  new Vector2(0.16064453125f  * bgw, 0.58927882761f * bgStackHeight),
+            cityP4 =  new Vector2(0.193359375f    * bgw, 0.59429232549f * bgStackHeight),
+            cityP5 =  new Vector2(0.21142578125f  * bgw, 0.42267643656f * bgStackHeight),
+            cityP6 =  new Vector2(0.24609375f     * bgw, 0.54512148091f * bgStackHeight),
+            cityP7 =  new Vector2(0.30322265625f  * bgw, 0.48438102583f * bgStackHeight),
+            cityP8 =  new Vector2(0.46533203125f  * bgw, 0.50617045892f * bgStackHeight),
+            cityP9 =  new Vector2(0.53515625f     * bgw, 0.62032394909f * bgStackHeight),
+            cityP10 = new Vector2(0.54052734375f  * bgw, 0.51851137678f * bgStackHeight),
+            sunPos  = new Vector2(0.59282f        * bgw, 0.525f         * bgStackHeight),
+            cityP11 = new Vector2(0.595703125f    * bgw, 0.59679907443f * bgStackHeight),
+            cityP12 = new Vector2(0.685546875f    * bgw, 0.50096413421f * bgStackHeight),
+            cityP13 = new Vector2(0.70258984375f  * bgw, 0.59660624759f * bgStackHeight),
+            cityP14 = new Vector2(0.87744140625f  * bgw, 0.50057848053f * bgStackHeight),
+            cityP15 = new Vector2(0.94091796875f  * bgw, 0.44369456229f * bgStackHeight),
+            cityP16 = new Vector2(0.955078125f    * bgw, 0.54512148091f * bgStackHeight),
+            cityP17 = new Vector2(0.9953515625f   * bgw, 0.60302776707f * bgStackHeight);
 
     //PARAMETER CONFIG
-    private static int cloudDia=5000, sunDia=2000, xsDia=50, sDia=100, mDia=200, lDia=300, xlDia=450, xxlDia=650, xxxlDia=1000;
-    private static float cloudA=0.85f, sunA=1.00f,xxsA=0.4f, xsA= 0.5f, sA=0.6f,mA=0.73f,lA=0.83f,xlA=0.9f,xxlA=0.95f, xxxlA=1.0f;
+    private static int cloudDia=3300, sunDia=2000, xsDia=50, sDia=100, mDia=200, lDia=300, xlDia=450, xxlDia=650, xxxlDia=1000;
+    private static float cloudA=0.95f, sunA=0.9f,xxsA=0.4f, xsA= 0.5f, sA=0.6f,mA=0.73f,lA=0.83f,xlA=0.9f,xxlA=0.95f, xxxlA=1.0f;
 
     public LightHandler(BgHandler bgHandler) {
                                     // 0    1    2    3    4    5    6    7
-        BirdHandler.waveTypeCnt=0; // "pB","tB","wB","fB","aB","nB","lB","gB"
+        BirdHandler.waveTypeCnt=5; // "pB","tB","wB","fB","aB","nB","lB","gB"
 
 
         //foreRayHandler.useDiffuseLight(true); //smoother but makes everywhere but light dark
-        foreRayHandler.setAmbientLight(1.00f);   //light everywhere outside of our set lights
-        backRayHandler.setAmbientLight(0.65f);
+        foreRayHandler.setAmbientLight(0.50f);   //light everywhere outside of our set lights
+        backRayHandler.setAmbientLight(0.90f);
         backRayHandler.setGammaCorrection(false);
         foreRayHandler.setGammaCorrection(true);    //play with all the options to see what fits best
 
         foreRayHandler.setBlurNum(4);
         backRayHandler.setBlurNum(4);
         newBgLighting(bgHandler.bgNumber);
-        bgLights.add(newBarLight(foreRayHandler, 255,255,255,cloudA,cloudDia,1, firstCloudLightVerts)); System.out.println("cloud");
-        //bgLights.add(newBarLight(foreRayHandler, 255,255,255,cloudA,cloudDia,-1, firstCloudLightVerts)); System.out.println("cloud");
+        bgLights.add(newPointLight(foreRayHandler, 255,255,255,cloudA,cloudDia,cloudBottomLeftPos)); System.out.println("cloud");
+        bgLights.add(newPointLight(foreRayHandler, 255,255,255,cloudA,cloudDia,cloudBottomRightPos));System.out.println("cloud");
         //bgLights.add(new DirectionalLight(foreRayHandler,30, new Color(233,33,33,0.5f), 90)); //directional light is like ambient light but with direction (for shadows)
 
 
     }
 
-    private static CustomChainLight newBarLight(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, int dirDeg, float[] chainVertices) {
-        CustomChainLight newChainLightFront = new CustomChainLight(rayHandler, r, g, b, a, lightDistance, dirDeg,(int) (chainVertices.length/2f)*20, chainVertices );
-        CustomChainLight newChainLightBack  = new CustomChainLight(rayHandler, r, g, b, a, lightDistance, -dirDeg, (int) (chainVertices.length/2f)*20, chainVertices );
+    /*private static CustomChainLight[] newBarLight(int r, int g, int b, float a, int lightDistance, int dirDeg, float[] chainVertices) {
+        CustomChainLight newChainLightFront = new CustomChainLight(r, g, b, a, lightDistance, dirDeg,(int) (chainVertices.length/2f)*20, chainVertices );
+        CustomChainLight newChainLightBack  = new CustomChainLight(r, g, b, a, lightDistance, -dirDeg, (int) (chainVertices.length/2f)*20, chainVertices );
         newChainLightBack.setSoft(false);         //no need for softness as not hitting obstacles
         newChainLightBack.setStaticLight(false);  //static lights dont interact with obstacles, redudes cpu load by 90%
         newChainLightBack.setXray(false);         //beams go through obstacles, reduces CPU burden of light about 70%
         newChainLightFront.setSoft(false);        //no need for softness as not hitting obstacles
         newChainLightFront.setStaticLight(false); //static lights dont interact with obstacles, redudes cpu load by 90%
         newChainLightFront.setXray(false);        //beams go through obstacles, reduces CPU burden of light about 70%
-        return newChainLightFront;
-    }
+        return new CustomChainLight[]{newChainLightFront, newChainLightBack};
+    }*/
 
     //(multiply width by bgh and height by *bgStackHeight respectively) positions of bg light sources are 0.5 x .154454 for clouds, .59082 x 0.517933 for first sun, .59082 x .791747 for second sun
     private static CustomPointLight newPointLight(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos) {
@@ -127,13 +125,13 @@ cityP1 = new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//ci
         bgLights.add(newPointLight(foreRayHandler, 255, 255, 255, cloudA, cloudDia, cloudTopRightPos));
         if (bgNumber < 9) {//phoenix
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 237, 137, sunA, sunDia, sunPos));    //puts in invertedBgSun and mirrored sun
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, xsDia, cityP1));      //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 237, 137, lA, xxxlDia, cityC2));     //cone
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, mA, xsDia, cityP1));      //skyScraper tip
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 237, 137, xxsA, xxxlDia, cityC2));     //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 237, 137, mA, xxxlDia, cityP3));      //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP4));   //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP5));       //skyScraper tip
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, mA, lDia, cityP5));       //skyScraper tip
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP6));   //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP7));   //red signal
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, sA, sDia, cityP7));   //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP8));   //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 237, 137, xsA,xxlDia, cityP9));   //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP10));  //red signal
@@ -141,7 +139,7 @@ cityP1 = new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//ci
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP12));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP13));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP14));  //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP15));   //skyScraper tip
+            Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, lA, sDia, cityP15));   //skyScraper tip
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 237, 137, mA, xxxlDia, cityP17));   //ambient lightspot
         } else if (bgNumber < 18) {//thunder
@@ -202,9 +200,9 @@ cityP1 = new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//ci
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 227, 133, 37, mA, xxxlDia, cityP17));    //ambient lightspot
         } else if (bgNumber < 45) {//acid
-            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 94, 252, 177, sunA-.15f, sunDia, sunPos));   //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 94, 252, 177, sunA-.20f, sunDia, sunPos));   //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 94, 252, 177, mA, xsDia, cityP1));      //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  94, 252, 177, sA, xxlDia, cityC2));     //cone
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  94, 252, 177, sA-.15f, xxlDia, cityC2));     //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 94, 252, 177, mA-.15f, xxxlDia, cityP3));    //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 100, 100, xxxlA, sDia, cityP4));           //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 94, 252, 177, mA, lDia, cityP5));                //skyscraper tip
@@ -221,16 +219,16 @@ cityP1 = new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//ci
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 94, 252, 177, mA-.15f, xxxlDia, cityP17));    //ambient lightspot
         } else if (bgNumber < 54) {//night
-            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, sunA, sunDia, sunPos));   //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, sunA-.20f, sunDia, sunPos));   //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 220, 221, 226, mA, xsDia, cityP1));      //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  220, 221, 226, sA, xxlDia, cityC2));     //cone
-            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, mA, xxxlDia, cityP3));    //ambient lightspot
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  220, 221, 226, sA-.15f, xxlDia, cityC2));     //cone
+            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, mA-.15f, xxxlDia, cityP3));    //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 100, 100, xxxlA, sDia, cityP4));    //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 220, 221, 226, mA, lDia, cityP5));       //skyScraper tip
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP6));    //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 220, 221, 226, sA, sDia, cityP7));   //red signal       //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP8));    //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, xsA,xxlDia, cityP9));     //ambient lightspot
+            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, xsA-.15f,xxlDia, cityP9));     //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP10));   //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP11));   //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP12));   //red signal
@@ -238,9 +236,9 @@ cityP1 = new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//ci
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP14));   //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 220, 221, 226, lA, sDia, cityP15));   //skyScraper tip      //skyScraper tip
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));   //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, mA, xxxlDia, cityP17));   //ambient lightspot
+            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, mA-.15f, xxxlDia, cityP17));   //ambient lightspot
         } else if (bgNumber < 63) {//lunar
-            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 230, 49, 252, sunA, sunDia, sunPos));    //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 230, 49, 252, sunA-0.1f, sunDia, sunPos));    //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 230, 49, 252, mA, xsDia, cityP1));      //skyScraper tip
             Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  230, 49, 252, sA, xxlDia, cityC2));     //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 230, 49, 252, mA, xxxlDia, cityP3));      //ambient lightspot
@@ -259,16 +257,16 @@ cityP1 = new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//ci
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 230, 49, 252, mA, xxxlDia, cityP17));   //ambient lightspot
         } else if (bgNumber < 72) {//gold
-            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, sunA, sunDia, sunPos));    //puts in invertedBgSun and mirrored sun
+            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, sunA-.20f, sunDia, sunPos));    //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 67, mA, xsDia, cityP1));      //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 255, 67, sA, xxlDia, cityC2));     //cone
-            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, mA, xxxlDia, cityP3));      //ambient lightspot
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 255, 67, sA-.15f, xxlDia, cityC2));     //cone
+            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, mA-.15f, xxxlDia, cityP3));      //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 100, 100, xxxlA, sDia, cityP4));   //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 67, mA, lDia, cityP5));       //skyScraper tip
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP6));   //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 67, sA, sDia, cityP7));   //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP8));   //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, xsA,xxlDia, cityP9));   //ambient lightspot
+            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, xsA-.15f,xxlDia, cityP9));   //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP10));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP11));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP12));  //red signal
@@ -276,7 +274,7 @@ cityP1 = new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//ci
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP14));  //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 67, lA, sDia, cityP15));   //skyScraper tip
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 255, xxxlA, sDia, cityP16));  //red signal
-            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, mA, xxxlDia, cityP17));   //ambient lightspot
+            Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, mA-.15f, xxxlDia, cityP17));   //ambient lightspot
         }
         System.out.println("Size of bgLights list: "+bgLights.size());
     }
@@ -297,7 +295,7 @@ cityP1 = new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//ci
         for (Light i : bgLights) {
             if (isOffCam(i)){ bgLights.remove(i);i.remove(); }
             else if (i instanceof CustomPointLight)  i.setPosition(((CustomPointLight) i).origPos.x + bgHoriz, ((CustomPointLight) i).origPos.y + bgVert);
-            else if (i instanceof ChainLight)        {i.setPosition(((CustomChainLight) i).origVerts[2] + bgHoriz, ((CustomChainLight) i).origVerts[3] + bgVert);}
+            else if (i instanceof ChainLight)        {i.setPosition(((CustomChainLight) i).origVerts[0] + bgHoriz, ((CustomChainLight) i).origVerts[1] + bgVert);}
             else                                     i.setPosition(((CustomConeLight) i).origPos.x + bgHoriz, ((CustomConeLight) i).origPos.y + bgVert);
         }
         foreRayHandler.update();   //the render part might need to be put at the end of the render cycle in gameRenderer
