@@ -21,7 +21,7 @@ public class WaterBird extends BirdAbstractClass {
     public WaterBird(float camHeight, float camWidth, float xPosition, float yPosition, ArrayList flashLengths){
         super();
         this.flashLengths=flashLengths;
-        yVel=1.5f*globalSpeedMultiplier;
+        yVel=1.3f*globalSpeedMultiplier;
         coinNumber=1;
         origYVel=yVel;
 
