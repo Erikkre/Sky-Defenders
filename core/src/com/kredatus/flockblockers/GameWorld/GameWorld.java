@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
+import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -28,6 +29,7 @@ public class GameWorld {
     private LightHandler lightHandler;
     //private boolean isAlive = true;
     private Rectangle ground;
+    public Airship airship;
     public double boost = 0;  //boostamount
     public int updatedboostnumber, orgboostnumber= AssetHandler.getBoostnumber();
 
@@ -56,7 +58,7 @@ public class GameWorld {
 
     public static int gold, diamonds, score;
 
-    public GameWorld(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler) {
+    public GameWorld(int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler) {
         this.bgHandler = bgHandler;
         this.birdHandler = birdHandler;
         this.targetHandler = targetHandler;
@@ -76,6 +78,7 @@ public class GameWorld {
         //this.midPointY=midPointY;
         //glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
 
+        airship=new Airship(camWidth, camHeight);
         AssetHandler.playnext(AssetHandler.menumusiclist);
         updatedboostnumber=orgboostnumber;
     }
@@ -107,6 +110,7 @@ public class GameWorld {
         targetHandler.update(delta, runTime);
         tinyBirdHandler.update(delta);
         lightHandler.update();
+        airship.update(delta);
     }
 
     private void updateReady(float runTime) {

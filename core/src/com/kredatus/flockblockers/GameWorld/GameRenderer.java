@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
 //import com.kredatus.flockblockers.GameObjects.Boost;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
@@ -74,6 +75,7 @@ public class GameRenderer {
     boolean turnback=true;
     private SpriteBatch batcher;
     private Glider glider;
+    private Airship airship;
     public static Vector3 campos;
     private Animation frontFlaps, leftSideFlaps, rightSideFlaps, flipflaps, frontViewFlaps, backFlaps;
     //private TextureRegion gliderMid, vertflipgliderMid;
@@ -249,6 +251,7 @@ public void setRotate(float angle){
         invflipboostlist = bgHandler.getinvflipboostlist();
 */
         glider = myWorld.getGlider();
+        airship = myWorld.airship;
         table=uiHandler.table;
     }
 
@@ -601,22 +604,53 @@ public void setRotate(float angle){
     */
 
     public void drawStory(float runTime, float delta) {
-        //System.out.println("Glider: "+glider.getPosition());
-        //System.out.println("Cam: "+cam.position);
-        //glider.getPosition().x+glider.getWidth()/2  glider.getPosition().y+glider.getHeight()/2
-        //if (!tinyBirdQueue.isEmpty())System.out.println(tinyBirdQueue.peek().vel.y);
+
         for (TinyBird i : tinyBirdQueue){
             batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime+i.flapRandomFactor), i.pos.x-i.width/2, i.pos.y-i.height/2,
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
         }
+
+        for (BirdAbstractClass k : deadBirdQueue) {
+            if (k.isFlashing){
+                //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
+                //flashShader.begin();
+                batcher.setShader(flashShader);
+                //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
+                flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.getValue());
+            }
+            batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
+                    k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
+            if (k.isFlashing){
+                //batcher.setColor(1,1,1,1);
+                batcher.setShader(null);
+                k.flashTween.update(delta);
+                //flashShader.end();
+            }
+            if (!k.coinList.isEmpty()) {
+                for (Coin l : k.coinList) {
+                    if (l.firstMovementEndedX) {
+                        batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x - l.width / 2, l.y - l.height / 2,
+                                l.width, l.height);
+                    } else {
+                        batcher.draw((TextureRegion) l.animation.getKeyFrame(0), l.x - l.width / 2, l.y - l.height / 2,
+                                l.width, l.height);
+                    }
+                }
+            }
+        }
+
+        Airship.draw(batcher);
+
         for (Turret i : turretList) {
             batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.getRotation());
         }
+
         for (Projectile j : projectileList) {
             batcher.draw(j.texture, j.position.x-j.width/2, j.position.y-j.height/2,
                     j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
         }
+
         for (BirdAbstractClass k : activeBirdQueue) {
 
             if (k.isFlashing){
@@ -645,34 +679,6 @@ public void setRotate(float angle){
             shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());
             shapeRenderer.end();
             batcher.begin();*/
-        }
-        for (BirdAbstractClass k : deadBirdQueue) {
-            if (k.isFlashing){
-                //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
-                //flashShader.begin();
-                batcher.setShader(flashShader);
-                //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
-                flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.getValue());
-            }
-            batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
-                    k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
-            if (k.isFlashing){
-                //batcher.setColor(1,1,1,1);
-                batcher.setShader(null);
-                k.flashTween.update(delta);
-                //flashShader.end();
-            }
-            if (!k.coinList.isEmpty()) {
-                for (Coin l : k.coinList) {
-                    if (l.firstMovementEndedX) {
-                        batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x - l.width / 2, l.y - l.height / 2,
-                                l.width, l.height);
-                    } else {
-                        batcher.draw((TextureRegion) l.animation.getKeyFrame(0), l.x - l.width / 2, l.y - l.height / 2,
-                                l.width, l.height);
-                    }
-                }
-            }
         }
 
         /*
