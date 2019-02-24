@@ -88,8 +88,8 @@ public class FireBird extends BirdAbstractClass {
     }
 
     private void newYWithinHeight() {
-        while (y > -height * 4 || y < -height * 8) {
-            y = (float) (-height * 6 + r.nextGaussian() * (height));
+        while (y > -height * 2 || y < -height * 6) {
+            y = (float) (-height * 4 + r.nextGaussian() * (height));
         }
     }
     private void animSetup(){

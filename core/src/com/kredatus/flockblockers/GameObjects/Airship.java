@@ -31,15 +31,16 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public Airship(int camWidth, int camHeight) {
         armorLvl=0;
         lvl=0;
-        sideThrust=1;
+        sideThrust=3;
 
         assignTextures(armorLvl,lvl);
         height=balloonHeight+rackHeight;
-        pos=new Vector2(camWidth/2f, camHeight-balloonHeight);
-        assignRackPositions();
+        pos=new Vector2(camWidth/2, camHeight-balloonHeight);
+        assignRackPositions(camWidth/2-rackWidth/2,camHeight, balloonHeight);
         for (int i=0;i<positions.size();i++){
             turretList.add(new Turret('f',positions.get(i)));
         }
+        System.out.println(turretList.size());
 
         /*
         int j=0;
@@ -53,19 +54,19 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 */
     }
 
-    private void assignRackPositions() {
+    private void assignRackPositions(int leftXOfAirship, int camHeight, int balloonHeight) {
         for (int i=0;i<=lvl;i++) {
             if (i<=1) {
                 for (int j=0;j<4;j++) {
-                    positions.add(new Vector2(j*55,   i*57 + 33));
+                    positions.add(new Vector2(leftXOfAirship+j*55+Turret.width/2,   camHeight-balloonHeight-i*57 - 33));
                 }
             } else if (i<=3) {
                 for (int j=0;j<3;j++) {
-                    positions.add(new Vector2(j*55+29,i*57 + 33));
+                    positions.add(new Vector2(leftXOfAirship+j*55+29+Turret.width/2,camHeight-balloonHeight-i*57 - 33));
                 }
             } else if (i<=4) {
                 for (int j=0;j<2;j++) {
-                    positions.add(new Vector2(j*55+56, i*57 + 33));
+                    positions.add(new Vector2(leftXOfAirship+j*55+56+Turret.width/2, camHeight-balloonHeight-i*57 - 33));
                 }
             }
         }
@@ -80,6 +81,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public  void update(float delta) {
         pos.add(vel.cpy().scl(delta));
+
         for (Turret i : turretList){
             i.position.add(vel.cpy().scl(delta));
             i.update();
@@ -94,15 +96,15 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static void draw(SpriteBatch batcher) {
         //System.out.println(1+0.2f*lvl);
         batcher.draw(balloonTexture, pos.x-(balloonWidth*(1+0.2f*lvl))/2f, pos.y,
-                pos.x, pos.y, balloonWidth*(1+0.2f*lvl), balloonHeight, 1, 1, rotation);  //origin might be x, y or 0, 0
+                balloonWidth/2, balloonHeight/2, balloonWidth*(1+0.2f*lvl), balloonHeight, 1, 1, rotation);  //origin might be x, y or 0, 0
 
         for (int i=0;i<sideThrust+1;i++){ //starting at bottom of balloon, draw different number of thrusters
             batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.22693f*balloonHeight + (i*thrusterHeight),
-                    pos.x, pos.y, thrusterWidth, thrusterHeight, 1, 1, rotation);  //origin might be x, y or 0, 0
+                    thrusterWidth/2, thrusterHeight/2, thrusterWidth, thrusterHeight, 1, 1, rotation);  //origin might be x, y or 0, 0
         }
 
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
-                pos.x, pos.y, rackWidth, rackHeight,1,1,rotation);
+                rackWidth/2, rackHeight/2, rackWidth, rackHeight,1,1,rotation);
 
         for (Turret i : turretList) {
             batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,
