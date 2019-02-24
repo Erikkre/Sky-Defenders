@@ -410,10 +410,10 @@ public class AssetHandler {
         airshipSideThruster = new TextureRegion(airshipSideThrusterTexture, airshipSideThrusterTexture.getWidth(), airshipSideThrusterTexture.getHeight());
     }
 
-    public static TextureRegion airshipturretRack(int armorLvl){
-            Texture turretRack = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"turretRack"+armorLvl+".png"));
-            turretRack.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-            return new TextureRegion(turretRack, turretRack.getWidth(), turretRack.getHeight());
+    public static TextureRegion airshipRack(int armorLvl, int lvl){
+            Texture rack = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"rack"+armorLvl+".png"));
+            rack.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+            return new TextureRegion(rack, rack.getWidth(), 57*lvl+62);
     }
 
     private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed){
@@ -423,12 +423,10 @@ public class AssetHandler {
         ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>();
         ArrayList<TextureRegion> leftSidePositions = new ArrayList<TextureRegion>();
 
-
         TextureRegion[] front=new TextureRegion[0];
         TextureRegion[] rightSide=new TextureRegion[0];
         TextureRegion[] leftSide=new TextureRegion[0];
         TextureRegion[] back=new TextureRegion[0];
-
 
         for (int i=0;i<22;i++) {
             TextureRegion temp;

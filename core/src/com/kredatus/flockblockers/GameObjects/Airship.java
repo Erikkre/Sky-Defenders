@@ -6,33 +6,84 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
+import java.util.ArrayList;
+
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
     private static float rotation;
     private Circle boundingCir;
     private static Vector2 pos, vel=new Vector2(), acc;
     public float gamexvel;
-    public static int balloonTextureWidth, balloonTextureHeight; //x and y are at middle of textures, bottom of balloonTexture,top of turretRack
+    public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
     protected boolean isScrolledDown;
     public float midpointY, midpointX, starty;
     private boolean isAlive;
+    private ArrayList<Vector2> positions = new ArrayList<Vector2>(16);
 
     public int armor=100, health=100;
-//151, 351
+
     public static int lvl, engineTuning, armorLvl, sideThrust;   //0-4
-    public static TextureRegion balloonTexture, turretRackTexture, sideThrustTexture;    //balloonTexture is top part of hot air balloon, turretRack is bottom
+    public static TextureRegion balloonTexture, rackTexture, sideThrustTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
 
-    public Airship(int camWidth, int camHeight){
-        assignTextures();
-        pos=new Vector2(camWidth/2f, camHeight-balloonTextureHeight);
-        balloonTextureHeight=balloonTexture.getRegionHeight();balloonTextureWidth=balloonTexture.getRegionWidth();
+    //positions 28,31    82,31  110-136 and 137-163
+
+    public static ArrayList<Turret> turretList=new ArrayList<Turret>(13);
+
+    public Airship(int camWidth, int camHeight) {
+        armorLvl=0;
+        lvl=0;
+        sideThrust=1;
+
+        assignTextures(armorLvl,lvl);
+        height=balloonHeight+rackHeight;
+        pos=new Vector2(camWidth/2f, camHeight-balloonHeight);
+        assignRackPositions();
+        for (int i=0;i<positions.size();i++){
+            turretList.add(new Turret('f',positions.get(i)));
+        }
+
+        /*
+        int j=0;
+        for (Turret i : turretList){
+                for (int k=0;k<j;k++){
+                    i.lvlUp();
+                }
+                j++;
+            System.out.println(i.dmg);
+            }
+*/
     }
 
-    public void assignTextures(){
-        balloonTexture=AssetHandler.airshipBalloon; turretRackTexture=AssetHandler.airshipturretRack(armorLvl); sideThrustTexture=AssetHandler.airshipSideThruster;
+    private void assignRackPositions() {
+        for (int i=0;i<=lvl;i++) {
+            if (i<=1) {
+                for (int j=0;j<4;j++) {
+                    positions.add(new Vector2(j*55,   i*57 + 33));
+                }
+            } else if (i<=3) {
+                for (int j=0;j<3;j++) {
+                    positions.add(new Vector2(j*55+29,i*57 + 33));
+                }
+            } else if (i<=4) {
+                for (int j=0;j<2;j++) {
+                    positions.add(new Vector2(j*55+56, i*57 + 33));
+                }
+            }
+        }
     }
 
-    public static void update(float delta){
+    private void assignTextures(int armorLvl, int lvl) {
+        balloonTexture=AssetHandler.airshipBalloon;rackTexture=AssetHandler.airshipRack(armorLvl,lvl);sideThrustTexture=AssetHandler.airshipSideThruster;
+        balloonWidth=balloonTexture.getRegionWidth()/2; balloonHeight=balloonTexture.getRegionHeight()/2;
+        thrusterWidth=sideThrustTexture.getRegionWidth()/2; thrusterHeight=sideThrustTexture.getRegionHeight()/2;
+        rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
+    }
+
+    public  void update(float delta) {
         pos.add(vel.cpy().scl(delta));
+        for (Turret i : turretList){
+            i.position.add(vel.cpy().scl(delta));
+            i.update();
+        }
         if (vel.x>0)vel.x-=1; //slowdown
         else if (vel.x<0)vel.x+=1;
 
@@ -40,16 +91,22 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         else if (vel.y<0)vel.y+=1;
     }
 
-    public static void draw(SpriteBatch batcher){
-        batcher.draw(balloonTexture, pos.x-balloonTextureWidth/2f, pos.y,
-                pos.x, pos.y, balloonTextureWidth*(1+0.2f*lvl), balloonTextureHeight/2f, 1f, 1f, rotation);  //origin might be x, y or 0, 0
+    public static void draw(SpriteBatch batcher) {
+        //System.out.println(1+0.2f*lvl);
+        batcher.draw(balloonTexture, pos.x-(balloonWidth*(1+0.2f*lvl))/2f, pos.y,
+                pos.x, pos.y, balloonWidth*(1+0.2f*lvl), balloonHeight, 1, 1, rotation);  //origin might be x, y or 0, 0
 
-        for (int i=0;i<sideThrust;i++){ //starting at bottom of balloon, draw different number of thrusters
-            batcher.draw(sideThrustTexture, pos.x-sideThrustTexture.getRegionWidth()/2f, pos.y+ 0.22693f*balloonTextureHeight + (i*sideThrustTexture.getRegionHeight()),
-                    pos.x, pos.y, balloonTextureWidth, balloonTextureHeight, 1, 1, rotation);  //origin might be x, y or 0, 0
+        for (int i=0;i<sideThrust+1;i++){ //starting at bottom of balloon, draw different number of thrusters
+            batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.22693f*balloonHeight + (i*thrusterHeight),
+                    pos.x, pos.y, thrusterWidth, thrusterHeight, 1, 1, rotation);  //origin might be x, y or 0, 0
         }
 
-        batcher.draw(turretRackTexture, pos.x-turretRackTexture.getRegionWidth()/2f, pos.y-turretRackTexture.getRegionHeight(),
-                pos.x, pos.y, turretRackTexture.getRegionWidth(), turretRackTexture.getRegionHeight(),1,1,rotation);
+        batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
+                pos.x, pos.y, rackWidth, rackHeight,1,1,rotation);
+
+        for (Turret i : turretList) {
+            batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,
+                    i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.getRotation());
+        }
     }
 }

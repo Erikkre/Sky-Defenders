@@ -5,17 +5,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 import com.kredatus.flockblockers.FlockBlockersMain;
+import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Turret;
-import com.kredatus.flockblockers.GameWorld.GameRenderer;
-import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
-import com.kredatus.flockblockers.Handlers.TurretHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.TweenAccessors.BirdAccessor;
 import com.kredatus.flockblockers.TweenAccessors.Value;
@@ -33,7 +31,7 @@ public class GameHandler implements Screen {
     public BgHandler bgHandler;
     private BirdHandler birdHandler;
     private TargetHandler targetHandler;
-    private TurretHandler turretHandler;
+    //private TurretHandler turretHandler;
     private TinyBirdHandler tinyBirdHandler;
     public UiHandler uiHandler;
     public LightHandler lightHandler;
@@ -42,6 +40,7 @@ public class GameHandler implements Screen {
     public boolean isPaused=false;
     public static double timeOfPause, timeOfResume;
 
+    Airship airship;
     public GameHandler() {
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
@@ -60,10 +59,11 @@ public class GameHandler implements Screen {
         bgHandler = new BgHandler(camWidth, camHeight);
         birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
         targetHandler = new TargetHandler();
-        turretHandler = new TurretHandler(camWidth, camHeight);
+        //turretHandler = new TurretHandler(camWidth, camHeight);
         lightHandler= new LightHandler(bgHandler);
+        airship=new Airship(camWidth, camHeight);
 
-        world = new GameWorld(camWidth, camHeight, bgHandler,birdHandler, targetHandler,turretHandler,tinyBirdHandler,uiHandler, lightHandler);
+        world = new GameWorld(airship, camWidth, camHeight, bgHandler,birdHandler, targetHandler,tinyBirdHandler,uiHandler, lightHandler);
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
 
         renderer = new GameRenderer(world, camWidth, camHeight);
@@ -105,7 +105,7 @@ public class GameHandler implements Screen {
             isPaused=true;
 
             timeOfPause=System.currentTimeMillis();
-            for (Turret i : turretHandler.turretList){
+            for (Turret i : airship.turretList){
                 if (i.firing) {
                     i.stopFiring();
                     i.firingStoppedByGamePause = true;
@@ -125,7 +125,7 @@ public class GameHandler implements Screen {
 
             timeOfResume = System.currentTimeMillis();    //has to be before turrets restart firing so know how much longer left of interval before fire next shot
 
-            for (Turret i : turretHandler.turretList) {
+            for (Turret i : airship.turretList) {
                 if (i.firingStoppedByGamePause) {
                     i.startFiring();
                     i.firingStoppedByGamePause = false;

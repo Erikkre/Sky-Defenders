@@ -11,7 +11,6 @@ import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
-import com.kredatus.flockblockers.Handlers.TurretHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 
@@ -23,7 +22,7 @@ public class GameWorld {
     public BgHandler bgHandler;
     public BirdHandler birdHandler;
     public TargetHandler targetHandler;
-    public TurretHandler turretHandler;
+    //public TurretHandler turretHandler;
     public TinyBirdHandler tinyBirdHandler;
     public UiHandler uiHandler;
     private LightHandler lightHandler;
@@ -58,14 +57,15 @@ public class GameWorld {
 
     public static int gold, diamonds, score;
 
-    public GameWorld(int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TurretHandler turretHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler) {
+    public GameWorld(Airship airship, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler) {
         this.bgHandler = bgHandler;
         this.birdHandler = birdHandler;
         this.targetHandler = targetHandler;
-        this.turretHandler=turretHandler;
+        //this.turretHandler=turretHandler;
         this.tinyBirdHandler=tinyBirdHandler;
         this.uiHandler=uiHandler;
         this.lightHandler=lightHandler;
+        this.airship=airship;
 
         if (AssetHandler.getHighScore()==0){
             isFirstTime=true;
@@ -78,7 +78,7 @@ public class GameWorld {
         //this.midPointY=midPointY;
         //glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
 
-        airship=new Airship(camWidth, camHeight);
+
         AssetHandler.playnext(AssetHandler.menumusiclist);
         updatedboostnumber=orgboostnumber;
     }
@@ -106,7 +106,7 @@ public class GameWorld {
     private void updateStory(float delta, float runTime) {
         bgHandler.update(delta);
         birdHandler.update();
-        turretHandler.update();
+        //turretHandler.update();
         targetHandler.update(delta, runTime);
         tinyBirdHandler.update(delta);
         lightHandler.update();

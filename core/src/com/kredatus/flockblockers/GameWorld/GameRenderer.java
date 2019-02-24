@@ -15,9 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kredatus.flockblockers.GameObjects.Airship;
@@ -28,7 +26,6 @@ import com.kredatus.flockblockers.GameObjects.Coin;
 import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameObjects.TinyBird;
-import com.kredatus.flockblockers.GameObjects.Turret;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
@@ -36,7 +33,6 @@ import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
-import com.kredatus.flockblockers.Handlers.TurretHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
@@ -44,15 +40,12 @@ import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
 
 /**
  * Created by Mr. Kredatus on 8/5/2017.
@@ -98,7 +91,7 @@ public class GameRenderer {
 
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,deadBirdQueue;
     public static ConcurrentLinkedQueue<TinyBird> tinyBirdQueue;
-    public ArrayList<Turret> turretList;
+    //public ArrayList<Turret> turretList;
     public ConcurrentLinkedQueue<Projectile> projectileList;
     private float highScorelen, len, endgamelen, tryAgainlen, boostTextLen, scorelen, startLevellen, titlelen,
             c0len, c1len, c2len, c3len, c4len, c5len, c6len, c7len, c8len, c9len, c10len, c11len, c12len, c13len, c14len,
@@ -113,7 +106,7 @@ public class GameRenderer {
     private BirdHandler birdHandler;
     private TinyBirdHandler tinyBirdHandler;
     private TargetHandler targetHandler;
-    private TurretHandler turretHandler;
+    //private TurretHandler turretHandler;
     private UiHandler uiHandler;
 
     Table table;
@@ -128,7 +121,7 @@ public class GameRenderer {
         this.birdHandler=myWorld.birdHandler;
         this.bgHandler=myWorld.bgHandler;
         this.targetHandler =myWorld. targetHandler;
-        this.turretHandler=myWorld.turretHandler;
+        //this.turretHandler=myWorld.turretHandler;
         this.uiHandler=myWorld.uiHandler;
 
         this.camWidth=camWidth;
@@ -211,7 +204,7 @@ public void setRotate(float angle){
         activeBirdQueue=birdHandler.activeBirdQueue;
         deadBirdQueue=  birdHandler.deadBirdQueue;
         tinyBirdQueue= tinyBirdHandler.tinyBirdQueue;
-        turretList=     turretHandler.turretList;
+
         projectileList= targetHandler.projectileList;
         //tinyBirdList=birdHandler.activeBirdQueue;
 
@@ -641,10 +634,10 @@ public void setRotate(float angle){
 
         Airship.draw(batcher);
 
-        for (Turret i : turretList) {
+        /*for (Turret i : turretList) {
             batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.getRotation());
-        }
+        } delegated to airship*/
 
         for (Projectile j : projectileList) {
             batcher.draw(j.texture, j.position.x-j.width/2, j.position.y-j.height/2,
