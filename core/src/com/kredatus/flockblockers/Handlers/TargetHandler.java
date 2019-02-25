@@ -1,6 +1,7 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
+import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
@@ -18,15 +19,23 @@ public class TargetHandler {
     public static BirdAbstractClass targetBird;
     public static int minTargetingHeight=0;
     private float previousBirdHeight=minTargetingHeight;
-
-  //  public TargetHandler(float camWidth, float camHeight){  }
+    private Airship airship;
+    public TargetHandler(Airship airship){
+        this.airship=airship;
+    }
 
     public void update(float delta, float runTime) {
 
         //System.out.println(BirdHandler.activeBirdQueue);
         for (BirdAbstractClass i : BirdHandler.activeBirdQueue) {
             i.update(delta, runTime);
-            if (!i.isAlive) {
+
+            if (i.collides(airship.boundingPoly)) {
+                System.out.println(airship.boundingPoly + " "+i.collides(airship.boundingPoly));
+                airship.hit(i.origHealth);
+                i.hit(9000);    //lol
+                i.die();                   //just in case bird health gets crazy high
+            } else if (!i.isAlive){
                 BirdHandler.deadBirdQueue.add(i);
                 BirdHandler.activeBirdQueue.remove(i);
             } else {
@@ -45,8 +54,8 @@ public class TargetHandler {
                 projectileList.remove(i);
             }
             for (BirdAbstractClass j : BirdHandler.activeBirdQueue) {
-                if (i.pen>0 && !j.hitBulletList.contains(i) && j.y>minTargetingHeight && j.collides(i) && j.health>0) {  //if bird i is colliding with bullet j and was not already hit before
-                    j.hit(i);
+                if (i.pen>0 && !j.hitBulletList.contains(i) && j.y>minTargetingHeight && j.collides(i.boundingRect) && j.health>0) {  //if bird i is colliding with bullet j and was not already hit before
+                    j.hit(i.dmg);
                     //System.out.println("Bullet --, pen was "+i.pen);
                     i.pen--;
 

@@ -645,6 +645,11 @@ public void setRotate(float angle){
         }
 
         for (BirdAbstractClass k : activeBirdQueue) {
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(255,0,0, 1f);
+
+            shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());
+            shapeRenderer.end();
 
             if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
@@ -664,15 +669,16 @@ public void setRotate(float angle){
                 k.flashTween.update(delta);
 
             }
-            /*batcher.end();
+            //batcher.end();
 
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(255,0,0, 1f);
 
-            shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());
-            shapeRenderer.end();
-            batcher.begin();*/
+            //batcher.begin();
         }
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(255,0,0, 1f);
+
+        shapeRenderer.polygon(airship.boundingPoly.getTransformedVertices());
+        shapeRenderer.end();
 
         /*
         batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-glider.getWidth()/2, glider.getPosition().y-glider.getHeight()/2,

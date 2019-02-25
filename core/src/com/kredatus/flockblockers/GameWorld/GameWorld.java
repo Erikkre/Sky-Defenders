@@ -107,10 +107,10 @@ public class GameWorld {
         bgHandler.update(delta);
         birdHandler.update();
         //turretHandler.update();
+        airship.update(delta);
         targetHandler.update(delta, runTime);
         tinyBirdHandler.update(delta);
         lightHandler.update();
-        airship.update(delta);
     }
 
     private void updateReady(float runTime) {

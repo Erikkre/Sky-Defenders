@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class TinyBirdHandler {
     public static ConcurrentLinkedQueue<TinyBird> tinyBirdQueue=new ConcurrentLinkedQueue<TinyBird>();
-    public static final int birdAmount = 200;
+    public static final int birdAmount = 100;
     private static Random r = new Random();
     private static ArrayList<Float> flapSpeedIntervals=new ArrayList<Float>();
 

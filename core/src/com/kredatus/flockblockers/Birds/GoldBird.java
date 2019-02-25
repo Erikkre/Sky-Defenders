@@ -79,7 +79,7 @@ this.flashLengths=flashLengths;
             if (x<camWidth/2) targetX=(camWidth/2+width/3)+r.nextInt(  (int)((camWidth/2-(2*width/3)))  );  //if on left go to right if on right go left
             else              targetX=width/3+r.nextInt((int)(camWidth/2-(2*width/3)));
 
-            targetY=height/3+r.nextInt((int)(camHeight-height*3));
+            targetY=height/3+r.nextInt((int)(camHeight-height/2));
             /*while (Math.abs(x-targetX)<200){
                 System.out.println("finding target: "+targetX+"far enough from "+x+"constraints are "+width/3+" and "+(camWidth-(width/3)));
                 if (x<camWidth/2)

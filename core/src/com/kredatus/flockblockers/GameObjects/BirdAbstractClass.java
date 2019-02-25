@@ -10,6 +10,7 @@ import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Handlers.BgHandler;
+import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
@@ -90,7 +91,7 @@ public abstract class BirdAbstractClass {
     private BirdAbstractClass thisBird=this;
     public Animation[] animSeq;
 
-    public float origHealth, health;
+    public int origHealth, health;
     public float targetRot, rotation, rotStep, unRotStep;
 
     public float origYVel, origFlapSpeed, lastYSpeedAtFlapChange;
@@ -177,9 +178,9 @@ public abstract class BirdAbstractClass {
                 setCoinList(delta);
                 die();
             }
-            if (y > camHeight - 0) { //0 being height of top of tower where score & diamonds are
+            if (y > camHeight +height/2) { //0 being height of top of tower where score & diamonds are
                 //whatever we hit -= the starting health of the bird hitting it
-                die();
+                BirdHandler.activeBirdQueue.remove(this);
             }
             specificUpdate(delta, runTime);
 
@@ -259,7 +260,7 @@ public abstract class BirdAbstractClass {
         boundingPoly.translate(xVel, yVel);
     }
 
-    private void die(){
+    public void die(){
         if (currentX!=null) currentX.kill();
         if (currentY!=null) currentY.kill();
 
@@ -279,9 +280,9 @@ public abstract class BirdAbstractClass {
 
     public abstract void setManager(float camWidth);
 
-    public boolean collides(Projectile projectile) {
-        return Intersector.overlapConvexPolygons(boundingPoly, projectile.boundingRect);
-        //}
+    public boolean collides(Polygon objectYoureHitting) {
+        System.out.println(" birds: "+boundingPoly.toString() + ", airship: "+objectYoureHitting.toString());
+        return Intersector.overlapConvexPolygons(boundingPoly, objectYoureHitting);
     }
 
     private float rotationToTargetRot(float rotation, float targetRot, float angleStep) {
@@ -403,12 +404,12 @@ public abstract class BirdAbstractClass {
 
     public abstract void specificUpdate(float delta, float runTime);
 
-    public final void hit(Projectile projectile){
-        health -= projectile.dmg;
+    public final void hit(float collisionDmg){
+        health -= collisionDmg;
         isFlashing = true;
         flashOpacityValue.setValue(1f);//always start from white flash to distinguish from bg
-        if (projectile.dmg<origHealth&&health>0){
-            currentFlashLength=flashLengths.get((int)((projectile.dmg/origHealth)*flashLengths.size()));
+        if (collisionDmg<origHealth&&health>0){
+            currentFlashLength=flashLengths.get((int)((collisionDmg/origHealth)*flashLengths.size()));
             flashTween = Tween.to(flashOpacityValue, -1, currentFlashLength).target(0f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();
         } else {
             //currentFlashLength=flashLengths.get(flashLengths.size()-1); //else make flash black (-1f-0f)

@@ -26,7 +26,7 @@ public class Projectile {
         this.position = position.cpy() ;
         this.spd      = pen*2+4;
 
-        this.rotation = rotation -(acc/2)+r.nextInt(acc);   //accuracy
+        this.rotation = rotation -(acc/2f)+r.nextInt(acc);   //accuracy
         if (this.rotation>360){
             this.rotation-=360;
         } else if (rotation<0) {
@@ -41,7 +41,7 @@ public class Projectile {
         vel.set(     -(float)(spd*Math.cos(Math.toRadians(this.rotation))),    -(float)(spd*Math.sin(Math.toRadians(this.rotation)))    );
 
 
-        boundingRect  = new Polygon(new float[]{position.x-width/2,position.y-height/2,         position.x+width/2,position.y-height/2,         position.x+width/2,position.y+height/2,         position.x-width/2,position.y+height/2});
+        boundingRect  = new Polygon(new float[]{position.x-width/2f,position.y-height/2f,         position.x+width/2f,position.y-height/2f,         position.x+width/2f,position.y+height/2f,         position.x-width/2f,position.y+height/2f});
         boundingRect  . setOrigin(position.x, position.y);
 //        rotation      = -(float) Math.toDegrees(Math.atan(spd.y / (-spd.x) ));
         boundingRect  . setRotation(this.rotation);
@@ -51,8 +51,8 @@ public class Projectile {
     public void update(float delta) {
         position.add(vel.cpy());
         boundingRect.translate(vel.x, vel.y);
-        if    ( position.x +  width/2 < 0 ||  position.x - width/2 > camWidth  ||
-                position.y + height/2 < 0 || position.y - height/2 > camHeight   )  {
+        if    ( position.x +  width/2f < 0 ||  position.x - width/2f > camWidth  ||
+                position.y + height/2f < 0 || position.y - height/2f > camHeight   )  {
             isGone = true;
         }
     }

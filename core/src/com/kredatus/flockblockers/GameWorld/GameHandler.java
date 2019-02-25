@@ -58,10 +58,11 @@ public class GameHandler implements Screen {
         tinyBirdHandler = new TinyBirdHandler();
         bgHandler = new BgHandler(camWidth, camHeight);
         birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
-        targetHandler = new TargetHandler();
+
         //turretHandler = new TurretHandler(camWidth, camHeight);
         lightHandler= new LightHandler(bgHandler);
         airship=new Airship(camWidth, camHeight);
+        targetHandler = new TargetHandler(airship);
 
         world = new GameWorld(airship, camWidth, camHeight, bgHandler,birdHandler, targetHandler,tinyBirdHandler,uiHandler, lightHandler);
         Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
