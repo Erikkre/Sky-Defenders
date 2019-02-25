@@ -39,7 +39,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public Airship(int camWidth, int camHeight) {
         armorLvl=0;
-        lvl=1;
+        lvl=3;
         sideThrust=3;
 
         assignTextures(armorLvl,lvl);
@@ -49,10 +49,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         assignBounds();
 
         assignRackPositions(camWidth/2-rackWidth/2,camHeight, balloonHeight);
-        for (int i=0;i<positions.size();i++){
-            //turretList.add(new Turret('f',positions.get(i)));
-        }
-        System.out.println(turretList.size());
+        //for (int i=0;i<positions.size()/2;i+=2){
+            //turretList.add(new Turret('f',positions.get(6)));
+        //}
 
         /*
         int j=0;
@@ -103,9 +102,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     );
                 } else if (lvl==4) {
                     boundingPoly = new Polygon(new float[]{x, y + balloonHeight + 20, x - (balloonWidth / 2f) * 0.5f, y + balloonHeight * 0.95f, x - (balloonWidth / 2f) * 0.9f, y + balloonHeight * 0.75f, x - (balloonWidth / 2f), y + balloonHeight * 0.55f, x - (balloonWidth / 2f) * 0.95f, y + balloonHeight * 0.40f, x - (balloonWidth / 2f) * 0.40f, y,  //top to bottom left of burner
-                            x - turretW * 2, y - 5, x - turretW * 2, y - 2 * turretH - 5, x - turretW * 1.5f, y - 4 * turretH - 5, x - turretW * 1f, y - 5 * turretH - 5,//bottom left rack
+                            x - turretW * 2, y - 5, x - turretW * 2, y - 2 * turretH - 5, x - turretW * 1.5f, y - 4 * turretH - 5, x - turretW * 1f, y - 5 * turretH - 15,//bottom left rack
 
-                            x + turretW * 1f, y - 5 * turretH - 5, x + turretW * 1.5f, y - 4 * turretH - 5, x + turretW * 2, y - 2 * turretH - 5, x + turretW * 2, y - 5,     //bottom right of burner
+                            x + turretW * 1f, y - 5 * turretH - 15, x + turretW * 1.5f, y - 4 * turretH - 5, x + turretW * 2, y - 2 * turretH - 5, x + turretW * 2, y - 5,     //bottom right of burner
                             x + (balloonWidth / 2f) * 0.40f, y, x + (balloonWidth / 2f) * 0.95f, y + balloonHeight * 0.40f, x + (balloonWidth / 2f), y + balloonHeight * 0.55f, x + (balloonWidth / 2f) * 0.9f, y + balloonHeight * 0.75f, x + (balloonWidth / 2f) * 0.5f, y + balloonHeight * 0.95f //to top of balloon
                     }
                     );
@@ -135,7 +134,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void assignTextures(int armorLvl, int lvl) {
         balloonTexture=AssetHandler.airshipBalloon;rackTexture=AssetHandler.airshipRack(armorLvl,lvl);sideThrustTexture=AssetHandler.airshipSideThruster;
-        balloonWidth=balloonTexture.getRegionWidth()/2; balloonHeight=balloonTexture.getRegionHeight()/2;
+        balloonWidth=(int) ((balloonTexture.getRegionWidth()/2f)*(1+0.2f*lvl)); balloonHeight=balloonTexture.getRegionHeight()/2;
         thrusterWidth=sideThrustTexture.getRegionWidth()/2; thrusterHeight=sideThrustTexture.getRegionHeight()/2;
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
     }
@@ -161,8 +160,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public static void draw(SpriteBatch batcher) {
         //System.out.println(1+0.2f*lvl);
-        batcher.draw(balloonTexture, pos.x-(balloonWidth*(1+0.2f*lvl))/2f, pos.y,
-                balloonWidth/2f, balloonHeight/2f, balloonWidth*(1+0.2f*lvl), balloonHeight, 1, 1, rotation);
+        batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
+                balloonWidth/2f, balloonHeight/2f, balloonWidth, balloonHeight, 1, 1, rotation);
 
         //for (int i=0;i<sideThrust+1;i++){ //starting at bottom of balloon, draw different number of thrusters
             batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i

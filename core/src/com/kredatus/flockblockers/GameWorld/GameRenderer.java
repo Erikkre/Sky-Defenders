@@ -529,7 +529,7 @@ public void setRotate(float angle){
         droidSerifFont.draw(batcher, "%", cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 110, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+90);
         droidSerifFont.draw(batcher, "%", cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 110 , camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+230);
 
-        batcher.draw(boostdown, cam.position.x - 40, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
+        batcher.draw(boostdown, cam.position.x - 40,  camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
         batcher.draw(boostdown, cam.position.x - 135, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
         batcher.draw(boostdown, cam.position.x - 230, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
         batcher.draw(boostdown, cam.position.x - 325, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
