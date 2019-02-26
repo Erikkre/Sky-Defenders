@@ -5,19 +5,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
-import org.w3c.dom.css.Rect;
-
 import java.util.ArrayList;
-
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
     private static float rotation;
     private Circle boundingCir;
-    private static Vector2 pos, vel=new Vector2(), acc;
+    private static Vector2 pos, vel=new Vector2(), lastTouchVel=new Vector2(), acc;
+    //public boolean was
     public float gamexvel;
     public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
     protected boolean isScrolledDown;
@@ -36,22 +33,25 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public Polygon rackHitbox, balloonHitbox, prelimBoundPoly1, prelimBoundPoly2;
 
     public int tW=32, tH=33;
+    public int airshipTouchPointer, camWidth, camHeight;
 
     public Airship(int camWidth, int camHeight) {
+        this.camWidth=camWidth;
+        this.camHeight=camHeight;
         armorLvl=0;
         lvl=2;
         sideThrustLvl=0;
 
         assignTextures(armorLvl,lvl);
         height=balloonHeight+rackHeight;
-        pos=new Vector2(camWidth/2f, camHeight-balloonHeight-50);
-
+        pos=new Vector2(camWidth/2f, balloonHeight);
+        vel=new Vector2(0,0);
         assignBounds();
 
-        assignRackPositions(pos.x-rackWidth/2f, balloonHeight);
-        //for (int i=0;i<positions.size()/2;i+=2){
-            turretList.add(new Turret('f',positions.get(positions.size()/2)));
-        //}
+        assignRackPositions(pos.x-rackWidth/2f);
+        for (int i=0;i<positions.size();i++){
+            turretList.add(new Turret('f',positions.get(i)));
+        }
 
         /*
         int j=0;
@@ -112,11 +112,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackHitbox.setRotation(rotation);
     }
 
-    private void assignRackPositions(float leftXOfAirship, int balloonHeight) {
+    private void assignRackPositions(float leftXOfAirship) {
         for (int i=0;i<=lvl;i++) {
             if (i<=1) {
                 for (int j=0;j<4;j++) {
-                    positions.add(new Vector2(leftXOfAirship+j*tW+tW/2f,   pos.y-     i*tH - (tH/2)-1 ));
+                    positions.add(new Vector2(leftXOfAirship+j*tW+tW/2f,        pos.y-i*tH - (tH/2)-1 ));
                 }
             } else if (i<=3) {
                 for (int j=0;j<3;j++) {
@@ -124,7 +124,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 }
             } else if (i<=4) {
                 for (int j=0;j<2;j++) {
-                    positions.add(new Vector2(leftXOfAirship+j*tW+(tW)+tW/2f, pos.y-  i*tH - (tH/2)-1 ));
+                    positions.add(new Vector2(leftXOfAirship+j*tW+(tW)+tW/2f,   pos.y-i*tH - (tH/2)-1 ));
                 }
             }
         }
@@ -137,23 +137,57 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
     }
 
-    public  void update(float delta) {
-        //pos.add(vel.cpy().scl(delta));
-        //rackHitbox.translate(vel.cpy().scl(delta).x,vel.cpy().scl(delta).y);
-        //rackHitbox.setRotation(rotation);
+    private int getAirshipTouchPointer(){
+            for (int i = 0; i < 2; i++) {
+                float y = -(Gdx.input.getY(i)-camHeight), x = Gdx.input.getX(i);
+                System.out.println(x+", "+y);
+                if (y < pos.y + balloonHeight && y > pos.y - rackHeight && x < pos.x + ((balloonWidth + rackWidth) / 4f) && x > pos.x - ((balloonWidth + rackWidth) / 4f)) {//average width of airship between balloon and rack
+                    System.out.println("NEW TOUCH ON AIRSHIP as y: "+y+", posY: "+pos.y+", x: "+x+", posX: "+x);
+                    return i;
+                }
+            }
+        return -1;
+    }
 
-        if (Gdx.input.isTouched(0)){
-
+    private void moveAirship(){
+        if (airshipTouchPointer==-1 && Gdx.input.justTouched()) {//if new press and not pressed before
+            airshipTouchPointer=getAirshipTouchPointer();
+        } else if (airshipTouchPointer>=0 && Gdx.input.isTouched(airshipTouchPointer)) {//if (after first press) and (airship was pressed) and (airship currently pressed)
+            System.out.println("AIRSHIP WAS TOUCHED");
+            vel.set(Gdx.input.getDeltaX(airshipTouchPointer)*60,-(Gdx.input.getDeltaY(airshipTouchPointer))*60);
+        } else if (airshipTouchPointer>=0){//if (airship pointer not pressed and pointer not reset)
+            System.out.println("AIRSHIP POINTER UNTOUCHED");
+            airshipTouchPointer=-1;
         }
+    }
+
+    public void update(float delta) {
+        moveAirship();
+
+        pos.add(vel.cpy().scl(delta));
+        rackHitbox.translate(vel.cpy().scl(delta).x,vel.cpy().scl(delta).y);
+        rackHitbox.setRotation(rotation);
+        balloonHitbox.translate(vel.cpy().scl(delta).x,vel.cpy().scl(delta).y);
+        balloonHitbox.setRotation(rotation);
+
         for (Turret i : turretList){
             i.position.add(vel.cpy().scl(delta));
             i.update();
         }
-        if (vel.x>0)vel.x-=1; //slowdown
-        else if (vel.x<0)vel.x+=1;
 
-        if (vel.y>0)vel.y-=1;
-        else if (vel.y<0)vel.y+=1;
+        if (vel.x>0)vel.x-=5; //slowdown
+        else if (vel.x<0)vel.x+=5;
+
+        if (vel.y>0)vel.y-=5;
+        else if (vel.y<0)vel.y+=5;
+
+        if (pos.x < balloonWidth||pos.x>camWidth-balloonWidth) {
+            vel.x*=0.1f;
+        }
+        if (pos.y < height||pos.y>camHeight-height){
+            vel.y*=0.1f;
+        }
+        System.out.println("PositionY: "+pos.y+" , height: "+height);
     }
 
     public static void draw(SpriteBatch batcher) {
@@ -178,4 +212,5 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public void hit(int origBirdHealth){
         health-=origBirdHealth;
     }
+
 }
