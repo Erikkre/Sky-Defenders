@@ -21,7 +21,7 @@ public class Turret {
     public boolean firing, targetAquired;
     private int[] rotList =new int[] {1,2,5, 10, 20}, accList=new int[] {28, 22, 16, 10, 2};    //rotation rates, accuracy disparity in degrees (divide by 2), so highest innacuracy is 14 lowest is 1 degree off from target
     public int dmgUpCounter, penUpCounter, rofUpCounter, sprUpCounter, rotUpCounter, accUpCounter,  spr, acc=accList[0], rot=rotList[0];   //rot = rotationSpeed
-    public static int width=54,height=54;
+    public static int width,height;
     public Vector2 position;
     private float camWidth, camHeight;
     public float dmg, pen, rof;
@@ -45,7 +45,7 @@ public class Turret {
         timer=new Timer();
         firing=false;
         turretSetup(turretType, lvl);
-
+        height=texture.getRegionHeight();width=texture.getRegionWidth();
         /*if (position.x<camWidth/2) {
             texture = new TextureRegion(texture);
             texture.flip(false,true);

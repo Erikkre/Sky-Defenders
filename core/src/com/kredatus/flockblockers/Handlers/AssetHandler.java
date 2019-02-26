@@ -327,8 +327,8 @@ public class AssetHandler {
         f0Texture= new Texture(Gdx.files.internal("sprites"+File.separator+"turrets"+File.separator+"FF0.png"));
         f0Texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         //turret.flip(false, true);
-        f0 = new TextureRegion(f0Texture,0, 11,100,30);
-        f0Proj = new TextureRegion(f0Texture,0, 0,100,10);
+        f0 = new TextureRegion(f0Texture,0, 4,32,13);
+        f0Proj = new TextureRegion(f0Texture,0, 0,32,3);
 
 
         Texture coinTexture=new Texture(Gdx.files.internal("sprites"+File.separator+"coin.png"));
@@ -410,10 +410,10 @@ public class AssetHandler {
         airshipSideThruster = new TextureRegion(airshipSideThrusterTexture, airshipSideThrusterTexture.getWidth(), airshipSideThrusterTexture.getHeight());
     }
 
-    public static TextureRegion airshipRack(int armorLvl, int lvl){
+    public static TextureRegion airshipRack(int armorLvl, int lvl, int turretHeight){
             Texture rack = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"rack"+armorLvl+".png"));
             rack.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-            return new TextureRegion(rack, rack.getWidth(), 57*lvl+62);
+            return new TextureRegion(rack, rack.getWidth(), turretHeight*lvl+3);
     }
 
     private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed){

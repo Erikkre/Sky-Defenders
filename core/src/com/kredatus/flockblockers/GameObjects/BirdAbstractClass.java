@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
@@ -127,8 +128,8 @@ public abstract class BirdAbstractClass {
 
         isAlive=true;
         isOffCam = false;
-        yAcc=-1f;
-        yVelDeath=15;
+        yAcc=-0.6f;
+        yVelDeath=10;
         rotStep=2.1f;
         unRotStep=0.6f;
         //this.manager=manager;
@@ -281,7 +282,6 @@ public abstract class BirdAbstractClass {
     public abstract void setManager(float camWidth);
 
     public boolean collides(Polygon objectYoureHitting) {
-        System.out.println(" birds: "+boundingPoly.toString() + ", airship: "+objectYoureHitting.toString());
         return Intersector.overlapConvexPolygons(boundingPoly, objectYoureHitting);
     }
 

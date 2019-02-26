@@ -34,6 +34,7 @@ import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
+import com.kredatus.flockblockers.Helpers.ShapeRendererCustom;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
@@ -64,7 +65,7 @@ public class GameRenderer {
     private GameWorld myWorld;
     public OrthographicCamera cam;
     private FitViewport viewport;
-    private ShapeRenderer shapeRenderer;
+    private ShapeRenderer shapeRenderer; private ShapeRendererCustom shapeRendererCust;
     boolean turnback=true;
     private SpriteBatch batcher;
     private Glider glider;
@@ -150,8 +151,8 @@ public class GameRenderer {
         //viewport.apply();
 
 
-
-
+        shapeRendererCust= new ShapeRendererCustom();
+        shapeRendererCust.setProjectionMatrix(cam.combined);
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(cam.combined);
 
@@ -603,6 +604,8 @@ public void setRotate(float angle){
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
         }
 
+        Airship.draw(batcher);
+
         for (BirdAbstractClass k : deadBirdQueue) {
             if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
@@ -632,7 +635,7 @@ public void setRotate(float angle){
             }
         }
 
-        Airship.draw(batcher);
+
 
         /*for (Turret i : turretList) {
             batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,
@@ -645,11 +648,11 @@ public void setRotate(float angle){
         }
 
         for (BirdAbstractClass k : activeBirdQueue) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            /*shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(255,0,0, 1f);
 
             shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());
-            shapeRenderer.end();
+            shapeRenderer.end();*/
 
             if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
@@ -674,11 +677,14 @@ public void setRotate(float angle){
 
             //batcher.begin();
         }
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(255,0,0, 1f);
+        /*shapeRendererCust.begin(ShapeRenderer.ShapeType.Line);
+        shapeRendererCust.setColor(255,0,0, 1f);
 
-        shapeRenderer.polygon(airship.boundingPoly.getTransformedVertices());
-        shapeRenderer.end();
+        //shapeRenderer.polygon(airship.prelimBoundPoly1.getTransformedVertices());
+        //shapeRenderer.polygon(airship.prelimBoundPoly2.getTransformedVertices());
+        shapeRendererCust.polygon(airship.rackHitbox.getTransformedVertices());
+        shapeRendererCust.polygon(airship.balloonHitbox.getTransformedVertices());
+        shapeRendererCust.end();*/
 
         /*
         batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-glider.getWidth()/2, glider.getPosition().y-glider.getHeight()/2,

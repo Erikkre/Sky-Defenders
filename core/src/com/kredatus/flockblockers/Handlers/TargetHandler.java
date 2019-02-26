@@ -30,11 +30,13 @@ public class TargetHandler {
         for (BirdAbstractClass i : BirdHandler.activeBirdQueue) {
             i.update(delta, runTime);
 
-            if (i.collides(airship.boundingPoly)) {
-                System.out.println(airship.boundingPoly + " "+i.collides(airship.boundingPoly));
-                airship.hit(i.origHealth);
-                i.hit(9000);    //lol
-                i.die();                   //just in case bird health gets crazy high
+            //if (i.collides(airship.prelimBoundPoly1)||i.collides(airship.prelimBoundPoly2)) {
+                //System.out.println("********************** HIT PRELIM *********************");
+            if (i.isAlive && i.collides(airship.rackHitbox) || i.collides(airship.balloonHitbox)) {
+                    //System.out.println("********************** HIT REAL *********************");
+                    airship.hit(i.origHealth);
+                    i.hit(i.origHealth);    //lol
+                //}
             } else if (!i.isAlive){
                 BirdHandler.deadBirdQueue.add(i);
                 BirdHandler.activeBirdQueue.remove(i);
@@ -74,6 +76,7 @@ public class TargetHandler {
             i.update(delta, runTime);
             if (i.isOffCam()&&i.coinList==null) {
                 BirdHandler.deadBirdQueue.remove(i);
+
             }
         }
     }

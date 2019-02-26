@@ -5,13 +5,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
+import org.w3c.dom.css.Rect;
+
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
     private static float rotation;
@@ -26,31 +27,30 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public int armor=100, health=100;
 
-    public static int lvl, engineTuning, armorLvl, sideThrust;   //0-4
+    public static int lvl, engineTuning, armorLvl, sideThrustLvl;   //0-4
     public static TextureRegion balloonTexture, rackTexture, sideThrustTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
 
     //positions 28,31    82,31  110-136 and 137-163
 
     public static ArrayList<Turret> turretList=new ArrayList<Turret>(13);
-    public Polygon boundingPoly, wideBoundingPoly;
-    Circle circle = new Circle();
+    public Polygon rackHitbox, balloonHitbox, prelimBoundPoly1, prelimBoundPoly2;
 
-    public int turretW=54, turretH=54;
+    public int tW=32, tH=33;
 
     public Airship(int camWidth, int camHeight) {
         armorLvl=0;
-        lvl=3;
-        sideThrust=3;
+        lvl=2;
+        sideThrustLvl=0;
 
         assignTextures(armorLvl,lvl);
         height=balloonHeight+rackHeight;
-        pos=new Vector2(camWidth/2f, camHeight-balloonHeight);
+        pos=new Vector2(camWidth/2f, camHeight-balloonHeight-50);
 
         assignBounds();
 
-        assignRackPositions(camWidth/2-rackWidth/2,camHeight, balloonHeight);
+        assignRackPositions(pos.x-rackWidth/2f, balloonHeight);
         //for (int i=0;i<positions.size()/2;i+=2){
-            //turretList.add(new Turret('f',positions.get(6)));
+            turretList.add(new Turret('f',positions.get(positions.size()/2)));
         //}
 
         /*
@@ -66,83 +66,81 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     private void assignBounds(){
-        float x =pos.x, y=pos.y;
+        float x =pos.x, y=pos.y-2, rB=balloonWidth/2f, hB=balloonHeight;
+
+                prelimBoundPoly2= new Polygon(new float[]{x - balloonWidth/2f,y,   x - balloonWidth/2f,y+hB,    x + balloonWidth/2f,y+hB,    x + balloonWidth/2f,y});//left side
+                prelimBoundPoly1= new Polygon(new float[]{x - rackWidth/2f,y,   x - rackWidth/2f,y - rackHeight,   x + rackWidth/2f,y - rackHeight,  x + rackWidth/2f,y});
+
+                balloonHitbox = new Polygon(new float[]{
+                        x, y +hB,     x - rB * 0.60f, y + hB * 0.92f,       x - rB * 0.98f, y + hB * 0.67f,          x - rB * 0.90f, y + hB * 0.37f,      x - rB * 0.40f, y,  //top to bottom left of burner
+                        x + rB * 0.40f, y,        x + rB * 0.90f, y + hB * 0.37f,    x + rB * 0.98f, y + hB * 0.67f,          x + rB * 0.60f, y + hB * 0.92f //to top of balloon
+                });
+
                 if (lvl==0){
-                boundingPoly = new Polygon(new float[]{x, y +balloonHeight + 20, x - (balloonWidth / 2f) * 0.5f*(1+0.2f*lvl), y + balloonHeight * 0.95f, x - (balloonWidth / 2f)*(1+0.2f*lvl) * 0.9f, y + balloonHeight * 0.75f, x - (balloonWidth / 2f)*(1+0.2f*lvl), y + balloonHeight * 0.55f, x - (balloonWidth / 2f) * 0.95f*(1+0.2f*lvl), y + balloonHeight * 0.40f, x - (balloonWidth / 2f) * 0.40f*(1+0.2f*lvl), y,  //top to bottom left of burner
-                        x - turretW * 2, y - 5,     x - turretW * 2, y - 1 * turretH - 5,//bottom left rack
-
-                        x + turretW * 2, y - 1 * turretH - 5,   x + turretW * 2, y - 5,     //bottom right of burner
-                        x + (balloonWidth / 2f)*(1+0.2f*lvl) * 0.40f, y, x + (balloonWidth / 2f)*(1+0.2f*lvl) * 0.95f, y + balloonHeight * 0.40f, x + (balloonWidth / 2f)*(1+0.2f*lvl), y + balloonHeight * 0.55f, x + (balloonWidth / 2f)*(1+0.2f*lvl) * 0.9f, y + balloonHeight * 0.75f, x + (balloonWidth / 2f) * 0.5f*(1+0.2f*lvl), y + balloonHeight * 0.95f //to top of balloon
-
+                rackHitbox = new Polygon(new float[]{
+                        x - tW * 2, y ,         x - tW * 2, y - 1 * tH ,//bottom left rack
+                        x + tW * 2, y - 1 * tH ,     x + tW * 2, y ,     //bottom right of burner
                         }
                     );
                 } else if (lvl==1){
-                    boundingPoly = new Polygon(new float[]{x, y + balloonHeight + 20, x - (balloonWidth / 2f) * 0.5f, y + balloonHeight * 0.95f, x - (balloonWidth / 2f) * 0.9f, y + balloonHeight * 0.75f, x - (balloonWidth / 2f), y + balloonHeight * 0.55f, x - (balloonWidth / 2f) * 0.95f, y + balloonHeight * 0.40f, x - (balloonWidth / 2f) * 0.40f, y,  //top to bottom left of burner
-                            x - turretW * 2, y - 5,     x - turretW * 2, y - 2 * turretH - 5,//bottom left rack
-
-                            x + turretW * 2, y - 2 * turretH - 5,   x + turretW * 2, y - 5,     //bottom right of burner
-                            x + (balloonWidth / 2f) * 0.40f, y, x + (balloonWidth / 2f) * 0.95f, y + balloonHeight * 0.40f, x + (balloonWidth / 2f), y + balloonHeight * 0.55f, x + (balloonWidth / 2f) * 0.9f, y + balloonHeight * 0.75f, x + (balloonWidth / 2f) * 0.5f, y + balloonHeight * 0.95f //to top of balloon
+                    rackHitbox = new Polygon(new float[]{
+                            x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,//bottom left rack
+                            x + tW * 2, y - 2 * tH ,   x + tW * 2, y ,     //bottom right of burner
                         }
                     );
                 } else if (lvl==2) {
-                    boundingPoly = new Polygon(new float[]{x, y + balloonHeight + 20, x - (balloonWidth / 2f) * 0.5f, y + balloonHeight * 0.95f, x - (balloonWidth / 2f) * 0.9f, y + balloonHeight * 0.75f, x - (balloonWidth / 2f), y + balloonHeight * 0.55f, x - (balloonWidth / 2f) * 0.95f, y + balloonHeight * 0.40f, x - (balloonWidth / 2f) * 0.40f, y,  //top to bottom left of burner
-                            x - turretW * 2, y - 5,    x - turretW * 2, y - 2 * turretH - 5,     x - turretW * 1.5f, y - 3 * turretH - 5,//bottom left rack
-
-                            x + turretW * 1.5f, y - 3 * turretH - 5,        x + turretW * 2, y - 2 * turretH - 5,    x + turretW * 2, y - 5,     //bottom right of burner
-                            x + (balloonWidth / 2f) * 0.40f, y, x + (balloonWidth / 2f) * 0.95f, y + balloonHeight * 0.40f, x + (balloonWidth / 2f), y + balloonHeight * 0.55f, x + (balloonWidth / 2f) * 0.9f, y + balloonHeight * 0.75f, x + (balloonWidth / 2f) * 0.5f, y + balloonHeight * 0.95f //to top of balloon
-                    }
+                    rackHitbox = new Polygon(new float[]{
+                            x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 3 * tH ,//bottom left rack
+                            x + tW * 1.5f, y - 3 * tH ,        x + tW * 2, y - 2 * tH ,    x + tW * 2, y ,     //bottom right of burner
+                        }
                     );
                 } else if (lvl==3) {
-                    boundingPoly = new Polygon(new float[]{x, y + balloonHeight + 20, x - (balloonWidth / 2f) * 0.5f, y + balloonHeight * 0.95f, x - (balloonWidth / 2f) * 0.9f, y + balloonHeight * 0.75f, x - (balloonWidth / 2f), y + balloonHeight * 0.55f, x - (balloonWidth / 2f) * 0.95f, y + balloonHeight * 0.40f, x - (balloonWidth / 2f) * 0.40f, y,  //top to bottom left of burner
-                            x - turretW * 2, y - 5,    x - turretW * 2, y - 2 * turretH - 5,     x - turretW * 1.5f, y - 4 * turretH - 5,//bottom left rack
-
-                            x + turretW * 1.5f, y - 4 * turretH - 5,        x + turretW * 2, y - 2 * turretH - 5,    x + turretW * 2, y - 5,     //bottom right of burner
-                            x + (balloonWidth / 2f) * 0.40f, y, x + (balloonWidth / 2f) * 0.95f, y + balloonHeight * 0.40f, x + (balloonWidth / 2f), y + balloonHeight * 0.55f, x + (balloonWidth / 2f) * 0.9f, y + balloonHeight * 0.75f, x + (balloonWidth / 2f) * 0.5f, y + balloonHeight * 0.95f //to top of balloon
-                    }
+                    rackHitbox = new Polygon(new float[]{
+                            x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 4 * tH ,//bottom left rack
+                            x + tW * 1.5f, y - 4 * tH ,        x + tW * 2, y - 2 * tH ,    x + tW * 2, y ,     //bottom right of burner
+                        }
                     );
                 } else if (lvl==4) {
-                    boundingPoly = new Polygon(new float[]{x, y + balloonHeight + 20, x - (balloonWidth / 2f) * 0.5f, y + balloonHeight * 0.95f, x - (balloonWidth / 2f) * 0.9f, y + balloonHeight * 0.75f, x - (balloonWidth / 2f), y + balloonHeight * 0.55f, x - (balloonWidth / 2f) * 0.95f, y + balloonHeight * 0.40f, x - (balloonWidth / 2f) * 0.40f, y,  //top to bottom left of burner
-                            x - turretW * 2, y - 5, x - turretW * 2, y - 2 * turretH - 5, x - turretW * 1.5f, y - 4 * turretH - 5, x - turretW * 1f, y - 5 * turretH - 15,//bottom left rack
-
-                            x + turretW * 1f, y - 5 * turretH - 15, x + turretW * 1.5f, y - 4 * turretH - 5, x + turretW * 2, y - 2 * turretH - 5, x + turretW * 2, y - 5,     //bottom right of burner
-                            x + (balloonWidth / 2f) * 0.40f, y, x + (balloonWidth / 2f) * 0.95f, y + balloonHeight * 0.40f, x + (balloonWidth / 2f), y + balloonHeight * 0.55f, x + (balloonWidth / 2f) * 0.9f, y + balloonHeight * 0.75f, x + (balloonWidth / 2f) * 0.5f, y + balloonHeight * 0.95f //to top of balloon
-                    }
+                    rackHitbox = new Polygon(new float[]{
+                            x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 4 * tH ,      x - tW * 1f, y - 5 * tH ,//bottom left rack
+                            x + tW * 1f, y - 5 * tH , x + tW * 1.5f, y - 4 * tH , x + tW * 2, y - 2 * tH , x + tW * 2, y ,     //bottom right of burner
+                        }
                     );
                 }
 
-        boundingPoly.setOrigin(x, y);
-        boundingPoly.setRotation(rotation);
+        rackHitbox.setOrigin(x, y);
+        rackHitbox.setRotation(rotation);
     }
 
-    private void assignRackPositions(int leftXOfAirship, int camHeight, int balloonHeight) {
+    private void assignRackPositions(float leftXOfAirship, int balloonHeight) {
         for (int i=0;i<=lvl;i++) {
             if (i<=1) {
                 for (int j=0;j<4;j++) {
-                    positions.add(new Vector2(leftXOfAirship+j*55+Turret.width/2,   camHeight-balloonHeight-i*57 - 33));
+                    positions.add(new Vector2(leftXOfAirship+j*tW+tW/2f,   pos.y-     i*tH - (tH/2)-1 ));
                 }
             } else if (i<=3) {
                 for (int j=0;j<3;j++) {
-                    positions.add(new Vector2(leftXOfAirship+j*55+29+Turret.width/2,camHeight-balloonHeight-i*57 - 33));
+                    positions.add(new Vector2(leftXOfAirship+j*tW+(tW/2f)+tW/2f,pos.y-i*tH - (tH/2)-1 ));
                 }
             } else if (i<=4) {
                 for (int j=0;j<2;j++) {
-                    positions.add(new Vector2(leftXOfAirship+j*55+56+Turret.width/2, camHeight-balloonHeight-i*57 - 33));
+                    positions.add(new Vector2(leftXOfAirship+j*tW+(tW)+tW/2f, pos.y-  i*tH - (tH/2)-1 ));
                 }
             }
         }
     }
 
     private void assignTextures(int armorLvl, int lvl) {
-        balloonTexture=AssetHandler.airshipBalloon;rackTexture=AssetHandler.airshipRack(armorLvl,lvl);sideThrustTexture=AssetHandler.airshipSideThruster;
-        balloonWidth=(int) ((balloonTexture.getRegionWidth()/2f)*(1+0.2f*lvl)); balloonHeight=balloonTexture.getRegionHeight()/2;
-        thrusterWidth=sideThrustTexture.getRegionWidth()/2; thrusterHeight=sideThrustTexture.getRegionHeight()/2;
+        balloonTexture=AssetHandler.airshipBalloon;rackTexture=AssetHandler.airshipRack(armorLvl,lvl+1, tH);sideThrustTexture=AssetHandler.airshipSideThruster;
+        balloonWidth=(int) ((balloonTexture.getRegionWidth())*(1+0.2f*lvl)); balloonHeight=balloonTexture.getRegionHeight();
+        thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*sideThrustLvl));
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
     }
 
     public  void update(float delta) {
-        pos.add(vel.cpy().scl(delta));
-        boundingPoly.translate(vel.cpy().scl(delta).x,vel.cpy().scl(delta).y);
-        boundingPoly.setRotation(rotation);
+        //pos.add(vel.cpy().scl(delta));
+        //rackHitbox.translate(vel.cpy().scl(delta).x,vel.cpy().scl(delta).y);
+        //rackHitbox.setRotation(rotation);
 
         if (Gdx.input.isTouched(0)){
 
@@ -163,7 +161,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, balloonHeight/2f, balloonWidth, balloonHeight, 1, 1, rotation);
 
-        //for (int i=0;i<sideThrust+1;i++){ //starting at bottom of balloon, draw different number of thrusters
+        //for (int i=0;i<sideThrustLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
             batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
                     thrusterWidth/2f, thrusterHeight/2f, thrusterWidth, thrusterHeight, 1, 1, rotation);
         //}
