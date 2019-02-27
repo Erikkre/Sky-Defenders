@@ -241,8 +241,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             balloonHitbox.setPosition(pos.x-startX,pos.y-startY);
             checkBordersAndSlowdown();
         }
-
-
     }
 
     public void draw(SpriteBatch batcher) {

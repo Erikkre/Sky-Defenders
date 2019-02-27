@@ -19,11 +19,12 @@ public class Coin {
     public float y1, x1, width, height, x,y;
     public Value tweenX=new Value(), tweenY=new Value();
     public Animation animation;
-    public boolean firstMovementEndedX=false, firstMovementEndedY=false, phoenixCoin;
+    public boolean firstMovementEndedX=false, firstMovementEndedY=false, phoenixCoin, airshipMoved;
     public TweenCallback endFirstMovementX, endFirstMovementY;
     public BirdAbstractClass thisBird;
     public Tween firstXMotion, secondXMotion, firstYMotion, secondYMotion;
     public Timeline xMotion, yMotion;
+    public double startTime;
 
     public Coin(float x, float y, float rotation, BirdAbstractClass thisBird, boolean phoenixCoin){
         this.phoenixCoin=phoenixCoin;
@@ -44,9 +45,10 @@ public class Coin {
             x1 = (float) (Math.cos(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
             y1 = (float) (Math.sin(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
        }
+
+        dest=new Vector2(Airship.pos.x,Airship.pos.y+Airship.balloonHeight/2f);
+        lastDest=new Vector2(0,0);
         setupTweens();
-
-
     }
 
     private void setupTweens(){
@@ -56,6 +58,7 @@ public class Coin {
                 firstMovementEndedX=true;
                 tweenX.setValue(x);
                 if (secondXMotion!=null) secondXMotion.start();
+                startTime=System.currentTimeMillis();
             }
         };
 
@@ -65,51 +68,58 @@ public class Coin {
                 firstMovementEndedY=true;
                 tweenY.setValue(y);
                 if (secondYMotion!=null) secondYMotion.start();
+                startTime=System.currentTimeMillis();
             }
         };
 
         if (phoenixCoin) {
-
             firstXMotion=(Tween.to(tweenX, -1, 0.1f).target(x1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementX).start();
             secondXMotion=(Tween.to(tweenX, -1, 0.9f).target(dest.x).ease(TweenEquations.easeNone));
 
-
-
             firstYMotion=(Tween.to(tweenY, -1, 0.1f).target(y1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementY).start();
             secondYMotion=(Tween.to(tweenY, -1, 0.9f).target(dest.y).ease(TweenEquations.easeNone));
-
-
         } else {
-
             firstXMotion = Tween.to(tweenX, -1, 0.7f).target(x1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementX).start();
             secondXMotion= Tween.to(tweenX, -1, 1.7f).target(dest.x).ease(TweenEquations.easeNone);
 
             firstYMotion = Tween.to(tweenY, -1, 0.7f).target(y1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementY).start();
             secondYMotion= Tween.to(tweenY, -1, 1.7f).target(dest.y).ease(TweenEquations.easeNone);
         }
+        startTime=System.currentTimeMillis();
     }
 
     public void update(float delta){
         dest.set(Airship.pos.x,Airship.pos.y+Airship.balloonHeight/2f);
         differenceVector=dest.cpy().sub(lastDest);
-        if (Math.abs(differenceVector.x)>1||Math.abs(differenceVector.y)>1) {
-            //changeTarget
-        }
-            if (!firstMovementEndedX){
-                x=tweenX.getValue()+thisBird.x;//+thisBird.width/9.7f; //higher number=more to the left
-                firstXMotion.update(delta);
-            } else {
-                x=tweenX.getValue();
-                secondXMotion.update(delta);
-            }
-            if (!firstMovementEndedY){
-                y=tweenY.getValue()+thisBird.y;
-                firstYMotion.update(delta);
-            } else {
-                y=tweenY.getValue();
-                secondYMotion.update(delta);
-            }
-            lastDest=dest.cpy();
+        airshipMoved=Math.abs(differenceVector.x)>0 || Math.abs(differenceVector.y)>0;
 
+        if (!firstMovementEndedX) {
+            if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>=0) {
+                //System.out.println("current="+System.currentTimeMillis()+", start: "+startTime);
+                firstXMotion = (Tween.to(tweenX, -1, (float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)).target(x1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementX).start();
+            }
+            x = tweenX.getValue() + thisBird.x;//+thisBird.width/9.7f; //higher number=more to the left
+            firstXMotion.update(delta);
+        } else {
+            if (airshipMoved&&(float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)>=0) {
+                secondXMotion = (Tween.to(tweenX, -1, (float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)).target(dest.x).ease(TweenEquations.easeNone)).start();
+            }
+            x = tweenX.getValue();
+            secondXMotion.update(delta);
+        }
+        if (!firstMovementEndedY) {
+            if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>=0) {
+                firstYMotion = (Tween.to(tweenY, -1, (float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)).target(y1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementY).start();
+            }
+            y = tweenY.getValue() + thisBird.y;
+            firstYMotion.update(delta);
+        } else {
+            if (airshipMoved&&(float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)>=0) {
+                secondYMotion = (Tween.to(tweenY, -1, (float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)).target(dest.y).ease(TweenEquations.easeNone)).start();
+            }
+            y = tweenY.getValue();
+            secondYMotion.update(delta);
+        }
+        lastDest = dest.cpy();
     }
 }
