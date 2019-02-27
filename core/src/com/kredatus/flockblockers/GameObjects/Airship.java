@@ -40,9 +40,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public Polygon rackHitbox, balloonHitbox, prelimBoundPoly1, prelimBoundPoly2;
 
     public int tW=32, tH=33;
-    public int airshipTouchPointer=-1, camWidth, camHeight;
+    public static int airshipTouchPointer=-1, camWidth, camHeight;
     public float fingerAirshipXDiff, fingerAirshipYDiff;
-    public boolean isTouched;
+    public static boolean isTouched, justTouched;
 
     public float currentFlashLength;
     public boolean isFlashing;
@@ -179,14 +179,14 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void moveAirship(){
         if (airshipTouchPointer==-1 && Gdx.input.justTouched()) {//if new press and not pressed before
-            System.out.println(InputHandler.scaleX(Gdx.input.getX())+ " *** "+  InputHandler.scaleY(Gdx.input.getY()) );
+            //System.out.println(InputHandler.scaleX(Gdx.input.getX())+ " *** "+  InputHandler.scaleY(Gdx.input.getY()) );
             airshipTouchPointer=getAirshipTouchPointer();
-            if (airshipTouchPointer>=0){isTouched=true;System.out.println("AIRSHIP POINTER TOUCHED");
+            if (airshipTouchPointer>=0){isTouched=true;justTouched=true;//System.out.println("AIRSHIP POINTER TOUCHED");
+                System.out.println("AirshipTouchPointer set to: "+airshipTouchPointer);
                 fingerAirshipXDiff=InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))-pos.x;fingerAirshipYDiff=-(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)-pos.y;
             }
-
         } else if (airshipTouchPointer>=0 && Gdx.input.isTouched(airshipTouchPointer)) {//if (after first press) and (airship was pressed) and (airship currently pressed)
-
+            if (justTouched)justTouched=false;
             float inputX=InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))-fingerAirshipXDiff,inputY=-(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)-fingerAirshipYDiff;
             if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
             if (inputY > rackHeight/3f  &&   inputY<camHeight-balloonHeight/4f) pos.y=inputY;
@@ -233,8 +233,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 i.update();
             }
         } else {
-
-
             for (Turret i : turretList){
                 i.position.set(pos.x-(startX-i.origPosition.x),pos.y-(startY-i.origPosition.y));
                 i.update();

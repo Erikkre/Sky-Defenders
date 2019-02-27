@@ -284,7 +284,6 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 67, lA, mDia, cityP16));          //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, lA, xlDia, cityP17));         //ambient lightspot
         }
-        System.out.println("Size of bgLights list: "+bgLights.size());
     }
 
     public void setCam(GameRenderer renderer) {

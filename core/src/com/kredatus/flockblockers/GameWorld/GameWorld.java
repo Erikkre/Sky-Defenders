@@ -239,6 +239,4 @@ public class GameWorld {
     public void setRenderer(GameRenderer renderer) {
         this.renderer = renderer;
     }
-
-
 }

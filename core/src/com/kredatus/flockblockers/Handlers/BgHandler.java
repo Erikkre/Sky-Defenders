@@ -92,7 +92,7 @@ public class BgHandler {
         startStoryIntroAndSpawns=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                System.out.println("Start Spawning");
+                //System.out.println("Start Spawning");
                if (!isPastStoryIntro && GameWorld.isFirstTime){
                     isPastStoryIntro=false;
                     horizPositionBg.pause();
@@ -107,7 +107,7 @@ public class BgHandler {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
                     isBirdSpawning=false;
-                    System.out.println("end spawning");
+                    //System.out.println("end spawning");
             }
         };
 
@@ -166,7 +166,7 @@ public class BgHandler {
             public void onEvent(int i, BaseTween<?> baseTween) {
                 TinyBirdHandler.addVertValueToBirdsSurvivingWavePart(vert.getValue());
                 TinyBirdHandler.addTinyBirdsNextCity(camWidth, camHeight);
-                System.out.println("Reset stack");
+                //System.out.println("Reset stack");
                 stackJustReset=true;
                 if (bgNumber == AssetHandler.bgList.size()) {
                     //waveNumber+=1;

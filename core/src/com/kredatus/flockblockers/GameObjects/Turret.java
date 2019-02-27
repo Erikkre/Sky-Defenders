@@ -31,7 +31,7 @@ public class Turret {
     private BirdAbstractClass targetBird;
     public TextureRegion texture, projTexture;
     char turretType;
-    public int lvl = 0, firingInterval, timeSinceLastShot;
+    public int lvl = 0, firingInterval, timeSinceLastShot, gunTargetPointer=-1;
     private double lastShotTime=0;
 
     public boolean firingStoppedByGamePause;
@@ -198,13 +198,30 @@ public class Turret {
 
     public void update() {
         //System.out.println(rotation);
-        if (Gdx.input.isTouched()) {   //***************************************************if tapped and not startedTapping yet***********************************************************************************************
-            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - camHeight) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
+        if (Gdx.input.justTouched() && gunTargetPointer==-1 && !Airship.justTouched  ) {   //airShip updates first so takes the spot
+            if (Airship.airshipTouchPointer >= 0) {
+                for (int i = 0; i <= 1; i++) {
+                    if (i != Airship.airshipTouchPointer) {
+                        gunTargetPointer = i;
+                        System.out.println("GunTargetPointer set to: " + gunTargetPointer);
+                        break;
+                    }
+                }
+            } else {
+                gunTargetPointer = 0;
+                System.out.println("GunTargetPointer set to: " + gunTargetPointer);
+            }
+        }
+        if (gunTargetPointer>=0&&Gdx.input.isTouched(gunTargetPointer)){
+            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight) - position.y, InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)) - position.x);
             rotateToTarget();
             //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
             if (!firing && targetAquired) {
                 startFiring();
             }
+        } else if ((!Gdx.input.isTouched(gunTargetPointer)||Airship.airshipTouchPointer==gunTargetPointer) && gunTargetPointer>=0) {
+            gunTargetPointer=-1;
+            System.out.println("GunTargetPointer set to: "+gunTargetPointer);
         } else {    //****************************************************************************************************ai system****************************************************************************************************
             //System.out.println("AI system");
             if (BirdHandler.activeBirdQueue.size() > 0) {
@@ -213,7 +230,6 @@ public class Turret {
                     setTarget(TargetHandler.targetBird);
                     setRotation(targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
                     rotateToTarget();
-
                 } else if (targetBird!=null&&targetBird.isAlive){
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is vel but needs to be better scaled
