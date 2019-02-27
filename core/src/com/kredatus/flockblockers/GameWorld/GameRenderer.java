@@ -603,25 +603,41 @@ public void setRotate(float angle){
             batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime+i.flapRandomFactor), i.pos.x-i.width/2, i.pos.y-i.height/2,
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
         }
+/*
+        if (airship.isFlashing){
+            //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
+            batcher.setShader(flashShader);
 
-        Airship.draw(batcher);
+            //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
+            flashShader.setUniformf("flashOpacityValue", airship.flashOpacityValue.getValue());
+            //flashShader.begin();
+        }*/
+        airship.draw(batcher);/*
+        if (airship.isFlashing){
+
+            //batcher.setColor(1,1,1,1);
+            batcher.setShader(null);
+            //flashShader.end();
+            airship.flashTween.update(delta);
+        }*/
+
 
         for (BirdAbstractClass k : deadBirdQueue) {
-            if (k.isFlashing){
+            /*if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
                 //flashShader.begin();
                 batcher.setShader(flashShader);
                 //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
                 flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.getValue());
-            }
+            }*/
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
-            if (k.isFlashing){
+            /*if (k.isFlashing){
                 //batcher.setColor(1,1,1,1);
                 batcher.setShader(null);
                 k.flashTween.update(delta);
                 //flashShader.end();
-            }
+            }*/
             if (!k.coinList.isEmpty()) {
                 for (Coin l : k.coinList) {
                     if (l.firstMovementEndedX) {
@@ -654,37 +670,37 @@ public void setRotate(float angle){
             shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());
             shapeRenderer.end();*/
 
-            if (k.isFlashing){
+            /*if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
                 batcher.setShader(flashShader);
 
                 //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
                 flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.getValue());
                 //flashShader.begin();
-            }
+            }*/
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1f, 1f, k.rotation);
-            if (k.isFlashing){
+            /*if (k.isFlashing){
 
                 //batcher.setColor(1,1,1,1);
                 batcher.setShader(null);
                 //flashShader.end();
                 k.flashTween.update(delta);
 
-            }
+            }*/
             //batcher.end();
 
 
             //batcher.begin();
         }
-        /*shapeRendererCust.begin(ShapeRenderer.ShapeType.Line);
+        shapeRendererCust.begin(ShapeRenderer.ShapeType.Line);
         shapeRendererCust.setColor(255,0,0, 1f);
 
         //shapeRenderer.polygon(airship.prelimBoundPoly1.getTransformedVertices());
         //shapeRenderer.polygon(airship.prelimBoundPoly2.getTransformedVertices());
         shapeRendererCust.polygon(airship.rackHitbox.getTransformedVertices());
         shapeRendererCust.polygon(airship.balloonHitbox.getTransformedVertices());
-        shapeRendererCust.end();*/
+        shapeRendererCust.end();
 
         /*
         batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-glider.getWidth()/2, glider.getPosition().y-glider.getHeight()/2,

@@ -117,7 +117,7 @@ public abstract class BirdAbstractClass {
 
         if (FlockBlockersMain.fastTest) {globalSpeedMultiplier = 3f; globalHealthMultiplier=0.1f;}
 
-        if (flashTween!=null)flashTween.kill();
+        //if (flashTween!=null)flashTween.kill();
         endFlashing = new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {

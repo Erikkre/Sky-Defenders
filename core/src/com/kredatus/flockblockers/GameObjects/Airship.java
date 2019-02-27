@@ -7,8 +7,14 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
+
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquations;
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
     private static float rotation;
@@ -22,7 +28,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private boolean isAlive;
     private ArrayList<Vector2> positions = new ArrayList<Vector2>(16);
 
-    public int armor=100, health=100;
+    public static int armor=100, health=100, origHealth=health;
 
     public static int lvl, engineTuning, armorLvl, sideThrustLvl;   //0-4
     public static TextureRegion balloonTexture, rackTexture, sideThrustTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
@@ -33,9 +39,16 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public Polygon rackHitbox, balloonHitbox, prelimBoundPoly1, prelimBoundPoly2;
 
     public int tW=32, tH=33;
-    public int airshipTouchPointer, camWidth, camHeight;
+    public int airshipTouchPointer=-1, camWidth, camHeight;
     public float fingerAirshipXDiff, fingerAirshipYDiff;
+    public boolean isTouched;
 
+    public float currentFlashLength;
+    public boolean isFlashing;
+    public Value flashOpacityValue = new Value();
+    public Tween flashTween;
+    public TweenCallback endFlashing;
+    protected ArrayList<Float> flashLengths=new ArrayList<Float>();
     public Airship(int camWidth, int camHeight) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -46,7 +59,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         assignTextures(armorLvl,lvl);
         height=balloonHeight+rackHeight;
         pos=new Vector2(camWidth/2f, balloonHeight);
-        vel=new Vector2(0,200);
+        vel=new Vector2(0,50);
         assignBounds();
 
         assignRackPositions(pos.x-rackWidth/2f);
@@ -62,8 +75,19 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 }
                 j++;
             System.out.println(i.dmg);
+            }*/
+
+        endFlashing = new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                isFlashing = false;
+                flashTween = null;
             }
-*/
+        };
+        for (double i = 0.4f; i <= 6; i += 0.1f) { //  5.6/0.05=66 poss, maxes out at a 13 second flash
+            flashLengths.add((float) (Math.pow(flashLengths.size(), 0.7) / 3f + 0.3f));//desmos:y=\left(x^{0.5}+0.3\right)
+            //else flashLengths.add(   (float) (                (-(Math.pow(-(flashLengths.size()-25),1.32))/50) +1.8f    ));
+        }
     }
 
     private void assignBounds(){
@@ -154,8 +178,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (airshipTouchPointer==-1 && Gdx.input.justTouched()) {//if new press and not pressed before
             airshipTouchPointer=getAirshipTouchPointer();
             fingerAirshipXDiff=Gdx.input.getX(airshipTouchPointer)-pos.x;fingerAirshipYDiff=-(Gdx.input.getY(airshipTouchPointer)-camHeight)-pos.y;
+            System.out.println("AIRSHIP POINTER TOUCHED");
         } else if (airshipTouchPointer>=0 && Gdx.input.isTouched(airshipTouchPointer)) {//if (after first press) and (airship was pressed) and (airship currently pressed)
-            System.out.println("AIRSHIP WAS TOUCHED");
+            isTouched=true;
             float inputX=Gdx.input.getX(airshipTouchPointer)-fingerAirshipXDiff,inputY=-(Gdx.input.getY(airshipTouchPointer)-camHeight)-fingerAirshipYDiff;
             if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
             if (inputY > rackHeight/3f  &&   inputY<camHeight-balloonHeight/4f) pos.y=inputY;
@@ -163,24 +188,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             System.out.println("AIRSHIP POINTER UNTOUCHED");
             vel.set(Gdx.input.getDeltaX(airshipTouchPointer)*30,-(Gdx.input.getDeltaY(airshipTouchPointer))*30);
             airshipTouchPointer=-1;
+            isTouched=false;
         }
     }
 
-    public void update(float delta) {
-
-
-        pos.add(vel.cpy().scl(delta));
-        rackHitbox.translate(vel.cpy().scl(delta).x,vel.cpy().scl(delta).y);
-        rackHitbox.setRotation(rotation);
-        balloonHitbox.translate(vel.cpy().scl(delta).x,vel.cpy().scl(delta).y);
-        balloonHitbox.setRotation(rotation);
-
-        for (Turret i : turretList){
-            i.position.add(vel.cpy().scl(delta));
-            i.update();
-        }
-
-        moveAirship();
+    public void checkBordersAndSlowdown(){
         if (vel.x>0)vel.x-=10; //slowdown
         else if (vel.x<0)vel.x+=10;
 
@@ -197,6 +209,32 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 if (Math.abs(vel.y)>30f){vel.y=Math.signum(vel.y)*30f;}vel.y=-vel.y;//max speed for bounceback
             } else {vel.y*=0.5f;}
         }
+    }
+
+    public void update(float delta) {
+        moveAirship();
+
+        rackHitbox.setRotation(rotation);
+        balloonHitbox.setRotation(rotation);
+        if (!isTouched) {
+            checkBordersAndSlowdown();
+            pos.add(vel.cpy().scl(delta));
+            rackHitbox.translate(vel.cpy().scl(delta).x, vel.cpy().scl(delta).y);
+            balloonHitbox.translate(vel.cpy().scl(delta).x, vel.cpy().scl(delta).y);
+        } else {
+            System.out.println("SET POSITION OF HITBOX");
+            rackHitbox.setPosition(pos.x-rackHitbox.getScaleX()*1.5f,pos.y);
+            balloonHitbox.setPosition(pos.x,pos.y);
+            checkBordersAndSlowdown();
+        }
+
+        for (Turret i : turretList){
+            i.position.add(vel.cpy().scl(delta));
+            i.update();
+        }
+
+
+
     }
 
     public static void draw(SpriteBatch batcher) {
@@ -218,8 +256,20 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
     }
 
-    public void hit(int origBirdHealth){
-        health-=origBirdHealth;
-    }
+    public void hit(int collisionDmg){
+        health-=collisionDmg;
+        isFlashing = true;
+        flashOpacityValue.setValue(1f);//always start from white flash to distinguish from bg
+        if (collisionDmg<origHealth&&health>0){
+            currentFlashLength=flashLengths.get((int)((collisionDmg/origHealth)*flashLengths.size()));
+            flashTween = Tween.to(flashOpacityValue, -1, currentFlashLength).target(0f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();
+        } else {
+            //currentFlashLength=flashLengths.get(flashLengths.size()-1); //else make flash black (-1f-0f)
+            flashOpacityValue.setValue(1f);    //make a death shader effect
 
+            //.push(Tween.to(flashOpacityValue, -1, 0.3f).target(1f).ease(TweenEquations.easeOutExpo))
+            flashTween = Tween.to(flashOpacityValue, -1, 2f).target(-1f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();
+        }
+        //System.out.println(currentFlashLength);
+    }
 }
