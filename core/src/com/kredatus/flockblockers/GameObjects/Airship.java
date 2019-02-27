@@ -20,7 +20,7 @@ import aurelienribon.tweenengine.TweenEquations;
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
     private static float rotation;
     private Circle boundingCir;
-    private static Vector2 pos, vel=new Vector2(), lastTouchVel=new Vector2(), acc;
+    public static Vector2 pos, vel=new Vector2(), lastTouchVel=new Vector2(), acc;
     //public boolean was
     public float gamexvel;
     public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack

@@ -36,7 +36,7 @@ public class GameHandler implements Screen {
     public UiHandler uiHandler;
     public LightHandler lightHandler;
     private float runTime;
-    public static int camWidth, midPointY, camHeight, midPointX;
+    public static int camWidth, camHeight;
     public boolean isPaused=false;
     public static double timeOfPause, timeOfResume;
 
@@ -47,8 +47,7 @@ public class GameHandler implements Screen {
         camHeight=1000;
         camWidth= (int) (camHeight* (screenWidth/screenHeight)) ;
         //System.out.println("width: "+camWidth);
-        midPointY = camHeight/2;
-        midPointX = camWidth/2;
+
 
         Tween.registerAccessor(Value.class, new ValueAccessor());
         Tween.registerAccessor(BirdAbstractClass.class, new BirdAccessor());
