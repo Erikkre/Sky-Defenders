@@ -22,7 +22,7 @@ public class Turret {
     private int[] rotList =new int[] {1,2,5, 10, 20}, accList=new int[] {28, 22, 16, 10, 2};    //rotation rates, accuracy disparity in degrees (divide by 2), so highest innacuracy is 14 lowest is 1 degree off from target
     public int dmgUpCounter, penUpCounter, rofUpCounter, sprUpCounter, rotUpCounter, accUpCounter,  spr, acc=accList[0], rot=rotList[0];   //rot = rotationSpeed
     public static int width,height;
-    public Vector2 position;
+    public Vector2 position, origPosition;
     private float camWidth, camHeight;
     public float dmg, pen, rof;
     private int rotation, targetRot, behindRotation, spreadAngle=50;
@@ -38,6 +38,7 @@ public class Turret {
 
     public Turret(char turretType, Vector2 position){
         this.position =position ;
+        this.origPosition=position.cpy();
         this.camWidth = GameHandler.camWidth;
         this.camHeight=GameHandler.camHeight;
         this.turretType= turretType;
@@ -197,7 +198,7 @@ public class Turret {
 
     public void update() {
         //System.out.println(rotation);
-        if (Gdx.input.isTouched(1)) {   //***************************************************if tapped and not startedTapping yet***********************************************************************************************
+        if (Gdx.input.isTouched()) {   //***************************************************if tapped and not startedTapping yet***********************************************************************************************
             setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY()) - camHeight) - position.y, InputHandler.scaleX(Gdx.input.getX()) - position.x);
             rotateToTarget();
             //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);

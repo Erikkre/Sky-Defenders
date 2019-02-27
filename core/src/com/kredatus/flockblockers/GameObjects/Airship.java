@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public float gamexvel;
     public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
     protected boolean isScrolledDown;
-    public float midpointY, midpointX, starty;
+    public float midpointY, midpointX, startY,startX;
     private boolean isAlive;
     private ArrayList<Vector2> positions = new ArrayList<Vector2>(16);
 
@@ -35,7 +36,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     //positions 28,31    82,31  110-136 and 137-163
 
-    public static ArrayList<Turret> turretList=new ArrayList<Turret>(13);
+    public ArrayList<Turret> turretList=new ArrayList<Turret>(13);
     public Polygon rackHitbox, balloonHitbox, prelimBoundPoly1, prelimBoundPoly2;
 
     public int tW=32, tH=33;
@@ -53,12 +54,14 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         this.camWidth=camWidth;
         this.camHeight=camHeight;
         armorLvl=0;
-        lvl=2;
+        lvl=1;
         sideThrustLvl=0;
 
         assignTextures(armorLvl,lvl);
         height=balloonHeight+rackHeight;
-        pos=new Vector2(camWidth/2f, balloonHeight);
+        startY=0;
+        startX=camWidth/2;
+        pos=new Vector2(startX, startY);
         vel=new Vector2(0,50);
         assignBounds();
 
@@ -133,8 +136,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     );
                 }
 
-        rackHitbox.setOrigin(x, y);
         rackHitbox.setRotation(rotation);
+        balloonHitbox.setRotation(rotation);
     }
 
     private void assignRackPositions(float leftXOfAirship) {
@@ -164,10 +167,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private int getAirshipTouchPointer(){
             for (int i = 0; i < 2; i++) {
-                float y = -(Gdx.input.getY(i)-camHeight), x = Gdx.input.getX(i);
-                System.out.println(x+", "+y);
+                float y = -(InputHandler.scaleY(Gdx.input.getY(i))-camHeight), x = InputHandler.scaleX(Gdx.input.getX(i));
+
                 if (y < pos.y + balloonHeight && y > pos.y - rackHeight && x < pos.x + ((balloonWidth + rackWidth) / 4f) && x > pos.x - ((balloonWidth + rackWidth) / 4f)) {//average width of airship between balloon and rack
-                    System.out.println("NEW TOUCH ON AIRSHIP as y: "+y+", posY: "+pos.y+", x: "+x+", posX: "+x);
+                    //System.out.println("NEW TOUCH ON AIRSHIP as y: "+y+", posY: "+pos.y+", x: "+x+", posX: "+x);
                     return i;
                 }
             }
@@ -176,16 +179,19 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void moveAirship(){
         if (airshipTouchPointer==-1 && Gdx.input.justTouched()) {//if new press and not pressed before
+            System.out.println(InputHandler.scaleX(Gdx.input.getX())+ " *** "+  InputHandler.scaleY(Gdx.input.getY()) );
             airshipTouchPointer=getAirshipTouchPointer();
-            fingerAirshipXDiff=Gdx.input.getX(airshipTouchPointer)-pos.x;fingerAirshipYDiff=-(Gdx.input.getY(airshipTouchPointer)-camHeight)-pos.y;
-            System.out.println("AIRSHIP POINTER TOUCHED");
+            if (airshipTouchPointer>=0){isTouched=true;System.out.println("AIRSHIP POINTER TOUCHED");
+                fingerAirshipXDiff=InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))-pos.x;fingerAirshipYDiff=-(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)-pos.y;
+            }
+
         } else if (airshipTouchPointer>=0 && Gdx.input.isTouched(airshipTouchPointer)) {//if (after first press) and (airship was pressed) and (airship currently pressed)
-            isTouched=true;
-            float inputX=Gdx.input.getX(airshipTouchPointer)-fingerAirshipXDiff,inputY=-(Gdx.input.getY(airshipTouchPointer)-camHeight)-fingerAirshipYDiff;
+
+            float inputX=InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))-fingerAirshipXDiff,inputY=-(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)-fingerAirshipYDiff;
             if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
             if (inputY > rackHeight/3f  &&   inputY<camHeight-balloonHeight/4f) pos.y=inputY;
         } else if (airshipTouchPointer>=0){//if (airship pointer not pressed and pointer not reset)
-            System.out.println("AIRSHIP POINTER UNTOUCHED");
+            //System.out.println("AIRSHIP POINTER UNTOUCHED");
             vel.set(Gdx.input.getDeltaX(airshipTouchPointer)*30,-(Gdx.input.getDeltaY(airshipTouchPointer))*30);
             airshipTouchPointer=-1;
             isTouched=false;
@@ -217,27 +223,31 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackHitbox.setRotation(rotation);
         balloonHitbox.setRotation(rotation);
         if (!isTouched) {
+            //System.out.println("not touched");
             checkBordersAndSlowdown();
             pos.add(vel.cpy().scl(delta));
             rackHitbox.translate(vel.cpy().scl(delta).x, vel.cpy().scl(delta).y);
             balloonHitbox.translate(vel.cpy().scl(delta).x, vel.cpy().scl(delta).y);
+            for (Turret i : turretList){
+                i.position.add(vel.cpy().scl(delta));
+                i.update();
+            }
         } else {
-            System.out.println("SET POSITION OF HITBOX");
-            rackHitbox.setPosition(pos.x-rackHitbox.getScaleX()*1.5f,pos.y);
-            balloonHitbox.setPosition(pos.x,pos.y);
+
+
+            for (Turret i : turretList){
+                i.position.set(pos.x-(startX-i.origPosition.x),pos.y-(startY-i.origPosition.y));
+                i.update();
+            }
+            rackHitbox.setPosition(pos.x-startX,pos.y-startY);
+            balloonHitbox.setPosition(pos.x-startX,pos.y-startY);
             checkBordersAndSlowdown();
         }
-
-        for (Turret i : turretList){
-            i.position.add(vel.cpy().scl(delta));
-            i.update();
-        }
-
 
 
     }
 
-    public static void draw(SpriteBatch batcher) {
+    public void draw(SpriteBatch batcher) {
         //System.out.println(1+0.2f*lvl);
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, balloonHeight/2f, balloonWidth, balloonHeight, 1, 1, rotation);
@@ -256,7 +266,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
     }
 
-    public void hit(int collisionDmg){
+    public void hit(int collisionDmg) {
         health-=collisionDmg;
         isFlashing = true;
         flashOpacityValue.setValue(1f);//always start from white flash to distinguish from bg

@@ -398,7 +398,7 @@ public abstract class BirdAbstractClass {
                 }
             };
             float timerIntervals = (timeToOffCam * delta * 1.05f) / coinNumber;  //because yacc and yvel are added every frameTimeDifference, we must multiply by delta to get seconds approximation
-            timer.scheduleAtFixedRate(task, 0, (int) (timerIntervals * 1000));
+            timer.scheduleAtFixedRate(task, 0, (int) (timerIntervals * 1000)+1);
         }
     }
 
