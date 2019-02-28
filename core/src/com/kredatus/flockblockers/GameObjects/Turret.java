@@ -219,7 +219,7 @@ public class Turret {
             if (!firing && targetAquired) {
                 startFiring();
             }
-        } else if ((!Gdx.input.isTouched(gunTargetPointer)||Airship.airshipTouchPointer==gunTargetPointer) && gunTargetPointer>=0) {
+        } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer)||Airship.airshipTouchPointer==gunTargetPointer)) {
             gunTargetPointer=-1;
             System.out.println("GunTargetPointer set to: "+gunTargetPointer);
         } else {    //****************************************************************************************************ai system****************************************************************************************************

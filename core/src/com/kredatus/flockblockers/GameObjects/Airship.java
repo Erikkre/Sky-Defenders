@@ -29,7 +29,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private boolean isAlive;
     private ArrayList<Vector2> positions = new ArrayList<Vector2>(16);
 
-    public static int armor=100, health=100, origHealth=health;
+    public static int armor=100, health=100, origHealth=health, slowdownSpeed;
 
     public static int lvl, engineTuning, armorLvl, sideThrustLvl;   //0-4
     public static TextureRegion balloonTexture, rackTexture, sideThrustTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
@@ -44,7 +44,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public float fingerAirshipXDiff, fingerAirshipYDiff;
     public static boolean isTouched, justTouched;
 
-    public float currentFlashLength;
+    public float currentFlashLength, dragSpeed;
     public boolean isFlashing;
     public Value flashOpacityValue = new Value();
     public Tween flashTween;
@@ -91,6 +91,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             flashLengths.add((float) (Math.pow(flashLengths.size(), 0.7) / 3f + 0.3f));//desmos:y=\left(x^{0.5}+0.3\right)
             //else flashLengths.add(   (float) (                (-(Math.pow(-(flashLengths.size()-25),1.32))/50) +1.8f    ));
         }
+        slowdownSpeed=20;
+        dragSpeed=10f;
     }
 
     private void assignBounds(){
@@ -183,7 +185,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             airshipTouchPointer=getAirshipTouchPointer();
             if (airshipTouchPointer>=0){isTouched=true;justTouched=true;//System.out.println("AIRSHIP POINTER TOUCHED");
                 System.out.println("AirshipTouchPointer set to: "+airshipTouchPointer);
-                fingerAirshipXDiff=InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))-pos.x;fingerAirshipYDiff=-(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)-pos.y;
+                fingerAirshipXDiff=(InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))-pos.x);fingerAirshipYDiff=(-(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)-pos.y);
             }
         } else if (airshipTouchPointer>=0 && Gdx.input.isTouched(airshipTouchPointer)) {//if (after first press) and (airship was pressed) and (airship currently pressed)
             if (justTouched)justTouched=false;
@@ -199,11 +201,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void checkBordersAndSlowdown(){
-        if (vel.x>0)vel.x-=10; //slowdown
-        else if (vel.x<0)vel.x+=10;
+        if (vel.x>0)vel.x-=slowdownSpeed; //slowdown
+        else if (vel.x<0)vel.x+=slowdownSpeed;
 
-        if (vel.y>0)vel.y-=10;
-        else if (vel.y<0)vel.y+=10;
+        if (vel.y>0)vel.y-=slowdownSpeed;
+        else if (vel.y<0)vel.y+=slowdownSpeed;
 
         if (pos.x < balloonWidth/2f&&vel.x<0   ||   pos.x>camWidth-balloonWidth/2f&&vel.x>0){
             if (pos.x < balloonWidth/3f   ||   pos.x>camWidth-balloonWidth/3f){
