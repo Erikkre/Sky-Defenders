@@ -4,6 +4,7 @@ package com.kredatus.flockblockers.GameWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
@@ -18,6 +19,7 @@ import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.TweenAccessors.BirdAccessor;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
+import com.kredatus.flockblockers.TweenAccessors.VectorAccessor;
 
 import aurelienribon.tweenengine.Tween;
 
@@ -51,6 +53,7 @@ public class GameHandler implements Screen {
 
         Tween.registerAccessor(Value.class, new ValueAccessor());
         Tween.registerAccessor(BirdAbstractClass.class, new BirdAccessor());
+        Tween.registerAccessor(Vector2.class, new VectorAccessor());
         Tween.setWaypointsLimit(10);
 
         uiHandler=new UiHandler();

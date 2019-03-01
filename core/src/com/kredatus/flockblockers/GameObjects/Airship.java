@@ -6,21 +6,25 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.brashmonkey.spriter.TweenedAnimation;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
+import com.kredatus.flockblockers.Helpers.InvertedTweenEquations;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenAccessor;
 import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
     private static float rotation;
     private Circle boundingCir;
-    public static Vector2 pos, vel=new Vector2(), lastTouchVel=new Vector2(), acc;
+    public static Vector2 pos, vel=new Vector2(); //lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
     public float gamexvel;
     public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
@@ -29,7 +33,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private boolean isAlive;
     private ArrayList<Vector2> positions = new ArrayList<Vector2>(16);
 
-    public static int armor=100, health=100, origHealth=health, slowdownSpeed;
+    public static int armor=100, health=100, origHealth=health; //slowdownSpeed;
 
     public static int lvl, engineTuning, armorLvl, sideThrustLvl;   //0-4
     public static TextureRegion balloonTexture, rackTexture, sideThrustTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
@@ -42,33 +46,38 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public int tW=32, tH=33;
     public static int airshipTouchPointer=-1, camWidth, camHeight;
     public float fingerAirshipXDiff, fingerAirshipYDiff;
-    public static boolean isTouched, justTouched;
+    //public static boolean justTouched;
 
-    public float currentFlashLength, dragSpeed;
+    public float currentFlashLength;// dragSpeed;
     public boolean isFlashing;
     public Value flashOpacityValue = new Value();
     public Tween flashTween;
     public TweenCallback endFlashing;
     protected ArrayList<Float> flashLengths=new ArrayList<Float>();
+
+    public Tween tween;
+    float inputX, inputY, speedDivisor;
+    public static boolean justTouched;
+
     public Airship(int camWidth, int camHeight) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
         armorLvl=0;
-        lvl=1;
+        lvl=0;
         sideThrustLvl=0;
 
         assignTextures(armorLvl,lvl);
         height=balloonHeight+rackHeight;
-        startY=0;
-        startX=camWidth/2;
+        startY=-height;
+        startX=-balloonWidth;
         pos=new Vector2(startX, startY);
         vel=new Vector2(0,50);
         assignBounds();
 
         assignRackPositions(pos.x-rackWidth/2f);
-        for (int i=0;i<positions.size();i++){
-            turretList.add(new Turret('f',positions.get(i)));
-        }
+        //for (int i=0;i<positions.size();i++){
+            turretList.add(new Turret('f',positions.get(0)));
+        //}
 
         /*
         int j=0;
@@ -91,8 +100,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             flashLengths.add((float) (Math.pow(flashLengths.size(), 0.7) / 3f + 0.3f));//desmos:y=\left(x^{0.5}+0.3\right)
             //else flashLengths.add(   (float) (                (-(Math.pow(-(flashLengths.size()-25),1.32))/50) +1.8f    ));
         }
-        slowdownSpeed=20;
-        dragSpeed=10f;
+        //slowdownSpeed=20;
+        //dragSpeed=10f;
+
+        tween=Tween.to(pos,0,3).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(2).start();
+        speedDivisor=100f;//35, 45, 60, 75, 90, higher the faster
     }
 
     private void assignBounds(){
@@ -167,41 +179,18 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
     }
 
-    private int getAirshipTouchPointer(){
-            for (int i = 0; i < 2; i++) {
-                float y = -(InputHandler.scaleY(Gdx.input.getY(i))-camHeight), x = InputHandler.scaleX(Gdx.input.getX(i));
-
-                if (y < pos.y + balloonHeight && y > pos.y - rackHeight && x < pos.x + ((balloonWidth + rackWidth) / 4f) && x > pos.x - ((balloonWidth + rackWidth) / 4f)) {//average width of airship between balloon and rack
-                    //System.out.println("NEW TOUCH ON AIRSHIP as y: "+y+", posY: "+pos.y+", x: "+x+", posX: "+x);
-                    return i;
-                }
-            }
-        return -1;
+    public boolean pointerOnAirship(int pointer){
+        //System.out.println("NEW TOUCH ON AIRSHIP as y: "+y+", posY: "+pos.y+", x: "+x+", posX: "+x);
+        float y = -(InputHandler.scaleY(Gdx.input.getY(pointer))-camHeight), x = InputHandler.scaleX(Gdx.input.getX(pointer));
+        return y < pos.y + balloonHeight && y > pos.y - rackHeight && x < pos.x + ((balloonWidth + rackWidth) / 4f) && x > pos.x - ((balloonWidth + rackWidth) / 4f);//average width of airship between balloon and rack
     }
 
-    private void moveAirship(){
-        if (airshipTouchPointer==-1 && Gdx.input.justTouched()) {//if new press and not pressed before
-            //System.out.println(InputHandler.scaleX(Gdx.input.getX())+ " *** "+  InputHandler.scaleY(Gdx.input.getY()) );
-            airshipTouchPointer=getAirshipTouchPointer();
-            if (airshipTouchPointer>=0){isTouched=true;justTouched=true;//System.out.println("AIRSHIP POINTER TOUCHED");
-                System.out.println("AirshipTouchPointer set to: "+airshipTouchPointer);
-                fingerAirshipXDiff=(InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))-pos.x);fingerAirshipYDiff=(-(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)-pos.y);
-            }
-        } else if (airshipTouchPointer>=0 && Gdx.input.isTouched(airshipTouchPointer)) {//if (after first press) and (airship was pressed) and (airship currently pressed)
-            if (justTouched)justTouched=false;
-            float inputX=InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))-fingerAirshipXDiff,inputY=-(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)-fingerAirshipYDiff;
-            if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
-            if (inputY > rackHeight/3f  &&   inputY<camHeight-balloonHeight/4f) pos.y=inputY;
-        } else if (airshipTouchPointer>=0){//if (airship pointer not pressed and pointer not reset)
-            //System.out.println("AIRSHIP POINTER UNTOUCHED");
-            vel.set(Gdx.input.getDeltaX(airshipTouchPointer)*30,-(Gdx.input.getDeltaY(airshipTouchPointer))*30);
-            airshipTouchPointer=-1;
-            isTouched=false;
-        }
+    public boolean isOnCam(float x, float y){
+        return x > 0 && x < camWidth && y < camHeight && y > 0;
     }
 
     public void checkBordersAndSlowdown(){
-        if (vel.x>0)vel.x-=slowdownSpeed; //slowdown
+        /*if (vel.x>0)vel.x-=slowdownSpeed; //slowdown
         else if (vel.x<0)vel.x+=slowdownSpeed;
 
         if (vel.y>0)vel.y-=slowdownSpeed;
@@ -216,15 +205,68 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             if (pos.y < rackHeight/3f  ||   pos.y>camHeight-balloonHeight/4f){
                 if (Math.abs(vel.y)>30f){vel.y=Math.signum(vel.y)*30f;}vel.y=-vel.y;//max speed for bounceback
             } else {vel.y*=0.5f;}
+        }*/
+    }
+
+    private int getAirshipTouchPointer(){
+        for (int i = 0; i < 2; i++) {
+            if (pointerOnAirship(i)) {System.out.println("airShipPointer set to "+i);return i;}
+        }
+        return -1;
+    }
+    private void setDestAirship(){
+        if (justTouched)justTouched=false;
+        if (airshipTouchPointer==-1 && Gdx.input.justTouched()) {//if new press and not pressed before
+            //System.out.println(InputHandler.scaleX(Gdx.input.getX())+ " *** "+  InputHandler.scaleY(Gdx.input.getY()) );
+            airshipTouchPointer=getAirshipTouchPointer();
+            if (airshipTouchPointer>=0){
+                //System.out.println("AIRSHIP POINTER TOUCHED");
+                justTouched=true;
+                inputX=InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer));inputY= -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight);
+                fingerAirshipXDiff=inputX-pos.x;fingerAirshipYDiff=inputY-pos.y;//fingerAirshipDiff doesnt change while finger is pressed which is why we get it once here
+        }
+        } else if (airshipTouchPointer>=0 && Gdx.input.isTouched(airshipTouchPointer) &&
+                (     Math.abs((inputX+fingerAirshipXDiff)-InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))  ) >0
+                    ||Math.abs((inputY+fingerAirshipYDiff)+(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)  ) >0     )     ) { //if (after first press) and (airship was pressed) and (airship currently pressed)
+            //System.out.println("AIRSHIP POINTER MOVED");
+            inputX = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff ;//input with finger touch difference
+            inputY = -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight) - fingerAirshipYDiff ;
+            if (isOnCam(inputX, inputY)) {
+                        tween = Tween.to(pos, 0, (float) (Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y-inputY),2)))/speedDivisor ).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
+            }
+            //if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
+            //if (inputY > rackHeight/3f  &&   inputY<camHeight-balloonHeight/4f) pos.y=inputY;
+            //} else if (airshipTouchPointer>=0) {//if (airship pointer not pressed and pointer not reset)
+
+        } else if (airshipTouchPointer>=0&&!Gdx.input.isTouched(airshipTouchPointer)) {
+            //System.out.println("AIRSHIP POINTER UNTOUCHED");
+            //vel.set(Gdx.input.getDeltaX(airshipTouchPointer)*30,-(Gdx.input.getDeltaY(airshipTouchPointer))*30);
+            airshipTouchPointer=-1;
         }
     }
 
     public void update(float delta) {
-        moveAirship();
-
+        //System.out.println("inputx: "+inputX);
+        setDestAirship();
+        //System.out.print(pos.toString());
         rackHitbox.setRotation(rotation);
         balloonHitbox.setRotation(rotation);
-        if (!isTouched) {
+        for (Turret i : turretList) {
+            i.update();
+        }
+
+        if (!tween.isFinished()) {
+            //System.out.println("update tween");
+            tween.update(delta);
+            for (Turret i : turretList) {
+                i.position.set(pos.x - (startX - i.origPosition.x), pos.y - (startY - i.origPosition.y));
+            }
+
+            rackHitbox.setPosition(pos.x - startX, pos.y - startY);
+            balloonHitbox.setPosition(pos.x - startX, pos.y - startY);
+            //checkBordersAndSlowdown(); not using velocity
+        }
+        /*if (!isTouched) {
             //System.out.println("not touched");
             checkBordersAndSlowdown();
             pos.add(vel.cpy().scl(delta));
@@ -235,14 +277,15 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 i.update();
             }
         } else {
-            for (Turret i : turretList){
-                i.position.set(pos.x-(startX-i.origPosition.x),pos.y-(startY-i.origPosition.y));
+            for (Turret i : turretList) {
+                i.position.set(pos.x - (startX - i.origPosition.x), pos.y - (startY - i.origPosition.y));
                 i.update();
             }
-            rackHitbox.setPosition(pos.x-startX,pos.y-startY);
-            balloonHitbox.setPosition(pos.x-startX,pos.y-startY);
+
+            rackHitbox.setPosition(pos.x - startX, pos.y - startY);
+            balloonHitbox.setPosition(pos.x - startX, pos.y - startY);
             checkBordersAndSlowdown();
-        }
+        }*/
     }
 
     public void draw(SpriteBatch batcher) {

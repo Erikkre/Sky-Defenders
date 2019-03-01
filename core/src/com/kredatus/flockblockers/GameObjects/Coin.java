@@ -16,14 +16,13 @@ import aurelienribon.tweenengine.TweenEquations;
 
 public class Coin {
     private Vector2 dest, lastDest, differenceVector;
-    public float y1, x1, width, height, x,y;
+    public float y1, x1, width, height, x, y, motion1TimePhoenix,motion2TimePhoenix,motion1Time,motion2Time;
     public Value tweenX=new Value(), tweenY=new Value();
     public Animation animation;
     public boolean firstMovementEndedX=false, firstMovementEndedY=false, phoenixCoin, airshipMoved;
     public TweenCallback endFirstMovementX, endFirstMovementY;
     public BirdAbstractClass thisBird;
     public Tween firstXMotion, secondXMotion, firstYMotion, secondYMotion;
-    public Timeline xMotion, yMotion;
     public double startTime;
 
     public Coin(float x, float y, float rotation, BirdAbstractClass thisBird, boolean phoenixCoin){
@@ -33,21 +32,27 @@ public class Coin {
 
         height = width;
 
-        if (phoenixCoin) {
-            x+=thisBird.width/7.7f;
-           x1= x - (float)(Math.cos(Math.toRadians(rotation)))*75 ;
-           y1= y - (float)(Math.sin(Math.toRadians(rotation)))*75;
-           tweenX.setValue(x);
-           tweenY.setValue(y);
+        this.thisBird=thisBird;
 
-       } else {
-            this.thisBird=thisBird;
+        if (phoenixCoin) {
+            //x+=thisBird.width/7.7f;
+           x1 =  (float)(Math.cos(Math.toRadians(rotation)))*55 ;
+           y1 =  (float)(Math.sin(Math.toRadians(rotation)))*55;
+           //tweenX.setValue(x);
+           //tweenY.setValue(y);
+        } else {
             x1 = (float) (Math.cos(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
             y1 = (float) (Math.sin(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
-       }
+        }
 
         dest=new Vector2(Airship.pos.x,Airship.pos.y+Airship.balloonHeight/2f);
         lastDest=new Vector2(0,0);
+
+        motion1TimePhoenix=0.7f;
+        motion2TimePhoenix=1.7f;
+        motion1Time=0.7f;
+        motion2Time=1.7f;
+
         setupTweens();
     }
 
@@ -73,17 +78,17 @@ public class Coin {
         };
 
         if (phoenixCoin) {
-            firstXMotion=(Tween.to(tweenX, -1, 0.1f).target(x1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementX).start();
-            secondXMotion=(Tween.to(tweenX, -1, 0.9f).target(dest.x).ease(TweenEquations.easeNone));
+            firstXMotion=(Tween.to(tweenX, -1, motion1TimePhoenix).target(x1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementX).start();
+            secondXMotion=(Tween.to(tweenX, -1, motion2TimePhoenix).target(dest.x).ease(TweenEquations.easeNone));
 
-            firstYMotion=(Tween.to(tweenY, -1, 0.1f).target(y1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementY).start();
-            secondYMotion=(Tween.to(tweenY, -1, 0.9f).target(dest.y).ease(TweenEquations.easeNone));
+            firstYMotion=(Tween.to(tweenY, -1, motion1TimePhoenix).target(y1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementY).start();
+            secondYMotion=(Tween.to(tweenY, -1, motion2TimePhoenix).target(dest.y).ease(TweenEquations.easeNone));
         } else {
-            firstXMotion = Tween.to(tweenX, -1, 0.7f).target(x1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementX).start();
-            secondXMotion= Tween.to(tweenX, -1, 1.7f).target(dest.x).ease(TweenEquations.easeNone);
+            firstXMotion = Tween.to(tweenX, -1, motion1Time).target(x1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementX).start();
+            secondXMotion= Tween.to(tweenX, -1, motion2Time).target(dest.x).ease(TweenEquations.easeNone);
 
-            firstYMotion = Tween.to(tweenY, -1, 0.7f).target(y1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementY).start();
-            secondYMotion= Tween.to(tweenY, -1, 1.7f).target(dest.y).ease(TweenEquations.easeNone);
+            firstYMotion = Tween.to(tweenY, -1, motion1Time).target(y1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementY).start();
+            secondYMotion= Tween.to(tweenY, -1, motion2Time).target(dest.y).ease(TweenEquations.easeNone);
         }
         startTime=System.currentTimeMillis();
     }
@@ -94,27 +99,27 @@ public class Coin {
         airshipMoved=Math.abs(differenceVector.x)>0 || Math.abs(differenceVector.y)>0;
 
         if (!firstMovementEndedX) {
-            if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>=0) {
+            if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>0) {
                 //System.out.println("current="+System.currentTimeMillis()+", start: "+startTime);
                 firstXMotion = (Tween.to(tweenX, -1, (float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)).target(x1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementX).start();
             }
             x = tweenX.getValue() + thisBird.x;//+thisBird.width/9.7f; //higher number=more to the left
             firstXMotion.update(delta);
         } else {
-            if (airshipMoved&&(float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)>=0) {
+            if (airshipMoved&&(float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)>0) {
                 secondXMotion = (Tween.to(tweenX, -1, (float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)).target(dest.x).ease(TweenEquations.easeNone)).start();
             }
             x = tweenX.getValue();
             secondXMotion.update(delta);
         }
         if (!firstMovementEndedY) {
-            if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>=0) {
+            if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>0) {
                 firstYMotion = (Tween.to(tweenY, -1, (float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)).target(y1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementY).start();
             }
             y = tweenY.getValue() + thisBird.y;
             firstYMotion.update(delta);
         } else {
-            if (airshipMoved&&(float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)>=0) {
+            if (airshipMoved&&(float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)>0) {
                 secondYMotion = (Tween.to(tweenY, -1, (float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)).target(dest.y).ease(TweenEquations.easeNone)).start();
             }
             y = tweenY.getValue();

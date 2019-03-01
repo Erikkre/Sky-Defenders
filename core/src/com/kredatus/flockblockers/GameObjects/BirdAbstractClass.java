@@ -187,7 +187,7 @@ public abstract class BirdAbstractClass {
 
         } else {
             //System.out.println("dead");
-            if (diamonds==1){   //is phoenix
+            if (coinNumber>=25){   //is phoenix
                 width*=0.996;
                 height*=0.996;
             } else {
@@ -200,7 +200,7 @@ public abstract class BirdAbstractClass {
             if (coinList!=null){
                 for (Coin i : coinList){
                     i.update(delta);
-                    if ((coinNumber<100 && i.secondYMotion.isFinished()) || (coinNumber>=100&&i.xMotion.isFinished())) {
+                    if (i.secondYMotion.isFinished()) {
                         GameWorld.addGold(1);
                         coinList.remove(i);
                     }
@@ -276,7 +276,7 @@ public abstract class BirdAbstractClass {
     }
 
     public boolean isOffCam(){
-        return y+height/2<0 || x+width/2< 0 || x-width/2> camWidth;
+        return y+height/2<0 || x+width/2< 0 || x-width/2> camWidth || y-height/2>camHeight;
     }
 
     public abstract void setManager(float camWidth);
@@ -357,7 +357,7 @@ public abstract class BirdAbstractClass {
     }
 
     private  void setCoinList(float delta) {
-        if (coinNumber<100) {  //if not a phoenix or goldbird
+        if (coinNumber<25) {  //if not a phoenix or goldbird
             final float rotationIncrement = 360 / coinNumber;
             for (int i=0;i<coinNumber;i++) {
                 coinList.add(new Coin(x, y, rotationIncrement * rotationCounter++, thisBird, false));

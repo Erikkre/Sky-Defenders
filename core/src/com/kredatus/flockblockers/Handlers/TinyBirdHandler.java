@@ -28,7 +28,7 @@ public class TinyBirdHandler {
              //slow to fast (number is ms/frame)
              flapSpeedIntervals.add(i);
         }
-        System.out.println(flapSpeedIntervals.toString());
+        //System.out.println(flapSpeedIntervals.toString());
     }
 
     public static void addVertValueToBirdsSurvivingWavePart(float vertValue){

@@ -130,7 +130,6 @@ public class Turret {
         };//set task to run later using timer.schedule
     }
 
-
     public void startFiring() {
         setupFiring();
         if (!firingStoppedByGamePause) timeSinceLastShot=(int) (System.currentTimeMillis()-lastShotTime);
@@ -143,7 +142,6 @@ public class Turret {
         }
         firing = true;
     }
-
 
     public void stopFiring(){
         firing = false;
@@ -168,7 +166,6 @@ public class Turret {
         if (behindRotation<0){
             behindRotation+=360;
         }
-
         //1st case is if targetRot and rot are not 1 at 270-360 and 1 at 0-90 degrees, 2nd is rot at 0-90 targetRot at 270-360, 3rd is rot at 270-360 and targetRot at 0-90. rotlist is degree step of the turn, so if target within next degree of turn just do else part of the if statement below
         targetAquired=Math.abs(rotation-targetRot)<rotList[rotUpCounter] || (rotation<=90&&(targetRot>=270&&targetRot<=360)    &&rotation-targetRot<0 && rotation-targetRot+360<rotList[rotUpCounter]) || (targetRot<=90&&(rotation>=270&&rotation<=360)   &&targetRot-rotation<0 && targetRot-rotation+360<rotList[rotUpCounter]);
         if (!targetAquired) {
@@ -197,21 +194,22 @@ public class Turret {
     }
 
     public void update() {
-        //System.out.println(rotation);
-        if (Gdx.input.justTouched() && gunTargetPointer==-1 && !Airship.justTouched  ) {   //airShip updates first so takes the spot
+        if (Gdx.input.justTouched()  && gunTargetPointer==-1 ) {   //airShip updates first so takes the spot
+            System.out.println("touched");
             if (Airship.airshipTouchPointer >= 0) {
                 for (int i = 0; i <= 1; i++) {
                     if (i != Airship.airshipTouchPointer) {
                         gunTargetPointer = i;
-                        System.out.println("GunTargetPointer set to: " + gunTargetPointer);
+                        System.out.println("Set and GunTargetPointer set to: " + gunTargetPointer);
                         break;
                     }
                 }
             } else {
                 gunTargetPointer = 0;
-                System.out.println("GunTargetPointer set to: " + gunTargetPointer);
+                System.out.println("Not set and GunTargetPointer set to: " + gunTargetPointer);
             }
         }
+
         if (gunTargetPointer>=0&&Gdx.input.isTouched(gunTargetPointer)){
             setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight) - position.y, InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)) - position.x);
             rotateToTarget();
@@ -219,11 +217,11 @@ public class Turret {
             if (!firing && targetAquired) {
                 startFiring();
             }
-        } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer)||Airship.airshipTouchPointer==gunTargetPointer)) {
+        } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
+                                                                                    //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
+            System.out.println("GunTargetPointer set to: "+gunTargetPointer+" because "+(!Gdx.input.isTouched(gunTargetPointer))+" and "+(Airship.airshipTouchPointer==gunTargetPointer));
             gunTargetPointer=-1;
-            System.out.println("GunTargetPointer set to: "+gunTargetPointer);
-        } else {    //****************************************************************************************************ai system****************************************************************************************************
-            //System.out.println("AI system");
+        } else {//AI SYSTEM
             if (BirdHandler.activeBirdQueue.size() > 0) {
                 if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null && !TargetHandler.targetBird.isOffCam()) {
                     //System.out.println("Activebirdqueue not empty, set target &");
@@ -246,6 +244,8 @@ public class Turret {
                 stopFiring();
             }
         }
+
+
     }
 
     public void setTarget(BirdAbstractClass targetBird){

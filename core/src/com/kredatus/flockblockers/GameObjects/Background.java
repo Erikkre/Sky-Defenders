@@ -27,7 +27,6 @@ public class Background {
     }
 
     public void update() {
-
         if (y + height < 0) {  //-GameHandler.camHeight / 2 is a buffer of half the camera height
             height=texture.getRegionHeight();
             isScrolledDown = true;

@@ -821,7 +821,6 @@ public void setRotate(float angle){
     public void prepareTransition(int r, int g, int b, float duration) {
         transitionColor.set(r / 255.0f, g / 255.0f, b / 255.0f, 1);
         alpha.setValue(1);
-        Tween.registerAccessor(Value.class, new ValueAccessor());
         manager = SplashScreen.getManager();
         Tween.to(alpha, -1, duration).target(0)
                 .ease(TweenEquations.easeOutQuad).start(manager);

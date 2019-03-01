@@ -29,6 +29,7 @@ public class SplashScreen implements Screen {
 
     @Override
     public void show() {
+        Tween.registerAccessor(Sprite.class, new SpriteAccessor());
         sprite = new Sprite(AssetHandler.logo);
         sprite.setColor(1, 1, 1, 0);
 
@@ -45,7 +46,7 @@ public class SplashScreen implements Screen {
     }
 
     private void setupTween() {
-        Tween.registerAccessor(Sprite.class, new SpriteAccessor());
+
         manager = new TweenManager();
 
         TweenCallback cb = new TweenCallback() {

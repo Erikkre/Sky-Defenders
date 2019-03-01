@@ -68,7 +68,7 @@ public class BgHandler {
         this.camHeight=camHeight;
         this.camWidth =camWidth;
                           // 0    1    2    3    4    5    6    7
-        bgNumber = 9 * 2;// "pB","tB","wB","fB","aB","nB","lB","gB"
+        bgNumber = 0 * 0;// "pB","tB","wB","fB","aB","nB","lB","gB"
         //System.out.print("Start height of bg1: "+-bgStackStartYHeight);
         horiz.setValue(0);
         vert.setValue(0);//everything is done in negative (camera goes up by that amount
@@ -193,7 +193,7 @@ public class BgHandler {
 
     private void  regularVertBgMotion(){
         if (!FlockBlockersMain.fastTest) {
-            System.out.println("First target: "+bgStackHeight+", separator height: "+separatorHeight+", bgh: "+bgh);
+            //System.out.println("First target: "+bgStackHeight+", separator height: "+separatorHeight+", bgh: "+bgh);
             (vertPositionBg = Timeline.createSequence()  //15 sec duration
                     .push((((Tween.to(vert, -1, 15).delay(1.2f).targetRelative(-bgStackHeight).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     )).repeat(2,0))//complete is after repetitions done, end is after each repetition
@@ -203,7 +203,7 @@ public class BgHandler {
             ).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START).repeat(Tween.INFINITY, 0).start();
 
         } else {
-            System.out.println("First target: "+bgStackHeight+", separator height: "+separatorHeight+", bgh: "+bgh);
+            //System.out.println("First target: "+bgStackHeight+", separator height: "+separatorHeight+", bgh: "+bgh);
             (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
                     .push((((Tween.to(vert, -1, 5).delay(1.2f).targetRelative(-bgStackHeight).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     )).repeat(2,0))//complete is after repetitions done, end is after each repetition
@@ -247,7 +247,7 @@ public class BgHandler {
             }
 
             if (endWaveBgMotion && vertPositionBg.isFinished() ) {   //check if we need to keep ending wave quickly or new wave begins
-                System.out.println("vert position finished bgNum now "+bgNumber);
+                //System.out.println("vert position finished bgNum now "+bgNumber);
                 //vertPositionBg.pause();
                 //System.out.println(BirdHandler.birdQueue+ ", ActiveBirdQueue: "+BirdHandler.activeBirdQueue+"************************************************");
                 if (  ((bgNumber+1)%9==0) ){       //if last background motion before round end clouds slow down at the end
@@ -255,7 +255,7 @@ public class BgHandler {
                             .push(Tween.to(vert, -1, 1.5f).targetRelative(-(separatorHeight + bgh + bgh)-vert.getValue()).ease(TweenEquations.easeOutSine).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     ).start();
                 } else if (  !((bgNumber-2)%9==0) && !((bgNumber-3)%9==0)){ // && !((bgNumber-1)%9==0) && !((bgNumber)%9==0)    cam is at round end clouds when ((bgNumber-2)%9==0  (every 3 cities)
-                        System.out.println("bgNum is "+bgNumber+" so make another tween");
+                        //System.out.println("bgNum is "+bgNumber+" so make another tween");
                         (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
                                 .push(Tween.to(vert, -1, 1.5f).targetRelative(-(separatorHeight + bgh + bgh)-vert.getValue()).ease(TweenEquations.easeNone).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                                 ).start();

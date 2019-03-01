@@ -65,7 +65,6 @@ public class TargetHandler {
                         //System.out.println("Bullet exhausted");
                         projectileList.remove(i);
                     } else {
-
                         j.hitBulletList.add(i);
                     }
 
