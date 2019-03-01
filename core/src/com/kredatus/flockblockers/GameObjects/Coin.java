@@ -98,6 +98,7 @@ public class Coin {
         differenceVector=dest.cpy().sub(lastDest);
         airshipMoved=Math.abs(differenceVector.x)>0 || Math.abs(differenceVector.y)>0;
 
+        //dont need to do this for firstMovementX
         if (!firstMovementEndedX) {
             if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>0) {
                 //System.out.println("current="+System.currentTimeMillis()+", start: "+startTime);

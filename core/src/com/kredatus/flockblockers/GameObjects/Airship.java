@@ -60,6 +60,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static boolean justTouched;
 
     private static float preX, xVel, rotation;
+    float xOffsetFromRotation,yOffsetFromRotation;
 
     public Airship(int camWidth, int camHeight) {
         this.camWidth=camWidth;
@@ -77,11 +78,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         assignBounds();
 
         assignRackPositions(pos.x-rackWidth/2f);
-        //for (int i=0;i<positions.size();i++){
-            turretList.add(new Turret('f',positions.get(0)));
-            turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();
-            turretList.get(0).penUp();turretList.get(0).penUp();turretList.get(0).penUp();
-        //}
+        for (int i=0;i<positions.size();i++){
+            turretList.add(new Turret('f',positions.get(i)));
+            turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();
+            turretList.get(i).penUp();turretList.get(i).penUp();turretList.get(i).penUp();
+        }
 
         /*
         int j=0;
@@ -214,7 +215,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private int getAirshipTouchPointer(){
         for (int i = 0; i < 2; i++) {
-            if (pointerOnAirship(i)) {System.out.println("airShipPointer set to "+i);return i;}
+            if (pointerOnAirship(i)) {return i;}
         }
         return -1;
     }
@@ -250,12 +251,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void update(float delta) {
-        //System.out.println("inputx: "+inputX);
         setDestAirship();
         //System.out.print(pos.toString());
         rackHitbox.setRotation(rotation);
         balloonHitbox.setRotation(rotation);
-
 
         if (!tween.isFinished()) {
             //System.out.println("update tween");
@@ -301,7 +300,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void draw(SpriteBatch batcher) {
-        //System.out.println(1+0.2f*lvl);
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation);
 
@@ -313,8 +311,22 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
                 rackWidth/2f, rackHeight/2f, rackWidth, rackHeight,1,1,rotation);
 
+        System.out.println("Further out turrets position: "+5 * ((startX - turretList.get(0).origPosition.x) / 50f));
+        System.out.println("Closer turrets position: "+5 * ((startX - turretList.get(1).origPosition.x) / 50f));
         for (Turret i : turretList) {
-            batcher.draw(i.texture, i.position.x-i.width/2f, i.position.y-i.height/2f,
+
+            if (rotation < 0) {//right movement, need to rotate less
+                    xOffsetFromRotation = 3 * -rotation / (5 * ((startX - i.origPosition.x) / 50f));
+                    yOffsetFromRotation = 2 * -rotation / (5 * ((startY - i.origPosition.y) / 50f));//divided by x distance from pos.x so effect less pronounced when close to center
+            } else {        //left movement
+                    xOffsetFromRotation = 2 * rotation / (5 * ((startX - i.origPosition.x) / 50f));
+                    yOffsetFromRotation = -rotation / (5 * ((startY - i.origPosition.y) / 50f));//
+            }
+            if (startX - i.origPosition.x<0) {//if on right side of airship we need to invert movements
+                xOffsetFromRotation=(-xOffsetFromRotation +1)/1.1f;yOffsetFromRotation=(-yOffsetFromRotation +2)/1.1f;
+            }
+
+            batcher.draw(i.texture, i.position.x-i.width/2f + xOffsetFromRotation, i.position.y-i.height/2f + yOffsetFromRotation,
                     i.width/2f, i.height/2f, i.width, i.height, 1f, 1f, i.getRotation());
         }
     }
