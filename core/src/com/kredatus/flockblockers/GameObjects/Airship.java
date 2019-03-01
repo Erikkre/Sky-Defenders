@@ -311,20 +311,17 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
                 rackWidth/2f, rackHeight/2f, rackWidth, rackHeight,1,1,rotation);
 
-        System.out.println("Further out turrets position: "+5 * ((startX - turretList.get(0).origPosition.x) / 50f));
-        System.out.println("Closer turrets position: "+5 * ((startX - turretList.get(1).origPosition.x) / 50f));
         for (Turret i : turretList) {
-
             if (rotation < 0) {//right movement, need to rotate less
-                    xOffsetFromRotation = 3 * -rotation / (5 * ((startX - i.origPosition.x) / 50f));
-                    yOffsetFromRotation = 2 * -rotation / (5 * ((startY - i.origPosition.y) / 50f));//divided by x distance from pos.x so effect less pronounced when close to center
+                    xOffsetFromRotation =  -rotation * (startX - i.origPosition.x)   / (70f);//divided by x distance from pos.x so effect less pronounced when close to center
+                    yOffsetFromRotation =  -rotation * ((startY - i.origPosition.y))   / (65f);
             } else {        //left movement
-                    xOffsetFromRotation = 2 * rotation / (5 * ((startX - i.origPosition.x) / 50f));
-                    yOffsetFromRotation = -rotation / (5 * ((startY - i.origPosition.y) / 50f));//
+                    xOffsetFromRotation =   rotation * (startX - i.origPosition.x)   / (70f);
+                    yOffsetFromRotation =  -rotation * ((startY - i.origPosition.y))   / (65f);
             }
             if (startX - i.origPosition.x<0) {//if on right side of airship we need to invert movements
-                xOffsetFromRotation=(-xOffsetFromRotation +1)/1.1f;yOffsetFromRotation=(-yOffsetFromRotation +2)/1.1f;
-            }
+                yOffsetFromRotation=-yOffsetFromRotation/1.1f;
+            } else if (Math.abs(startX-i.origPosition.x) < 2) {xOffsetFromRotation=0;yOffsetFromRotation=0;}
 
             batcher.draw(i.texture, i.position.x-i.width/2f + xOffsetFromRotation, i.position.y-i.height/2f + yOffsetFromRotation,
                     i.width/2f, i.height/2f, i.width, i.height, 1f, 1f, i.getRotation());
