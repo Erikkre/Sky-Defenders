@@ -357,7 +357,7 @@ public abstract class BirdAbstractClass {
         if (coinNumber<25) {  //if not a phoenix or goldbird
             final float rotationIncrement = 360 / coinNumber;
             for (int i=0;i<coinNumber;i++) {
-                coinList.add(new Coin(x, y, rotationIncrement * rotationCounter++, thisBird, false));
+                coinList.add(new Coin(rotationIncrement * rotationCounter++, thisBird, false));
             }
         } else {
             //(0.5*yAcc)
@@ -390,7 +390,7 @@ public abstract class BirdAbstractClass {
                         task.cancel();
                     }
                     rotationCounter++;
-                    coinList.add(new Coin(x, y, r.nextInt(360), thisBird, true));   //random spurting for phoenix
+                    coinList.add(new Coin(r.nextInt(360), thisBird, true));   //random spurting for phoenix
                     //System.out.println("Coin added at rotation"+rotationIncrement*rotationCounter);
                 }
             };

@@ -2,6 +2,8 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
@@ -25,7 +27,7 @@ public class Coin {
     public Tween firstXMotion, secondXMotion, firstYMotion, secondYMotion;
     public double startTime;
 
-    public Coin(float x, float y, float rotation, BirdAbstractClass thisBird, boolean phoenixCoin){
+    public Coin(float rotation, BirdAbstractClass thisBird, boolean phoenixCoin){
         this.phoenixCoin=phoenixCoin;
         animation = AssetHandler.coinAnimation;
         width = ((TextureRegion) animation.getKeyFrame(0)).getRegionWidth();
@@ -100,10 +102,10 @@ public class Coin {
 
         //dont need to do this for firstMovementX
         if (!firstMovementEndedX) {
-            if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>0) {
+            /*if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>0) {
                 //System.out.println("current="+System.currentTimeMillis()+", start: "+startTime);
                 firstXMotion = (Tween.to(tweenX, -1, (float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)).target(x1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementX).start();
-            }
+            }*/
             x = tweenX.getValue() + thisBird.x;//+thisBird.width/9.7f; //higher number=more to the left
             firstXMotion.update(delta);
         } else {
@@ -114,9 +116,9 @@ public class Coin {
             secondXMotion.update(delta);
         }
         if (!firstMovementEndedY) {
-            if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>0) {
+            /*if (airshipMoved&&(float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)>0) {
                 firstYMotion = (Tween.to(tweenY, -1, (float) (0.1 - (System.currentTimeMillis() - startTime)/1000d)).target(y1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementY).start();
-            }
+            }*/
             y = tweenY.getValue() + thisBird.y;
             firstYMotion.update(delta);
         } else {
