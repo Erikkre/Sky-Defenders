@@ -38,13 +38,14 @@ public class TargetHandler {
                     i.hit(i.origHealth);    //lol
                 //}
             } else if (!i.isAlive){
-                BirdHandler.deadBirdQueue.add(i);
                 BirdHandler.activeBirdQueue.remove(i);
+                BirdHandler.deadBirdQueue.add(i);
             } else {
-                if (i.y >= previousBirdHeight) {
+                if (i.y >= previousBirdHeight ) {
                     previousBirdHeight = i.y;
                     targetBird = i;
                 }
+                if (i.isAboveCam())BirdHandler.activeBirdQueue.remove(i);
             }
         }
 
@@ -56,7 +57,7 @@ public class TargetHandler {
                 projectileList.remove(i);
             }
             for (BirdAbstractClass j : BirdHandler.activeBirdQueue) {
-                if (i.pen>0 && !j.hitBulletList.contains(i) && j.y>minTargetingHeight && j.collides(i.boundingRect) && j.health>0) {  //if bird i is colliding with bullet j and was not already hit before
+                if (i.pen>0 && !j.hitBulletList.contains(i) && j.y>minTargetingHeight && j.collides(i.boundingRect) && j.health>0) {  //if bird j is colliding with bullet i and was not already hit before
                     j.hit(i.dmg);
                     //System.out.println("Bullet --, pen was "+i.pen);
                     i.pen--;

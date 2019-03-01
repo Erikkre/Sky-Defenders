@@ -22,9 +22,9 @@ import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
-    private static float rotation;
+
     private Circle boundingCir;
-    public static Vector2 pos, vel=new Vector2(); //lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
+    public static Vector2 pos; //lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
     public float gamexvel;
     public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
@@ -59,11 +59,13 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     float inputX, inputY, speedDivisor;
     public static boolean justTouched;
 
+    private static float preX, xVel, rotation;
+
     public Airship(int camWidth, int camHeight) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
         armorLvl=0;
-        lvl=0;
+        lvl=2;
         sideThrustLvl=0;
 
         assignTextures(armorLvl,lvl);
@@ -71,12 +73,14 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         startY=-height;
         startX=-balloonWidth;
         pos=new Vector2(startX, startY);
-        vel=new Vector2(0,50);
+        //vel=new Vector2(0,50);
         assignBounds();
 
         assignRackPositions(pos.x-rackWidth/2f);
         //for (int i=0;i<positions.size();i++){
             turretList.add(new Turret('f',positions.get(0)));
+            turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();turretList.get(0).rofUp();
+            turretList.get(0).penUp();turretList.get(0).penUp();turretList.get(0).penUp();
         //}
 
         /*
@@ -104,7 +108,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //dragSpeed=10f;
 
         tween=Tween.to(pos,0,3).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(2).start();
-        speedDivisor=100f;//35, 45, 60, 75, 90, higher the faster
+        speedDivisor=90f;//60, 75, 90, 105, 120  higher the faster
     }
 
     private void assignBounds(){
@@ -251,20 +255,28 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.print(pos.toString());
         rackHitbox.setRotation(rotation);
         balloonHitbox.setRotation(rotation);
-        for (Turret i : turretList) {
-            i.update();
-        }
+
 
         if (!tween.isFinished()) {
             //System.out.println("update tween");
+            preX=pos.x;
             tween.update(delta);
+            xVel= pos.x-preX;
+            float temp = xVel/(2f*(speedDivisor/60f));
+            rotation= -Math.signum(xVel)*(temp*temp); //exponent of 2 //(float) (-Math.signum(xVel)*Math.pow(Math.abs(xVel),1.5));//-xVel*2f;
+
             for (Turret i : turretList) {
+                i.update();
                 i.position.set(pos.x - (startX - i.origPosition.x), pos.y - (startY - i.origPosition.y));
             }
 
             rackHitbox.setPosition(pos.x - startX, pos.y - startY);
             balloonHitbox.setPosition(pos.x - startX, pos.y - startY);
             //checkBordersAndSlowdown(); not using velocity
+        } else {
+            for (Turret i : turretList) {
+                i.update();
+            }
         }
         /*if (!isTouched) {
             //System.out.println("not touched");
@@ -291,11 +303,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public void draw(SpriteBatch batcher) {
         //System.out.println(1+0.2f*lvl);
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
-                balloonWidth/2f, balloonHeight/2f, balloonWidth, balloonHeight, 1, 1, rotation);
+                balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation);
 
         //for (int i=0;i<sideThrustLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
             batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
-                    thrusterWidth/2f, thrusterHeight/2f, thrusterWidth, thrusterHeight, 1, 1, rotation);
+                    thrusterWidth/2f, -0.18f*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation);
         //}
 
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
@@ -312,7 +324,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         isFlashing = true;
         flashOpacityValue.setValue(1f);//always start from white flash to distinguish from bg
         if (collisionDmg<origHealth&&health>0){
-            currentFlashLength=flashLengths.get((int)((collisionDmg/origHealth)*flashLengths.size()));
+            currentFlashLength=flashLengths.get((collisionDmg/origHealth)*flashLengths.size());
             flashTween = Tween.to(flashOpacityValue, -1, currentFlashLength).target(0f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();
         } else {
             //currentFlashLength=flashLengths.get(flashLengths.size()-1); //else make flash black (-1f-0f)

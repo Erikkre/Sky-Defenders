@@ -2,11 +2,9 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
@@ -15,17 +13,14 @@ import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 //import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 
@@ -148,7 +143,6 @@ public abstract class BirdAbstractClass {
     }
 
     public void update(float delta, float runTime){
-
         if (isAlive) {
             if (!BgHandler.isBirdSpawning&&currentY!=outroY) {
                 if (currentX!=null)currentX.kill();
@@ -179,10 +173,11 @@ public abstract class BirdAbstractClass {
                 setCoinList(delta);
                 die();
             }
-            if (y > camHeight +height/2) { //0 being height of top of tower where score & diamonds are
-                //whatever we hit -= the starting health of the bird hitting it
+            /*if (y > camHeight +height/2) { //0 being height of top of tower where score & diamonds are
                 BirdHandler.activeBirdQueue.remove(this);
-            }
+
+               System.out.println(this+" removed");
+            }*/
             specificUpdate(delta, runTime);
 
         } else {
@@ -276,7 +271,10 @@ public abstract class BirdAbstractClass {
     }
 
     public boolean isOffCam(){
-        return y+height/2<0 || x+width/2< 0 || x-width/2> camWidth || y-height/2>camHeight;
+        return y+height/2<0 || x+width/2< 0 || x-width/2> camWidth;
+    }
+    public boolean isAboveCam(){
+        return y-height/2>camHeight;
     }
 
     public abstract void setManager(float camWidth);
@@ -290,7 +288,6 @@ public abstract class BirdAbstractClass {
         if (behindRotation < 0) {
             behindRotation += 360;
         }
-
             if (rotation < 180) {
                 if (targetRot > rotation && targetRot < behindRotation) {
                     rotation += angleStep;

@@ -68,7 +68,7 @@ public class BgHandler {
         this.camHeight=camHeight;
         this.camWidth =camWidth;
                           // 0    1    2    3    4    5    6    7
-        bgNumber = 0 * 0;// "pB","tB","wB","fB","aB","nB","lB","gB"
+        bgNumber = 9 * 2;// "pB","tB","wB","fB","aB","nB","lB","gB"
         //System.out.print("Start height of bg1: "+-bgStackStartYHeight);
         horiz.setValue(0);
         vert.setValue(0);//everything is done in negative (camera goes up by that amount

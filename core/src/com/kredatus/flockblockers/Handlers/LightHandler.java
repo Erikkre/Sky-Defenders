@@ -58,7 +58,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
 
     public LightHandler(BgHandler bgHandler) {
                                     // 0    1    2    3    4    5    6    7
-        BirdHandler.waveTypeCnt=0; // "pB","tB","wB","fB","aB","nB","lB","gB"
+        BirdHandler.waveTypeCnt=2; // "pB","tB","wB","fB","aB","nB","lB","gB"
 
 
         //foreRayHandler.useDiffuseLight(true); //smoother but makes everywhere but light dark

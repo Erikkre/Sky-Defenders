@@ -73,9 +73,9 @@ public class Turret {
         restartFiring();
     }
     public void rofUp(){
-        restartFiring();
         rofUpCounter++;
         rof*=1.2;
+        firingInterval=(int) ((1 / (rof / 3)) * 1000);
         restartFiring();
     }
     public void rotUp(){
@@ -195,18 +195,18 @@ public class Turret {
 
     public void update() {
         if (Gdx.input.justTouched()  && gunTargetPointer==-1 ) {   //airShip updates first so takes the spot
-            System.out.println("touched");
+            //System.out.println("touched");
             if (Airship.airshipTouchPointer >= 0) {
                 for (int i = 0; i <= 1; i++) {
                     if (i != Airship.airshipTouchPointer) {
                         gunTargetPointer = i;
-                        System.out.println("Set and GunTargetPointer set to: " + gunTargetPointer);
+                        //System.out.println("Set and GunTargetPointer set to: " + gunTargetPointer);
                         break;
                     }
                 }
             } else {
                 gunTargetPointer = 0;
-                System.out.println("Not set and GunTargetPointer set to: " + gunTargetPointer);
+                //System.out.println("Not set and GunTargetPointer set to: " + gunTargetPointer);
             }
         }
 
@@ -219,16 +219,19 @@ public class Turret {
             }
         } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
                                                                                     //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
-            System.out.println("GunTargetPointer set to: "+gunTargetPointer+" because "+(!Gdx.input.isTouched(gunTargetPointer))+" and "+(Airship.airshipTouchPointer==gunTargetPointer));
+            //System.out.println("GunTargetPointer set to: "+gunTargetPointer+" because "+(!Gdx.input.isTouched(gunTargetPointer))+" and "+(Airship.airshipTouchPointer==gunTargetPointer));
             gunTargetPointer=-1;
         } else {//AI SYSTEM
+            //System.out.println("TargetBird: "+targetBird);
             if (BirdHandler.activeBirdQueue.size() > 0) {
-                if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null && !TargetHandler.targetBird.isOffCam()) {
-                    //System.out.println("Activebirdqueue not empty, set target &");
+                if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null) {
+
+                    //System.out.println("1");
                     setTarget(TargetHandler.targetBird);
                     setRotation(targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
                     rotateToTarget();
-                } else if (targetBird!=null&&targetBird.isAlive){
+                } else if (targetBird!=null&&targetBird.isAlive&& BirdHandler.activeBirdQueue.contains(TargetHandler.targetBird)){
+                    //System.out.println("2 "+ BirdHandler.activeBirdQueue);
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is vel but needs to be better scaled
                     setRotation( targetBird.xVel, targetBird.yVel,targetBird.y-position.y, targetBird.x-position.x);
@@ -238,10 +241,14 @@ public class Turret {
                         startFiring();
                     }
                 } else if (firing) {
+                    //System.out.print("Stop firing 1");
                     stopFiring();
+                    targetBird=null;
                 }
             } else if (firing) {
+                //System.out.print("Stop firing 2");
                 stopFiring();
+                targetBird=null;
             }
         }
 
