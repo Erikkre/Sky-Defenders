@@ -1,11 +1,15 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.brashmonkey.spriter.TweenedAnimation;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
@@ -62,6 +66,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private static float preX, xVel, rotation;
     float xOffsetFromRotation,yOffsetFromRotation;
 
+    public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireUp=new ParticleEffect();
+    public static ParticleEffectPool burnerFirePool, thrusterFireLeftPool, thrusterFireUpPool;
+    public static Array<ParticleEffectPool.PooledEffect> additiveEffects = new Array<ParticleEffectPool.PooledEffect>();
+
     public Airship(int camWidth, int camHeight) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -108,8 +116,16 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //slowdownSpeed=20;
         //dragSpeed=10f;
 
-        tween=Tween.to(pos,0,3).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(2).start();
-        speedDivisor=90f;//60, 75, 90, 105, 120  higher the faster
+        tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(4).start();
+        speedDivisor=60f;//60, 75, 90, 105, 120  higher the faster
+
+        loadEffects();
+    }
+
+    private void loadEffects(){
+        burnerFirePool=AssetHandler.burnerFirePool; thrusterFireLeftPool=AssetHandler.thrusterFireLeftPool; thrusterFireUpPool=AssetHandler.thrusterFireUpPool;
+        additiveEffects = AssetHandler.additiveEffects;
+        burnerFirePool.obtain().start();
     }
 
     private void assignBounds(){
@@ -255,8 +271,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.print(pos.toString());
         rackHitbox.setRotation(rotation);
         balloonHitbox.setRotation(rotation);
+        burnerFirePool.obtain().setPosition(camWidth/2f,camHeight/2f);
 
         if (!tween.isFinished()) {
+            //burnerFirePool.obtain().setPosition(pos.x,pos.y+0.10f*balloonHeight);
             //System.out.println("update tween");
             preX=pos.x;
             tween.update(delta);
@@ -299,14 +317,24 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }*/
     }
 
-    public void draw(SpriteBatch batcher) {
+    public void draw(SpriteBatch batcher, float delta) {
+        //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+        //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
+
+
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation);
+
+        for (ParticleEffectPool.PooledEffect i : additiveEffects){
+            i.draw(batcher, delta);
+        }
 
         //for (int i=0;i<sideThrustLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
             batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
                     thrusterWidth/2f, -0.18f*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation);
         //}
+
+
 
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
                 rackWidth/2f, rackHeight/2f, rackWidth, rackHeight,1,1,rotation);

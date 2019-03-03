@@ -598,7 +598,7 @@ public void setRotate(float angle){
     */
 
     public void drawStory(float runTime, float delta) {
-
+//burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
         for (TinyBird i : tinyBirdQueue){
             batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime+i.flapRandomFactor), i.pos.x-i.width/2, i.pos.y-i.height/2,
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
@@ -612,7 +612,7 @@ public void setRotate(float angle){
             flashShader.setUniformf("flashOpacityValue", airship.flashOpacityValue.getValue());
             //flashShader.begin();
         }
-        airship.draw(batcher);
+        airship.draw(batcher, delta);
         if (airship.isFlashing){
 
             //batcher.setColor(1,1,1,1);
@@ -815,6 +815,7 @@ public void setRotate(float angle){
         LightHandler.renderFront();//make usre having outside of batcher does nothing
 
         drawTransition(delta);
+        //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
         //System.out.println("gameRenderer edge:"+(cam.position.x - camWidth / 2));
     }
 

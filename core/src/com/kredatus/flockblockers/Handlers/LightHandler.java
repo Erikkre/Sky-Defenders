@@ -33,7 +33,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             cloudTopMidPos   = new Vector2(   1*bgw/2, cloudTopY),
             cloudTopRightPos = new Vector2(   bgw, cloudTopY),
     //2 3 and 4 wrong pos vert and horiz
-    cityP1         =  new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//cityPight1
+            cityP1 =  new Vector2(0               * bgw, 0.49922869263f * bgStackHeight),//cityPight1
             cityC2 =  new Vector2(0.15380859375f  * bgw, 0.54454300039f * bgStackHeight),//coneLight
             cityP3 =  new Vector2(0.16064453125f  * bgw, 0.58927882761f * bgStackHeight),
             cityP4 =  new Vector2(0.193359375f    * bgw, 0.59429232549f * bgStackHeight),

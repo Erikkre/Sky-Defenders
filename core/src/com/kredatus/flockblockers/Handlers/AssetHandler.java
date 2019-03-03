@@ -7,6 +7,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
@@ -58,7 +60,35 @@ public class AssetHandler {
     public static Preferences prefs;
 
     public static ShaderProgram flashShader;
+
+    public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireUp=new ParticleEffect();
+    public static ParticleEffectPool burnerFirePool, thrusterFireLeftPool, thrusterFireUpPool;
+    public static Array<ParticleEffectPool.PooledEffect> additiveEffects = new Array<ParticleEffectPool.PooledEffect>(), nonAdditiveEffects;
     public static void load() {
+        //If your particle effect includes additive or pre-multiplied particle emitters
+//you can turn off blend function clean-up to save a lot of draw calls, but
+//remember to switch the Batch back to GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
+//before drawing "regular" sprites or your Stage.
+
+        burnerFire.load(Gdx.files.internal("effects"+File.separator+"burnerFire.p"),Gdx.files.internal("particles"));
+        //burnerFire.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
+        burnerFirePool= new ParticleEffectPool(burnerFire,1,2);
+        ParticleEffectPool.PooledEffect pooledEffect=burnerFirePool.obtain();
+        additiveEffects.add(pooledEffect);
+
+        thrusterFireUp.load(Gdx.files.internal("effects"+File.separator+"thrusterFireUp.p"),Gdx.files.internal("particles"));
+        //thrusterFireUp.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
+        thrusterFireUpPool= new ParticleEffectPool(thrusterFireUp,1,2);
+        pooledEffect=thrusterFireUpPool.obtain();
+        additiveEffects.add(pooledEffect);
+
+        thrusterFireLeft.load(Gdx.files.internal("effects"+File.separator+"thrusterFireLeft.p"),Gdx.files.internal("particles"));
+        //thrusterFireLeft.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
+        thrusterFireLeftPool= new ParticleEffectPool(thrusterFireLeft,1,2);
+        pooledEffect=thrusterFireLeftPool.obtain();
+        additiveEffects.add(pooledEffect);
+
+
         menumusiciterator = r.nextInt(3);
         musiciterator = r.nextInt(6);
 
