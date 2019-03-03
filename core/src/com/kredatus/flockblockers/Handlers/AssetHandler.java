@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class AssetHandler {
 
     public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireUp=new ParticleEffect();
     public static ParticleEffectPool burnerFirePool, thrusterFireLeftPool, thrusterFireUpPool;
-    public static Array<ParticleEffectPool.PooledEffect> additiveEffects = new Array<ParticleEffectPool.PooledEffect>(), nonAdditiveEffects;
+    public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>(), nonAdditiveEffects;
     public static void load() {
         //If your particle effect includes additive or pre-multiplied particle emitters
 //you can turn off blend function clean-up to save a lot of draw calls, but
@@ -73,7 +74,7 @@ public class AssetHandler {
         burnerFire.load(Gdx.files.internal("effects"+File.separator+"burnerFire.p"),Gdx.files.internal("particles"));
         //burnerFire.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
         burnerFirePool= new ParticleEffectPool(burnerFire,1,2);
-        ParticleEffectPool.PooledEffect pooledEffect=burnerFirePool.obtain();
+        PooledEffect pooledEffect=burnerFirePool.obtain();
         additiveEffects.add(pooledEffect);
 
         thrusterFireUp.load(Gdx.files.internal("effects"+File.separator+"thrusterFireUp.p"),Gdx.files.internal("particles"));

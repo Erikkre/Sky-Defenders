@@ -24,6 +24,7 @@ import aurelienribon.tweenengine.TweenAccessor;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
 
@@ -66,9 +67,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private static float preX, xVel, rotation;
     float xOffsetFromRotation,yOffsetFromRotation;
 
-    public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireUp=new ParticleEffect();
-    public static ParticleEffectPool burnerFirePool, thrusterFireLeftPool, thrusterFireUpPool;
-    public static Array<ParticleEffectPool.PooledEffect> additiveEffects = new Array<ParticleEffectPool.PooledEffect>();
+    public static PooledEffect burnerFire, thrusterFireLeft, thrusterFireUp;
+    public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>();
 
     public Airship(int camWidth, int camHeight) {
         this.camWidth=camWidth;
@@ -123,9 +123,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     private void loadEffects(){
-        burnerFirePool=AssetHandler.burnerFirePool; thrusterFireLeftPool=AssetHandler.thrusterFireLeftPool; thrusterFireUpPool=AssetHandler.thrusterFireUpPool;
+        burnerFire=AssetHandler.burnerFirePool.obtain(); thrusterFireLeft=AssetHandler.thrusterFireLeftPool.obtain(); thrusterFireUp=AssetHandler.thrusterFireUpPool.obtain();
         additiveEffects = AssetHandler.additiveEffects;
-        burnerFirePool.obtain().start();
+        burnerFire.start();
     }
 
     private void assignBounds(){
@@ -271,8 +271,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.print(pos.toString());
         rackHitbox.setRotation(rotation);
         balloonHitbox.setRotation(rotation);
-        burnerFirePool.obtain().setPosition(camWidth/2f,camHeight/2f);
 
+        //0 is burner, 1 is thrustUp, 2 is thrustLeft, 3 is thrustRight
+        additiveEffects.get(0).setPosition(pos.x,pos.y);
+        additiveEffects.get(1).setPosition(pos.x,pos.y);
+        additiveEffects.get(2).setPosition(pos.x,pos.y);
         if (!tween.isFinished()) {
             //burnerFirePool.obtain().setPosition(pos.x,pos.y+0.10f*balloonHeight);
             //System.out.println("update tween");
@@ -325,7 +328,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation);
 
-        for (ParticleEffectPool.PooledEffect i : additiveEffects){
+        for (PooledEffect i : additiveEffects){
             i.draw(batcher, delta);
         }
 
