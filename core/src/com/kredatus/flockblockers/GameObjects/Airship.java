@@ -23,7 +23,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
 
     private Circle boundingCir;
-    public static Vector2 pos; //lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
+    public static Vector2 pos, vel=new Vector2(); //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
     public float gamexvel;
     public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
@@ -58,7 +58,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     float inputX, inputY, speedDivisor;
     public static boolean justTouched;
 
-    private static float preX, xVel, rotation;
+    private static float preX, preY, rotation;
     float xOffsetFromRotation,yOffsetFromRotation;
 
     public static PooledEffect burnerFire, thrusterFireLeft, thrusterFireUp;
@@ -74,11 +74,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         assignTextures(armorLvl,lvl);
         height=balloonHeight+rackHeight;
-        startY=-height;
-        startX=-balloonWidth;
+        startY=camHeight/2f;//-height;
+        startX=camWidth/2f;//-balloonWidth;
         pos=new Vector2(startX, startY);
-        //vel=new Vector2(0,50);
         assignBounds();
+        tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(1).start();
 
         assignRackPositions(pos.x-rackWidth/2f);
         for (int i=0;i<positions.size();i++){
@@ -111,20 +111,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //slowdownSpeed=20;
         //dragSpeed=10f;
 
-        tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(4).start();
+
         speedDivisor=90f;//60, 75, 90, 105, 120  higher the faster
 
         loadEffects();
-    }
-
-    private void loadEffects(){
-        //burnerFire=AssetHandler.burnerFirePool.obtain(); thrusterFireLeft=AssetHandler.thrusterFireLeftPool.obtain(); thrusterFireUp=AssetHandler.thrusterFireUpPool.obtain();
-        additiveEffects = AssetHandler.additiveEffects;
-        additiveEffects.get(0).scaleEffect(0.25f);
-        emitters=AssetHandler.emitters;
-        //burnerFire.scaleEffect(0.3f);
-        //burnerFire.start();
-
     }
 
     private void assignBounds(){
@@ -254,8 +244,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             inputX = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff ;//input with finger touch difference
             inputY = -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight) - fingerAirshipYDiff ;
             if (isOnCam(inputX, inputY)) {
-                        tween = Tween.to(pos, 0, (float) (Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y-inputY),2)))/speedDivisor ).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
+                tween = Tween.to(pos, 0, (float) (Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y-inputY),2)))/speedDivisor ).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
             }
+
+
+
+
             //if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
             //if (inputY > rackHeight/3f  &&   inputY<camHeight-balloonHeight/4f) pos.y=inputY;
             //} else if (airshipTouchPointer>=0) {//if (airship pointer not pressed and pointer not reset)
@@ -266,12 +260,26 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
     }
 
-    public void setEmitterAttributeTo(ParticleEmitter.ScaledNumericValue val, float amountInDegrees) {
-            float amplitude = (val.getHighMax() - val.getHighMin()) / 2f;
-            float h1 = amountInDegrees + amplitude;
-            float h2 = amountInDegrees - amplitude;
-            val.setHigh(h1, h2);
-            val.setLow(amountInDegrees);
+    private void loadEffects(){
+        //burnerFire=AssetHandler.burnerFirePool.obtain(); thrusterFireLeft=AssetHandler.thrusterFireLeftPool.obtain(); thrusterFireUp=AssetHandler.thrusterFireUpPool.obtain();
+        additiveEffects = AssetHandler.additiveEffects;
+        additiveEffects.get(0).scaleEffect(0.20f);
+        emitters=AssetHandler.emitters;
+        //burnerFire.scaleEffect(0.3f);
+        //burnerFire.start();
+    }
+
+    public void setEmitterVal(ParticleEmitter.ScaledNumericValue val, float newVal, boolean retainHighMinMax, boolean changeLowToo) {
+            if (retainHighMinMax) {
+                float amplitude = (val.getHighMax() - val.getHighMin()) / 2f;
+                float h1 = newVal + amplitude;
+                float h2 = newVal - amplitude;
+                val.setHigh(h1, h2);
+            } else {
+                val.setHigh(newVal);
+            }
+            if (changeLowToo) val.setLow(newVal);
+
     }
 
     public void update(float delta) {
@@ -282,16 +290,40 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         //0 is burner, 1 is thrustUp, 2 is thrustLeft, 3 is thrustRight
         if (!tween.isFinished()) {
+            if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
+            additiveEffects.get(0).setPosition(pos.x, pos.y + 8);
 
-            additiveEffects.get(0).setPosition(pos.x,pos.y+8);
-            setEmitterAttributeTo(emitters.get(0).getAngle(),90-rotation*10);
+            if (vel.y > 0) {
+
+                setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);
+
+                if (vel.y>3 && emitters.get(0).getEmission().getHighMax()==700){
+                    setEmitterVal(emitters.get(0).getEmission(),700+ vel.y*550, false, false);
+                    emitters.get(0).start();
+                }else if (vel.y<3&&emitters.get(0).getEmission().getHighMax()>=700){
+                    setEmitterVal(emitters.get(0).getEmission(),700, false, false);
+                    emitters.get(0).start();
+                }
+
+                System.out.println("Vely: " + vel.y + ", Velocity set to: " + (700+vel.y*350)+", Velocity: "+emitters.get(0).getEmission().getHighMax());
+                setEmitterVal(emitters.get(0).getLife(), 250+ vel.y * 40 , false, false);
+                setEmitterVal(emitters.get(0).getVelocity(), 80+vel.y*15 , true, false);
+                //if (justTouched)setEmitterVal(emitters.get(0).getEmission(), 700+vel.y*350 , false, false);
+                //emitters.get(0).
+            } else if (!emitters.get(0).isComplete()) { //if yvel <0
+                emitters.get(0).allowCompletion();
+                emitters.get(0).reset();
+            }
+            //setEmitterVal(emitters.get(0).ge,);
             //burnerFirePool.obtain().setPosition(pos.x,pos.y+0.10f*balloonHeight);
             //System.out.println("update tween");
             preX=pos.x;
+            preY=pos.y;
             tween.update(delta);
-            xVel= pos.x-preX;
-            float temp = xVel/(2f*(speedDivisor/60f));
-            rotation= -Math.signum(xVel)*(temp*temp); //exponent of 2 //(float) (-Math.signum(xVel)*Math.pow(Math.abs(xVel),1.5));//-xVel*2f;
+            vel.set(pos.x-preX,pos.y-preY);
+
+            float temp = vel.x/(2f*(speedDivisor/60f));
+            rotation= -Math.signum(vel.x)*(temp*temp); //exponent of 2 //(float) (-Math.signum(xVel)*Math.pow(Math.abs(xVel),1.5));//-xVel*2f;
 
             for (Turret i : turretList) {
                 i.update();
@@ -328,6 +360,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }*/
     }
 
+
+
     public void draw(SpriteBatch batcher, float delta) {
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
@@ -338,6 +372,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation);
+
+
 
         //for (int i=0;i<sideThrustLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
             batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
