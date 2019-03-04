@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
+import com.badlogic.gdx.utils.Pool;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -65,6 +67,7 @@ public class AssetHandler {
     public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireUp=new ParticleEffect();
     public static ParticleEffectPool burnerFirePool, thrusterFireLeftPool, thrusterFireUpPool;
     public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>(), nonAdditiveEffects;
+    public static Array<ParticleEmitter> emitters=new Array<ParticleEmitter>();
     public static void load() {
         //If your particle effect includes additive or pre-multiplied particle emitters
 //you can turn off blend function clean-up to save a lot of draw calls, but
@@ -89,6 +92,9 @@ public class AssetHandler {
         pooledEffect=thrusterFireLeftPool.obtain();
         additiveEffects.add(pooledEffect);
 
+        for (PooledEffect i: additiveEffects){
+            emitters.add(i.getEmitters().get(0));
+        }
 
         menumusiciterator = r.nextInt(3);
         musiciterator = r.nextInt(6);

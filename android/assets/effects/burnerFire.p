@@ -10,8 +10,8 @@ max: 300
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 400.0
-highMax: 400.0
+highMin: 700.0
+highMax: 700.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -36,7 +36,16 @@ timeline3: 1.0
 - Life Offset - 
 active: false
 - X Offset - 
-active: false
+active: true
+lowMin: -140.0
+lowMax: -140.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
 - Y Offset - 
 active: false
 - Spawn Shape - 
@@ -44,8 +53,8 @@ shape: line
 - Spawn Width - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 200.0
-highMax: 200.0
+highMin: 280.0
+highMax: 280.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -85,8 +94,8 @@ active: false
 active: true
 lowMin: 0.0
 lowMax: 151.0
-highMin: 300.0
-highMax: 450.0
+highMin: 200.0
+highMax: 350.0
 relative: false
 scalingCount: 4
 scaling0: 0.0

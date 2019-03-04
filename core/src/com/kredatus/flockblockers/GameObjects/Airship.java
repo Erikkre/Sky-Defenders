@@ -1,28 +1,22 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.brashmonkey.spriter.TweenedAnimation;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
-import com.kredatus.flockblockers.Helpers.InvertedTweenEquations;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenAccessor;
 import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 
@@ -69,6 +63,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public static PooledEffect burnerFire, thrusterFireLeft, thrusterFireUp;
     public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>();
+    public static Array<ParticleEmitter> emitters = new Array<ParticleEmitter>();
 
     public Airship(int camWidth, int camHeight) {
         this.camWidth=camWidth;
@@ -117,15 +112,16 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //dragSpeed=10f;
 
         tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(4).start();
-        speedDivisor=60f;//60, 75, 90, 105, 120  higher the faster
+        speedDivisor=90f;//60, 75, 90, 105, 120  higher the faster
 
         loadEffects();
     }
 
     private void loadEffects(){
-        burnerFire=AssetHandler.burnerFirePool.obtain(); thrusterFireLeft=AssetHandler.thrusterFireLeftPool.obtain(); thrusterFireUp=AssetHandler.thrusterFireUpPool.obtain();
+        //burnerFire=AssetHandler.burnerFirePool.obtain(); thrusterFireLeft=AssetHandler.thrusterFireLeftPool.obtain(); thrusterFireUp=AssetHandler.thrusterFireUpPool.obtain();
         additiveEffects = AssetHandler.additiveEffects;
         additiveEffects.get(0).scaleEffect(0.25f);
+        emitters=AssetHandler.emitters;
         //burnerFire.scaleEffect(0.3f);
         //burnerFire.start();
 
@@ -238,6 +234,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
         return -1;
     }
+
     private void setDestAirship(){
         if (justTouched)justTouched=false;
         if (airshipTouchPointer==-1 && Gdx.input.justTouched()) {//if new press and not pressed before
@@ -246,9 +243,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             if (airshipTouchPointer>=0){
                 //System.out.println("AIRSHIP POINTER TOUCHED");
                 justTouched=true;
-                inputX=InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer));inputY= -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight);
+                inputX=InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer));inputY=-(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight);
                 fingerAirshipXDiff=inputX-pos.x;fingerAirshipYDiff=inputY-pos.y;//fingerAirshipDiff doesnt change while finger is pressed which is why we get it once here
-        }
+            }
+
         } else if (airshipTouchPointer>=0 && Gdx.input.isTouched(airshipTouchPointer) &&
                 (     Math.abs((inputX+fingerAirshipXDiff)-InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))  ) >0
                     ||Math.abs((inputY+fingerAirshipYDiff)+(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)  ) >0     )     ) { //if (after first press) and (airship was pressed) and (airship currently pressed)
@@ -261,7 +259,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
             //if (inputY > rackHeight/3f  &&   inputY<camHeight-balloonHeight/4f) pos.y=inputY;
             //} else if (airshipTouchPointer>=0) {//if (airship pointer not pressed and pointer not reset)
-
         } else if (airshipTouchPointer>=0&&!Gdx.input.isTouched(airshipTouchPointer)) {
             //System.out.println("AIRSHIP POINTER UNTOUCHED");
             //vel.set(Gdx.input.getDeltaX(airshipTouchPointer)*30,-(Gdx.input.getDeltaY(airshipTouchPointer))*30);
@@ -269,19 +266,25 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
     }
 
+    public void setEmitterAttributeTo(ParticleEmitter.ScaledNumericValue val, float amountInDegrees) {
+            float amplitude = (val.getHighMax() - val.getHighMin()) / 2f;
+            float h1 = amountInDegrees + amplitude;
+            float h2 = amountInDegrees - amplitude;
+            val.setHigh(h1, h2);
+            val.setLow(amountInDegrees);
+    }
+
     public void update(float delta) {
         setDestAirship();
         //System.out.print(pos.toString());
-        rackHitbox.setRotation(rotation);
-        balloonHitbox.setRotation(rotation);
+        rackHitbox   .setRotation(rotation) ;
+        balloonHitbox.setRotation(rotation) ;
 
         //0 is burner, 1 is thrustUp, 2 is thrustLeft, 3 is thrustRight
-
-
-        //additiveEffects.get(1).setPosition(pos.x,pos.y);
-        //additiveEffects.get(2).setPosition(pos.x,pos.y);
         if (!tween.isFinished()) {
-            additiveEffects.get(0).setPosition(pos.x-25,pos.y+5);
+
+            additiveEffects.get(0).setPosition(pos.x,pos.y+8);
+            setEmitterAttributeTo(emitters.get(0).getAngle(),90-rotation*10);
             //burnerFirePool.obtain().setPosition(pos.x,pos.y+0.10f*balloonHeight);
             //System.out.println("update tween");
             preX=pos.x;
@@ -329,20 +332,17 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
 
-
-        batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
-                balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation);
-
         for (PooledEffect i : additiveEffects){
             i.draw(batcher, delta);
         }
+
+        batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
+                balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation);
 
         //for (int i=0;i<sideThrustLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
             batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
                     thrusterWidth/2f, -0.18f*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation);
         //}
-
-
 
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
                 rackWidth/2f, rackHeight/2f, rackWidth, rackHeight,1,1,rotation);
