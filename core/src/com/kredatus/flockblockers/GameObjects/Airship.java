@@ -125,7 +125,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private void loadEffects(){
         burnerFire=AssetHandler.burnerFirePool.obtain(); thrusterFireLeft=AssetHandler.thrusterFireLeftPool.obtain(); thrusterFireUp=AssetHandler.thrusterFireUpPool.obtain();
         additiveEffects = AssetHandler.additiveEffects;
-        burnerFire.start();
+        additiveEffects.get(0).scaleEffect(0.25f);
+        //burnerFire.scaleEffect(0.3f);
+        //burnerFire.start();
+
     }
 
     private void assignBounds(){
@@ -273,10 +276,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         balloonHitbox.setRotation(rotation);
 
         //0 is burner, 1 is thrustUp, 2 is thrustLeft, 3 is thrustRight
-        additiveEffects.get(0).setPosition(pos.x,pos.y);
-        additiveEffects.get(1).setPosition(pos.x,pos.y);
-        additiveEffects.get(2).setPosition(pos.x,pos.y);
+
+
+        //additiveEffects.get(1).setPosition(pos.x,pos.y);
+        //additiveEffects.get(2).setPosition(pos.x,pos.y);
         if (!tween.isFinished()) {
+            additiveEffects.get(0).setPosition(pos.x-25,pos.y+5);
             //burnerFirePool.obtain().setPosition(pos.x,pos.y+0.10f*balloonHeight);
             //System.out.println("update tween");
             preX=pos.x;
