@@ -45,7 +45,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public int tW=32, tH=33;
     public static int airshipTouchPointer=-1, camWidth, camHeight;
     public float fingerAirshipXDiff, fingerAirshipYDiff;
-    //public static boolean justTouched;
+    //public static boolean airshipTouched;
 
     public float currentFlashLength;// dragSpeed;
     public boolean isFlashing;
@@ -56,7 +56,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public Tween tween;
     float inputX, inputY, speedDivisor;
-    public static boolean justTouched;
+    public static boolean airshipTouched;
 
     private static float preX, preY, rotation;
     float xOffsetFromRotation,yOffsetFromRotation;
@@ -227,13 +227,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     private void setDestAirship(){
-        if (justTouched)justTouched=false;
         if (airshipTouchPointer==-1 && Gdx.input.justTouched()) {//if new press and not pressed before
             //System.out.println(InputHandler.scaleX(Gdx.input.getX())+ " *** "+  InputHandler.scaleY(Gdx.input.getY()) );
             airshipTouchPointer=getAirshipTouchPointer();
-            if (airshipTouchPointer>=0){
+            if (airshipTouchPointer>=0) {
                 //System.out.println("AIRSHIP POINTER TOUCHED");
-                justTouched=true;
+                airshipTouched=true;
                 inputX=InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer));inputY=-(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight);
                 fingerAirshipXDiff=inputX-pos.x;fingerAirshipYDiff=inputY-pos.y;//fingerAirshipDiff doesnt change while finger is pressed which is why we get it once here
             }
@@ -242,6 +241,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 (     Math.abs((inputX+fingerAirshipXDiff)-InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))  ) >0
                     ||Math.abs((inputY+fingerAirshipYDiff)+(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)  ) >0     )     ) { //if (after first press) and (airship was pressed) and (airship currently pressed)
             //System.out.println("AIRSHIP POINTER MOVED");
+
+
             inputX = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff ;//input with finger touch difference
             inputY = -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight) - fingerAirshipYDiff ;
             if (isOnCam(inputX, inputY)) {
@@ -255,6 +256,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("AIRSHIP POINTER UNTOUCHED");
             //vel.set(Gdx.input.getDeltaX(airshipTouchPointer)*30,-(Gdx.input.getDeltaY(airshipTouchPointer))*30);
             airshipTouchPointer=-1;
+            if (airshipTouched)airshipTouched=false;
         }
     }
 
@@ -262,13 +264,29 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //burnerFire=AssetHandler.burnerFirePool.obtain(); thrusterFireLeft=AssetHandler.thrusterFireLeftPool.obtain(); thrusterFireUp=AssetHandler.thrusterFireUpPool.obtain();
         additiveEffects = AssetHandler.additiveEffects;
         additiveEffects.get(0).scaleEffect(0.20f);
+        additiveEffects.get(1).scaleEffect(0.30f);
+        additiveEffects.get(2).scaleEffect(0.30f);
         emitters=AssetHandler.emitters;
         //burnerFire.scaleEffect(0.3f);
         //burnerFire.start();
     }
 
     public void fireThrusters(){
+        if ((vel.x>0 && pos.x-preX<0) ) {    //if change in velocity and thrustRight
+            System.out.println("Thrust Right");
+            //emitters.get(2).allowCompletion();
+            //emitters.get(2).reset();
 
+            emitters.get(2).getDuration().setLow( 300+Math.abs(vel.x)*100);
+            emitters.get(2).start();
+            //emitters.get(2).se
+        } else if ((vel.x<0 && pos.x-preX>0) ){//thrustLeft to go right
+            System.out.println("Thrust Left");
+            //emitters.get(1).allowCompletion();
+            //emitters.get(1).reset();
+            emitters.get(1).getDuration().setLow( 300+Math.abs(vel.x)*100);
+            emitters.get(1).start();
+        }
     }
 
     public void burnerOnOff(){
@@ -283,10 +301,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 emitters.get(0).start();
             }
 
-            System.out.println("Vely: " + vel.y + ", Velocity set to: " + (700+vel.y*350)+", Velocity: "+emitters.get(0).getEmission().getHighMax());
+            //System.out.println("Vely: " + vel.y + ", Velocity set to: " + (700+vel.y*350)+", Velocity: "+emitters.get(0).getEmission().getHighMax());
             //setEmitterVal(emitters.get(0).getLife(), 250+ vel.y * 40 , false, false);
             setEmitterVal(emitters.get(0).getVelocity(), 80+vel.y*15 , true, false);
-            //if (justTouched)setEmitterVal(emitters.get(0).getEmission(), 700+vel.y*350 , false, false);
+            //if (airshipTouched)setEmitterVal(emitters.get(0).getEmission(), 700+vel.y*350 , false, false);
             //emitters.get(0).
         } else if (vel.y<-2.5 && !emitters.get(0).isComplete()) { //if yvel <0
             emitters.get(0).allowCompletion();
@@ -317,19 +335,23 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
             additiveEffects.get(0).setPosition(pos.x, pos.y + 8);
 
-            additiveEffects.get(1).setPosition(pos.x-thrusterWidth/2, pos.y + 0.18f*balloonHeight);
-            additiveEffects.get(2).setPosition(pos.x+thrusterWidth/2, pos.y + 0.18f*balloonHeight);
+            additiveEffects.get(1).setPosition(pos.x-thrusterWidth/2f+2, pos.y + 0.18f*balloonHeight+thrusterHeight/2f);
+            additiveEffects.get(2).setPosition(pos.x+thrusterWidth/2f-2, pos.y + 0.18f*balloonHeight+thrusterHeight/2f);
 
             burnerOnOff();
-            fireThrusters();
+
 
             preX=pos.x;
             preY=pos.y;
             tween.update(delta);
+
+            fireThrusters(); //fireThrusters if xVel changes directions (need to use old vel.x so thats why inbetween here)
+
             vel.set(pos.x-preX,pos.y-preY);
 
             float temp = vel.x/(2f*(speedDivisor/60f));
             rotation= -Math.signum(vel.x)*(temp*temp); //exponent of 2 //(float) (-Math.signum(xVel)*Math.pow(Math.abs(xVel),1.5));//-xVel*2f;
+
 
             for (Turret i : turretList) {
                 i.update();
@@ -370,18 +392,22 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
 
-        for (PooledEffect i : additiveEffects){
-            i.draw(batcher, delta);
-        }
+
+            additiveEffects.get(0).draw(batcher, delta);
+
 
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation);
 
-
-
+        if (!additiveEffects.get(1).isComplete()) {
+            additiveEffects.get(1).draw(batcher, delta);
+        }
+        if (!additiveEffects.get(2).isComplete()){
+            additiveEffects.get(2).draw(batcher, delta);
+        }
         //for (int i=0;i<sideThrustLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
         batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
-                // thrusterWidth/2f, -0.18f*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation);
+                 thrusterWidth/2f, -0.18f*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation);
         //}
 
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
