@@ -363,9 +363,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             preY=pos.y;
             tween.update(delta);
 
-            thrusterControl(); //thrusterControl if xVel changes directions (need to use old vel.x so thats why inbetween here)
+            //IS NOW MANAGED IN setDesAirship during pushdown. thrusterControl(); //thrusterControl if xVel changes directions (need to use old vel.x so thats why inbetween here)
             //if moving right and old vel>current vel and status is not slowing down
-            if (vel.x>0 && vel.x>pos.x-preX && !isMovingRightAndSlowing){
+            /*if (vel.x>0 && vel.x>pos.x-preX && !isMovingRightAndSlowing){
                 isMovingRightAndSlowing=true;
             } else if (vel.x>0 && vel.x<pos.x-preX && isMovingRightAndSlowing){
                 isMovingRightAndSlowing=false;
@@ -378,7 +378,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             } else if (vel.x==0){
                 isMovingLeftAndSlowing=false;
                 isMovingRightAndSlowing=false;
-            }
+            }*/
 
             vel.set(pos.x-preX,pos.y-preY);
 
