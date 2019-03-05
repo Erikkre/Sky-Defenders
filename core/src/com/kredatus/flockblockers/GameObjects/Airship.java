@@ -65,6 +65,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>();
     public static Array<ParticleEmitter> emitters = new Array<ParticleEmitter>();
 
+    public boolean thrustLeft, thrustRight;
     public Airship(int camWidth, int camHeight) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -247,9 +248,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 tween = Tween.to(pos, 0, (float) (Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y-inputY),2)))/speedDivisor ).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
             }
 
-
-
-
             //if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
             //if (inputY > rackHeight/3f  &&   inputY<camHeight-balloonHeight/4f) pos.y=inputY;
             //} else if (airshipTouchPointer>=0) {//if (airship pointer not pressed and pointer not reset)
@@ -269,6 +267,33 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //burnerFire.start();
     }
 
+    public void fireThrusters(){
+
+    }
+
+    public void burnerOnOff(){
+        if (vel.y > 0) {
+            setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);
+
+            if (vel.y>2 && emitters.get(0).getEmission().getHighMax()==700){
+                setEmitterVal(emitters.get(0).getEmission(),700+ vel.y*750, false, false);
+                emitters.get(0).start();
+            }else if (vel.y<1&&emitters.get(0).getEmission().getHighMax()>=700){
+                setEmitterVal(emitters.get(0).getEmission(),700, false, false);
+                emitters.get(0).start();
+            }
+
+            System.out.println("Vely: " + vel.y + ", Velocity set to: " + (700+vel.y*350)+", Velocity: "+emitters.get(0).getEmission().getHighMax());
+            //setEmitterVal(emitters.get(0).getLife(), 250+ vel.y * 40 , false, false);
+            setEmitterVal(emitters.get(0).getVelocity(), 80+vel.y*15 , true, false);
+            //if (justTouched)setEmitterVal(emitters.get(0).getEmission(), 700+vel.y*350 , false, false);
+            //emitters.get(0).
+        } else if (vel.y<-2.5 && !emitters.get(0).isComplete()) { //if yvel <0
+            emitters.get(0).allowCompletion();
+            emitters.get(0).reset();
+        }
+    }
+
     public void setEmitterVal(ParticleEmitter.ScaledNumericValue val, float newVal, boolean retainHighMinMax, boolean changeLowToo) {
             if (retainHighMinMax) {
                 float amplitude = (val.getHighMax() - val.getHighMin()) / 2f;
@@ -279,7 +304,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 val.setHigh(newVal);
             }
             if (changeLowToo) val.setLow(newVal);
-
     }
 
     public void update(float delta) {
@@ -288,35 +312,17 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackHitbox   .setRotation(rotation) ;
         balloonHitbox.setRotation(rotation) ;
 
-        //0 is burner, 1 is thrustUp, 2 is thrustLeft, 3 is thrustRight
+        //0 is burner, 1 is thrustLeft, 2 is thrustRight
         if (!tween.isFinished()) {
-            if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
+            //if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
             additiveEffects.get(0).setPosition(pos.x, pos.y + 8);
 
-            if (vel.y > 0) {
+            additiveEffects.get(1).setPosition(pos.x-thrusterWidth/2, pos.y + 0.18f*balloonHeight);
+            additiveEffects.get(2).setPosition(pos.x+thrusterWidth/2, pos.y + 0.18f*balloonHeight);
 
-                setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);
+            burnerOnOff();
+            fireThrusters();
 
-                if (vel.y>3 && emitters.get(0).getEmission().getHighMax()==700){
-                    setEmitterVal(emitters.get(0).getEmission(),700+ vel.y*550, false, false);
-                    emitters.get(0).start();
-                }else if (vel.y<3&&emitters.get(0).getEmission().getHighMax()>=700){
-                    setEmitterVal(emitters.get(0).getEmission(),700, false, false);
-                    emitters.get(0).start();
-                }
-
-                System.out.println("Vely: " + vel.y + ", Velocity set to: " + (700+vel.y*350)+", Velocity: "+emitters.get(0).getEmission().getHighMax());
-                setEmitterVal(emitters.get(0).getLife(), 250+ vel.y * 40 , false, false);
-                setEmitterVal(emitters.get(0).getVelocity(), 80+vel.y*15 , true, false);
-                //if (justTouched)setEmitterVal(emitters.get(0).getEmission(), 700+vel.y*350 , false, false);
-                //emitters.get(0).
-            } else if (!emitters.get(0).isComplete()) { //if yvel <0
-                emitters.get(0).allowCompletion();
-                emitters.get(0).reset();
-            }
-            //setEmitterVal(emitters.get(0).ge,);
-            //burnerFirePool.obtain().setPosition(pos.x,pos.y+0.10f*balloonHeight);
-            //System.out.println("update tween");
             preX=pos.x;
             preY=pos.y;
             tween.update(delta);
@@ -360,8 +366,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }*/
     }
 
-
-
     public void draw(SpriteBatch batcher, float delta) {
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
@@ -376,8 +380,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
         //for (int i=0;i<sideThrustLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
-            batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
-                    thrusterWidth/2f, -0.18f*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation);
+        batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
+                // thrusterWidth/2f, -0.18f*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation);
         //}
 
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,

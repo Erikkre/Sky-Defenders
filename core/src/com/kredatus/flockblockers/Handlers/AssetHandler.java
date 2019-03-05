@@ -64,8 +64,8 @@ public class AssetHandler {
 
     public static ShaderProgram flashShader;
 
-    public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireUp=new ParticleEffect();
-    public static ParticleEffectPool burnerFirePool, thrusterFireLeftPool, thrusterFireUpPool;
+    public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireRight=new ParticleEffect(); //thrusterFireUp=new ParticleEffect();
+    public static ParticleEffectPool burnerFirePool, thrusterFireLeftPool, thrusterFireRightPool;
     public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>(), nonAdditiveEffects;
     public static Array<ParticleEmitter> emitters=new Array<ParticleEmitter>();
     public static void load() {
@@ -80,16 +80,22 @@ public class AssetHandler {
         PooledEffect pooledEffect=burnerFirePool.obtain();
         additiveEffects.add(pooledEffect);
 
-        thrusterFireUp.load(Gdx.files.internal("effects"+File.separator+"thrusterFireUp.p"),Gdx.files.internal("particles"));
+        /*thrusterFireUp.load(Gdx.files.internal("effects"+File.separator+"thrusterFireUp.p"),Gdx.files.internal("particles"));
         //thrusterFireUp.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
         thrusterFireUpPool= new ParticleEffectPool(thrusterFireUp,1,2);
         pooledEffect=thrusterFireUpPool.obtain();
-        additiveEffects.add(pooledEffect);
+        additiveEffects.add(pooledEffect);*/
 
         thrusterFireLeft.load(Gdx.files.internal("effects"+File.separator+"thrusterFireLeft.p"),Gdx.files.internal("particles"));
         //thrusterFireLeft.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
         thrusterFireLeftPool= new ParticleEffectPool(thrusterFireLeft,1,2);
         pooledEffect=thrusterFireLeftPool.obtain();
+        additiveEffects.add(pooledEffect);
+
+        thrusterFireRight.load(Gdx.files.internal("effects"+File.separator+"thrusterFireRight.p"),Gdx.files.internal("particles"));
+        //thrusterFireRight.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
+        thrusterFireRightPool= new ParticleEffectPool(thrusterFireRight,1,2);
+        pooledEffect=thrusterFireRightPool.obtain();
         additiveEffects.add(pooledEffect);
 
         for (PooledEffect i: additiveEffects){
