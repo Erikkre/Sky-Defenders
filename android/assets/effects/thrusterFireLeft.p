@@ -2,8 +2,8 @@ thrusterFire
 - Delay -
 active: false
 - Duration - 
-lowMin: 1000.0
-lowMax: 1000.0
+lowMin: 100.0
+lowMax: 100.0
 - Count - 
 min: 0
 max: 300

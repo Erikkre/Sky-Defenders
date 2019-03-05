@@ -58,7 +58,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     float inputX, inputY, speedDivisor;
     public static boolean airshipTouched;
 
-    private static float preX, preY, rotation;
+    private static float preX, preY, rotation, maxInputX;
     float xOffsetFromRotation,yOffsetFromRotation;
 
     public static PooledEffect burnerFire, thrusterFireLeft, thrusterFireUp;
@@ -241,12 +241,16 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 (     Math.abs((inputX+fingerAirshipXDiff)-InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))  ) >0
                     ||Math.abs((inputY+fingerAirshipYDiff)+(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)  ) >0     )     ) { //if (after first press) and (airship was pressed) and (airship currently pressed)
             //System.out.println("AIRSHIP POINTER MOVED");
-
-
             inputX = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff ;//input with finger touch difference
             inputY = -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight) - fingerAirshipYDiff ;
             if (isOnCam(inputX, inputY)) {
-                tween = Tween.to(pos, 0, (float) (Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y-inputY),2)))/speedDivisor ).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
+                double distance =(Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y-inputY),2)));
+
+                //if (distance/speedDivisor<1.5f){//if distance is so small it takes under 1.5s to get there, take 1.5s anyways
+                //    tween = Tween.to(pos, 0, 1.5f).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
+                //} else {
+                    tween = Tween.to(pos, 0, (float) distance / speedDivisor).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
+                //}
             }
 
             //if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
@@ -271,21 +275,29 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //burnerFire.start();
     }
 
-    public void fireThrusters(){
-        if ((vel.x>0 && pos.x-preX<0) ) {    //if change in velocity and thrustRight
-            System.out.println("Thrust Right");
-            //emitters.get(2).allowCompletion();
-            //emitters.get(2).reset();
+    public void fireThrusters(){//set to 100ms min duration
 
-            emitters.get(2).getDuration().setLow( 300+Math.abs(vel.x)*100);
-            emitters.get(2).start();
-            //emitters.get(2).se
-        } else if ((vel.x<0 && pos.x-preX>0) ){//thrustLeft to go right
+        //System.out.println("Vel before: "+vel.x+", current vel: "+(pos.x-preX));
+        if ((vel.x>=0 && pos.x-preX<0 && emitters.get(2).getDuration().getLowMax()==100) ) {    //if change in velocity and thrustRight (vel is old vel, pos.x-preX is new)
+            System.out.println("Thrust Right");
+
+
+                emitters.get(2).reset();
+
+            emitters.get(2).getDuration().setLowMax( 100+Math.abs(pos.x-preX)*100);
+            additiveEffects.get(2).start();
+            System.out.println(emitters.get(2).getDuration().getLowMax());
+        } else if ((vel.x<=0 && pos.x-preX>0 && emitters.get(1).getDuration().getLowMax()==100) ){//thrustLeft to go right
             System.out.println("Thrust Left");
-            //emitters.get(1).allowCompletion();
-            //emitters.get(1).reset();
-            emitters.get(1).getDuration().setLow( 300+Math.abs(vel.x)*100);
-            emitters.get(1).start();
+
+                emitters.get(1).reset();
+
+            emitters.get(1).getDuration().setLowMax( 100+Math.abs(pos.x-preX)*100);
+            additiveEffects.get(1).start();
+            System.out.println(emitters.get(1).getDuration().getLowMax());
+        } else {
+            if (vel.x>=0 && emitters.get(2).getDuration().getLowMax()!=100){emitters.get(2).getDuration().setLowMax(100);emitters.get(2).allowCompletion();}//reset other thruster if no longer flying that way
+            if (vel.x<=0 && emitters.get(1).getDuration().getLowMax()!=100){emitters.get(1).getDuration().setLowMax(100);emitters.get(1).allowCompletion();}
         }
     }
 
@@ -293,7 +305,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (vel.y > 0) {
             setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);
 
-            if (vel.y>2 && emitters.get(0).getEmission().getHighMax()==700){
+            if (vel.y>1 && emitters.get(0).getEmission().getHighMax()==700){
                 setEmitterVal(emitters.get(0).getEmission(),700+ vel.y*750, false, false);
                 emitters.get(0).start();
             }else if (vel.y<1&&emitters.get(0).getEmission().getHighMax()>=700){
@@ -392,7 +404,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
 
-
             additiveEffects.get(0).draw(batcher, delta);
 
 
@@ -405,6 +416,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (!additiveEffects.get(2).isComplete()){
             additiveEffects.get(2).draw(batcher, delta);
         }
+
+
         //for (int i=0;i<sideThrustLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
         batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
                  thrusterWidth/2f, -0.18f*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation);
