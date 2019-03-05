@@ -65,7 +65,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>();
     public static Array<ParticleEmitter> emitters = new Array<ParticleEmitter>();
 
-    public boolean thrustLeft, thrustRight;
+    public boolean isMovingLeftAndSlowing, isMovingRightAndSlowing;
     public Airship(int camWidth, int camHeight) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -243,6 +243,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("AIRSHIP POINTER MOVED");
             inputX = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff ;//input with finger touch difference
             inputY = -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight) - fingerAirshipYDiff ;
+
             if (isOnCam(inputX, inputY)) {
                 double distance =(Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y-inputY),2)));
 
@@ -278,7 +279,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public void fireThrusters(){//set to 100ms min duration
 
         //System.out.println("Vel before: "+vel.x+", current vel: "+(pos.x-preX));
-        if ((vel.x>=0 && pos.x-preX<0 && emitters.get(2).getDuration().getLowMax()==100) ) {    //if change in velocity and thrustRight (vel is old vel, pos.x-preX is new)
+        if (((vel.x>=0 && pos.x-preX<0)||(vel.x<0&&isMovingLeftAndSlowing&&(pos.x-preX)<vel.x)) && emitters.get(2).getDuration().getLowMax()==100 ) {    //if change in velocity and thrustRight (vel is old vel, pos.x-preX is new)
             System.out.println("Thrust Right");
 
 
@@ -287,7 +288,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             emitters.get(2).getDuration().setLowMax( 100+Math.abs(pos.x-preX)*100);
             additiveEffects.get(2).start();
             System.out.println(emitters.get(2).getDuration().getLowMax());
-        } else if ((vel.x<=0 && pos.x-preX>0 && emitters.get(1).getDuration().getLowMax()==100) ){//thrustLeft to go right
+        //if moving left and change to moving right or if moving right, slowing down and all of a sudden speed up fire left thruster
+        } else if (((vel.x<=0 && pos.x-preX>0)||(vel.x>0&&isMovingRightAndSlowing&&(pos.x-preX)>vel.x)) && emitters.get(1).getDuration().getLowMax()==100 ){//thrustLeft to go right
             System.out.println("Thrust Left");
 
                 emitters.get(1).reset();
@@ -337,6 +339,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void update(float delta) {
+        System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing);
         setDestAirship();
         //System.out.print(pos.toString());
         rackHitbox   .setRotation(rotation) ;
@@ -358,6 +361,21 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             tween.update(delta);
 
             fireThrusters(); //fireThrusters if xVel changes directions (need to use old vel.x so thats why inbetween here)
+            //if moving right and old vel>current vel and status is not slowing down
+            if (vel.x>0 && vel.x>pos.x-preX && !isMovingRightAndSlowing){
+                isMovingRightAndSlowing=true;
+            } else if (vel.x>0 && vel.x<pos.x-preX && isMovingRightAndSlowing){
+                isMovingRightAndSlowing=false;
+
+            } else if (vel.x<0 && vel.x<pos.x-preX &&  !isMovingLeftAndSlowing){
+                isMovingLeftAndSlowing=true;
+            } else if (vel.x<0 && vel.x>pos.x-preX && isMovingLeftAndSlowing){
+                isMovingLeftAndSlowing=false;
+
+            } else if (vel.x==0){
+                isMovingLeftAndSlowing=false;
+                isMovingRightAndSlowing=false;
+            }
 
             vel.set(pos.x-preX,pos.y-preY);
 
