@@ -130,12 +130,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 });
 
                 if (lvl==0){
-                rackHitbox = new Polygon(new float[]{
+                rackHitbox = new Polygon(new float[] {
                         x - tW * 2, y ,         x - tW * 2, y - 1 * tH ,//bottom left rack
                         x + tW * 2, y - 1 * tH ,     x + tW * 2, y ,     //bottom right of burner
                         }
                     );
-                } else if (lvl==1){
+                } else if (lvl==1) {
                     rackHitbox = new Polygon(new float[]{
                             x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,//bottom left rack
                             x + tW * 2, y - 2 * tH ,   x + tW * 2, y ,     //bottom right of burner
@@ -285,7 +285,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public void fireThruster(int i){
         emitters.get(i).allowCompletion();
-        //emitters.get(i).getEmission().setHigh(300+Math.abs(Gdx.input.getDeltaX(airshipTouchPointer))*50);
+
+        if (i==1) setEmitterVal(emitters.get(i).getAngle(), 180 + rotation*2, true, true);
+        else if(i==2) setEmitterVal(emitters.get(i).getAngle(), 0 + rotation*2, true, true);
 
         additiveEffects.get(i).start();
         System.out.println(emitters.get(i).getEmission().getHighMax());
@@ -354,8 +356,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
             additiveEffects.get(0).setPosition(pos.x, pos.y + 8);
 
-            additiveEffects.get(1).setPosition(pos.x-thrusterWidth/2f+2, pos.y + 0.18f*balloonHeight+thrusterHeight/2f);
-            additiveEffects.get(2).setPosition(pos.x+thrusterWidth/2f-2, pos.y + 0.18f*balloonHeight+thrusterHeight/2f);
+            additiveEffects.get(1).setPosition(pos.x-thrusterWidth/2f+2, pos.y + 0.18f*balloonHeight+thrusterHeight/2f + vel.y/speedDivisor);//adding a bit of vel for straying thrusters
+            additiveEffects.get(2).setPosition(pos.x+thrusterWidth/2f-2, pos.y + 0.18f*balloonHeight+thrusterHeight/2f + vel.y/speedDivisor);
 
             burnerOnOff();
 
