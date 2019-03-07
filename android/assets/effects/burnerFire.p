@@ -10,8 +10,8 @@ max: 700
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 700.0
-highMax: 700.0
+highMin: 300.0
+highMax: 300.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -147,32 +147,26 @@ timeline0: 0.0
 - Gravity - 
 active: false
 - Tint - 
-colorsCount: 6
-colors0: 1.0
-colors1: 0.63529414
-colors2: 0.08627451
-colors3: 1.0
-colors4: 0.0
-colors5: 0.0
-timelineCount: 2
+colorsCount: 3
+colors0: 0.5058824
+colors1: 0.11372549
+colors2: 0.0
+timelineCount: 1
 timeline0: 0.0
-timeline1: 1.0
 - Transparency - 
 lowMin: 0.0
 lowMax: 0.0
 highMin: 1.0
 highMax: 1.0
 relative: false
-scalingCount: 4
+scalingCount: 3
 scaling0: 0.0
 scaling1: 1.0
-scaling2: 0.8596491
-scaling3: 0.0
-timelineCount: 4
+scaling2: 0.0
+timelineCount: 3
 timeline0: 0.0
 timeline1: 0.2
-timeline2: 0.31506848
-timeline3: 1.0
+timeline2: 1.0
 - Options - 
 attached: true
 continuous: true

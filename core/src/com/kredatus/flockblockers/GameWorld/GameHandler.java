@@ -121,7 +121,6 @@ public class GameHandler implements Screen {
 
     @Override
     public void resume() {
-
         Gdx.app.log("GameHandler", "resume called");
         if (!FlockBlockersMain.dontPauseOnUnfocus) {
             isPaused = false;

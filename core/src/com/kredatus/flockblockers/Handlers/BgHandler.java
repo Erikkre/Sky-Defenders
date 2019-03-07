@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kredatus.flockblockers.FlockBlockersMain;
+import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
 import com.kredatus.flockblockers.GameObjects.TinyBird;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
@@ -51,14 +52,14 @@ public class BgHandler {
     //private int orgBoostnumber = AssetHandler.getBoostnumber(), coordslistsize=AssetHandler.getcoordslistsize();
     public static int bgw= AssetHandler.bgPhoenixtexture.getRegionWidth();
     public static int bgh = AssetHandler.bgPhoenixtexture.getRegionHeight(), separatorHeight=AssetHandler.bgCloudSeparatorTexture.getRegionHeight();    //height of separator is different, and there are 2 combined with eachother
-    float x, y, width, height;
+    float preVert, yVelAbs;
     public int bgNumber;
 
     //private TweenManager manager;
     public Timeline horizPositionBg, vertPositionBg,smallShake, bigShake;
     private TweenCallback startStoryIntroAndSpawns, backgroundStackReset, shakeCamCallback, endBirdSpawn;
     public static float camHeight, camWidth, bgStackHeight=separatorHeight+bgh+bgh;
-    public static boolean isPastStoryIntro, isCameraShake, isBirdSpawning, stackJustReset;
+    public static boolean isPastStoryIntro, isCameraShake, isBirdSpawning, stackJustReset, isbgVertFast;
     private OrthographicCamera cam;
     private GameRenderer renderer;
     private int bgStackStartYHeight=0;
@@ -68,7 +69,7 @@ public class BgHandler {
         this.camHeight=camHeight;
         this.camWidth =camWidth;
                           // 0    1    2    3    4    5    6    7
-        bgNumber = 9 * 2;// "pB","tB","wB","fB","aB","nB","lB","gB"
+        bgNumber = 9 * 0;// "pB","tB","wB","fB","aB","nB","lB","gB"
         //System.out.print("Start height of bg1: "+-bgStackStartYHeight);
         horiz.setValue(0);
         vert.setValue(0);//everything is done in negative (camera goes up by that amount
@@ -183,8 +184,12 @@ public class BgHandler {
                 isCameraShake = false;
                 smallShake.pause();
                 vert.setValue(0);
-                //}
-                //}
+                //System.out.println("Bgnumber: "+(bgNumber-2)+", ");
+                if ((bgNumber-2)%9==0) {
+                    for (int j = 0; j < Airship.emitters.size; j++) {//also done in BirdHandler class every time background changes
+                        Airship.fireColor(j);
+                    }
+                }
             }
         };
         regularVertBgMotion();
@@ -232,7 +237,16 @@ public class BgHandler {
                     //stop running once done
 
             //if(vert.getValue()<bgStackHeight+35)backgroundStackReset();
+
+            preVert=vert.getValue();
             vertPositionBg.update(delta);
+            yVelAbs=Math.abs(vert.getValue()-preVert);
+            if (yVelAbs>900&&!isbgVertFast){//test this
+                isbgVertFast=true;
+            } else if (yVelAbs<900&&isbgVertFast){
+                isbgVertFast=false;
+            }
+
             //if end of wave close or 1 background away from ending dont end wave quickly, bgNumber multiples of 10 are wave end bg's
             //System.out.println(isBirdSpawning +" "+ BirdHandler.birdQueue.isEmpty() +" "+ BirdHandler.activeBirdQueue.isEmpty() +" "+ !(bgNumber%10==0) +" "+ !((bgNumber+1)%10==0));
             if (bgNumber>1 && !((bgNumber-1)%9==0) && !((bgNumber-2)%9==0) && isBirdSpawning && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty() ) {
