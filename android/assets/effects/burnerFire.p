@@ -102,7 +102,7 @@ active: false
 - Velocity - 
 active: true
 lowMin: 0.0
-lowMax: 151.0
+lowMax: 0.0
 highMin: 200.0
 highMax: 400.0
 relative: false

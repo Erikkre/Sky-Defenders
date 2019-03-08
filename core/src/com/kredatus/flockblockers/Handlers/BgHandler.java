@@ -1,18 +1,12 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
-import com.kredatus.flockblockers.GameObjects.TinyBird;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Helpers.InvertedTweenEquations;
@@ -25,9 +19,7 @@ import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
-import box2dLight.RayHandler;
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.
@@ -52,7 +44,7 @@ public class BgHandler {
     //private int orgBoostnumber = AssetHandler.getBoostnumber(), coordslistsize=AssetHandler.getcoordslistsize();
     public static int bgw= AssetHandler.bgPhoenixtexture.getRegionWidth();
     public static int bgh = AssetHandler.bgPhoenixtexture.getRegionHeight(), separatorHeight=AssetHandler.bgCloudSeparatorTexture.getRegionHeight();    //height of separator is different, and there are 2 combined with eachother
-    float preVert, yVelAbs;
+//    float preVert, yVelAbs;
     public int bgNumber;
 
     //private TweenManager manager;
@@ -196,8 +188,7 @@ public class BgHandler {
         regularVertBgMotion();
     }
 
-
-    private void  regularVertBgMotion(){
+    private void  regularVertBgMotion() {
         if (!FlockBlockersMain.fastTest) {
             //System.out.println("First target: "+bgStackHeight+", separator height: "+separatorHeight+", bgh: "+bgh);
             (vertPositionBg = Timeline.createSequence()  //15 sec duration
@@ -219,33 +210,35 @@ public class BgHandler {
             ).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START).repeat(Tween.INFINITY, 0).start();
         }
     }
+
     private void shakeCamera(float delta){
        // cam.normalizeUp();
         //System.out.println("Last angle: "+(-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees) + " New Angle: "+shake.getValue());
         renderer.setRotate((-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees) +shake.getValue() ); //subtract last angle and add next one
-//+ (-1+2*r.nextFloat())
+        //+ (-1+2*r.nextFloat())
     }
 //PointLight
     public void update(float delta) {
         //System.out.println("1: "+ Math.round(background.y) + " 2: "+Math.round(background2.y));
-        if (isCameraShake){
+        if (isCameraShake) {
             smallShake.update(delta);
             bigShake.update(delta);
-            shakeCamera(delta); }
+            shakeCamera(delta);
+        }
 
         if(isPastStoryIntro ){
             //System.out.println(" vert values:" + Math.round(vert.getValue()) + " bg1: "+background.y +" bg2: "+ background2.y + " bg1 added: "+background.addedY+" bg2 added: "+background2.addedY);
                     //stop running once done
-
             //if(vert.getValue()<bgStackHeight+35)backgroundStackReset();
 
-            preVert=vert.getValue();
+            //preVert=vert.getValue();
             vertPositionBg.update(delta);
-            yVelAbs=Math.abs(vert.getValue()-preVert);
-            System.out.println(yVelAbs+", isbgVertFast: "+isbgVertFast);
-            if (yVelAbs>50&&!isbgVertFast){//test this
-                isbgVertFast=true;
-            } else if (yVelAbs<50&&isbgVertFast){
+            //yVelAbs=Math.abs(vert.getValue()-preVert);
+
+            //System.out.println("isbgVertFast: "+isbgVertFast);
+            if (vert.getValue()>0.20*-bgStackHeight||vert.getValue()<0.67*-bgStackHeight) {//test this
+                if (!isbgVertFast) isbgVertFast=true;
+            } else if (isbgVertFast) {
                 isbgVertFast=false;
             }
 

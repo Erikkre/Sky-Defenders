@@ -320,30 +320,38 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public void burnerOnOff(){
         if (!BgHandler.isbgVertFast) {
-            if (vel.y >= 0) {
 
+            if (vel.y >= 0) {
+                //System.out.println("1, "+emitters.get(0).getEmission().getHighMax());
                 setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);
 
                 if (vel.y > 1 && emitters.get(0).getEmission().getHighMax() == 300) {
+                    //System.out.println("2, "+emitters.get(0).getEmission().getHighMax());
                     setEmitterVal(emitters.get(0).getEmission(), 300 + vel.y * 750, false, false);
 
                     emitters.get(0).start();
                 } else if (vel.y < 1 && emitters.get(0).getEmission().getHighMax() != 300) {
                     setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
                     emitters.get(0).start();
+                    //System.out.println("3, "+emitters.get(0).getEmission().getHighMax());
                 }
-                setEmitterVal(emitters.get(0).getVelocity(), 250 + vel.y * 15, true, false);//test this out
+                setEmitterVal(emitters.get(0).getVelocity(), 80 + vel.y * 15, true, false);//test this out
+                //System.out.println("vel: "+emitters.get(0).getVelocity().getHighMax());
 
             } else if (vel.y < -2.5 && !emitters.get(0).isComplete()) { //if descending let current burner anim finish then turn it off
                 emitters.get(0).allowCompletion();
-
+                //System.out.println("4, "+emitters.get(0).getEmission().getHighMax());
             } else if (vel.y >= -2.5f && emitters.get(0).isComplete()) {
+                //System.out.println("5, "+emitters.get(0).getEmission().getHighMax());
                 if (emitters.get(0).getEmission().getHighMax() != 300)
+                    //System.out.println("6, "+emitters.get(0).getEmission().getHighMax());
                     setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
                 emitters.get(0).start();
             }
         } else {
-            if (vel.y < 1 && emitters.get(0).getEmission().getHighMax() != 2000) {
+            //System.out.println("7, "+emitters.get(0).getEmission().getHighMax());
+            if (emitters.get(0).getEmission().getHighMax() != 2000) {
+                //System.out.println("8, "+emitters.get(0).getEmission().getHighMax());
                 setEmitterVal(emitters.get(0).getEmission(), 2000, false, false);
                 emitters.get(0).start();
             }
@@ -369,6 +377,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.print(pos.toString());
         rackHitbox   .setRotation(rotation) ;
         balloonHitbox.setRotation(rotation) ;
+        burnerOnOff();
 
         //0 is burner, 1 is thrustLeft, 2 is thrustRight
         if (!tween.isFinished()) {
@@ -378,7 +387,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             additiveEffects.get(1).setPosition(pos.x-thrusterWidth/2f+2, pos.y + 0.18f*balloonHeight+thrusterHeight/2f + vel.y);//adding a bit of vel for straying thrusters
             additiveEffects.get(2).setPosition(pos.x+thrusterWidth/2f-2, pos.y + 0.18f*balloonHeight+thrusterHeight/2f + vel.y);
 
-            burnerOnOff();
+
 
             preX=pos.x;
             preY=pos.y;
