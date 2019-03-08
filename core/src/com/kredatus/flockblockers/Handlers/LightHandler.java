@@ -57,10 +57,6 @@ public class LightHandler { //consider making barlight and mirroring on each sid
     private static float cloudA=1.00f, sunA=0.85f,  xxsA=0.23f, xsA=0.35f, sA=0.46f,smA=0.56f,mA=0.65f,mlA=0.73f, lA =0.80f,xlA=0.86f, xxlA=0.91f, xxxlA=0.95f, xxxxlA=1.00f;
 
     public LightHandler(BgHandler bgHandler) {
-                                    // 0    1    2    3    4    5    6    7
-        BirdHandler.waveTypeCnt=0; // "pB","tB","wB","fB","aB","nB","lB","gB"
-
-
         //foreRayHandler.useDiffuseLight(true); //smoother but makes everywhere but light dark
         //foreRayHandler.setAmbientLight(0.85f);   //light everywhere outside of our set lights
         //backRayHandler.setAmbientLight(0.55f);

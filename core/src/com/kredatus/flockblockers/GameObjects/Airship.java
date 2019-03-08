@@ -70,7 +70,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static Array<ParticleEmitter> emitters = new Array<ParticleEmitter>();
 
     public boolean isMovingLeftAndSlowing, isMovingRightAndSlowing;
-    public Airship(int camWidth, int camHeight) {
+    public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
         armorLvl=0;
@@ -120,8 +120,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         loadEffects();
 
+        //System.out.println("Start ");
         for (int i=0;i<Airship.emitters.size;i++){//also done in BirdHandler class every time background changes
-            Airship.fireColor(i);
+            Airship.fireColor(i, birdType);
         }
     }
 
@@ -292,17 +293,18 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //burnerFire.start();
     }
 
-    public static void fireColor(int i){
+    public static void fireColor(int i, int waveTypeCnt){
         //System.out.println("Was "+emitters.get(i).getTint().getColors()[0]+", "+emitters.get(i).getTint().getColors()[1]+", "+emitters.get(i).getTint().getColors()[2]);
-
-        if (BirdHandler.waveTypeCnt==0) emitters.get(i).getTint().setColors(new float[]{255/255f, 237/255f, 137/255f});
-        if (BirdHandler.waveTypeCnt==1) emitters.get(i).getTint().setColors(new float[]{255/255f, 170/255f, 140/255f});
-        if (BirdHandler.waveTypeCnt==2) emitters.get(i).getTint().setColors(new float[]{43/255f,  158/255f, 238/255f});
-        if (BirdHandler.waveTypeCnt==3) emitters.get(i).getTint().setColors(new float[]{227/255f, 133/255f, 37/255f });
-        if (BirdHandler.waveTypeCnt==4) emitters.get(i).getTint().setColors(new float[]{94/255f,  252/255f, 177/255f});
-        if (BirdHandler.waveTypeCnt==5) emitters.get(i).getTint().setColors(new float[]{220/255f, 221/255f, 226/255f});
-        if (BirdHandler.waveTypeCnt==6) emitters.get(i).getTint().setColors(new float[]{230/255f, 49/255f,  252/255f});
-        if (BirdHandler.waveTypeCnt==7) emitters.get(i).getTint().setColors(new float[]{255/255f, 255/255f, 67/255f });
+        //{"pB","tB","wB","fB","aB","nB","lB","gB"};
+        //  0    1    2    3    4    5    6    7
+        if (waveTypeCnt==0) emitters.get(i).getTint().setColors(new float[]{178/255f, 166/255f, 96/255f});
+        if (waveTypeCnt==1) emitters.get(i).getTint().setColors(new float[]{178/255f, 119/255f, 98/255f});
+        if (waveTypeCnt==2) emitters.get(i).getTint().setColors(new float[]{43/255f,  158/255f, 238/255f});
+        if (waveTypeCnt==3) emitters.get(i).getTint().setColors(new float[]{227/255f, 133/255f, 37/255f });
+        if (waveTypeCnt==4) emitters.get(i).getTint().setColors(new float[]{75/255f,  201/255f, 142/255f});
+        if (waveTypeCnt==5) emitters.get(i).getTint().setColors(new float[]{154/255f, 155/255f, 158/255f});
+        if (waveTypeCnt==6) emitters.get(i).getTint().setColors(new float[]{230/255f, 49/255f,  252/255f});
+        if (waveTypeCnt==7) emitters.get(i).getTint().setColors(new float[]{178/255f, 178/255f, 47/255f });
         //System.out.println("Was "+emitters.get(i).getTint().getColors()[0]+", "+emitters.get(i).getTint().getColors()[1]+", "+emitters.get(i).getTint().getColors()[2]);
     }
 
@@ -316,24 +318,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.println(emitters.get(i).getEmission().getHighMax());
     }
 
-    public void thrusterControl(){//set to 100ms min duration
-        /*
-        //System.out.println("Vel before: "+vel.x+", current vel: "+(pos.x-preX));
-        if (((vel.x>=0 && pos.x-preX<0)||(vel.x<0&&isMovingLeftAndSlowing&&(pos.x-preX)<vel.x)) && emitters.get(2).getDuration().getLowMax()==100 ) {    //if change in velocity and thrustRight (vel is old vel, pos.x-preX is new)
-            System.out.println("Thrust Right");
-            fireThruster(2);
-        //if moving left and change to moving right or if moving right, slowing down and all of a sudden speed up fire left thruster
-        } else if (((vel.x<=0 && pos.x-preX>0)||(vel.x>0&&isMovingRightAndSlowing&&(pos.x-preX)>vel.x)) && emitters.get(1).getDuration().getLowMax()==100 ){//thrustLeft to go right
-            System.out.println("Thrust Left");
-            fireThruster(1);
-        } else {
-            if (vel.x>=0 && emitters.get(2).getDuration().getLowMax()!=100){emitters.get(2).getDuration().setLowMax(100);emitters.get(2).allowCompletion();System.out.println("stop");}//reset other thruster if no longer flying that way
-            if (vel.x<=0 && emitters.get(1).getDuration().getLowMax()!=100){emitters.get(1).getDuration().setLowMax(100);emitters.get(1).allowCompletion();System.out.println("stop");}
-        }*/
-    }
-
     public void burnerOnOff(){
-        if (BgHandler.isbgVertFast) {
+        if (!BgHandler.isbgVertFast) {
             if (vel.y >= 0) {
 
                 setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);
@@ -346,8 +332,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
                     emitters.get(0).start();
                 }
-
-
                 setEmitterVal(emitters.get(0).getVelocity(), 250 + vel.y * 15, true, false);//test this out
 
             } else if (vel.y < -2.5 && !emitters.get(0).isComplete()) { //if descending let current burner anim finish then turn it off

@@ -62,7 +62,7 @@ public class AcidBird extends BirdAbstractClass {
         setBoundingPoly(x,y,width,height);
         flapSpeedIntervals();
 
-        System.out.println(width + " " + camWidth/3);
+        //System.out.println(width + " " + camWidth/3);
     }
 
     private void animSetup(){

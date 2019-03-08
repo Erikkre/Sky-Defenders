@@ -41,7 +41,7 @@ public class GameHandler implements Screen {
     public static int camWidth, camHeight;
     public boolean isPaused=false;
     public static double timeOfPause, timeOfResume;
-
+    public int birdType = FlockBlockersMain.birdType;
     Airship airship;
     public GameHandler() {
         float screenWidth = Gdx.graphics.getWidth();
@@ -58,12 +58,12 @@ public class GameHandler implements Screen {
 
         uiHandler=new UiHandler();
         tinyBirdHandler = new TinyBirdHandler();
-        bgHandler = new BgHandler(camWidth, camHeight);
-        birdHandler= new BirdHandler(bgHandler, camWidth, camHeight);
+        bgHandler = new BgHandler(camWidth, camHeight, birdType);
+        birdHandler= new BirdHandler(bgHandler, camWidth, camHeight, birdType);
 
         //turretHandler = new TurretHandler(camWidth, camHeight);
         lightHandler= new LightHandler(bgHandler);
-        airship=new Airship(camWidth, camHeight);
+        airship=new Airship(camWidth, camHeight, birdType);
         targetHandler = new TargetHandler(airship);
 
         world = new GameWorld(airship, camWidth, camHeight, bgHandler,birdHandler, targetHandler,tinyBirdHandler,uiHandler, lightHandler);

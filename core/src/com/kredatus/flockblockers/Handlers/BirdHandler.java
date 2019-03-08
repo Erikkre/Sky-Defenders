@@ -40,7 +40,8 @@ public class BirdHandler {
     public double lastBirdSpawnTime;
     private ArrayList<Float> flashLengths=new ArrayList<Float>();
 
-    public BirdHandler(BgHandler bgHandler,  float camWidth, float camHeight) {
+    public BirdHandler(BgHandler bgHandler,  float camWidth, float camHeight, int birdType) {
+        waveTypeCnt=birdType;
         this.bgHandler = bgHandler;
         this.camHeight = camHeight;
         this.camWidth  = camWidth ;

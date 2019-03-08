@@ -21,8 +21,6 @@ import aurelienribon.tweenengine.TweenEquations;
 
 public class ThunderBird extends BirdAbstractClass {
 
-
-
     //public final int[] animSeqList = {0,1,2,3};
     Random r = new Random();
     Tween second;
