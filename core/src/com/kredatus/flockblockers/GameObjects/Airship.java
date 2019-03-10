@@ -282,7 +282,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
     }
 
-    private void loadEffects(){
+    private void loadEffects () {
         //burnerFire=AssetHandler.burnerFirePool.obtain(); thrusterFireLeft=AssetHandler.thrusterFireLeftPool.obtain(); thrusterFireUp=AssetHandler.thrusterFireUpPool.obtain();
         additiveEffects = AssetHandler.additiveEffects;
         additiveEffects.get(0).scaleEffect(0.20f);
@@ -297,8 +297,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.println("Was "+emitters.get(i).getTint().getColors()[0]+", "+emitters.get(i).getTint().getColors()[1]+", "+emitters.get(i).getTint().getColors()[2]);
         //{"pB","tB","wB","fB","aB","nB","lB","gB"};
         //  0    1    2    3    4    5    6    7
-        if (waveTypeCnt==0) emitters.get(i).getTint().setColors(new float[]{178/255f, 166/255f, 96/255f});
-        if (waveTypeCnt==1) emitters.get(i).getTint().setColors(new float[]{178/255f, 119/255f, 98/255f});
+        if (waveTypeCnt==0) emitters.get(i).getTint().setColors(new float[]{178/255f, 166/255f, 96/255f });
+        if (waveTypeCnt==1) emitters.get(i).getTint().setColors(new float[]{178/255f, 119/255f, 98/255f });
         if (waveTypeCnt==2) emitters.get(i).getTint().setColors(new float[]{43/255f,  158/255f, 238/255f});
         if (waveTypeCnt==3) emitters.get(i).getTint().setColors(new float[]{227/255f, 133/255f, 37/255f });
         if (waveTypeCnt==4) emitters.get(i).getTint().setColors(new float[]{75/255f,  201/255f, 142/255f});
@@ -320,7 +320,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public void burnerOnOff(){
         if (!BgHandler.isbgVertFast) {
-
             if (vel.y >= 0) {
                 //System.out.println("1, "+emitters.get(0).getEmission().getHighMax());
                 setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);
@@ -507,4 +506,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
         //System.out.println(currentFlashLength);
     }
+
+
 }
