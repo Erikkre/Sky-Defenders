@@ -179,9 +179,7 @@ public class BgHandler {
 
                 if ((bgNumber-2)%9==0) {
                     //System.out.println("Bgnumber: "+(bgNumber-2)+", ");
-                    for (int j = 0; j < Airship.emitters.size; j++) {//also done in BirdHandler class every time background changes
-                        Airship.fireColor(j, (bgNumber-2)/9);
-                    }
+                    Airship.setFireColor((bgNumber-2)/9);
                 }
             }
         };

@@ -72,7 +72,6 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         bgLights.add(newPointLight(foreRayHandler, 255,255,255,cloudA,cloudDia,cloudBottomRightPos));
         //bgLights.add(new DirectionalLight(foreRayHandler,30, new Color(233,33,33,0.5f), 90)); //directional light is like ambient light but with direction (for shadows)
 
-
     }
 
     /*private static CustomChainLight[] newBarLight(int r, int g, int b, float a, int lightDistance, int dirDeg, float[] chainVertices) {
@@ -88,7 +87,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
     }*/
 
     //(multiply width by bgh and height by *bgStackHeight respectively) positions of bg light sources are 0.5 x .154454 for clouds, .59082 x 0.517933 for first sun, .59082 x .791747 for second sun
-    private static CustomPointLight newPointLight(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos) {
+    public static CustomPointLight newPointLight(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos) {
         CustomPointLight newPointLight = new CustomPointLight(rayHandler, r, g, b, a, lightDistance, origPos);
         newPointLight.setSoft(false);
         newPointLight.setStaticLight(false);
@@ -96,13 +95,13 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         return newPointLight;
     }
 
-    private static CustomPointLight[] newPointLightMirrored(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos) {   //input newPointLight in invertedBG and return a list with inverted and non inverted bg pointlights
+    public static CustomPointLight[] newPointLightMirrored(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos) {   //input newPointLight in invertedBG and return a list with inverted and non inverted bg pointlights
         CustomPointLight invBgPointlight = new CustomPointLight(rayHandler, r, g, b, a, lightDistance, origPos);
         CustomPointLight nonInvBgPointLight =  new CustomPointLight(rayHandler, r, g, b, a, lightDistance, new Vector2(origPos.x,origPos.y+((BgHandler.bgh-((origPos.y-BgHandler.separatorHeight)))*2)));
         return new CustomPointLight[]{invBgPointlight, nonInvBgPointLight};
     }
 
-    private static CustomPointLight[] newPointLightMirrored(RayHandler rayHandler, Color color, int lightDistance, Vector2 origPos) {   //input newPointLight in invertedBG and return a list with inverted and non inverted bg pointlights
+    public static CustomPointLight[] newPointLightMirrored(RayHandler rayHandler, Color color, int lightDistance, Vector2 origPos) {   //input newPointLight in invertedBG and return a list with inverted and non inverted bg pointlights
         CustomPointLight invBgPointlight = new CustomPointLight(rayHandler, color, lightDistance, origPos);
         CustomPointLight nonInvBgPointLight =  new CustomPointLight(rayHandler, color, lightDistance, new Vector2(origPos.x,origPos.y+((BgHandler.bgh-((origPos.y-BgHandler.separatorHeight)))*2)));
         return new CustomPointLight[]{invBgPointlight, nonInvBgPointLight};
@@ -301,8 +300,6 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             else if (i instanceof ChainLight)        {i.setPosition(((CustomChainLight) i).origVerts[0] + bgHoriz, ((CustomChainLight) i).origVerts[1] + bgVert);}
             else                                     i.setPosition(((CustomConeLight) i).origPos.x + bgHoriz, ((CustomConeLight) i).origPos.y + bgVert);
         }
-        foreRayHandler.update();   //the render part might need to be put at the end of the render cycle in gameRenderer
-        backRayHandler.update();
     }
 
     public static void renderFront() {

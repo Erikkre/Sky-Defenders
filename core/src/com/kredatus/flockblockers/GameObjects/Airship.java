@@ -8,18 +8,26 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.kredatus.flockblockers.CustomLights.CustomChainLight;
+import com.kredatus.flockblockers.CustomLights.CustomConeLight;
+import com.kredatus.flockblockers.CustomLights.CustomPointLight;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
+import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
+import box2dLight.ChainLight;
+import box2dLight.Light;
+
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 
 import javax.swing.ButtonGroup;
@@ -27,7 +35,7 @@ import javax.swing.ButtonGroup;
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
 
     private Circle boundingCir;
-    public static Vector2 pos, vel=new Vector2(); //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
+    public static Vector2 pos, vel=new Vector2(), thrusterOrigPos; //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
     public float gamexvel;
     public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
@@ -65,11 +73,13 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private static float preX, preY, rotation, maxInputX;
     float xOffsetFromRotation,yOffsetFromRotation;
 
-    public static PooledEffect burnerFire, thrusterFireLeft, thrusterFireUp;
+    //public static PooledEffect burnerFire, thrusterFireLeft, thrusterFireUp;
     public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>();
     public static Array<ParticleEmitter> emitters = new Array<ParticleEmitter>();
 
-    public boolean isMovingLeftAndSlowing, isMovingRightAndSlowing;
+    //public boolean isMovingLeftAndSlowing, isMovingRightAndSlowing;
+    public static Array<Light> flameLights = new Array<Light>();
+
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -82,6 +92,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         startY=camHeight/2f;//-height;
         startX=camWidth/2f;//-balloonWidth;
         pos=new Vector2(startX, startY);
+        thrusterOrigPos=new Vector2(pos.x, pos.y+ 0.18f*balloonHeight);
+                
         assignBounds();
         tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(1).start();
 
@@ -120,10 +132,18 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         loadEffects();
 
-        //System.out.println("Start ");
-        for (int i=0;i<Airship.emitters.size;i++){//also done in BirdHandler class every time background changes
-            Airship.fireColor(i, birdType);
-        }
+
+        //also done in BirdHandler class every time background changes
+        setupLights();
+        setFireColor(birdType);
+    }
+
+    private void setupLights(){
+        //thrusterOrigPos=new Vector2(pos.x);
+        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,1,30, new Vector2(thrusterOrigPos.x-thrusterWidth, thrusterOrigPos.y+thrusterHeight/2)));
+        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,1,30, new Vector2(thrusterOrigPos.x+thrusterWidth, thrusterOrigPos.y+thrusterHeight/2)));
+        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,1,50, new Vector2(pos.x-15,pos.y+15)));
+        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,1,50, new Vector2(pos.x+15,pos.y+15)));
     }
 
     private void assignBounds() {
@@ -293,18 +313,25 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //burnerFire.start();
     }
 
-    public static void fireColor(int i, int waveTypeCnt){
+    public static void setFireColor(int waveTypeCnt){
         //System.out.println("Was "+emitters.get(i).getTint().getColors()[0]+", "+emitters.get(i).getTint().getColors()[1]+", "+emitters.get(i).getTint().getColors()[2]);
         //{"pB","tB","wB","fB","aB","nB","lB","gB"};
         //  0    1    2    3    4    5    6    7
-        if (waveTypeCnt==0) emitters.get(i).getTint().setColors(new float[]{178/255f, 166/255f, 96/255f });
-        if (waveTypeCnt==1) emitters.get(i).getTint().setColors(new float[]{178/255f, 119/255f, 98/255f });
-        if (waveTypeCnt==2) emitters.get(i).getTint().setColors(new float[]{43/255f,  158/255f, 238/255f});
-        if (waveTypeCnt==3) emitters.get(i).getTint().setColors(new float[]{227/255f, 133/255f, 37/255f });
-        if (waveTypeCnt==4) emitters.get(i).getTint().setColors(new float[]{75/255f,  201/255f, 142/255f});
-        if (waveTypeCnt==5) emitters.get(i).getTint().setColors(new float[]{154/255f, 155/255f, 158/255f});
-        if (waveTypeCnt==6) emitters.get(i).getTint().setColors(new float[]{230/255f, 49/255f,  252/255f});
-        if (waveTypeCnt==7) emitters.get(i).getTint().setColors(new float[]{178/255f, 178/255f, 47/255f });
+        float[] color =null;
+        if (waveTypeCnt==0) color=new float[]{178/255f, 166/255f, 96/255f };
+        else if (waveTypeCnt==1) color=new float[]{178/255f, 119/255f, 98/255f };
+        else if (waveTypeCnt==2) color=new float[]{43/255f,  158/255f, 238/255f};
+        else if (waveTypeCnt==3) color=new float[]{227/255f, 133/255f, 37/255f };
+        else if (waveTypeCnt==4) color=new float[]{75/255f,  201/255f, 142/255f};
+        else if (waveTypeCnt==5) color=new float[]{154/255f, 155/255f, 158/255f};
+        else if (waveTypeCnt==6) color=new float[]{230/255f, 49/255f,  252/255f};
+        else if (waveTypeCnt==7) color=new float[]{178/255f, 178/255f, 47/255f };
+        for (int i=0;i<Airship.emitters.size;i++){
+            emitters.get(i).getTint().setColors(color);
+        }
+        for (Light j : flameLights) {
+            j.setColor(color[0],color[1],color[2],j.getColor().a);
+        }
         //System.out.println("Was "+emitters.get(i).getTint().getColors()[0]+", "+emitters.get(i).getTint().getColors()[1]+", "+emitters.get(i).getTint().getColors()[2]);
     }
 
@@ -348,16 +375,30 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 emitters.get(0).start();
             }
         } else {
+
             //System.out.println("7, "+emitters.get(0).getEmission().getHighMax());
             if (emitters.get(0).getEmission().getHighMax() != 2000) {
                 //System.out.println("8, "+emitters.get(0).getEmission().getHighMax());
                 setEmitterVal(emitters.get(0).getEmission(), 2000, false, false);
                 emitters.get(0).start();
+
+
             }
             setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);
         }
     }
 
+    public void changeLightAlpha(String burnerOrThruster, float newAlpha){
+        Light i=null, j=null;
+        if (burnerOrThruster.equals("burner")){
+            i = flameLights.get(2); j=flameLights.get(3);
+        } else if (burnerOrThruster.equals("thruster")) {
+            i = flameLights.get(0); j = flameLights.get(1);
+        }
+            i.setColor(i.getColor().r,i.getColor().g,i.getColor().b,newAlpha);
+            j.setColor(j.getColor().r,j.getColor().g,j.getColor().b,newAlpha);
+
+    }
     public void setEmitterVal(ParticleEmitter.ScaledNumericValue val, float newVal, boolean retainHighMinMax, boolean changeLowToo) {
             if (retainHighMinMax) {
                 float amplitude = (val.getHighMax() - val.getHighMin()) / 2f;
@@ -418,7 +459,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 i.update();
                 i.position.set(pos.x - (startX - i.origPosition.x), pos.y - (startY - i.origPosition.y));
             }
-
+            for (Light i: flameLights){
+                if (i instanceof CustomPointLight)  i.setPosition(pos.x - (startX - ((CustomPointLight) i).origPos.x), pos.y - (startY - ((CustomPointLight) i).origPos.y));
+                //else if (i instanceof ChainLight)        {i.setPosition(pos.x - (startX - ((CustomChainLight) i).origPos.x), pos.x - (startX - ((CustomChainLight) i).origPos.y))}
+                else                                     i.setPosition(pos.x - (startX - ((CustomConeLight) i).origPos.x), pos.y - (startY - ((CustomConeLight) i).origPos.y));
+            }
             rackHitbox.setPosition(pos.x - startX, pos.y - startY);
             balloonHitbox.setPosition(pos.x - startX, pos.y - startY);
             //checkBordersAndSlowdown(); not using velocity

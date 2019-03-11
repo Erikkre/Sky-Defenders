@@ -111,6 +111,8 @@ public class GameWorld {
         targetHandler.update(delta, runTime);
         tinyBirdHandler.update(delta);
         lightHandler.update();
+        LightHandler.foreRayHandler.update();  //used for airship and gun lights too
+        LightHandler.backRayHandler.update();
     }
 
     private void updateReady(float runTime) {
