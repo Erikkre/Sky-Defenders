@@ -147,7 +147,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x+15,pos.y+15)));
         leftThrusterTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
         rightThrusterTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
-        burnerTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
+        burnerTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist);
     }
 
     private void assignBounds() {
@@ -288,7 +288,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
             if (Gdx.input.getDeltaX(airshipTouchPointer)<-2) {
                 fireThruster(2);
-                //System.out.println("Thrust Right");
+
+                System.out.println("Thrust Right");
             } else if (Gdx.input.getDeltaX(airshipTouchPointer)>2) {
                 fireThruster(1);
                // System.out.println("Thrust Left");
@@ -350,14 +351,17 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 leftThrusterTween.start();
             } else if (getLightDist("thruster")>thrusterOrigDist*0.95f) {    //if firing and highest light level reached
                 leftThrusterTween.pause();
+
             }
         }
         else if(i==2) {
             setEmitterVal(emitters.get(i).getAngle(), 0 + rotation, true, true);//thrust right
             if (rightThrusterTween.isFinished()){//start firing if done firing
                 rightThrusterTween.start();
+                System.out.println("start when finished");
             } else if (getLightDist("thruster")>thrusterOrigDist*0.95f) {    //if firing and highest light level reached
                 rightThrusterTween.pause();
+                System.out.println("pause");
             }
         }
 
@@ -435,6 +439,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             i = flameLights.get(0); j = flameLights.get(1);
         }
         i.setDistance(newDist);j.setDistance(newDist);
+        System.out.println(i.getDistance());
     }
 
     public void changeLightAlpha(String burnerOrThruster, float newAlpha){
