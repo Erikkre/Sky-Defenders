@@ -147,7 +147,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x+15,pos.y+15)));
         leftThrusterTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
         rightThrusterTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
-        burnerTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist);
+        burnerTween=Tween.to(flameLights.get(3), 2, 1f).target(thrusterOrigDist).start();
     }
 
     private void assignBounds() {
@@ -486,9 +486,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             preX=pos.x;
             preY=pos.y;
             tween.update(delta);
-            leftThrusterTween.update(delta);
-            rightThrusterTween.update(delta);
-            burnerTween.update(delta);
+            if (leftThrusterTween.isStarted())  leftThrusterTween.update(delta);
+            if (rightThrusterTween.isStarted()) rightThrusterTween.update(delta);
+            if (burnerTween.isStarted())        burnerTween.update(delta);
             //IS NOW MANAGED IN setDesAirship during pushdown. thrusterControl(); //thrusterControl if xVel changes directions (need to use old vel.x so thats why inbetween here)
             //if moving right and old vel>current vel and status is not slowing down
             /*if (vel.x>0 && vel.x>pos.x-preX && !isMovingRightAndSlowing){
