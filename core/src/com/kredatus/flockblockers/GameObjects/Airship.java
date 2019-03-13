@@ -79,8 +79,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     //public boolean isMovingLeftAndSlowing, isMovingRightAndSlowing;
     public static Array<Light> flameLights = new Array<Light>();
-    public float burnerOrigAlpha=0.7f, thrusterOrigAlpha=0.7f;
-    public int burnerOrigDist=40, thrusterOrigDist=20;
+    public float burnerOrigAlpha=0.7f, thrusterOrigAlpha=1f;
+    public int burnerOrigDist=40, thrusterOrigDist=40;
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -145,8 +145,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x+thrusterWidth, thrusterOrigPos.y+thrusterHeight/2)));
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x-15,pos.y+15)));
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x+15,pos.y+15)));
-        leftThrusterTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
-        rightThrusterTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
+        //leftThrusterTween=Tween.to(flameLights.get(1), 1, 1f).waypoint(thrusterOrigDist).target(0).repeatYoyo(0,0);
+        //rightThrusterTween=Tween.to(flameLights.get(0), 1, 1f).waypoint(thrusterOrigDist).target(0).repeatYoyo(0,0);// tweens dont work use instantaneous method of changing lights
         burnerTween=Tween.to(flameLights.get(3), 2, 1f).target(thrusterOrigDist).start();
     }
 
@@ -286,16 +286,19 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 tween = Tween.to(pos, 0, (float) distance / speedDivisor).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
                 //}
             }
+
+
+
             if (Gdx.input.getDeltaX(airshipTouchPointer)<-2) {
+                rightThrusterTween=Tween.to(flameLights.get(1), 1, 1f).waypoint(thrusterOrigDist).target(0).repeatYoyo(0,0).start();
                 fireThruster(2);
 
                 System.out.println("Thrust Right");
             } else if (Gdx.input.getDeltaX(airshipTouchPointer)>2) {
+                leftThrusterTween=Tween.to(flameLights.get(0), 1, 1f).waypoint(thrusterOrigDist).target(0).repeatYoyo(0,0).start();
                 fireThruster(1);
+
                // System.out.println("Thrust Left");
-            } else {
-                if (leftThrusterTween.isPaused())leftThrusterTween.resume();//if low speed and thrusterlightlevel paused, finish tween (lower light level)
-                if (rightThrusterTween.isPaused())rightThrusterTween.resume();
             }
 
             //if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
@@ -347,22 +350,13 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         if (i==1) {
             setEmitterVal(emitters.get(i).getAngle(), 180 + rotation, true, true);
-            if (leftThrusterTween.isFinished()){//start firing if done firing
-                leftThrusterTween.start();
-            } else if (getLightDist("thruster")>thrusterOrigDist*0.95f) {    //if firing and highest light level reached
-                leftThrusterTween.pause();
-
-            }
+            leftThrusterTween.start();
         }
         else if(i==2) {
             setEmitterVal(emitters.get(i).getAngle(), 0 + rotation, true, true);//thrust right
-            if (rightThrusterTween.isFinished()){//start firing if done firing
-                rightThrusterTween.start();
-                System.out.println("start when finished");
-            } else if (getLightDist("thruster")>thrusterOrigDist*0.95f) {    //if firing and highest light level reached
-                rightThrusterTween.pause();
-                System.out.println("pause");
-            }
+            rightThrusterTween.start();
+                System.out.println("started again");
+
         }
 
         additiveEffects.get(i).start();
@@ -419,27 +413,28 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
     }
 
-    public int getLightDist(String burnerOrThruster){
-        if (burnerOrThruster.equals("burner")){
+    public int getLightDist(String burnerOrleftThrustOrRightThrust){
+        if (burnerOrleftThrustOrRightThrust.equals("burner")){
             return (int) flameLights.get(2).getDistance();
-        } else if (burnerOrThruster.equals("thruster")) {
+        } else if (burnerOrleftThrustOrRightThrust.equals("leftThrust")) {
             return (int) flameLights.get(0).getDistance();
+        } else if (burnerOrleftThrustOrRightThrust.equals("rightThrust")) {
+            return (int) flameLights.get(1).getDistance();
         }
         return 0;
     }
     
-    public void setLightDist(String burnerOrThruster, int newDist){
-        Light i=null, j=null;
-        if (burnerOrThruster.equals("burner")){
+    public void setLightDist(String burnerOrThrusterLeftOrThrusterRight, int newDist){
+        if (burnerOrThrusterLeftOrThrusterRight.equals("burner")){
             if (!BgHandler.isbgVertFast&&newDist>burnerOrigDist*2){
                 newDist=burnerOrigDist*2;
             }
-            i = flameLights.get(2); j=flameLights.get(3);
-        } else if (burnerOrThruster.equals("thruster")) {
-            i = flameLights.get(0); j = flameLights.get(1);
+            flameLights.get(2).setDistance(newDist); flameLights.get(3).setDistance(newDist);
+        } else if (burnerOrThrusterLeftOrThrusterRight.equals("thrusterLeft")) {
+            flameLights.get(0).setDistance(newDist);
+        } else if (burnerOrThrusterLeftOrThrusterRight.equals("thrusterRight")) {
+            flameLights.get(1).setDistance(newDist);
         }
-        i.setDistance(newDist);j.setDistance(newDist);
-        System.out.println(i.getDistance());
     }
 
     public void changeLightAlpha(String burnerOrThruster, float newAlpha){
@@ -473,6 +468,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         balloonHitbox.setRotation(rotation) ;
         burnerOnOff();
 
+
         //0 is burner, 1 is thrustLeft, 2 is thrustRight
         if (!tween.isFinished()) {
             //if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
@@ -486,8 +482,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             preX=pos.x;
             preY=pos.y;
             tween.update(delta);
-            if (leftThrusterTween.isStarted())  leftThrusterTween.update(delta);
-            if (rightThrusterTween.isStarted()) rightThrusterTween.update(delta);
+            leftThrusterTween.update(delta);
+            rightThrusterTween.update(delta);
+
             if (burnerTween.isStarted())        burnerTween.update(delta);
             //IS NOW MANAGED IN setDesAirship during pushdown. thrusterControl(); //thrusterControl if xVel changes directions (need to use old vel.x so thats why inbetween here)
             //if moving right and old vel>current vel and status is not slowing down
@@ -520,6 +517,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 //else if (i instanceof ChainLight)        {i.setPosition(pos.x - (startX - ((CustomChainLight) i).origPos.x), pos.x - (startX - ((CustomChainLight) i).origPos.y))}
                 else                                     i.setPosition(pos.x - (startX - ((CustomConeLight) i).origPos.x), pos.y - (startY - ((CustomConeLight) i).origPos.y));
             }
+
+            System.out.println("posLeft: "+flameLights.get(0).getDistance()+"posRight: "+flameLights.get(1).getDistance());
+
             rackHitbox.setPosition(pos.x - startX, pos.y - startY);
             balloonHitbox.setPosition(pos.x - startX, pos.y - startY);
             //checkBordersAndSlowdown(); not using velocity
