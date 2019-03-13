@@ -17,11 +17,14 @@ import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.TweenAccessors.BirdAccessor;
+import com.kredatus.flockblockers.TweenAccessors.LightAccessor;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.TweenAccessors.VectorAccessor;
 
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenAccessor;
+import box2dLight.Light;
 
 /**
  * Created by Mr. Kredatus on 8/5/2017.
@@ -54,6 +57,7 @@ public class GameHandler implements Screen {
         Tween.registerAccessor(Value.class, new ValueAccessor());
         Tween.registerAccessor(BirdAbstractClass.class, new BirdAccessor());
         Tween.registerAccessor(Vector2.class, new VectorAccessor());
+        Tween.registerAccessor(Light.class, new LightAccessor());
         Tween.setWaypointsLimit(10);
 
         uiHandler=new UiHandler();

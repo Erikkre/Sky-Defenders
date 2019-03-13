@@ -444,8 +444,9 @@ public class AssetHandler {
             System.out.println(flashShader.getLog());
         }
 
+        //160*180, let player choose color but tint it in a batcher pass (batcher.setColorTint)
         airshipBalloonTexture = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"balloon.png"));
-        airshipBalloonTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        airshipBalloonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         airshipBalloon = new TextureRegion(airshipBalloonTexture, airshipBalloonTexture.getWidth(), airshipBalloonTexture.getHeight());
 
         airshipSideThrusterTexture = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"sideThruster.png"));

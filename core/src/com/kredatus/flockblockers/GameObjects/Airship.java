@@ -66,7 +66,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public TweenCallback endFlashing;
     protected ArrayList<Float> flashLengths=new ArrayList<Float>();
 
-    public Tween tween;
+    public Tween tween, burnerTween, rightThrusterTween, leftThrusterTween;
     float inputX, inputY, speedDivisor;
     public static boolean airshipTouched;
 
@@ -79,7 +79,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     //public boolean isMovingLeftAndSlowing, isMovingRightAndSlowing;
     public static Array<Light> flameLights = new Array<Light>();
-
+    public float burnerOrigAlpha=0.7f, thrusterOrigAlpha=0.7f;
+    public int burnerOrigDist=40, thrusterOrigDist=20;
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -140,10 +141,13 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void setupLights(){
         //thrusterOrigPos=new Vector2(pos.x);
-        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,1,30, new Vector2(thrusterOrigPos.x-thrusterWidth, thrusterOrigPos.y+thrusterHeight/2)));
-        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,1,30, new Vector2(thrusterOrigPos.x+thrusterWidth, thrusterOrigPos.y+thrusterHeight/2)));
-        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,1,50, new Vector2(pos.x-15,pos.y+15)));
-        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,1,50, new Vector2(pos.x+15,pos.y+15)));
+        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x-thrusterWidth, thrusterOrigPos.y+thrusterHeight/2)));
+        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x+thrusterWidth, thrusterOrigPos.y+thrusterHeight/2)));
+        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x-15,pos.y+15)));
+        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x+15,pos.y+15)));
+        leftThrusterTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
+        rightThrusterTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
+        burnerTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
     }
 
     private void assignBounds() {
@@ -276,19 +280,21 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
             if (isOnCam(inputX, inputY)) {
                 double distance =(Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y-inputY),2)));
-
                 //if (distance/speedDivisor<1.5f){//if distance is so small it takes under 1.5s to get there, take 1.5s anyways
                 //    tween = Tween.to(pos, 0, 1.5f).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
                 //} else {
-                    tween = Tween.to(pos, 0, (float) distance / speedDivisor).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
+                tween = Tween.to(pos, 0, (float) distance / speedDivisor).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
                 //}
             }
-            if (Gdx.input.getDeltaX(airshipTouchPointer)<-2){
+            if (Gdx.input.getDeltaX(airshipTouchPointer)<-2) {
                 fireThruster(2);
                 //System.out.println("Thrust Right");
-            } else if (Gdx.input.getDeltaX(airshipTouchPointer)>2){
+            } else if (Gdx.input.getDeltaX(airshipTouchPointer)>2) {
                 fireThruster(1);
                // System.out.println("Thrust Left");
+            } else {
+                if (leftThrusterTween.isPaused())leftThrusterTween.resume();//if low speed and thrusterlightlevel paused, finish tween (lower light level)
+                if (rightThrusterTween.isPaused())rightThrusterTween.resume();
             }
 
             //if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
@@ -338,41 +344,62 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public void fireThruster(int i){
         emitters.get(i).allowCompletion();
 
-        if (i==1) setEmitterVal(emitters.get(i).getAngle(), 180 + rotation, true, true);
-        else if(i==2) setEmitterVal(emitters.get(i).getAngle(), 0 + rotation, true, true);
+        if (i==1) {
+            setEmitterVal(emitters.get(i).getAngle(), 180 + rotation, true, true);
+            if (leftThrusterTween.isFinished()){//start firing if done firing
+                leftThrusterTween.start();
+            } else if (getLightDist("thruster")>thrusterOrigDist*0.95f) {    //if firing and highest light level reached
+                leftThrusterTween.pause();
+            }
+        }
+        else if(i==2) {
+            setEmitterVal(emitters.get(i).getAngle(), 0 + rotation, true, true);//thrust right
+            if (rightThrusterTween.isFinished()){//start firing if done firing
+                rightThrusterTween.start();
+            } else if (getLightDist("thruster")>thrusterOrigDist*0.95f) {    //if firing and highest light level reached
+                rightThrusterTween.pause();
+            }
+        }
 
         additiveEffects.get(i).start();
+
+
         //System.out.println(emitters.get(i).getEmission().getHighMax());
     }
 
     public void burnerOnOff(){
         if (!BgHandler.isbgVertFast) {
-            if (vel.y >= 0) {
+            if (vel.y >= 0) {   //if moving up
                 //System.out.println("1, "+emitters.get(0).getEmission().getHighMax());
-                setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);
+                setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);//always change angle based on arship rot
+                setEmitterVal(emitters.get(0).getVelocity(), 80 + vel.y * 15, true, false);//always change vel based on airship vel
 
-                if (vel.y > 1 && emitters.get(0).getEmission().getHighMax() == 300) {
+                if (vel.y > 1 ) {   //if moving up fastish and burner set to low (might want to leave out last condition)
                     //System.out.println("2, "+emitters.get(0).getEmission().getHighMax());
                     setEmitterVal(emitters.get(0).getEmission(), 300 + vel.y * 750, false, false);
-
+                    setLightDist("burner", (int) (vel.y*(burnerOrigDist/2f)+burnerOrigDist));
                     emitters.get(0).start();
-                } else if (vel.y < 1 && emitters.get(0).getEmission().getHighMax() != 300) {
+                } else if (vel.y < 1 && emitters.get(0).getEmission().getHighMax() != 300) {    //if moving slow and burner not set to low, reset
                     setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
                     emitters.get(0).start();
+                    setLightDist("burner", burnerOrigDist);
                     //System.out.println("3, "+emitters.get(0).getEmission().getHighMax());
                 }
-                setEmitterVal(emitters.get(0).getVelocity(), 80 + vel.y * 15, true, false);//test this out
-                //System.out.println("vel: "+emitters.get(0).getVelocity().getHighMax());
+
 
             } else if (vel.y < -2.5 && !emitters.get(0).isComplete()) { //if descending let current burner anim finish then turn it off
                 emitters.get(0).allowCompletion();
+                if (getLightDist("burner")!=0){
+                    setLightDist("burner", 0);
+                }
                 //System.out.println("4, "+emitters.get(0).getEmission().getHighMax());
             } else if (vel.y >= -2.5f && emitters.get(0).isComplete()) {
                 //System.out.println("5, "+emitters.get(0).getEmission().getHighMax());
                 if (emitters.get(0).getEmission().getHighMax() != 300)
                     //System.out.println("6, "+emitters.get(0).getEmission().getHighMax());
                     setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
-                emitters.get(0).start();
+                    emitters.get(0).start();
+                    setLightDist("burner", burnerOrigDist);
             }
         } else {
 
@@ -381,11 +408,33 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 //System.out.println("8, "+emitters.get(0).getEmission().getHighMax());
                 setEmitterVal(emitters.get(0).getEmission(), 2000, false, false);
                 emitters.get(0).start();
-
+                setLightDist("burner",  burnerOrigDist*3);
 
             }
             setEmitterVal(emitters.get(0).getAngle(), 90 - rotation * 10, true, true);
         }
+    }
+
+    public int getLightDist(String burnerOrThruster){
+        if (burnerOrThruster.equals("burner")){
+            return (int) flameLights.get(2).getDistance();
+        } else if (burnerOrThruster.equals("thruster")) {
+            return (int) flameLights.get(0).getDistance();
+        }
+        return 0;
+    }
+    
+    public void setLightDist(String burnerOrThruster, int newDist){
+        Light i=null, j=null;
+        if (burnerOrThruster.equals("burner")){
+            if (!BgHandler.isbgVertFast&&newDist>burnerOrigDist*2){
+                newDist=burnerOrigDist*2;
+            }
+            i = flameLights.get(2); j=flameLights.get(3);
+        } else if (burnerOrThruster.equals("thruster")) {
+            i = flameLights.get(0); j = flameLights.get(1);
+        }
+        i.setDistance(newDist);j.setDistance(newDist);
     }
 
     public void changeLightAlpha(String burnerOrThruster, float newAlpha){
@@ -397,8 +446,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
             i.setColor(i.getColor().r,i.getColor().g,i.getColor().b,newAlpha);
             j.setColor(j.getColor().r,j.getColor().g,j.getColor().b,newAlpha);
-
     }
+
     public void setEmitterVal(ParticleEmitter.ScaledNumericValue val, float newVal, boolean retainHighMinMax, boolean changeLowToo) {
             if (retainHighMinMax) {
                 float amplitude = (val.getHighMax() - val.getHighMin()) / 2f;
@@ -432,7 +481,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             preX=pos.x;
             preY=pos.y;
             tween.update(delta);
-
+            leftThrusterTween.update(delta);
+            rightThrusterTween.update(delta);
+            burnerTween.update(delta);
             //IS NOW MANAGED IN setDesAirship during pushdown. thrusterControl(); //thrusterControl if xVel changes directions (need to use old vel.x so thats why inbetween here)
             //if moving right and old vel>current vel and status is not slowing down
             /*if (vel.x>0 && vel.x>pos.x-preX && !isMovingRightAndSlowing){
@@ -495,6 +546,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void draw(SpriteBatch batcher, float delta) {
+
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
 
