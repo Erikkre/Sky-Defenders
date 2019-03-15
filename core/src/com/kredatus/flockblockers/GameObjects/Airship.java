@@ -287,7 +287,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 rightThrusterTween=Tween.to(flameLights.get(1), 1, 1.5f).target(0).waypoint(thrusterOrigDist).repeatYoyo(0,0).ease(TweenEquations.easeOutQuint).start();
                 fireThruster(2);
 
-                System.out.println("Thrust Right");
+                //System.out.println("Thrust Right");
             } else if (Gdx.input.getDeltaX(airshipTouchPointer)>2) {
                 leftThrusterTween=Tween.to(flameLights.get(0), 1, 1.5f).waypoint(thrusterOrigDist).target(0).repeatYoyo(0,0).ease(TweenEquations.easeOutQuint).start();
                 fireThruster(1);
@@ -513,7 +513,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 else                                     i.setPosition(pos.x - (startX - ((CustomConeLight) i).origPos.x), pos.y - (startY - ((CustomConeLight) i).origPos.y));
             }
 
-            System.out.println("posLeft: "+flameLights.get(0).getDistance()+"posRight: "+flameLights.get(1).getDistance());
+            //System.out.println("posLeft: "+flameLights.get(0).getDistance()+"posRight: "+flameLights.get(1).getDistance());
 
             rackHitbox.setPosition(pos.x - startX, pos.y - startY);
             balloonHitbox.setPosition(pos.x - startX, pos.y - startY);
