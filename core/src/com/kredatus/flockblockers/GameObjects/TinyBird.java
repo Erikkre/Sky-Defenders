@@ -77,7 +77,7 @@ public class TinyBird {
 
     public void update(float delta){
         if (!inCamView&&pos.y +  height/2 < camHeight) inCamView=true;
-        pos.set(BgHandler.horiz.getValue()+posChange.cpy().x, BgHandler.vert.getValue()+posChange.cpy().y+addedY);
+        pos.set(BgHandler.horiz.get()+posChange.cpy().x, BgHandler.vert.get()+posChange.cpy().y+addedY);
         if (inCamView)posChange.add(vel.cpy());
     }
 }

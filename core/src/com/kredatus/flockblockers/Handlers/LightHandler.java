@@ -93,8 +93,8 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         newPointLight.setXray(false);
         return newPointLight;
     }
-    public static CustomConeLight newConeLight(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos, float dirDeg, float coneDeg) {
-        CustomConeLight newConeLight = new CustomConeLight(rayHandler, r, g, b, a, lightDistance, origPos,dirDeg,coneDeg);
+    public static CustomConeLight newConeLight(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos, float dirDeg, float coneDegHalf) {
+        CustomConeLight newConeLight = new CustomConeLight(rayHandler, r, g, b, a, lightDistance, origPos,dirDeg,coneDegHalf);
         newConeLight.setSoft(false);
         newConeLight.setStaticLight(false);
         newConeLight.setXray(false);
@@ -107,9 +107,9 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         return new CustomPointLight[]{invBgPointlight, nonInvBgPointLight};
     }
 
-    private static CustomConeLight[] newConeLightMirrored(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos, float dirDeg, float coneDeg) {   //input newPointLight in invertedBG and return a list with inverted and non inverted bg pointlights
-        CustomConeLight invBgCoinlight = new CustomConeLight(rayHandler, r, g, b, a, lightDistance, origPos, 270, 90);
-        CustomConeLight noninvBgCoinlight =  new CustomConeLight(rayHandler, r, g, b, a, lightDistance, new Vector2(origPos.x,origPos.y+((BgHandler.bgh-((origPos.y-BgHandler.separatorHeight)))*2)), dirDeg, coneDeg);
+    private static CustomConeLight[] newConeLightMirrored(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos, float dirDeg, float coneDegHalf) {   //input newPointLight in invertedBG and return a list with inverted and non inverted bg pointlights
+        CustomConeLight invBgCoinlight = new CustomConeLight(rayHandler, r, g, b, a, lightDistance, origPos, dirDeg+180, coneDegHalf);//lower light facing downwards
+        CustomConeLight noninvBgCoinlight =  new CustomConeLight(rayHandler, r, g, b, a, lightDistance, new Vector2(origPos.x,origPos.y+((BgHandler.bgh-((origPos.y-BgHandler.separatorHeight)))*2)), dirDeg, coneDegHalf);//upper light facing upwards
         //noninvBgCoinlight.setSoft(true);
         return new CustomConeLight[]{invBgCoinlight, noninvBgCoinlight};
     }
@@ -130,7 +130,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         if (bgNumber < 9) {//phoenix
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 237, 137, sunA, sunDia, sunPos));       //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xsA, mlDia, cityP1));         //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 237, 137, smA, xxlDia, cityC2,90,180));       //cone
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 237, 137, smA, xxlDia, cityC2,90,90));       //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 237, 137, sA, xxlDia, cityP3));        //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 0, 0,     xxlA, xsDia, cityP4));        //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, smA, xxlDia, cityP5));        //skyScraper tip***************
@@ -149,7 +149,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         } else if (bgNumber < 18) {//thunder
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 170, 140, sunA, sunDia, sunPos));       //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 170, 140, xsA, mlDia, cityP1));         //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 170, 140, smA, xxlDia, cityC2,90,180));       //cone));       //cone
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 170, 140, smA, xxlDia, cityC2,90,90));       //cone));       //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 170, 140, sA, xxlDia, cityP3));        //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 1, 55,     xxlA, xsDia, cityP4));        //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 170, 140, smA, xxlDia, cityP5));        //skyScraper tip***************
@@ -168,7 +168,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         } else if (bgNumber < 27) {//water
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 43, 158, 238, sunA, sunDia, sunPos));       //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 43, 158, 238, xsA, mlDia, cityP1));         //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  43, 158, 238, smA, xxlDia, cityC2,90,180));       //cone));       //cone
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  43, 158, 238, smA, xxlDia, cityC2,90,90));       //cone));       //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 43, 158, 238, sA, xxlDia, cityP3));        //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 1, 132, 222,     xxlA, xsDia, cityP4));        //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 43, 158, 238, smA, xxlDia, cityP5));        //skyScraper tip***************
@@ -187,7 +187,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         } else if (bgNumber < 36) {//fire
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 227, 133, 37, sunA, sunDia, sunPos));       //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 227, 133, 37, xsA, mlDia, cityP1));         //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  227, 133, 37, smA, xxlDia, cityC2,90,180));       //cone));       //cone
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  227, 133, 37, smA, xxlDia, cityC2,90,90));       //cone));       //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 227, 133, 37, sA, xxlDia, cityP3));        //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 219, 36, 118,     xxlA, xsDia, cityP4));        //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 227, 133, 37, smA, xxlDia, cityP5));        //skyScraper tip***************
@@ -206,7 +206,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         } else if (bgNumber < 45) {//acid
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 94, 252, 177, sunA, sunDia, sunPos));       //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 94, 252, 177, xsA, mlDia, cityP1));         //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  94, 252, 177, smA, xxlDia, cityC2,90,180));       //cone));       //cone
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  94, 252, 177, smA, xxlDia, cityC2,90,90));       //cone));       //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 94, 252, 177, sA, xxlDia, cityP3));        //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 85, 236, 0,     xxlA, xsDia, cityP4));        //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 94, 252, 177, smA, xxlDia, cityP5));        //skyScraper tip***************
@@ -225,7 +225,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         } else if (bgNumber < 54) {//night
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, sunA, sunDia, sunPos));       //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 220, 221, 226, xsA, mlDia, cityP1));         //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  220, 221, 226, smA, xxlDia, cityC2,90,180));       //cone));       //cone
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  220, 221, 226, smA, xxlDia, cityC2,90,90));       //cone));       //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 220, 221, 226, sA, xxlDia, cityP3));        //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 32, 33, 37,     xxlA, xsDia, cityP4));        //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 220, 221, 226, smA, xxlDia, cityP5));        //skyScraper tip***************
@@ -244,7 +244,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         } else if (bgNumber < 63) {//lunar
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 230, 49, 252, sunA, sunDia, sunPos));       //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 230, 49, 252, xsA, mlDia, cityP1));         //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  230, 49, 252, smA, xxlDia, cityC2,90,180));       //cone));       //cone
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  230, 49, 252, smA, xxlDia, cityC2,90,90));       //cone));       //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 230, 49, 252, sA, xxlDia, cityP3));        //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 3, 4, 206,     xxlA, xsDia, cityP4));        //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 230, 49, 252, smA, xxlDia, cityP5));        //skyScraper tip***************
@@ -263,7 +263,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         } else if (bgNumber < 72) {//gold
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, sunA, sunDia, sunPos));       //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 67, xsA, mlDia, cityP1));         //skyScraper tip
-            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 255, 67, smA, xxlDia, cityC2,90,180));       //cone));       //cone
+            Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 255, 67, smA, xxlDia, cityC2,90,90));       //cone));       //cone
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 255, 67, sA, xxlDia, cityP3));        //ambient lightspot
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 251, 2, 0,     xxlA, xsDia, cityP4));        //red signal
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 255, 67, smA, xxlDia, cityP5));        //skyScraper tip***************
@@ -293,8 +293,8 @@ public class LightHandler { //consider making barlight and mirroring on each sid
     }
 
     public void update() {
-        float bgVert = BgHandler.vert.getValue();
-        float bgHoriz = BgHandler.horiz.getValue();
+        float bgVert = BgHandler.vert.get();
+        float bgHoriz = BgHandler.horiz.get();
         for (Light i : bgLights) {
             if (isOffCam(i)){ bgLights.remove(i);i.remove(); }
             else if (i instanceof CustomPointLight)  i.setPosition(((CustomPointLight) i).origPos.x + bgHoriz, ((CustomPointLight) i).origPos.y + bgVert);

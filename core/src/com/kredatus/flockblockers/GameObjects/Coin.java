@@ -40,8 +40,8 @@ public class Coin {
             //x+=thisBird.width/7.7f;
            x1 =  (float)(Math.cos(Math.toRadians(rotation)))*55 ;
            y1 =  (float)(Math.sin(Math.toRadians(rotation)))*55;
-           //tweenX.setValue(x);
-           //tweenY.setValue(y);
+           //tweenX.set(x);
+           //tweenY.set(y);
         } else {
             x1 = (float) (Math.cos(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
             y1 = (float) (Math.sin(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
@@ -63,7 +63,7 @@ public class Coin {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
                 firstMovementEndedX=true;
-                tweenX.setValue(x);
+                tweenX.set(x);
                 if (secondXMotion!=null) secondXMotion.start();
                 startTime=System.currentTimeMillis();
             }
@@ -73,7 +73,7 @@ public class Coin {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
                 firstMovementEndedY=true;
-                tweenY.setValue(y);
+                tweenY.set(y);
                 if (secondYMotion!=null) secondYMotion.start();
                 startTime=System.currentTimeMillis();
             }
@@ -102,23 +102,23 @@ public class Coin {
 
         //dont need to do this for firstMovementX
         if (!firstMovementEndedX) {
-            x = tweenX.getValue() + thisBird.x;//+thisBird.width/9.7f; //higher number=more to the left
+            x = tweenX.get() + thisBird.x;//+thisBird.width/9.7f; //higher number=more to the left
             firstXMotion.update(delta);
         } else {
             if (airshipMoved&&(float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)>0) {
                 secondXMotion = (Tween.to(tweenX, -1, (float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)).target(dest.x).ease(TweenEquations.easeNone)).start();
             }
-            x = tweenX.getValue();
+            x = tweenX.get();
             secondXMotion.update(delta);
         }
         if (!firstMovementEndedY) {
-            y = tweenY.getValue() + thisBird.y;
+            y = tweenY.get() + thisBird.y;
             firstYMotion.update(delta);
         } else {
             if (airshipMoved&&(float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)>0) {
                 secondYMotion = (Tween.to(tweenY, -1, (float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)).target(dest.y).ease(TweenEquations.easeNone)).start();
             }
-            y = tweenY.getValue();
+            y = tweenY.get();
             secondYMotion.update(delta);
         }
         lastDest = dest.cpy();

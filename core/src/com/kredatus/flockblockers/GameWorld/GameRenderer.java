@@ -459,17 +459,17 @@ public void setRotate(float angle){
 
 /*
     public void prepareSunshine(){
-        beta.setValue(camWidth*1.6f); //start val
+        beta.set(camWidth*1.6f); //start val
         Tween.registerAccessor(Value.class, new ValueAccessor());
         sunshineManager = new TweenManager();
         Tween.to(beta, -1, 6f).target(0)    //end val
                 .ease(TweenEquations.easeOutQuad).repeat(Tween.INFINITY,5f).start(sunshineManager);
 
         sunshineManager2= new TweenManager();
-        charlie.setValue(AssetHandler.frontGliderMid.getRegionWidth()/2);
+        charlie.set(AssetHandler.frontGliderMid.getRegionWidth()/2);
         Tween.to(charlie, -1, 10).target(0)    //end val
                 .ease(TweenEquations.easeInOutExpo).repeatYoyo(Tween.INFINITY,0).start(sunshineManager2);
-        delta.setValue(AssetHandler.frontGliderMid.getRegionHeight()/2);
+        delta.set(AssetHandler.frontGliderMid.getRegionHeight()/2);
         Tween.to(delta, -1, 10).target(0)    //end val
                 .ease(TweenEquations.easeInOutExpo).repeatYoyo(Tween.INFINITY,0).start(sunshineManager2);
     }
@@ -487,31 +487,31 @@ public void setRotate(float angle){
     private void drawSpritesDeathMenu(float runTime) {
         rotate += 1;
 
-        /*if (charlie.getValue()<previousvalue && turnback==false && charlie.getValue()<0.85*AssetHandler.frontGliderMid.getRegionWidth()/2){   //if bird going away and 0.2 of the way there and facing towards, face away
+        /*if (charlie.get()<previousvalue && turnback==false && charlie.get()<0.85*AssetHandler.frontGliderMid.getRegionWidth()/2){   //if bird going away and 0.2 of the way there and facing towards, face away
             turnback=true;
-        } else if (charlie.getValue()> previousvalue && turnback==true){   //if bird coming and facing away, face towards
+        } else if (charlie.get()> previousvalue && turnback==true){   //if bird coming and facing away, face towards
             turnback=false;
         }
         if (!turnback){
-            batcher.draw(gliderbg, cam.position.x-charlie.getValue()*1.5f, glider.getPosition().y- 40  - charlie.getValue()*1.5f, charlie.getValue()*1.5f, charlie.getValue()*1.5f,
-                    charlie.getValue()*3, charlie.getValue()*3, 1, 1, rotate);
+            batcher.draw(gliderbg, cam.position.x-charlie.get()*1.5f, glider.getPosition().y- 40  - charlie.get()*1.5f, charlie.get()*1.5f, charlie.get()*1.5f,
+                    charlie.get()*3, charlie.get()*3, 1, 1, rotate);
             frontTexture = (TextureRegion) frontViewFlaps.getKeyFrame(runTime+0.5f);
-            batcher.draw(frontTexture, cam.position.x-charlie.getValue()* ((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), glider.getPosition().y - 40 -delta.getValue()* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()),
-                    charlie.getValue()*2*((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), delta.getValue()*2* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()));
+            batcher.draw(frontTexture, cam.position.x-charlie.get()* ((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), glider.getPosition().y - 40 -delta.get()* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()),
+                    charlie.get()*2*((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), delta.get()*2* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()));
         } else {
             frontTexture = (TextureRegion) backFlaps.getKeyFrame(runTime+0.5f);
-            batcher.draw(frontTexture, cam.position.x-charlie.getValue()* ((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), glider.getPosition().y - 40 -delta.getValue()* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()),
-                    charlie.getValue()*2*((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), delta.getValue()*2* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()));
-            batcher.draw(gliderbg, cam.position.x-charlie.getValue()*1.5f, glider.getPosition().y- 40  - charlie.getValue()*1.5f, charlie.getValue()*1.5f, charlie.getValue()*1.5f,
-                    charlie.getValue()*3, charlie.getValue()*3, 1, 1, rotate);
+            batcher.draw(frontTexture, cam.position.x-charlie.get()* ((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), glider.getPosition().y - 40 -delta.get()* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()),
+                    charlie.get()*2*((float)frontTexture.getRegionWidth()/frontglidermid.getRegionWidth()), delta.get()*2* ((float)frontTexture.getRegionHeight()/frontglidermid.getRegionHeight()));
+            batcher.draw(gliderbg, cam.position.x-charlie.get()*1.5f, glider.getPosition().y- 40  - charlie.get()*1.5f, charlie.get()*1.5f, charlie.get()*1.5f,
+                    charlie.get()*3, charlie.get()*3, 1, 1, rotate);
         }
-        previousvalue=charlie.getValue();*/
+        previousvalue=charlie.get();*/
     }
 
     private void drawSpritesMenu(float runTime) {
         rotate += 3;
-        batcher.draw(gliderbg, cam.position.x-beta.getValue(), camHeight/2-50 -beta.getValue(), beta.getValue(), beta.getValue(),
-                beta.getValue()*2, beta.getValue()*2, 1, 1, rotate);
+        batcher.draw(gliderbg, cam.position.x-beta.get(), camHeight/2-50 -beta.get(), beta.get(), beta.get(),
+                beta.get()*2, beta.get()*2, 1, 1, rotate);
         frontTexture = (TextureRegion) frontFlaps.getKeyFrame(runTime+0.5f);
 
         batcher.draw(frontTexture, cam.position.x-frontTexture.getRegionWidth()/(gliderscaling/1.8f)/2, glider.getPosition().y +cam.position.y- glider.starty-30 -frontTexture.getRegionHeight()/(gliderscaling /1.8f)/2, frontTexture.getRegionWidth()/(gliderscaling/1.8f), frontTexture.getRegionHeight()/(gliderscaling/1.8f));
@@ -605,11 +605,11 @@ public void setRotate(float angle){
         }
 
         if (airship.isFlashing){
-            //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
+            //batcher.setColor(1,1,1,k.flashOpacityValue.get());
             batcher.setShader(flashShader);
 
-            //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
-            flashShader.setUniformf("flashOpacityValue", airship.flashOpacityValue.getValue());
+            //System.out.println("Value sent to: "+k.flashOpacityValue.get());
+            flashShader.setUniformf("flashOpacityValue", airship.flashOpacityValue.get());
             //flashShader.begin();
         }
         airship.draw(batcher, delta);
@@ -624,11 +624,11 @@ public void setRotate(float angle){
 
         for (BirdAbstractClass k : deadBirdQueue) {
             if (k.isFlashing){
-                //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
+                //batcher.setColor(1,1,1,k.flashOpacityValue.get());
                 //flashShader.begin();
                 batcher.setShader(flashShader);
-                //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
-                flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.getValue());
+                //System.out.println("Value sent to: "+k.flashOpacityValue.get());
+                flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.get());
             }
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
                     k.width/2, k.height/2, k.width, k.height, 1, 1, k.rotation);
@@ -671,11 +671,11 @@ public void setRotate(float angle){
             shapeRenderer.end();*/
 
             if (k.isFlashing){
-                //batcher.setColor(1,1,1,k.flashOpacityValue.getValue());
+                //batcher.setColor(1,1,1,k.flashOpacityValue.get());
                 batcher.setShader(flashShader);
 
-                //System.out.println("Value sent to: "+k.flashOpacityValue.getValue());
-                flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.getValue());
+                //System.out.println("Value sent to: "+k.flashOpacityValue.get());
+                flashShader.setUniformf("flashOpacityValue", k.flashOpacityValue.get());
                 //flashShader.begin();
             }
             batcher.draw((TextureRegion) k.animation.getKeyFrame(runTime+k.flapRandomFactor), k.x - k.width / 2, k.y - k.height / 2,
@@ -821,19 +821,19 @@ public void setRotate(float angle){
 
     public void prepareTransition(int r, int g, int b, float duration) {
         transitionColor.set(r / 255.0f, g / 255.0f, b / 255.0f, 1);
-        alpha.setValue(1);
+        alpha.set(1);
         manager = SplashScreen.getManager();
         Tween.to(alpha, -1, duration).target(0)
                 .ease(TweenEquations.easeOutQuad).start(manager);
     }
 
     private void drawTransition(float delta) {
-     //   if (alpha.getValue() > 0) {
+     //   if (alpha.get() > 0) {
          //   manager.update(delta);
           //  Gdx.gl.glEnable(GL30.GL_BLEND);
           //  Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
            // shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-          //  shapeRenderer.setColor(transitionColor.r, transitionColor.g,transitionColor.b, alpha.getValue());
+          //  shapeRenderer.setColor(transitionColor.r, transitionColor.g,transitionColor.b, alpha.get());
           //  shapeRenderer.rect(-camWidth*5000, -camHeight*5000, camWidth*10000, camHeight*10000);
           //  shapeRenderer.end();
           //  Gdx.gl.glDisable(GL30.GL_BLEND);

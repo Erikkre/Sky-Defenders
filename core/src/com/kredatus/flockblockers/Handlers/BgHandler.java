@@ -63,15 +63,15 @@ public class BgHandler {
                           // 0    1    2    3    4    5    6    7
         bgNumber = 9 * birdType;// "pB","tB","wB","fB","aB","nB","lB","gB"
         //System.out.print("Start height of bg1: "+-bgStackStartYHeight);
-        horiz.setValue(0);
-        vert.setValue(0);//everything is done in negative (camera goes up by that amount
-        shake.setValue(0);                              //but in reality its the bg's lowering by that much
+        horiz.set(0);
+        vert.set(0);//everything is done in negative (camera goes up by that amount
+        shake.set(0);                              //but in reality its the bg's lowering by that much
 
-        background = new Background(horiz.getValue(), vert.getValue(), bgw, separatorHeight, AssetHandler.bgList.get(bgNumber++));
-        background2 = new Background(horiz.getValue(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
+        background = new Background(horiz.get(), vert.get(), bgw, separatorHeight, AssetHandler.bgList.get(bgNumber++));
+        background2 = new Background(horiz.get(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
 
         //this.manager= SplashScreen.getManager();
-        //System.out.println("vert.getValue() " + vert.getValue());
+        //System.out.println("vert.get() " + vert.get());
         isCameraShake=false;
         setupTweens(camWidth, camHeight);
         isPastStoryIntro=true;
@@ -157,7 +157,7 @@ public class BgHandler {
         backgroundStackReset=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                TinyBirdHandler.addVertValueToBirdsSurvivingWavePart(vert.getValue());
+                TinyBirdHandler.addVertValueToBirdsSurvivingWavePart(vert.get());
                 TinyBirdHandler.addTinyBirdsNextCity(camWidth, camHeight);
                 //System.out.println("Reset stack");
                 stackJustReset=true;
@@ -170,12 +170,12 @@ public class BgHandler {
                 else { background2.reset(background.getTailY(), bgNumber++);}
                 background2.addedY = 0;
                 background.addedY = 0;
-                //vert.setValue(-bgStackStartYHeight);
+                //vert.set(-bgStackStartYHeight);
                 //cam.normalizeUp();
                 renderer.setRotate(-(float) Math.atan2(cam.up.x, cam.up.y) * MathUtils.radiansToDegrees);
                 isCameraShake = false;
                 smallShake.pause();
-                vert.setValue(0);
+                vert.set(0);
 
                 if ((bgNumber-2)%9==0) {
                     //System.out.println("Bgnumber: "+(bgNumber-2)+", ");
@@ -193,7 +193,7 @@ public class BgHandler {
                     .push((((Tween.to(vert, -1, 15).delay(1.2f).targetRelative(-bgStackHeight).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     )).repeat(2,0))//complete is after repetitions done, end is after each repetition
 
-                    .push(Tween.to(vert, -1, 5).targetRelative(vert.getValue()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
+                    .push(Tween.to(vert, -1, 5).targetRelative(vert.get()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
                     //pause in clouds after waves over to have the effect of travelling to different bird type areas, only going horizontally
             ).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START).repeat(Tween.INFINITY, 0).start();
 
@@ -203,7 +203,7 @@ public class BgHandler {
                     .push((((Tween.to(vert, -1, 5).delay(1.2f).targetRelative(-bgStackHeight).ease(InvertedTweenEquations.QuartInOut2LongerMiddle).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     )).repeat(2,0))//complete is after repetitions done, end is after each repetition
 
-                    .push(Tween.to(vert, -1, 5).targetRelative(vert.getValue()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
+                    .push(Tween.to(vert, -1, 5).targetRelative(vert.get()).setCallback(endBirdSpawn).setCallbackTriggers(TweenCallback.START)) //start spawning after wave done
                     //pause in clouds after waves over to have the effect of travelling to different bird type areas, only going horizontally
             ).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START).repeat(Tween.INFINITY, 0).start();
         }
@@ -211,8 +211,8 @@ public class BgHandler {
 
     private void shakeCamera(float delta){
        // cam.normalizeUp();
-        //System.out.println("Last angle: "+(-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees) + " New Angle: "+shake.getValue());
-        renderer.setRotate((-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees) +shake.getValue() ); //subtract last angle and add next one
+        //System.out.println("Last angle: "+(-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees) + " New Angle: "+shake.get());
+        renderer.setRotate((-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees) +shake.get() ); //subtract last angle and add next one
         //+ (-1+2*r.nextFloat())
     }
 //PointLight
@@ -225,16 +225,16 @@ public class BgHandler {
         }
 
         if(isPastStoryIntro ){
-            //System.out.println(" vert values:" + Math.round(vert.getValue()) + " bg1: "+background.y +" bg2: "+ background2.y + " bg1 added: "+background.addedY+" bg2 added: "+background2.addedY);
+            //System.out.println(" vert values:" + Math.round(vert.get()) + " bg1: "+background.y +" bg2: "+ background2.y + " bg1 added: "+background.addedY+" bg2 added: "+background2.addedY);
                     //stop running once done
-            //if(vert.getValue()<bgStackHeight+35)backgroundStackReset();
+            //if(vert.get()<bgStackHeight+35)backgroundStackReset();
 
-            //preVert=vert.getValue();
+            //preVert=vert.get();
             vertPositionBg.update(delta);
-            //yVelAbs=Math.abs(vert.getValue()-preVert);
+            //yVelAbs=Math.abs(vert.get()-preVert);
 
             //System.out.println("isbgVertFast: "+isbgVertFast);
-            if (vert.getValue()>0.20*-bgStackHeight||vert.getValue()<0.67*-bgStackHeight) {//test this
+            if (vert.get()>0.20*-bgStackHeight||vert.get()<0.67*-bgStackHeight) {//test this
                 if (!isbgVertFast) isbgVertFast=true;
             } else if (isbgVertFast) {
                 isbgVertFast=false;
@@ -248,7 +248,7 @@ public class BgHandler {
                 isBirdSpawning = false;
                 vertPositionBg.kill();
                 (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
-                        .push(Tween.to(vert, -1, 2).targetRelative(-(separatorHeight + bgh + bgh)-vert.getValue()).ease(TweenEquations.easeInQuint).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+                        .push(Tween.to(vert, -1, 2).targetRelative(-(separatorHeight + bgh + bgh)-vert.get()).ease(TweenEquations.easeInQuint).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                 ).start();
                 //System.out.println("irregular motion");
             }
@@ -259,12 +259,12 @@ public class BgHandler {
                 //System.out.println(BirdHandler.birdQueue+ ", ActiveBirdQueue: "+BirdHandler.activeBirdQueue+"************************************************");
                 if (  ((bgNumber+1)%9==0) ){       //if last background motion before round end clouds slow down at the end
                     (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
-                            .push(Tween.to(vert, -1, 1.5f).targetRelative(-(separatorHeight + bgh + bgh)-vert.getValue()).ease(TweenEquations.easeOutSine).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+                            .push(Tween.to(vert, -1, 1.5f).targetRelative(-(separatorHeight + bgh + bgh)-vert.get()).ease(TweenEquations.easeOutSine).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     ).start();
                 } else if (  !((bgNumber-2)%9==0) && !((bgNumber-3)%9==0)){ // && !((bgNumber-1)%9==0) && !((bgNumber)%9==0)    cam is at round end clouds when ((bgNumber-2)%9==0  (every 3 cities)
                         //System.out.println("bgNum is "+bgNumber+" so make another tween");
                         (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
-                                .push(Tween.to(vert, -1, 1.5f).targetRelative(-(separatorHeight + bgh + bgh)-vert.getValue()).ease(TweenEquations.easeNone).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
+                                .push(Tween.to(vert, -1, 1.5f).targetRelative(-(separatorHeight + bgh + bgh)-vert.get()).ease(TweenEquations.easeNone).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                                 ).start();
                     //System.out.println("irregular motion");
                 } else {
@@ -276,16 +276,16 @@ public class BgHandler {
 
 
             if (background.y<background2.y){
-                background.setY(vert.getValue());
+                background.setY(vert.get());
                 background2.setYToTail(background.getTailY());
             } else {
-                background2.setY(vert.getValue());
+                background2.setY(vert.get());
                 background.setYToTail(background2.getTailY());
             }
 
             horizPositionBg.update(delta);
-            background.setX(horiz.getValue());
-            background2.setX(horiz.getValue());
+            background.setX(horiz.get());
+            background2.setX(horiz.get());
 
             background.update();
             background2.update();

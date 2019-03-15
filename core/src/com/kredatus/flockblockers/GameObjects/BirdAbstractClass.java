@@ -404,13 +404,13 @@ public abstract class BirdAbstractClass {
     public final void hit(float collisionDmg){
         health -= collisionDmg;
         isFlashing = true;
-        flashOpacityValue.setValue(1f);//always start from white flash to distinguish from bg
+        flashOpacityValue.set(1f);//always start from white flash to distinguish from bg
         if (collisionDmg<origHealth&&health>0){
             currentFlashLength=flashLengths.get((int)((collisionDmg/origHealth)*flashLengths.size()));
             flashTween = Tween.to(flashOpacityValue, -1, currentFlashLength).target(0f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();
         } else {
             //currentFlashLength=flashLengths.get(flashLengths.size()-1); //else make flash black (-1f-0f)
-            flashOpacityValue.setValue(1f);    //make a death shader effect
+            flashOpacityValue.set(1f);    //make a death shader effect
 
                     //.push(Tween.to(flashOpacityValue, -1, 0.3f).target(1f).ease(TweenEquations.easeOutExpo))
                     flashTween = Tween.to(flashOpacityValue, -1, 2f).target(-1f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();

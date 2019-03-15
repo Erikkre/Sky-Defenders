@@ -9,11 +9,11 @@ public class Value {
 
     private float val = 0;
 
-    public float getValue() {
+    public float get() {
         return val;
     }
 
-    public void setValue(float newVal) {
+    public void set(float newVal) {
         val = newVal;
     }
 
