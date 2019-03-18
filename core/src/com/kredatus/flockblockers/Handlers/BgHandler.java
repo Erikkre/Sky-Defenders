@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
+import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Helpers.InvertedTweenEquations;
@@ -177,9 +178,10 @@ public class BgHandler {
                 smallShake.pause();
                 vert.set(0);
 
-                if ((bgNumber-2)%9==0) {
+                if ((bgNumber-2)%9==0) {    //if changing waves, change colors
                     //System.out.println("Bgnumber: "+(bgNumber-2)+", ");
                     Airship.setFireColor((bgNumber-2)/9);
+                    Airship.airshipTint=Airship.chooseColorBasedOnWave((bgNumber-2)/9, true);
                 }
             }
         };

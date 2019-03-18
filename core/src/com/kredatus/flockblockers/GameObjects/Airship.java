@@ -1,6 +1,7 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -76,6 +77,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static Array<Light> flameLights = new Array<Light>();
     public float burnerOrigAlpha=0.70f, thrusterOrigAlpha=0.70f;
     public int burnerOrigDist=40, thrusterOrigDist=70;
+
+    public static float[] airshipTint;
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -131,6 +134,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //also done in BirdHandler class every time background changes
         setupLights();
         setFireColor(birdType);
+        airshipTint=chooseColorBasedOnWave(birdType, true);
     }
 
     private void setupLights(){
@@ -318,19 +322,42 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //burnerFire.start();
     }
 
+    public static float[] chooseColorBasedOnWave (int waveTypeCnt, boolean isBalloon) {
+        if (!isBalloon){
+                 if (waveTypeCnt==0) return new float[]{178/255f, 166/255f, 96/255f };
+            else if (waveTypeCnt==1) return new float[]{178/255f, 119/255f, 98/255f };
+            else if (waveTypeCnt==2) return new float[]{43/255f,  158/255f, 238/255f};
+            else if (waveTypeCnt==3) return new float[]{227/255f, 133/255f, 37/255f };
+            else if (waveTypeCnt==4) return new float[]{75/255f,  201/255f, 142/255f};
+            else if (waveTypeCnt==5) return new float[]{154/255f, 155/255f, 158/255f};
+            else if (waveTypeCnt==6) return new float[]{230/255f, 49/255f,  252/255f};
+            else if (waveTypeCnt==7) return new float[]{178/255f, 178/255f, 47/255f };
+        } else {
+                if (waveTypeCnt==0)  return new float[]{255/255f, 180/255f, 148/255f };
+            else if (waveTypeCnt==1) return new float[]{249/255f, 50/255f, 109/255f };
+            else if (waveTypeCnt==2) return new float[]{43/255f,  158/255f, 238/255f};
+            else if (waveTypeCnt==3) return new float[]{227/255f, 133/255f, 37/255f };
+            else if (waveTypeCnt==4) return new float[]{75/255f,  201/255f, 142/255f};
+            else if (waveTypeCnt==5) return new float[]{154/255f, 155/255f, 158/255f};
+            else if (waveTypeCnt==6) return new float[]{230/255f, 49/255f,  252/255f};
+            else if (waveTypeCnt==7) return new float[]{178/255f, 178/255f, 47/255f };
+        }
+        return null;
+    }
+
     public static void setFireColor(int waveTypeCnt){
         //System.out.println("Was "+emitters.get(i).getTint().getColors()[0]+", "+emitters.get(i).getTint().getColors()[1]+", "+emitters.get(i).getTint().getColors()[2]);
         //{"pB","tB","wB","fB","aB","nB","lB","gB"};
         //  0    1    2    3    4    5    6    7
+
         float[] color =null;
-        if (waveTypeCnt==0) color=new float[]{178/255f, 166/255f, 96/255f };
-        else if (waveTypeCnt==1) color=new float[]{178/255f, 119/255f, 98/255f };
-        else if (waveTypeCnt==2) color=new float[]{43/255f,  158/255f, 238/255f};
-        else if (waveTypeCnt==3) color=new float[]{227/255f, 133/255f, 37/255f };
-        else if (waveTypeCnt==4) color=new float[]{75/255f,  201/255f, 142/255f};
-        else if (waveTypeCnt==5) color=new float[]{154/255f, 155/255f, 158/255f};
-        else if (waveTypeCnt==6) color=new float[]{230/255f, 49/255f,  252/255f};
-        else if (waveTypeCnt==7) color=new float[]{178/255f, 178/255f, 47/255f };
+        try {
+            color = chooseColorBasedOnWave(waveTypeCnt, false);
+            assert color!=null;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         for (int i=0;i<Airship.emitters.size;i++){
             emitters.get(i).getTint().setColors(color);
         }
@@ -537,8 +564,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         additiveEffects.get(0).draw(batcher, delta);
 
+        batcher.setColor(airshipTint[0], airshipTint[1], airshipTint[2], 1);
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation.get());
+        batcher.setColor(Color.WHITE);
 
         if (!additiveEffects.get(1).isComplete()) {
             additiveEffects.get(1).draw(batcher, delta);

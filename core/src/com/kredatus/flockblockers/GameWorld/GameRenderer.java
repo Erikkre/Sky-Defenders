@@ -621,7 +621,6 @@ public void setRotate(float angle){
             airship.flashTween.update(delta);
         }
 
-
         for (BirdAbstractClass k : deadBirdQueue) {
             if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.get());
@@ -650,8 +649,6 @@ public void setRotate(float angle){
                 }
             }
         }
-
-
 
         /*for (Turret i : turretList) {
             batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,

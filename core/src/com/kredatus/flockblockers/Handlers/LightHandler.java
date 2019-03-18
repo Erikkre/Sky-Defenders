@@ -127,7 +127,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         bgLights.add(newPointLight(foreRayHandler, 255, 255, 255, cloudA, cloudDia, cloudTopLeftPos));   //add cloudLights no matter what
         bgLights.add(newPointLight(foreRayHandler, 255, 255, 255, cloudA-.2f, cloudDia, cloudTopMidPos));
         bgLights.add(newPointLight(foreRayHandler, 255, 255, 255, cloudA, cloudDia, cloudTopRightPos));
-        if (bgNumber < 9) {//phoenix
+        if (bgNumber < 9) {         //phoenix
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 237, 137, sunA, sunDia, sunPos));       //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, xsA, mlDia, cityP1));         //skyScraper tip
             Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 237, 137, smA, xxlDia, cityC2,90,90));       //cone
@@ -146,7 +146,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, mA, xxlDia, cityP15));        //skyScraper tip**********************
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 237, 137, lA, mDia, cityP16));          //red signal
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 237, 137, lA, xlDia, cityP17));         //ambient lightspot
-        } else if (bgNumber < 18) {//thunder
+        } else if (bgNumber < 18) { //thunder
             Collections.addAll(bgLights, newPointLightMirrored(foreRayHandler, 255, 170, 140, sunA, sunDia, sunPos));       //puts in invertedBgSun and mirrored sun
             Collections.addAll(bgLights, newPointLightMirrored(backRayHandler, 255, 170, 140, xsA, mlDia, cityP1));         //skyScraper tip
             Collections.addAll(bgLights, newConeLightMirrored(foreRayHandler,  255, 170, 140, smA, xxlDia, cityC2,90,90));       //cone));       //cone
