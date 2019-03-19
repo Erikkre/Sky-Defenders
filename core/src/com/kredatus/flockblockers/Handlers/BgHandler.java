@@ -55,8 +55,8 @@ public class BgHandler {
     public static boolean isPastStoryIntro, isCameraShake, isBirdSpawning, stackJustReset, isbgVertFast;
     private OrthographicCamera cam;
     private GameRenderer renderer;
-    private int bgStackStartYHeight=0;
-
+    public static int bgStackStartYHeight=0;
+    public static boolean isMiddleOfCloud;
     public BgHandler(float camWidth, float camHeight, int birdType){
         //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
         this.camHeight=camHeight;
@@ -132,7 +132,7 @@ public class BgHandler {
                     .repeat(Tween.INFINITY, 0).start();
         }*/
 
-/*
+    /*
         (vertPositionBg = Timeline.createSequence()  //55 20 .01, 8 and 800 repeats
                 //.push(Tween.to(vert, -1, 13).target(  -bgh+(1.1f*camHeight)).ease(TweenEquations.easeInOutQuart).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.START)   )                 //center is 0.6 camheight below, cam is centered on -0.5 to everything
                 .push((Tween.to(vert, -1, 30).target(  -bgh-(.15f*camHeight)).ease(TweenEquations.easeOutSine)).setCallback(startStoryIntroAndSpawns).setCallbackTriggers(TweenCallback.BEGIN) ) //center is 0.65 camheight  above
@@ -143,7 +143,7 @@ public class BgHandler {
 
                 //.push(Tween.to(vert,-1,6).target(-bgh*2).ease(TweenEquations.easeInCubic)          .setCallback(backgroundStackReset))                   )
                 .repeat(Tween.INFINITY, 0).start();
-*/
+    */
 
         float smallShakeMaxAngle=0.1f;
         int bigShakeMaxAngle=30;
@@ -235,12 +235,22 @@ public class BgHandler {
             vertPositionBg.update(delta);
             //yVelAbs=Math.abs(vert.get()-preVert);
 
+
+
             //System.out.println("isbgVertFast: "+isbgVertFast);
-            if (vert.get()>0.20*-bgStackHeight||vert.get()<0.67*-bgStackHeight) {//test this
-                if (!isbgVertFast) isbgVertFast=true;
+            if ( vert.get()>0.20*-bgStackHeight||vert.get()<0.67*-bgStackHeight ) {  //test this
+                if (!isbgVertFast) {
+                    isbgVertFast=true;
+                }
+                if (vert.get()>0.03*-bgStackHeight||vert.get()<0.97*-bgStackHeight) {
+                    if (!isMiddleOfCloud) isMiddleOfCloud=true;
+
+                } else if (isMiddleOfCloud) isMiddleOfCloud =false;
+
             } else if (isbgVertFast) {
-                isbgVertFast=false;
+                    isbgVertFast=false;
             }
+
 
             //if end of wave close or 1 background away from ending dont end wave quickly, bgNumber multiples of 10 are wave end bg's
             //System.out.println(isBirdSpawning +" "+ BirdHandler.birdQueue.isEmpty() +" "+ BirdHandler.activeBirdQueue.isEmpty() +" "+ !(bgNumber%10==0) +" "+ !((bgNumber+1)%10==0));

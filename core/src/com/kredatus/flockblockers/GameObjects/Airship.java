@@ -78,7 +78,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public float burnerOrigAlpha=0.70f, thrusterOrigAlpha=0.70f;
     public int burnerOrigDist=40, thrusterOrigDist=70;
 
-    public static float[] airshipTint;
+    public static float[] airshipTint, airShipCloudTint;
+    public boolean hitMaxBrightnessCloudBrightening=true;
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -135,6 +136,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         setupLights();
         setFireColor(birdType);
         airshipTint=chooseColorBasedOnWave(birdType, true);
+        airShipCloudTint=airshipTint.clone();
     }
 
     private void setupLights(){
@@ -324,7 +326,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public static float[] chooseColorBasedOnWave (int waveTypeCnt, boolean isBalloon) {
         if (!isBalloon){
-                 if (waveTypeCnt==0) return new float[]{178/255f, 166/255f, 96/255f };
+            if (waveTypeCnt==0) return new float[]{178/255f, 166/255f, 96/255f };
             else if (waveTypeCnt==1) return new float[]{178/255f, 119/255f, 98/255f };
             else if (waveTypeCnt==2) return new float[]{43/255f,  158/255f, 238/255f};
             else if (waveTypeCnt==3) return new float[]{227/255f, 133/255f, 37/255f };
@@ -333,14 +335,14 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             else if (waveTypeCnt==6) return new float[]{230/255f, 49/255f,  252/255f};
             else if (waveTypeCnt==7) return new float[]{178/255f, 178/255f, 47/255f };
         } else {
-                if (waveTypeCnt==0)  return new float[]{255/255f, 180/255f, 148/255f };
-            else if (waveTypeCnt==1) return new float[]{249/255f, 50/255f, 109/255f };
-            else if (waveTypeCnt==2) return new float[]{43/255f,  158/255f, 238/255f};
-            else if (waveTypeCnt==3) return new float[]{227/255f, 133/255f, 37/255f };
-            else if (waveTypeCnt==4) return new float[]{75/255f,  201/255f, 142/255f};
-            else if (waveTypeCnt==5) return new float[]{154/255f, 155/255f, 158/255f};
-            else if (waveTypeCnt==6) return new float[]{230/255f, 49/255f,  252/255f};
-            else if (waveTypeCnt==7) return new float[]{178/255f, 178/255f, 47/255f };
+                if (waveTypeCnt==0)  return new float[]{255, 180, 148 };
+            else if (waveTypeCnt==1) return new float[]{249, 50, 109 };
+            else if (waveTypeCnt==2) return new float[]{43,  158, 238};
+            else if (waveTypeCnt==3) return new float[]{227, 133, 37 };
+            else if (waveTypeCnt==4) return new float[]{75,  201, 142};
+            else if (waveTypeCnt==5) return new float[]{154, 155, 158};
+            else if (waveTypeCnt==6) return new float[]{230, 49,  252};
+            else if (waveTypeCnt==7) return new float[]{178, 178, 47 };
         }
         return null;
     }
@@ -564,7 +566,30 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         additiveEffects.get(0).draw(batcher, delta);
 
-        batcher.setColor(airshipTint[0], airshipTint[1], airshipTint[2], 1);
+        if (BgHandler.isbgVertFast) {
+            if (!BgHandler.isMiddleOfCloud) {
+                if (!hitMaxBrightnessCloudBrightening) { //if still getting brighter
+                    System.out.println("Getting brighter");
+                    airShipCloudTint[0] += (255 - airShipCloudTint[0]) / 4f;
+                    airShipCloudTint[1] += (255 - airShipCloudTint[1]) / 4f;
+                    airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 4f;
+                } else if (airShipCloudTint[0] > airshipTint[0]) {   //if past max point and getting darker and brighter than original
+                    System.out.println("Getting darker");
+                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 4f;
+                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 4f;
+                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 4f;
+                }
+                //if (airShipCloudTint[0] > 255)
+                //batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
+            } else {
+                if (!hitMaxBrightnessCloudBrightening) hitMaxBrightnessCloudBrightening=true;System.out.println("Hit lightest");
+                    batcher.setColor(1, 1, 1, 1);
+            }
+        } else {
+            System.out.println("Not going fast");
+            if (hitMaxBrightnessCloudBrightening) hitMaxBrightnessCloudBrightening=false;
+            batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
+        }
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation.get());
         batcher.setColor(Color.WHITE);
