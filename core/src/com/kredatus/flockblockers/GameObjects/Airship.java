@@ -80,7 +80,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public int burnerOrigDist=40, thrusterOrigDist=70;
 
     public static float[] airshipTint, airShipCloudTint;
-    public boolean hitMaxBrightnessCloudBrightening=true;
+    public boolean hitMaxBrightnessCloudBrightening=false;
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -587,9 +587,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 250f;
                 } else if (airShipCloudTint[0] > airshipTint[0]) {   //if past max point and getting darker and brighter than original
                     //System.out.println("Getting darker");
-                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 10f;
-                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 10f;
-                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 10f;
+                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 7f;
+                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 7f;
+                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 7f;
                 }
                 //if (airShipCloudTint[0] > 255)
                 batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
