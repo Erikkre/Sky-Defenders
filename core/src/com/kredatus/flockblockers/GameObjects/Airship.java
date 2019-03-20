@@ -18,6 +18,7 @@ import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -510,7 +511,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 rotation.get() += -Math.signum(vel.x)*((Math.abs(vel.x*2)-Math.abs(rotation.get()))/1.5f);
             }*/
 
-            System.out.println("Velocity change, vel: "+vel.x+", preVel: "+(tween.getTargetValues()[0]-pos.x));
+            //System.out.println("Velocity change, vel: "+vel.x+", preVel: "+(tween.getTargetValues()[0]-pos.x));
             float temp = vel.x/(2f*(speedDivisor/60f));
             //-Math.signum(vel.x)*(temp*temp); //exponent of 2 //(float) (-Math.signum(xVel)*Math.pow(Math.abs(xVel),1.5));//-xVel*2f;
 
@@ -565,31 +566,58 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
 
         additiveEffects.get(0).draw(batcher, delta);
-
+/*if (!hitMaxBrightnessCloudBrightening) { //if still getting brighter
+                    System.out.println("Getting brighter");
+                    airShipCloudTint[0] += (255 - airShipCloudTint[0]) / 10f;
+                    airShipCloudTint[1] += (255 - airShipCloudTint[1]) / 10f;
+                    airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 10f;
+                } else if (airShipCloudTint[0] > airshipTint[0]) {   //if past max point and getting darker and brighter than original
+                    System.out.println("Getting darker");
+                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 10f;
+                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 10f;
+                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 10f;
+                }
+                */
         if (BgHandler.isbgVertFast) {
             if (!BgHandler.isMiddleOfCloud) {
                 if (!hitMaxBrightnessCloudBrightening) { //if still getting brighter
-                    System.out.println("Getting brighter");
-                    airShipCloudTint[0] += (255 - airShipCloudTint[0]) / 4f;
-                    airShipCloudTint[1] += (255 - airShipCloudTint[1]) / 4f;
-                    airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 4f;
+                    //System.out.println("Getting brighter");
+                    airShipCloudTint[0] += (255 - airShipCloudTint[0]) / 250f;
+                    airShipCloudTint[1] += (255 - airShipCloudTint[1]) / 250f;
+                    airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 250f;
                 } else if (airShipCloudTint[0] > airshipTint[0]) {   //if past max point and getting darker and brighter than original
-                    System.out.println("Getting darker");
-                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 4f;
-                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 4f;
-                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 4f;
+                    //System.out.println("Getting darker");
+                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 10f;
+                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 10f;
+                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 10f;
                 }
                 //if (airShipCloudTint[0] > 255)
-                //batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
-            } else {
-                if (!hitMaxBrightnessCloudBrightening) hitMaxBrightnessCloudBrightening=true;System.out.println("Hit lightest");
-                    batcher.setColor(1, 1, 1, 1);
+                batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
+            } else {    //if is moving fast and in the middle of the cloud
+                if (!hitMaxBrightnessCloudBrightening) {//so we only do this block once
+                    hitMaxBrightnessCloudBrightening=true;
+                    System.out.println("hit middle of cloud");
+                    if ((BgHandler.bgNumber-1)%9==0) {    //if changing waves, change colors
+                        System.out.println("Change colors");
+                        //System.out.println("Bgnumber: "+(bgNumber-2)+", ");
+                        setFireColor((BgHandler.bgNumber-1)/9);
+                        airshipTint=Airship.chooseColorBasedOnWave((BgHandler.bgNumber-1)/9, true);
+                    }
+                }
+
             }
         } else {
-            System.out.println("Not going fast");
-            if (hitMaxBrightnessCloudBrightening) hitMaxBrightnessCloudBrightening=false;
+            if (hitMaxBrightnessCloudBrightening){ //if stopped going fast and had hit max brightness
+                //System.out.println("Not going fast, isFast= "+BgHandler.isbgVertFast);
+                hitMaxBrightnessCloudBrightening=false;
+            }
+            if (airShipCloudTint[0]!=airshipTint[0]){airShipCloudTint=airshipTint.clone();
+            //System.out.println("******************************************************************************************");
+                }
             batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
         }
+
+
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation.get());
         batcher.setColor(Color.WHITE);

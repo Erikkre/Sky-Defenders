@@ -46,7 +46,7 @@ public class BgHandler {
     public static int bgw= AssetHandler.bgPhoenixtexture.getRegionWidth();
     public static int bgh = AssetHandler.bgPhoenixtexture.getRegionHeight(), separatorHeight=AssetHandler.bgCloudSeparatorTexture.getRegionHeight();    //height of separator is different, and there are 2 combined with eachother
 //    float preVert, yVelAbs;
-    public int bgNumber;
+    public static int bgNumber;
 
     //private TweenManager manager;
     public Timeline horizPositionBg, vertPositionBg,smallShake, bigShake;
@@ -177,12 +177,6 @@ public class BgHandler {
                 isCameraShake = false;
                 smallShake.pause();
                 vert.set(0);
-
-                if ((bgNumber-2)%9==0) {    //if changing waves, change colors
-                    //System.out.println("Bgnumber: "+(bgNumber-2)+", ");
-                    Airship.setFireColor((bgNumber-2)/9);
-                    Airship.airshipTint=Airship.chooseColorBasedOnWave((bgNumber-2)/9, true);
-                }
             }
         };
         regularVertBgMotion();
@@ -243,14 +237,20 @@ public class BgHandler {
                     isbgVertFast=true;
                 }
                 if (vert.get()>0.03*-bgStackHeight||vert.get()<0.97*-bgStackHeight) {
-                    if (!isMiddleOfCloud) isMiddleOfCloud=true;
+                    if (!isMiddleOfCloud) {
+                        isMiddleOfCloud=true;
+                        //System.out.println("Middle of cloud");
+                    }
 
-                } else if (isMiddleOfCloud) isMiddleOfCloud =false;
+                } else if (isMiddleOfCloud) {
+                    isMiddleOfCloud =false;
+                    System.out.println("Not Middle of cloud");
+                }
 
             } else if (isbgVertFast) {
                     isbgVertFast=false;
             }
-
+            //System.out.println("BgVertFast = "+isbgVertFast+", vert: "+vert.get()+", greater than: "+ (0.20*-bgStackHeight)+", lower than: "+ (0.67*-bgStackHeight));
 
             //if end of wave close or 1 background away from ending dont end wave quickly, bgNumber multiples of 10 are wave end bg's
             //System.out.println(isBirdSpawning +" "+ BirdHandler.birdQueue.isEmpty() +" "+ BirdHandler.activeBirdQueue.isEmpty() +" "+ !(bgNumber%10==0) +" "+ !((bgNumber+1)%10==0));
