@@ -389,9 +389,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void fastBurner( ) {
-        //System.out.println("7, "+emitters.get(0).getEmission().getHighMax());
+        System.out.println("7, "+emitters.get(0).getEmission().getHighMax());
         if (emitters.get(0).getEmission().getHighMax() != 2000) {
-            //System.out.println("8, "+emitters.get(0).getEmission().getHighMax());
+            System.out.println("8, "+emitters.get(0).getEmission().getHighMax());
             setEmitterVal(emitters.get(0).getEmission(), 2000, false, false);
             emitters.get(0).start();
             setBurnerLightTarget(burnerOrigDist*5,TweenEquations.easeOutElastic);
@@ -401,12 +401,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public void burnerOnOff() {
             if (vel.y >= 0) {   //if moving up
-                //System.out.println("1, "+emitters.get(0).getEmission().getHighMax());
+                System.out.println("1, "+emitters.get(0).getEmission().getHighMax());
                 setEmitterVal(emitters.get(0).getAngle(), 90 - rotation.get() * 10, true, true);//always change angle based on arship rot
                 setEmitterVal(emitters.get(0).getVelocity(), 80 + vel.y * 15, true, false);//always change vel based on airship vel
 
                 if (vel.y > 1 ) {   //if moving up fastish and burner set to low (might want to leave out last condition)
-                    //System.out.println("2, "+emitters.get(0).getEmission().getHighMax());
+                    System.out.println("2, "+emitters.get(0).getEmission().getHighMax());
                     setEmitterVal(emitters.get(0).getEmission(), 300 + vel.y * 750, false, false);
                     setBurnerLightTarget(vel.y*(burnerOrigDist/2f)+burnerOrigDist, TweenEquations.easeOutElastic);
                     emitters.get(0).start();
@@ -414,7 +414,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
                     emitters.get(0).start();
                     setBurnerLightTarget( burnerOrigDist, TweenEquations.easeOutElastic);
-                    //System.out.println("3, "+emitters.get(0).getEmission().getHighMax());
+                    System.out.println("3, "+emitters.get(0).getEmission().getHighMax());
                 }
 
             } else if (vel.y < -2.5 && !emitters.get(0).isComplete()) { //if descending let current burner anim finish then turn it off
@@ -422,11 +422,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 if (getLightDist("burner")!=0){
                     setBurnerLightTarget( 0, TweenEquations.easeOutCirc);
                 }
-                //System.out.println("4, "+emitters.get(0).getEmission().getHighMax());
+                System.out.println("4, "+emitters.get(0).getEmission().getHighMax());
             } else if (vel.y >= -2.5f && emitters.get(0).isComplete()) {//if stopped falling go back to flame
-                //System.out.println("5, "+emitters.get(0).getEmission().getHighMax());
+                System.out.println("5, "+emitters.get(0).getEmission().getHighMax());
                 if (emitters.get(0).getEmission().getHighMax() != 300)
-                    //System.out.println("6, "+emitters.get(0).getEmission().getHighMax());
+                    System.out.println("6, "+emitters.get(0).getEmission().getHighMax());
                     setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
                     emitters.get(0).start();
                     setBurnerLightTarget(burnerOrigDist, TweenEquations.easeOutElastic);
@@ -487,7 +487,15 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackHitbox   .setRotation(rotation.get());
         balloonHitbox.setRotation(rotation.get());
 
-        if (BgHandler.isbgVertFast) fastBurner();
+        if (BgHandler.isbgVertFast) {
+            fastBurner();
+            //System.out.println("very fast");
+        } else if (emitters.get(0).getEmission().getHighMax() == 2000){ //if past fastBurning stage, change emission to 300
+            setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
+            setBurnerLightTarget( burnerOrigDist, TweenEquations.easeOutElastic);
+            //System.out.println("not very fast and reset");
+        }
+
 
         //0 is burner, 1 is thrustLeft, 2 is thrustRight
         if (!tween.isFinished()) { //if moving
