@@ -27,7 +27,7 @@ import aurelienribon.tweenengine.TweenEquations;
  */
 
 public class BgHandler {
-    private  boolean endWaveBgMotion;
+    public static boolean endWaveBgMotion;
     // BgHandler will create all five objects that we need.
     private Background background, background2, background3, background4;
     private Random r = new Random();
@@ -56,7 +56,7 @@ public class BgHandler {
     private OrthographicCamera cam;
     private GameRenderer renderer;
     public static int bgStackStartYHeight=0;
-    public static boolean isMiddleOfCloud;
+    public static boolean isMiddleOfCloud   ;
     public BgHandler(float camWidth, float camHeight, int birdType){
         //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
         this.camHeight=camHeight;
@@ -213,6 +213,7 @@ public class BgHandler {
     }
 //PointLight
     public void update(float delta) {
+        System.out.println(endWaveBgMotion);
         //System.out.println("1: "+ Math.round(background.y) + " 2: "+Math.round(background2.y));
         if (isCameraShake) {
             smallShake.update(delta);
@@ -229,8 +230,6 @@ public class BgHandler {
             vertPositionBg.update(delta);
             //yVelAbs=Math.abs(vert.get()-preVert);
 
-
-
             //System.out.println("isbgVertFast: "+isbgVertFast);
             if ( vert.get()>0.20*-bgStackHeight||vert.get()<0.67*-bgStackHeight ) {  //test this
                 if (!isbgVertFast) {
@@ -244,7 +243,7 @@ public class BgHandler {
 
                 } else if (isMiddleOfCloud) {
                     isMiddleOfCloud =false;
-                    System.out.println("Not Middle of cloud");
+                    //system.out.println("Not Middle of cloud");
                 }
 
             } else if (isbgVertFast) {
@@ -254,10 +253,11 @@ public class BgHandler {
 
             //if end of wave close or 1 background away from ending dont end wave quickly, bgNumber multiples of 10 are wave end bg's
             //System.out.println(isBirdSpawning +" "+ BirdHandler.birdQueue.isEmpty() +" "+ BirdHandler.activeBirdQueue.isEmpty() +" "+ !(bgNumber%10==0) +" "+ !((bgNumber+1)%10==0));
-            if (bgNumber>1 && !((bgNumber-1)%9==0) && !((bgNumber-2)%9==0) && isBirdSpawning && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty() ) {
+            if (bgNumber>1 && !((bgNumber-1)%9==0) && !((bgNumber-2)%9==0) && isBirdSpawning && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty() ) {//stop spawning
                 //System.out.println(bgNumber);
                 endWaveBgMotion = true;
                 isBirdSpawning = false;
+                //if (!isEndingEarlyAndFast) isEndingEarlyAndFast=true;//fire burner if all birds are dead and about to end quickly(used in airship class)
                 vertPositionBg.kill();
                 (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
                         .push(Tween.to(vert, -1, 2).targetRelative(-(separatorHeight + bgh + bgh)-vert.get()).ease(TweenEquations.easeInQuint).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
@@ -270,11 +270,14 @@ public class BgHandler {
                 //vertPositionBg.pause();
                 //System.out.println(BirdHandler.birdQueue+ ", ActiveBirdQueue: "+BirdHandler.activeBirdQueue+"************************************************");
                 if (  ((bgNumber+1)%9==0) ){       //if last background motion before round end clouds slow down at the end
+                    System.out.println("Fast moving 1");
+
                     (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
                             .push(Tween.to(vert, -1, 1.5f).targetRelative(-(separatorHeight + bgh + bgh)-vert.get()).ease(TweenEquations.easeOutSine).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     ).start();
                 } else if (  !((bgNumber-2)%9==0) && !((bgNumber-3)%9==0)){ // && !((bgNumber-1)%9==0) && !((bgNumber)%9==0)    cam is at round end clouds when ((bgNumber-2)%9==0  (every 3 cities)
-                        //System.out.println("bgNum is "+bgNumber+" so make another tween");
+                        System.out.println("Fast moving 2");
+
                         (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
                                 .push(Tween.to(vert, -1, 1.5f).targetRelative(-(separatorHeight + bgh + bgh)-vert.get()).ease(TweenEquations.easeNone).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                                 ).start();
@@ -285,7 +288,6 @@ public class BgHandler {
                     //System.out.println("regular motion");
                 }
             }
-
 
             if (background.y<background2.y){
                 background.setY(vert.get());
@@ -328,8 +330,8 @@ public class BgHandler {
             //end with spawning again, if this done then ispaststory=true
             isPastStoryIntro=true;
             horizPositionBg.resume();
-            vertPositionBg.resume();
-            isBirdSpawning=true;
+            vertPositionBg .resume();
+            isBirdSpawning  =true;
         }
     }
 
