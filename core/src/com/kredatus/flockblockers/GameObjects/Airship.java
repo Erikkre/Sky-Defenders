@@ -34,7 +34,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private Circle boundingCir;
     public static Vector2 pos, vel=new Vector2(), thrusterOrigPos; //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
-    public float gamexvel;
+
     public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
     protected boolean isScrolledDown;
     public float midpointY, midpointX, startY,startX;
@@ -194,8 +194,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     );
                 }
 
-        rackHitbox.setRotation(rotation.get());
-        balloonHitbox.setRotation(rotation.get());
+        //rackHitbox.setRotation(rotation.get());
+        //balloonHitbox.setRotation(rotation.get());
     }
 
     private void assignRackPositions(float leftXOfAirship) {
@@ -476,12 +476,17 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             if (changeLowToo) val.setLow(newVal);
     }
 
+    public void setHitboxRotation(Polygon poly, float rotation){
+        //use draw method
+
+    }
+
     public void update(float delta) {
         //System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing+", velX: "+vel.x);
         setDestAirship();
         //System.out.print(pos.toString());
-        rackHitbox   .setRotation(rotation.get());
-        balloonHitbox.setRotation(rotation.get());
+        setHitboxRotation(rackHitbox,25);
+        setHitboxRotation(balloonHitbox,25);
         //System.out.print(BgHandler.isbgVertFast);
         if (BgHandler.isbgVertFast||BgHandler.endWaveBgMotion) {
             fastBurner();
