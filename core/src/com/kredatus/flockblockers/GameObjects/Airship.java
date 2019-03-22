@@ -63,7 +63,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public TweenCallback endFlashing;
     protected ArrayList<Float> flashLengths=new ArrayList<Float>();
 
-    public Tween tween, burnerTween, rightThrusterTween, leftThrusterTween, rotationTween;
+    public Tween tween, burnerLightTween, rightThrusterLightTween, leftThrusterLightTween, rotationTween;
     float inputX, inputY, speedDivisor;
     public static boolean airshipTouched;
 
@@ -146,9 +146,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x+thrusterWidth*1.1f, thrusterOrigPos.y+thrusterHeight/1.9f)));
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x,pos.y+8)));//position same as bottom of burner
         //flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x+15,pos.y+15)));
-         //leftThrusterTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
-        //rightThrusterTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
-        burnerTween=Tween.to(flameLights.get(2), 1, 1f).target(burnerOrigDist).start();
+         //leftThrusterLightTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
+        //rightThrusterLightTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
+        burnerLightTween=Tween.to(flameLights.get(2), 1, 1f).target(burnerOrigDist).start();
     }
 
     private void assignBounds() {
@@ -291,15 +291,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 //rotate to waypoint based on x distance, then back to itself
             }
 
-            if (Gdx.input.getDeltaX(airshipTouchPointer)<-2) {
-                rightThrusterTween=Tween.to(flameLights.get(1), 1, 1.5f).target(0).waypoint(thrusterOrigDist).repeatYoyo(0,0).ease(TweenEquations.easeOutQuint).start();
+            if (Gdx.input.getDeltaX(airshipTouchPointer)<-3) {
                 fireThruster(2);
-
                 //System.out.println("Thrust Right");
-            } else if (Gdx.input.getDeltaX(airshipTouchPointer)>2) {
-                leftThrusterTween=Tween.to(flameLights.get(0), 1, 1.5f).waypoint(thrusterOrigDist).target(0).repeatYoyo(0,0).ease(TweenEquations.easeOutQuint).start();
+            } else if (Gdx.input.getDeltaX(airshipTouchPointer)>3) {
                 fireThruster(1);
-
                // System.out.println("Thrust Left");
             }
 
@@ -336,8 +332,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             else if (waveTypeCnt==6) return new float[]{230/255f, 49/255f,  252/255f};
             else if (waveTypeCnt==7) return new float[]{178/255f, 178/255f, 47/255f };
         } else {
-                if (waveTypeCnt==0)  return new float[]{255, 180, 148 };
-            else if (waveTypeCnt==1) return new float[]{249, 50, 109 };
+                if (waveTypeCnt==0)  return new float[]{255, 180, 148};
+            else if (waveTypeCnt==1) return new float[]{249, 50,  109};
             else if (waveTypeCnt==2) return new float[]{43,  158, 238};
             else if (waveTypeCnt==3) return new float[]{227, 133, 37 };
             else if (waveTypeCnt==4) return new float[]{75,  201, 142};
@@ -372,20 +368,19 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public void fireThruster(int i){
         emitters.get(i).allowCompletion();
-
         if (i==1) {
             setEmitterVal(emitters.get(i).getAngle(), 180 + rotation.get(), true, true);
-            leftThrusterTween.start();
+            leftThrusterLightTween=Tween.to(flameLights.get(0), 1, 1.5f).waypoint(thrusterOrigDist).target(0).repeatYoyo(0,0).ease(TweenEquations.easeOutQuint).start();
         }
         else if(i==2) {
             setEmitterVal(emitters.get(i).getAngle(), 0 + rotation.get(), true, true);//thrust right
-            rightThrusterTween.start();
+            rightThrusterLightTween=Tween.to(flameLights.get(1), 1, 1.5f).target(0).waypoint(thrusterOrigDist).repeatYoyo(0,0).ease(TweenEquations.easeOutQuint).start();
         }
         additiveEffects.get(i).start();
     }
 
     public void setBurnerLightTarget(float target, TweenEquation eq) {
-        burnerTween=Tween.to(flameLights.get(2), 1, 1f).target(target).ease(eq).start();
+        burnerLightTween=Tween.to(flameLights.get(2), 1, 1f).target(target).ease(eq).start();
     }
 
     public void fastBurner( ) {
@@ -424,7 +419,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     setBurnerLightTarget( 0, TweenEquations.easeOutCirc);
                 }
                 //System.out.println("4, "+emitters.get(0).getEmission().getHighMax());
-            } else if (vel.y >= -2.5f && emitters.get(0).isComplete()) {//if stopped falling go back to flame
+            } else if (vel.y >= -2.5f ) {//if stopped falling go back to flame
                 //System.out.println("5, "+emitters.get(0).getEmission().getHighMax());
                 if (emitters.get(0).getEmission().getHighMax() != 300)
                     //System.out.println("6, "+emitters.get(0).getEmission().getHighMax());
@@ -497,15 +492,17 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("not very fast and reset");
         }
 
-
+        if (burnerLightTween.isStarted()) burnerLightTween.update(delta);
+        if (leftThrusterLightTween!=null && !leftThrusterLightTween.isFinished()) leftThrusterLightTween.update(delta);
+        if (rightThrusterLightTween!=null && !rightThrusterLightTween.isFinished()) rightThrusterLightTween.update(delta);
+                
         //0 is burner, 1 is thrustLeft, 2 is thrustRight
         if (!tween.isFinished()) { //if moving
-            if (!BgHandler.isbgVertFast&&!BgHandler.endWaveBgMotion) {burnerOnOff();//if not moving quickly
+            if (!BgHandler.isbgVertFast&&!BgHandler.endWaveBgMotion) {
+                burnerOnOff();//if not moving quickly
                 //system.out.println("burner change");
-                 }
+            }
 
-            if (leftThrusterTween!=null) leftThrusterTween.update(delta);
-            if (rightThrusterTween!=null) rightThrusterTween.update(delta);
             //if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
             additiveEffects.get(0).setPosition(pos.x, pos.y + 8);
 
@@ -527,7 +524,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //-Math.signum(vel.x)*(temp*temp); //exponent of 2 //(float) (-Math.signum(xVel)*Math.pow(Math.abs(xVel),1.5));//-xVel*2f;
 
 
-            if (burnerTween.isStarted()) burnerTween.update(delta);
+
 
 
             for (Turret i : turretList) {
@@ -593,12 +590,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (BgHandler.isbgVertFast) {
             if (!BgHandler.isMiddleOfCloud) {
                 if (!hitMaxBrightnessCloudBrightening) { //if still getting brighter
-                    //System.out.println("Getting brighter");
+                    System.out.println("Getting brighter");
                     airShipCloudTint[0] += (255 - airShipCloudTint[0]) / 250f;
                     airShipCloudTint[1] += (255 - airShipCloudTint[1]) / 250f;
                     airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 250f;
                 } else if (airShipCloudTint[0] > airshipTint[0]) {   //if past max point and getting darker and brighter than original
-                    //System.out.println("Getting darker");
+                    System.out.println("Getting darker");
                     airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 7f;
                     airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 7f;
                     airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 7f;
@@ -608,9 +605,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             } else {    //if is moving fast and in the middle of the cloud
                 if (!hitMaxBrightnessCloudBrightening) {//so we only do this block once
                     hitMaxBrightnessCloudBrightening=true;
-                    //system.out.println("hit middle of cloud");
+                    System.out.println("hit middle of cloud");
                     if ((BgHandler.bgNumber-1)%9==0) {    //if changing waves, change colors
-                        //system.out.println("Change colors");
+                        System.out.println("Change colors");
                         //System.out.println("Bgnumber: "+(bgNumber-2)+", ");
                         setFireColor((BgHandler.bgNumber-1)/9);
                         airshipTint=Airship.chooseColorBasedOnWave((BgHandler.bgNumber-1)/9, true);
@@ -623,7 +620,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 hitMaxBrightnessCloudBrightening=false;
             }
             if (airShipCloudTint[0]!=airshipTint[0]){airShipCloudTint=airshipTint.clone();
-            //System.out.println("******************************************************************************************");
+            System.out.println("airship cloud tint");
                 }
             batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
         }
