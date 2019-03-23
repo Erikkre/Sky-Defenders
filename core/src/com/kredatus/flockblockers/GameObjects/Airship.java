@@ -497,7 +497,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("not very fast and reset");
         }
 
-
         //0 is burner, 1 is thrustLeft, 2 is thrustRight
         if (!tween.isFinished()) { //if moving
             if (!BgHandler.isbgVertFast&&!BgHandler.endWaveBgMotion) {burnerOnOff();//if not moving quickly
