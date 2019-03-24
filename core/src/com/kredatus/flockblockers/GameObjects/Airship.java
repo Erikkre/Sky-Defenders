@@ -530,8 +530,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
 
-
-
             for (Turret i : turretList) {
                 i.update();
                 i.position.set(pos.x - (startX - i.origPosition.x), pos.y - (startY - i.origPosition.y));
