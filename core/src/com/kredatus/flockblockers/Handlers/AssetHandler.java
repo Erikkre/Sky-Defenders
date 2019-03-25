@@ -372,8 +372,7 @@ public class AssetHandler {
         f0 = new TextureRegion(f0Texture,0, 4,32,13);
         f0Proj = new TextureRegion(f0Texture,0, 0,32,3);
 
-
-        Texture coinTexture=new Texture(Gdx.files.internal("sprites"+File.separator+"coin.png"));
+        Texture coinTexture=new Texture(Gdx.files.internal("bayatTextures"+File.separator+"coin.png"));
         ArrayList<TextureRegion> tempPosition = new ArrayList<TextureRegion>(16);
         for (int i = 0; i < 17; i++) {
             if (i<16){
