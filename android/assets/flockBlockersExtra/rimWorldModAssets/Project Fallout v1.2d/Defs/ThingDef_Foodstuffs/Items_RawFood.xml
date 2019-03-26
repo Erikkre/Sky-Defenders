@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Defs>
+
+<ThingDef ParentName="ResourceBase" Name="OrganicProductBase" Abstract="True">
+<graphicData>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<socialPropernessMatters>true</socialPropernessMatters>
+<statBases>
+<MaxHitPoints>100</MaxHitPoints>
+<Flammability>1.0</Flammability>
+<DeteriorationRate>10</DeteriorationRate>
+</statBases>
+<tickerType>Rare</tickerType>
+</ThingDef>
+
+<ThingDef ParentName="OrganicProductBase" Name="PlantFoodRawBase" Abstract="True">
+<ingestible>
+<preferability>RawBad</preferability>
+<tastesRaw>true</tastesRaw>
+<nutrition>0.05</nutrition>
+<eatEffect>EatVegetarian</eatEffect>
+<soundEat>RawVegetable_Eat</soundEat>
+</ingestible>
+<thingCategories>
+<li>PlantFoodRaw</li>
+</thingCategories>
+<comps>
+<li Class="CompProperties_FoodPoisoningChance"/>
+</comps>
+</ThingDef>
+
+<ThingDef ParentName="PlantFoodRawBase">
+<defName>RawTatos</defName>
+<label>Tatos</label>
+<description>A mutated hybrid between potatoes and tomatoes. It tastes horrible raw, and not much better when cooked, but in the wasteland you can't complain.</description>
+<graphicData>
+<texPath>Things/Fallout/Food/RawPlants/Tato</texPath>
+</graphicData>
+<statBases>
+<MarketValue>1.5</MarketValue>
+</statBases>
+<ingestible>
+<foodType>VegetableOrFruit</foodType>
+</ingestible>
+<comps>
+<li Class="CompProperties_Rottable">
+<daysToRotStart>40</daysToRotStart>
+</li>
+</comps>
+</ThingDef>
+
+<ThingDef ParentName="PlantFoodRawBase">
+<defName>RawRazorgrain</defName>
+<label>Razorgrain</label>
+<description>A distant descendant of wheat, it is able to grow in the harsh wasteland.</description>
+<soundInteract>Grain_Drop</soundInteract>
+<soundDrop>Grain_Drop</soundDrop>
+<graphicData>
+<texPath>Things/Fallout/Food/RawPlants/Razorgrain</texPath>
+</graphicData>
+<statBases>
+<MarketValue>1.2</MarketValue>
+</statBases>
+<ingestible>
+<foodType>Seeds</foodType>
+</ingestible>
+<comps>
+<li Class="CompProperties_Rottable">
+<daysToRotStart>45</daysToRotStart>
+</li>
+</comps>
+</ThingDef>
+
+<ThingDef ParentName="PlantFoodRawBase">
+<defName>RawRazorgrain</defName>
+<label>Razorgrain</label>
+<description>A distant descendant of wheat, it is able to grow in the harsh wasteland.</description>
+<soundInteract>Grain_Drop</soundInteract>
+<soundDrop>Grain_Drop</soundDrop>
+<graphicData>
+<texPath>Things/Fallout/Food/RawPlants/Razorgrain</texPath>
+</graphicData>
+<statBases>
+<MarketValue>1.2</MarketValue>
+</statBases>
+<ingestible>
+<foodType>Seeds</foodType>
+<preferability>DesperateOnly</preferability>
+</ingestible>
+<comps>
+<li Class="CompProperties_Rottable">
+<daysToRotStart>45</daysToRotStart>
+</li>
+</comps>
+</ThingDef>
+
+<ThingDef ParentName="PlantFoodRawBase">
+<defName>Mutfruit</defName>
+<label>Mutfruit</label>
+<description>A large mutated descendant of blueberries, it tastes good and won't kill you, a must have for farmers in the wastelands.</description>
+<graphicData>
+<texPath>Things/Fallout/Food/RawPlants/Mutfruit</texPath>
+</graphicData>
+<statBases>
+<MarketValue>2.4</MarketValue>
+</statBases>
+<ingestible>
+<preferability>RawTasty</preferability>
+<tastesRaw>false</tastesRaw>
+<foodType>VegetableOrFruit</foodType>
+<joy>0.005</joy>
+</ingestible>
+<comps>
+<li Class="CompProperties_Rottable">
+<daysToRotStart>27</daysToRotStart>
+</li>
+</comps>
+</ThingDef>
+
+<ThingDef ParentName="PlantFoodRawBase">
+<defName>Tarberry</defName>
+<label>Tarberries</label>
+<description>A cluster of small purple berries, very similar to cranberries. They taste great and have some other uses other than consumption.</description>
+<graphicData>
+<texPath>Things/Fallout/Food/RawPlants/Tarberry</texPath>
+</graphicData>
+<statBases>
+<MarketValue>2.75</MarketValue>
+</statBases>
+<ingestible>
+<preferability>RawTasty</preferability>
+<tastesRaw>false</tastesRaw>
+<foodType>VegetableOrFruit</foodType>
+<joy>0.005</joy>
+</ingestible>
+<comps>
+<li Class="CompProperties_Rottable">
+<daysToRotStart>27</daysToRotStart>
+</li>
+</comps>
+</ThingDef>
+
+</Defs>

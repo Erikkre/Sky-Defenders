@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ThingDefs>
+<ThingDef Abstract="True" Name="ImplantBase">
+<label>Implant</label>
+<thingClass>ThingWithComps</thingClass>
+<category>Item</category>
+<useHitPoints>true</useHitPoints>
+<selectable>true</selectable>
+<statbases>
+<MaxHitPoints>50</MaxHitPoints>
+<Flammability>1.0</Flammability>
+</statbases>
+<altitudeLayer>Item</altitudeLayer>
+<tickerType>Never</tickerType>
+<alwaysHaulable>true</alwaysHaulable>
+<isBodyPartOrImplant>true</isBodyPartOrImplant>
+<tradeTags>
+<li>BodyPartOrImplant</li>
+</tradeTags>
+<comps>
+<li Class="CompProperties_Forbiddable"/>
+</comps>
+<thingCategories>
+<li>BodyPartsArtificial</li>
+</thingCategories>
+<pathCost>10</pathCost>
+</ThingDef>
+<!-- artificial body parts -->
+<ThingDef ParentName="ImplantBase">
+<defName>VATS</defName>
+<label>VATS Implant</label>
+<description>A variation of the VaultTec Assisted Targeting System that is implanted directly into the user's brain. </description>
+<graphicData>
+<texPath>Things/Item/Implant/Implant</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>3250</MarketValue>
+</statBases>
+<techHediffsTags>
+      <li>Advanced</li>
+    </techHediffsTags>
+</ThingDef>
+</ThingDefs>

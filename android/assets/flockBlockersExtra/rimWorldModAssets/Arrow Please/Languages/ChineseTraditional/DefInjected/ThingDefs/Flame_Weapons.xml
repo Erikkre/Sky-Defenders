@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Bowshort_Flame.label>短弓(火箭)</Bowshort_Flame.label>
+  <Bowshort_Flame.description>一把簡單的短單弓，由一條木頭製成，可以讓你射出火箭。</Bowshort_Flame.description>
+  <Arrowshort_Flame.label>短弓火箭</Arrowshort_Flame.label>
+  <Bowrecurve_Flame.label>反曲弓(火箭)</Bowrecurve_Flame.label>
+  <Bowrecurve_Flame.description>一把反曲弓，結構就如同一個協調的彈簧，高效的儲存能量並提供更高的射擊速度。也可以用來射出火箭。</Bowrecurve_Flame.description>
+  <Arrowrecurve_Flame.label>反曲弓火箭</Arrowrecurve_Flame.label>
+  <Bowgreat_Flame.label>長弓(火箭)</Bowgreat_Flame.label>
+  <Bowgreat_Flame.description>一把威力強大的大弓，能夠射擊重型箭矢至非常遠的距離外。也可以用來射出火箭。</Bowgreat_Flame.description>
+  <Arrowgreat_Flame.label>長弓火箭</Arrowgreat_Flame.label>
+  
+</LanguageData>

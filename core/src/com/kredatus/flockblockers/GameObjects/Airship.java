@@ -500,7 +500,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (burnerLightTween.isStarted()) burnerLightTween.update(delta);
         if (leftThrusterLightTween!=null && !leftThrusterLightTween.isFinished()) leftThrusterLightTween.update(delta);
         if (rightThrusterLightTween!=null && !rightThrusterLightTween.isFinished()) rightThrusterLightTween.update(delta);
-                
+
         //0 is burner, 1 is thrustLeft, 2 is thrustRight
         if (!tween.isFinished()) { //if moving
             if (!BgHandler.isbgVertFast&&!BgHandler.endWaveBgMotion) {
@@ -527,7 +527,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("Velocity change, vel: "+vel.x+", preVel: "+(tween.getTargetValues()[0]-pos.x));
             float temp = vel.x/(2f*(speedDivisor/60f));
             //-Math.signum(vel.x)*(temp*temp); //exponent of 2 //(float) (-Math.signum(xVel)*Math.pow(Math.abs(xVel),1.5));//-xVel*2f;
-
 
 
             for (Turret i : turretList) {

@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+  <!-- =======================STUN================================= -->
+
+  <ThingDef ParentName="BaseMeleeWeapon_Blunt">
+    <defName>MeleeWeapon_Stun</defName>
+    <label>Betäubungsstab</label>
+    <description>Primitive Technologie kombiniert mit fortschrittlicher Technologie. Ein Betäubungsstab - macht dein Ziel bewusstlos.</description>
+    <graphicData><!--Primitive technology combined with advanced technology. A stun rod - make your target unconscious.-->
+      <texPath>Things/Item/Equipment/WeaponMelee/club_stun_melee</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>InteractPistol</soundInteract>
+    <tradeability>Sellable</tradeability>
+    <costStuffCount>75</costStuffCount>
+    <techLevel>Spacer</techLevel>
+    <weaponTags>
+      <li>AdvancedGun</li>
+    </weaponTags>
+    <statBases>
+      <MarketValue>51200</MarketValue>
+      <WorkToMake>48000</WorkToMake>
+      <Mass>2.25</Mass>
+      <MeleeWeapon_DamageAmount>1</MeleeWeapon_DamageAmount>
+      <DeteriorationRate>0.75</DeteriorationRate>
+      <MeleeWeapon_Cooldown>1.55</MeleeWeapon_Cooldown>
+    </statBases>
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <costList>
+      <Component>35</Component>
+      <Jade>5</Jade>
+      <Uranium>15</Uranium>
+      <Plasteel>45</Plasteel>
+    </costList>
+    <generateCommonality>0.075</generateCommonality>
+    <tradeTags>
+			<li>Exotic</li>
+		</tradeTags>
+    <recipeMaker>
+      <researchPrerequisite>StunWeapons</researchPrerequisite>
+      <recipeUsers>
+        <li>ElectricSmithy</li>
+        <li>FueledSmithy</li>
+      </recipeUsers>
+    </recipeMaker>
+    <verbs>
+      <li>
+        <verbClass>Verb_MeleeAttack</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <meleeDamageDef>StunMelee</meleeDamageDef>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <!-- =======================SPEARTOXIC================================= -->
+
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp">
+		<defName>MeleeWeapon_Spear_Toxic</defName>
+		<label>Giftgetränkter Speer</label>
+    <description>Primitive Technologie kombiniert mit fortschrittlicher Technologie. Ein giftgetränkter Speer - vergiftet dein Ziel mit jedem Stich.</description>
+    <graphicData><!--Primitive technology combined with advanced technology. A poisoned spear - poisons your target with every stab.-->
+			<texPath>Things/Item/Equipment/WeaponMelee/spear_toxic_melee</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+    <soundInteract>InteractPistol</soundInteract>
+    <tradeability>Sellable</tradeability>
+    <costStuffCount>75</costStuffCount>
+    <techLevel>Spacer</techLevel>
+		<weaponTags>
+			<li>Neolithic</li>
+			<li>NeolithicMelee</li>
+    </weaponTags>
+    <statBases>
+      <MarketValue>28800</MarketValue>
+      <WorkToMake>34000</WorkToMake>
+			<Mass>3.25</Mass>
+			<MeleeWeapon_DamageAmount>7</MeleeWeapon_DamageAmount>
+			<MeleeWeapon_Cooldown>2.75</MeleeWeapon_Cooldown>
+		</statBases>
+    <generateCommonality>0.125</generateCommonality>
+    <tradeTags>
+			<li>Exotic</li>
+		</tradeTags>
+    <recipeMaker>
+      <researchPrerequisite>ToxicWeapons</researchPrerequisite>
+    </recipeMaker>
+		<equippedAngleOffset>-25</equippedAngleOffset>
+    <costList>
+      <Component>15</Component>
+      <WoodLog>55</WoodLog>
+      <Jade>10</Jade>
+      <Plasteel>45</Plasteel>
+      <Steel>45</Steel>
+    </costList>
+		<verbs>
+			<li>
+				<verbClass>Verb_MeleeAttack</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<meleeDamageDef>WeaponToxic</meleeDamageDef>
+			</li>
+		</verbs>
+	</ThingDef>
+
+  <!-- =======================LONGSWORDTOXIC================================= -->
+
+	<ThingDef ParentName="BaseMeleeWeapon_Sharp">
+    <defName>MeleeWeapon_LongSword_Toxic</defName>
+    <label>Giftgetränktes Langschwert</label>
+    <description>Primitive Technologie kombiniert mit fortschrittlicher Technologie. Ein giftgetränktes Langschwert - vergiftet dein Ziel mit jedem Schnitt.</description>
+    <graphicData><!--Primitive technology combined with advanced technology. A poisoned Longsword - poisons your target with every cut.-->
+      <texPath>Things/Item/Equipment/WeaponMelee/longsword_toxic_melee</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>InteractPistol</soundInteract>
+    <tradeability>Sellable</tradeability>
+    <costStuffCount>75</costStuffCount>
+    <techLevel>Spacer</techLevel>
+    <statBases>
+      <MarketValue>30250</MarketValue>
+      <WorkToMake>38000</WorkToMake>
+      <Mass>3.65</Mass>
+      <MeleeWeapon_DamageAmount>9</MeleeWeapon_DamageAmount>
+      <MeleeWeapon_Cooldown>3.15</MeleeWeapon_Cooldown>
+    </statBases>
+    <generateCommonality>0.105</generateCommonality>
+    <tradeTags>
+			<li>Exotic</li>
+		</tradeTags>
+    <recipeMaker>
+      <researchPrerequisite>ToxicWeapons</researchPrerequisite>
+    </recipeMaker>
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <costList>
+      <Component>20</Component>
+      <WoodLog>45</WoodLog>
+      <Jade>15</Jade>
+      <Plasteel>75</Plasteel>
+      <Steel>75</Steel>
+    </costList>
+    <verbs>
+      <li>
+        <verbClass>Verb_MeleeAttack</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <meleeDamageDef>WeaponToxic</meleeDamageDef>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <!-- =======================SPEARFIRE================================= -->
+
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp">
+		<defName>MeleeWeapon_Spear_Fire</defName>
+		<label>Glühender Speer</label>
+    <description>Primitive Technologie kombiniert mit fortschrittlicher Technologie. Ein Glühender Speer - verbrennt dein Ziel mit jedem Stich.</description>
+    <graphicData><!--Primitive technology combined with advanced technology. A glowing spear - burns your target with every stab.-->
+			<texPath>Things/Item/Equipment/WeaponMelee/spear_fire_melee</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+    <soundInteract>InteractPistol</soundInteract>
+    <tradeability>Sellable</tradeability>
+    <costStuffCount>75</costStuffCount>
+    <techLevel>Spacer</techLevel>
+		<weaponTags>
+			<li>Neolithic</li>
+			<li>NeolithicMelee</li>
+		</weaponTags>
+		<statBases>
+      <MarketValue>25750</MarketValue>
+			<WorkToMake>35000</WorkToMake>
+			<Mass>3.3</Mass>
+			<MeleeWeapon_DamageAmount>8</MeleeWeapon_DamageAmount>
+			<MeleeWeapon_Cooldown>2.15</MeleeWeapon_Cooldown>
+		</statBases>
+    <generateCommonality>0.15</generateCommonality>
+    <tradeTags>
+      <li>Exotic</li>
+    </tradeTags>
+    <recipeMaker>
+      <researchPrerequisite>FireWeapons</researchPrerequisite>
+    </recipeMaker>
+		<equippedAngleOffset>-25</equippedAngleOffset>
+    <costList>
+      <WoodLog>55</WoodLog>
+      <Component>30</Component>
+      <Uranium>15</Uranium>
+      <Plasteel>45</Plasteel>
+      <Steel>45</Steel>
+    </costList>
+		<verbs>
+			<li>
+				<verbClass>Verb_MeleeAttack</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<meleeDamageDef>Flame</meleeDamageDef>
+			</li>
+		</verbs>
+	</ThingDef>
+
+  <!-- =======================LONGSWORDFIRE================================= -->
+
+  <ThingDef ParentName="BaseMeleeWeapon_Sharp">
+		<defName>MeleeWeapon_LongSword_Fire</defName>
+		<label>Glühendes Langschwert</label>
+    <description>Primitive Technologie kombiniert mit fortschrittlicher Technologie. Ein Glühendes Langschwert - verbrennt dein Ziel mit jedem Schnitt.</description>
+    <graphicData><!--Primitive technology combined with advanced technology. A glowing longsword - burns your target with every cut.-->
+			<texPath>Things/Item/Equipment/WeaponMelee/longsword_fire_melee</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+    <soundInteract>InteractPistol</soundInteract>
+    <tradeability>Sellable</tradeability>
+    <costStuffCount>75</costStuffCount>
+    <techLevel>Spacer</techLevel>
+		<weaponTags>
+			<li>Neolithic</li>
+			<li>NeolithicMelee</li>
+		</weaponTags>
+		<statBases>
+      <MarketValue>27000</MarketValue>
+			<WorkToMake>41000</WorkToMake>
+			<Mass>3.75</Mass>
+			<MeleeWeapon_DamageAmount>9</MeleeWeapon_DamageAmount>
+			<MeleeWeapon_Cooldown>2.45</MeleeWeapon_Cooldown>
+		</statBases>
+    <generateCommonality>0.13</generateCommonality>
+    <tradeTags>
+      <li>Exotic</li>
+    </tradeTags>
+    <recipeMaker>
+      <researchPrerequisite>FireWeapons</researchPrerequisite>
+    </recipeMaker>
+		<equippedAngleOffset>-25</equippedAngleOffset>
+    <costList>
+      <WoodLog>25</WoodLog>
+      <Component>25</Component>
+      <Uranium>20</Uranium>
+      <Plasteel>75</Plasteel>
+      <Steel>75</Steel>
+    </costList>
+		<verbs>
+			<li>
+				<verbClass>Verb_MeleeAttack</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<meleeDamageDef>Flame</meleeDamageDef>
+			</li>
+		</verbs>
+	</ThingDef>
+
+</ThingDefs>

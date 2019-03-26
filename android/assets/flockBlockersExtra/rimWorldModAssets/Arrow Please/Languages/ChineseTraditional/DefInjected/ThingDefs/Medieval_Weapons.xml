@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Ranged_Crossbow.label>輕弩</Ranged_Crossbow.label>
+  <Ranged_Crossbow.description>相對簡單，造價低廉的輕弩，和一般的弓相比可以造成更多的傷害，代價是較長的裝填時間與較短的射程。</Ranged_Crossbow.description>
+  <Arrow_Crossbow.label>弩箭</Arrow_Crossbow.label>
+
+  <Flame_Crossbow.label>輕弩(火箭)</Flame_Crossbow.label>
+  <Flame_Crossbow.description>相對簡單，造價低廉的輕弩，和一般的弓相比可以造成更多的傷害，代價是較長的裝填時間與較短的射程。輕弩也可以用來發射火箭。</Flame_Crossbow.description>
+  <FlameArrow_Crossbow.label>輕弩火箭</FlameArrow_Crossbow.label>
+
+  <Ranged_Arbalest.label>強弩</Ranged_Arbalest.label>
+  <Ranged_Arbalest.description>這些威力強大的強弩，對於那些沒有全副武裝的敵人來說猶如噩夢。</Ranged_Arbalest.description>
+  <Arrow_Arbalest.label>強弩箭矢</Arrow_Arbalest.label>
+
+  <Flame_Arbalest.label>強弩(火箭)</Flame_Arbalest.label>
+  <Flame_Arbalest.description>這些威力強大的強弩，對於那些沒有全副武裝的敵人來說猶如噩夢。發射火箭的強弩將變得更為危險。</Flame_Arbalest.description>
+  <FlameArrow_Arbalest.label>強弩火箭</FlameArrow_Arbalest.label>
+
+  <Ranged_Waistcrossbow.label>腰張弩</Ranged_Waistcrossbow.label>
+  <Ranged_Waistcrossbow.description>一種需要在地上用全身力量才能裝填的弩。威力驚人，但射速緩慢。</Ranged_Waistcrossbow.description>
+  <Arrow_Waistcrossbow.label>腰張弩箭</Arrow_Waistcrossbow.label>
+
+  <Ranged_Repeatingcrossbow.label>連弩</Ranged_Repeatingcrossbow.label>
+  <Ranged_Repeatingcrossbow.description>連弩，又稱諸葛弩，是一種可以短時間內連發的弩，但是火力實在不如其他種類的弩。</Ranged_Repeatingcrossbow.description>
+  <Arrow_Repeatingcrossbow.label>連弩箭矢</Arrow_Repeatingcrossbow.label>
+  
+</LanguageData>

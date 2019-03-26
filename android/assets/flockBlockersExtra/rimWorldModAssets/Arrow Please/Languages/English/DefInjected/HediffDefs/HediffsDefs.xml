@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Dart_Blowgun.label>dart toxin</Dart_Blowgun.label>
+  <Dart_Blowgun.stages.initial.label>initial</Dart_Blowgun.stages.initial.label>
+  <Dart_Blowgun.stages.minor.label>minor</Dart_Blowgun.stages.minor.label>
+  <Dart_Blowgun.stages.moderate.label>moderate</Dart_Blowgun.stages.moderate.label>
+  <Dart_Blowgun.stages.serious.label>serious</Dart_Blowgun.stages.serious.label>
+  <Dart_Blowgun.stages.extreme.label>extreme</Dart_Blowgun.stages.extreme.label>
+  
+</LanguageData>

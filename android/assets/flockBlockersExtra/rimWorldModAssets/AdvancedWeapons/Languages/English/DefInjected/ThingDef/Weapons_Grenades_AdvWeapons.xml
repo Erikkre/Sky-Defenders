@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <!-- =======================TOXICGRENADE================================= -->
+
+  <Weapon_GrenadeToxic.label>Toxic grenade</Weapon_GrenadeToxic.label>
+  <Proj_GrenadeToxic.label>Toxic grenade</Proj_GrenadeToxic.label>
+  <Weapon_GrenadeToxic.description>Toxic grenades damaging the body on the long term.</Weapon_GrenadeToxic.description>
+  <Weapon_GrenadeToxic.verbs.0.label>throw toxic grenade</Weapon_GrenadeToxic.verbs.0.label>
+
+</LanguageData>

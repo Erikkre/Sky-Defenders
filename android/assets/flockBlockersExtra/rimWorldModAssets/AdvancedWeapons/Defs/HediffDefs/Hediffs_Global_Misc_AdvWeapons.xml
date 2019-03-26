@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+<!-- EXTREM TOXIC -->
+<HediffDef>
+  <defName>ExtremeToxicBuildup</defName>
+  <hediffClass>HediffWithComps</hediffClass>
+  <defaultLabelColor>(0.7, 1.0, 0.7)</defaultLabelColor>
+  <label>Extremer Gift Anstieg</label>
+  <lethalSeverity>1</lethalSeverity>
+  <initialSeverity>0.7</initialSeverity>
+  <makesSickThought>true</makesSickThought>
+  <scenarioCanAdd>false</scenarioCanAdd>
+  <tendable>true</tendable>
+  <comps>
+    <li Class="HediffCompProperties_TendDuration">
+      <tendDuration>10000</tendDuration>
+      <severityPerDayTended>-1.5</severityPerDayTended>
+    </li>
+    <li Class="HediffCompProperties_Immunizable">
+      <immunityPerDayNotSick>-0.8</immunityPerDayNotSick>
+      <immunityPerDaySick>0.45</immunityPerDaySick>
+      <severityPerDayNotImmune>0.20</severityPerDayNotImmune>
+      <severityPerDayImmune>-1.80</severityPerDayImmune>
+    </li>
+  </comps>
+  <stages>
+    <li>
+      <label>initial-hidden</label>
+      <everVisible>false</everVisible>
+      <vomitMtbDays>1.5</vomitMtbDays>
+      <painOffset>0.1</painOffset>
+    </li>
+    <li>
+      <label>Vergiftet(Leicht)</label>
+      <minSeverity>0.04</minSeverity>
+      <painOffset>0.15</painOffset>
+      <capMods>
+        <li>
+          <capacity>Breathing</capacity>
+          <offset>-0.1</offset>
+        </li>
+        <li>
+          <capacity>Moving</capacity>
+          <offset>-0.1</offset>
+        </li>
+        <li>
+          <capacity>Consciousness</capacity>
+          <offset>-0.1</offset>
+        </li>
+      </capMods>
+    </li>
+    <li>
+      <label>Vergiftet(Mittel)</label>
+      <minSeverity>0.4</minSeverity>
+      <painOffset>0.35</painOffset>
+      <vomitMtbDays>1</vomitMtbDays>
+      <capMods>
+        <li>
+          <capacity>Breathing</capacity>
+          <offset>-0.15</offset>
+        </li>
+        <li>
+          <capacity>Moving</capacity>
+          <offset>-0.20</offset>
+        </li>
+        <li>
+          <capacity>Consciousness</capacity>
+          <offset>-0.20</offset>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>213</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>239</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageModerate</hediff>
+          <mtbDays>121.5</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageModerate</hediff>
+          <mtbDays>122.5</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>HeartArteryBlockage</hediff>
+          <mtbDays>123.5</mtbDays>
+          <partsToAffect>
+            <li>Heart</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Asthma</hediff>
+          <mtbDays>152.5</mtbDays>
+          <partsToAffect>
+            <li>LeftLung</li>
+            <li>RightLung</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+    <li>
+      <label>Vergiftet(Schwer)</label>
+      <minSeverity>0.6</minSeverity>
+      <vomitMtbDays>0.5</vomitMtbDays>
+      <painOffset>0.55</painOffset>
+      <capMods>
+        <li>
+          <capacity>Breathing</capacity>
+          <offset>-0.25</offset>
+        </li>
+        <li>
+          <capacity>Moving</capacity>
+          <setMax>0.25</setMax>
+        </li>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.25</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>160</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>175</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>75.5</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>95.5</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>HeartArteryBlockage</hediff>
+          <mtbDays>105.5</mtbDays>
+          <partsToAffect>
+            <li>Heart</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Asthma</hediff>
+          <mtbDays>122.5</mtbDays>
+          <partsToAffect>
+            <li>LeftLung</li>
+            <li>RightLung</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+    <li>
+      <label>Vergiftet(Sehr Schwer)</label>
+      <minSeverity>0.7</minSeverity>
+      <vomitMtbDays>0.25</vomitMtbDays>
+      <lifeThreatening>false</lifeThreatening>
+      <painOffset>0.65</painOffset>
+      <capMods>
+        <li>
+          <capacity>Moving</capacity>
+          <setMax>0.20</setMax>
+        </li>
+        <li>
+          <capacity>Breathing</capacity>
+          <setMax>0.75</setMax>
+        </li>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.20</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>12</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>35</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>55</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>45</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>HeartArteryBlockage</hediff>
+          <mtbDays>35</mtbDays>
+          <partsToAffect>
+            <li>Heart</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Asthma</hediff>
+          <mtbDays>50</mtbDays>
+          <partsToAffect>
+            <li>LeftLung</li>
+            <li>RightLung</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+    <li>
+      <label>Vergiftet(Extrem)</label>
+      <minSeverity>0.80</minSeverity>
+      <vomitMtbDays>0.15</vomitMtbDays>
+      <lifeThreatening>true</lifeThreatening>
+      <painOffset>0.85</painOffset>
+      <capMods>
+        <li>
+          <capacity>Breathing</capacity>
+          <setMax>0.5</setMax>
+        </li>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.1</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>13</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>15</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>12</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>13</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>HeartArteryBlockage</hediff>
+          <mtbDays>8</mtbDays>
+          <partsToAffect>
+            <li>Heart</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Asthma</hediff>
+          <mtbDays>10</mtbDays>
+          <partsToAffect>
+            <li>LeftLung</li>
+            <li>RightLung</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+  </stages>
+</HediffDef>
+
+<!-- STUN ARROW -->
+<HediffDef>
+  <defName>StunnedArrow</defName>
+  <hediffClass>HediffWithComps</hediffClass>
+  <defaultLabelColor>(1, 0.2, 0.2)</defaultLabelColor>
+  <label>Betäubt</label>
+  <lethalSeverity>1</lethalSeverity>
+  <makesSickThought>true</makesSickThought>
+  <scenarioCanAdd>false</scenarioCanAdd>
+  <comps>
+    <li Class="HediffCompProperties_Immunizable">
+      <severityPerDayNotImmune>-7</severityPerDayNotImmune>
+    </li>
+  </comps>
+  <stages>
+    <li>
+      <label>initial-hidden</label>
+      <everVisible>false</everVisible>
+      <painOffset>0.025</painOffset>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.50</setMax>
+        </li>
+        <li>
+          <capacity>Moving</capacity>
+          <setMax>0.40</setMax>
+        </li>
+      </capMods>
+    </li>
+    <li>
+      <label>Betäubt(Leicht)</label>
+      <minSeverity>0.10</minSeverity>
+      <painOffset>0.05</painOffset>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.30</setMax>
+        </li>
+        <li>
+          <capacity>Moving</capacity>
+          <setMax>0.20</setMax>
+        </li>
+      </capMods>
+    </li>
+    <li>
+      <label>Betäubt(Mittel)</label>
+      <minSeverity>0.35</minSeverity>
+      <painOffset>0.15</painOffset>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.29</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>413</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>420</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageModerate</hediff>
+          <mtbDays>150</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageModerate</hediff>
+          <mtbDays>120</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>HeartArteryBlockage</hediff>
+          <mtbDays>220</mtbDays>
+          <partsToAffect>
+            <li>Heart</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+    <li>
+      <label>Betäubt(Schwer)</label>
+      <minSeverity>0.6</minSeverity>
+      <painOffset>0.25</painOffset>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.29</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>125</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>255</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>42</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>65</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+    <li>
+      <label>Betäubt(Sehr Schwer)</label>
+      <minSeverity>0.8</minSeverity>
+      <painOffset>0.55</painOffset>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.28</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>85</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>195</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>31</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>45</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+    <li>
+      <label>Betäubt(Extrem)</label>
+      <minSeverity>1.05</minSeverity>
+      <painOffset>0.75</painOffset>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.25</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>42</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>128</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>18</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>24</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+  </stages>
+</HediffDef>
+
+<!-- STUN MELEE -->
+<HediffDef>
+  <defName>StunnedMelee</defName>
+  <hediffClass>HediffWithComps</hediffClass>
+  <defaultLabelColor>(1, 0.35, 0.2)</defaultLabelColor>
+  <label>Betäubt</label>
+  <lethalSeverity>1</lethalSeverity>
+  <makesSickThought>true</makesSickThought>
+  <scenarioCanAdd>false</scenarioCanAdd>
+  <comps>
+    <li Class="HediffCompProperties_Immunizable">
+      <severityPerDayNotImmune>-4</severityPerDayNotImmune>
+    </li>
+  </comps>
+  <stages>
+    <li>
+      <label>initial-hidden</label>
+      <everVisible>false</everVisible>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.50</setMax>
+        </li>
+        <li>
+          <capacity>Moving</capacity>
+          <setMax>0.40</setMax>
+        </li>
+      </capMods>
+    </li>
+    <li>
+      <label>Betäubt(Leicht)</label>
+      <minSeverity>0.10</minSeverity>
+      <painOffset>0.15</painOffset>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.30</setMax>
+        </li>
+        <li>
+          <capacity>Moving</capacity>
+          <setMax>0.20</setMax>
+        </li>
+      </capMods>
+    </li>
+    <li>
+      <label>Betäubt(Mittel)</label>
+      <minSeverity>0.35</minSeverity>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.29</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>413</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>420</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageModerate</hediff>
+          <mtbDays>150</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageModerate</hediff>
+          <mtbDays>120</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>HeartArteryBlockage</hediff>
+          <mtbDays>220</mtbDays>
+          <partsToAffect>
+            <li>Heart</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+    <li>
+      <label>Betäubt(Schwer)</label>
+      <minSeverity>0.75</minSeverity>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.29</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>125</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>255</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>42</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>65</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+    <li>
+      <label>Betäubt(Sehr Schwer)</label>
+      <minSeverity>1.05</minSeverity>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.28</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>85</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>195</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>31</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>45</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+    <li>
+      <label>Betäubt(Extrem)</label>
+      <minSeverity>1.25</minSeverity>
+      <capMods>
+        <li>
+          <capacity>Consciousness</capacity>
+          <setMax>0.25</setMax>
+        </li>
+      </capMods>
+      <hediffGivers>
+        <li Class="HediffGiver_Random">
+          <hediff>Dementia</hediff>
+          <mtbDays>42</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>Carcinoma</hediff>
+          <mtbDays>128</mtbDays>
+          <canAffectAnyLivePart>true</canAffectAnyLivePart>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>18</mtbDays>
+          <partsToAffect>
+            <li>Brain</li>
+          </partsToAffect>
+        </li>
+        <li Class="HediffGiver_Random">
+          <hediff>ChemicalDamageSevere</hediff>
+          <mtbDays>24</mtbDays>
+          <partsToAffect>
+            <li>LeftKidney</li>
+            <li>RightKidney</li>
+          </partsToAffect>
+        </li>
+      </hediffGivers>
+    </li>
+  </stages>
+</HediffDef>
+
+</Defs>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <GiantArrowHediff.label>Gigantic wound</GiantArrowHediff.label>
+  <GiantArrowHediff.comps.0.labelTendedWell>bandaged</GiantArrowHediff.comps.0.labelTendedWell>
+  <GiantArrowHediff.comps.0.labelTendedWellInner>sutured</GiantArrowHediff.comps.0.labelTendedWellInner>
+  <GiantArrowHediff.comps.0.labelSolidTendedWell>sealed</GiantArrowHediff.comps.0.labelSolidTendedWell>
+  <GiantArrowHediff.comps.2.oldLabel>Ugly scar</GiantArrowHediff.comps.2.oldLabel>
+  <GiantArrowHediff.comps.2.instantlyOldLabel>Permanent ugly scar</GiantArrowHediff.comps.2.instantlyOldLabel>
+  <GiantArrowHediff.injuryProps.destroyedLabel>Torn off</GiantArrowHediff.injuryProps.destroyedLabel>
+  <GiantArrowHediff.injuryProps.destroyedOutLabel>Torn out</GiantArrowHediff.injuryProps.destroyedOutLabel>
+
+  <GiantArrowHediffShredded.label>Shreds</GiantArrowHediffShredded.label>
+  <GiantArrowHediffShredded.comps.0.labelTendedWell>bandaged</GiantArrowHediffShredded.comps.0.labelTendedWell>
+  <GiantArrowHediffShredded.comps.0.labelTendedWellInner>sutured</GiantArrowHediffShredded.comps.0.labelTendedWellInner>
+  <GiantArrowHediffShredded.comps.0.labelSolidTendedWell>sealed</GiantArrowHediffShredded.comps.0.labelSolidTendedWell>
+  <GiantArrowHediffShredded.comps.2.oldLabel>Ugly scar</GiantArrowHediffShredded.comps.2.oldLabel>
+  <GiantArrowHediffShredded.injuryProps.destroyedLabel>Shot off</GiantArrowHediffShredded.injuryProps.destroyedLabel>
+  <GiantArrowHediffShredded.injuryProps.destroyedOutLabel>Shot out</GiantArrowHediffShredded.injuryProps.destroyedOutLabel>
+
+</LanguageData>

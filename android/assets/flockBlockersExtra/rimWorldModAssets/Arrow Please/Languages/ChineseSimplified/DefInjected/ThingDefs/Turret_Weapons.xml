@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Turret_Ballista.label>弩炮</Turret_Ballista.label>
+  <Turret_Ballista.description>一种近似弩的攻城器具，可以用来射出大只的弩箭。射速缓慢，但是精准，而且致命。</Turret_Ballista.description>
+  <Turret_BallistaGun.label>弩炮</Turret_BallistaGun.label>
+  <Bolt_Ballista.label>弩炮箭矢</Bolt_Ballista.label>
+  <Turret_Ballista.comps.CompRefuelable.fuelLabel>可以射到箭矢用尽</Turret_Ballista.comps.CompRefuelable.fuelLabel>
+  <Turret_Ballista.comps.CompRefuelable.fuelGizmoLabel>箭矢库存</Turret_Ballista.comps.CompRefuelable.fuelGizmoLabel>
+  <Turret_Ballista.comps.CompRefuelable.outOfFuelMessage>无法射击：需要箭矢</Turret_Ballista.comps.CompRefuelable.outOfFuelMessage>
+
+  <Turret_Triplecrossbow.label>三弓床弩</Turret_Triplecrossbow.label>
+  <Turret_Triplecrossbow.description>三弓床弩由三个弓构成，位在类似床的结构上。可以射出最强，最远的箭矢。</Turret_Triplecrossbow.description>
+  <Turret_TriplecrossbowGun.label>三弓床弩</Turret_TriplecrossbowGun.label>
+  <Bolt_Triplecrossbow.label>床弩箭矢</Bolt_Triplecrossbow.label>
+  <Turret_Triplecrossbow.comps.CompRefuelable.fuelLabel>可以射到箭矢用尽</Turret_Triplecrossbow.comps.CompRefuelable.fuelLabel>
+  <Turret_Triplecrossbow.comps.CompRefuelable.fuelGizmoLabel>箭矢库存</Turret_Triplecrossbow.comps.CompRefuelable.fuelGizmoLabel>
+  <Turret_Triplecrossbow.comps.CompRefuelable.outOfFuelMessage>无法射击：需要箭矢</Turret_Triplecrossbow.comps.CompRefuelable.outOfFuelMessage>
+
+  <Turret_Trebuchet.label>抛石机</Turret_Trebuchet.label>
+  <Turret_Trebuchet.description>极其庞大的攻城器具，用于远程摧毁敌人的城墙。你也可以用他来对敌人发射石块。</Turret_Trebuchet.description>
+  <Turret_TrebuchetGun.label>抛石机</Turret_TrebuchetGun.label>
+  <Turret_TrebuchetGun.description>抛石机的主体，让你可以在远距离摧毁你的敌人。</Turret_TrebuchetGun.description>
+
+  <Turret_Catapult.label>投石器</Turret_Catapult.label>
+  <Turret_Catapult.description>一个让你可以对敌人发射石块的攻城器具。</Turret_Catapult.description>
+  <Turret_CatapultGun.label>投石器</Turret_CatapultGun.label>
+  <Turret_CatapultGun.description>投石器的主体，让你可以在远距离摧毁你的敌人。</Turret_CatapultGun.description>
+
+</LanguageData>

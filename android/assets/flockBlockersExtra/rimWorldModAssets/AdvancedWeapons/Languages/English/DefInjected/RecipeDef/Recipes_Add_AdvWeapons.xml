@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<!-- =======================STUN================================= -->
+
+	<Make_MeleeWeapon_Stun.label>Make stun rod</Make_MeleeWeapon_Stun.label>
+	<Make_MeleeWeapon_Stun.description>Make stun rod.</Make_MeleeWeapon_Stun.description>
+	<Make_MeleeWeapon_Stun.jobString>Making stun rod.</Make_MeleeWeapon_Stun.jobString>
+
+	<!-- =======================SPEARTOXIC================================= -->
+
+	<Make_MeleeWeapon_Spear_Toxic.label>Make toxic spear</Make_MeleeWeapon_Spear_Toxic.label>
+	<Make_MeleeWeapon_Spear_Toxic.description>Make toxic spear.</Make_MeleeWeapon_Spear_Toxic.description>
+	<Make_MeleeWeapon_Spear_Toxic.jobString>Making toxic spear.</Make_MeleeWeapon_Spear_Toxic.jobString>
+
+	<!-- =======================LONGSWORDTOXIC================================= -->
+
+	<Make_MeleeWeapon_LongSword_Toxic.label>Make toxic longsword</Make_MeleeWeapon_LongSword_Toxic.label>
+	<Make_MeleeWeapon_LongSword_Toxic.description>Make toxic longsword.</Make_MeleeWeapon_LongSword_Toxic.description>
+	<Make_MeleeWeapon_LongSword_Toxic.jobString>Making toxic longsword.</Make_MeleeWeapon_LongSword_Toxic.jobString>
+
+	<!-- =======================SPEARFIRE================================= -->
+
+	<Make_MeleeWeapon_Spear_Fire.label>Make glowing spear</Make_MeleeWeapon_Spear_Fire.label>
+	<Make_MeleeWeapon_Spear_Fire.description>Make glowing spear.</Make_MeleeWeapon_Spear_Fire.description>
+	<Make_MeleeWeapon_Spear_Fire.jobString>Making glowing spear.</Make_MeleeWeapon_Spear_Fire.jobString>
+
+	<!-- =======================LONGSWORDFIRE================================= -->
+
+	<Make_MeleeWeapon_LongSword_Fire.label>Make glowing longsword</Make_MeleeWeapon_LongSword_Fire.label>
+	<Make_MeleeWeapon_LongSword_Fire.description>Make glowing longsword.</Make_MeleeWeapon_LongSword_Fire.description>
+	<Make_MeleeWeapon_LongSword_Fire.jobString>Making glowing longsword.</Make_MeleeWeapon_LongSword_Fire.jobString>
+
+	<!-- =======================TOXICGRENADE================================= -->
+
+	<Make_Weapon_GrenadeToxic.label>Make toxic grenade</Make_Weapon_GrenadeToxic.label>
+	<Make_Weapon_GrenadeToxic.description>Make toxic grenade.</Make_Weapon_GrenadeToxic.description>
+	<Make_Weapon_GrenadeToxic.jobString>Making toxic grenade.</Make_Weapon_GrenadeToxic.jobString>
+
+	<!-- =======================STUN================================= -->
+
+	<Make_Bow_Short_Stun.label>Make stun short bow</Make_Bow_Short_Stun.label>
+	<Make_Bow_Short_Stun.description>Make stun short bow.</Make_Bow_Short_Stun.description>
+	<Make_Bow_Short_Stun.jobString>Making stun short bow.</Make_Bow_Short_Stun.jobString>
+
+  <!-- =======================GIANT================================= -->
+
+	<Make_Bow_Giant.label>Make giant bow</Make_Bow_Giant.label>
+	<Make_Bow_Giant.description>Make giant bow.</Make_Bow_Giant.description>
+	<Make_Bow_Giant.jobString>Making giant bow.</Make_Bow_Giant.jobString>
+
+  <!-- =======================FEUER================================= -->
+
+	<Make_Bow_Fire.label>Make fire short bow</Make_Bow_Fire.label>
+	<Make_Bow_Fire.description>Make fire short bow.</Make_Bow_Fire.description>
+	<Make_Bow_Fire.jobString>Making fire short bow.</Make_Bow_Fire.jobString>
+
+	<!-- =======================TOXIC================================= -->
+
+	<Make_Bow_Toxic.label>Make toxic short bow</Make_Bow_Toxic.label>
+	<Make_Bow_Toxic.description>Make toxic short bow.</Make_Bow_Toxic.description>
+	<Make_Bow_Toxic.jobString>Making toxic short bow.</Make_Bow_Toxic.jobString>
+
+</LanguageData>

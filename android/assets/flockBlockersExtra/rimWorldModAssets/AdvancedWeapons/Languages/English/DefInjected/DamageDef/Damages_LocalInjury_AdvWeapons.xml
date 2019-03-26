@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <GiantArrow.label>Gigantic cut</GiantArrow.label>
+  <GiantArrow.deathMessage>{0} was shredded.</GiantArrow.deathMessage>
+
+  <StunArrow.label>Stunning cut</StunArrow.label>
+  <StunArrow.deathMessage>{0} has been shot to death.</StunArrow.deathMessage>
+
+  <StunMelee.label>Stunning blow</StunMelee.label>
+  <StunMelee.deathMessage>{0} was beaten to death.</StunMelee.deathMessage>
+
+  <WeaponToxic.label>Toxic cut</WeaponToxic.label>
+  <WeaponToxic.deathMessage>{0} was poisoned.</WeaponToxic.deathMessage>
+
+</LanguageData>

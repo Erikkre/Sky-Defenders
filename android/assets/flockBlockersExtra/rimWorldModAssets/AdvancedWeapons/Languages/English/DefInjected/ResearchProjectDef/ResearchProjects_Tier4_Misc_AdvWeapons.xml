@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+  <!--========================= Tier 4: Hit-tech research bench with multi-analyzer ===================================-->
+
+  <ToxicWeapons.label>Toxic Weapons</ToxicWeapons.label>
+  <ToxicWeapons.description>Understand the secrets of Toxic Weapons.</ToxicWeapons.description>
+
+  <StunWeapons.label>Stun Weapons</StunWeapons.label>
+  <StunWeapons.description>Understand the secrets of Stunning Weapons.</StunWeapons.description>
+
+  <FireWeapons.label>Fire Weapons</FireWeapons.label>
+  <FireWeapons.description>Understand the secrets of Fire Weapons.</FireWeapons.description>
+
+</LanguageData>

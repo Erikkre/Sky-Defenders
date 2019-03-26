@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+  <!-- =======================STUN================================= -->
+
+  <ThingDef ParentName="BaseProjectileNeolithic">
+    <defName>Arrow_Short_Stun</defName>
+    <label>Betäubungspfeil (Kurzbogen)</label>
+    <graphicData>
+      <texPath>Things/Projectile/short_arrow_stun_ranged</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <flyOverhead>false</flyOverhead>
+      <damageDef>StunArrow</damageDef>
+      <DamageAmountBase>1</DamageAmountBase>
+      <Speed>50</Speed>
+    </projectile>
+  </ThingDef>
+  <ThingDef ParentName="BaseWeaponNeolithic">
+    <defName>Bow_Short_Stun</defName>
+    <label>Betäubungs Kurzbogen</label>
+    <description>Primitive Technologie kombiniert mit fortschrittlicher Technologie. Ein Kurzbogen, mit dem du Pfeile verschießen kannst, die deine Opfer bewusstlos machen.</description>
+    <graphicData><!--Primitive technology combined with advanced technology. A short bow which you can shoot arrows with that will make your prey unconscious.-->
+      <texPath>Things/Item/Equipment/WeaponRanged/bow_stun_ranged</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>BowSmall</soundInteract>
+    <costList>
+      <Component>10</Component>
+      <Jade>25</Jade>
+      <WoodLog>40</WoodLog>
+      <Plasteel>50</Plasteel>
+      <Steel>50</Steel>
+      <Uranium>15</Uranium>
+    </costList>
+    <statBases>
+      <MarketValue>63800</MarketValue>
+      <WorkToMake>48500</WorkToMake>
+      <Mass>5.5</Mass>
+      <AccuracyTouch>1.0</AccuracyTouch>
+      <AccuracyShort>0.99</AccuracyShort>
+      <AccuracyMedium>0.975</AccuracyMedium>
+      <AccuracyLong>0.95</AccuracyLong>
+      <RangedWeapon_Cooldown>1.85</RangedWeapon_Cooldown>
+    </statBases>
+    <generateCommonality>0.15</generateCommonality>
+		<techLevel>Spacer</techLevel>
+    <weaponTags>
+      <li>SniperRifle</li>
+      <li>AdvancedGun</li>
+    </weaponTags>
+    <tradeTags>
+			<li>Exotic</li>
+		</tradeTags>
+    <recipeMaker>
+      <researchPrerequisite>StunWeapons</researchPrerequisite>
+      <recipeUsers>
+        <li>ElectricSmithy</li>
+        <li>FueledSmithy</li>
+      </recipeUsers>
+    </recipeMaker>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <projectileDef>Arrow_Short_Stun</projectileDef>
+        <warmupTime>2.35</warmupTime>
+        <range>55</range>
+        <soundCast>BowSmall</soundCast>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <!-- =======================GIANT================================= -->
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>Arrow_Giant</defName>
+    <label>Gigantischer Pfeil</label>
+    <graphicData>
+      <texPath>Things/Projectile/giant_arrow_explode_ranged</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+			<shaderType>TransparentPostLight</shaderType>
+    </graphicData>
+      <thingClass>Projectile_Explosive</thingClass>
+    <projectile>
+      <flyOverhead>false</flyOverhead>
+      <damageDef>GiantArrow</damageDef>
+      <DamageAmountBase>35</DamageAmountBase>
+      <Speed>65</Speed>
+      <explosionRadius>2.25</explosionRadius>
+      <explosionSpawnChance>1.0</explosionSpawnChance>
+    </projectile>
+  </ThingDef>
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>Bow_Giant</defName>
+    <label>Gigantischer Bogen</label>
+    <description>Ein unbarmherziger Bogen mit einer unglaublichen Macht. Gigantischer Bogen, ungeeignet für jeden Jäger, die Nutzung dieses Bogen ist verbunden mit einer großen Verantwortung. Mit diesem Bogen können mächtige Pfeile abgefeuert werden, welche ihr Ziel vernichten. Es muss ein Sicherheitsabstand gewahrt werden bei Benutzung des Bogens ansonsten besteht höchste Lebensgefahr!</description>
+    <graphicData><!--A ruthless bow with an incredible power. The Giant Bow, unsuitable for every hunter, the use of this bow is associated with a great responsibility. With this bow can be fired mighty arrows, which will destroy their target. A safety clearance must be maintained when using this bow otherwise there is a high risk of life!-->
+      <texPath>Things/Item/Equipment/WeaponRanged/bow_explode_ranged</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>BowLarge</soundInteract>
+    <costList>
+      <Component>20</Component>
+      <Uranium>25</Uranium>
+      <Jade>15</Jade>
+      <Plasteel>125</Plasteel>
+	    <Steel>125</Steel>
+    </costList>
+    <statBases>
+      <MarketValue>62800</MarketValue>
+      <WorkToMake>54500</WorkToMake>
+      <Mass>13</Mass>
+      <AccuracyTouch>0.995</AccuracyTouch>
+      <AccuracyShort>0.98</AccuracyShort>
+      <AccuracyMedium>0.95</AccuracyMedium>
+      <AccuracyLong>0.90</AccuracyLong>
+      <RangedWeapon_Cooldown>2.25</RangedWeapon_Cooldown>
+    </statBases>
+    <generateCommonality>0.10</generateCommonality>
+		<techLevel>Spacer</techLevel>
+    <weaponTags>
+      <li>AdvancedGun</li>
+      <li>GunHeavy</li>
+    </weaponTags>
+    <tradeTags>
+			<li>Exotic</li>
+		</tradeTags>
+    <recipeMaker>
+      <researchPrerequisite>StunWeapons</researchPrerequisite>
+      <recipeUsers>
+        <li>ElectricSmithy</li>
+        <li>FueledSmithy</li>
+      </recipeUsers>
+    </recipeMaker>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <projectileDef>Arrow_Giant</projectileDef>
+				<!--<forcedMissRadius>0.5</forcedMissRadius>-->
+        <ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+        <ai_IsIncendiary>true</ai_IsIncendiary>
+        <targetParams>
+          <canTargetLocations>true</canTargetLocations>
+        </targetParams>
+        <warmupTime>2.25</warmupTime>
+        <range>275</range>
+        <burstShotCount>1</burstShotCount>
+        <soundCast>ShotIncendiaryLauncher</soundCast>
+        <soundCastTail>GunTail_Medium</soundCastTail>
+        <muzzleFlashScale>14</muzzleFlashScale>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <!-- =======================FEUER================================= -->
+
+  <ThingDef ParentName="BaseProjectileNeolithic">
+    <defName>Arrow_Fire</defName>
+    <label>Feuer Pfeil</label>
+    <graphicData>
+      <texPath>Things/Projectile/short_arrow_fire_ranged</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <flyOverhead>false</flyOverhead>
+      <damageDef>Flame</damageDef>
+      <DamageAmountBase>10</DamageAmountBase>
+      <Speed>42</Speed>
+    </projectile>
+  </ThingDef>
+  <ThingDef ParentName="BaseWeaponNeolithic">
+    <defName>Bow_Fire</defName>
+    <label>Brand Bogen</label>
+    <description>Ein fortschrittlicher Bogen mit Feuerpfeilen. Dieser Bogen ist ein Kampfbogen, weniger ein Jagdbogen, da das Ziel Feuer fängt und womöglich ein Waldbrand auslöst.</description>
+    <graphicData><!--An advanced bow with fire arrows. This bow is a combat bow, less a hunting bow, since the target catches fire and possibly triggers a forest fire.-->
+      <texPath>Things/Item/Equipment/WeaponRanged/bow_advanced_fire</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>BowLarge</soundInteract>
+    <costList>
+      <WoodLog>55</WoodLog>
+      <Component>15</Component>
+      <Uranium>15</Uranium>
+      <Plasteel>55</Plasteel>
+      <Steel>55</Steel>
+    </costList>
+    <statBases>
+      <MarketValue>35750</MarketValue>
+      <WorkToMake>41000</WorkToMake>
+      <Mass>6.15</Mass>
+      <AccuracyTouch>0.98</AccuracyTouch>
+      <AccuracyShort>0.95</AccuracyShort>
+      <AccuracyMedium>0.90</AccuracyMedium>
+      <AccuracyLong>0.85</AccuracyLong>
+      <RangedWeapon_Cooldown>2.75</RangedWeapon_Cooldown>
+    </statBases>
+    <generateCommonality>0.25</generateCommonality>
+		<techLevel>Spacer</techLevel>
+    <weaponTags>
+      <li>SniperRifle</li>
+      <li>AdvancedGun</li>
+    </weaponTags>
+    <tradeTags>
+			<li>Exotic</li>
+		</tradeTags>
+    <recipeMaker>
+      <researchPrerequisite>FireWeapons</researchPrerequisite>
+      <recipeUsers>
+        <li>ElectricSmithy</li>
+        <li>FueledSmithy</li>
+      </recipeUsers>
+    </recipeMaker>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <projectileDef>Arrow_Fire</projectileDef>
+        <warmupTime>2.25</warmupTime>
+        <range>35</range>
+        <soundCast>BowLarge</soundCast>
+      </li>
+    </verbs>
+  </ThingDef>
+
+  <!-- =======================TOXIC================================= -->
+
+  <ThingDef ParentName="BaseProjectileNeolithic">
+    <defName>Arrow_Toxic</defName>
+    <label>Gift Pfeil</label>
+    <graphicData>
+      <texPath>Things/Projectile/short_arrow_toxic_ranged</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <flyOverhead>false</flyOverhead>
+      <damageDef>WeaponToxic</damageDef>
+      <DamageAmountBase>5</DamageAmountBase>
+      <Speed>42</Speed>
+    </projectile>
+  </ThingDef>
+  <ThingDef ParentName="BaseWeaponNeolithic">
+    <defName>Bow_Toxic</defName>
+    <label>Gift Bogen</label>
+    <description>Ein fortschrittlicher Bogen mit Giftpfeilen. Dieser Bogen ist ein Jagdbogen, weniger ein Kampfbogen, da das Ziel vergiftet wird und ohne Behandlung stirbt. Wenn jedoch genug Gift konzentriert werden kann, kann der Bogen auch im Kampf eine ernst zu nehmende Bedrohung sein.</description>
+    <graphicData><!--An advanced bow with toxic arrows. This bow is a hunting bow, less a combat bow, since the target is poisoned and dies without treatment. However, if enough poison can be concentrated, the bow can also be a serious threat in combat.-->
+      <texPath>Things/Item/Equipment/WeaponRanged/bow_advanced_toxic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>BowLarge</soundInteract>
+    <costList>
+      <WoodLog>65</WoodLog>
+      <Component>20</Component>
+      <Uranium>20</Uranium>
+      <Plasteel>55</Plasteel>
+      <Steel>55</Steel>
+    </costList>
+    <statBases>
+      <MarketValue>34500</MarketValue>
+      <WorkToMake>36500</WorkToMake>
+      <Mass>5.45</Mass>
+      <AccuracyTouch>0.975</AccuracyTouch>
+      <AccuracyShort>0.925</AccuracyShort>
+      <AccuracyMedium>0.85</AccuracyMedium>
+      <AccuracyLong>0.80</AccuracyLong>
+      <RangedWeapon_Cooldown>2.85</RangedWeapon_Cooldown>
+    </statBases>
+    <generateCommonality>0.20</generateCommonality>
+		<techLevel>Spacer</techLevel>
+    <weaponTags>
+      <li>SniperRifle</li>
+      <li>AdvancedGun</li>
+    </weaponTags>
+    <tradeTags>
+			<li>Exotic</li>
+		</tradeTags>
+    <recipeMaker>
+      <researchPrerequisite>ToxicWeapons</researchPrerequisite>
+      <recipeUsers>
+        <li>ElectricSmithy</li>
+        <li>FueledSmithy</li>
+      </recipeUsers>
+    </recipeMaker>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <projectileDef>Arrow_Toxic</projectileDef>
+        <warmupTime>2.15</warmupTime>
+        <range>35</range>
+        <soundCast>BowLarge</soundCast>
+      </li>
+    </verbs>
+  </ThingDef>
+
+</ThingDefs>

@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+	<!-- ==================== Bases ========================== -->
+
+	<ThingDef Name="BaseEquipment" Abstract="True">
+		<eType>Equipment</eType>
+		<equipmentType>Secondary</equipmentType>
+		<label>Equipment lacks label</label>
+		<thingClass>Equipment</thingClass>
+		<category>Item</category>
+		<useStandardHealth>true</useStandardHealth>
+		<selectable>true</selectable>
+		<maxHealth>100</maxHealth>
+		<altitudeLayer>Item</altitudeLayer>
+		<description>Equipment lacks desc.</description>
+		<comps>
+			<li><compClass>CompForbiddable</compClass></li>
+		</comps>
+		<alwaysHaulable>true</alwaysHaulable>
+		<storeCategories>
+			<li>Weapons</li>
+		</storeCategories>
+		<tickerType>Never</tickerType>
+	</ThingDef>
+
+
+	<ThingDef Name="BaseGrenade" Abstract="True">
+		<category>Projectile</category>
+		<altitudeLayer>Projectile</altitudeLayer>
+		<thingClass>Projectile</thingClass>
+		<label>Projectile</label>
+		<tickerType>Normal</tickerType>
+		<useStandardHealth>False</useStandardHealth>
+		<neverMultiSelect>True</neverMultiSelect>
+		<baseMaterialType>Transparent</baseMaterialType>
+		<projectile>
+			<speed>12</speed>
+			<impactWorld>true</impactWorld>
+		</projectile>
+	</ThingDef>
+
+
+
+	<!-- ==================== Frag grenade ========================== -->
+
+	<ThingDef ParentName="BaseGrenade">
+		<defName>Proj_GrenadeFrag</defName>
+		<label>Frag grenade</label>
+		<thingClass>Projectile_Explosive</thingClass>
+		<texturePath>Things/Projectile/Grenade</texturePath>
+		<projectile>
+			<explosionRadius >1.9</explosionRadius >
+			<damageType>Bomb</damageType>
+			<explosionDelay>100</explosionDelay>
+			<randomMissRadius>1.0</randomMissRadius>
+		</projectile>
+	</ThingDef>
+
+	<ThingDef ParentName="BaseEquipment">
+		<defName>Weapon_GrenadeFrag</defName>
+		<equipmentType>Primary</equipmentType>
+		<label>Frag grenades</label>
+		<texturePath>Things/Item/Equipment/Grenades</texturePath>
+		<interactSound>InteractGrenade</interactSound>
+		<basePrice>200</basePrice>
+		<verb>
+			<id>Nonnative</id>
+			<verbClass>Verb_LaunchProjectile</verbClass>
+			<label>Frag grenades</label>
+			<description>Thrown explosive.</description>
+			<range>12.9</range>
+			<warmupTicks>108</warmupTicks>
+			<cooldownTicks>120</cooldownTicks>
+			<noiseRadius>4</noiseRadius>
+			<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+			<fireSound>ThrowGrenade</fireSound>
+			<targetParams>
+				<canTargetLocations>true</canTargetLocations>
+				<canTargetPawns>true</canTargetPawns>
+				<canTargetBuildings>true</canTargetBuildings>
+				<worldObjectTargetsMustBeAutoAttackable>true</worldObjectTargetsMustBeAutoAttackable>
+			</targetParams>
+			<hasStandardCommand>true</hasStandardCommand>
+			<projectileDef>Proj_GrenadeFrag</projectileDef>
+		</verb>
+	</ThingDef>
+
+
+
+	<!-- ==================== Molotov cocktail ========================== -->
+
+	<ThingDef ParentName="BaseGrenade">
+		<defName>Proj_GrenadeMolotov</defName>
+		<label>Molotov cocktail</label>
+		<thingClass>Projectile_ExplosiveMolotov</thingClass>
+		<texturePath>Things/Projectile/Molotov</texturePath>
+		<projectile>
+			<explosionRadius >1.1</explosionRadius >
+			<damageType>Flame</damageType>
+			<randomMissRadius>2.9</randomMissRadius>
+		</projectile>
+	</ThingDef>
+
+	<ThingDef ParentName="BaseEquipment">
+		<defName>Weapon_GrenadeMolotov</defName>
+		<equipmentType>Primary</equipmentType>
+		<label>Molotov cocktails</label>
+		<texturePath>Things/Item/Equipment/Molotov</texturePath>
+		<interactSound>InteractMolotovCocktail</interactSound>
+		<basePrice>100</basePrice>
+		<verb>
+			<id>Nonnative</id>
+			<verbClass>Verb_LaunchProjectile</verbClass>
+			<label>Molotov cocktails</label>
+			<description>Thrown explosive.</description>
+			<range>12.9</range>
+			<warmupTicks>108</warmupTicks>
+			<cooldownTicks>120</cooldownTicks>
+			<noiseRadius>4</noiseRadius>
+			<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+			<fireSound>ThrowMolotovCocktail</fireSound>
+			<targetParams>
+				<canTargetLocations>true</canTargetLocations>
+				<canTargetPawns>true</canTargetPawns>
+				<canTargetBuildings>true</canTargetBuildings>
+				<worldObjectTargetsMustBeAutoAttackable>true</worldObjectTargetsMustBeAutoAttackable>		
+			</targetParams>
+			<hasStandardCommand>true</hasStandardCommand>
+			<projectileDef>Proj_GrenadeMolotov</projectileDef>
+		</verb>
+	</ThingDef>
+
+</ThingDefs>

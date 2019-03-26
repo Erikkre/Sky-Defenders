@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ThingDefs>
+
+<ThingDef Name="BaseGun" Abstract="True">
+<category>Item</category>
+<thingClass>ThingWithComps</thingClass>
+<equipmentType>Primary</equipmentType>
+<pathCost>10</pathCost>
+<useHitPoints>True</useHitPoints>
+<selectable>True</selectable>
+<graphicData>
+<onGroundRandomRotateAngle>35</onGroundRandomRotateAngle>
+</graphicData>
+<drawGUIOverlay>true</drawGUIOverlay>
+<statBases>
+<MaxHitPoints>100</MaxHitPoints>
+<Flammability>1.0</Flammability>
+<DeteriorationRate>2</DeteriorationRate>
+<SellPriceFactor>0.5</SellPriceFactor>
+</statBases>
+<altitudeLayer>Item</altitudeLayer>
+<alwaysHaulable>True</alwaysHaulable>
+<tickerType>Never</tickerType>
+<techLevel>Industrial</techLevel>
+<thingCategories>
+<li>WeaponsRanged</li>
+</thingCategories>
+<inspectorTabs>
+<li>ITab_Art</li>
+</inspectorTabs>
+<comps>
+<li Class="CompProperties_Forbiddable"/>
+<li>
+<compClass>CompEquippable</compClass>
+</li>
+<li>
+<compClass>CompQuality</compClass>
+</li>
+<li Class="CompProperties_Art">
+<nameMaker>ArtName_WeaponGun</nameMaker>
+<descriptionMaker>ArtDescription_WeaponGun</descriptionMaker>
+<minQualityForArtistic>Excellent</minQualityForArtistic>
+</li>
+</comps>
+
+</ThingDef>
+
+<ThingDef Abstract="True" Name="BaseMakeableGun" ParentName="BaseGun">
+<recipeMaker>
+<workSpeedStat>SmithingSpeed</workSpeedStat>
+<workSkill>Crafting</workSkill>
+<effectWorking>Smith</effectWorking>
+<soundWorking>Recipe_Smith</soundWorking>
+<recipeUsers>
+<li>TableMachining</li>
+</recipeUsers>
+<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+</recipeMaker>
+</ThingDef>
+
+<ThingDef Abstract="True" Name="BaseHumanGun" ParentName="BaseGun">
+<weaponTags>
+<li>Gun</li>
+</weaponTags>
+</ThingDef>
+
+<ThingDef Abstract="True" Name="BaseHumanMakeableGun" ParentName="BaseMakeableGun">
+<weaponTags>
+<li>Gun</li>
+</weaponTags>
+</ThingDef>
+
+<ThingDef Abstract="True" Name="BaseBullet">
+<category>Projectile</category>
+<tickerType>Normal</tickerType>
+<altitudeLayer>Projectile</altitudeLayer>
+<thingClass>Bullet</thingClass>
+<label>bullet</label>
+<useHitPoints>False</useHitPoints>
+<neverMultiSelect>True</neverMultiSelect>
+<graphicData>
+<shaderType>Transparent</shaderType>
+</graphicData>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_357_Magnum</defName>
+<label>.357 Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>17</DamageAmountBase>
+<Speed>90</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_357_Magnum</defName>
+<label>.357 Magnum</label>
+<description>A single action, fixed-cylinder revolver with lower stopping power, but higher accuracy compared to its brother the .44 Magnum.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/357_Magnum_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>36000</WorkToMake>
+<MarketValue>360</MarketValue>
+<AccuracyTouch>0.93</AccuracyTouch>
+<AccuracyShort>0.76</AccuracyShort>
+<AccuracyMedium>0.52</AccuracyMedium>
+<AccuracyLong>0.33</AccuracyLong>
+<RangedWeapon_Cooldown>0.65</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>50</Steel>
+<Component>4</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_357_Magnum</projectileDef>
+<warmupTicks>55</warmupTicks>
+<range>25</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_Lucky</defName>
+<label>.357 Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>22</DamageAmountBase>
+<Speed>95</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_Lucky</defName>
+<label>Lucky</label>
+<description>A unique variant of the .357 single action, fixed-cylinder revolver with more stopping power, accuracy, and firing rate.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Lucky_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>650</MarketValue>
+<AccuracyTouch>0.91</AccuracyTouch>
+<AccuracyShort>0.84</AccuracyShort>
+<AccuracyMedium>0.53</AccuracyMedium>
+<AccuracyLong>0.32</AccuracyLong>
+<RangedWeapon_Cooldown>0.60</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_Lucky</projectileDef>
+<warmupTicks>50</warmupTicks>
+<range>28</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_44_Magnum</defName>
+<label>.44 Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>22</DamageAmountBase>
+<Speed>90</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_44_Magnum</defName>
+<label>.44 Magnum</label>
+<description>A double action, swing-out cylinder revolver with higher stopping power but lower accuracy compared to its brother the .357 Magnum</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/44_Magnum_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>40000</WorkToMake>
+<MarketValue>400</MarketValue>
+<AccuracyTouch>0.85</AccuracyTouch>
+<AccuracyShort>0.75</AccuracyShort>
+<AccuracyMedium>0.48</AccuracyMedium>
+<AccuracyLong>0.29</AccuracyLong>
+<RangedWeapon_Cooldown>0.65</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>60</Steel>
+<Component>4</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_44_Magnum</projectileDef>
+<warmupTicks>55</warmupTicks>
+<range>27</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_MysteriousMagnum</defName>
+<label>.44 Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>25</DamageAmountBase>
+<Speed>95</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_MysteriousMagnum</defName>
+<label>Mysterious Magnum</label>
+<description>A unique variant of the .44 Magnum double action, swing-out cylinder revolver that has increased stopping power, accuracy, and range.  </description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/MysteriousMagnum_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>777</MarketValue>
+<AccuracyTouch>0.93</AccuracyTouch>
+<AccuracyShort>0.81</AccuracyShort>
+<AccuracyMedium>0.50</AccuracyMedium>
+<AccuracyLong>0.27</AccuracyLong>
+<RangedWeapon_Cooldown>0.60</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_MysteriousMagnum</projectileDef>
+<warmupTicks>50</warmupTicks>
+<range>27</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_PF9mmPistol</defName>
+<label>9mm Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>8</DamageAmountBase>
+<Speed>80</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_PF9mmPistol</defName>
+<label>9mm Pistol</label>
+<description>A semi-automatic handgun, used as the standard issue side-arm of the New California Republic Army, and is one of the most common guns in the wastelands.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/9mm_Pistol_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>32000</WorkToMake>
+<MarketValue>225</MarketValue>
+<AccuracyTouch>0.93</AccuracyTouch>
+<AccuracyShort>0.83</AccuracyShort>
+<AccuracyMedium>0.63</AccuracyMedium>
+<AccuracyLong>0.30</AccuracyLong>
+<RangedWeapon_Cooldown>0.50</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>45</Steel>
+<Component>3</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_PF9mmPistol</projectileDef>
+<warmupTicks>40</warmupTicks>
+<range>27</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_Maria</defName>
+<label>9mm Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>11</DamageAmountBase>
+<Speed>90</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_Maria</defName>
+<label>Maria</label>
+<description>A unique variant of the 9mm semi-automatic handgun, with higher damage and accuracy. This was the weapon that "killed" The Courier.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Maria_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>500</MarketValue>
+<AccuracyTouch>0.95</AccuracyTouch>
+<AccuracyShort>0.85</AccuracyShort>
+<AccuracyMedium>0.70</AccuracyMedium>
+<AccuracyLong>0.33</AccuracyLong>
+<RangedWeapon_Cooldown>0.45</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_Maria</projectileDef>
+<warmupTicks>40</warmupTicks>
+<range>30</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_PF10mmPistol</defName>
+<label>10mm Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>11</DamageAmountBase>
+<Speed>80</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_PF10mmPistol</defName>
+<label>10mm Pistol</label>
+<description>The N99 10mm sidearm, used as standard issue military gear after it's predecessor, the N80 was phased out in 2051. An extremely durable weapon, this model sees extensive use all across the wastes.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/10mm_Pistol_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>34000</WorkToMake>
+<MarketValue>265</MarketValue>
+<AccuracyTouch>0.95</AccuracyTouch>
+<AccuracyShort>0.80</AccuracyShort>
+<AccuracyMedium>0.52</AccuracyMedium>
+<AccuracyLong>0.29</AccuracyLong>
+<RangedWeapon_Cooldown>0.60</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>55</Steel>
+<Component>3</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_PF10mmPistol</projectileDef>
+<warmupTicks>60</warmupTicks>
+<range>29</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_12_7mmPistol</defName>
+<label>12.7mm Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>20</DamageAmountBase>
+<Speed>100</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_12_7mmPistol</defName>
+<label>12.7mm Pistol</label>
+<description>A Swiss SIG-Sauer 14mm handgun that has been rechambered for 12.7mm ammunition. Fairly common before the nukes dropped, the number of surviving models is slowly dwindling. </description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/12.7 Pistol_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>40000</WorkToMake>
+<MarketValue>400</MarketValue>
+<AccuracyTouch>0.94</AccuracyTouch>
+<AccuracyShort>0.82</AccuracyShort>
+<AccuracyMedium>0.44</AccuracyMedium>
+<AccuracyLong>0.31</AccuracyLong>
+<RangedWeapon_Cooldown>0.88</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>75</Steel>
+<Component>4</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_12_7mmPistol</projectileDef>
+<warmupTicks>80</warmupTicks>
+<range>31</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_LilDevil</defName>
+<label>12.7mm Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>24</DamageAmountBase>
+<Speed>105</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_LilDevil</defName>
+<label>Li'l Devil</label>
+<description>A unique variant of the Swiss SIG-Sauer 14mm handgun that has been rechambered for 12.7mm ammunition.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/LilDevil_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>650</MarketValue>
+<AccuracyTouch>0.94</AccuracyTouch>
+<AccuracyShort>0.82</AccuracyShort>
+<AccuracyMedium>0.48</AccuracyMedium>
+<AccuracyLong>0.32</AccuracyLong>
+<RangedWeapon_Cooldown>0.88</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_LilDevil</projectileDef>
+<warmupTicks>75</warmupTicks>
+<range>31</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_HuntingRevolver</defName>
+<label>.45-70 Gov't Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>26</DamageAmountBase>
+<Speed>110</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_HuntingRevolver</defName>
+<label>Hunting Revolver</label>
+<description>A large double-action revolver that fires .45-70 Gov't ammunition, it comes with a 2.46x magnifying scope.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/HuntingRevolver_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>42000</WorkToMake>
+<MarketValue>625</MarketValue>
+<AccuracyTouch>0.60</AccuracyTouch>
+<AccuracyShort>0.70</AccuracyShort>
+<AccuracyMedium>0.82</AccuracyMedium>
+<AccuracyLong>0.84</AccuracyLong>
+<RangedWeapon_Cooldown>1.00</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>75</Steel>
+<Component>4</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_HuntingRevolver</projectileDef>
+<warmupTicks>90</warmupTicks>
+<range>35</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_RangerSequoia</defName>
+<label>.45-70 Gov't Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>27</DamageAmountBase>
+<Speed>115</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_RangerSequoia</defName>
+<label>Ranger Sequoia</label>
+<description>A unique scope-less variant of the Hunting Revolver given only to NCR Rangers after 20 years of service. The Ranger Sequoia has the highest stopping power of any one-handed weapon in the wasteland.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/RangerSequoia_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>1000</MarketValue>
+<AccuracyTouch>0.87</AccuracyTouch>
+<AccuracyShort>0.75</AccuracyShort>
+<AccuracyMedium>0.73</AccuracyMedium>
+<AccuracyLong>0.53</AccuracyLong>
+<RangedWeapon_Cooldown>0.80</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_RangerSequoia</projectileDef>
+<warmupTicks>80</warmupTicks>
+<range>28</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_Silenced_22Pistol</defName>
+<label>.22LR Bullet </label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>5</DamageAmountBase>
+<Speed>90</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_Silenced_22Pistol</defName>
+<label>Silenced .22 Pistol</label>
+<description>A handgun that fires .22 ammunition with an integrated silencer. Commonly used by assassins and those who would like to sneak weapons into secured areas, it has extremely low stopping power, but more than makes up for that with it's high fire-rate and accuracy.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Silenced 22 Pistol</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>28000</WorkToMake>
+<MarketValue>200</MarketValue>
+<AccuracyTouch>0.92</AccuracyTouch>
+<AccuracyShort>0.84</AccuracyShort>
+<AccuracyMedium>0.82</AccuracyMedium>
+<AccuracyLong>0.70</AccuracyLong>
+<RangedWeapon_Cooldown>0.33</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>30</Steel>
+<Component>4</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_Silenced_22Pistol</projectileDef>
+<warmupTicks>30</warmupTicks>
+<range>22</range>
+<soundCast>ShotSilenced</soundCast>
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>3</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_556mm_Pistol</defName>
+<label>5.56mm Bullet </label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>20</DamageAmountBase>
+<Speed>100</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_556_Pistol</defName>
+<label>5.56mm Pistol</label>
+<description>A revolver with a motorized cylinder chambered in 5.56mm ammunition, which is a heavily modified .223 Pistol. Weighing in at 5lbs it has similar stopping power but higher accuracy compared to other revolvers in it's class</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/5.56mm_Pistol_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>40000</WorkToMake>
+<MarketValue>350</MarketValue>
+<AccuracyTouch>0.91</AccuracyTouch>
+<AccuracyShort>0.78</AccuracyShort>
+<AccuracyMedium>0.64</AccuracyMedium>
+<AccuracyLong>0.43</AccuracyLong>
+<RangedWeapon_Cooldown>0.70</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>60</Steel>
+<Component>4</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_556mm_Pistol</projectileDef>
+<warmupTicks>55</warmupTicks>
+<range>27</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_That_Gun</defName>
+<label>5.56mm Bullet </label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>22</DamageAmountBase>
+<Speed>105</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_ThatGun</defName>
+<label>That Gun</label>
+<description>A unique variant of the 5.56mm Pistol, it is quite heavy and has slightly more accuracy and stopping power than it's generic version.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/ThatGun_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>370</MarketValue>
+<AccuracyTouch>0.93</AccuracyTouch>
+<AccuracyShort>0.80</AccuracyShort>
+<AccuracyMedium>0.67</AccuracyMedium>
+<AccuracyLong>0.49</AccuracyLong>
+<RangedWeapon_Cooldown>0.65</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_That_Gun</projectileDef>
+<warmupTicks>55</warmupTicks>
+<range>28</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+</ThingDefs>
