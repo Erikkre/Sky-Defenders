@@ -35,7 +35,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static Vector2 pos, vel=new Vector2(), thrusterOrigPos; //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
 
-    public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
+    public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, armorWidth, armorHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
     protected boolean isScrolledDown;
     public float midpointY, midpointX, startY,startX;
     private boolean isAlive;
@@ -89,7 +89,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         sideThrustLvl=0;
 
         assignTextures(armorLvl,lvl);
-        height=balloonHeight+rackHeight;
+        height=balloonHeight+rackHeight+armorHeight;
         startY=camHeight/2f; //-height;
         startX=0; //-balloonWidth;
         pos=new Vector2(startX, startY);
@@ -218,10 +218,15 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void assignTextures(int armorLvl, int lvl) {
         balloonTexture=AssetHandler.airshipBalloon;rackTexture=AssetHandler.airshipRack(armorLvl,lvl+1, tH);
-        sideThrustTexture=AssetHandler.airshipSideThruster;armorTexture=AssetHandler.armor(armorLvl);
+        sideThrustTexture=AssetHandler.airshipSideThruster;
         balloonWidth=(int) ((balloonTexture.getRegionWidth())*(1+0.2f*lvl)); balloonHeight=balloonTexture.getRegionHeight();
         thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*sideThrustLvl));
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
+        for (int i=0;i<5;i++){
+            armorTextures.add(AssetHandler.armor(i));
+            rackTextures.add(AssetHandler.airshipRack(i));
+        }
+        armorHeight=armorTexture.getRegionHeight();armorWidth=armorTexture.getRegionWidth();
     }
 
     public boolean pointerOnAirship(int pointer){
