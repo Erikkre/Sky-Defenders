@@ -647,6 +647,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
                 rackWidth/2f, rackHeight/2f, rackWidth, rackHeight,1,1,rotation.get());
 
+        batcher.draw(armorTexture, pos.x-armorTexture.getRegionWidth()/2f, pos.y-rackHeight-armorTexture.getRegionHeight(),//+ (thrusterHeight)*i
+                armorTexture.getRegionWidth()/2, armorTexture.getRegionHeight()/2,
+                armorTexture.getRegionWidth(), armorTexture.getRegionHeight(), 1, 1, rotation.get());
+
         for (Turret i : turretList) {
             if (rotation.get() < 0) {//right movement, need to rotate less?
                     xOffsetFromRotation =  -rotation.get() * (startX - i.origPosition.x)   / (140f);//divided by x distance from pos.x so effect less pronounced when close to center
