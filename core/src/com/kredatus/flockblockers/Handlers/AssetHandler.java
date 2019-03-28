@@ -452,10 +452,10 @@ public class AssetHandler {
         airshipSideThruster = new TextureRegion(airshipSideThrusterTexture, airshipSideThrusterTexture.getWidth(), airshipSideThrusterTexture.getHeight());
     }
 
-    public static TextureRegion airshipRack(int armorLvl, int lvl, int turretHeight){
+    public static TextureRegion airshipRack(int armorLvl){
             Texture rack = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"rack"+armorLvl+".png"));
             rack.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-            return new TextureRegion(rack, rack.getWidth(), turretHeight*lvl+3);
+            return new TextureRegion(rack);
     }
 
     public static TextureRegion armor(int armorLvl) {

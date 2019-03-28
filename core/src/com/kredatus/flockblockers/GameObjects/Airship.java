@@ -81,6 +81,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public static float[] airshipTint, airShipCloudTint;
     public boolean hitMaxBrightnessCloudBrightening=false;
+    public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850};
+    public static TextureRegion[] armorTextures, rackTextures;
+
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth=camWidth;
         this.camHeight=camHeight;
@@ -88,14 +91,16 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         lvl=0;
         sideThrustLvl=0;
 
-        assignTextures(armorLvl,lvl);
+        assignTextures(armorLvl,lvl);//also assigns rack bounds
+        assignBalloonBounds();
+
         height=balloonHeight+rackHeight+armorHeight;
         startY=camHeight/2f; //-height;
         startX=0; //-balloonWidth;
         pos=new Vector2(startX, startY);
         thrusterOrigPos=new Vector2(pos.x, pos.y+ 0.18f*balloonHeight);
 
-        assignBounds();
+
         tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(1).start();
         rotationTween=Tween.to(rotation,0,2).waypoint((pos.x-(camWidth-balloonWidth))/25f).target(0).ease(TweenEquations.easeOutCirc).delay(1).start();
         assignRackPositions(pos.x-rackWidth/2f);
@@ -151,49 +156,56 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         burnerLightTween=Tween.to(flameLights.get(2), 1, 1f).target(burnerOrigDist).start();
     }
 
-    private void assignBounds() {
-        float x =pos.x, y=pos.y-2, rB=balloonWidth/2f, hB=balloonHeight;
+    private void assignBalloonBounds() {
+        float x = pos.x, y = pos.y, rB = balloonWidth / 2f, hB = balloonHeight;
 
-                prelimBoundPoly2= new Polygon(new float[]{x - balloonWidth/2f,y,   x - balloonWidth/2f,y+hB,    x + balloonWidth/2f,y+hB,    x + balloonWidth/2f,y});//left side
-                prelimBoundPoly1= new Polygon(new float[]{x - rackWidth/2f,y,   x - rackWidth/2f,y - rackHeight,   x + rackWidth/2f,y - rackHeight,  x + rackWidth/2f,y});
+        prelimBoundPoly2 = new Polygon(new float[]{x - balloonWidth / 2f, y, x - balloonWidth / 2f, y + hB, x + balloonWidth / 2f, y + hB, x + balloonWidth / 2f, y});//left side
+        prelimBoundPoly1 = new Polygon(new float[]{x - rackWidth / 2f, y, x - rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y});
 
-                balloonHitbox = new Polygon(  new float[]{
-                        x, y +hB,     x - rB * 0.60f, y + hB * 0.92f,       x - rB * 0.98f, y + hB * 0.67f,          x - rB * 0.90f, y + hB * 0.37f,      x - rB * 0.40f, y,  //top to bottom left of burner
-                        x + rB * 0.40f, y,        x + rB * 0.90f, y + hB * 0.37f,    x + rB * 0.98f, y + hB * 0.67f,          x + rB * 0.60f, y + hB * 0.92f //to top of balloon
-                });
+        balloonHitbox = new Polygon(new float[]{
+                x, y + hB, x - rB * 0.60f, y + hB * 0.92f, x - rB * 0.98f, y + hB * 0.67f, x - rB * 0.90f, y + hB * 0.37f, x - rB * 0.40f, y,  //top to bottom left of burner
+                x + rB * 0.40f, y, x + rB * 0.90f, y + hB * 0.37f, x + rB * 0.98f, y + hB * 0.67f, x + rB * 0.60f, y + hB * 0.92f //to top of balloon
+        });
+    }
 
+    private void changeRackBounds(){
+        float x = pos.x, y = pos.y;
                 if (lvl==0){
                 rackHitbox = new Polygon(new float[] {
-                        x - tW * 2, y ,         x - tW * 2, y - 1 * tH ,//bottom left rack
+                        x - tW * 2, y ,         x - tW * 2, y - 1 * tH , //bottom left rack
+                        x, y - (1 * tH) - armorHeight,  //tip of bottom of armor
                         x + tW * 2, y - 1 * tH ,     x + tW * 2, y ,     //bottom right of burner
                         }
                     );
                 } else if (lvl==1) {
                     rackHitbox = new Polygon(new float[]{
                             x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,//bottom left rack
+                            x, y - (2 * tH) - armorHeight,  //tip of bottom f armor
                             x + tW * 2, y - 2 * tH ,   x + tW * 2, y ,     //bottom right of burner
                         }
                     );
                 } else if (lvl==2) {
                     rackHitbox = new Polygon(new float[]{
                             x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 3 * tH ,//bottom left rack
+                            x, y - (3 * tH) - armorHeight,  //tip of bottom of armor
                             x + tW * 1.5f, y - 3 * tH ,        x + tW * 2, y - 2 * tH ,    x + tW * 2, y ,     //bottom right of burner
                         }
                     );
                 } else if (lvl==3) {
                     rackHitbox = new Polygon(new float[]{
                             x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 4 * tH ,//bottom left rack
+                            x, y - (4 * tH) - armorHeight,  //tip of bottom of armor
                             x + tW * 1.5f, y - 4 * tH ,        x + tW * 2, y - 2 * tH ,    x + tW * 2, y ,     //bottom right of burner
                         }
                     );
                 } else if (lvl==4) {
                     rackHitbox = new Polygon(new float[]{
                             x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 4 * tH ,      x - tW * 1f, y - 5 * tH ,//bottom left rack
+                            x, y - (5 * tH) - armorHeight,  //tip of bottom of armor
                             x + tW * 1f, y - 5 * tH , x + tW * 1.5f, y - 4 * tH , x + tW * 2, y - 2 * tH , x + tW * 2, y ,     //bottom right of burner
                         }
                     );
                 }
-
         //rackHitbox.setRotation(rotation.get());
         //balloonHitbox.setRotation(rotation.get());
     }
@@ -217,16 +229,28 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     private void assignTextures(int armorLvl, int lvl) {
-        balloonTexture=AssetHandler.airshipBalloon;rackTexture=AssetHandler.airshipRack(armorLvl,lvl+1, tH);
+        balloonTexture=AssetHandler.airshipBalloon;
         sideThrustTexture=AssetHandler.airshipSideThruster;
         balloonWidth=(int) ((balloonTexture.getRegionWidth())*(1+0.2f*lvl)); balloonHeight=balloonTexture.getRegionHeight();
         thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*sideThrustLvl));
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
-        for (int i=0;i<5;i++){
-            armorTextures.add(AssetHandler.armor(i));
-            rackTextures.add(AssetHandler.airshipRack(i));
-        }
+
         armorHeight=armorTexture.getRegionHeight();armorWidth=armorTexture.getRegionWidth();
+        for (int i=0;i<5;i++){
+            armorTextures[i]=AssetHandler.armor(i);
+            rackTextures[i]=AssetHandler.airshipRack(i);
+        }
+        assignLevelAndArmor(armorLvl,lvl);
+    }
+
+    private void assignLevelAndArmor(int armorLvl, int lvl){
+        rackTexture=rackTextures[armorLvl];
+        rackTexture.setRegion(0,0,rackTextures[armorLvl].getRegionWidth(),tH*lvl + 3);
+        armorTexture=armorTextures[armorLvl];
+
+        health=healthValues[lvl];
+        armor=armorValues[armorLvl];
+        changeRackBounds();
     }
 
     public boolean pointerOnAirship(int pointer){
@@ -653,8 +677,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 rackWidth/2f, rackHeight/2f, rackWidth, rackHeight,1,1,rotation.get());
 
         batcher.draw(armorTexture, pos.x-armorTexture.getRegionWidth()/2f, pos.y-rackHeight-armorTexture.getRegionHeight(),//+ (thrusterHeight)*i
-                armorTexture.getRegionWidth()/2, armorTexture.getRegionHeight()/2,
-                armorTexture.getRegionWidth(), armorTexture.getRegionHeight(), 1, 1, rotation.get());
+                armorWidth/2, armorTexture.getRegionHeight()/2,
+                armorWidth, armorHeight, 1, 1, rotation.get());
 
         for (Turret i : turretList) {
             if (rotation.get() < 0) {//right movement, need to rotate less?
