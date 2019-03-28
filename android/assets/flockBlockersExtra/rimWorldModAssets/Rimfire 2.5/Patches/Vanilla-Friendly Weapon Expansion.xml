@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="ModCheck.isModLoaded">
+				<modName>Vanilla-Friendly Weapon Expansion</modName>
+				<yourMod>Rimfire 2.4</yourMod>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>Defs/GunMod.RFTDef[defName="RF_Settings"]/CategoryLoader</xpath>
+				<value>
+					<li>
+						<category>Pistols</category>
+						<targets>
+							<li>Gun_ImprovisedPistol</li>
+						</targets>
+					</li>
+					<li>
+						<category>Revolvers</category>
+						<targets>
+							<li>Gun_Revolver</li>
+						</targets>
+					</li>
+					<li>
+						<category>Shotguns</category>
+						<targets>
+							<li>Gun_SawnoffShotgun</li>
+						</targets>
+					</li>
+					<li>
+						<category>Carbines</category>
+						<targets>
+							<li>Gun_RepeaterRifle</li>
+						</targets>
+					</li>
+					<li>
+						<category>Rifles</category>
+						<targets>
+							<li>Gun_VintageAssaultRifle</li>
+						</targets>
+					</li>
+					<li>
+						<category>AntiMateriel</category>
+						<targets>
+							<li>Gun_FiftyCalRifle</li>
+						</targets>
+					</li>
+					<li>
+						<category>ChargeGuns</category>
+						<targets>
+							<li>Gun_GuidedSMG</li>
+						</targets>
+					</li>
+					<li>
+						<category>MechanoidGuns</category>
+						<targets>
+							<li>Gun_ChargeScattergun</li>
+							<li>Gun_RadiationCannon</li>
+						</targets>
+					</li>
+					<li>
+						<category>NeolithicRanged</category>
+						<targets>
+							<li>Weapon_Sling</li>
+						</targets>
+					</li>
+					<li>
+						<category>IndustrialMelee</category>
+						<targets>
+							<li>MeleeWeapon_Quarterstaff</li>
+						</targets>
+					</li>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	
+</Patch>

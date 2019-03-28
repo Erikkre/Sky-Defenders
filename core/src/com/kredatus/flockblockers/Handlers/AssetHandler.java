@@ -458,7 +458,13 @@ public class AssetHandler {
             return new TextureRegion(rack, rack.getWidth(), turretHeight*lvl+3);
     }
 
-    private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed){
+    public static TextureRegion armor(int armorLvl) {
+        Texture armor = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"armor"+armorLvl+".png"));
+        armor.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        return new TextureRegion(armor, armor.getWidth(), armor.getHeight());
+    }
+
+    private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed) {
         sprites = new Texture(Gdx.files.internal("sprites"+File.separator+"birds"+File.separator+""+path));
         sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
 

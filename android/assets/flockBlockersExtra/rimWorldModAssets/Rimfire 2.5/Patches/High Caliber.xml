@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="ModCheck.isModLoaded">
+				<modName>High Caliber</modName>
+				<yourMod>Rimfire 2.4</yourMod>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>Defs/GunMod.RFTDef[defName="RF_Settings"]/CategoryLoader</xpath>
+				<value>
+					<li>
+						<category>GunModMCM_Grenades</category>
+						<targets>
+							<li>Weapon_M14Grenade_HC</li>
+							<li>Weapon_M84StunGrenade_HC</li>
+						</targets>
+					</li>
+					<li>
+						<category>HeavyWeapons</category>
+						<targets>
+							<li>Gun_XM25_HC</li>
+							<li>Gun_M224Mortar_HC</li>
+						</targets>
+					</li>
+					<li>
+						<category>Shotguns</category>
+						<targets>
+							<li>Gun_Saiga12K_HC</li>
+						</targets>
+					</li>
+					<li>
+						<category>SniperRifles</category>
+						<targets>
+							<li>Gun_AWM_HC</li>
+							<li>Gun_DragunovSVU_HC</li>
+						</targets>
+					</li>
+					<li>
+						<category>AntiMateriel</category>
+						<targets>
+							<li>Gun_M82_HC</li>
+						</targets>
+					</li>
+					<li>
+						<category>SubMachineGuns</category>
+						<targets>
+							<li>Gun_P90_HC</li>
+							<li>Gun_MP5_HC</li>
+							<li>Gun_UMP45_HC</li>
+						</targets>
+					</li>
+					<li>
+						<category>Rifles</category>
+						<targets>
+							<li>Gun_AK74M_HC</li>
+							<li>Gun_AKS74U_HC</li>
+							<li>Gun_FATAL515_HC</li>
+							<li>Gun_FAMAS_HC</li>
+							<li>Gun_M4A1_HC</li>
+							<li>Gun_SG553_HC</li>
+							<li>Gun_AUG_HC</li>
+							<li>Gun_G36_HC</li>
+							<li>Gun_SCAR-H_HC</li>
+							<li>Gun_Mk14EBR_HC</li>
+						</targets>
+					</li>
+					<li>
+						<category>MachineGuns</category>
+						<targets>
+							<li>Gun_MG4_HC</li>
+						</targets>
+					</li>
+					<li>
+						<category>Pistols</category>
+						<targets>
+							<li>Gun_Glock17_HC</li>
+							<li>Gun_P226_HC</li>
+							<li>Gun_HK45_HC</li>
+							<li>Gun_Fiveseven_HC</li>
+						</targets>
+					</li>
+					<li>
+						<category>Revolvers</category>
+						<targets>
+							<li>Gun_DesertEagle_HC</li>
+							<li>Gun_SW500_HC</li>
+						</targets>
+					</li>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	
+</Patch>

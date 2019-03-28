@@ -44,7 +44,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static int armor=100, health=100, origHealth=health; //slowdownSpeed;
 
     public static int lvl, engineTuning, armorLvl, sideThrustLvl;   //0-4
-    public static TextureRegion balloonTexture, rackTexture, sideThrustTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
+    public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, armorTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
 
     //positions 28,31    82,31  110-136 and 137-163
 
@@ -217,7 +217,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     private void assignTextures(int armorLvl, int lvl) {
-        balloonTexture=AssetHandler.airshipBalloon;rackTexture=AssetHandler.airshipRack(armorLvl,lvl+1, tH);sideThrustTexture=AssetHandler.airshipSideThruster;
+        balloonTexture=AssetHandler.airshipBalloon;rackTexture=AssetHandler.airshipRack(armorLvl,lvl+1, tH);
+        sideThrustTexture=AssetHandler.airshipSideThruster;armorTexture=AssetHandler.armor(armorLvl);
         balloonWidth=(int) ((balloonTexture.getRegionWidth())*(1+0.2f*lvl)); balloonHeight=balloonTexture.getRegionHeight();
         thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*sideThrustLvl));
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();

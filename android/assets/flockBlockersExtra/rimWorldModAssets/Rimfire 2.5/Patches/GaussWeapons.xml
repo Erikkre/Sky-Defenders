@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+	
+	<Operation Class="PatchOperationSequence">
+		<success>Always</success>
+		<operations>
+			<li Class="ModCheck.isModLoaded">
+				<modName>GaussWeapons</modName>
+				<yourMod>Rimfire 2.4</yourMod>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>Defs/GunMod.RFTDef[defName="RF_Settings"]/CategoryLoader</xpath>
+				<value>
+					<li>
+						<category>GaussGuns</category>
+						<targets>
+							<li>Gun_GaussPistol</li>
+							<li>Gun_GaussCarbine</li>
+							<li>Gun_GaussRifle</li>
+							<li>Gun_GaussScatter</li>
+							<li>Gun_GaussPrecision</li>
+							<li>Gun_GaussShotgun</li>
+							<li>Gun_XBRG</li>
+							<li>Gun_Xronon</li>
+						</targets>
+					</li>
+					<li>
+						<category>GunModMCM_Grenades</category>
+						<targets>
+							<li>Weapon_GrenadeGauss</li>
+						</targets>
+					</li>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+	
+</Patch>
