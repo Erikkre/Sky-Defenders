@@ -366,13 +366,13 @@ public class AssetHandler {
         boostdown = new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
         boostdown.flip(false, true);
 
-        f0Texture= new Texture(Gdx.files.internal("sprites"+File.separator+"turrets"+File.separator+"FF0.png"));
+        f0Texture= new Texture(Gdx.files.internal("sprites"+File.separator+"turrets"+File.separator+"f0.png"));
         f0Texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         //turret.flip(false, true);
         f0 = new TextureRegion(f0Texture,0, 4,32,13);
         f0Proj = new TextureRegion(f0Texture,0, 0,32,3);
 
-        Texture coinTexture=new Texture(Gdx.files.internal("bayatTextures"+File.separator+"coin.png"));
+        Texture coinTexture=new Texture(Gdx.files.internal("flockBlockersExtra"+File.separator+"bayatGames"+File.separator+"coin.png"));
         ArrayList<TextureRegion> tempPosition = new ArrayList<TextureRegion>(16);
         for (int i = 0; i < 17; i++) {
             if (i<16){

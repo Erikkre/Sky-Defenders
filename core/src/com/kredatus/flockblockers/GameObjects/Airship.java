@@ -83,6 +83,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public boolean hitMaxBrightnessCloudBrightening=false;
     public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850};
     public static TextureRegion[] armorTextures, rackTextures;
+    public int nextTurretPosition;
 
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth=camWidth;
@@ -103,12 +104,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(1).start();
         rotationTween=Tween.to(rotation,0,2).waypoint((pos.x-(camWidth-balloonWidth))/25f).target(0).ease(TweenEquations.easeOutCirc).delay(1).start();
-        assignRackPositions(pos.x-rackWidth/2f);
-        for (int i=0;i<positions.size();i++){
-            turretList.add(new Turret('f',positions.get(i)));
-            turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();turretList.get(i).rofUp();
-            turretList.get(i).penUp();turretList.get(i).penUp();turretList.get(i).penUp();
-        }
+        assignRackPositions();
 
         /*
         int j=0;
@@ -143,7 +139,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         setFireColor(birdType);
         airshipTint=chooseColorBasedOnWave(birdType, true);
         airShipCloudTint=airshipTint.clone();
+        addTurret('f');
     }
+
+    private void addTurret(char type){//button will upgrade turret based on position of click choosing which turretPosition on a rack diagram thats blown up on screen when you tap upgrade i.e.
+        turretList.add(nextTurretPosition, new Turret(type,positions.get(nextTurretPosition++)));   //turretlist(position).lvlUp or whatever upgrades you're giving
+    }//draw a screen with a diagram of the upgrades
 
     private void setupLights(){
         //thrusterOrigPos=new Vector2(pos.x);
@@ -210,7 +211,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //balloonHitbox.setRotation(rotation.get());
     }
 
-    private void assignRackPositions(float leftXOfAirship) {
+    private void assignRackPositions() {
+        positions.clear();
+        float leftXOfAirship=pos.x-rackWidth/2f;
         for (int i=0;i<=lvl;i++) {
             if (i<=1) {
                 for (int j=0;j<4;j++) {
@@ -231,26 +234,29 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private void assignTextures(int armorLvl, int lvl) {
         balloonTexture=AssetHandler.airshipBalloon;
         sideThrustTexture=AssetHandler.airshipSideThruster;
-        balloonWidth=(int) ((balloonTexture.getRegionWidth())*(1+0.2f*lvl)); balloonHeight=balloonTexture.getRegionHeight();
-        thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*sideThrustLvl));
-        rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
 
-        armorHeight=armorTexture.getRegionHeight();armorWidth=armorTexture.getRegionWidth();
         for (int i=0;i<5;i++){
             armorTextures[i]=AssetHandler.armor(i);
             rackTextures[i]=AssetHandler.airshipRack(i);
         }
         assignLevelAndArmor(armorLvl,lvl);
+        armorHeight=armorTexture.getRegionHeight();armorWidth=armorTexture.getRegionWidth();
+        balloonWidth=(int) ((balloonTexture.getRegionWidth())*(1+0.2f*lvl)); balloonHeight=balloonTexture.getRegionHeight();
+        thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*sideThrustLvl));
+        rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
     }
 
     private void assignLevelAndArmor(int armorLvl, int lvl){
         rackTexture=rackTextures[armorLvl];
-        rackTexture.setRegion(0,0,rackTextures[armorLvl].getRegionWidth(),tH*lvl + 3);
+        rackTexture.setRegion(0,0,rackTexture.getRegionWidth(),tH*lvl + 3);
+        rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
+
         armorTexture=armorTextures[armorLvl];
 
         health=healthValues[lvl];
         armor=armorValues[armorLvl];
         changeRackBounds();
+        assignRackPositions();
     }
 
     public boolean pointerOnAirship(int pointer){
