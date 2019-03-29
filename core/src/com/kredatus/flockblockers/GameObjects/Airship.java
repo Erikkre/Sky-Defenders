@@ -18,7 +18,6 @@ import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -82,25 +81,25 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static float[] airshipTint, airShipCloudTint;
     public boolean hitMaxBrightnessCloudBrightening=false;
     public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850};
-    public static TextureRegion[] armorTextures, rackTextures;
+    public static TextureRegion[] armorTextures=new TextureRegion[6], rackTextures=new TextureRegion[6];
     public int nextTurretPosition;
 
     public Airship(int camWidth, int camHeight, int birdType) {
-        this.camWidth=camWidth;
+        this.camWidth =camWidth;
         this.camHeight=camHeight;
         armorLvl=0;
         lvl=0;
         sideThrustLvl=0;
 
+        startY=camHeight/2f; //-height;
+        startX=0; //-balloonWidth;
+        pos=new Vector2(startX, startY);
         assignTextures(armorLvl,lvl);//also assigns rack bounds
         assignBalloonBounds();
 
         height=balloonHeight+rackHeight+armorHeight;
-        startY=camHeight/2f; //-height;
-        startX=0; //-balloonWidth;
-        pos=new Vector2(startX, startY);
-        thrusterOrigPos=new Vector2(pos.x, pos.y+ 0.18f*balloonHeight);
 
+        thrusterOrigPos=new Vector2(pos.x, pos.y+ 0.18f*balloonHeight);
 
         tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(1).start();
         rotationTween=Tween.to(rotation,0,2).waypoint((pos.x-(camWidth-balloonWidth))/25f).target(0).ease(TweenEquations.easeOutCirc).delay(1).start();
@@ -235,7 +234,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         balloonTexture=AssetHandler.airshipBalloon;
         sideThrustTexture=AssetHandler.airshipSideThruster;
 
-        for (int i=0;i<5;i++){
+        for (int i=0;i<6;i++){
             armorTextures[i]=AssetHandler.armor(i);
             rackTextures[i]=AssetHandler.airshipRack(i);
         }
