@@ -40,9 +40,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private boolean isAlive;
     private ArrayList<Vector2> positions = new ArrayList<Vector2>(16);
 
-    public static int armor=100, health=100, origHealth=health; //slowdownSpeed;
+    public static int armor, health; //slowdownSpeed;
 
-    public static int lvl, engineTuning, armorLvl, sideThrustLvl;   //0-4
+    public static int rackLvl, engineLvl, healthLvl, armorLvl, mobilityLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
     public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, armorTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
 
     //positions 28,31    82,31  110-136 and 137-163
@@ -81,20 +81,26 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static float[] airshipTint, airShipCloudTint;
     public boolean hitMaxBrightnessCloudBrightening=false;
     public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850};
-    public static TextureRegion[] armorTextures=new TextureRegion[6], rackTextures=new TextureRegion[6];
+    public static TextureRegion[] armorTextures=new TextureRegion[6], rackTextures=new TextureRegion[6], pipeTextures=new TextureRegion[6];//3 more pairs of pipes for upgrades
+    
     public int nextTurretPosition;
 
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth =camWidth;
         this.camHeight=camHeight;
+
+        engineLvl=0;
+        healthLvl=0;
         armorLvl=0;
-        lvl=0;
-        sideThrustLvl=0;
+        rackLvl=0;
+        mobilityLvl=0;
+        health=healthValues[healthLvl];
+        armor=armorValues[armorLvl];
 
         startY=camHeight/2f; //-height;
         startX=0; //-balloonWidth;
         pos=new Vector2(startX, startY);
-        assignTextures(armorLvl,lvl);//also assigns rack bounds
+        assignTextures(armorLvl,rackLvl);//also assigns rack bounds
         assignBalloonBounds();
 
         height=balloonHeight+rackHeight+armorHeight;
@@ -170,35 +176,35 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void changeRackBounds(){
         float x = pos.x, y = pos.y;
-                if (lvl==0){
+                if (rackLvl==0){
                 rackHitbox = new Polygon(new float[] {
                         x - tW * 2, y ,         x - tW * 2, y - 1 * tH , //bottom left rack
                         x, y - (1 * tH) - armorHeight,  //tip of bottom of armor
                         x + tW * 2, y - 1 * tH ,     x + tW * 2, y ,     //bottom right of burner
                         }
                     );
-                } else if (lvl==1) {
+                } else if (rackLvl==1) {
                     rackHitbox = new Polygon(new float[]{
                             x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,//bottom left rack
                             x, y - (2 * tH) - armorHeight,  //tip of bottom f armor
                             x + tW * 2, y - 2 * tH ,   x + tW * 2, y ,     //bottom right of burner
                         }
                     );
-                } else if (lvl==2) {
+                } else if (rackLvl==2) {
                     rackHitbox = new Polygon(new float[]{
                             x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 3 * tH ,//bottom left rack
                             x, y - (3 * tH) - armorHeight,  //tip of bottom of armor
                             x + tW * 1.5f, y - 3 * tH ,        x + tW * 2, y - 2 * tH ,    x + tW * 2, y ,     //bottom right of burner
                         }
                     );
-                } else if (lvl==3) {
+                } else if (rackLvl==3) {
                     rackHitbox = new Polygon(new float[]{
                             x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 4 * tH ,//bottom left rack
                             x, y - (4 * tH) - armorHeight,  //tip of bottom of armor
                             x + tW * 1.5f, y - 4 * tH ,        x + tW * 2, y - 2 * tH ,    x + tW * 2, y ,     //bottom right of burner
                         }
                     );
-                } else if (lvl==4) {
+                } else if (rackLvl==4) {
                     rackHitbox = new Polygon(new float[]{
                             x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 4 * tH ,      x - tW * 1f, y - 5 * tH ,//bottom left rack
                             x, y - (5 * tH) - armorHeight,  //tip of bottom of armor
@@ -213,7 +219,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private void assignRackPositions() {
         positions.clear();
         float leftXOfAirship=pos.x-rackWidth/2f;
-        for (int i=0;i<=lvl;i++) {
+        for (int i=0;i<=rackLvl;i++) {
             if (i<=1) {
                 for (int j=0;j<4;j++) {
                     positions.add(new Vector2(leftXOfAirship+j*tW+tW/2f,        pos.y-i*tH - (tH/2)-1 ));
@@ -230,7 +236,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
     }
 
-    private void assignTextures(int armorLvl, int lvl) {
+    private void assignTextures(int armorLvl, int rackLvl) {
         balloonTexture=AssetHandler.airshipBalloon;
         sideThrustTexture=AssetHandler.airshipSideThruster;
 
@@ -238,21 +244,19 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             armorTextures[i]=AssetHandler.armor(i);
             rackTextures[i]=AssetHandler.airshipRack(i);
         }
-        assignLevelAndArmor(armorLvl,lvl);
+        assignRackAndArmor(armorLvl,rackLvl);
         armorHeight=armorTexture.getRegionHeight();armorWidth=armorTexture.getRegionWidth();
-        balloonWidth=(int) ((balloonTexture.getRegionWidth())*(1+0.2f*lvl)); balloonHeight=balloonTexture.getRegionHeight();
-        thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*sideThrustLvl));
+        balloonWidth=balloonTexture.getRegionWidth(); balloonHeight=balloonTexture.getRegionHeight();
+        thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*mobilityLvl));
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
     }
 
-    private void assignLevelAndArmor(int armorLvl, int lvl){
+    private void assignRackAndArmor(int armorLvl, int rackLvl){
         rackTexture=rackTextures[armorLvl];
-        rackTexture.setRegion(0,0,rackTexture.getRegionWidth(),tH*lvl + 3);
+        rackTexture.setRegion(0,0,rackTexture.getRegionWidth(),tH*rackLvl + 3);
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
 
         armorTexture=armorTextures[armorLvl];
-
-        health=healthValues[lvl];
         armor=armorValues[armorLvl];
         changeRackBounds();
         assignRackPositions();
@@ -673,7 +677,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             additiveEffects.get(2).draw(batcher, delta);
         }
 
-        //for (int i=0;i<sideThrustLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
+        //for (int i=0;i<mobilityLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
         batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
                  thrusterWidth/2f, -0.18f*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation.get());
         //}
@@ -706,8 +710,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         health-=collisionDmg;
         isFlashing = true;
         flashOpacityValue.set(1f);//always start from white flash to distinguish from bg
-        if (collisionDmg<origHealth&&health>0){
-            currentFlashLength=flashLengths.get((collisionDmg/origHealth)*flashLengths.size());
+        if (collisionDmg<healthValues[healthLvl]&&health>0){
+            currentFlashLength=flashLengths.get((collisionDmg/healthValues[healthLvl])*flashLengths.size());
             flashTween = Tween.to(flashOpacityValue, -1, currentFlashLength).target(0f).ease(TweenEquations.easeOutExpo).setCallback(endFlashing).start();
         } else {
             //currentFlashLength=flashLengths.get(flashLengths.size()-1); //else make flash black (-1f-0f)
