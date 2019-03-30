@@ -34,7 +34,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static Vector2 pos, vel=new Vector2(), thrusterOrigPos; //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
 
-    public static int balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, armorWidth, armorHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
+    public static int pipeWidth, balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, armorWidth, armorHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
     protected boolean isScrolledDown;
     public float midpointY, midpointX, startY,startX;
     private boolean isAlive;
@@ -42,8 +42,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public static int armor, health; //slowdownSpeed;
 
-    public static int rackLvl, engineLvl, healthLvl, armorLvl, mobilityLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
-    public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, armorTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
+    public static int rackLvl, burnerLvl, healthLvl, armorLvl, mobilityLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
+    public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, armorTexture, pipeTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
 
     //positions 28,31    82,31  110-136 and 137-163
 
@@ -81,15 +81,22 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static float[] airshipTint, airShipCloudTint;
     public boolean hitMaxBrightnessCloudBrightening=false;
     public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850};
-    public static TextureRegion[] armorTextures=new TextureRegion[6], rackTextures=new TextureRegion[6], pipeTextures=new TextureRegion[6];//3 more pairs of pipes for upgrades
+    public static TextureRegion[] armorTextures=new TextureRegion[6], rackTextures=new TextureRegion[6];
     
     public int nextTurretPosition;
 
+    public void armorUp(){
+        armor=armorValues[++armorLvl];
+    }
+    public void burnerUp(){
+        setEmitterVal(emitters.get(0).getSpawnWidth(), (++burnerLvl+1)*pipeWidth*1.6f, false, false);
+    }
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth =camWidth;
         this.camHeight=camHeight;
 
-        engineLvl=0;
+
+        burnerLvl=0;
         healthLvl=0;
         armorLvl=0;
         rackLvl=0;
@@ -119,7 +126,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 }
                 j++;
             System.out.println(i.dmg);
-            }*/
+        }*/
 
         endFlashing = new TweenCallback() {
             @Override
@@ -145,6 +152,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         airshipTint=chooseColorBasedOnWave(birdType, true);
         airShipCloudTint=airshipTint.clone();
         addTurret('f');
+
+        setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
+        burnerUp();burnerUp();burnerUp();
     }
 
     private void addTurret(char type){//button will upgrade turret based on position of click choosing which turretPosition on a rack diagram thats blown up on screen when you tap upgrade i.e.
@@ -237,6 +247,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     private void assignTextures(int armorLvl, int rackLvl) {
+        pipeTexture=AssetHandler.airshipBurnerPipe;
         balloonTexture=AssetHandler.airshipBalloon;
         sideThrustTexture=AssetHandler.airshipSideThruster;
 
@@ -249,11 +260,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         balloonWidth=balloonTexture.getRegionWidth(); balloonHeight=balloonTexture.getRegionHeight();
         thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*mobilityLvl));
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
+        pipeWidth=pipeTexture.getRegionWidth();
     }
 
     private void assignRackAndArmor(int armorLvl, int rackLvl){
         rackTexture=rackTextures[armorLvl];
-        rackTexture.setRegion(0,0,rackTexture.getRegionWidth(),tH*rackLvl + 3);
+        rackTexture.setRegion(0,0,rackTexture.getRegionWidth(),tH*(rackLvl+1) + 3);
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
 
         armorTexture=armorTextures[armorLvl];
@@ -423,21 +435,21 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void fastBurner( ) {
-        //System.out.println("7, "+emitters.get(0).getEmission().getHighMax());
-        System.out.println("8, "+emitters.get(0).getEmission().getHighMax());
+        //System.out.println("8, "+emitters.get(0).getEmission().getHighMax());
         if (emitters.get(0).getEmission().getHighMax() < 2000) {
 
             setEmitterVal(emitters.get(0).getEmission(), 2000, false, false);
             emitters.get(0).start();
             setBurnerLightTarget(burnerOrigDist*5,TweenEquations.easeOutElastic);
         }
-        setEmitterVal(emitters.get(0).getAngle(), 90 - rotation.get() * 10, true, true);
+        //setEmitterVal(emitters.get(0).getAngle(), 90 - rotation.get() * 10, true, true);
     }
 
     public void burnerOnOff() {
+
             if (vel.y >= 0) {   //if moving up
                 //System.out.println("1, "+emitters.get(0).getEmission().getHighMax());
-                setEmitterVal(emitters.get(0).getAngle(), 90 - rotation.get() * 10, true, true);//always change angle based on arship rot
+
                 setEmitterVal(emitters.get(0).getVelocity(), 80 + vel.y * 15, true, false);//always change vel based on airship vel
 
                 if (vel.y > 1 ) {   //if moving up fastish and burner set to low (might want to leave out last condition)
@@ -521,6 +533,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void update(float delta) {
+        setEmitterVal(emitters.get(0).getAngle(), 90 - rotation.get() * 3, true, true);//always change angle of burner fire based on arship rot
+
         //System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing+", velX: "+vel.x);
         setDestAirship();
         //System.out.print(pos.toString());
@@ -548,7 +562,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
 
             //if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
-            additiveEffects.get(0).setPosition(pos.x, pos.y + 8);
+            additiveEffects.get(0).setPosition(pos.x- (pipeWidth * (burnerLvl+1)) + 4, pos.y + 4 + pipeTexture.getRegionHeight());
 
             additiveEffects.get(1).setPosition(pos.x-thrusterWidth/2f+2, pos.y + 0.18f*balloonHeight+thrusterHeight/2f + vel.y);//adding a bit of vel for straying thrusters
             additiveEffects.get(2).setPosition(pos.x+thrusterWidth/2f-2, pos.y + 0.18f*balloonHeight+thrusterHeight/2f + vel.y);
@@ -668,7 +682,18 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y,
                 balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation.get());
-        batcher.setColor(Color.WHITE);
+
+        if (burnerLvl>0) {//if theres 4 pipes or up to 8 with higher burner levels
+            for (float i = 2; i < burnerLvl + 2; i++) {
+                batcher.draw(pipeTexture, pos.x - (pipeWidth * i), pos.y + 2,
+                        (pipeWidth * i), -2, pipeWidth, pipeTexture.getRegionHeight(), 1, 1, rotation.get()); //originX and Y work as: starting with (0,0) being at the bottom left corner of wherever the image currently is,
+                                                                                                                                    // set the point of rotation (irrelevant to world or camera coordinates)
+                        batcher.draw(pipeTexture, pos.x + (pipeWidth * (i-1)), pos.y + 2,
+                                -(pipeWidth * (i-1)), -2, pipeWidth, pipeTexture.getRegionHeight(), 1, 1, rotation.get());
+            }
+        }
+
+        batcher.setColor(Color.WHITE);//draw balloon and pipes, then set color back to normal
 
         if (!additiveEffects.get(1).isComplete()) {
             additiveEffects.get(1).draw(batcher, delta);
@@ -678,6 +703,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
 
         //for (int i=0;i<mobilityLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
+
+
         batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ 0.18f*balloonHeight ,//+ (thrusterHeight)*i
                  thrusterWidth/2f, -0.18f*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation.get());
         //}

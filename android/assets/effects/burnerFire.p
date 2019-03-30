@@ -37,8 +37,8 @@ timeline3: 1.0
 active: false
 - X Offset - 
 active: true
-lowMin: -160.0
-lowMax: -160.0
+lowMin: 0.0
+lowMax: 0.0
 highMin: 0.0
 highMax: 0.0
 relative: false

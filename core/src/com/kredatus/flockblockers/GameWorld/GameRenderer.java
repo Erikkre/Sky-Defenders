@@ -661,12 +661,12 @@ public void setRotate(float angle){
         }
 
         for (BirdAbstractClass k : activeBirdQueue) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            /*shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(255,0,0, 1f);
 
             shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());
             shapeRenderer.end();
-
+*/
             if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.get());
                 batcher.setShader(flashShader);
@@ -690,6 +690,8 @@ public void setRotate(float angle){
 
             //batcher.begin();
         }
+
+        /*
         shapeRendererCust.begin(ShapeRenderer.ShapeType.Line);
         shapeRendererCust.setColor(255,0,0, 1f);
 

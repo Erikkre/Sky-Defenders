@@ -213,7 +213,7 @@ public class BgHandler {
     }
 //PointLight
     public void update(float delta) {
-        System.out.println(endWaveBgMotion);
+        //System.out.println(endWaveBgMotion);
         //System.out.println("1: "+ Math.round(background.y) + " 2: "+Math.round(background2.y));
         if (isCameraShake) {
             smallShake.update(delta);
