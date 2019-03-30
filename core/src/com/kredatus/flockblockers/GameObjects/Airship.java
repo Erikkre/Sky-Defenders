@@ -154,7 +154,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         addTurret('f');
 
         setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
-        burnerUp();burnerUp();burnerUp();
+        burnerUp();
     }
 
     private void addTurret(char type){//button will upgrade turret based on position of click choosing which turretPosition on a rack diagram thats blown up on screen when you tap upgrade i.e.
@@ -165,7 +165,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //thrusterOrigPos=new Vector2(pos.x);
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x-thrusterWidth*1.1f, thrusterOrigPos.y+thrusterHeight/1.9f)));
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x+thrusterWidth*1.1f, thrusterOrigPos.y+thrusterHeight/1.9f)));
-        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x,pos.y+8)));//position same as bottom of burner
+        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x,pos.y+pipeTexture.getRegionHeight()*2)));//position same as bottom of burner
         //flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x+15,pos.y+15)));
          //leftThrusterLightTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
         //rightThrusterLightTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
@@ -466,7 +466,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
             } else if (vel.y < -2.5 && !emitters.get(0).isComplete()) { //if descending let current burner anim finish then turn it off
                 emitters.get(0).allowCompletion();
-                if (getLightDist("burner")!=0){
+                if (getLightDist("burner")!=0 && burnerLightTween.getTargetValues()[0]!=0){
                     setBurnerLightTarget( 0, TweenEquations.easeOutCirc);
                 }
                 //System.out.println("4, "+emitters.get(0).getEmission().getHighMax());
@@ -626,7 +626,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public void draw(SpriteBatch batcher, float delta) {
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
-        //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
+        //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make all textures ghostly, see what blending function actually enables that
 
         additiveEffects.get(0).draw(batcher, delta);
 /*if (!hitMaxBrightnessCloudBrightening) { //if still getting brighter
