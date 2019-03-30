@@ -430,8 +430,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         additiveEffects.get(i).start();
     }
 
-    public void setBurnerLightTarget(float target, TweenEquation eq) {
-        burnerLightTween=Tween.to(flameLights.get(2), 1, 1f).target(target).ease(eq).start();
+    public void setBurnerLightTarget(float target, TweenEquation eq, boolean fast) {
+        if (fast) burnerLightTween=Tween.to(flameLights.get(2), 1, 0.25f).target(target).ease(eq).start();
+        else burnerLightTween=Tween.to(flameLights.get(2), 1, 1f).target(target).ease(eq).start();
     }
 
     public void fastBurner( ) {
@@ -440,7 +441,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
             setEmitterVal(emitters.get(0).getEmission(), 2000, false, false);
             emitters.get(0).start();
-            setBurnerLightTarget(burnerOrigDist*5,TweenEquations.easeOutElastic);
+            setBurnerLightTarget(burnerOrigDist*5,TweenEquations.easeOutElastic, false);
         }
         //setEmitterVal(emitters.get(0).getAngle(), 90 - rotation.get() * 10, true, true);
     }
@@ -455,19 +456,19 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 if (vel.y > 1 ) {   //if moving up fastish and burner set to low (might want to leave out last condition)
                     //System.out.println("2, "+emitters.get(0).getEmission().getHighMax());
                     setEmitterVal(emitters.get(0).getEmission(), 300 + vel.y * 750, false, false);
-                    setBurnerLightTarget(vel.y*(burnerOrigDist/2f)+burnerOrigDist, TweenEquations.easeOutElastic);
+                    setBurnerLightTarget(vel.y*(burnerOrigDist/2f)+burnerOrigDist, TweenEquations.easeOutElastic, false);
                     emitters.get(0).start();
                 } else if (vel.y < 1 && emitters.get(0).getEmission().getHighMax() != 300) {    //if moving slow and burner not set to low, reset
                     setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
                     emitters.get(0).start();
-                    setBurnerLightTarget( burnerOrigDist, TweenEquations.easeOutElastic);
+                    setBurnerLightTarget( burnerOrigDist, TweenEquations.easeOutElastic, false);
                     //System.out.println("3, "+emitters.get(0).getEmission().getHighMax());
                 }
 
             } else if (vel.y < -2.5 && !emitters.get(0).isComplete()) { //if descending let current burner anim finish then turn it off
                 emitters.get(0).allowCompletion();
                 if (getLightDist("burner")!=0 && burnerLightTween.getTargetValues()[0]!=0){
-                    setBurnerLightTarget( 0, TweenEquations.easeOutCirc);
+                    setBurnerLightTarget( 0, TweenEquations.easeInCirc, true);
                 }
                 //System.out.println("4, "+emitters.get(0).getEmission().getHighMax());
             } else if (vel.y >= -2.5f ) {//if stopped falling go back to flame
@@ -476,7 +477,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     //System.out.println("6, "+emitters.get(0).getEmission().getHighMax());
                     setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
                     emitters.get(0).start();
-                    setBurnerLightTarget(burnerOrigDist, TweenEquations.easeOutElastic);
+                    setBurnerLightTarget(burnerOrigDist, TweenEquations.easeOutElastic, false);
             }
     }
 
@@ -546,7 +547,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("very fast");
         } else if (emitters.get(0).getEmission().getHighMax() == 2000){ //if past fastBurning stage, change emission to 300
             setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
-            setBurnerLightTarget( burnerOrigDist, TweenEquations.easeOutElastic);
+            setBurnerLightTarget( burnerOrigDist, TweenEquations.easeOutElastic, false);
             //System.out.println("not very fast and reset");
         }
 
