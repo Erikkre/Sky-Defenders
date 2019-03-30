@@ -458,13 +458,13 @@ public class AssetHandler {
 
     public static TextureRegion airshipRack(int armorLvl){
             Texture rack = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"rack"+armorLvl+".png"));
-            rack.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+            rack.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             return new TextureRegion(rack);
     }
 
     public static TextureRegion armor(int armorLvl) {
         Texture armor = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"armor"+armorLvl+".png"));
-        armor.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        armor.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         return new TextureRegion(armor);
     }
 

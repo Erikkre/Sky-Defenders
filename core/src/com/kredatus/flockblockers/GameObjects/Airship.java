@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -30,7 +30,6 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
-    private Circle boundingCir;
     public static Vector2 pos, vel=new Vector2(), thrusterOrigPos; //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
 
@@ -42,7 +41,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public static int armor, health; //slowdownSpeed;
 
-    public static int rackLvl, burnerLvl, healthLvl, armorLvl, mobilityLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
+    public static int rackLvl, burnerLvl, healthLvl, armorLvl, speedLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
     public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, armorTexture, pipeTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
 
     //positions 28,31    82,31  110-136 and 137-163
@@ -50,7 +49,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public ArrayList<Turret> turretList=new ArrayList<Turret>(13);
     public Polygon rackHitbox, balloonHitbox, prelimBoundPoly1, prelimBoundPoly2;
 
-    public int tW=32, tH=33;
+    public int tW=41, tH=38;
     public static int airshipTouchPointer=-1, camWidth, camHeight;
     public float fingerAirshipXDiff, fingerAirshipYDiff;
     //public static boolean airshipTouched;
@@ -63,7 +62,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     protected ArrayList<Float> flashLengths=new ArrayList<Float>();
 
     public Tween tween, burnerLightTween, rightThrusterLightTween, leftThrusterLightTween, rotationTween;
-    float inputX, inputY, speedDivisor;
+    float inputX, inputY, speed;
     public static boolean airshipTouched;
 
     public static float preX, preY, maxInputX;
@@ -80,30 +79,39 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public static float[] airshipTint, airShipCloudTint;
     public boolean hitMaxBrightnessCloudBrightening=false;
-    public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850};
+    public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850}, 
+            speedValues={55, 65, 75, 87, 100};
     public static TextureRegion[] armorTextures=new TextureRegion[6], rackTextures=new TextureRegion[6];
     
     public int nextTurretPosition;
 
+    public void healthUp(){
+        health=healthValues[++healthLvl];
+    }
     public void armorUp(){
-        armor=armorValues[++armorLvl];
+        assignRackAndArmor(++armorLvl,rackLvl);
+    }
+    public void rackUp(){
+        assignRackAndArmor(armorLvl,++rackLvl);
     }
     public void burnerUp(){
         setEmitterVal(emitters.get(0).getSpawnWidth(), (++burnerLvl+1)*pipeWidth*1.6f, false, false);
     }
+    public void speedUp(){
+        speed=speedValues[++speedLvl];
+    }
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth =camWidth;
         this.camHeight=camHeight;
-
-
+        
         burnerLvl=0;
         healthLvl=0;
         armorLvl=0;
         rackLvl=0;
-        mobilityLvl=0;
+        speedLvl=0;
         health=healthValues[healthLvl];
         armor=armorValues[armorLvl];
-
+        speed=speedValues[speedLvl];
         startY=camHeight/2f; //-height;
         startX=0; //-balloonWidth;
         pos=new Vector2(startX, startY);
@@ -142,8 +150,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //slowdownSpeed=20;
         //dragSpeed=10f;
 
-        speedDivisor=50f;//50, 65, 80, 95, 110  higher the faster
-
         loadEffects();
 
         //also done in BirdHandler class every time background changes
@@ -154,7 +160,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         addTurret('f');
 
         setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
-        burnerUp();
+        burnerUp();armorUp();armorUp();armorUp();armorUp();armorUp();rackUp();speedUp();speedUp();
     }
 
     private void addTurret(char type){//button will upgrade turret based on position of click choosing which turretPosition on a rack diagram thats blown up on screen when you tap upgrade i.e.
@@ -175,55 +181,55 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private void assignBalloonBounds() {
         float x = pos.x, y = pos.y, rB = balloonWidth / 2f, hB = balloonHeight;
 
-        prelimBoundPoly2 = new Polygon(new float[]{x - balloonWidth / 2f, y, x - balloonWidth / 2f, y + hB, x + balloonWidth / 2f, y + hB, x + balloonWidth / 2f, y});//left side
-        prelimBoundPoly1 = new Polygon(new float[]{x - rackWidth / 2f, y, x - rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y});
+        //prelimBoundPoly2 = new Polygon(new float[]{x - balloonWidth / 2f, y, x - balloonWidth / 2f, y + hB, x + balloonWidth / 2f, y + hB, x + balloonWidth / 2f, y});//left side
+        //prelimBoundPoly1 = new Polygon(new float[]{x - rackWidth / 2f, y, x - rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y});
 
         balloonHitbox = new Polygon(new float[]{
-                x, y + hB, x - rB * 0.60f, y + hB * 0.92f, x - rB * 0.98f, y + hB * 0.67f, x - rB * 0.90f, y + hB * 0.37f, x - rB * 0.40f, y,  //top to bottom left of burner
-                x + rB * 0.40f, y, x + rB * 0.90f, y + hB * 0.37f, x + rB * 0.98f, y + hB * 0.67f, x + rB * 0.60f, y + hB * 0.92f //to top of balloon
+                x, y + hB, x - rB * 0.60f, y + hB * 0.92f, x - rB * 0.95f, y + hB * 0.74f, x - rB * 0.88f, y + hB * 0.45f, x - rB * 0.15f, y-tH*0.2f,  //top to bottom left of burner
+                x + rB * 0.15f, y-tH*0.2f, x + rB * 0.88f, y + hB * 0.45f, x + rB * 0.95f, y + hB * 0.74f, x + rB * 0.60f, y + hB * 0.92f //to top of balloon
         });
+        balloonHitbox.setOrigin(startX,startY);
     }
 
     private void changeRackBounds(){
         float x = pos.x, y = pos.y;
                 if (rackLvl==0){
                 rackHitbox = new Polygon(new float[] {
-                        x - tW * 2, y ,         x - tW * 2, y - 1 * tH , //bottom left rack
+                        x - tW * 2, y -tH*0.2f,         x - tW * 2, y - 1 * tH , //bottom left rack
                         x, y - (1 * tH) - armorHeight,  //tip of bottom of armor
-                        x + tW * 2, y - 1 * tH ,     x + tW * 2, y ,     //bottom right of burner
+                        x + tW * 2, y - 1 * tH ,     x + tW * 2, y-tH*0.2f ,     //bottom right of burner
                         }
                     );
                 } else if (rackLvl==1) {
                     rackHitbox = new Polygon(new float[]{
-                            x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,//bottom left rack
+                            x - tW * 2, y -tH*0.2f,     x - tW * 2, y - 2 * tH ,//bottom left rack
                             x, y - (2 * tH) - armorHeight,  //tip of bottom f armor
-                            x + tW * 2, y - 2 * tH ,   x + tW * 2, y ,     //bottom right of burner
+                            x + tW * 2, y - 2 * tH ,   x + tW * 2, y -tH*0.2f ,     //bottom right of burner
                         }
                     );
                 } else if (rackLvl==2) {
                     rackHitbox = new Polygon(new float[]{
-                            x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 3 * tH ,//bottom left rack
+                            x - tW * 2, y -tH*0.2f,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 3 * tH ,//bottom left rack
                             x, y - (3 * tH) - armorHeight,  //tip of bottom of armor
-                            x + tW * 1.5f, y - 3 * tH ,        x + tW * 2, y - 2 * tH ,    x + tW * 2, y ,     //bottom right of burner
+                            x + tW * 1.5f, y - 3 * tH ,        x + tW * 2, y - 2 * tH ,    x + tW * 2, y -tH*0.2f,     //bottom right of burner
                         }
                     );
                 } else if (rackLvl==3) {
                     rackHitbox = new Polygon(new float[]{
-                            x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 4 * tH ,//bottom left rack
+                            x - tW * 2, y -tH*0.2f,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 4 * tH ,//bottom left rack
                             x, y - (4 * tH) - armorHeight,  //tip of bottom of armor
-                            x + tW * 1.5f, y - 4 * tH ,        x + tW * 2, y - 2 * tH ,    x + tW * 2, y ,     //bottom right of burner
+                            x + tW * 1.5f, y - 4 * tH ,        x + tW * 2, y - 2 * tH ,    x + tW * 2, y -tH*0.2f,     //bottom right of burner
                         }
                     );
                 } else if (rackLvl==4) {
                     rackHitbox = new Polygon(new float[]{
-                            x - tW * 2, y ,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 4 * tH ,      x - tW * 1f, y - 5 * tH ,//bottom left rack
+                            x - tW * 2, y -tH*0.2f,     x - tW * 2, y - 2 * tH ,     x - tW * 1.5f, y - 4 * tH ,      x - tW * 1f, y - 5 * tH ,//bottom left rack
                             x, y - (5 * tH) - armorHeight,  //tip of bottom of armor
-                            x + tW * 1f, y - 5 * tH , x + tW * 1.5f, y - 4 * tH , x + tW * 2, y - 2 * tH , x + tW * 2, y ,     //bottom right of burner
+                            x + tW * 1f, y - 5 * tH , x + tW * 1.5f, y - 4 * tH , x + tW * 2, y - 2 * tH , x + tW * 2, y -tH*0.2f,     //bottom right of burner
                         }
                     );
                 }
-        //rackHitbox.setRotation(rotation.get());
-        //balloonHitbox.setRotation(rotation.get());
+        rackHitbox.setOrigin(startX,startY);
     }
 
     private void assignRackPositions() {
@@ -258,15 +264,15 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         assignRackAndArmor(armorLvl,rackLvl);
         armorHeight=armorTexture.getRegionHeight();armorWidth=armorTexture.getRegionWidth();
         balloonWidth=balloonTexture.getRegionWidth(); balloonHeight=balloonTexture.getRegionHeight();
-        thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*mobilityLvl));
+        thrusterWidth=sideThrustTexture.getRegionWidth(); thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.2f*speedLvl));
         rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
         pipeWidth=pipeTexture.getRegionWidth();
     }
 
     private void assignRackAndArmor(int armorLvl, int rackLvl){
         rackTexture=rackTextures[armorLvl];
-        rackTexture.setRegion(0,0,rackTexture.getRegionWidth(),tH*(rackLvl+1) + 3);
-        rackWidth=rackTexture.getRegionWidth(); rackHeight=rackTexture.getRegionHeight();
+        rackTexture.setRegion(0,0,rackTexture.getRegionWidth(),tH*(rackLvl+1));
+        rackHeight=rackTexture.getRegionHeight();
 
         armorTexture=armorTextures[armorLvl];
         armor=armorValues[armorLvl];
@@ -282,25 +288,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public boolean isOnCam(float x, float y){
         return x > 0 && x < camWidth && y < camHeight && y > 0;
-    }
-
-    public void checkBordersAndSlowdown(){
-        /*if (vel.x>0)vel.x-=slowdownSpeed; //slowdown
-        else if (vel.x<0)vel.x+=slowdownSpeed;
-
-        if (vel.y>0)vel.y-=slowdownSpeed;
-        else if (vel.y<0)vel.y+=slowdownSpeed;
-
-        if (pos.x < balloonWidth/2f&&vel.x<0   ||   pos.x>camWidth-balloonWidth/2f&&vel.x>0){
-            if (pos.x < balloonWidth/3f   ||   pos.x>camWidth-balloonWidth/3f){
-                if (Math.abs(vel.x)>30f){vel.x=Math.signum(vel.x)*30f;}vel.x=-vel.x;//max speed for bounceback
-            } else {vel.x*=0.5f;}
-        }
-        if (pos.y < rackHeight&&vel.y<0   ||   pos.y>camHeight-balloonHeight&&vel.y>0){
-            if (pos.y < rackHeight/3f  ||   pos.y>camHeight-balloonHeight/4f){
-                if (Math.abs(vel.y)>30f){vel.y=Math.signum(vel.y)*30f;}vel.y=-vel.y;//max speed for bounceback
-            } else {vel.y*=0.5f;}
-        }*/
     }
 
     private int getAirshipTouchPointer() {
@@ -331,7 +318,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             inputY = -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight) - fingerAirshipYDiff ;
 
             if (isOnCam(inputX, inputY)) {
-                double distance =(Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y-inputY),2)))/speedDivisor;
+                double distance =(Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y-inputY),2)))/speed;
                 //if (distance/speedDivisor<1.5f){//if distance is so small it takes under 1.5s to get there, take 1.5s anyways
                 //    tween = Tween.to(pos, 0, 1.5f).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
                 //} else {
@@ -447,7 +434,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void burnerOnOff() {
-
             if (vel.y >= 0) {   //if moving up
                 //System.out.println("1, "+emitters.get(0).getEmission().getHighMax());
 
@@ -468,7 +454,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             } else if (vel.y < -2.5 && !emitters.get(0).isComplete()) { //if descending let current burner anim finish then turn it off
                 emitters.get(0).allowCompletion();
                 if (getLightDist("burner")!=0 && burnerLightTween.getTargetValues()[0]!=0){
-                    setBurnerLightTarget( 0, TweenEquations.easeInCirc, true);
+                    setBurnerLightTarget( 0, TweenEquations.easeOutCirc, true);
                 }
                 //System.out.println("4, "+emitters.get(0).getEmission().getHighMax());
             } else if (vel.y >= -2.5f ) {//if stopped falling go back to flame
@@ -528,7 +514,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             if (changeLowToo) val.setLow(newVal);
     }
 
-    public void setHitboxRotation(Polygon poly, float rotation){
+    public void setHitboPos(Polygon poly){
         //use draw method
 
     }
@@ -539,8 +525,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing+", velX: "+vel.x);
         setDestAirship();
         //System.out.print(pos.toString());
-        setHitboxRotation(rackHitbox,25);
-        setHitboxRotation(balloonHitbox,25);
+        rackHitbox.setRotation(rotation.get());
+        balloonHitbox.setRotation(rotation.get());
         //System.out.print(BgHandler.isbgVertFast);
         if (BgHandler.isbgVertFast||BgHandler.endWaveBgMotion) {
             fastBurner();
@@ -579,13 +565,13 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }*/
 
             //System.out.println("Velocity change, vel: "+vel.x+", preVel: "+(tween.getTargetValues()[0]-pos.x));
-            float temp = vel.x/(2f*(speedDivisor/60f));
+            float temp = vel.x/(2f*(speed/60f));
             //-Math.signum(vel.x)*(temp*temp); //exponent of 2 //(float) (-Math.signum(xVel)*Math.pow(Math.abs(xVel),1.5));//-xVel*2f;
 
 
             for (Turret i : turretList) {
                 i.update();
-                i.position.set(pos.x - (startX - i.origPosition.x), pos.y - (startY - i.origPosition.y));
+                i.pos.set(pos.x - (startX - i.origPosition.x), pos.y - (startY - i.origPosition.y));
             }
             for (Light i: flameLights){
                 if (i instanceof CustomPointLight)  i.setPosition(pos.x - (startX - ((CustomPointLight) i).origPos.x), pos.y - (startY - ((CustomPointLight) i).origPos.y));
@@ -602,27 +588,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             for (Turret i : turretList) {
                 i.update();
             }
+            if (!rotationTween.isFinished()){//finish rotation
+                rotationTween.update(delta);
+            }
         }
-        /*if (!isTouched) {
-            //System.out.println("not touched");
-            checkBordersAndSlowdown();
-            pos.add(vel.cpy().scl(delta));
-            rackHitbox.translate(vel.cpy().scl(delta).x, vel.cpy().scl(delta).y);
-            balloonHitbox.translate(vel.cpy().scl(delta).x, vel.cpy().scl(delta).y);
-            for (Turret i : turretList){
-                i.position.add(vel.cpy().scl(delta));
-                i.update();
-            }
-        } else {
-            for (Turret i : turretList) {
-                i.position.set(pos.x - (startX - i.origPosition.x), pos.y - (startY - i.origPosition.y));
-                i.update();
-            }
 
-            rackHitbox.setPosition(pos.x - startX, pos.y - startY);
-            balloonHitbox.setPosition(pos.x - startX, pos.y - startY);
-            checkBordersAndSlowdown();
-        }*/
     }
 
     public void draw(SpriteBatch batcher, float delta) {
@@ -699,7 +669,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (!additiveEffects.get(1).isComplete()) {
             additiveEffects.get(1).draw(batcher, delta);
         }
-        if (!additiveEffects.get(2).isComplete()){
+        if (!additiveEffects.get(2).isComplete()) {
             additiveEffects.get(2).draw(batcher, delta);
         }
 
@@ -711,26 +681,22 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //}
 
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
-                rackWidth/2f, rackHeight/2f, rackWidth, rackHeight,1,1,rotation.get());
+                rackWidth/2f, rackHeight, rackWidth, rackHeight,1,1,rotation.get());
 
-        batcher.draw(armorTexture, pos.x-armorTexture.getRegionWidth()/2f, pos.y-rackHeight-armorTexture.getRegionHeight(),//+ (thrusterHeight)*i
-                armorWidth/2, armorTexture.getRegionHeight()/2,
+        batcher.draw(armorTexture, pos.x-armorWidth/2f, pos.y-rackHeight-armorHeight,//+ (thrusterHeight)*i
+                armorWidth/2, armorTexture.getRegionHeight()+rackHeight,
                 armorWidth, armorHeight, 1, 1, rotation.get());
 
-        for (Turret i : turretList) {
-            if (rotation.get() < 0) {//right movement, need to rotate less?
-                    xOffsetFromRotation =  -rotation.get() * (startX - i.origPosition.x)   / (140f);//divided by x distance from pos.x so effect less pronounced when close to center
-                    yOffsetFromRotation =  -rotation.get() * (startY - i.origPosition.y)   / (65f);
-            } else {        //left movement
-                    xOffsetFromRotation =   rotation.get() * (startX - i.origPosition.x)   / (140f);
-                    yOffsetFromRotation =  -rotation.get() * (startY - i.origPosition.y)   / (65f);
+        if (rotation.get() ==0) {
+            for (Turret i : turretList) {
+                batcher.draw(i.texture, i.pos.x - i.width / 2f, i.pos.y - i.height / 2f,
+                        i.width / 2f, i.height / 2f, i.width, i.height, 1f, 1f, i.getRotation());
             }
-            if (startX - i.origPosition.x<0) {//if on right side of airship we need to invert movements
-                yOffsetFromRotation=-yOffsetFromRotation/1.1f;
-            } else if (Math.abs(startX-i.origPosition.x) < 2) {xOffsetFromRotation=0;yOffsetFromRotation=0;}
-
-            batcher.draw(i.texture, i.position.x-i.width/2f + xOffsetFromRotation, i.position.y-i.height/2f + yOffsetFromRotation,
-                    i.width/2f, i.height/2f, i.width, i.height, 1f, 1f, i.getRotation());
+        } else {
+            for (Turret i : turretList) {
+                batcher.draw(i.texture, xOffsetDueToAirshipRotation(i) - i.width / 2f, yOffsetDueToAirshipRotation(i) - i.height / 2f,
+                        i.width / 2f, i.height / 2f, i.width, i.height, 1f, 1f, i.getRotation());
+            }
         }
     }
 
@@ -751,4 +717,32 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.println(currentFlashLength);
     }
 
+    public float xOffsetDueToAirshipRotation(Turret i){ //modified .draw from spritebatch, for using the equation that moves the turret's x,y with the rotation of the airship, so they can turn on the spot and stay on the racks
+            float x = i.pos.x, originX = (startX - i.origPosition.x), originY = (startY - i.origPosition.y), rotation = this.rotation.get();
+
+            float worldOriginX = x + originX;
+            float fx = -originX;
+            float fy = -originY;
+
+            float x1;
+            float u = MathUtils.cosDeg(rotation);
+            float v = MathUtils.sinDeg(rotation);
+            x1 = u * fx - v * fy;
+
+        return x1 + worldOriginX;
+    }
+    public float yOffsetDueToAirshipRotation(Turret i){
+            float y = i.pos.y, originX = (startX - i.origPosition.x), originY = (startY - i.origPosition.y), rotation = this.rotation.get();
+
+            float worldOriginY = y + originY;
+            float fx = -originX;
+            float fy = -originY;
+
+            float y1;
+            float u = MathUtils.cosDeg(rotation);
+            float v = MathUtils.sinDeg(rotation);
+            y1 = v * fx + u * fy;
+
+            return y1+ worldOriginY;
+    }
 }

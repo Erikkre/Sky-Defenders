@@ -695,8 +695,6 @@ public void setRotate(float angle){
         shapeRendererCust.begin(ShapeRenderer.ShapeType.Line);
         shapeRendererCust.setColor(255,0,0, 1f);
 
-        //shapeRenderer.polygon(airship.prelimBoundPoly1.getTransformedVertices());
-        //shapeRenderer.polygon(airship.prelimBoundPoly2.getTransformedVertices());
         shapeRendererCust.polygon(airship.rackHitbox.getTransformedVertices());
         shapeRendererCust.polygon(airship.balloonHitbox.getTransformedVertices());
         shapeRendererCust.end();
