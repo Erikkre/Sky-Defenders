@@ -160,7 +160,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
         setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
-        burnerUp();armorUp();armorUp();armorUp();rackUp();rackUp();speedUp();
+        burnerUp();rackUp();rackUp();speedUp();//armorUp();
 
         addTurret('f');addTurret('f');addTurret('f');addTurret('f');addTurret('f');addTurret('f');
     }
@@ -669,15 +669,16 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
         }
 
-
-        //}
-
-
-
+        //************************* 30% of the tint ****************************
         Color c=batcher.getColor();
         batcher.setColor((c.r+2f)/3f,(c.g+2f)/3f,(c.b+2f)/3f,c.a);
         batcher.draw(sideThrustTexture, pos.x-thrusterWidth/2f, pos.y+ thrusterYPosition*balloonHeight ,
                 thrusterWidth/2f, -thrusterYPosition*balloonHeight, thrusterWidth, thrusterHeight, 1, 1, rotation.get());
+
+
+        //************************* 16.66% of the tint ****************************
+        c=batcher.getColor();
+        batcher.setColor((c.r+1f)/2f,(c.g+1f)/2f,(c.b+1f)/2f,c.a);
 
         batcher.draw(rackTexture, pos.x-rackWidth/2f, pos.y-rackHeight,
                 rackWidth/2f, rackHeight, rackWidth, rackHeight,1,1,rotation.get());
