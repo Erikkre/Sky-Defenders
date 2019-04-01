@@ -367,7 +367,7 @@ public class AssetHandler {
         boostdown.flip(false, true);
 
         f0Texture= new Texture(Gdx.files.internal("sprites"+File.separator+"turrets"+File.separator+"f0.png"));
-        f0Texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        f0Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         //turret.flip(false, true);
         f0 = new TextureRegion(f0Texture,0, 4,32,13);
         f0Proj = new TextureRegion(f0Texture,0, 0,32,3);
@@ -448,7 +448,7 @@ public class AssetHandler {
         airshipBalloon = new TextureRegion(airshipBalloonTexture);
 
         airshipSideThrusterTexture = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"sideThruster.png"));
-        airshipSideThrusterTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        airshipSideThrusterTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         airshipSideThruster = new TextureRegion(airshipSideThrusterTexture, airshipSideThrusterTexture.getWidth(), airshipSideThrusterTexture.getHeight());
 
         airshipBurnerPipeTexture = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"burnerPipes.png"));

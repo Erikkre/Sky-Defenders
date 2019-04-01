@@ -180,7 +180,7 @@ public class BirdHandler {
     }
 
     public void pause(){
-        if (waveTypeCnt!=3 && waveTypeCnt!=0 && bgHandler.isBirdSpawning) task.cancel();    //if not fire or phoenix, cancel. dont make taskRunning=false
+        if (waveTypeCnt!=3 && waveTypeCnt!=0 && bgHandler.isBirdSpawning && taskRunning) task.cancel();    //if not fire or phoenix, cancel. dont make taskRunning=false
     }
 
     public void resume(){
