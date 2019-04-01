@@ -52,11 +52,11 @@ public class BgHandler {
     public Timeline horizPositionBg, vertPositionBg,smallShake, bigShake;
     private TweenCallback startStoryIntroAndSpawns, backgroundStackReset, shakeCamCallback, endBirdSpawn;
     public static float camHeight, camWidth, bgStackHeight=separatorHeight+bgh+bgh;
-    public static boolean isPastStoryIntro, isCameraShake, isBirdSpawning, stackJustReset, isbgVertFast;
+    public static boolean isPastStoryIntro, isCameraShake, isBirdSpawning, stackJustReset, isbgVertFast, changingBalloonBrightness;
     private OrthographicCamera cam;
     private GameRenderer renderer;
     public static int bgStackStartYHeight=0;
-    public static boolean isMiddleOfCloud   ;
+    public static boolean isMiddleOfCloud, irregularMotion;
     public BgHandler(float camWidth, float camHeight, int birdType){
         //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
         this.camHeight=camHeight;
@@ -230,22 +230,28 @@ public class BgHandler {
             vertPositionBg.update(delta);
             //yVelAbs=Math.abs(vert.get()-preVert);
 
-            //System.out.println("isbgVertFast: "+isbgVertFast);
+
+            //System.out.println(vert.get()+" "+isbgVertFast);
             if ( vert.get()>0.20*-bgStackHeight||vert.get()<0.67*-bgStackHeight ) {  //test this
                 if (!isbgVertFast) {
                     isbgVertFast=true;
                 }
-                if (vert.get()>0.03*-bgStackHeight||vert.get()<0.97*-bgStackHeight) {
-                    if (!isMiddleOfCloud) {
-                        isMiddleOfCloud=true;
-                        //System.out.println("Middle of cloud");
+                if (vert.get()>0.15*-bgStackHeight||vert.get()<0.85*-bgStackHeight) {
+                    if (!changingBalloonBrightness) {
+                        changingBalloonBrightness = true;
                     }
-
-                } else if (isMiddleOfCloud) {
-                    isMiddleOfCloud =false;
-                    //system.out.println("Not Middle of cloud");
+                    if (vert.get() > 0.02 * -bgStackHeight || vert.get() < 0.92 * -bgStackHeight) {
+                        if (!isMiddleOfCloud) {
+                            isMiddleOfCloud = true;
+                            //System.out.println("Middle of cloud");
+                        }
+                    } else if (isMiddleOfCloud) {
+                        isMiddleOfCloud = false;
+                        //system.out.println("Not Middle of cloud");
+                    }
+                } else if (changingBalloonBrightness){
+                    changingBalloonBrightness=false;
                 }
-
             } else if (isbgVertFast) {
                     isbgVertFast=false;
             }
@@ -270,13 +276,13 @@ public class BgHandler {
                 //vertPositionBg.pause();
                 //System.out.println(BirdHandler.birdQueue+ ", ActiveBirdQueue: "+BirdHandler.activeBirdQueue+"************************************************");
                 if (  ((bgNumber+1)%9==0) ){       //if last background motion before round end clouds slow down at the end
-                    System.out.println("Fast moving 1");
+                    //System.out.println("Fast moving 1");
 
                     (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
                             .push(Tween.to(vert, -1, 1.5f).targetRelative(-(separatorHeight + bgh + bgh)-vert.get()).ease(TweenEquations.easeOutSine).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                     ).start();
                 } else if (  !((bgNumber-2)%9==0) && !((bgNumber-3)%9==0)){ // && !((bgNumber-1)%9==0) && !((bgNumber)%9==0)    cam is at round end clouds when ((bgNumber-2)%9==0  (every 3 cities)
-                        System.out.println("Fast moving 2");
+                        //System.out.println("Fast moving 2");
 
                         (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
                                 .push(Tween.to(vert, -1, 1.5f).targetRelative(-(separatorHeight + bgh + bgh)-vert.get()).ease(TweenEquations.easeNone).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))

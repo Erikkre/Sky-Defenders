@@ -18,6 +18,7 @@ import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -176,7 +177,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //thrusterOrigPos=new Vector2(pos.x);
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x-thrusterWidth/1.1f, thrusterOrigPos.y)));
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x+thrusterWidth/1.1f, thrusterOrigPos.y)));
-        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x,pos.y+pipeTexture.getRegionHeight()*2)));//position same as bottom of burner
+        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,  0, new Vector2(pos.x,pos.y+pipeTexture.getRegionHeight()*2)));//position same as bottom of burner
         //flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x+15,pos.y+15)));
          //leftThrusterLightTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
         //rightThrusterLightTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
@@ -380,7 +381,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             else if (waveTypeCnt==4) return new float[]{75,  201, 142};
             else if (waveTypeCnt==5) return new float[]{154, 155, 158};
             else if (waveTypeCnt==6) return new float[]{230, 49,  252};
-            else if (waveTypeCnt==7) return new float[]{178, 178, 47 };
+            else if (waveTypeCnt==7) return new float[]{200, 255, 0 };
         }
         return null;
     }
@@ -618,30 +619,31 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 }
                 */
 
-        if (BgHandler.isbgVertFast) {
+        if (BgHandler.changingBalloonBrightness) {
             if (!BgHandler.isMiddleOfCloud) {
-                if (!hitMaxBrightnessCloudBrightening) { //if still getting brighter
-                    System.out.println("Getting brighter");
-                    airShipCloudTint[0] += (255 - airShipCloudTint[0]) / 250f;
-                    airShipCloudTint[1] += (255 - airShipCloudTint[1]) / 250f;
-                    airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 250f;
-                } else if (airShipCloudTint[0] > airshipTint[0]) {   //if past max point and getting darker and brighter than original
-                    System.out.println("Getting darker");
-                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 7f;
-                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 7f;
-                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 7f;
+                if (!hitMaxBrightnessCloudBrightening ) { //if still getting brighter
+                    //System.out.println("Getting brighter");
+                    airShipCloudTint[0] += (255 - airShipCloudTint[0]) / 20f;
+                    airShipCloudTint[1] += (255 - airShipCloudTint[1]) / 20f;
+                    airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 20f;
+                } else if (!Arrays.equals(airShipCloudTint,airshipTint)) {   //if past max point and getting darker and brighter than original
+                    //System.out.println("Getting darker");
+                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 20f;
+                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 20f;
+                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 20f;
                 }
                 //if (airShipCloudTint[0] > 255)
                 batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
             } else {    //if is moving fast and in the middle of the cloud
                 if (!hitMaxBrightnessCloudBrightening) {//so we only do this block once
                     hitMaxBrightnessCloudBrightening=true;
-                    System.out.println("hit middle of cloud");
+                    //System.out.println("hit middle of cloud");
                     if ((BgHandler.bgNumber-1)%9==0) {    //if changing waves, change colors
-                        System.out.println("Change colors");
+                        //System.out.println("New color target");
                         //System.out.println("Bgnumber: "+(bgNumber-2)+", ");
                         setFireColor((BgHandler.bgNumber-1)/9);
                         airshipTint=Airship.chooseColorBasedOnWave((BgHandler.bgNumber-1)/9, true);
+                        airShipCloudTint[0]=255f;airShipCloudTint[1]=255f;airShipCloudTint[2]=255f;
                     }
                 }
             }
@@ -649,10 +651,13 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             if (hitMaxBrightnessCloudBrightening){ //if stopped going fast and had hit max brightness
                 //System.out.println("Not going fast, isFast= "+BgHandler.isbgVertFast);
                 hitMaxBrightnessCloudBrightening=false;
+                System.out.println("Done getting darker");
             }
             if (airShipCloudTint[0]!=airshipTint[0]){airShipCloudTint=airshipTint.clone();
             System.out.println("airship cloud tint");
                 }
+            //System.out.println("Batcher r set to: "+ (airshipTint[0] / 255f));
+            //System.out.println("*******************************************************************************************************************");
             batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
         }
 
