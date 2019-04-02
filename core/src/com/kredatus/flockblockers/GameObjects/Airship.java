@@ -1,3 +1,4 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.Gdx;
@@ -600,7 +601,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 rotationTween.update(delta);
             }
         }
-
     }
 
     public void drawReticle(SpriteBatch batcher) {
@@ -618,7 +618,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 batcher.draw(reticleTexture, turretAimer.targetBird.x - turretAimer.targetBird.width / 3f, turretAimer.targetBird.y - turretAimer.targetBird.height / 15f - turretAimer.targetBird.width / 3f,
                         turretAimer.targetBird.width/3f, turretAimer.targetBird.width/3f, turretAimer.targetBird.width/1.5f, turretAimer.targetBird.width/1.5f,reticleSize.get(),reticleSize.get(), reticleRotation--);
                     //System.out.println("Draw reticle with width " + turretAimer.targetBird.width);
-
             }
             batcher.setColor(Color.WHITE);
         }
@@ -662,10 +661,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             if (hitMaxBrightnessCloudBrightening){ //if stopped going fast and had hit max brightness
                 //System.out.println("Not going fast, isFast= "+BgHandler.isbgVertFast);
                 hitMaxBrightnessCloudBrightening=false;
-                System.out.println("Done getting darker");
+                //System.out.println("Done getting darker");
             }
             if (airShipCloudTint[0]!=airshipTint[0]){airShipCloudTint=airshipTint.clone();
-            System.out.println("airship cloud tint");
+            //System.out.println("airship cloud tint");
                 }
             //System.out.println("Batcher r set to: "+ (airshipTint[0] / 255f));
             //System.out.println("*******************************************************************************************************************");
@@ -716,7 +715,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
 
         //for (int i=0;i<mobilityLvl+1;i++){ //starting at bottom of balloon, draw different number of thrusters
-
 
 
         if (rotation.get() ==0) {

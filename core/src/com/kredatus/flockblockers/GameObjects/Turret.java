@@ -229,7 +229,7 @@ public class Turret {
             gunTargetPointer=-1;                                                   //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
             //System.out.println("GunTargetPointer set to: "+gunTargetPointer+" because "+(!Gdx.input.isTouched(gunTargetPointer))+" and "+(Airship.airshipTouchPointer==gunTargetPointer));
 
-            System.out.println("Set Bird if closer*****************************************");
+            //System.out.println("Set Bird if closer*****************************************");
             BirdAbstractClass target=null;
             double distance;
             if (targetBird!=null){

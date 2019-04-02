@@ -1,4 +1,4 @@
-
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 
 package com.kredatus.flockblockers.Helpers;
 
