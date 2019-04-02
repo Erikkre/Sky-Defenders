@@ -28,7 +28,7 @@ public class Turret {
     private int rotation, targetRot, behindRotation, spreadAngle=50;
     private Timer timer;
     private TimerTask timerTask;
-    private BirdAbstractClass targetBird;
+    public BirdAbstractClass targetBird;
     public TextureRegion texture, projTexture;
     char turretType;
     public int lvl = 0, firingInterval, timeSinceLastShot, gunTargetPointer=-1;
@@ -195,11 +195,13 @@ public class Turret {
 
     public void update() {
         if (Gdx.input.justTouched()  && gunTargetPointer==-1 ) {   //airShip updates first so takes the spot
+            if (targetBird!=null)targetBird=null;
             //System.out.println("touched");
             if (Airship.airshipTouchPointer >= 0) {
                 for (int i = 0; i <= 1; i++) {
                     if (i != Airship.airshipTouchPointer) {
                         gunTargetPointer = i;
+                            //so that reticle knows to stop going to targeted bird but finger instead
                         //System.out.println("Set and GunTargetPointer set to: " + gunTargetPointer);
                         break;
                     }

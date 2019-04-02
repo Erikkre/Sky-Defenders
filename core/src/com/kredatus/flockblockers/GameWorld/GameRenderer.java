@@ -612,14 +612,7 @@ public void setRotate(float angle){
             flashShader.setUniformf("flashOpacityValue", airship.flashOpacityValue.get());
             //flashShader.begin();
         }
-        airship.draw(batcher, delta);
-        if (airship.isFlashing){
 
-            //batcher.setColor(1,1,1,1);
-            batcher.setShader(null);
-            //flashShader.end();
-            airship.flashTween.update(delta);
-        }
 
         for (BirdAbstractClass k : deadBirdQueue) {
             if (k.isFlashing){
@@ -650,6 +643,14 @@ public void setRotate(float angle){
             }
         }
 
+
+        airship.draw(batcher, delta);   //after deadBirds but before activeBirds
+        if (airship.isFlashing){
+            //batcher.setColor(1,1,1,1);
+            batcher.setShader(null);
+            //flashShader.end();
+            airship.flashTween.update(delta);
+        }
         /*for (Turret i : turretList) {
             batcher.draw(i.texture, i.position.x-i.width/2, i.position.y-i.height/2,
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.getRotation());
@@ -685,12 +686,13 @@ public void setRotate(float angle){
                 k.flashTween.update(delta);
 
             }
+
             //batcher.end();
 
 
             //batcher.begin();
         }
-
+        airship.drawReticle(batcher);
         /*
         shapeRendererCust.begin(ShapeRenderer.ShapeType.Line);
         shapeRendererCust.setColor(255,0,0, 1f);

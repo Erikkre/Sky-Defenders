@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.kredatus.flockblockers.CustomLights.CustomConeLight;
 import com.kredatus.flockblockers.CustomLights.CustomPointLight;
+import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
@@ -43,7 +44,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static int armor, health; //slowdownSpeed;
 
     public static int rackLvl, burnerLvl, healthLvl, armorLvl, speedLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
-    public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, armorTexture, pipeTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
+    public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, armorTexture, pipeTexture, reticleTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
 
     //positions 28,31    82,31  110-136 and 137-163
 
@@ -101,6 +102,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         speed=speedValues[++speedLvl];
         thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.3f*speedLvl));
     }
+    private int reticleRotation;
+    private Value reticleSize=new Value(0.9f);
+    public Tween reticleSizeTween= Tween.to(reticleSize,1,0.7f).target(1.1f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth =camWidth;
         this.camHeight=camHeight;
@@ -260,6 +264,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         pipeTexture=AssetHandler.airshipBurnerPipe;
         balloonTexture=AssetHandler.airshipBalloon;
         sideThrustTexture=AssetHandler.airshipSideThruster;
+        reticleTexture=AssetHandler.reticle;
 
         for (int i=0;i<6;i++){
             armorTextures[i]=AssetHandler.armor(i);
@@ -518,11 +523,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             if (changeLowToo) val.setLow(newVal);
     }
 
-    public void setHitboxPos(Polygon poly){
-        //use draw method
-    }
-
     public void update(float delta) {
+        reticleSizeTween.update(delta);
         setEmitterVal(emitters.get(0).getAngle(), 90 - rotation.get() * 3, true, true);//always change angle of burner fire based on arship rot
 
         //System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing+", velX: "+vel.x);
@@ -601,39 +603,48 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     }
 
+    public void drawReticle(SpriteBatch batcher) {
+        if (turretList.size() > 0) {
+            if (BgHandler.changingBalloonBrightness) batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
+            else batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
+            System.out.println("Turretlist size: " + turretList.size());
+            Turret turretAimer = turretList.get(0);
+
+            if (turretAimer.targetBird != null) {   //if ai is engaged
+                batcher.draw(reticleTexture, turretAimer.targetBird.x - turretAimer.targetBird.width / 3f, turretAimer.targetBird.y - turretAimer.targetBird.height / 15f - turretAimer.targetBird.width / 3f,
+                        turretAimer.targetBird.width/3f, turretAimer.targetBird.width/3f, turretAimer.targetBird.width/1.5f, turretAimer.targetBird.width/1.5f,reticleSize.get(),reticleSize.get(), reticleRotation--);
+                    System.out.println("Draw reticle with width " + turretAimer.targetBird.width);
+
+            } else if (turretAimer.gunTargetPointer != -1) {    //if using finger to aim
+                    batcher.draw(reticleTexture, InputHandler.scaleX(Gdx.input.getX(turretAimer.gunTargetPointer)) - reticleTexture.getRegionWidth() / 3f,
+                            -(InputHandler.scaleY(Gdx.input.getY(turretAimer.gunTargetPointer)) - camHeight) - reticleTexture.getRegionWidth() / 3f,
+                            reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 1.5f, reticleTexture.getRegionHeight() / 1.5f,reticleSize.get(),reticleSize.get(),reticleRotation--);
+                }
+            batcher.setColor(Color.WHITE);
+            }
+    }
+
     public void draw(SpriteBatch batcher, float delta) {
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make all textures ghostly, see what blending function actually enables that
 
         additiveEffects.get(0).draw(batcher, delta);
-/*if (!hitMaxBrightnessCloudBrightening) { //if still getting brighter
-                    System.out.println("Getting brighter");
-                    airShipCloudTint[0] += (255 - airShipCloudTint[0]) / 10f;
-                    airShipCloudTint[1] += (255 - airShipCloudTint[1]) / 10f;
-                    airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 10f;
-                } else if (airShipCloudTint[0] > airshipTint[0]) {   //if past max point and getting darker and brighter than original
-                    System.out.println("Getting darker");
-                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 10f;
-                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 10f;
-                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 10f;
-                }
-                */
 
         if (BgHandler.changingBalloonBrightness) {
+            batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
+
             if (!BgHandler.isMiddleOfCloud) {
                 if (!hitMaxBrightnessCloudBrightening ) { //if still getting brighter
                     //System.out.println("Getting brighter");
-                    airShipCloudTint[0] += (255 - airShipCloudTint[0]) / 20f;
-                    airShipCloudTint[1] += (255 - airShipCloudTint[1]) / 20f;
-                    airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 20f;
+                    airShipCloudTint[0] += (255 - airShipCloudTint[0]) / 30f;
+                    airShipCloudTint[1] += (255 - airShipCloudTint[1]) / 30f;
+                    airShipCloudTint[2] += (255 - airShipCloudTint[2]) / 30f;
                 } else if (!Arrays.equals(airShipCloudTint,airshipTint)) {   //if past max point and getting darker and brighter than original
                     //System.out.println("Getting darker");
-                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 20f;
-                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 20f;
-                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 20f;
+                    airShipCloudTint[0] -= (airShipCloudTint[0]-airshipTint[0]) / 30f;
+                    airShipCloudTint[1] -= (airShipCloudTint[1]-airshipTint[1]) / 30f;
+                    airShipCloudTint[2] -= (airShipCloudTint[2]-airshipTint[2]) / 30f;
                 }
-                //if (airShipCloudTint[0] > 255)
-                batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
             } else {    //if is moving fast and in the middle of the cloud
                 if (!hitMaxBrightnessCloudBrightening) {//so we only do this block once
                     hitMaxBrightnessCloudBrightening=true;
@@ -689,7 +700,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 rackWidth/2f, rackHeight, rackWidth, rackHeight,1,1,rotation.get());
 
         batcher.draw(armorTexture, pos.x-armorWidth/2f, pos.y-rackHeight-armorHeight,//+ (thrusterHeight)*i
-                armorWidth/2, armorTexture.getRegionHeight()+rackHeight,
+                armorWidth/2f, armorTexture.getRegionHeight()+rackHeight,
                 armorWidth, armorHeight, 1, 1, rotation.get());
 
         batcher.setColor(Color.WHITE);//draw balloon and pipes, then set color back to normal

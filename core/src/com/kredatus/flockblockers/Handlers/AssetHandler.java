@@ -454,6 +454,10 @@ public class AssetHandler {
         airshipBurnerPipeTexture = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"burnerPipes.png"));
         airshipBurnerPipeTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         airshipBurnerPipe = new TextureRegion(airshipBurnerPipeTexture);
+
+        reticleTexture=new Texture(Gdx.files.internal("sprites"+File.separator+"reticle4.png"));
+        reticleTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        reticle=new TextureRegion(reticleTexture);
     }
 
     public static TextureRegion airshipRack(int armorLvl){

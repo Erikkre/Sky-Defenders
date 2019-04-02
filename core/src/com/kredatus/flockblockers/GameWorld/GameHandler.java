@@ -40,7 +40,7 @@ public class GameHandler implements Screen {
     private TinyBirdHandler tinyBirdHandler;
     public UiHandler uiHandler;
     public LightHandler lightHandler;
-    private float runTime;
+    public static float runTime;
     public static int camWidth, camHeight;
     public boolean isPaused=false;
     public static double timeOfPause, timeOfResume;
