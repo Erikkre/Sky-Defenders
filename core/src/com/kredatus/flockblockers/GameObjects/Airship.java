@@ -289,7 +289,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         assignRackPositions();
     }
 
-    public boolean pointerOnAirship(int pointer){
+    public static boolean pointerOnAirship(int pointer){
         //System.out.println("NEW TOUCH ON AIRSHIP as y: "+y+", posY: "+pos.y+", x: "+x+", posX: "+x);
         float y = -(InputHandler.scaleY(Gdx.input.getY(pointer))-camHeight), x = InputHandler.scaleX(Gdx.input.getX(pointer));
         return y < pos.y + balloonHeight && y > pos.y - rackHeight && x < pos.x + ((balloonWidth + rackWidth) / 4f) && x > pos.x - ((balloonWidth + rackWidth) / 4f);//average width of airship between balloon and rack
@@ -607,21 +607,21 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (turretList.size() > 0) {
             if (BgHandler.changingBalloonBrightness) batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
             else batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
-            System.out.println("Turretlist size: " + turretList.size());
+            //System.out.println("Turretlist size: " + turretList.size());
             Turret turretAimer = turretList.get(0);
 
-            if (turretAimer.targetBird != null) {   //if ai is engaged
+            if (turretAimer.gunTargetPointer != -1&&!Airship.pointerOnAirship(turretAimer.gunTargetPointer)) {    //if using finger to aim
+                batcher.draw(reticleTexture, turretAimer.lastFingerPosition.x - reticleTexture.getRegionWidth() / 3f,
+                        turretAimer.lastFingerPosition.y - reticleTexture.getRegionWidth() / 3f,
+                        reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 1.5f, reticleTexture.getRegionHeight() / 1.5f,reticleSize.get(),reticleSize.get(),reticleRotation--);
+            } else if (turretAimer.targetBird != null) {   //if ai is engaged
                 batcher.draw(reticleTexture, turretAimer.targetBird.x - turretAimer.targetBird.width / 3f, turretAimer.targetBird.y - turretAimer.targetBird.height / 15f - turretAimer.targetBird.width / 3f,
                         turretAimer.targetBird.width/3f, turretAimer.targetBird.width/3f, turretAimer.targetBird.width/1.5f, turretAimer.targetBird.width/1.5f,reticleSize.get(),reticleSize.get(), reticleRotation--);
-                    System.out.println("Draw reticle with width " + turretAimer.targetBird.width);
+                    //System.out.println("Draw reticle with width " + turretAimer.targetBird.width);
 
-            } else if (turretAimer.gunTargetPointer != -1) {    //if using finger to aim
-                    batcher.draw(reticleTexture, InputHandler.scaleX(Gdx.input.getX(turretAimer.gunTargetPointer)) - reticleTexture.getRegionWidth() / 3f,
-                            -(InputHandler.scaleY(Gdx.input.getY(turretAimer.gunTargetPointer)) - camHeight) - reticleTexture.getRegionWidth() / 3f,
-                            reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 1.5f, reticleTexture.getRegionHeight() / 1.5f,reticleSize.get(),reticleSize.get(),reticleRotation--);
-                }
-            batcher.setColor(Color.WHITE);
             }
+            batcher.setColor(Color.WHITE);
+        }
     }
 
     public void draw(SpriteBatch batcher, float delta) {

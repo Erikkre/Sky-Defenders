@@ -35,6 +35,7 @@ public class Turret {
     private double lastShotTime=0;
 
     public boolean firingStoppedByGamePause;
+    public Vector2 lastFingerPosition=new Vector2();
 
     public Turret(char turretType, Vector2 pos){
         this.pos = pos;
@@ -52,7 +53,7 @@ public class Turret {
             texture.flip(false,true);
             rotation=180;
         }*/
-        setTarget(BirdHandler.activeBirdQueue.peek());
+        targetBird=BirdHandler.activeBirdQueue.peek();
         setupFiring();
     }
 
@@ -195,12 +196,14 @@ public class Turret {
 
     public void update() {
         if (Gdx.input.justTouched()  && gunTargetPointer==-1 ) {   //airShip updates first so takes the spot
-            if (targetBird!=null)targetBird=null;
+
             //System.out.println("touched");
             if (Airship.airshipTouchPointer >= 0) {
                 for (int i = 0; i <= 1; i++) {
-                    if (i != Airship.airshipTouchPointer) {
+                    if (i!=Airship.airshipTouchPointer&&!Airship.pointerOnAirship(i)&&Gdx.input.isTouched(i)) {
                         gunTargetPointer = i;
+                        //System.out.println("Pointer "+i+" "+ Airship.pointerOnAirship(i));
+                        //if (targetBird!=null)targetBird=null;
                             //so that reticle knows to stop going to targeted bird but finger instead
                         //System.out.println("Set and GunTargetPointer set to: " + gunTargetPointer);
                         break;
@@ -208,31 +211,50 @@ public class Turret {
                 }
             } else {
                 gunTargetPointer = 0;
+                //if (targetBird!=null)targetBird=null;
+
                 //System.out.println("Not set and GunTargetPointer set to: " + gunTargetPointer);
             }
         }
 
-        if (gunTargetPointer>=0&&Gdx.input.isTouched(gunTargetPointer)){
-            setRotation(0, 0, -(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight) - pos.y, InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)) - pos.x);
+        if (gunTargetPointer>=0&&Gdx.input.isTouched(gunTargetPointer)&&!Airship.pointerOnAirship(gunTargetPointer)){
+            lastFingerPosition.set(InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)),-(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight));
+            setRotation(0, 0,  lastFingerPosition.y - pos.y,lastFingerPosition.x  - pos.x);
             rotateToTarget();
             //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
             if (!firing && targetAquired) {
                 startFiring();
             }
         } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
-                                                                                    //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
+            gunTargetPointer=-1;                                                   //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
             //System.out.println("GunTargetPointer set to: "+gunTargetPointer+" because "+(!Gdx.input.isTouched(gunTargetPointer))+" and "+(Airship.airshipTouchPointer==gunTargetPointer));
-            gunTargetPointer=-1;
+
+            System.out.println("Set Bird if closer*****************************************");
+            BirdAbstractClass target=null;
+            double distance;
+            if (targetBird!=null){
+                if (BirdHandler.activeBirdQueue.size()>1) {//need min 2 birds to switch between
+                    double minDistance=camHeight*3f;
+                    for (BirdAbstractClass i : BirdHandler.activeBirdQueue) {//if theres a bird closer to the reticle when we drop it than the current targetBird would be
+                        distance=Math.sqrt(Math.pow(lastFingerPosition.x - i.x, 2) + (Math.pow(lastFingerPosition.y - i.y, 2)));
+                        if (distance<minDistance) {minDistance=distance;target=i;}
+                    }
+                    if (minDistance < Math.sqrt(Math.pow(lastFingerPosition.x - targetBird.x, 2) + (Math.pow(lastFingerPosition.y - targetBird.y, 2)))) {
+                        targetBird = target;
+                        //System.out.println("Change target");
+                    }
+                }
+            }
         } else {//AI SYSTEM
             //System.out.println("TargetBird: "+targetBird);
             if (BirdHandler.activeBirdQueue.size() > 0) {
                 if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null) {
 
                     //System.out.println("1");
-                    setTarget(TargetHandler.targetBird);
+                    targetBird=TargetHandler.targetBird;
                     setRotation(targetBird.xVel, targetBird.yVel,targetBird.y- pos.y, targetBird.x- pos.x);
                     rotateToTarget();
-                } else if (targetBird!=null&&targetBird.isAlive&& BirdHandler.activeBirdQueue.contains(TargetHandler.targetBird)){
+                } else if (targetBird!=null&&targetBird.isAlive&&BirdHandler.activeBirdQueue.contains(targetBird)){
                     //System.out.println("2 "+ BirdHandler.activeBirdQueue);
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is vel but needs to be better scaled
@@ -253,12 +275,6 @@ public class Turret {
                 targetBird=null;
             }
         }
-
-
-    }
-
-    public void setTarget(BirdAbstractClass targetBird){
-        this.targetBird=targetBird;
     }
 
     private void turretSetup(char turretType, int lvl){
