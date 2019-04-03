@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ThingDefs>
+
+<ThingDef Abstract="True" Name="BaseEquipment">
+<equipmentType>Secondary</equipmentType>
+<label>equipment lacks label</label>
+<thingClass>ThingWithComps</thingClass>
+<category>Item</category>
+<useHitPoints>true</useHitPoints>
+<selectable>true</selectable>
+<graphicData>
+<onGroundRandomRotateAngle>35</onGroundRandomRotateAngle>
+</graphicData>
+<drawGUIOverlay>true</drawGUIOverlay>
+<statBases>
+<MaxHitPoints>100</MaxHitPoints>
+<Flammability>1.0</Flammability>
+<DeteriorationRate>2</DeteriorationRate>
+<SellPriceFactor>0.5</SellPriceFactor>
+</statBases>
+<altitudeLayer>Item</altitudeLayer>
+<description>Equipment lacks desc.</description>
+<comps>
+<li Class="CompProperties_Forbiddable"/>
+<li>
+<compClass>CompEquippable</compClass>
+</li>
+</comps>
+<alwaysHaulable>true</alwaysHaulable>
+<tickerType>Never</tickerType>
+
+</ThingDef>
+
+<ThingDef Abstract="True" Name="BaseGrenadeProjectile">
+<category>Projectile</category>
+<altitudeLayer>Projectile</altitudeLayer>
+<thingClass>Projectile_Explosive</thingClass>
+<label>projectile</label>
+<tickerType>Normal</tickerType>
+<useHitPoints>False</useHitPoints>
+<neverMultiSelect>True</neverMultiSelect>
+<graphicData>
+<shaderType>Transparent</shaderType>
+</graphicData>
+<projectile>
+<speed>12</speed>
+<flyOverhead>false</flyOverhead>
+</projectile>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseGrenadeProjectile">
+<defName>Proj_PFThrowableDynamite</defName>
+<label>Dynamite Stick</label>
+<thingClass>Projectile_Explosive</thingClass>
+<graphicData>
+<texPath>Effects/Dynamite</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<explosionRadius>2.5</explosionRadius>
+<damageDef>Bomb</damageDef>
+<damageAmountBase>30</damageAmountBase>
+<explosionDelay>75</explosionDelay>
+</projectile>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseEquipment">
+<defName>Throwable_PFDynamite</defName>
+<equipmentType>Primary</equipmentType>
+<label>Dynamite</label>
+<description>Old-fashion sticks of dynamite.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Throwables/Dynamite</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<techLevel>Industrial</techLevel>
+<statBases>
+<MarketValue>300</MarketValue>
+<RangedWeapon_Cooldown>2.00</RangedWeapon_Cooldown>
+</statBases>
+<weaponTags>
+<li>GrenadeDestructive</li>
+</weaponTags>
+<thingCategories>
+<li>Grenades</li>
+</thingCategories>
+<verbs>
+<li>
+<label>Throw Dynamite</label>
+<verbClass>Verb_LaunchProjectile</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<range>10.9</range>
+<forcedMissRadius>1.5</forcedMissRadius>
+<warmupTicks>100</warmupTicks>
+<noiseRadius>5</noiseRadius>
+<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+<soundCast>LightDynamite</soundCast>
+<targetParams>
+<canTargetLocations>true</canTargetLocations>
+</targetParams>
+<projectileDef>Proj_PFThrowableDynamite</projectileDef>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseGrenadeProjectile">
+<defName>Proj_ThrowableLFDynamite</defName>
+<label>Long Fuse Dynamite Stick</label>
+<thingClass>Projectile_Explosive</thingClass>
+<graphicData>
+<texPath>Effects/LFDynamite</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<explosionRadius>2.1</explosionRadius>
+<damageDef>Bomb</damageDef>
+<damageAmountBase>30</damageAmountBase>
+<explosionDelay>150</explosionDelay>
+</projectile>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseEquipment">
+<defName>Throwable_LFDynamite</defName>
+<equipmentType>Primary</equipmentType>
+<label>Long-fuse Dynamite</label>
+<description>Old-fashion sticks of dynamite with extended fuses.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Throwables/LFDynamite</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<techLevel>Industrial</techLevel>
+<statBases>
+<MarketValue>325</MarketValue>
+<RangedWeapon_Cooldown>2.00</RangedWeapon_Cooldown>
+</statBases>
+<weaponTags>
+<li>GrenadeDestructive</li>
+</weaponTags>
+<thingCategories>
+<li>Grenades</li>
+</thingCategories>
+<verbs>
+<li>
+<label>Throw Long-fuse Dynamite</label>
+<verbClass>Verb_LaunchProjectile</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<range>10.9</range>
+<forcedMissRadius>1.0</forcedMissRadius>
+<warmupTicks>120</warmupTicks>
+<noiseRadius>5</noiseRadius>
+<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+<soundCast>LightDynamite</soundCast>
+<targetParams>
+<canTargetLocations>true</canTargetLocations>
+</targetParams>
+<projectileDef>Proj_ThrowableLFDynamite</projectileDef>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseGrenadeProjectile">
+<defName>Proj_PFThrowablePulseGrenade</defName>
+<label>Pulse Grenade</label>
+<thingClass>Projectile_Explosive</thingClass>
+<graphicData>
+<texPath>Effects/PulseGrenade</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<explosionRadius>4.5</explosionRadius>
+<damageDef>EMP</damageDef>
+<damageAmountBase>120</damageAmountBase>
+<explosionDelay>80</explosionDelay>
+</projectile>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseEquipment">
+<defName>Throwable_PFPulseGrenade</defName>
+<equipmentType>Primary</equipmentType>
+<label>Pulse Grenades</label>
+<description>A grenade that when detonated releases a very strong EMP pulse that damages robots and electronics.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Throwables/PulseGrenade</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<techLevel>Spacer</techLevel>
+<statBases>
+<MarketValue>900</MarketValue>
+<RangedWeapon_Cooldown>2.66</RangedWeapon_Cooldown>
+</statBases>
+<weaponTags>
+<li>GrenadeEMP</li>
+</weaponTags>
+<thingCategories>
+<li>Grenades</li>
+</thingCategories>
+<verbs>
+<li>
+<label>Throw Pulse Grenade</label>
+<verbClass>Verb_LaunchProjectile</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<range>13.9</range>
+<forcedMissRadius>1.0</forcedMissRadius>
+<warmupTicks>100</warmupTicks>
+<noiseRadius>4</noiseRadius>
+<ai_IsBuildingDestroyer>false</ai_IsBuildingDestroyer>
+<soundCast>ThrowGrenade</soundCast>
+<targetParams>
+<canTargetLocations>true</canTargetLocations>
+</targetParams>
+<projectileDef>Proj_PFThrowablePulseGrenade</projectileDef>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseGrenadeProjectile">
+<defName>Proj_PFThrowablePlasmaGrenade</defName>
+<label>Plasma Grenade</label>
+<thingClass>Projectile_Explosive</thingClass>
+<graphicData>
+<texPath>Effects/PlasmaGrenade</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<explosionRadius>4.5</explosionRadius>
+<damageDef>PlasmaBoom</damageDef>
+<damageAmountBase>140</damageAmountBase>
+<explosionDelay>70</explosionDelay>
+</projectile>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseEquipment">
+<defName>Throwable_PFPlasmaGrenade</defName>
+<equipmentType>Primary</equipmentType>
+<label>Plasma Grenades</label>
+<description>A powerful grenade that highly outclasses the standard fragmentation grenade. It combines energy and fragmentation to utterly melt those who are directly in it's blast.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Throwables/PlasmaGrenade</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<techLevel>Spacer</techLevel>
+<statBases>
+<MarketValue>1600</MarketValue>
+<RangedWeapon_Cooldown>3.33</RangedWeapon_Cooldown>
+</statBases>
+<weaponTags>
+<li>GrenadeDestructive</li>
+</weaponTags>
+<thingCategories>
+<li>Grenades</li>
+</thingCategories>
+<verbs>
+<li>
+<label>Throw Plasma Grenade</label>
+<verbClass>Verb_LaunchProjectile</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<range>16.9</range>
+<forcedMissRadius>1.0</forcedMissRadius>
+<warmupTicks>120</warmupTicks>
+<noiseRadius>6</noiseRadius>
+<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+<soundCast>ThrowGrenade</soundCast>
+<targetParams>
+<canTargetLocations>true</canTargetLocations>
+</targetParams>
+<projectileDef>Proj_PFThrowablePlasmaGrenade</projectileDef>
+</li>
+</verbs>
+
+</ThingDef>
+
+</ThingDefs>

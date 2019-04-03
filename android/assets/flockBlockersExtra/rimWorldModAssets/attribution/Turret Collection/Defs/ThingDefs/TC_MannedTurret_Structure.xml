@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+<!--=============== TC_CannonTurret ===============-->
+
+<ThingDef ParentName="TC_BaseMannedBuilding">
+    <defName>TC_CannonTurret</defName>
+    <label>cannon turret</label>
+    <description>A cannon turret with a 120mm smooth bore tank gun, apart from normal high-explosive rounds, it can also fire high-explosive anti-tank rounds with extreme armor piercing capability.</description>
+    <inspectorTabs>
+      <li>ITab_Shells</li>
+    </inspectorTabs>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+    <costList>
+	<Steel>500</Steel>
+	<ComponentIndustrial>10</ComponentIndustrial>
+    </costList>
+    <statBases>
+      <MaxHitPoints>500</MaxHitPoints>
+      <Flammability>0.7</Flammability>
+      <WorkToBuild>15000</WorkToBuild>
+      <Beauty>-20</Beauty>
+      <ShootingAccuracyTurret>0.988</ShootingAccuracyTurret>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>4.9</explosiveRadius>
+        <explosiveDamageType>Bomb</explosiveDamageType>
+      </li>
+    </comps>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <building>
+      <turretGunDef>TC_CannonTurret_Gun</turretGunDef>
+      <turretTopGraphicPath>Things/Building/Security/TC_CannonTurret_Top</turretTopGraphicPath>
+      <turretTopDrawSize>2.5</turretTopDrawSize>
+      <turretBurstWarmupTime>4</turretBurstWarmupTime>
+      <turretBurstCooldownTime>8</turretBurstCooldownTime>
+    </building>
+    <researchPrerequisites>
+      <li>TC_Artillery</li>
+    </researchPrerequisites>
+    <uiIconPath>Things/Building/Security/TC_CannonTurret_Top</uiIconPath>
+  </ThingDef>
+
+<!--=============== TC_AvengerTurret ===============-->
+
+<ThingDef ParentName="TC_BaseMannedBuilding">
+    <defName>TC_AvengerTurret</defName>
+    <label>avenger turret</label>
+    <description>An avenger turret, 30mm multi-barrel autocannon, fires armor piercing rounds at high rate of fire.</description>
+    <constructionSkillPrerequisite>10</constructionSkillPrerequisite>
+    <costList>
+	<Steel>400</Steel>
+                <Plasteel>200</Plasteel>
+	<ComponentIndustrial>50</ComponentIndustrial>
+    </costList>
+    <statBases>
+      <MaxHitPoints>400</MaxHitPoints>
+      <Flammability>0.7</Flammability>
+      <WorkToBuild>25000</WorkToBuild>
+      <Beauty>-20</Beauty>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>4.9</explosiveRadius>
+        <explosiveDamageType>Bomb</explosiveDamageType>
+      </li>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>500</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Refuelable">
+        <fuelLabel>Shots until barrel change</fuelLabel>
+        <fuelGizmoLabel>Barrel durability</fuelGizmoLabel>
+        <fuelFilter>
+          <thingDefs>
+            <li>Steel</li>
+          </thingDefs>
+        </fuelFilter>
+        <fuelCapacity>180</fuelCapacity>
+        <initialFuelPercent>1</initialFuelPercent>
+        <autoRefuelPercent>0.75</autoRefuelPercent>
+        <showFuelGizmo>true</showFuelGizmo>
+        <minimumFueledThreshold>1</minimumFueledThreshold>
+        <fuelMultiplier>2</fuelMultiplier>
+        <factorByDifficulty>true</factorByDifficulty>
+        <consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+        <outOfFuelMessage>Cannot shoot: Needs new barrel</outOfFuelMessage>
+        <fuelIconPath>UI/Overlays/Barrel</fuelIconPath>
+      </li>
+    </comps>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <building>
+      <turretGunDef>TC_AvengerTurret_Gun</turretGunDef>
+      <turretTopGraphicPath>Things/Building/Security/TC_AvengerTurret_Top</turretTopGraphicPath>
+      <turretTopDrawSize>2.4</turretTopDrawSize>
+      <turretBurstWarmupTime>1</turretBurstWarmupTime>
+      <turretBurstCooldownTime>2</turretBurstCooldownTime>
+      <ai_combatDangerous>true</ai_combatDangerous>
+    </building>
+    <researchPrerequisites>
+      <li>TC_AvengerTurret</li>
+    </researchPrerequisites>
+    <uiIconPath>Things/Building/Security/TC_AvengerTurret_Top</uiIconPath>
+  </ThingDef>
+
+</Defs>

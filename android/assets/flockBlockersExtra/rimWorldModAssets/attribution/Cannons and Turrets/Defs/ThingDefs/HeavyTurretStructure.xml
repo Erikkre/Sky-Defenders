@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+
+	<ThingDef Name="BuildingBase" Abstract="True">
+		<category>Building</category>
+		<soundBulletHit>BulletImpactMetal</soundBulletHit>
+		<selectable>true</selectable>
+		<drawerType>MapMeshAndRealTime</drawerType>
+		<surfaceNeeded>Light</surfaceNeeded>
+		<constructionEffect>ConstructMetal</constructionEffect>
+		<repairEffect>Repair</repairEffect>
+	</ThingDef>
+
+	<!-- =================== Various ==================-->
+
+	<ThingDef ParentName="BuildingBase">
+		<defName>HeavyTurretGun</defName>
+		<eType>Building_Turret</eType>
+		<label>Heavy Turret</label>
+		<thingClass>Building_TurretGun</thingClass>
+		<texturePath>Things/Building/HeavyTurretGun</texturePath>
+		<altitudeLayer>Waist</altitudeLayer>
+		<maxHealth>800</maxHealth>
+		<tickerType>Normal</tickerType>
+		<comps>
+			<li>
+				<compClass>CompExplosive</compClass>
+				<explosiveRadius>3.0</explosiveRadius>
+				<explosiveDamageType>Bomb</explosiveDamageType>
+			</li>
+			<li><compClass>CompForbiddable</compClass></li>
+			<li>
+				<compClass>CompPowerTrader</compClass>
+				<basePowerConsumption>600</basePowerConsumption>
+			</li>
+		</comps>
+		<description>A heavily armoured turret that automatically fires bursts of 12 rounds at nearby enemies. Explodes when damaged. 800 health.</description>
+		<flammability>0.5</flammability>
+		<size>(2,2)</size>
+		<passability>Impassable</passability>
+		<castEdgeShadows>true</castEdgeShadows>
+		<fillPercent>0.4</fillPercent>
+		<costList>
+			<li>
+				<thingDef>Metal</thingDef>
+				<count>400</count>
+			</li>
+		</costList>
+		<researchPrerequisite><li>WeaponSystems</li></researchPrerequisite>
+		<workToBuild>2000</workToBuild>
+		<overdraw>true</overdraw>
+		<combatTargetBuilding>true</combatTargetBuilding>
+		<beauty>Ugly</beauty>
+		<filthLeavings>
+			<li>
+				<thingDef>SlagRubble</thingDef>
+				<count>3</count>
+			</li>
+		</filthLeavings>
+		<leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+		<surfaceNeeded>Light</surfaceNeeded>
+		<designationCategory>Security</designationCategory>
+		<specialDisplayRadius>26</specialDisplayRadius>
+		<building>
+			<turretGunDef>Gun_HeavyTurret</turretGunDef>
+			<turretTopTexturePath>Things/Building/HeavyTurretGun_Top</turretTopTexturePath>
+		</building>
+	</ThingDef>
+
+	<!-- ============================================== -->
+
+</ThingDefs>

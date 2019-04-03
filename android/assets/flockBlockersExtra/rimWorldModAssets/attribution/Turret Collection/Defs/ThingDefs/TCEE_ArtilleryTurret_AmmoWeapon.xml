@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+<!-- =====================TCEE_Shell_Howitzer========================= -->
+
+  <ThingDef ParentName="TC_MakeableShellBase">
+    <defName>TCEE_Shell_Howitzer_ClusterBomb</defName>
+    <label>howitzer cluster bomb</label>
+    <description>A howitzer cluster bomb. Can be fired from howitzers. Explodes when damaged.</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/Shell/Shell_HighExplosive</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <recipeMaker>
+      <workAmount>3600</workAmount>
+      <targetCountAdjustment>1</targetCountAdjustment>
+      <researchPrerequisite>TCEE_ClusterMunition</researchPrerequisite>
+      <skillRequirements>
+        <Crafting>8</Crafting>
+      </skillRequirements>
+    </recipeMaker>
+    <comps>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>2.9</explosiveRadius>
+        <explosiveDamageType>Bomb</explosiveDamageType>
+        <explosiveExpandPerStackcount>0.4</explosiveExpandPerStackcount>
+        <startWickHitPointsPercent>0.7</startWickHitPointsPercent>
+        <wickTicks>
+          <min>30</min>
+          <max>60</max>
+        </wickTicks>
+      </li>
+    </comps>
+    <projectileWhenLoaded>TCEE_Bullet_Shell_Howitzer_ClusterBomb</projectileWhenLoaded>
+    <costList>
+      <Steel>100</Steel>
+      <Chemfuel>45</Chemfuel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <thingCategories>
+      <li>TC_HowitzerShells</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>TCEE_Bullet_Shell_Howitzer_ClusterBomb</defName>
+    <label>155mm cluster bomb</label>
+    <graphicData>
+      <texPath>Things/Projectile/ShellHighExplosive</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <drawSize>1.5</drawSize>
+    </graphicData>
+    <thingClass>Projectile_Explosive</thingClass>
+    <projectile>
+      <damageDef>TCEE_ClusterBomb</damageDef>
+      <speed>60</speed>
+      <explosionRadius>9.9</explosionRadius>
+      <preExplosionSpawnThingDef>TCEE_Submunition</preExplosionSpawnThingDef>
+      <preExplosionSpawnChance>0.15</preExplosionSpawnChance>
+      <flyOverhead>true</flyOverhead>
+      <soundHitThickRoof>Artillery_HitThickRoof</soundHitThickRoof>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>TCEE_Submunition</defName>
+    <label>submunition</label>
+    <graphicData>
+      <texPath>Things/Item/Resource/TCEE_Submunition</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>0.8</drawSize>
+    </graphicData>
+    <selectable>false</selectable>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>1.9</explosiveRadius>
+        <explosiveDamageType>TCEE_Submunition</explosiveDamageType>
+        <startWickHitPointsPercent>1</startWickHitPointsPercent>
+        <wickTicks>
+          <min>60</min>
+          <max>180</max>
+        </wickTicks>
+      </li>
+      <li Class="CompProperties_Lifespan">
+        <lifespanTicks>240</lifespanTicks>
+      </li>
+    </comps>
+    <alwaysHaulable>false</alwaysHaulable>
+  </ThingDef>
+
+<!-- =====================TCEE_Shell_NavalGun========================= -->
+
+  <ThingDef ParentName="TC_MakeableShellBase">
+    <defName>TCEE_Shell_NavalGunTurret_HighExplosive</defName>
+    <label>naval gun shell high-explosive</label>
+    <description>A high-explosive naval gun shell. Can be fired from naval gun turrets. Explodes when damaged.</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/Shell/Shell_HighExplosive</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+      <drawSize>1.1</drawSize>
+    </graphicData>
+    <recipeMaker>
+      <workAmount>1800</workAmount>
+    </recipeMaker>
+    <stackLimit>9</stackLimit>
+    <statBases>
+      <MaxHitPoints>80</MaxHitPoints>
+      <Mass>30</Mass>
+    </statBases>
+    <comps>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>5.9</explosiveRadius>
+        <explosiveDamageType>Bomb</explosiveDamageType>
+        <explosiveExpandPerStackcount>0.4</explosiveExpandPerStackcount>
+        <startWickHitPointsPercent>0.7</startWickHitPointsPercent>
+        <wickTicks>
+          <min>30</min>
+          <max>60</max>
+        </wickTicks>
+      </li>
+    </comps>
+    <costList>
+      <Steel>150</Steel>
+      <Chemfuel>50</Chemfuel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <thingCategories>
+      <li>TCEE_NavalGunShells</li>
+    </thingCategories>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>TCEE_Bullet_Shell_NavalGunTurret_HighExplosive</defName>
+    <label>280mm naval gun shell</label>
+    <graphicData>
+      <texPath>Things/Projectile/ShellHighExplosive</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>TransparentPostLight</shaderType>
+      <drawSize>1.7</drawSize>
+    </graphicData>
+    <thingClass>Projectile_Explosive</thingClass>
+    <projectile>
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>70</damageAmountBase>
+      <speed>65</speed>
+      <explosionRadius>5.9</explosionRadius>
+      <flyOverhead>true</flyOverhead>
+      <soundHitThickRoof>Artillery_HitThickRoof</soundHitThickRoof>
+      <soundExplode>MortarBomb_Explode</soundExplode>
+      <soundImpactAnticipate>TC_PreImpact</soundImpactAnticipate>
+    </projectile>
+  </ThingDef>
+
+<!-- =====================TCEE_NavalGunTurret========================= -->
+
+  <ThingDef ParentName="TC_BaseArtilleryWeapon">
+    <defName>TCEE_NavalGunTurret_Gun</defName>
+    <label>280mm naval gun</label>
+    <description>A 280mm naval gun.</description>
+    <weaponTags>
+      <li>Artillery_BaseDestroyer</li>
+    </weaponTags>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <forceNormalTimeSpeed>false</forceNormalTimeSpeed>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>TCEE_Bullet_Shell_NavalGunTurret_HighExplosive</defaultProjectile>
+        <forcedMissRadius>16</forcedMissRadius>
+        <requireLineOfSight>false</requireLineOfSight>
+        <minRange>34.9</minRange>
+        <range>900</range>
+        <burstShotCount>3</burstShotCount>
+        <ticksBetweenBurstShots>0</ticksBetweenBurstShots>
+        <consumeFuelPerShot>1</consumeFuelPerShot>
+        <soundCast>TCEE_ShotNavalGunTurret</soundCast>
+        <muzzleFlashScale>20</muzzleFlashScale>
+        <targetParams>
+          <canTargetLocations>true</canTargetLocations>
+        </targetParams>
+      </li>
+    </verbs>
+  </ThingDef>
+
+</Defs>

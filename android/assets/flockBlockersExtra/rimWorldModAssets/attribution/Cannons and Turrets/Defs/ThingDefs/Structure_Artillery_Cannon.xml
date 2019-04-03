@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+    <ThingDef Name="BuildingBase" Abstract="True">
+            <category>Building</category>
+            <soundBulletHit>BulletImpactMetal</soundBulletHit>
+            <selectable>true</selectable>
+            <drawerType>MapMeshAndRealTime</drawerType>
+            <surfaceNeeded>Light</surfaceNeeded>
+            <constructionEffect>ConstructMetal</constructionEffect>
+            <repairEffect>Repair</repairEffect>
+    </ThingDef>
+
+    <ThingDef ParentName="BuildingBase">
+            <defName>Artillery_Cannon</defName>
+            <eType>Building_Turret</eType>
+            <label>150mm Artillery</label>
+            <thingClass>Building_TurretGun</thingClass>
+            <texturePath>Things/Building/TurretGun_Artillery</texturePath>
+            <altitudeLayer>Waist</altitudeLayer>
+            <maxHealth>650</maxHealth>
+            <tickerType>Normal</tickerType>
+        <comps>
+            <li>
+            <compClass>CompExplosive</compClass>
+            <explosiveRadius>3.9</explosiveRadius>
+            <explosiveDamageType>Bomb</explosiveDamageType>
+            </li>
+            <li>
+			<compClass>CompForbiddable</compClass>
+			</li>
+            <li>
+            <compClass>CompPowerTrader</compClass>
+            <basePowerConsumption>650</basePowerConsumption>
+            </li>
+        </comps>
+		    <description>150mm Artillery, slow firing, big damage, large explosion.</description>
+            <flammability>1.0</flammability>
+            <size>(2,2)</size>
+            <passability>Impassable</passability>
+            <castEdgeShadows>true</castEdgeShadows>
+            <fillPercent>0.4</fillPercent>
+        <costList>
+            <li>
+            <thingDef>Metal</thingDef>
+            <count>650</count>
+            </li>
+	        <li>
+            <thingDef>Shells</thingDef>
+            <count>35</count>
+            </li>
+        </costList>
+	        <workToBuild>1000</workToBuild>
+            <overdraw>true</overdraw>
+            <combatTargetBuilding>true</combatTargetBuilding>
+            <beauty>Ugly</beauty>
+        <filthLeavings>
+        <li>
+            <thingDef>SlagRubble</thingDef>
+            <count>1</count>
+        </li>
+        </filthLeavings>
+            <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+            <surfaceNeeded>Light</surfaceNeeded>
+            <designationCategory>Security</designationCategory>
+			<specialDisplayRadius>56</specialDisplayRadius>
+        <building>
+            <turretGunDef>Artillery_CannonTurret</turretGunDef>
+            <turretTopTexturePath>Things/Building/TurretGun_Top_Artillery</turretTopTexturePath>
+        </building>
+	    <designationHotKey>Y</designationHotKey>
+	    <researchPrerequisite>
+		    <li>Ballistics</li>
+		</researchPrerequisite>
+    </ThingDef>
+  
+</ThingDefs>
