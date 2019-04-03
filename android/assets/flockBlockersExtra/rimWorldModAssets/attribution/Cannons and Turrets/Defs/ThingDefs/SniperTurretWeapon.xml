@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+	<!-- ==================== Bases ========================== -->
+
+	<ThingDef Name="BaseGun" Abstract="True">
+		<category>Item</category>
+		<eType>Equipment</eType>
+		<thingClass>Equipment</thingClass>
+		<label>Gun</label>
+		<equipmentType>Primary</equipmentType>
+		<isGun>True</isGun>
+		<pathCost>10</pathCost>
+		<useStandardHealth>True</useStandardHealth>
+		<selectable>True</selectable>
+		<maxHealth>100</maxHealth>
+		<altitudeLayer>Item</altitudeLayer>
+		<alwaysHaulable>True</alwaysHaulable>
+		<tickerType>Never</tickerType>
+		<techLevel>Midworld</techLevel>
+		<storeCategories>
+			<li>Weapons</li>
+		</storeCategories>
+		<comps>
+			<li>
+				<compClass>CompForbiddable</compClass>
+			</li>
+		</comps>
+		<verb>
+			<id>Nonnative</id>
+			<verbClass>Verb_Shoot</verbClass>
+			<cooldownTicks>15</cooldownTicks>
+			<label>VerbGun</label>
+			<description>Verb fires bullets.</description>
+			<hasStandardCommand>true</hasStandardCommand>
+			<targetParams>
+				<canTargetPawns>true</canTargetPawns>
+				<canTargetBuildings>true</canTargetBuildings>
+				<worldObjectTargetsMustBeAutoAttackable>true</worldObjectTargetsMustBeAutoAttackable>
+			</targetParams>
+			<canMiss>true</canMiss>
+		</verb>
+	</ThingDef>
+
+	<ThingDef Name="BaseBullet" Abstract="True">
+		<category>Projectile</category>
+		<tickerType>Normal</tickerType>
+		<altitudeLayer>Projectile</altitudeLayer>
+		<thingClass>Bullet</thingClass>
+		<label>Bullet</label>
+		<useStandardHealth>False</useStandardHealth>
+		<neverMultiSelect>True</neverMultiSelect>
+		<baseMaterialType>Transparent</baseMaterialType>
+	</ThingDef>
+
+<!-- ============================================== -->
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Bullet_SniperTurret</defName>
+		<label>M-24 bullet</label>
+		<texturePath>Things/Projectile/Bullet_Big</texturePath>
+		<projectile>
+			<damageDef>Bullet</damageDef>
+			<damageAmountBase>40</damageAmountBase>
+			<speed>100</speed>
+		</projectile>
+	</ThingDef>
+
+	<ThingDef ParentName="BaseGun">
+		<defName>Gun_SniperTurret</defName>
+		<label>Sniper Rifle Turret.</label>
+		<description>Ancient pattern military sniper rifle. Bolt action. Long range, great accuracy and power mounted on an auto turret.</description>
+		<texturePath>Things/Building/SniperTurretGun_V2</texturePath>
+		<soundInteract>InteractRifle</soundInteract>
+		<basePrice>370</basePrice>
+		<verb>
+			<projectileDef>Bullet_M24Rifle</projectileDef>
+			<warmupTicks>130</warmupTicks>
+			<cooldownTicks>150</cooldownTicks>
+			<minRange>1</minRange>
+			<range>50</range>
+			<accuracyTouch>1.00</accuracyTouch>
+			<accuracyShort>0.98</accuracyShort>
+			<accuracyMedium>0.95</accuracyMedium>
+			<accuracyLong>0.90</accuracyLong>
+			<fireSound>50Cal</fireSound>
+		</verb>
+	</ThingDef>
+
+<!-- ============================================== -->
+
+</ThingDefs>

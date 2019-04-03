@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+    <ThingDef Name="BuildingBase" Abstract="True">
+            <category>Building</category>
+            <soundBulletHit>BulletImpactMetal</soundBulletHit>
+            <selectable>true</selectable>
+            <drawerType>MapMeshAndRealTime</drawerType>
+            <surfaceNeeded>Light</surfaceNeeded>
+            <constructionEffect>ConstructMetal</constructionEffect>
+            <repairEffect>Repair</repairEffect>
+    </ThingDef>
+
+    <ThingDef ParentName="BuildingBase">
+            <defName>Howitzer_Cannon</defName>
+            <eType>Building_Turret</eType>
+            <label>88mm Howitzer</label>
+            <thingClass>Building_TurretGun</thingClass>
+            <texturePath>Things/Building/TurretGun_Howitzer</texturePath>
+            <altitudeLayer>Waist</altitudeLayer>
+            <maxHealth>650</maxHealth>
+            <tickerType>Normal</tickerType>
+        <comps>
+            <li>
+            <compClass>CompExplosive</compClass>
+            <explosiveRadius>3.9</explosiveRadius>
+            <explosiveDamageType>Bomb</explosiveDamageType>
+            </li>
+            <li>
+			<compClass>CompForbiddable</compClass>
+			</li>
+            <li>
+            <compClass>CompPowerTrader</compClass>
+            <basePowerConsumption>350</basePowerConsumption>
+            </li>
+        </comps>
+		    <description>88mm Howitzer, fast firing, high velocity, deadly accurate.</description>
+            <flammability>1.0</flammability>
+            <size>(2,2)</size>
+            <passability>Impassable</passability>
+            <castEdgeShadows>true</castEdgeShadows>
+            <fillPercent>0.4</fillPercent>
+        <costList>
+            <li>
+            <thingDef>Metal</thingDef>
+            <count>500</count>
+            </li>
+	        <li>
+            <thingDef>Shells</thingDef>
+            <count>50</count>
+            </li>
+        </costList>
+	        <workToBuild>850</workToBuild>
+            <overdraw>true</overdraw>
+            <combatTargetBuilding>true</combatTargetBuilding>
+            <beauty>Ugly</beauty>
+        <filthLeavings>
+        <li>
+            <thingDef>SlagRubble</thingDef>
+            <count>1</count>
+        </li>
+        </filthLeavings>
+            <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+            <surfaceNeeded>Light</surfaceNeeded>
+            <designationCategory>Security</designationCategory>
+			<specialDisplayRadius>56</specialDisplayRadius>
+        <building>
+            <turretGunDef>Howitzer_CannonTurret</turretGunDef>
+            <turretTopTexturePath>Things/Building/TurretGun_Top_Howitzer</turretTopTexturePath>
+        </building>
+		    <designationHotKey>Y</designationHotKey>
+	    <researchPrerequisite>
+		    <li>SelfPropelledGuns</li>
+		</researchPrerequisite>
+    </ThingDef>
+  
+</ThingDefs>
