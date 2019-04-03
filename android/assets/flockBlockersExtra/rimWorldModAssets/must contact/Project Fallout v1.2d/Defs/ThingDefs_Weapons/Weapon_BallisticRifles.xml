@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ThingDefs>
+
+<ThingDef ParentName="BaseBullet" Name="BaseAntiMateriel" Class="AntiMateriel.ThingDef_AntiMateriel" Abstract="True">
+		<thingClass>AntiMateriel.Projectile_AntiMateriel</thingClass>
+	</ThingDef>
+
+<!--
+=========================================================================
+-->
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_VarmintRifle</defName>
+<label>5.66mm Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Big</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>18</DamageAmountBase>
+<Speed>100</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_VarmintRifle</defName>
+<label>Varmint Rifle</label>
+<description>A sturdy bolt-action rifle widely used around the wastelands, although quite accurate, it does suffer fairly low stopping power for a rifle.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/VarmintRifle_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<soundInteract>InteractAntiMaterielRifle</soundInteract>
+<statBases>
+<WorkToMake>55000</WorkToMake>
+<MarketValue>465</MarketValue>
+<AccuracyTouch>0.76</AccuracyTouch>
+<AccuracyShort>0.89</AccuracyShort>
+<AccuracyMedium>0.96</AccuracyMedium>
+<AccuracyLong>0.81</AccuracyLong>
+<RangedWeapon_Cooldown>0.66</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>100</Steel>
+<Component>3</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_VarmintRifle</projectileDef>
+<warmupTicks>120</warmupTicks>
+<range>35</range>
+<soundCast>ShotVarmintRifle</soundCast>
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_Ratslayer</defName>
+<label>5.66mm Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Big</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>20</DamageAmountBase>
+<Speed>110</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_Ratslayer</defName>
+<label>Ratslayer</label>
+<description>A unique lighter weight variant of the "Varmint" model bolt-action rifle with a scope, silencer, and higher stopping power.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Ratslayer_Org</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<soundInteract>InteractAntiMaterielRifle</soundInteract>
+<statBases>
+<MarketValue>820</MarketValue>
+<AccuracyTouch>0.5</AccuracyTouch>
+<AccuracyShort>0.87</AccuracyShort>
+<AccuracyMedium>0.99</AccuracyMedium>
+<AccuracyLong>0.94</AccuracyLong>
+<RangedWeapon_Cooldown>0.75</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_Ratslayer</projectileDef>
+<warmupTicks>130</warmupTicks>
+<range>42</range>
+<soundCast>ShotVarmintRifle</soundCast>
+<!-- Needs a silenced gunshot -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>6</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet" Class="AntiMateriel.ThingDef_AntiMateriel">
+<defName>Bullet_AMRifle</defName>
+<label>.50 Cal</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Big</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<antiMaterielDamage>250</antiMaterielDamage>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>AntiMateriel</damageDef>
+<DamageAmountBase>70</DamageAmountBase>
+<Speed>200</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_AMRifle</defName>
+<label>Anti-Materiel Rifle</label>
+<description>An extremely powerful bolt-action rifle that fires .50Cal bullets. It has enough stopping power to put down just about anything in 1 shot, if you can manage to fire it in time.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Anti_Materiel_Rifle_Custom</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<soundInteract>InteractAntiMaterielRifle</soundInteract>
+<statBases>
+<MarketValue>2850</MarketValue>
+<AccuracyTouch>0.25</AccuracyTouch>
+<AccuracyShort>0.66</AccuracyShort>
+<AccuracyMedium>0.85</AccuracyMedium>
+<AccuracyLong>0.9</AccuracyLong>
+<RangedWeapon_Cooldown>4</RangedWeapon_Cooldown>
+</statBases>
+<equippedStatOffsets>
+    <MoveSpeed>-0.20</MoveSpeed>
+</equippedStatOffsets>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+<projectileDef>Bullet_AMRifle</projectileDef>
+<warmupTicks>360</warmupTicks>
+<range>60</range>
+<soundCast>ShotAntiMaterielRifle</soundCast>
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+<weaponTags>
+			<li>SniperRifle</li>
+		</weaponTags>
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_AssaultCarbine</defName>
+<label>5mm Bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>8</DamageAmountBase>
+<Speed>100</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_AssaultCarbine</defName>
+<label>Assault Carbine</label>
+<description>A magazine-fed compact automatic rifle with a high firing rate and comparatively good accuracy. A deadly weapon in the right hands, it can be used effectively at close to mid range combat.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Assault_Carbine_Custom</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>125000</WorkToMake>
+<MarketValue>1100</MarketValue>
+<AccuracyTouch>0.75</AccuracyTouch>
+<AccuracyShort>0.9</AccuracyShort>
+<AccuracyMedium>0.75</AccuracyMedium>
+<AccuracyLong>0.62</AccuracyLong>
+<RangedWeapon_Cooldown>0.66</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>110</Steel>
+<Component>6</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_AssaultCarbine</projectileDef>
+<warmupTicks>80</warmupTicks>
+<range>28</range>
+<burstShotCount>4</burstShotCount>
+<ticksBetweenBurstShots>4</ticksBetweenBurstShots>
+<soundCast>ShotAssaultCarbine</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_BattleRifle</defName>
+<label>.308 round</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>11</DamageAmountBase>
+<Speed>110</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_BattleRifle</defName>
+<label>Battle Rifle</label>
+<description>A semi-automatic rifle chambered for .308 cartridges, with good a nice firing rate and stopping power it can be highly effective at combat. What it lacks in accuracy it makes up for how many rounds it can put down range and the power of the bullets themselves.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Battle_Rifle</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<soundInteract>InteractAntiMaterielRifle</soundInteract>
+<statBases>
+<WorkToMake>75000</WorkToMake>
+<MarketValue>730</MarketValue>
+<AccuracyTouch>.79</AccuracyTouch>
+<AccuracyShort>0.94</AccuracyShort>
+<AccuracyMedium>0.72</AccuracyMedium>
+<AccuracyLong>0.63</AccuracyLong>
+<RangedWeapon_Cooldown>1.1</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>100</Steel>
+<Component>4</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_BattleRifle</projectileDef>
+<warmupTicks>90</warmupTicks>
+<range>33</range>
+<burstShotCount>3</burstShotCount>
+<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+<soundCast>ShotBozar</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_ThisMachine</defName>
+<label>.308 round</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>14</DamageAmountBase>
+<Speed>110</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_ThisMachine</defName>
+<label>This Machine</label>
+<description>A unique variant of the Battle Rifle, it is better in just about every way to it's more generic version, albeit only slightly. It has the words "WELL THIS MACHNE KILLS COMMIES" engraved on it's side, it appears to have been used in a past war.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/This_Machine</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<soundInteract>InteractAntiMaterielRifle</soundInteract>
+<statBases>
+<MarketValue>1025</MarketValue>
+<AccuracyTouch>.82</AccuracyTouch>
+<AccuracyShort>0.96</AccuracyShort>
+<AccuracyMedium>0.75</AccuracyMedium>
+<AccuracyLong>0.66</AccuracyLong>
+<RangedWeapon_Cooldown>1</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_ThisMachine</projectileDef>
+<warmupTicks>85</warmupTicks>
+<burstShotCount>3</burstShotCount>
+<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+<range>33</range>
+<soundCast>ShotBozar</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_BBGun</defName>
+<label>A small metal BB</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>3</DamageAmountBase>
+<Speed>60</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_BBGun</defName>
+<label>BB Gun</label>
+<description>A BB gun that fires tiny metal pellets, it hits about as hard as a thrown rock. It has the potential to do some damage, thanks to it's accuracy and fire-rate, but you need to put a lot of shots down range for any real effect.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/BB_Gun_Custom</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>20000</WorkToMake>
+<MarketValue>130</MarketValue>
+<AccuracyTouch>1.00</AccuracyTouch>
+<AccuracyShort>0.96</AccuracyShort>
+<AccuracyMedium>0.87</AccuracyMedium>
+<AccuracyLong>0.79</AccuracyLong>
+<RangedWeapon_Cooldown>0.33</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>30</Steel>
+<Component>1</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_BBGun</projectileDef>
+<warmupTicks>35</warmupTicks>
+<range>28</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>1</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_AbileneKid</defName>
+<label>A small metal BB</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>4</DamageAmountBase>
+<Speed>70</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_AbileneKid</defName>
+<label>Abilene Kid</label>
+<description>A unique "Limited Edition" of the BB Gun, it has slightly higher damage and range. </description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Abilene_Kid</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>200</MarketValue>
+<AccuracyTouch>1,00</AccuracyTouch>
+<AccuracyShort>0.96</AccuracyShort>
+<AccuracyMedium>0.88</AccuracyMedium>
+<AccuracyLong>0.80</AccuracyLong>
+<RangedWeapon_Cooldown>0.25</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_AbileneKid</projectileDef>
+<warmupTicks>35</warmupTicks>
+<range>30</range>
+<soundCast>ShotPistol</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>1</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_BrushGun</defName>
+<label>.45-70 Gov't Ammunition</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>35</DamageAmountBase>
+<Speed>120</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_BrushGun</defName>
+<label>Brush Gun</label>
+<description>A large caliber lever action carbine used mainly for hunting at close to medium ranges.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Brush_Gun</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>125000</WorkToMake>
+<MarketValue>1325</MarketValue>
+<AccuracyTouch>.93</AccuracyTouch>
+<AccuracyShort>0.86</AccuracyShort>
+<AccuracyMedium>0.73</AccuracyMedium>
+<AccuracyLong>0.55</AccuracyLong>
+<RangedWeapon_Cooldown>1.5</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>110</Steel>
+<Component>7</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_BrushGun</projectileDef>
+<warmupTicks>85</warmupTicks>
+<range>36</range>
+<soundCast>ShotAntiMaterielRifle</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>6</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_MedicineStick</defName>
+<label>.45-70 Gov't Ammunition</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>36</DamageAmountBase>
+<Speed>125</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_MedicineStick</defName>
+<label>Medicine Stick</label>
+<description>A unique variant of the Brush Gun, with slightly higher stopping power and higher ammunition capacity.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Medicine_Stick</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>1725</MarketValue>
+<AccuracyTouch>0.94</AccuracyTouch>
+<AccuracyShort>0.87</AccuracyShort>
+<AccuracyMedium>0.76</AccuracyMedium>
+<AccuracyLong>0.6</AccuracyLong>
+<RangedWeapon_Cooldown>1.33</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_MedicineStick</projectileDef>
+<warmupTicks>75</warmupTicks>
+<range>36</range>
+<soundCast>ShotAntiMaterielRifle</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>7</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_LaLongueCarabine</defName>
+<label>.357 Magnum Rounds</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>25</DamageAmountBase>
+<Speed>125</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_LaLongueCarabine</defName>
+<label>La Longue Carabine</label>
+<description>A unique scoped variant of the Cowboy Repeater with slightly higher stopping power accuracy.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/La_Longue_Carabine</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>1050</MarketValue>
+<AccuracyTouch>0.63</AccuracyTouch>
+<AccuracyShort>0.77</AccuracyShort>
+<AccuracyMedium>0.93</AccuracyMedium>
+<AccuracyLong>0.71</AccuracyLong>
+<RangedWeapon_Cooldown>0.75</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_LaLongueCarabine</projectileDef>
+<warmupTicks>70</warmupTicks>
+<range>45</range>
+<soundCast>ShotAntiMaterielRifle</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>7</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_CowboyRepeater</defName>
+<label>.357 Magnum Rounds</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>24</DamageAmountBase>
+<Speed>110</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_CowboyRepeater</defName>
+<label>Cowboy Repeater</label>
+<description>A lever-action rifle firing small-caliber .357 magnum rounds.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Cowboy_Repeater</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>115000</WorkToMake>
+<MarketValue>850</MarketValue>
+<AccuracyTouch>0.92</AccuracyTouch>
+<AccuracyShort>0.83</AccuracyShort>
+<AccuracyMedium>0.71</AccuracyMedium>
+<AccuracyLong>0.50</AccuracyLong>
+<RangedWeapon_Cooldown>0.8</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>90</Steel>
+<Component>4</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_CowboyRepeater</projectileDef>
+<warmupTicks>80</warmupTicks>
+<range>33</range>
+<soundCast>ShotAntiMaterielRifle</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>7</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_HuntingRifle</defName>
+<label>.308 Rounds</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>32</DamageAmountBase>
+<Speed>120</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_HuntingRifle</defName>
+<label>Hunting Rifle</label>
+<description>A bolt-action rifle firing .308 rounds.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Hunting_Rifle</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<soundInteract>InteractAntiMaterielRifle</soundInteract>
+<statBases>
+<WorkToMake>127500</WorkToMake>
+<MarketValue>1300</MarketValue>
+<AccuracyTouch>0.8</AccuracyTouch>
+<AccuracyShort>0.84</AccuracyShort>
+<AccuracyMedium>0.76</AccuracyMedium>
+<AccuracyLong>0.58</AccuracyLong>
+<RangedWeapon_Cooldown>1.33</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>100</Steel>
+<Component>6</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_HuntingRifle</projectileDef>
+<warmupTicks>120</warmupTicks>
+<range>37</range>
+<soundCast>ShotAntiMaterielRifle</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>7</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_Paciencia</defName>
+<label>.308 Rounds</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>33</DamageAmountBase>
+<Speed>125</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_Paciencia</defName>
+<label>Paciencia</label>
+<description>A unique variant of the Hunting Rifle. It has a flag wrapped around the stock, and multiple notches in it, most likely as a kill counter. </description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Paciencia</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<soundInteract>InteractAntiMaterielRifle</soundInteract>
+<statBases>
+<MarketValue>1750</MarketValue>
+<AccuracyTouch>0.84</AccuracyTouch>
+<AccuracyShort>0.87</AccuracyShort>
+<AccuracyMedium>0.78</AccuracyMedium>
+<AccuracyLong>0.62</AccuracyLong>
+<RangedWeapon_Cooldown>1.22</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_Paciencia</projectileDef>
+<warmupTicks>110</warmupTicks>
+<range>38</range>
+<soundCast>ShotAntiMaterielRifle</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>7</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_MarksmanCarbine</defName>
+<label>5.56mm rounds</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>16</DamageAmountBase>
+<Speed>90</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_MarksmanCarbine</defName>
+<label>Marksman Carbine</label>
+<description>A semi-auto rifle with a scope.</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Marksman_Carbine</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>125000</WorkToMake>
+<MarketValue>1450</MarketValue>
+<AccuracyTouch>0.52</AccuracyTouch>
+<AccuracyShort>0.83</AccuracyShort>
+<AccuracyMedium>0.77</AccuracyMedium>
+<AccuracyLong>0.80</AccuracyLong>
+<RangedWeapon_Cooldown>0.77</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>110</Steel>
+<Component>6</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_MarksmanCarbine</projectileDef>
+<warmupTicks>80</warmupTicks>
+<range>45</range>
+<burstShotCount>2</burstShotCount>
+<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+<soundCast>ShotAssaultCarbine</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>7</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+</ThingDefs>

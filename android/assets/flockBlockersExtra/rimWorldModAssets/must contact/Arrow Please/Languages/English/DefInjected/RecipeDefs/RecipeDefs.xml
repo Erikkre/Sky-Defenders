@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Make_TrebuchetShells.label>make trebuchet projectiles</Make_TrebuchetShells.label>
+  <Make_TrebuchetShells.description>Reshaped stone chunk for trebuchet use.</Make_TrebuchetShells.description>
+  <Make_TrebuchetShells.jobString>Make trebuchet projectiles.</Make_TrebuchetShells.jobString>
+
+  <Make_TrebuchetShellsA.label>make trebuchet projectiles</Make_TrebuchetShellsA.label>
+  <Make_TrebuchetShellsA.description>Mix different stone blocks for trebuchet projectiles.</Make_TrebuchetShellsA.description>
+  <Make_TrebuchetShellsA.jobString>Make trebuchet projectiles.</Make_TrebuchetShellsA.jobString>
+
+  <MakeHumanRound.label>make human trebuchet projectiles</MakeHumanRound.label>
+  <MakeHumanRound.description>Reshaped a human corpse for trebuchet use.</MakeHumanRound.description>
+  <MakeHumanRound.jobString>Make human trebuchet projectiles.</MakeHumanRound.jobString>
+
+  <Make_CatapultShells.label>make catapult projectiles</Make_CatapultShells.label>
+  <Make_CatapultShells.description>Reshaped stone chunk for catapult use.</Make_CatapultShells.description>
+  <Make_CatapultShells.jobString>Make catapult projectiles.</Make_CatapultShells.jobString>
+
+  <Make_CatapultShellsA.label>make catapult projectiles</Make_CatapultShellsA.label>
+  <Make_CatapultShellsA.description>Mix different stone blocks for catapult projectiles.</Make_CatapultShellsA.description>
+  <Make_CatapultShellsA.jobString>Make catapult projectiles.</Make_CatapultShellsA.jobString>
+
+</LanguageData>
