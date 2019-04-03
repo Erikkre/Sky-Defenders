@@ -48,8 +48,8 @@ Only add health to phoenix each round   after you hit multiples of 500 gold/phoe
  cost	        500	            1500	    4500	        13500	        40500	        121500          	364500	            1000 diamonds	3000 diamonds	10000 diamonds
                 I	            II	        III	            IV	            V           	VI	                VII	                VIII	    IX	                X       Dmg	  RoF	  Pen         Spr
  (Fast Firing)	knife thrower	bow	        Machine Pistol  assault rifle	machinegun	    Minigun	            AA Autocannon	    Laser	    Ion cannon	        ???	    1	  1/s	  2 birds     +1 upgradeable (last upgrade cuz pretty op, maybe lower fire rate)
- (High Damage)	spear thrower	crossbow	Ballistae	    Hand Cannon	    sniper rifle	grenade launcher	anti-tank rifle	    Artillery	gauss cannon	    ???	    4	  0.1/s	  3 birds
- (Wide Spread)	dart thrower	multishot	MultiCatapult	shotgun	        blunderbuss	    Flamethrower	    Mortar	            Missile	    Microwave emitter	???	    0.5   0.5/s	  2 bird	  3 shots +1 each time
+ (Damage Dealer)spear thrower	crossbow	Ballistae	    Hand Cannon	    sniper rifle	grenade launcher	anti-tank rifle	    Artillery	gauss cannon	    ???	    4	  0.1/s	  3 birds
+ (Crowd Control)dart thrower	multishot	MultiCatapult	shotgun	        blunderbuss	    Flamethrower	    Mortar	            Missile	    Microwave emitter	???	    0.5   0.5/s	  2 bird	  3 shots +1 each time
                                                                                                                                                                             *=2   *=1.5   *=1.4
 
  Gold/s	score is gold/s/active playtime		gold is lost when bird passes through

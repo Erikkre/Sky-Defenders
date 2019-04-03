@@ -474,7 +474,7 @@ public class AssetHandler {
 
     private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed) {
         sprites = new Texture(Gdx.files.internal("sprites"+File.separator+"birds"+File.separator+""+path));
-        sprites.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        sprites.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>();
         ArrayList<TextureRegion> leftSidePositions = new ArrayList<TextureRegion>();
@@ -532,6 +532,7 @@ public class AssetHandler {
 
     private static Animation<TextureRegion> tinyBirdTextureToAnimation (String shadeNumber) {
         texture = new Texture(Gdx.files.internal("sprites"+File.separator+"tinyBirds"+File.separator+"tinyBird"+shadeNumber+".png"));
+        texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>(9);
 
         for (int i = 0; i < 9; i++) {

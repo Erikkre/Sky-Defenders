@@ -103,8 +103,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     private int reticleRotation;
     private Value reticleSize=new Value(0.9f); private static Value balloonBob=new Value(-7f);
-    public Tween reticleSizeTween= Tween.to(reticleSize,1,0.7f).target(1.1f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
-    public Tween balloonBobTween= Tween.to(balloonBob,1,1.3f).target(7f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
+    public Tween reticleSizeTween= Tween.to(reticleSize,1,0.9f).target(1.3f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
+    public Tween balloonBobTween= Tween.to(balloonBob,1,1f).target(7f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
     public Airship(int camWidth, int camHeight, int birdType) {
         this.camWidth =camWidth;
         this.camHeight=camHeight;
@@ -127,7 +127,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         thrusterOrigPos=new Vector2(pos.x, pos.y+thrusterYPosition*balloonHeight+thrusterHeight/2f);
 
-        tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(0.7f).start();
+        tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(1f).start();
         rotationTween=Tween.to(rotation,0,2).waypoint((pos.x-(camWidth-balloonWidth))/25f).target(0).ease(TweenEquations.easeOutCirc).delay(1).start();
         assignRackPositions();
 
@@ -616,8 +616,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 batcher.draw(reticleTexture, turretAimer.lastFingerPosition.x - reticleTexture.getRegionWidth() / 3f,
                         turretAimer.lastFingerPosition.y - reticleTexture.getRegionWidth() / 3f,
                         reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 1.5f, reticleTexture.getRegionHeight() / 1.5f,reticleSize.get(),reticleSize.get(),reticleRotation--);
-            } else if (turretAimer.targetBird != null) {   //if ai is engaged
-                batcher.draw(reticleTexture, turretAimer.targetBird.x - turretAimer.targetBird.width / 3f, turretAimer.targetBird.y - turretAimer.targetBird.height / 15f - turretAimer.targetBird.width / 3f,
+            } else if (turretAimer.targetBird != null) {                                                          //if ai is engaged
+                batcher.draw(reticleTexture, turretAimer.targetBird.x - turretAimer.targetBird.width / 3f, turretAimer.targetBird.y - turretAimer.targetBird.width / 3f,
                         turretAimer.targetBird.width/3f, turretAimer.targetBird.width/3f, turretAimer.targetBird.width/1.5f, turretAimer.targetBird.width/1.5f,reticleSize.get(),reticleSize.get(), reticleRotation--);
                     //System.out.println("Draw reticle with width " + turretAimer.targetBird.width);
             }
