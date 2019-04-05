@@ -26,12 +26,13 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import box2dLight.Light;
+import box2dLight.PointLight;
 
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
-    public static Vector2 pos, vel=new Vector2(), thrusterOrigPos; //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
+    public static Vector2 pos, vel=new Vector2(), thrusterOrigPos, tweenTarget=new Vector2(); //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
 
     public static int pipeWidth, balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, armorWidth, armorHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
@@ -43,8 +44,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static int armor, health; //slowdownSpeed;
 
     public static int rackLvl, burnerLvl, healthLvl, armorLvl, speedLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
-    public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, armorTexture, pipeTexture, reticleTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
-
+    public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, armorTexture, pipeTexture, reticleTexture,
+            dragCircleTexture, dragLineTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
+    public static PointLight dragCircleLight;
     //positions 28,31    82,31  110-136 and 137-163
 
     public ArrayList<Turret> turretList=new ArrayList<Turret>(13);
@@ -59,7 +61,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public boolean isFlashing;
     public Value flashOpacityValue = new Value(), rotation = new Value();
     public Tween flashTween;
-    public TweenCallback endFlashing;
+    public TweenCallback endFlashing, endOfMovement;
     protected ArrayList<Float> flashLengths=new ArrayList<Float>();
 
     public Tween tween, burnerLightTween, rightThrusterLightTween, leftThrusterLightTween, rotationTween;
@@ -141,6 +143,14 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             System.out.println(i.dmg);
         }*/
 
+
+        endOfMovement = new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+
+            }
+        };
+
         endFlashing = new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
@@ -180,6 +190,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void setupLights(){
         //thrusterOrigPos=new Vector2(pos.x);
+        dragCircleLight=LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(camWidth/2, camHeight/2));
+        dragCircleLight.setActive(false);
+        System.out.println("set inactive");
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x-thrusterWidth/1.1f, thrusterOrigPos.y)));
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x+thrusterWidth/1.1f, thrusterOrigPos.y)));
         flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,  0, new Vector2(pos.x,pos.y+balloonBob.get()+pipeTexture.getRegionHeight()*2)));//position same as bottom of burner
@@ -265,9 +278,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         pipeTexture=AssetHandler.airshipBurnerPipe;
         balloonTexture=AssetHandler.airshipBalloon;
         sideThrustTexture=AssetHandler.airshipSideThruster;
-        reticleTexture=AssetHandler.reticle;
 
-        for (int i=0;i<6;i++){
+        reticleTexture=AssetHandler.reticle;
+        dragCircleTexture=AssetHandler.dragCircle;
+        dragLineTexture=AssetHandler.dragLine;
+
+        for (int i=0;i<6;i++) {
             armorTextures[i]=AssetHandler.armor(i);
             rackTextures[i]=AssetHandler.airshipRack(i);
         }
@@ -333,7 +349,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 //    tween = Tween.to(pos, 0, 1.5f).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
                 //} else {
 
-                tween = Tween.to(pos, 0, (float) distance ).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
+                tween = Tween.to(pos, 0, (float) distance ).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
+                tweenTarget.set(inputX,inputY);
+                dragCircleLight.setActive(true);
+                System.out.println("set active");
+
                 if (distance>10) distance = 10; //limit rotation
                 rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x-inputX)/25f).target(0).ease(TweenEquations.easeOutCirc).start();
                 //rotate to waypoint based on x distance, then back to itself
@@ -353,6 +373,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         } else if (airshipTouchPointer>=0&&!Gdx.input.isTouched(airshipTouchPointer)) {
             //System.out.println("AIRSHIP POINTER UNTOUCHED");
             //vel.set(Gdx.input.getDeltaX(airshipTouchPointer)*30,-(Gdx.input.getDeltaY(airshipTouchPointer))*30);
+
             airshipTouchPointer=-1;
             if (airshipTouched)airshipTouched=false;
         }
@@ -411,6 +432,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         for (Light j : flameLights) {
             j.setColor(color[0],color[1],color[2],j.getColor().a);
         }
+        //dragCircleLight.setColor(color[0],color[1],color[2],dragCircleLight.getColor().a);
         //System.out.println("Was "+emitters.get(i).getTint().getColors()[0]+", "+emitters.get(i).getTint().getColors()[1]+", "+emitters.get(i).getTint().getColors()[2]);
     }
 
@@ -570,6 +592,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             rotationTween.update(delta);
             vel.set(pos.x-preX, pos.y+balloonBob.get()-preY);
 
+            if (Math.abs(vel.x)<2&&tweenTarget.x!=0){
+                tweenTarget.setZero();
+                dragCircleLight.setActive(false);
+                System.out.println("set inactive");
+            }
             /*if ((vel.x<=0&&tween.getTargetValues()[0]-pos.x<0)||(vel.x>=0&&tween.getTargetValues()[0]-pos.x>0)){
                 rotation.get() += -Math.signum(vel.x)*((Math.abs(vel.x*2)-Math.abs(rotation.get()))/1.5f);
             }*/
@@ -626,6 +653,26 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void draw(SpriteBatch batcher, float delta) {
+        if (tweenTarget.x!=0){
+            dragCircleLight.setPosition(tweenTarget.x,tweenTarget.y+balloonHeight/2);
+
+            float xDist=tweenTarget.x - pos.x, yDist = (tweenTarget.y - (pos.y+balloonHeight/2)), width= (float)Math.sqrt(Math.pow(xDist,2)+Math.pow(yDist,2));
+            float rotation=(float)Math.toDegrees(Math.atan(yDist / xDist));
+            /*if        (xDist > 0) { //(xDistance+position.x > position.x) {
+                rotation += 180;
+            } else if (yDist > 0) {
+                rotation += 360;
+            }*/
+
+
+            batcher.draw(dragLineTexture, pos.x, (pos.y+balloonHeight/2)-dragLineTexture.getRegionHeight()/2,
+                    0,dragLineTexture.getRegionWidth()/2,//Math.abs(xDist)/2f, dragLineTexture.getRegionWidth()/2,//dragLineTexture.getRegionWidth()/2f, dragLineTexture.getRegionHeight()/2f,
+                    Math.abs(width), dragLineTexture.getRegionHeight(), 1,1, rotation);//taken from turret
+
+            batcher.draw(dragCircleTexture, tweenTarget.x - dragCircleTexture.getRegionWidth()/2f, tweenTarget.y - dragCircleTexture.getRegionHeight()/2f +  balloonHeight/2,
+                    dragCircleTexture.getRegionWidth(), dragCircleTexture.getRegionHeight());//full height at top, half height at sides
+        }
+
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make all textures ghostly, see what blending function actually enables that
         additiveEffects.get(0).draw(batcher, delta);
@@ -672,6 +719,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
         }
 
+
+
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y+balloonBob.get(),
                 balloonWidth/2f, 0, balloonWidth, balloonHeight, 1, 1, rotation.get());
 
@@ -703,6 +752,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 armorWidth, armorHeight, 1, 1, rotation.get());
 
         batcher.setColor(Color.WHITE);//draw balloon and pipes, then set color back to normal
+
 
 
         if (!additiveEffects.get(1).isComplete()) {

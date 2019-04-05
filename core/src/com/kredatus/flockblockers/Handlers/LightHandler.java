@@ -60,8 +60,11 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         //foreRayHandler.useDiffuseLight(true); //smoother but makes everywhere but light dark
         //foreRayHandler.setAmbientLight(0.85f);   //light everywhere outside of our set lights
         //backRayHandler.setAmbientLight(0.55f);
+
         foreRayHandler.setAmbientLight(0.70f);  //++ makes backhandler lights brighter, -- makes birds darker outside of forehandler lights and forehandler lights brighter
-        backRayHandler.setAmbientLight(0.75f);  //-- makes backhandler lights darker and background much darker
+        backRayHandler.setAmbientLight(0.75f);
+        //foreRayHandler.setAmbientLight(0,0,0,0.70f);  //++ makes backhandler lights brighter, -- makes birds darker outside of forehandler lights and forehandler lights brighter
+        //backRayHandler.setAmbientLight(0,0,0,0.75f);  //-- makes backhandler lights darker and background much darker
 
         //backRayHandler.setGammaCorrection(false);
         //foreRayHandler.setGammaCorrection(false);    //play with all the options to see what fits best
