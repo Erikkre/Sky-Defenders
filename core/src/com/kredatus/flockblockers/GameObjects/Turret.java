@@ -19,7 +19,7 @@ import java.util.TimerTask;
 
 public class Turret {
     public boolean firing, targetAquired;
-    private int[] rotList =new int[] {1,2,5, 10, 20}, accList=new int[] {28, 22, 16, 10, 2};    //rotation rates, accuracy disparity in degrees (divide by 2), so highest innacuracy is 14 lowest is 1 degree off from target
+    private int[] rotList =new int[] {1,2,3, 5, 7, 10, 13, 17, 22, 30}, accList=new int[] {28, 22, 16, 10, 2};    //rotation rates, accuracy disparity in degrees (divide by 2), so highest innacuracy is 14 lowest is 1 degree off from target
     public int dmgUpCounter, penUpCounter, rofUpCounter, sprUpCounter, rotUpCounter, accUpCounter,  spr, acc=accList[0], rot=rotList[0];   //rot = rotationSpeed
     public static int width,height;
     public Vector2 pos, origPosition;

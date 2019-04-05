@@ -575,7 +575,7 @@ public void setRotate(float angle){
 
     private void drawScore() {
         //scorenumber=
-        font.draw(batcher, "Gold: " + GameWorld.gold, (camWidth / 2) - scorelen, 9*camHeight/10);
+        font.draw(batcher, "Gold: " + GameWorld.gold, (camWidth / 2f) - scorelen*2, 19.5f*camHeight/20f);
         //droidSerifFont.draw(batcher, "%", cam.position.x + (camWidth / 2) - 40, cam.position.y - camHeight / 2 + 5);
         //font.draw(batcher, "POWER: " + (int)myWorld.boost, cam.position.x - (camWidth / 2) + 5, cam.position.y - camHeight / 2 + 5 );
     }
