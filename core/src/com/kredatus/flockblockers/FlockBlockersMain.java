@@ -12,7 +12,7 @@ import com.kredatus.flockblockers.Screens.SplashScreen;
 
 public class FlockBlockersMain extends Game {
     public static final boolean fastTest = false, dontPauseOnUnfocus = false;
-    public static int birdType=1;
+    public static int birdType=5;
     @Override
     public void create() {
         Gdx.app.log("CloudDefenders", "created");

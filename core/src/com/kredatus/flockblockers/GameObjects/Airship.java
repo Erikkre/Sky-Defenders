@@ -105,7 +105,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     float timeToTweenTarget;
     private int reticleRotation;
-    private Value reticleSize=new Value(0.9f), dragLineOpacity=new Value(1f); private static Value balloonBob=new Value(-7f);
+    private Value reticleSize=new Value(0.9f), dragLineOpacity=new Value(); private static Value balloonBob=new Value(-7f);
     public Tween reticleSizeTween= Tween.to(reticleSize,1,0.9f).target(1.3f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
     public Tween balloonBobTween= Tween.to(balloonBob,1,1f).target(7f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
     public Tween dragLineFadeout= Tween.to(dragLineOpacity,1,timeToTweenTarget*0.5f).target(0).ease(TweenEquations.easeInCubic);
@@ -197,7 +197,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void setupLights(){
         //thrusterOrigPos=new Vector2(pos.x);
-        dragCircleLight=LightHandler.newPointLight(LightHandler.backRayHandler, 255,255,255,1,70, new Vector2(0, -camHeight));
+        dragCircleLight=LightHandler.newPointLight(LightHandler.backRayHandler, 255,255,255,1,50, new Vector2(0, -camHeight));
         //dragCircleLight.setXray(true);
         //dragCircleLight.setActive(false);
 
@@ -364,9 +364,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
                 if (timeToTweenTarget>2) {
                     System.out.println(timeToTweenTarget);
-                    dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.06f).target(0).ease(TweenEquations.easeInExpo).delay(timeToTweenTarget * 0.04f).start();
+                    dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.14f).target(-1).ease(TweenEquations.easeInSine).start();
                 } else {
-                    dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.09f).target(0).ease(TweenEquations.easeInCubic).start();//no delay if very close
+                    dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.11f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
                 }
 
                 rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x-inputX)/25f).target(0).ease(TweenEquations.easeOutCirc).start();
@@ -664,7 +664,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void draw(SpriteBatch batcher, float delta) {
-        if (tweenTarget.x!=0) {
+        Color l=dragCircleLight.getColor();
+        dragCircleLight.setColor(l.r, l.g, l.b, dragLineOpacity.get());
+        if (dragLineOpacity.get()>0) {
             dragCircleLight.setPosition(tweenTarget.x,tweenTarget.y);
 
 
@@ -678,8 +680,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             if (xDist<=0) rotation+=180;
             //System.out.println(rotation);
 
-            Color l=dragCircleLight.getColor();
-            dragCircleLight.setColor(l.r,l.g,l.b,dragLineOpacity.get());
+
 
             Color c=batcher.getColor();
             batcher.setColor(c.r,c.g,c.b,dragLineOpacity.get());
@@ -688,9 +689,17 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     0,dragLineTexture.getRegionHeight()/2,//Math.abs(xDist)/2f, dragLineTexture.getRegionWidth()/2,//dragLineTexture.getRegionWidth()/2f, dragLineTexture.getRegionHeight()/2f,
                     Math.abs(width), dragLineTexture.getRegionHeight(), 1,1, rotation);//taken from turret
 
-            batcher.draw(dragCircleTexture, tweenTarget.x - dragCircleTexture.getRegionWidth()/2, tweenTarget.y - dragCircleTexture.getRegionHeight()/2.4f,
-                    dragCircleTexture.getRegionWidth(), dragCircleTexture.getRegionHeight()/1.2f);//full height at top, half height at sides*/
-            batcher.setColor(Color.WHITE);
+
+                if (dragLineOpacity.get()>0.50f) {
+                    batcher.setColor(c.r, c.g, c.b, dragLineOpacity.get() + (1f - dragLineOpacity.get()));
+                    //makes the circle dissapear slower
+                } else {
+                    batcher.setColor( c.r, c.g, c.b, dragLineOpacity.get() + 0.50f );
+                }
+                batcher.draw(dragCircleTexture, tweenTarget.x - dragCircleTexture.getRegionWidth() / 2, tweenTarget.y - dragCircleTexture.getRegionHeight() / 2.4f,
+                        dragCircleTexture.getRegionWidth(), dragCircleTexture.getRegionHeight() / 1.2f);//full height at top, half height at sides*/
+                batcher.setColor(Color.WHITE);
+
         }
 
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
