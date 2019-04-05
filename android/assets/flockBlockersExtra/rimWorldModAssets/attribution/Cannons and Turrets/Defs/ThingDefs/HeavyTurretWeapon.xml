@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+	<!-- ==================== Bases ========================== -->
+
+	<ThingDef Name="BaseGun" Abstract="True">
+		<category>Item</category>
+		<eType>Equipment</eType>
+		<thingClass>Equipment</thingClass>
+		<label>Gun</label>
+		<equipmentType>Primary</equipmentType>
+		<isGun>True</isGun>
+		<pathCost>10</pathCost>
+		<useStandardHealth>True</useStandardHealth>
+		<selectable>True</selectable>
+		<maxHealth>100</maxHealth>
+		<altitudeLayer>Item</altitudeLayer>
+		<alwaysHaulable>True</alwaysHaulable>
+		<tickerType>Never</tickerType>
+		<techLevel>Midworld</techLevel>
+		<storeCategories>
+			<li>Weapons</li>
+		</storeCategories>
+		<comps>
+			<li>
+				<compClass>CompForbiddable</compClass>
+			</li>
+		</comps>
+		<verb>
+			<id>Nonnative</id>
+			<verbClass>Verb_Shoot</verbClass>
+			<cooldownTicks>15</cooldownTicks>
+			<label>VerbGun</label>
+			<description>Verb fires bullets.</description>
+			<hasStandardCommand>true</hasStandardCommand>
+			<targetParams>
+				<canTargetPawns>true</canTargetPawns>
+				<canTargetBuildings>true</canTargetBuildings>
+				<worldObjectTargetsMustBeAutoAttackable>true</worldObjectTargetsMustBeAutoAttackable>
+			</targetParams>
+			<canMiss>true</canMiss>
+		</verb>
+	</ThingDef>
+
+	<ThingDef Name="BaseBullet" Abstract="True">
+		<category>Projectile</category>
+		<tickerType>Normal</tickerType>
+		<altitudeLayer>Projectile</altitudeLayer>
+		<thingClass>Bullet</thingClass>
+		<label>Bullet</label>
+		<useStandardHealth>False</useStandardHealth>
+		<neverMultiSelect>True</neverMultiSelect>
+		<baseMaterialType>Transparent</baseMaterialType>
+	</ThingDef>
+
+<!-- ============================================== -->
+
+	<ThingDef ParentName="BaseBullet">
+		<defName>Bullet_HeavyTurret</defName>
+		<label>Heavy turret round</label>
+		<texturePath>Things/Projectile/Bullet_Small</texturePath>
+		<projectile>
+		    <damageDef>Bullet</damageDef>
+			<damageAmountBase>12</damageAmountBase>
+			<speed>70</speed>
+		</projectile>
+	</ThingDef>
+
+	<ThingDef ParentName="BaseGun">
+		<defName>Gun_HeavyTurret</defName>
+		<label>Heavy Turret</label>
+		<menuHidden>true</menuHidden>
+		<description>Heavy gun attached to a turret.</description>
+		<texturePath>Things/Building/HeavyTurretGun</texturePath>
+		<soundInteract>InteractRifle</soundInteract>
+		<verb>
+			<projectileDef>Bullet_TurretImprovised</projectileDef>
+			<warmupTicks>54</warmupTicks>
+			<cooldownTicks>100</cooldownTicks>
+			<minRange>1</minRange>
+			<range>26</range>
+			<accuracyTouch>1.00</accuracyTouch>
+			<accuracyShort>0.95</accuracyShort>
+			<accuracyMedium>0.85</accuracyMedium>
+			<accuracyLong>0.80</accuracyLong>
+			<ticksBetweenBurstShots>5</ticksBetweenBurstShots>
+			<burstShotCount>12</burstShotCount>
+			<fireSound>GunShotA</fireSound>
+		</verb>
+	</ThingDef>
+
+<!-- ============================================== -->
+
+</ThingDefs>

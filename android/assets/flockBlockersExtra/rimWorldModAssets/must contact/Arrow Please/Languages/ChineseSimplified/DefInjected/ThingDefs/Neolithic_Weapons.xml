@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Ranged_Torch.label>投掷用火炬</Ranged_Torch.label>
+  <Ranged_Torch.description>一个照明用的工具。但为何不和你的敌人"分享"你的火呢？然而，火炬真的不太适合投掷。</Ranged_Torch.description>
+  <Torch_Torch.label>火炬</Torch_Torch.label>
+  <Ranged_Slinger.label>投石环索</Ranged_Slinger.label>
+  <Ranged_Slinger.description>一块用来投掷石头的布料。非常原始，但仍然可以造成伤亡。这种轻便的武器很适合打带跑。</Ranged_Slinger.description>
+  <Stone_Slinger.label>石头</Stone_Slinger.label>
+  <Ranged_Tomahawk.label>战斧</Ranged_Tomahawk.label>
+  <Ranged_Tomahawk.description>一种可以同时用于进远程的武器。不过投掷时的命中率并不理想。</Ranged_Tomahawk.description>
+  <Axe_Tomahawk.label>战斧</Axe_Tomahawk.label>
+  <Ranged_Blowgun.label>吹箭</Ranged_Blowgun.label>
+  <Ranged_Blowgun.description>一根可以用来射出毒镖的简单管子。毒镖本身几乎没有杀伤力，但是上面的毒却能快速地让敌人麻痹，甚至是死亡。</Ranged_Blowgun.description>
+  <Dart_Blowgun.label>毒镖</Dart_Blowgun.label>
+  
+</LanguageData>

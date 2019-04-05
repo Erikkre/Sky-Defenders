@@ -1,0 +1,117 @@
+v1.0:   - Artillery cannon turret.
+
+v1.1:   - Fixed cannon turret overiding improvised turret.
+
+v1.2:   - Raised projectile speed by 1/3.
+
+v1.3:   - New cannon texture.
+
+v1.4:   - Fixed the turret textures to look more centred on the structure
+        and will now take 2x2 squares instead of 1x1.
+        - Added a few touches to the textures. (muzzle break)
+        - Raised the projectile speed from 35 to 55.
+        - Raised explosion radius from 1.5 to 2.5.
+        - Reduced reload time by 1 sec
+
+v1.5:   - Research now needed to build the artillery cannon
+        1. Self propelled guns, leading to high explosives (cost 3500)
+        2. High explosives leading to the cannon (cost 2500)
+        - 10 Shells are also needed with the 650 metal to build 1 cannon
+        - Raised the reload time to 5.5 secs
+        - Raised the projectile speed from 55 to 85
+
+v1.51:  - Bit of code cleanup
+        - Changed the range and placing display radius from 55 to 56,
+           56 is the maximum placing display radius possible atm.
+        - Changed the explosion radius of the shells from 2.5 to 3.0.
+           and accuracy from 6 to 10.
+
+v1.6:   - Tweaked warmup, cooldown and reload times to be more closer to stats.
+        - Tripled the firing range and tweaked the minimum range alot more closer to the turret.
+
+v1.7:   - Added 2 new sounds *Pre-impact* and *explosion* sounds
+        - Changed the projectile texture a bit, so you can see it better.
+
+v2.0    - Mod now called Cannons
+        - Changed cannon names to artillery cannon and howitzer cannon
+        - Artillery cannon fires over walls/mountains/rocks, and
+        the Howitzer cannon is the original cannon and doesn't have the pre-impact sound.
+        - Both cannons are from the same research pre-requisites.
+
+v2.1    - Tweaked the stats of both cannons.
+        - New howitzer cannon texture.
+        - damage now doesn't instantly disintergrate enemys,
+        thats how i wanted it initially :).
+
+v2.2    - added new artillery firing sound, howitzer got the artillery sound.
+        - tweaked the volumes of all sounds.
+
+v2.3    - Added new research, ballistics, howitzer and artillery armour plating.
+        - Changed the research tree for artillery and howitzer cannons.
+        - changed the work to build of the howitzer from 1000 to 850.
+        - Changed the cost of the artillery from 650 metal to 850 and from 10 shells to 20.
+
+v3.0    - Mod renamed to Cannons and Turrets
+        - Merged Kilroy's killer turret pack
+        - Grenade turret has been removed (for now) will put back if everyone wants it.
+        - Reworked research tree of turret pack.
+        - All turrets have new armour plating research, 
+          when each turret becomes available through research.
+        - Added reinforced metal walls and fire proof metal walls research.
+        - Added colonist fitness training research.
+
+v3.1   - Tweaked the artillery cannon's accuracy.
+         - Added colonist endurance, strength training and diet program research.
+         - all slaves from slave traders will benefit from the colonist training and diet program.
+         - 50% more walk speed for all colonist who benefit from training.
+         - Remember only the 3 orig starting colonist and slaves from slave traders,
+           will benefit from the 50% more walk speed, training, and the diet program.
+
+v3.2     - Artillery accuracy decreased, explosion radius and damage increased.
+         - Howitzer accuracy, explosion radius and damage increased.
+         - Colonist training removed and moved to it's own mod. (Enhanced Colonists)
+         - Metal costs reduced.
+         - Shell costs increased.
+         - Started working on a new flak style cannon.
+
+v3.3     - Added new 20mm Flak cannon.
+
+v3.4     - Added new Kaytusha MRL (Multiple rocket launcher) With firing sound.
+         - Removed preimpact sound for flak cannon, to make artillery cannon unique.
+
+v3.5     - Added new howitzer sound, artillery got the old howitzer sound 
+           and the flak got the artillery sound.
+           Sounds alot better, and more relative to the size of the cannons.
+         - Accuracy, damage and firing speed re-balancing.
+         - Kaytusha now fires incendiary rockets and fires 2 extra shots. (8 missles)
+           
+v3.6      - Further Re-balancing of damage, explosion radius, firerate and range.
+           - Howitzer damage reduced from 65 to 45, 
+             and explosion radius reduced from 4.5 to 3.5
+           - Artillery damage reduced from 135 to 90
+             and explosion radius reduced from 8.0 to 7.0
+           - Artillery reload time increased from 12 to 17 secs.
+           - Flak Range reduced from 350 to 200
+           - Kaytusha reload time increased from 12 to 15 secs.
+
+v3.7       - Added EMP and incendiary blasting charges. (Research needed)
+           - Further Re-balancing of accuracy on artillery, 
+           accuracy and firerate on flak and kaytusha,
+           and firerate on howitzer
+           - Flak firerate increased from 8 to 12 secs.
+           - Kaytusha firerate increased from 15 to 24 secs.
+           - Howitzer firate increased from 6 to 8 secs.
+
+v3.8       - Added Stun blasting charge.
+           - All 3 blasting charges are now unlocked with 1 research
+             called IES Blasting Charges.
+           - Added flak and katyusha armour plating research.
+             Flak gains 250 health, giving it 900 total.
+             katyusha gains 150 health giving it 400 total.
+           - Re-balanced base power consumption on artillery, howitzer and katyusha.
+             Artillery base power consumption increased from 500 to 650.
+             Howitzer base power consumption decreased from 500 to 350.
+             Katyusha base power consumption increased from 500 to 550.
+           - Typo fix.
+
+v3.81      - Fixed pawn damage showing up as misc.

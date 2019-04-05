@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Trebuchet_ShellsN.label>拋石機彈藥</Trebuchet_ShellsN.label>
+  <Trebuchet_ShellsN.description>一顆供拋石機發射的石塊。</Trebuchet_ShellsN.description>
+  <ShellsN_Trebuchet.label>拋石機彈藥</ShellsN_Trebuchet.label>
+  <Trebuchet_ShellsF.label>燃燒拋石機彈藥</Trebuchet_ShellsF.label>
+  <Trebuchet_ShellsF.description>一顆供拋石機發射的燃燒石塊。</Trebuchet_ShellsF.description>
+  <ShellsF_Trebuchet.label>燃燒拋石機彈藥</ShellsF_Trebuchet.label>
+  <Trebuchet_ShellsH.label>人肉拋石機彈藥</Trebuchet_ShellsH.label>
+  <Trebuchet_ShellsH.description>一個被當作拋石機彈藥看待的倒楣屍體。</Trebuchet_ShellsH.description>
+  <ShellsH_Trebuchet.label>人肉拋石機彈藥</ShellsH_Trebuchet.label>
+  <Catapult_ShellsN.label>投石器彈藥</Catapult_ShellsN.label>
+  <Catapult_ShellsN.description>一團供投石器發射的石塊。</Catapult_ShellsN.description>
+  <ShellsN_Catapult.label>投石器彈藥</ShellsN_Catapult.label>
+  <Catapult_ShellsF.label>燃燒投石器彈藥</Catapult_ShellsF.label>
+  <Catapult_ShellsF.description>一團供投石器發射的燃燒石塊。</Catapult_ShellsF.description>
+  <ShellsF_Catapult.label>燃燒投石器彈藥</ShellsF_Catapult.label>
+  
+</LanguageData>

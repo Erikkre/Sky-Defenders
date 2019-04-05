@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<DamageDef Name="LocalInjuryBase" Abstract="True">
+		<workerClass>DamageWorker_AddInjury</workerClass>
+	</DamageDef>
+
+	<DamageDef ParentName="LocalInjuryBase">
+		<defName>AntiMateriel</defName>
+		<label>antimateriel</label>
+		<externalViolence>true</externalViolence>
+		<battleWound>true</battleWound>
+		<deathMessage>{0} has been shot to death.</deathMessage>
+		<hediff>Gunshot</hediff>
+		<hediffSolid>Crack</hediffSolid>
+		<harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
+		<impactSoundType>Bullet</impactSoundType>
+		<armorCategory>Sharp</armorCategory>
+	</DamageDef>
+
+	<DamageDef ParentName="LocalInjuryBase">
+		<defName>Laser</defName>
+		<label>Laser</label>
+		<externalViolence>true</externalViolence>
+		<battleWound>true</battleWound>
+		<deathMessage>{0} has been shot to death with a laser.</deathMessage>
+		<hediff>LaserBurn</hediff>
+		<harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
+		<impactSoundType>Bullet</impactSoundType>
+		<armorCategory>Heat</armorCategory>
+	</DamageDef>
+	
+		<DamageDef ParentName="LocalInjuryBase">
+		<defName>Plasma</defName>
+		<label>Plasma</label>
+		<externalViolence>true</externalViolence>
+		<battleWound>true</battleWound>
+		<deathMessage>{0} has been shot to death with plasma.</deathMessage>
+		<hediff>PlasmaBurn</hediff>
+		<harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
+		<impactSoundType>Bullet</impactSoundType>
+		<armorCategory>Heat</armorCategory>
+	</DamageDef>
+	
+		<DamageDef ParentName="LocalInjuryBase">
+		<defName>PlasmaBoom</defName>
+		<label>PlasmaBoom</label>
+		<externalViolence>true</externalViolence>
+		<battleWound>true</battleWound>
+		<deathMessage>{0} has died in an explosion of plasma.</deathMessage>
+		<hediff>PlasmaBurn</hediff>
+		<harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
+		<impactSoundType>Blunt</impactSoundType>
+		<armorCategory>Heat</armorCategory>
+		<spreadOut>true</spreadOut>
+		<explosionDamage>60</explosionDamage>
+		<explosionBuildingDamageFactor>2.5</explosionBuildingDamageFactor>
+		<explosionAffectOutsidePartsOnly>false</explosionAffectOutsidePartsOnly>
+		<explosionHeatEnergyPerCell>15</explosionHeatEnergyPerCell>
+		<explosionCellMote>Mote_BlastFlame</explosionCellMote>
+		<soundExplosion>PlasmaBoom</soundExplosion>
+	</DamageDef>
+	
+</Defs>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Flaming_Arrow.label>flaming arrow</Flaming_Arrow.label>
+  <Flaming_Arrow.deathMessage>{0} has been burned to death by a flaming arrow.</Flaming_Arrow.deathMessage>
+  <Dart_Blowgun.label>dart</Dart_Blowgun.label>
+  <Dart_Blowgun.deathMessage>{0} has been shot to death by a single blowgun.</Dart_Blowgun.deathMessage>
+  <Ballista.label>bolt</Ballista.label>
+  <Ballista.deathMessage>{0} has been shot to death by a bolt.</Ballista.deathMessage>
+  <Trebuchet.label>stone chunk</Trebuchet.label>
+  <Trebuchet.deathMessage>{0} has been smashed to death by a stone chunk launched by trebuchet.</Trebuchet.deathMessage>
+
+</LanguageData>

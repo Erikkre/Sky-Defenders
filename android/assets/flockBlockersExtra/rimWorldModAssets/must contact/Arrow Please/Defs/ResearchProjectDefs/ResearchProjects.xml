@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>Crossbow</defName>
+    <label>crossbow</label>
+    <description>Craft various types of crossbows for better firepower than bows.</description>
+    <baseCost>800</baseCost>
+    <techLevel>Medieval</techLevel>
+    <prerequisites>
+      <li>Greatbow</li>
+    </prerequisites>
+    <researchViewX>4</researchViewX>
+    <researchViewY>5</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>Siege_Engine</defName>
+    <label>siege engine</label>
+    <description>Craft siege engines to destroy bases from distance, or defend from raiders.</description>
+    <baseCost>600</baseCost>
+    <techLevel>Medieval</techLevel>
+    <prerequisites>
+      <li>Crossbow</li>
+    </prerequisites>
+    <researchViewX>4</researchViewX>
+    <researchViewY>4.5</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>

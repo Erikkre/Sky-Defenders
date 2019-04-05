@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<RecipeDef Name="Make_TrebuchetShells">
+		<defName>Make_TrebuchetShells</defName>
+		<label>make trebuchet projectiles</label>
+		<description>Reshaped stone chunk for trebuchet use.</description>
+		<ingredients>
+			<li>
+				<filter>
+					<categories>
+						<li>StoneChunks</li>
+					</categories>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<categories>
+				<li>StoneChunks</li>
+			</categories>
+		</fixedIngredientFilter>
+		<jobString>Make trebuchet projectiles.</jobString>
+		<workAmount>600</workAmount>
+                <workSpeedStat>UnskilledLaborSpeed</workSpeedStat>
+		<effectWorking>CutStone</effectWorking>
+		<soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+		<targetCountAdjustment>1</targetCountAdjustment>
+		<recipeUsers>
+			<li>TableStonecutter</li>
+		</recipeUsers>
+		<products>
+			<Trebuchet_ShellsN>1</Trebuchet_ShellsN>
+		</products>
+	</RecipeDef>
+
+	<RecipeDef Name="Make_TrebuchetShellsA">
+		<defName>Make_TrebuchetShellsA</defName>
+		<label>make trebuchet projectiles</label>
+		<description>Mix different stone blocks for trebuchet projectiles.</description>
+		<ingredients>
+			<li>
+				<filter>
+					<categories>
+						<li>StoneBlocks</li>
+					</categories>
+				</filter>
+				<count>30</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<categories>
+				<li>StoneBlocks</li>
+			</categories>
+		</fixedIngredientFilter>
+		<jobString>Make trebuchet projectiles.</jobString>
+		<workAmount>800</workAmount>
+                <workSpeedStat>UnskilledLaborSpeed</workSpeedStat>
+		<effectWorking>CutStone</effectWorking>
+		<soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+		<targetCountAdjustment>1</targetCountAdjustment>
+		<recipeUsers>
+			<li>TableStonecutter</li>
+		</recipeUsers>
+		<products>
+			<Trebuchet_ShellsN>1</Trebuchet_ShellsN>
+		</products>
+	</RecipeDef>
+
+-----------------------------------------------------------------------------------------------------------------
+
+	<RecipeDef>
+		<defName>MakeHumanRound</defName>
+		<label>make human trebuchet projectiles</label>
+		<description>Reshaped a human corpse for trebuchet use.</description>
+		<jobString>Make human trebuchet projectiles.</jobString>
+		<workAmount>300</workAmount>
+		<workSpeedStat>ButcheryFleshSpeed</workSpeedStat>
+    <workSkill>Cooking</workSkill>
+		<efficiencyStat>ButcheryFleshEfficiency</efficiencyStat>
+    <effectWorking>ButcherFlesh</effectWorking>
+    <soundWorking>Recipe_ButcherCorpseFlesh</soundWorking>
+    <ingredients>
+			<li>
+				<filter>
+					<categories>
+						<li>CorpsesHumanlike</li>
+					</categories>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<categories>
+				<li>CorpsesHumanlike</li>
+			</categories>
+			<disallowedCategories>
+				<li>CorpsesMechanoid</li>
+			</disallowedCategories>
+		</fixedIngredientFilter>
+		<recipeUsers>
+			<li>ButcherSpot</li>
+			<li>TableButcher</li>
+		</recipeUsers>
+		<products>
+			<Trebuchet_ShellsH>1</Trebuchet_ShellsH>
+		</products>
+	</RecipeDef>
+
+-----------------------------------------------------------------------------------------------------------------
+
+	<RecipeDef Name="Make_CatapultShells">
+		<defName>Make_CatapultShells</defName>
+		<label>make catapult projectiles</label>
+		<description>Reshaped stone chunks for catapult use.</description>
+		<ingredients>
+			<li>
+				<filter>
+					<categories>
+						<li>StoneChunks</li>
+					</categories>
+				</filter>
+				<count>1</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<categories>
+				<li>StoneChunks</li>
+			</categories>
+		</fixedIngredientFilter>
+		<jobString>Make catapult projectiles.</jobString>
+		<workAmount>600</workAmount>
+                <workSpeedStat>UnskilledLaborSpeed</workSpeedStat>
+		<effectWorking>CutStone</effectWorking>
+		<soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+		<targetCountAdjustment>1</targetCountAdjustment>
+		<recipeUsers>
+			<li>TableStonecutter</li>
+		</recipeUsers>
+		<products>
+			<Catapult_ShellsN>2</Catapult_ShellsN>
+		</products>
+	</RecipeDef>
+
+	<RecipeDef Name="Make_CatapultShellsA">
+		<defName>Make_CatapultShellsA</defName>
+		<label>make catapult projectiles</label>
+		<description>Mix different stone blocks for catapult projectiles.</description>
+		<ingredients>
+			<li>
+				<filter>
+					<categories>
+						<li>StoneBlocks</li>
+					</categories>
+				</filter>
+				<count>10</count>
+			</li>
+		</ingredients>
+		<fixedIngredientFilter>
+			<categories>
+				<li>StoneBlocks</li>
+			</categories>
+		</fixedIngredientFilter>
+		<jobString>Make trebuchet projectiles.</jobString>
+		<workAmount>400</workAmount>
+                <workSpeedStat>UnskilledLaborSpeed</workSpeedStat>
+		<effectWorking>CutStone</effectWorking>
+		<soundWorking>Recipe_MakeStoneBlocks</soundWorking>
+		<targetCountAdjustment>1</targetCountAdjustment>
+		<recipeUsers>
+			<li>TableStonecutter</li>
+		</recipeUsers>
+		<products>
+			<Catapult_ShellsN>1</Catapult_ShellsN>
+		</products>
+	</RecipeDef>
+
+</Defs>
