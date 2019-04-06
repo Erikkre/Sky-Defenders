@@ -102,6 +102,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public void speedUp(){
         speed=speedValues[++speedLvl];
         thrusterHeight=(int) (sideThrustTexture.getRegionHeight()*(1+0.3f*speedLvl));
+        setEmitterVal(emitters.get(1).getSpawnHeight(), speedLvl*3, false, false);
+        setEmitterVal(emitters.get(1).getEmission(), emitters.get(1).getEmission().getHighMax()*speedLvl, false, false);
+
+        setEmitterVal(emitters.get(2).getSpawnHeight(), speedLvl*3, false, false);
+        setEmitterVal(emitters.get(2).getEmission(), emitters.get(2).getEmission().getHighMax()*speedLvl, false, false);
+        //System.out.println(thrusterHeight+" ssssssssssssssssss");
     }
     float timeToTweenTarget;
     private int reticleRotation;
@@ -180,7 +186,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
         setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
-        burnerUp();rackUp();rackUp();speedUp();speedUp();speedUp();//armorUp();
+        burnerUp();rackUp();rackUp();speedUp();speedUp();speedUp();speedUp();//armorUp();
 
         addTurret('f');addTurret('f');addTurret('f');addTurret('f');addTurret('f');addTurret('f');
         for (Turret i :turretList){
@@ -578,7 +584,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("very fast");
         } else if (emitters.get(0).getEmission().getHighMax() == 2000){ //if past fastBurning stage, change emission to 300
             setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
-            setBurnerLightTarget( burnerOrigDist, TweenEquations.easeOutElastic, false);
+            setBurnerLightTarget(burnerOrigDist, TweenEquations.easeOutElastic, false);
             //System.out.println("not very fast and reset");
         }
 
@@ -597,10 +603,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
 
 
-            additiveEffects.get(1).setPosition(xOffsetDueToRotation(pos.x - thrusterWidth / 2f + 2, (thrusterWidth / 2f - 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f)),
-                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYPosition * balloonHeight + thrusterHeight / 2f, (thrusterWidth / 2f + 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f)));//adding a bit of vel for straying thrusters
-            additiveEffects.get(2).setPosition(xOffsetDueToRotation(pos.x + thrusterWidth / 2f + 2, -(thrusterWidth / 2f - 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f)),
-                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYPosition * balloonHeight + thrusterHeight / 2f, -(thrusterWidth / 2f + 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f)));//adding a bit of vel for straying thrusters
+            additiveEffects.get(1).setPosition(xOffsetDueToRotation(pos.x - thrusterWidth / 2f + 2, (thrusterWidth / 2f - 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f)),
+                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f, (thrusterWidth / 2f + 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f )));//adding a bit of vel for straying thrusters
+            additiveEffects.get(2).setPosition(xOffsetDueToRotation(pos.x + thrusterWidth / 2f + 2, -(thrusterWidth / 2f - 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f)),
+                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f, -(thrusterWidth / 2f + 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f)));//adding a bit of vel for straying thrusters
 
             preX=pos.x;
             preY=pos.y+balloonBob.get();
