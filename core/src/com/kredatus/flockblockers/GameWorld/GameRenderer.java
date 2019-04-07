@@ -171,6 +171,7 @@ public class GameRenderer {
         transitionColor = new Color();
         prepareTransition(255, 255, 255, .5f);
         //prepareSunshine();
+        //System.out.println(batcher.getBlendDstFunc()+" "+batcher.getBlendDstFuncAlpha()+" "+batcher.getBlendSrcFunc()+" "+batcher.getBlendSrcFuncAlpha()+" "+batcher.getPackedColor());
     }
 
     /*private void setupTweens() {
