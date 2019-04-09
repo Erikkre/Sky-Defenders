@@ -625,7 +625,7 @@ public class AssetHandler {
         }
     }
 
-    public static void playnext(Music[] list){
+    public static void playnext(Music[] list) {
         if (list==musiclist){
             if (musiciterator<5){
                 musiciterator++;
