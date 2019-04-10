@@ -192,6 +192,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         for (Turret i :turretList){
             i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();
         }
+        turretList.get(1).lvlUp();turretList.get(2).lvlUp();turretList.get(2).lvlUp();//max level 3 for now
     }
 
     private void addTurret(char type){//button will upgrade turret based on position of click choosing which turretPosition on a rack diagram thats blown up on screen when you tap upgrade i.e.
