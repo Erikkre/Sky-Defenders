@@ -72,7 +72,7 @@
                 <verbClass>Verb_Shoot</verbClass>
                 <hasStandardCommand>true</hasStandardCommand>
                 <defaultProjectile>Bullet_SR_Walther_WA_2000_PA</defaultProjectile>
-                <warmupTime>3.72</warmupTime>
+                <warmupTime>7.91</warmupTime>
                 <range>46.7</range>
                 <soundCast>Shot_SniperRifle</soundCast>
                 <soundCastTail>GunTail_Heavy</soundCastTail>

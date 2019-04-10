@@ -17,7 +17,7 @@
       </damageData>
     </graphicData>
      <uiIconScale>0.90</uiIconScale>
-   
+    <minifiedDef>MinifiedThing</minifiedDef>
     <castEdgeShadows>true</castEdgeShadows>
     <staticSunShadowHeight>0.40</staticSunShadowHeight>
     <costList>
@@ -90,7 +90,7 @@
       </damageData>
     </graphicData>
      <uiIconScale>0.90</uiIconScale>
-    
+    <minifiedDef>MinifiedThing</minifiedDef>
     <castEdgeShadows>true</castEdgeShadows>
     <staticSunShadowHeight>0.20</staticSunShadowHeight>
     <costList>
