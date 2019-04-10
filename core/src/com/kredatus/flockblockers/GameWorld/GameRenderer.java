@@ -23,7 +23,6 @@ import com.kredatus.flockblockers.GameObjects.Background;
 //import com.kredatus.flockblockers.GameObjects.Boost;
 import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Coin;
-import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameObjects.TinyBird;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
@@ -37,7 +36,6 @@ import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Helpers.ShapeRendererCustom;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
-import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
 
@@ -68,7 +66,6 @@ public class GameRenderer {
     private ShapeRenderer shapeRenderer; private ShapeRendererCustom shapeRendererCust;
     boolean turnback=true;
     private SpriteBatch batcher;
-    private Glider glider;
     private Airship airship;
     public static Vector3 campos;
     private Animation frontFlaps, leftSideFlaps, rightSideFlaps, flipflaps, frontViewFlaps, backFlaps;
@@ -245,7 +242,7 @@ public void setRotate(float angle){
         invboostlist = bgHandler.getinvboostlist();
         invflipboostlist = bgHandler.getinvflipboostlist();
 */
-        glider = myWorld.getGlider();
+
         airship = myWorld.airship;
         table=uiHandler.table;
     }
@@ -515,7 +512,6 @@ public void setRotate(float angle){
                 beta.get()*2, beta.get()*2, 1, 1, rotate);
         frontTexture = (TextureRegion) frontFlaps.getKeyFrame(runTime+0.5f);
 
-        batcher.draw(frontTexture, cam.position.x-frontTexture.getRegionWidth()/(gliderscaling/1.8f)/2, glider.getPosition().y +cam.position.y- glider.starty-30 -frontTexture.getRegionHeight()/(gliderscaling /1.8f)/2, frontTexture.getRegionWidth()/(gliderscaling/1.8f), frontTexture.getRegionHeight()/(gliderscaling/1.8f));
     }
 
     private void drawDeathMenu() {

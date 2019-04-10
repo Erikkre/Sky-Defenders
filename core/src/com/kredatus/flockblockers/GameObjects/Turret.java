@@ -2,6 +2,8 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
@@ -29,14 +31,25 @@ public class Turret {
     private Timer timer;
     private TimerTask timerTask;
     public BirdAbstractClass targetBird;
-    public TextureRegion texture, projTexture;
+    public TextureRegion[] texture;
+    public TextureRegion projTexture;
     char turretType;
     public int lvl = 0, firingInterval, timeSinceLastShot, gunTargetPointer=-1;
     private double lastShotTime=0;
 
     public boolean firingStoppedByGamePause;
     public Vector2 lastFingerPosition=new Vector2();
+    public boolean turretIsProjectile;
 
+    public void draw(SpriteBatch batcher, float xPos, float yPos){
+        if (texture.length==1 ||  timeSinceLastShot>1000 ) {//turret has 1 tex or it is after 1s after shot
+            batcher.draw(texture[0], xPos, yPos,
+                    width / 2f, height / 2f, width, height, 1f, 1f, getRotation());
+        } else if (timeSinceLastShot<1000 && projTexture!=texture[0]){//turret has a post-firing tex and was just fired and turretIsntProjectile. Doesnt
+            batcher.draw(texture[1], xPos, yPos,
+                    width / 2f, height / 2f, width, height, 1f, 1f, getRotation());
+        } //if turret is projectile then dont show it at all
+    }
     public Turret(char turretType, Vector2 pos){
         this.pos = pos;
         this.origPosition= pos.cpy();
@@ -47,7 +60,7 @@ public class Turret {
         timer=new Timer();
         firing=false;
         turretSetup(turretType, lvl);
-        height=texture.getRegionHeight();width=texture.getRegionWidth();
+        height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();
         /*if (position.x<camWidth/2) {
             texture = new TextureRegion(texture);
             texture.flip(false,true);
@@ -284,56 +297,53 @@ public class Turret {
                 pen = 1;
                 spr = 1;
                 rof = 1.5f; //was 0.5f //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots
-                /*
                     switch (lvl) {
-                        case(0):texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
-                        case(1):texture=AssetHandler.f1;projTexture=AssetHandler.f1Proj;break;
-                        case(2):texture=AssetHandler.f2;projTexture=AssetHandler.f2Proj;break;
-                        case(3):texture=AssetHandler.f3;projTexture=AssetHandler.f3Proj;break;
-                        case(4):texture=AssetHandler.f4;projTexture=AssetHandler.f4Proj;break;
-                        case(5):texture=AssetHandler.f5;projTexture=AssetHandler.f5Proj;break;
-                        case(6):texture=AssetHandler.f6;projTexture=AssetHandler.f6Proj;break;
-                        case(7):texture=AssetHandler.f7;projTexture=AssetHandler.f7Proj;break;
-                        case(8):texture=AssetHandler.f8;projTexture=AssetHandler.f8Proj;break;
-                        case(9):texture=AssetHandler.f9;projTexture=AssetHandler.f9Proj;break;
-                    } break;*/
-                texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
+                        case(0):texture[0]=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
+                        case(1):texture[0]=AssetHandler.f1;projTexture=texture[0];break;
+                        case(2):texture[0]=AssetHandler.f2;projTexture=AssetHandler.f2Proj;break;
+                        case(3):texture[0]=AssetHandler.f3;projTexture=AssetHandler.f3Proj;break;
+                        case(4):texture[0]=AssetHandler.f4;projTexture=AssetHandler.f4Proj;break;
+                        case(5):texture[0]=AssetHandler.f5;projTexture=AssetHandler.f5Proj;break;
+                        case(6):texture[0]=AssetHandler.f6;projTexture=AssetHandler.f6Proj;break;
+                        case(7):texture[0]=AssetHandler.f7;projTexture=AssetHandler.f7Proj;break;
+                        case(8):texture[0]=AssetHandler.f8;projTexture=AssetHandler.f8Proj;break;
+                        case(9):texture[0]=AssetHandler.f9;projTexture=AssetHandler.f9Proj;break;
+
+                    } break;
             case ('s'):
                 dmg = 0.3f;
                 pen = 1;
                 spr = 3;
-                rof = 1f;/*
+                rof = 1f;
                     switch (lvl) {
-                        case(0):texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;  //beware of slight changes
-                        case(1):texture=AssetHandler.s1;projTexture=AssetHandler.s1Proj;break;
-                        case(2):texture=AssetHandler.s2;projTexture=AssetHandler.s2Proj;break;
-                        case(3):texture=AssetHandler.s3;projTexture=AssetHandler.s3Proj;break;
-                        case(4):texture=AssetHandler.s4;projTexture=AssetHandler.s4Proj;break;
-                        case(5):texture=AssetHandler.s5;projTexture=AssetHandler.s5Proj;break;
-                        case(6):texture=AssetHandler.s6;projTexture=AssetHandler.s6Proj;break;
-                        case(7):texture=AssetHandler.s7;projTexture=AssetHandler.s7Proj;break;
-                        case(8):texture=AssetHandler.s8;projTexture=AssetHandler.s8Proj;break;
-                        case(9):texture=AssetHandler.s9;projTexture=AssetHandler.s9Proj;break;
-                    } break;*/
-            texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
+                        case(0):texture[0]=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;  //beware of slight changes
+                        case(1):texture[0]=AssetHandler.s1;projTexture=AssetHandler.s1Proj;break;
+                        case(2):texture[0]=AssetHandler.s2;projTexture=AssetHandler.s2Proj;break;
+                        case(3):texture[0]=AssetHandler.s3;projTexture=AssetHandler.s3Proj;break;
+                        case(4):texture[0]=AssetHandler.s4;projTexture=AssetHandler.s4Proj;break;
+                        case(5):texture[0]=AssetHandler.s5;projTexture=AssetHandler.s5Proj;break;
+                        case(6):texture[0]=AssetHandler.s6;projTexture=AssetHandler.s6Proj;break;
+                        case(7):texture[0]=AssetHandler.s7;projTexture=AssetHandler.s7Proj;break;
+                        case(8):texture[0]=AssetHandler.s8;projTexture=AssetHandler.s8Proj;break;
+                        case(9):texture[0]=AssetHandler.s9;projTexture=AssetHandler.s9Proj;break;
+                    } break;
             case ('d'):
                 dmg = 4;
                 pen = 4;
                 spr = 1;
-                rof = 0.5f;/*
+                rof = 0.5f;
                     switch (lvl) {
-                        case(0):texture=AssetHandler.d0;projTexture=AssetHandler.d0Proj;break;
-                        case(1):texture=AssetHandler.d1;projTexture=AssetHandler.d1Proj;break;
-                        case(2):texture=AssetHandler.d2;projTexture=AssetHandler.d2Proj;break;
-                        case(3):texture=AssetHandler.d3;projTexture=AssetHandler.d3Proj;break;
-                        case(4):texture=AssetHandler.d4;projTexture=AssetHandler.d4Proj;break;
-                        case(5):texture=AssetHandler.d5;projTexture=AssetHandler.d5Proj;break;
-                        case(6):texture=AssetHandler.d6;projTexture=AssetHandler.d6Proj;break;
-                        case(7):texture=AssetHandler.d7;projTexture=AssetHandler.d7Proj;break;
-                        case(8):texture=AssetHandler.d8;projTexture=AssetHandler.d8Proj;break;
-                        case(9):texture=AssetHandler.d9;projTexture=AssetHandler.d9Proj;break;
-                    } break;*/
-                texture=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
+                        case(0):texture[0]=AssetHandler.d0;projTexture=AssetHandler.d0Proj;break;
+                        case(1):texture[0]=AssetHandler.d1;projTexture=texture[0];break;
+                        case(2):texture[0]=AssetHandler.d2;projTexture=AssetHandler.d2Proj;break;
+                        case(3):texture[0]=AssetHandler.d3;projTexture=AssetHandler.d3Proj;break;
+                        case(4):texture[0]=AssetHandler.d4;projTexture=AssetHandler.d4Proj;break;
+                        case(5):texture[0]=AssetHandler.d5;projTexture=AssetHandler.d5Proj;break;
+                        case(6):texture[0]=AssetHandler.d6;projTexture=AssetHandler.d6Proj;break;
+                        case(7):texture[0]=AssetHandler.d7;projTexture=AssetHandler.d7Proj;break;
+                        case(8):texture[0]=AssetHandler.d8;projTexture=AssetHandler.d8Proj;break;
+                        case(9):texture[0]=AssetHandler.d9;projTexture=AssetHandler.d9Proj;break;
+                    } break;
         }
 
         for (int i=0;i<lvl;i++){
@@ -347,8 +357,8 @@ public class Turret {
 
         firingInterval=(int) ((1 / (rof / 3)) * 1000);
         //System.out.println("firingInterval set as: "+firingInterval);
-        //width=54;//texture.getRegionWidth();
-        //height=54;//=texture.getRegionHeight();
+        //width=54;//texture[0].getRegionWidth();
+        //height=54;//=texture[0].getRegionHeight();
     }
 
     public float getRotation() {

@@ -4,7 +4,6 @@ package com.kredatus.flockblockers.Handlers;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
@@ -17,7 +16,7 @@ import java.util.List;
 
 public class InputHandler implements InputProcessor {
     private GameWorld myWorld;
-    private Glider myGlider;
+
 
     private List<SimpleButton> menuButtons, deathButtons;
     private SimpleButton playButton, storyButton, creditsButton, exitButton, retryButton, menuButton, readyButton, instrButton, nextButton;
@@ -31,7 +30,6 @@ public class InputHandler implements InputProcessor {
         // myBird now represents the gameWorld's bird.
         this.camWidth=camWidth;
         this.myWorld = myWorld;
-        myGlider = myWorld.getGlider();
         this.scaleFactorX = scaleFactorX;
         this.scaleFactorY = scaleFactorY;
 
@@ -75,7 +73,7 @@ public class InputHandler implements InputProcessor {
         screenY = scaleY(screenY);
 
         if (myWorld.isRunning()) {
-            myGlider.onClick();
+            //myGlider.onClick();
             //point.set(screenX, screenY);
         } else if (myWorld.isMenu()) {
             for (SimpleButton buttons : menuButtons) {
@@ -110,7 +108,7 @@ public class InputHandler implements InputProcessor {
             } else if (myWorld.isReady()) {
                 myWorld.start();
             }
-            myGlider.onClick();
+            //myGlider.onClick();
         }
         return false;
     }

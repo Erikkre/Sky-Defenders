@@ -4,7 +4,6 @@ package com.kredatus.flockblockers.GameWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameObjects.Airship;
-import com.kredatus.flockblockers.GameObjects.Glider;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
@@ -18,7 +17,7 @@ import com.kredatus.flockblockers.Screens.SplashScreen;
  * Created by Mr. Kredatus on 8/5/2017.
  */
 public class GameWorld {
-    private Glider glider;
+
     public BgHandler bgHandler;
     public BirdHandler birdHandler;
     public TargetHandler targetHandler;
@@ -116,7 +115,7 @@ public class GameWorld {
     }
 
     private void updateReady(float runTime) {
-        glider.updateReady(runTime);
+        //glider.updateReady(runTime);
     }
 
     private void updateRunning(float delta, float runTime) {
@@ -125,9 +124,9 @@ public class GameWorld {
         if (delta > .15f) {
             delta = .15f;}
         //bgHandler.collides(glider, updatedboostnumber);
-        glider.update(delta);
+
         bgHandler.update(delta);
-        if (Math.abs(glider.getPosition().y) > bgHandler.bgh) {
+        /*if (Math.abs(glider.getPosition().y) > bgHandler.bgh) {
            // renderer.prepareSunshine();
             currentState = GameState.DEATHMENU;
             if (renderer.scorenumber > AssetHandler.getHighScore()) {
@@ -137,16 +136,13 @@ public class GameWorld {
            // AssetHandler.frontViewFlaps.setFrameDuration(0.2f);
            //renderer.setCamPositionOriginal();
             renderer.prepareTransition(255, 255, 255, 1);
-        }
+        }*/
     }
 
     public void addBoost(double increment) {
         boost += increment;
     }
 
-    public Glider getGlider() {
-        return glider;
-    }
 
     public BgHandler getbgHandler() {
         return bgHandler;
@@ -160,7 +156,7 @@ public class GameWorld {
 
     public void restart() {
         boost = 0;
-        glider.onRestart();
+        //glider.onRestart();
         //renderer.setCamPositionOriginal();
         renderer.scorenumber=0;
         AssetHandler.deathmenumusic.stop();
@@ -171,7 +167,7 @@ public class GameWorld {
 
     public void backToMenu() {
         boost = 0;
-        glider.onRestart();
+        //glider.onRestart();
         //bgHandler.onRestart();
         //renderer.setCamPositionOriginal();
         currentState = GameState.MENU;
