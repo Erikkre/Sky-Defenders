@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData> 
+
+<CraftANM14TH3IncendiaryGrenade.label>Собрать зажигательные гранаты AN-M14 TH3</CraftANM14TH3IncendiaryGrenade.label>
+<CraftANM14TH3IncendiaryGrenade.description>Собрать зажигательные гранаты AN-M14 TH3.</CraftANM14TH3IncendiaryGrenade.description>
+
+<CraftM84FlashbangGrenade.label>Собрать светошумовые гранаты M84</CraftM84FlashbangGrenade.label>
+<CraftM84FlashbangGrenade.description>Собрать светошумовые гранаты M84.</CraftM84FlashbangGrenade.description>
+
+<CraftM67FragGrenade.label>Собрать осколочные гранаты M67</CraftM67FragGrenade.label>
+<CraftM67FragGrenade.description>Собрать осколочные гранаты M67.</CraftM67FragGrenade.description>
+
+</LanguageData>

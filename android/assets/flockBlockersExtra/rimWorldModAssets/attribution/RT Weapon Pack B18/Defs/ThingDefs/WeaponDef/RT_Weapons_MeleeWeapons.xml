@@ -1,0 +1,1002 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ThingDef Abstract="True" Name="RT_BaseMeleeAllWeapon">
+		<thingClass>ThingWithComps</thingClass>
+		<category>Item</category>
+		<drawGUIOverlay>true</drawGUIOverlay>
+		<altitudeLayer>Item</altitudeLayer>
+		<alwaysHaulable>true</alwaysHaulable>
+		<tickerType>Never</tickerType>
+		<equipmentType>Primary</equipmentType>
+		<useHitPoints>true</useHitPoints>
+		<pathCost>5</pathCost>
+		<selectable>true</selectable>
+		<statBases>
+			<MaxHitPoints>150</MaxHitPoints>
+			<Flammability>1.0</Flammability>
+			<DeteriorationRate>2</DeteriorationRate>
+			<Beauty>-6</Beauty>
+			<SellPriceFactor>0.5</SellPriceFactor>
+			<MarketValue>70</MarketValue>
+		</statBases>
+		<comps>
+			<li Class="CompProperties_Forbiddable"/>
+			<li>
+				<compClass>CompEquippable</compClass>
+			</li>
+		</comps>
+		<costList>
+		<Steel>1</Steel>
+		</costList>		
+		<graphicData>
+			<onGroundRandomRotateAngle>35</onGroundRandomRotateAngle>
+		</graphicData>
+	</ThingDef>
+
+ <ThingDef Name="RT_BaseMeleeWeapon" Abstract="True" ParentName="RT_BaseMeleeAllWeapon">
+    <techLevel>Industrial</techLevel>
+    <thingCategories>
+      <li>WeaponsMelee</li>
+    </thingCategories>
+
+    <recipeMaker>
+      <workSpeedStat>SmithingSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <effectWorking>Smith</effectWorking>
+      <soundWorking>Recipe_Smith</soundWorking>
+      <recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+      </recipeUsers>
+      <unfinishedThingDef>UnfinishedWeapon</unfinishedThingDef>
+    </recipeMaker>
+    <inspectorTabs>
+      <li>ITab_Art</li>
+    </inspectorTabs>
+  </ThingDef>
+
+	<ThingDef Name="RT_BaseMeleeWeapon_Sharp" ParentName="RT_BaseMeleeWeapon" Abstract="True">
+
+    <recipeMaker>
+
+    <defaultIngredientFilter>
+      <categories>
+        <li>Root</li>
+      </categories>
+      <exceptedThingDefs>
+        <li>Silver</li>
+        <li>Gold</li>
+        <li>WoodLog</li>
+      </exceptedThingDefs>
+    </defaultIngredientFilter>
+    </recipeMaker>
+  </ThingDef>
+
+  <ThingDef Name="RT_BaseMeleeWeapon_Blunt" ParentName="RT_BaseMeleeWeapon" Abstract="True">
+
+    <recipeMaker>
+	
+      <defaultIngredientFilter>
+        <categories>
+          <li>Root</li>
+        </categories>
+        <exceptedThingDefs>
+          <li>Silver</li>
+          <li>Gold</li>
+        </exceptedThingDefs>
+      </defaultIngredientFilter>
+    </recipeMaker>
+  </ThingDef>
+
+
+	<ThingDef Name="RT_BaseMeleeWeapon_Sharp_CQB" ParentName="RT_BaseMeleeWeapon" Abstract="True">
+	<smeltable>true</smeltable>	
+    <recipeMaker>
+	<researchPrerequisite>RT_Melee</researchPrerequisite>
+    <defaultIngredientFilter>
+      <categories>
+        <li>Root</li>
+      </categories>
+      <exceptedThingDefs>
+        <li>Silver</li>
+        <li>Gold</li>
+        <li>WoodLog</li>
+      </exceptedThingDefs>
+    </defaultIngredientFilter>
+    </recipeMaker>
+  </ThingDef>
+
+  <ThingDef Name="RT_BaseMeleeWeapon_Blunt_CQB" ParentName="RT_BaseMeleeWeapon" Abstract="True">
+ 	<smeltable>true</smeltable> 
+    <recipeMaker>
+	<researchPrerequisite>RT_Melee</researchPrerequisite>	
+      <defaultIngredientFilter>
+        <categories>
+          <li>Root</li>
+        </categories>
+        <exceptedThingDefs>
+          <li>Silver</li>
+          <li>Gold</li>
+        </exceptedThingDefs>
+      </defaultIngredientFilter>
+    </recipeMaker>
+  </ThingDef>  
+  
+	<ThingDef Name="RT_BaseMeleeWeapon_Sharp_Quality" Abstract="True" ParentName="RT_BaseMeleeWeapon_Sharp_CQB">
+  
+		<comps>
+			<li>
+				<compClass>CompQuality</compClass>
+			</li>
+			<li Class="CompProperties_Art">
+				<nameMaker>ArtName_WeaponMelee</nameMaker>
+				<descriptionMaker>ArtDescription_WeaponMelee</descriptionMaker>
+				<minQualityForArtistic>Excellent</minQualityForArtistic>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef Name="RT_BaseMeleeWeapon_Blunt_Quality" Abstract="True" ParentName="RT_BaseMeleeWeapon_Blunt_CQB">
+		<comps>
+			<li>
+				<compClass>CompQuality</compClass>
+			</li>
+			<li Class="CompProperties_Art">
+				<nameMaker>ArtName_WeaponMelee</nameMaker>
+				<descriptionMaker>ArtDescription_WeaponMelee</descriptionMaker>
+				<minQualityForArtistic>Excellent</minQualityForArtistic>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef Name="RT_BaseMeleeWeapon_Sharp_Quality_CQB" Abstract="True" ParentName="RT_BaseMeleeWeapon_Sharp_CQB">
+		<comps>
+			<li>
+				<compClass>CompQuality</compClass>
+			</li>
+			<li Class="CompProperties_Art">
+				<nameMaker>ArtName_WeaponMelee</nameMaker>
+				<descriptionMaker>ArtDescription_WeaponMelee</descriptionMaker>
+				<minQualityForArtistic>Excellent</minQualityForArtistic>
+			</li>
+		</comps>
+	</ThingDef>
+
+	<ThingDef Name="RT_BaseMeleeWeapon_Blunt_Quality_CQB" Abstract="True" ParentName="RT_BaseMeleeWeapon_Blunt_CQB">
+		<comps>
+			<li>
+				<compClass>CompQuality</compClass>
+			</li>
+			<li Class="CompProperties_Art">
+				<nameMaker>ArtName_WeaponMelee</nameMaker>
+				<descriptionMaker>ArtDescription_WeaponMelee</descriptionMaker>
+				<minQualityForArtistic>Excellent</minQualityForArtistic>
+			</li>
+		</comps>
+	</ThingDef>
+
+	
+  <!-- ============================Sickle================================== -->
+	<ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality">
+		<defName>RT_MeleeWeapon_Sickle</defName>
+		<label>Sickle</label>
+		<techLevel>Neolithic</techLevel>
+		<description>Equipped Bonus:PlantWorkSpeed+15%. Description:This is a short-handled farming tool with a semicircular blade.</description>
+		<graphicData>
+			<texPath>Weapon/Sickle</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+    <weaponTags>
+		<li>NeolithicMeleeBasic</li>
+    </weaponTags>
+	    <canBeSpawningInventory>true</canBeSpawningInventory>
+		<costStuffCount>40</costStuffCount>
+		<statBases>
+			<WorkToMake>19000</WorkToMake>
+			<Mass>2</Mass>
+      <Weapon_Bulk>0.5</Weapon_Bulk>
+		</statBases>
+	<equippedStatOffsets>
+		<PlantWorkSpeed>0.15</PlantWorkSpeed>		 
+	</equippedStatOffsets>		
+		<equippedAngleOffset>-65</equippedAngleOffset>
+		<stuffCategories>
+			<li>Metallic</li>
+			<li>Woody</li>
+		</stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>3</power>
+        <cooldownTime>1.15</cooldownTime>
+      </li>
+      <li>
+        <label>blade</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>10</power>
+        <cooldownTime>1.8</cooldownTime>
+      </li>	  
+    </tools>
+
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->		
+
+	</ThingDef>  
+  <!-- ============================Military Shovel================================== -->	
+	
+	<ThingDef ParentName="RT_BaseMeleeWeapon_Blunt_Quality_CQB">
+		<defName>RT_MeleeWeapon_Militaryshovel</defName>
+		<label>Military Shovel</label>
+		<description>Equipped Bonus:MoveSpeed+15%,PlantWorkSpeed+15%,MiningSpeed+30%. Description:This is a shovel that won't fall apart or let you down during heavy work use.</description>
+		<graphicData>
+			<texPath>Weapon/Military Shovel</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<techLevel>Industrial</techLevel>
+		<weaponTags>
+		<li>NonNeolithicOnlyMelee</li>
+		</weaponTags>
+	    <canBeSpawningInventory>true</canBeSpawningInventory>		
+		<costStuffCount>150</costStuffCount>
+		<statBases>
+			<WorkToMake>25000</WorkToMake>
+			<Mass>1.5</Mass>
+      <Weapon_Bulk>0.5</Weapon_Bulk>
+		</statBases>
+	<equippedStatOffsets>
+		<MoveSpeed>0.15</MoveSpeed>	
+		<PlantWorkSpeed>0.15</PlantWorkSpeed>		
+		<MiningSpeed>0.1</MiningSpeed>		
+	</equippedStatOffsets>		
+		<equippedAngleOffset>-65</equippedAngleOffset>
+		<stuffCategories>
+			<li>Metallic</li>
+			<li>Woody</li>
+			<li>Stony</li>
+		</stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>8</power>
+        <cooldownTime>2.15</cooldownTime>
+      </li>
+      <li>
+        <label>head</label>
+        <labelUsedInLogging>false</labelUsedInLogging>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>2.15</cooldownTime>
+      </li>
+    </tools>
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->	
+	</ThingDef>  
+
+  <!-- ============================Pickaxe================================== -->
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality">
+    <defName>MeleeWeapon_Pickaxe</defName>
+    <label>Pickaxe</label>
+    <description>Equipped Bonus:MiningSpeed+35%. Description:A handy tool for mining. It also can do some damage.</description>
+    <graphicData>
+      <texPath>Weapon/Pickaxe</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Neolithic</techLevel>
+    <weaponTags>
+		<li>NeolithicMeleeBasic</li>
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>100</costStuffCount>
+    <statBases>
+      <WorkToMake>18000</WorkToMake>
+	  <Mass>3</Mass>
+	  <Weapon_Bulk>1.0</Weapon_Bulk>
+    </statBases>
+	<equippedStatOffsets>
+		<MiningSpeed>0.35</MiningSpeed>		
+	</equippedStatOffsets>
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+	<tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>5</power>
+        <cooldownTime>1.05</cooldownTime>
+      </li>
+      <li>
+        <label>head</label>
+        <labelUsedInLogging>false</labelUsedInLogging>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>8</power>
+        <cooldownTime>2.05</cooldownTime>
+      </li>
+    </tools>
+
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->		
+  </ThingDef> 	
+
+  <!-- ============================Butcher Knife================================== -->
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality">
+    <defName>MeleeWeapon_Butcherknife</defName>
+    <label>Butcher Knife</label>
+    <description>Equipped Bonus:CookSpeed+30%,ButcheryFleshSpeed+35%,ButcheryFleshEfficiency+35%. Description:An essential tool for a good chef.</description>
+    <graphicData>
+      <texPath>Weapon/Butcher Knife</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Neolithic</techLevel>
+    <weaponTags>
+		<li>NeolithicMeleeBasic</li>
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>30</costStuffCount>
+    <statBases>
+      <WorkToMake>6000</WorkToMake>
+	  <Mass>1</Mass>
+	  <Weapon_Bulk>0.5</Weapon_Bulk>
+    </statBases>
+	<equippedStatOffsets>
+		<CookSpeed>0.3</CookSpeed>
+		<ButcheryFleshSpeed>0.35</ButcheryFleshSpeed>
+		<ButcheryFleshEfficiency>0.35</ButcheryFleshEfficiency>			
+	</equippedStatOffsets>
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+	    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>3</power>
+        <cooldownTime>0.5</cooldownTime>
+      </li>
+      <li>
+        <label>point</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>10</power>
+        <cooldownTime>1</cooldownTime>
+      </li>
+      <li>
+        <label>edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>1.5</cooldownTime>
+      </li>
+    </tools>
+
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->		
+  </ThingDef> 
+
+  <!-- ============================Fire Axe================================== -->
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality_CQB">
+    <defName>MeleeWeapon_Fireaxe</defName>
+    <label>Fire Axe</label>
+    <description>Equipped Bonus:MoveSpeed+5%,ConstructionSpeed+5%,. Description:This is a stereotypical fireman's axe with a red axe head, silver edge, and a wooden handle.</description>
+    <graphicData>
+      <texPath>Weapon/FireAxe</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Neolithic</techLevel>
+    <weaponTags>
+		<li>NonNeolithicOnlyMelee</li>
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>150</costStuffCount>
+    <statBases>
+      <WorkToMake>23000</WorkToMake>
+	  <Mass>4.5</Mass>
+      <Weapon_Bulk>2</Weapon_Bulk>	  
+    </statBases>
+	<equippedStatOffsets>
+		<MoveSpeed>0.05</MoveSpeed>
+		<ConstructionSpeed>0.05</ConstructionSpeed>		
+	</equippedStatOffsets>	
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>13</power>
+        <cooldownTime>2</cooldownTime>
+      </li>
+      <li>
+        <label>edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>23</power>
+        <cooldownTime>3</cooldownTime>
+      </li>
+    </tools>
+
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->	
+  </ThingDef> 
+
+  
+  <!-- ============================Krambit================================== -->
+
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality_CQB">
+    <defName>MeleeWeapon_Karambit</defName>
+    <label>Karambit</label>
+    <description>Equipped Bonus:MoveSpeed+25%,ButcheryFleshEfficiency+15%. Description:The karambit is a small Southeast Asian hand-held, curved knife resembling a claw.</description>
+    <graphicData>
+      <texPath>Weapon/Karambit</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Neolithic</techLevel>
+    <weaponTags>
+      <li>NonNeolithicOnlyMelee</li>
+      <li>NonNeolithicOnlySimpleMelee</li>
+      <li>NeolithicMeleeBasic</li>
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>50</costStuffCount>
+    <statBases>
+      <WorkToMake>6000</WorkToMake>
+	  <Mass>0.08</Mass>
+      <Weapon_Bulk>0.2</Weapon_Bulk>	  
+    </statBases>
+	<equippedStatOffsets>
+		<MoveSpeed>0.25</MoveSpeed>	
+		<ButcheryFleshEfficiency>0.15</ButcheryFleshEfficiency>		
+	</equippedStatOffsets>	
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+	    <tools>
+      <li>
+        <label>point</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>6</power>
+        <cooldownTime>0.8</cooldownTime>
+      </li>
+      <li>
+        <label>edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>0.8</cooldownTime>
+      </li>
+    </tools>
+
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->	
+  </ThingDef>
+ 
+  
+  
+   <!-- ============================Machete Knife ================================== -->
+
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality_CQB">
+    <defName>MeleeWeapon_Machete</defName>
+    <label>Machete</label>
+    <description>Equipped Bonus:MoveSpeed+10%,MeleeHitChance+9%,ButcheryFleshEfficiency-5%. Description:This is a large hatchet-like knife. Frequently used to cut through rain forest undergrowth and for agricultural purposes.</description>
+    <graphicData>
+      <texPath>Weapon/Machete</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Neolithic</techLevel>
+    <weaponTags>
+      <li>NonNeolithicOnlyMelee</li>
+      <li>NonNeolithicOnlySimpleMelee</li>
+      <li>NeolithicMeleeBasic</li>		
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>85</costStuffCount>
+    <statBases>
+      <WorkToMake>20000</WorkToMake>
+	  <Mass>0.8</Mass>
+      <Weapon_Bulk>0.5</Weapon_Bulk>	  
+    </statBases>
+	<equippedStatOffsets>
+		<MoveSpeed>0.1</MoveSpeed>	
+		<MeleeHitChance>0.09</MeleeHitChance>	
+		<ButcheryFleshEfficiency>-0.05</ButcheryFleshEfficiency>	
+	</equippedStatOffsets>	
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>7</power>
+        <cooldownTime>2.5</cooldownTime>
+      </li>
+      <li>
+        <label>point</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>1</cooldownTime>
+      </li>
+      <li>
+        <label>edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>1</cooldownTime>
+      </li>
+    </tools>
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->		
+  </ThingDef> 
+  
+   <!-- ============================Katana ================================== -->
+
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality_CQB">
+    <defName>MeleeWeapon_Katana</defName>
+    <label>Katana</label>
+    <description>Equipped Bonus:MoveSpeed+15%,MeleeHitChance+10%. Description:Katana were one of the traditionally made Japanese swords that were used by the samurai of feudal Japan.</description>
+    <graphicData>
+      <texPath>Weapon/Katana</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Medieval</techLevel>
+    <weaponTags>
+      <li>NonNeolithicOnlyMelee</li>
+      <li>NonNeolithicOnlySimpleMelee</li>
+      <li>NeolithicMeleeBasic</li>		
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>150</costStuffCount>
+    <statBases>
+      <WorkToMake>23000</WorkToMake>
+	  <Mass>1.2</Mass>
+      <Weapon_Bulk>0.5</Weapon_Bulk>	  
+    </statBases>
+	<equippedStatOffsets>
+		<MoveSpeed>0.15</MoveSpeed>	
+		<MeleeHitChance>0.1</MeleeHitChance>		
+	</equippedStatOffsets>	
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>9.75</power>
+        <cooldownTime>0.6</cooldownTime>
+      </li>
+      <li>
+        <label>point</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>11</power>
+        <cooldownTime>0.8</cooldownTime>
+      </li>
+      <li>
+        <label>edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>16</power>
+        <cooldownTime>1.5</cooldownTime>
+      </li>
+    </tools>
+
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->		
+  </ThingDef> 
+
+ 
+  <!-- ============================Gerber Survival Knife================================== -->
+
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality_CQB">
+    <defName>MeleeWeapon_Gerber</defName>
+    <label>Gerber Survival Knife</label>
+    <description>Equipped Bonus:MoveSpeed+15%,MeleeHitChance+7%. Description:A handy survival knife.</description>
+    <graphicData>
+      <texPath>Weapon/GerberSurvivalKnife</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Industrial</techLevel>
+    <weaponTags>
+      <li>NonNeolithicOnlyMelee</li>
+      <li>NonNeolithicOnlySimpleMelee</li>
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>80</costStuffCount>
+    <statBases>
+      <WorkToMake>8000</WorkToMake>
+	  <Mass>0.4</Mass>
+      <Weapon_Bulk>0.2</Weapon_Bulk>	  
+    </statBases>
+	<equippedStatOffsets>
+		<MoveSpeed>0.15</MoveSpeed>	
+		<MeleeHitChance>0.07</MeleeHitChance>
+	</equippedStatOffsets>	
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>5</power>
+        <cooldownTime>0.65</cooldownTime>
+      </li>
+      <li>
+        <label>point</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>1.3</cooldownTime>
+      </li>
+      <li>
+        <label>edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>13</power>
+        <cooldownTime>1</cooldownTime>
+      </li>
+    </tools>
+
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->		
+  </ThingDef>
+
+
+  <!-- ============================M9 Bayonet================================== -->
+
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality_CQB">
+    <defName>MeleeWeapon_Mbayonet</defName>
+    <label>M9 Bayonet</label>
+    <description>Equipped Bonus:MoveSpeed+0.15%,MeleeHitChance+8%. Description:The M9 Bayonet is a multi-purpose knife, adopted in 1986 by the United States. It is a sturdy all purpose tool for a soldier,usefull for combat and utility.</description>
+    <graphicData>
+      <texPath>Weapon/M9_Bayonet</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Industrial</techLevel>
+    <weaponTags>
+      <li>NonNeolithicOnlyMelee</li>
+      <li>NonNeolithicOnlySimpleMelee</li>
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>60</costStuffCount>
+    <statBases>
+      <WorkToMake>7000</WorkToMake>
+	  <Mass>0.4</Mass>
+      <Weapon_Bulk>0.2</Weapon_Bulk>
+	  </statBases>
+	<equippedStatOffsets>
+		<MoveSpeed>0.15</MoveSpeed>	
+		<MeleeHitChance>0.08</MeleeHitChance>		
+	</equippedStatOffsets>
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>6</power>
+        <cooldownTime>0.6</cooldownTime>
+      </li>
+      <li>
+        <label>point</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>1.0</cooldownTime>
+      </li>
+      <li>
+        <label>edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>1.5</cooldownTime>
+      </li>
+    </tools>
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->		
+  </ThingDef>
+
+
+  
+    <!-- ============================Crowbar================================== -->
+
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Blunt_Quality">
+    <defName>MeleeWeapon_Crowbar</defName>
+    <label>Crowbar</label>
+    <description>Equipped Bonus:MoveSpeed+15%,ConstructionSpeed+25%. Description:A crowbar,is a tool consisting of a metal bar with a single curved end and flattened points, often with a small fissure on one or both ends for removing nails.Used as both a tool and as a weapon. </description>
+    <graphicData>
+      <texPath>Weapon/Crowbar</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Industrial</techLevel>
+    <weaponTags>
+      <li>NonNeolithicOnlyMelee</li>
+      <li>NonNeolithicOnlySimpleMelee</li>
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>35</costStuffCount>
+    <statBases>
+      <WorkToMake>800</WorkToMake>
+	  <Mass>2.2</Mass>
+      <Weapon_Bulk>1.0</Weapon_Bulk>	  
+    </statBases>
+	<equippedStatOffsets>
+		<MoveSpeed>0.15</MoveSpeed>
+		<ConstructionSpeed>0.25</ConstructionSpeed>		
+	</equippedStatOffsets>	
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>4</power>
+        <cooldownTime>1.2</cooldownTime>
+      </li>
+      <li>
+        <label>head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>9</power>
+        <cooldownTime>1.2</cooldownTime>
+      </li>
+    </tools>
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->	
+  </ThingDef>
+
+    <!-- ============================Baton================================== -->
+
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Blunt_Quality_CQB">
+    <defName>MeleeWeapon_Baton</defName>
+    <label>Baton</label>
+    <description>Equipped Bonus:MoveSpeed+15%,MeleeHitChance+5%. Description:This is a club of less than arm's length. They are carried for forced compliance and self-defense.</description>
+    <graphicData>
+      <texPath>Weapon/Baton</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Neolithic</techLevel>
+    <weaponTags>
+      <li>NonNeolithicOnlyMelee</li>
+      <li>NonNeolithicOnlySimpleMelee</li>
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>25</costStuffCount>
+    <statBases>
+      <WorkToMake>700</WorkToMake>
+	  <Mass>2.2</Mass>
+	  <Weapon_Bulk>0.5</Weapon_Bulk>
+    </statBases>
+	<equippedStatOffsets>
+		<MoveSpeed>0.15</MoveSpeed>	
+		<MeleeHitChance>0.05</MeleeHitChance> 
+	</equippedStatOffsets>
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+      <li>Stony</li>
+    </stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>3</power>
+        <cooldownTime>0.2</cooldownTime>
+      </li>
+      <li>
+        <label>head</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>5</power>
+        <cooldownTime>0.7</cooldownTime>
+      </li>
+    </tools>
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->		
+  </ThingDef>
+
+   <!-- ============================Huntsman================================== -->
+
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality_CQB">
+    <defName>MeleeWeapon_Huntsman</defName>
+    <label>Huntsman Knife</label>
+    <description>Equipped Bonus:MeleeHitChance+5%,ButcheryFleshSpeed+15%,ButcheryFleshEfficiency+10%. Description:A knife designed for modern tactical uses, the blade is well suited for a range of both combat and utilitarian needs.</description>
+    <graphicData>
+      <texPath>Weapon/Huntsman</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Industrial</techLevel>
+    <weaponTags>
+		<li>NonNeolithicOnlyMelee</li>
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>70</costStuffCount>
+    <statBases>
+      <WorkToMake>6000</WorkToMake>
+	  <Mass>0.4</Mass>
+      <Weapon_Bulk>0.2</Weapon_Bulk>	  
+    </statBases>
+	<equippedStatOffsets>
+		<MeleeHitChance>0.05</MeleeHitChance>	
+		<ButcheryFleshSpeed>0.15</ButcheryFleshSpeed>
+		<ButcheryFleshEfficiency>0.10</ButcheryFleshEfficiency>	
+	</equippedStatOffsets>	
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>5</power>
+        <cooldownTime>0.81</cooldownTime>
+      </li>
+      <li>
+        <label>point</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>13</power>
+        <cooldownTime>0.86</cooldownTime>
+      </li>
+      <li>
+        <label>edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>13</power>
+        <cooldownTime>2</cooldownTime>
+      </li>
+    </tools>
+
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->		
+  </ThingDef>
+  
+  
+  
+     <!-- ============================Khukuri Knife================================== -->
+
+  <ThingDef ParentName="RT_BaseMeleeWeapon_Sharp_Quality">
+    <defName>MeleeWeapon_Kuri</defName>
+    <label>Khukuri Knife</label>
+    <description>Equipped Bonus:MoveSpeed+10%,MeleeHitChance+9%. Description:The khukuri is a knife with an inwardly curved blade, similar to a machete, used as both a tool and as a weapon.</description>
+    <graphicData>
+      <texPath>Weapon/Kuri</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <techLevel>Neolithic</techLevel>
+    <weaponTags>
+		<li>NonNeolithicOnlyMelee</li>
+		<li>NonNeolithicOnlySimpleMelee</li>
+		<li>NeolithicMeleeBasic</li>
+		<li>NeolithicMeleeAdvanced</li>		
+    </weaponTags>
+    <canBeSpawningInventory>true</canBeSpawningInventory>
+    <costStuffCount>80</costStuffCount>
+    <statBases>
+      <WorkToMake>13000</WorkToMake>
+	  <Mass>0.6</Mass>
+	  <Weapon_Bulk>0.5</Weapon_Bulk>
+    </statBases>
+	<equippedStatOffsets>
+		<MoveSpeed>0.10</MoveSpeed>	
+		<MeleeHitChance>0.09</MeleeHitChance> 
+	</equippedStatOffsets>	
+    <equippedAngleOffset>-65</equippedAngleOffset>
+    <stuffCategories>
+      <li>Metallic</li>
+    </stuffCategories>
+    <tools>
+      <li>
+        <label>handle</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>7</power>
+        <cooldownTime>2.5</cooldownTime>
+      </li>
+      <li>
+        <label>point</label>
+        <capacities>
+          <li>Stab</li>
+        </capacities>
+        <power>15</power>
+        <cooldownTime>2</cooldownTime>
+      </li>
+      <li>
+        <label>edge</label>
+        <capacities>
+          <li>Cut</li>
+        </capacities>
+        <power>16</power>
+        <cooldownTime>1</cooldownTime>
+      </li>
+    </tools>
+<!-- 	<smeltProducts>
+		<Steel>3</Steel>
+	</smeltProducts> -->		
+  </ThingDef>
+  
+
+
+
+
+  
+</Defs>

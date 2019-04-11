@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ResearchTabDef>
+		<defName>RT_Weapons</defName>
+		<label>RT's Weapons</label>
+	</ResearchTabDef>
+
+</Defs>

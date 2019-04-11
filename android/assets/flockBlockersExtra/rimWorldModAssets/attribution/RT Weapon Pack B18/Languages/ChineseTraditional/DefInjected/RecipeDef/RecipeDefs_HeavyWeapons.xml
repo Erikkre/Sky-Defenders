@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <M79GLCraft.label>製作M79榴彈發射器</M79GLCraft.label>
+  <M79GLCraft.description>製作M79榴彈發射器。</M79GLCraft.description>
+  <M79GLCraft.jobString>正在製作M79榴彈發射器。</M79GLCraft.jobString>
+
+  <PKMCraft.label>製作PKM機槍</PKMCraft.label>
+  <PKMCraft.description>製作PKM機槍。</PKMCraft.description>
+  <PKMCraft.jobString>正在製作PKM機槍。</PKMCraft.jobString>
+
+  <RPGCraft.label>製作RPG-7 40mm火箭筒</RPGCraft.label>
+  <RPGCraft.description>製作RPG-7 40mm火箭筒。</RPGCraft.description>
+  <RPGCraft.jobString>正在製作RPG-7 40mm火箭筒。</RPGCraft.jobString>
+
+  <M32MGLCraft.label>製作M32榴彈發射器</M32MGLCraft.label>
+  <M32MGLCraft.description>製作M32榴彈發射器。</M32MGLCraft.description>
+  <M32MGLCraft.jobString>正在製作作M32榴彈發射。</M32MGLCraft.jobString>
+
+  <MG42Craft.label>製作MG42機槍</MG42Craft.label>
+  <MG42Craft.description>製作MG42機槍。</MG42Craft.description>
+  <MG42Craft.jobString>正在製作MG42機槍。</MG42Craft.jobString>
+
+  <SAWM249Craft.label>製作SAW M249機槍</SAWM249Craft.label>
+  <SAWM249Craft.description>製作SAW M249機槍。</SAWM249Craft.description>
+  <SAWM249Craft.jobString>正在製作SAW M249機槍。</SAWM249Craft.jobString>
+
+  <BARM1918Craft.label>製作B.A.R M1918自動步槍</BARM1918Craft.label>
+  <BARM1918Craft.description>製作B.A.R M1918自動步槍。</BARM1918Craft.description>
+  <BARM1918Craft.jobString>正在製作B.A.R M1918自動步槍。</BARM1918Craft.jobString>
+
+
+</LanguageData>

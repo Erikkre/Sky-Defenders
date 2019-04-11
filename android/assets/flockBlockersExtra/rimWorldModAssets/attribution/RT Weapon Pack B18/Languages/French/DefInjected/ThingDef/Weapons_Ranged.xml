@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData>
+
+<!--French  -->
+
+
+
+	<Bow_Compound_rt.label>Arc à poulie</Bow_Compound_rt.label>  
+
+    <Bow_Compound_rt.description>Il s'agit d'un arc qui utilise un système de levier, généralement de câbles et de poulies. Le système à poulie confère au porteur un avantage mécanique, de sorte que les branches d'un arc à poulie sont beaucoup plus rigides que celles d'un arc recourbé ou d'un arc long.</Bow_Compound_rt.description> 
+
+	<Bow_TCrossbow_rt.label>Arbalète tactique</Bow_TCrossbow_rt.label>  
+
+    <Bow_TCrossbow_rt.description>Ces types d'arbalètes sont utilisées pour le tir sportif et la chasse dans le monde moderne.</Bow_TCrossbow_rt.description> 
+	
+	
+</LanguageData>

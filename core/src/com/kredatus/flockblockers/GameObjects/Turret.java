@@ -258,7 +258,7 @@ public class Turret {
                     }
                 }
             }
-        } else {//AI SYSTEM
+        } else {    //AI SYSTEM
             //System.out.println("TargetBird: "+targetBird);
             if (BirdHandler.activeBirdQueue.size() > 0) {
                 if ((targetBird==null||!targetBird.isAlive) && TargetHandler.targetBird!=null) {
@@ -299,7 +299,7 @@ public class Turret {
                 rof = 1.5f; //was 0.5f //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots
                     switch (lvl) {
                         case(0):texture[0]=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
-                        case(1):texture[0]=AssetHandler.f1;projTexture=texture[0];break;
+                        case(1):texture[0]=AssetHandler.f1;projTexture=texture[0];         break;
                         case(2):texture[0]=AssetHandler.f2;projTexture=AssetHandler.f2Proj;break;
                         case(3):texture[0]=AssetHandler.f3;projTexture=AssetHandler.f3Proj;break;
                         case(4):texture[0]=AssetHandler.f4;projTexture=AssetHandler.f4Proj;break;
@@ -308,7 +308,6 @@ public class Turret {
                         case(7):texture[0]=AssetHandler.f7;projTexture=AssetHandler.f7Proj;break;
                         case(8):texture[0]=AssetHandler.f8;projTexture=AssetHandler.f8Proj;break;
                         case(9):texture[0]=AssetHandler.f9;projTexture=AssetHandler.f9Proj;break;
-
                     } break;
             case ('s'):
                 dmg = 0.3f;
@@ -334,7 +333,7 @@ public class Turret {
                 rof = 0.5f;
                     switch (lvl) {
                         case(0):texture[0]=AssetHandler.d0;projTexture=AssetHandler.d0Proj;break;
-                        case(1):texture[0]=AssetHandler.d1;projTexture=texture[0];break;
+                        case(1):texture[0]=AssetHandler.d1;projTexture=texture[0];         break;
                         case(2):texture[0]=AssetHandler.d2;projTexture=AssetHandler.d2Proj;break;
                         case(3):texture[0]=AssetHandler.d3;projTexture=AssetHandler.d3Proj;break;
                         case(4):texture[0]=AssetHandler.d4;projTexture=AssetHandler.d4Proj;break;

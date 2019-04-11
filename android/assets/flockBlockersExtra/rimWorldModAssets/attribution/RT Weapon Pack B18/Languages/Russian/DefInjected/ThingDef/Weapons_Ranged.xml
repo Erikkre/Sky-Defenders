@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData> 
+
+<Arrow_Compound_rt.label>Композитныые стрелы</Arrow_Compound_rt.label>
+<Bow_Compound_rt.label>Композитный лук</Bow_Compound_rt.label>
+<Bow_Compound_rt.description>Композитный лук сделан из различных  материалов, плотно соединённых межжду собой, что позволяет достичь наибольшей эффективности лука при меньшем размере.</Bow_Compound_rt.description> 
+
+<Arrow_TCrossbow_rt.label>Стрелы тактического арбалета</Arrow_TCrossbow_rt.label>
+<Bow_TCrossbow_rt.label>Тактический арбалет</Bow_TCrossbow_rt.label>
+<Bow_TCrossbow_rt.description>Этот современный тип арбалетов используется в спортивной стрельбе и охоте.</Bow_TCrossbow_rt.description>
+
+</LanguageData>

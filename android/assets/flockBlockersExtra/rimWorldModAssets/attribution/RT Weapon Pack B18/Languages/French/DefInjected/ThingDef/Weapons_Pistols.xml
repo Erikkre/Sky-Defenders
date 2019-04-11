@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData>
+
+<!--French-->
+
+
+
+    <Gun_Glock17_rt.label>Glock 17</Gun_Glock17_rt.label>
+
+    <Gun_Glock17_rt.description>Conçu pour les professionnels, le Glock 17 est le pistolet le plus utilisé dans le monde.</Gun_Glock17_rt.description>
+	
+	<Gun_Deagle_rt.label>Desert Eagle</Gun_Deagle_rt.label>
+	
+	<Gun_Deagle_rt.description>Le Desert Eagle est un pistolet semi-automatique remarquable. Il a un design unique avec son canon triangulaire.</Gun_Deagle_rt.description>
+	
+	<Gun_ColtPythonRevolver_rt.label>Revolver ColtPython</Gun_ColtPythonRevolver_rt.label>
+	
+	<Gun_ColtPythonRevolver_rt.description>Le Colt Python est un revolver autrefois fabriqué par Colt's Manufacturing Company de Hartford,au Connecticut. Il est parfois appelé «Magnum de combat».</Gun_ColtPythonRevolver_rt.description>
+	
+	<Gun_M1911_rt.label>Colt M1911</Gun_M1911_rt.label>
+	
+	<Gun_M1911_rt.description>Le Colt M1911 (aussi appelé Colt 45) a été le pistolet des Forces armées des États-Unis pendant 74 ans, de 1911 à 1986. </Gun_M1911_rt.description>
+	
+	<Gun_LugerP08_rt.label>Luger P08</Gun_LugerP08_rt.label>
+	
+	<Gun_LugerP08_rt.description>Il s'agit d'un pistolet semi-automatique. .</Gun_LugerP08_rt.description>
+	
+	<Gun_DualBerettas_rt.label>Dual Berettas</Gun_DualBerettas_rt.label>
+	
+	<Gun_DualBerettas_rt.description>Le Beretta est un pistolet semi-automatique à faible recul.</Gun_DualBerettas_rt.description>
+
+</LanguageData>

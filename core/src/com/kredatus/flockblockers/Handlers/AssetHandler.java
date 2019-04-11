@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
@@ -30,6 +31,8 @@ public class AssetHandler {
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;
     public static Animation[] tinyAnims, phoenixAnimations, nightAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
+
+    public static TextureAtlas tA;
     public static Texture sprites, texture, f0Texture, f1Texture,  f2Texture, f3Texture, f4Texture, f5Texture, f6Texture, f7Texture, f8Texture, f9Texture,
             bgPhoenix,bgNight,bgWater,bgAcid,bgFire,bgThunder,bgLunar,bgGold, phoenixBird, nightBird, acidBird, waterBird, thunderBird, fireBird, goldBird, lunarBird,
             boost, boostdowntexture, logoTexture, playtexture, playdowntexture, newHighscoretexture, creditstexture, creditsdowntexture, exittexture, exitdowntexture,
@@ -68,30 +71,32 @@ public class AssetHandler {
     public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>(), nonAdditiveEffects;
     public static Array<ParticleEmitter> emitters=new Array<ParticleEmitter>();
     public static void load() {
+        tA=new TextureAtlas("texturePack.txt");
+        //textureAtlas.findRegion()
         //If your particle effect includes additive or pre-multiplied particle emitters
-//you can turn off blend function clean-up to save a lot of draw calls, but
-//remember to switch the Batch back to GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
-//before drawing "regular" sprites or your Stage.
+        //you can turn off blend function clean-up to save a lot of draw calls, but
+        //remember to switch the Batch back to GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
+        //before drawing "regular" sprites or your Stage.
 
-        burnerFire.load(Gdx.files.internal("effects"+File.separator+"burnerFire.p"),Gdx.files.internal("particles"));
+        burnerFire.load(Gdx.files.internal("effects"+File.separator+"burnerFire.p"),Gdx.files.internal("textures"+File.separator+"particles"));
         //burnerFire.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
         burnerFirePool= new ParticleEffectPool(burnerFire,1,2);
         PooledEffect pooledEffect=burnerFirePool.obtain();
         additiveEffects.add(pooledEffect);
 
-        /*thrusterFireUp.load(Gdx.files.internal("effects"+File.separator+"thrusterFireUp.p"),Gdx.files.internal("particles"));
+        /*thrusterFireUp.load(Gdx.files.internal("effects"+File.separator+"thrusterFireUp.p"),Gdx.files.internal("textures"+File.separator+"particles"));
         //thrusterFireUp.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
         thrusterFireUpPool= new ParticleEffectPool(thrusterFireUp,1,2);
         pooledEffect=thrusterFireUpPool.obtain();
         additiveEffects.add(pooledEffect);*/
 
-        thrusterFireLeft.load(Gdx.files.internal("effects"+File.separator+"thrusterFireLeft.p"),Gdx.files.internal("particles"));
+        thrusterFireLeft.load(Gdx.files.internal("effects"+File.separator+"thrusterFireLeft.p"),Gdx.files.internal("textures"+File.separator+"particles"));
         //thrusterFireLeft.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
         thrusterFireLeftPool= new ParticleEffectPool(thrusterFireLeft,1,2);
         pooledEffect=thrusterFireLeftPool.obtain();
         additiveEffects.add(pooledEffect);
 
-        thrusterFireRight.load(Gdx.files.internal("effects"+File.separator+"thrusterFireRight.p"),Gdx.files.internal("particles"));
+        thrusterFireRight.load(Gdx.files.internal("effects"+File.separator+"thrusterFireRight.p"),Gdx.files.internal("textures"+File.separator+"particles"));
         //thrusterFireRight.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
         thrusterFireRightPool= new ParticleEffectPool(thrusterFireRight,1,2);
         pooledEffect=thrusterFireRightPool.obtain();
@@ -252,63 +257,63 @@ public class AssetHandler {
 
         Texture bgCloudSeparator= new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"cloudSeparator.jpg"));
         bgCloudSeparator.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgCloudSeparatorTexture = new TextureRegion(bgCloudSeparator, bgCloudSeparator.getWidth(), bgCloudSeparator.getHeight());
+        bgCloudSeparatorTexture = tA.findRegion("cloudSeparator");
 
 
         bgPhoenix = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgPhoenix2.jpg"));
         bgPhoenix.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgPhoenixtexture = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
+        bgPhoenixtexture = tA.findRegion()bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
         bgPhoenixtexture.flip(false, true);
-        bgPhoenixtexture2 = new TextureRegion(bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
+        bgPhoenixtexture2 = tA.findRegion()bgPhoenix, bgPhoenix.getWidth(), bgPhoenix.getHeight());
 
 
         bgThunder = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgThunder2.jpg"));
         bgThunder.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgThundertexture = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
+        bgThundertexture = tA.findRegion()bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
         bgThundertexture.flip(false, true);
-        bgThundertexture2 = new TextureRegion(bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
+        bgThundertexture2 = tA.findRegion()bgThunder, bgThunder.getWidth(), bgThunder.getHeight());
 
 
         bgWater = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgWater2.jpg"));
         bgWater.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgWatertexture = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
+        bgWatertexture = tA.findRegion()bgWater, bgWater.getWidth(), bgWater.getHeight());
         bgWatertexture.flip(false, true);
-        bgWatertexture2 = new TextureRegion(bgWater, bgWater.getWidth(), bgWater.getHeight());
+        bgWatertexture2 = tA.findRegion()bgWater, bgWater.getWidth(), bgWater.getHeight());
 
 
         bgFire = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgFire2.jpg"));
         bgFire.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgFiretexture = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
+        bgFiretexture = tA.findRegion()bgFire, bgFire.getWidth(), bgFire.getHeight());
         bgFiretexture.flip(false, true);
-        bgFiretexture2 = new TextureRegion(bgFire, bgFire.getWidth(), bgFire.getHeight());
+        bgFiretexture2 = tA.findRegion()bgFire, bgFire.getWidth(), bgFire.getHeight());
 
 
         bgAcid = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgAcid2.jpg"));
         bgAcid.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgAcidtexture = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
+        bgAcidtexture = tA.findRegion()bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
         bgAcidtexture.flip(false, true);
-        bgAcidtexture2 = new TextureRegion(bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
+        bgAcidtexture2 = tA.findRegion()bgAcid, bgAcid.getWidth(), bgAcid.getHeight());
 
 
         bgNight = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgNight2.jpg"));
         bgNight.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgNighttexture = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
+        bgNighttexture = tA.findRegion()bgNight, bgNight.getWidth(), bgNight.getHeight());
         bgNighttexture.flip(false, true);
-        bgNighttexture2 = new TextureRegion(bgNight, bgNight.getWidth(), bgNight.getHeight());
+        bgNighttexture2 = tA.findRegion()bgNight, bgNight.getWidth(), bgNight.getHeight());
 
 
         bgLunar = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgLunar2.jpg"));
         bgLunar.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgLunartexture = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
+        bgLunartexture = tA.findRegion()bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
         bgLunartexture.flip(false, true);
-        bgLunartexture2 = new TextureRegion(bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
+        bgLunartexture2 = tA.findRegion()bgLunar, bgLunar.getWidth(), bgLunar.getHeight());
 
 
         bgGold = new Texture(Gdx.files.internal("backgrounds"+File.separator+"levels"+File.separator+"bgGold2.jpg"));
         bgGold.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        bgGoldtexture = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
+        bgGoldtexture = tA.findRegion()bgGold, bgGold.getWidth(), bgGold.getHeight());
         bgGoldtexture.flip(false, true);
-        bgGoldtexture2 = new TextureRegion(bgGold, bgGold.getWidth(), bgGold.getHeight());
+        bgGoldtexture2 = tA.findRegion()bgGold, bgGold.getWidth(), bgGold.getHeight());
 
         //               9                       18                      27                      36                      45                        54                      63
         //1 2  4 5  7 8     10 11  13 14  16 17     19 20  22 23  25 26     28 29  31 32  34 35     37 38  40 41  43 44       46 47  49 50  52 53     55 56  58 59  61 62     64 65  67 68  70 71
@@ -359,27 +364,27 @@ public class AssetHandler {
         gliderscaling = 1;
         boost = new Texture(Gdx.files.internal("sprites"+File.separator+"boost.png"));
         boost.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        boosttexture = new TextureRegion(boost, boost.getWidth(), boost.getHeight());
+        boosttexture = tA.findRegion()boost, boost.getWidth(), boost.getHeight());
         boosttexture.flip(false, true);
         boostdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"boostdown.png"));
         boostdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        boostdown = new TextureRegion(boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
+        boostdown = tA.findRegion()boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
         boostdown.flip(false, true);
 
         f0Texture= new Texture(Gdx.files.internal("sprites"+File.separator+"turrets"+File.separator+"f0.png"));
         f0Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         //turret.flip(false, true);
-        f0 = new TextureRegion(f0Texture,0, 4,32,13);
-        f0Proj = new TextureRegion(f0Texture,0, 0,32,3);
+        f0 = tA.findRegion()f0Texture,0, 4,32,13);
+        f0Proj = tA.findRegion()f0Texture,0, 0,32,3);
 
-        Texture coinTexture=new Texture(Gdx.files.internal("flockBlockersExtra"+File.separator+"bayatGames"+File.separator+"coin.png"));
+        Texture coinTexture=new Texture(Gdx.files.internal("textures"+File.separator+"ui"+File.separator+"coin.png"));
         ArrayList<TextureRegion> tempPosition = new ArrayList<TextureRegion>(16);
         for (int i = 0; i < 17; i++) {
             if (i<16){
-            TextureRegion temp = new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
+            TextureRegion temp = tA.findRegion()coinTexture, 32 * i, 0, 32, 32);
             tempPosition.add(temp);
             } else {
-                coinSymbol= new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
+                coinSymbol= tA.findRegion()coinTexture, 32 * i, 0, 32, 32);
             }
         }
         coinAnimation=new Animation<TextureRegion>(0.03f, tempPosition.toArray(new TextureRegion[16]));
@@ -445,39 +450,39 @@ public class AssetHandler {
         //160*180, let player choose color but tint it in a batcher pass (batcher.setColorTint)
         airshipBalloonTexture = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"balloon.png"));
         airshipBalloonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        airshipBalloon = new TextureRegion(airshipBalloonTexture);
+        airshipBalloon = tA.findRegion()airshipBalloonTexture);
 
         airshipSideThrusterTexture = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"sideThruster.png"));
         airshipSideThrusterTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        airshipSideThruster = new TextureRegion(airshipSideThrusterTexture, airshipSideThrusterTexture.getWidth(), airshipSideThrusterTexture.getHeight());
+        airshipSideThruster = tA.findRegion()airshipSideThrusterTexture, airshipSideThrusterTexture.getWidth(), airshipSideThrusterTexture.getHeight());
 
         airshipBurnerPipeTexture = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"burnerPipes.png"));
         airshipBurnerPipeTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        airshipBurnerPipe = new TextureRegion(airshipBurnerPipeTexture);
+        airshipBurnerPipe = tA.findRegion()airshipBurnerPipeTexture);
 
         reticleTexture=new Texture(Gdx.files.internal("sprites"+File.separator+"reticle3.png"));
         reticleTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        reticle=new TextureRegion(reticleTexture);
+        reticle=tA.findRegion()reticleTexture);
 
         dragCircleTexture=new Texture(Gdx.files.internal("effect images"+File.separator+"dragCirc.png"));
         dragCircleTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        dragCircle=new TextureRegion(dragCircleTexture);
+        dragCircle=tA.findRegion()dragCircleTexture);
 
         dragLineTexture=new Texture(Gdx.files.internal("effect images"+File.separator+"dragLine.png"));
         dragLineTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        dragLine=new TextureRegion(dragLineTexture);
+        dragLine=tA.findRegion()dragLineTexture);
     }
 
     public static TextureRegion airshipRack(int armorLvl){
             Texture rack = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"rack"+armorLvl+".png"));
             rack.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            return new TextureRegion(rack);
+            return tA.findRegion()rack);
     }
 
     public static TextureRegion armor(int armorLvl) {
         Texture armor = new Texture(Gdx.files.internal("sprites"+File.separator+"balloons"+File.separator+"armor"+armorLvl+".png"));
         armor.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        return new TextureRegion(armor);
+        return tA.findRegion()armor);
     }
 
     private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed) {
@@ -495,14 +500,14 @@ public class AssetHandler {
         for (int i=0;i<22;i++) {
             TextureRegion temp;
             if (i<11) {
-                temp = new TextureRegion(sprites, 372 * i, 0, 372, 306);
+                temp = tA.findRegion()sprites, 372 * i, 0, 372, 306);
             } else {
-                temp = new TextureRegion(sprites, 372 * (i-11), 306, 372, 306);
+                temp = tA.findRegion()sprites, 372 * (i-11), 306, 372, 306);
             }
             poss.add(temp);
 
             if (i<6){
-                TextureRegion flipTemp = new TextureRegion(sprites, 372 * i, 0, 373, 306);
+                TextureRegion flipTemp = tA.findRegion()sprites, 372 * i, 0, 373, 306);
                 flipTemp.flip(true,false);
                 leftSidePositions.add(flipTemp);
             }
@@ -544,7 +549,7 @@ public class AssetHandler {
         ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>(9);
 
         for (int i = 0; i < 9; i++) {
-            TextureRegion temp = new TextureRegion(texture, 37 * i, 0, 37, 14);
+            TextureRegion temp = tA.findRegion()texture, 37 * i, 0, 37, 14);
             poss.add(temp);
         }
         Animation animation = new Animation<TextureRegion>(0.1f, poss.toArray((new TextureRegion[9])));
@@ -560,7 +565,7 @@ public class AssetHandler {
         TextureRegion[] back = new TextureRegion[0];
 
         for (int i = 0; i < 16; i++) {
-            TextureRegion temp = new TextureRegion(texture, 481 * i, 0, 481, 423);
+            TextureRegion temp = tA.findRegion()texture, 481 * i, 0, 481, 423);
             poss.add(temp);
             if (i == 5) {
                 front = poss.toArray(new TextureRegion[6]);

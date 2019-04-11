@@ -626,7 +626,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             for (Light i: flameLights){
                 if (i instanceof CustomPointLight)  i.setPosition(xOffsetDueToRotation(pos.x - (startX - ((CustomPointLight) i).origPos.x),(startX - ((CustomPointLight) i).origPos.x),(startY - ((CustomPointLight) i).origPos.y)),
                         yOffsetDueToRotation(pos.y+balloonBob.get() - (startY - ((CustomPointLight) i).origPos.y), (startX - ((CustomPointLight) i).origPos.x),(startY - ((CustomPointLight) i).origPos.y)) );
-
             }
 
             //System.out.println("posLeft: "+flameLights.get(0).getDistance()+"posRight: "+flameLights.get(1).getDistance());

@@ -1,0 +1,1005 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>L85A2Craft</defName>
+    <label>Make L85A2 Rifle</label>
+    <description>Craft L85A2.</description>
+    <jobString>Making L85A2.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>51000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_L85A2_rt>1</Gun_L85A2_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>120</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+
+
+
+   <RecipeDef>
+    <defName>InfernoRifleCraft</defName>
+    <label>Make Inferno Rifle</label>
+    <description>Craft Inferno Rifle.</description>
+    <jobString>Making Inferno Rifle.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>85000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Weapon_InfernoRifle_rt>1</Weapon_InfernoRifle_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>130</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>		
+  </RecipeDef>
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>AK12Craft</defName>
+    <label>Make AK-12 Rifle</label>
+    <description>Craft AK-12.</description>
+    <jobString>Making AK-12.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>52000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_AK12_rt>1</Gun_AK12_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>95</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+
+  
+ <!-- ===========--> 
+  <RecipeDef>
+    <defName>LVOACCraft</defName>
+    <label>Make LVOA-C Rifle</label>
+    <description>Craft LVOA-C.</description>
+    <jobString>Making LVOA-C.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>51000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_LVOAC_rt>1</Gun_LVOAC_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>110</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>   
+
+<!-- ===========--> 
+  <RecipeDef>
+    <defName>AACHoneyBadgerCraft</defName>
+    <label>Make AAC Honey Badger Rifle</label>
+    <description>Craft AAC Honey Badger.</description>
+    <jobString>Making AAC Honey Badger.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>51000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_AACHoneyBadger_rt>1</Gun_AACHoneyBadger_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>110</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>  
+
+<!-- ===========--> 
+  <RecipeDef>
+    <defName>IWITavorCraft</defName>
+    <label>Make IWI Tavor Rifle</label>
+    <description>Craft IWI Tavor.</description>
+    <jobString>Making IWI Tavor.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>48000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_IWITavor_rt>1</Gun_IWITavor_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>100</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>    
+
+<!-- ===========--> 
+  <RecipeDef>
+    <defName>FNFALCraft</defName>
+    <label>Make FN FAL Rifle</label>
+    <description>Craft FN FAL.</description>
+    <jobString>Making FN FAL.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>50000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_FNFAL_rt>1</Gun_FNFAL_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>120</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>  
+
+
+  <!-- ===========--> 
+  <RecipeDef>
+    <defName>AK5CCraft</defName>
+    <label>Make AK-5C Rifle</label>
+    <description>Craft AK-5C.</description>
+    <jobString>Making AK-5C.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>50000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_AK5C_rt>1</Gun_AK5C_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>130</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>  
+  
+<!-- ===========--> 
+  <RecipeDef>
+    <defName>QBZ97Craft</defName>
+    <label>Make QBZ-97 Rifle</label>
+    <description>Craft QBZ-97.</description>
+    <jobString>Making QBZ-97.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>50000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_QBZ97_rt>1</Gun_QBZ97_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>120</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>  
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>HKG36CCraft</defName>
+    <label>Make HK G36C Rifle</label>
+    <description>Craft HK G36C.</description>
+    <jobString>Making HK G36C.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>50000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_HKG36C_rt>1</Gun_HKG36C_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>100</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>    
+  
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>AK47Craft</defName>
+    <label>Make AK-47 Rifle</label>
+    <description>Craft AK-47.</description>
+    <jobString>Making AK-47.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>50000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_AK47_rt>1</Gun_AK47_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>90</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>WoodLog</li>
+				</thingDefs>
+			</filter>
+			<count>1</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+			<li>WoodLog</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+   
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>M1GarandCraft</defName>
+    <label>Make M1 Garand Rifle</label>
+    <description>Craft M1 Garand.</description>
+    <jobString>Making M1 Garand.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>55000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_M1Garand_rt>1</Gun_M1Garand_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>80</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>WoodLog</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+			<li>WoodLog</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>  
+
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>M4Craft</defName>
+    <label>Make M4 Rifle</label>
+    <description>Craft M4.</description>
+    <jobString>Making M4.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>52000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_M4A4_rt>1</Gun_M4A4_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>130</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>  
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>HKG3A3Craft</defName>
+    <label>Make HK G3A3 Rifle</label>
+    <description>Craft HK G3A3.</description>
+    <jobString>Making HK G3A3.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>53000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_G3A3_rt>1</Gun_G3A3_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>140</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef> 
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>SteyrStg77AUGCraft</defName>
+    <label>Make Steyr Stg.77AUG Rifle</label>
+    <description>Craft Steyr Stg.77AUG.</description>
+    <jobString>Making Steyr Stg.77AUG.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>50000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_Steyr_Stg77AUG_rt>1</Gun_Steyr_Stg77AUG_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>120</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>HKXM8Craft</defName>
+    <label>Make HK XM8 Rifle</label>
+    <description>Craft HK XM8.</description>
+    <jobString>Making HK XM8.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>51000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_XM8_rt>1</Gun_XM8_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>120</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>FNF2000Craft</defName>
+    <label>Make FN F2000 Rifle</label>
+    <description>Craft FN F2000.</description>
+    <jobString>Making FN F2000.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>51000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_FNF2000_rt>1</Gun_FNF2000_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>100</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+
+<!-- ===========--> 
+  <RecipeDef>
+    <defName>M14Craft</defName>
+    <label>Make M14 Rifle</label>
+    <description>Craft M14.</description>
+    <jobString>Making M14.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>49000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_M14_rt>1</Gun_M14_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>100</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>WoodLog</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+			<li>WoodLog</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+
+  <!-- ===========--> 
+     <RecipeDef>
+    <defName>FNSCARLCraft</defName>
+    <label>Make FN SCAR-L Rifle</label>
+    <description>Craft FN SCAR-L.</description>
+    <jobString>Making FN SCAR-L.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>53000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_SCARL_rt>1</Gun_SCARL_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>110</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+		<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+ 
+
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>FAMASCraft</defName>
+    <label>Make FAMAS Rifle</label>
+    <description>Craft FAMAS.</description>
+    <jobString>Making FAMAS.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>45000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_FAMAS_rt>1</Gun_FAMAS_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>90</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_Rifles</researchPrerequisite>
+	<skillRequirements>
+<Crafting>6</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+
+
+
+
+
+
+
+ 
+</Defs>

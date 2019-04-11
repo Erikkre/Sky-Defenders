@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
+<LanguageData>
+<!-- ============================Pickaxe================================== -->
+<MeleeWeapon_Pickaxe.label>Кирка</MeleeWeapon_Pickaxe.label>
+<MeleeWeapon_Pickaxe.description>Удобный инструмент для добычи полезных ископаемых. Так же при желании может нанести небольшие повреждения.</MeleeWeapon_Pickaxe.description>
+<!-- ============================Butcher Knife================================== -->
+<MeleeWeapon_Butcherknife.label>Нож мясника</MeleeWeapon_Butcherknife.label>
+<MeleeWeapon_Butcherknife.description>Нож, отлично подходит для разделки мяса.</MeleeWeapon_Butcherknife.description>
+<!-- ============================Military Shovel================================== -->
+<MeleeWeapon_Militaryshovel.label>Военная лопата</MeleeWeapon_Militaryshovel.label>
+<MeleeWeapon_Militaryshovel.description>Это лопата, которая не развалится или не подведёт во время тяжёлой работы.</MeleeWeapon_Militaryshovel.description>
+<!-- ============================Fire Axe================================== -->
+<MeleeWeapon_Fireaxe.label>Пожарный топор</MeleeWeapon_Fireaxe.label>
+<MeleeWeapon_Fireaxe.description>Стереотипный топор пожарного с красным лезвием, серебрянным краем и деревянной ручкой.</MeleeWeapon_Fireaxe.description>
+<!-- ============================Krambit================================== -->
+<MeleeWeapon_Karambit.label>Нож Керамбит</MeleeWeapon_Karambit.label>  
+<MeleeWeapon_Karambit.description>Керамбит удобно держать в руках, кривой нож, похожий на клешню.</MeleeWeapon_Karambit.description> 
+<!-- ============================Machete Knife ================================== -->
+<MeleeWeapon_Machete.label>Мачете</MeleeWeapon_Machete.label>
+<MeleeWeapon_Machete.description>Это большой тесак, в форме ножа. Часто используется, чтобы прорубить путь в лесу или в сельскохозяйственных целях.</MeleeWeapon_Machete.description>
+<!-- ============================Katana================================== -->
+<MeleeWeapon_Katana.label>Катана</MeleeWeapon_Katana.label>  
+<MeleeWeapon_Katana.description>Катана была одним из традиционных японских мечей, которыми пользовались самураи феодальной Японии.</MeleeWeapon_Katana.description>  
+<!-- ============================Gerber Survival Knife================================== -->
+<MeleeWeapon_Gerber.label>Гербер нож выживальщика</MeleeWeapon_Gerber.label>  
+<MeleeWeapon_Gerber.description>Удобный нож для выживания</MeleeWeapon_Gerber.description> 
+<!-- ============================M9 Bayonet================================== -->
+<MeleeWeapon_Mbayonet.label>M9 Штык-нож</MeleeWeapon_Mbayonet.label>  
+<MeleeWeapon_Mbayonet.description>M9 Bayonet является многоцелевым ножом, принятым на вооружение в 1986 году в Соединенных Штатах. Это надежное средство для солдата, полезен как в бою, так и в выживании.</MeleeWeapon_Mbayonet.description>
+<!-- ============================Crowbar================================== -->
+<MeleeWeapon_Crowbar.label>Лом</MeleeWeapon_Crowbar.label>  
+<MeleeWeapon_Crowbar.description>Лом, представляет из себя инструмент, состоящий из металлического стержня с одим загнутым, плоским концом, используется для разбора чего либо, либо как оружие.</MeleeWeapon_Crowbar.description>
+<!-- ============================Baton================================== -->
+<MeleeWeapon_Baton.label>Дубинка</MeleeWeapon_Baton.label>  
+<MeleeWeapon_Baton.description>Меньше вытянутой руки. Используются для принудительного соблюдения порядки и самообороны.</MeleeWeapon_Baton.description> 
+<!-- ============================Huntsman================================== -->
+<MeleeWeapon_Huntsman.label>Нож Егерь</MeleeWeapon_Huntsman.label>  
+<MeleeWeapon_Huntsman.description>Нож предназначен для современных тактических применений, лезвие хорошо подходит для целого ряда задач, боевых и не только.</MeleeWeapon_Huntsman.description>
+<!-- ============================Khukuri Knife================================== -->
+<MeleeWeapon_Kuri.label>Нож Кукри</MeleeWeapon_Kuri.label>  
+<MeleeWeapon_Kuri.description>Кукри представляет из себя нож с изогнутым внутрь лезвием, похож на мачете, используется как оружие.</MeleeWeapon_Kuri.description>  
+</LanguageData>

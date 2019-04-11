@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <USAS12Craft.label>製作USAS-12霰彈槍</USAS12Craft.label>
+  <USAS12Craft.description>製作USAS-12霰彈槍。</USAS12Craft.description>
+  <USAS12Craft.jobString>正在製作USAS-12霰彈槍。</USAS12Craft.jobString>
+
+  <M1014Craft.label>製作M1014霰彈槍</M1014Craft.label>
+  <M1014Craft.description>製作M1014霰彈槍。</M1014Craft.description>
+  <M1014Craft.jobString>正在製作M1014霰彈槍。</M1014Craft.jobString>
+
+  <DP12Craft.label>製作DP-12雙管泵動式霰彈槍</DP12Craft.label>
+  <DP12Craft.description>製作DP-12雙管泵動式霰彈槍。</DP12Craft.description>
+  <DP12Craft.jobString>正在製作DP-12雙管泵動式霰彈槍。</DP12Craft.jobString>
+
+  <Winchester87Craft.label>製作溫徹斯特M1887式霰彈槍</Winchester87Craft.label>
+  <Winchester87Craft.description>製作溫徹斯特M1887式霰彈槍。</Winchester87Craft.description>
+  <Winchester87Craft.jobString>正在製作溫徹斯特M1887式霰彈槍。</Winchester87Craft.jobString>
+
+  <SPAS12Craft.label>製作SPAS-12多功能霰彈槍</SPAS12Craft.label>
+  <SPAS12Craft.description>製作SPAS-12多功能霰彈槍。</SPAS12Craft.description>
+  <SPAS12Craft.jobString>正在製作SPAS-12多功能霰彈槍。</SPAS12Craft.jobString>
+
+
+</LanguageData>

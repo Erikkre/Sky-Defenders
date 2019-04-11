@@ -66,8 +66,6 @@ var EscapeSpecialChars = function(name)
                .replace(/#/g, "%23")
                .replace(/:/g, "%3A")
                .replace(/;/g, "%3B")
-               .replace(/\\/g, "-")
-               .replace(/\//g, "-")
 };
 
 

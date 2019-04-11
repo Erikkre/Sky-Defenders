@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+
+  <RecipeDef>
+    <defName>M72LAWCraft</defName>
+    <label>Make M72 L.A.W Rocket Launcher </label>
+    <description>Craft M72 LAW.</description>
+    <jobString>Making M72 LAW.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>150000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_M72LAW_rt>1</Gun_M72LAW_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>230</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>4</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_HeavyWeapons</researchPrerequisite>
+		<skillRequirements>
+				<Crafting>8</Crafting>
+		</skillRequirements>	
+  </RecipeDef>
+
+
+
+   <RecipeDef>
+    <defName>M79GLCraft</defName>
+    <label>Make M79 Grenade Launcher</label>
+    <description>Craft M79 GrenadeLauncher.</description>
+    <jobString>Making M79 Grenade Launcher.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>100000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_M79_rt>1</Gun_M79_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>120</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>WoodLog</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+			<li>WoodLog</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_HeavyWeapons</researchPrerequisite>
+			<skillRequirements>
+				<Crafting>8</Crafting>
+		</skillRequirements>	
+  </RecipeDef>
+
+
+
+
+    <RecipeDef>
+    <defName>PKMCraft</defName>
+    <label>Make PKM MachineGun</label>
+    <description>Craft PKM.</description>
+    <jobString>Making PKM.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>120000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_PKM_rt>1</Gun_PKM_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>130</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>WoodLog</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+			<li>WoodLog</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_HeavyWeapons</researchPrerequisite>
+		<skillRequirements>
+				<Crafting>8</Crafting>
+		</skillRequirements>	
+  </RecipeDef>
+
+
+
+
+  <RecipeDef>
+    <defName>RPGCraft</defName>
+    <label>Make RPG-7</label>
+    <description>Craft RPG-7.</description>
+    <jobString>Making RPG-7.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>120000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_RPG_rt>1</Gun_RPG_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>220</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>WoodLog</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+			<li>WoodLog</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_HeavyWeapons</researchPrerequisite>
+		<skillRequirements>
+				<Crafting>8</Crafting>
+		</skillRequirements>	
+  </RecipeDef>
+  
+  
+   <RecipeDef>
+    <defName>M32MGLCraft</defName>
+    <label>Make M32 GrenadeLauncher</label>
+    <description>Craft M32 Grenade Launcher.</description>
+    <jobString>Making M32 Grenade Launcher.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>120000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_M32MGL_rt>1</Gun_M32MGL_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>190</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>5</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_HeavyWeapons</researchPrerequisite>
+		<skillRequirements>
+				<Crafting>8</Crafting>
+		</skillRequirements>	
+  </RecipeDef> 
+  
+  
+  
+  
+     <RecipeDef>
+    <defName>MG42Craft</defName>
+    <label>Make MG42 MachineGun</label>
+    <description>Craft MG42.</description>
+    <jobString>Making MG42.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>110000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_MG42_rt>1</Gun_MG42_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>150</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_HeavyWeapons</researchPrerequisite>
+		<skillRequirements>
+				<Crafting>8</Crafting>
+		</skillRequirements>	
+  </RecipeDef>
+ 
+
+
+    <RecipeDef>
+    <defName>SAWM249Craft</defName>
+    <label>Make SAW M249 MachineGun</label>
+    <description>Craft SAW M249 MachineGun.</description>
+    <jobString>Making SAW M249.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>115000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_SAWM249_rt>1</Gun_SAWM249_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>130</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_HeavyWeapons</researchPrerequisite>
+		<skillRequirements>
+				<Crafting>8</Crafting>
+		</skillRequirements>	
+  </RecipeDef>
+ 
+  
+  
+   <RecipeDef>
+    <defName>BARM1918Craft</defName>
+    <label>Make BAR M1918 MachineGun</label>
+    <description>Craft BAR M1918.</description>
+    <jobString>Making BAR M1918.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>110000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_BARM1918_rt>1</Gun_BARM1918_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>120</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>
+	</recipeUsers>
+	<researchPrerequisite>RT_HeavyWeapons</researchPrerequisite>
+		<skillRequirements>
+				<Crafting>8</Crafting>
+		</skillRequirements>	
+  </RecipeDef>   
+      
+</Defs>
