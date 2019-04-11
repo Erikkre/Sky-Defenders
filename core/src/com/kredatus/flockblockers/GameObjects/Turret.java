@@ -291,58 +291,29 @@ public class Turret {
     }
 
     private void turretSetup(char turretType, int lvl){
+        texture[0]=AssetHandler.turret(turretType,lvl,false);projTexture=AssetHandler.turret(turretType,lvl,true);
+        if (projTexture==null) projTexture = texture[0];    //if texture has multiple anims dont worry because it turret is not thrown
         switch (turretType) {
             case ('f'): //fast firing
                 dmg = 1f;
                 pen = 1;
                 spr = 1;
                 rof = 1.5f; //was 0.5f //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots
-                    switch (lvl) {
-                        case(0):texture[0]=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;
-                        case(1):texture[0]=AssetHandler.f1;projTexture=texture[0];         break;
-                        case(2):texture[0]=AssetHandler.f2;projTexture=AssetHandler.f2Proj;break;
-                        case(3):texture[0]=AssetHandler.f3;projTexture=AssetHandler.f3Proj;break;
-                        case(4):texture[0]=AssetHandler.f4;projTexture=AssetHandler.f4Proj;break;
-                        case(5):texture[0]=AssetHandler.f5;projTexture=AssetHandler.f5Proj;break;
-                        case(6):texture[0]=AssetHandler.f6;projTexture=AssetHandler.f6Proj;break;
-                        case(7):texture[0]=AssetHandler.f7;projTexture=AssetHandler.f7Proj;break;
-                        case(8):texture[0]=AssetHandler.f8;projTexture=AssetHandler.f8Proj;break;
-                        case(9):texture[0]=AssetHandler.f9;projTexture=AssetHandler.f9Proj;break;
-                    } break;
+                break;
             case ('s'):
                 dmg = 0.3f;
                 pen = 1;
                 spr = 3;
                 rof = 1f;
-                    switch (lvl) {
-                        case(0):texture[0]=AssetHandler.f0;projTexture=AssetHandler.f0Proj;break;  //beware of slight changes
-                        case(1):texture[0]=AssetHandler.s1;projTexture=AssetHandler.s1Proj;break;
-                        case(2):texture[0]=AssetHandler.s2;projTexture=AssetHandler.s2Proj;break;
-                        case(3):texture[0]=AssetHandler.s3;projTexture=AssetHandler.s3Proj;break;
-                        case(4):texture[0]=AssetHandler.s4;projTexture=AssetHandler.s4Proj;break;
-                        case(5):texture[0]=AssetHandler.s5;projTexture=AssetHandler.s5Proj;break;
-                        case(6):texture[0]=AssetHandler.s6;projTexture=AssetHandler.s6Proj;break;
-                        case(7):texture[0]=AssetHandler.s7;projTexture=AssetHandler.s7Proj;break;
-                        case(8):texture[0]=AssetHandler.s8;projTexture=AssetHandler.s8Proj;break;
-                        case(9):texture[0]=AssetHandler.s9;projTexture=AssetHandler.s9Proj;break;
-                    } break;
+                break;
             case ('d'):
                 dmg = 4;
                 pen = 4;
                 spr = 1;
                 rof = 0.5f;
-                    switch (lvl) {
-                        case(0):texture[0]=AssetHandler.d0;projTexture=AssetHandler.d0Proj;break;
-                        case(1):texture[0]=AssetHandler.d1;projTexture=texture[0];         break;
-                        case(2):texture[0]=AssetHandler.d2;projTexture=AssetHandler.d2Proj;break;
-                        case(3):texture[0]=AssetHandler.d3;projTexture=AssetHandler.d3Proj;break;
-                        case(4):texture[0]=AssetHandler.d4;projTexture=AssetHandler.d4Proj;break;
-                        case(5):texture[0]=AssetHandler.d5;projTexture=AssetHandler.d5Proj;break;
-                        case(6):texture[0]=AssetHandler.d6;projTexture=AssetHandler.d6Proj;break;
-                        case(7):texture[0]=AssetHandler.d7;projTexture=AssetHandler.d7Proj;break;
-                        case(8):texture[0]=AssetHandler.d8;projTexture=AssetHandler.d8Proj;break;
-                        case(9):texture[0]=AssetHandler.d9;projTexture=AssetHandler.d9Proj;break;
-                    } break;
+                //see if it should be texture[0]=.split()[0][0] or what it is currently
+                if (lvl==2)texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];
+                break;
         }
 
         for (int i=0;i<lvl;i++){
