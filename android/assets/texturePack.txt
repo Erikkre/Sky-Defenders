@@ -255,154 +255,154 @@ tinyBird11
   orig: 333, 14
   offset: 1, 0
   index: -1
-crowdControl/0
+c/0
   rotate: false
   xy: 1907, 4006
   size: 51, 36
   orig: 64, 64
   offset: 7, 13
   index: -1
-crowdControl/0p
+c/0p
   rotate: false
   xy: 2592, 3917
   size: 30, 30
   orig: 64, 64
   offset: 16, 18
   index: -1
-crowdControl/1
+c/1
   rotate: false
   xy: 2010, 3791
   size: 47, 47
   orig: 64, 64
   offset: 9, 9
   index: -1
-crowdControl/1p
+c/1p
   rotate: true
   xy: 2010, 3840
   size: 27, 47
   orig: 64, 64
   offset: 19, 10
   index: -1
-crowdControl/maybe/bow_advanced_fire
+c/maybe/bow_advanced_fire
   rotate: false
   xy: 1998, 3923
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-crowdControl/maybe/bow_advanced_toxic
+c/maybe/bow_advanced_toxic
   rotate: false
   xy: 2572, 3950
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-crowdControl/maybe/bow_explode_ranged
+c/maybe/bow_explode_ranged
   rotate: false
   xy: 2592, 3785
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-crowdControl/maybe/giant_arrow_explode_ranged
+c/maybe/giant_arrow_explode_ranged
   rotate: false
   xy: 2592, 3851
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-crowdControl/maybe/short_arrow_fire_ranged
+c/maybe/short_arrow_fire_ranged
   rotate: false
   xy: 2638, 3947
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-crowdControl/maybe/short_arrow_toxic_ranged
+c/maybe/short_arrow_toxic_ranged
   rotate: false
   xy: 2658, 3785
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-crowdControl/maybe/Slingshot
+c/maybe/Slingshot
   rotate: false
   xy: 2030, 4006
   size: 26, 38
   orig: 64, 64
   offset: 16, 13
   index: -1
-crowdControl/maybe/spear_fire_melee
+c/maybe/spear_fire_melee
   rotate: false
   xy: 2658, 3851
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-crowdControl/maybe/spear_toxic_melee
+c/maybe/spear_toxic_melee
   rotate: false
   xy: 1932, 3923
   size: 64, 66
   orig: 64, 66
   offset: 0, 0
   index: -1
-damageDealer/0
+d/0
   rotate: true
   xy: 1960, 4006
   size: 46, 16
   orig: 64, 64
   offset: 13, 23
   index: -1
-damageDealer/1
+d/1
   rotate: false
   xy: 1893, 3923
   size: 9, 93
   orig: 9, 93
   offset: 0, 0
   index: -1
-damageDealer/2
+d/2
   rotate: true
   xy: 1834, 3923
   size: 119, 57
   orig: 128, 64
   offset: 2, 2
   index: -1
-damageDealer/2p
+d/2p
   rotate: false
   xy: 1910, 4044
   size: 32, 3
   orig: 32, 3
   offset: 0, 0
   index: -1
-fastFiring/0
+f/0
   rotate: true
   xy: 2562, 3785
   size: 163, 28
   orig: 163, 80
   offset: 0, 30
   index: -1
-fastFiring/0p
+f/0p
   rotate: false
   xy: 1893, 4018
   size: 12, 24
   orig: 12, 24
   offset: 0, 0
   index: -1
-fastFiring/1
+f/1
   rotate: true
   xy: 1978, 4006
   size: 44, 9
   orig: 44, 9
   offset: 0, 0
   index: -1
-fastFiring/2
+f/2
   rotate: true
   xy: 2624, 3917
   size: 28, 63
   orig: 64, 64
   offset: 26, 0
   index: -1
-fastFiring/2p
+f/2p
   rotate: true
   xy: 1866, 4044
   size: 7, 34
@@ -539,14 +539,14 @@ reticle2
   orig: 300, 300
   offset: 0, 0
   index: -1
-crowdControl/maybe/Mace
+c/maybe/Mace
   rotate: true
   xy: 2051, 803
   size: 608, 576
   orig: 608, 576
   offset: 0, 0
   index: -1
-crowdControl/maybe/Saw
+c/maybe/Saw
   rotate: false
   xy: 2629, 803
   size: 512, 512
