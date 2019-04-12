@@ -26,7 +26,7 @@
             </struct>
         </array>
         <key>allowRotation</key>
-        <true/>
+        <false/>
         <key>shapeDebug</key>
         <false/>
         <key>dpi</key>
@@ -163,13 +163,13 @@
             <key>scaleMode</key>
             <enum type="ScaleMode">Smooth</enum>
             <key>extrude</key>
-            <uint>1</uint>
+            <uint>0</uint>
             <key>trimThreshold</key>
             <uint>1</uint>
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
@@ -208,9 +208,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>512,448,1024,896</rect>
+                <rect>512,448,1023,896</rect>
                 <key>scale9Paddings</key>
-                <rect>512,448,1024,896</rect>
+                <rect>512,448,1023,896</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -221,9 +221,9 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>512,401,1024,801</rect>
+                <rect>512,401,1023,801</rect>
                 <key>scale9Paddings</key>
-                <rect>512,401,1024,801</rect>
+                <rect>512,401,1023,801</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -424,21 +424,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/0.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/0p.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/1.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/1p.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/Slingshot.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/bow_advanced_fire.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/bow_advanced_toxic.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/bow_explode_ranged.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/giant_arrow_explode_ranged.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/short_arrow_fire_ranged.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/short_arrow_toxic_ranged.png</key>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/spear_fire_melee.png</key>
-            <key type="filename">../../textures/sprites/turrets/damageDealer/0.png</key>
-            <key type="filename">../../textures/sprites/turrets/fastFiring/2.png</key>
-            <key type="filename">../../textures/sprites/turrets/fastFiring/2p.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/c0.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/c1.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/maybe/Slingshot.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/maybe/bow_advanced_fire.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/maybe/bow_advanced_toxic.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/maybe/bow_explode_ranged.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/maybe/giant_arrow_explode_ranged.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/maybe/short_arrow_fire_ranged.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/maybe/short_arrow_toxic_ranged.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/maybe/spear_fire_melee.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/pc0.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/pc1.png</key>
+            <key type="filename">../../textures/sprites/turrets/d/d0.png</key>
+            <key type="filename">../../textures/sprites/turrets/f/f2.png</key>
+            <key type="filename">../../textures/sprites/turrets/f/pf2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -451,7 +451,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/Mace.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/maybe/Mace.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -464,7 +464,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/Saw.png</key>
+            <key type="filename">../../textures/sprites/turrets/c/maybe/Saw.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -477,20 +477,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../textures/sprites/turrets/crowdControl/maybe/spear_toxic_melee.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>16,17,32,33</rect>
-                <key>scale9Paddings</key>
-                <rect>16,17,32,33</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../../textures/sprites/turrets/damageDealer/1.png</key>
+            <key type="filename">../../textures/sprites/turrets/d/d1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -503,7 +490,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../textures/sprites/turrets/damageDealer/2.png</key>
+            <key type="filename">../../textures/sprites/turrets/d/d2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -516,7 +503,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../textures/sprites/turrets/damageDealer/2p.png</key>
+            <key type="filename">../../textures/sprites/turrets/d/pd2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -529,33 +516,20 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../textures/sprites/turrets/fastFiring/0.png</key>
+            <key type="filename">../../textures/sprites/turrets/f/f0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>41,20,81,40</rect>
+                <rect>16,3,32,5</rect>
                 <key>scale9Paddings</key>
-                <rect>41,20,81,40</rect>
+                <rect>16,3,32,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../textures/sprites/turrets/fastFiring/0p.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>3,6,6,12</rect>
-                <key>scale9Paddings</key>
-                <rect>3,6,6,12</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../../textures/sprites/turrets/fastFiring/1.png</key>
+            <key type="filename">../../textures/sprites/turrets/f/f1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -565,6 +539,19 @@
                 <rect>11,2,22,5</rect>
                 <key>scale9Paddings</key>
                 <rect>11,2,22,5</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../../textures/sprites/turrets/f/pf0.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>2,3,3,6</rect>
+                <key>scale9Paddings</key>
+                <rect>2,3,3,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -589,7 +576,9 @@
         <key>ignoreFileList</key>
         <array/>
         <key>replaceList</key>
-        <array/>
+        <array>
+            <string>.*/=</string>
+        </array>
         <key>ignoredWarnings</key>
         <array/>
         <key>commonDivisorX</key>

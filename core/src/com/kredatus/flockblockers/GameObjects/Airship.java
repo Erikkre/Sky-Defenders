@@ -370,7 +370,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 dragLineOpacity.set(0.4f);
 
                 if (timeToTweenTarget>2) {
-                    System.out.println(timeToTweenTarget);
                     dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.24f).target(-1).ease(TweenEquations.easeInSine).start();
                 } else {
                     dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
@@ -746,7 +745,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("*******************************************************************************************************************");
             batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
         }
-
 
 
         batcher.draw(balloonTexture, pos.x-(balloonWidth)/2f, pos.y+balloonBob.get(),

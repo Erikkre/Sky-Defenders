@@ -43,15 +43,16 @@ public class Turret {
 
     public void draw(SpriteBatch batcher, float xPos, float yPos){
         if (texture.length==1 ||  timeSinceLastShot>1000 ) {//turret has 1 tex or it is after 1s after shot
-            System.out.println(1);
+            //System.out.println(1);
             batcher.draw(texture[0], xPos, yPos,
                     width / 2f, height / 2f, width, height, 1f, 1f, getRotation());
         } else if (timeSinceLastShot<1000 && projTexture!=texture[0]){//turret has a post-firing tex and was just fired and turretIsntProjectile. Doesnt
-            System.out.println(2);
+            //System.out.println(2);
             batcher.draw(texture[1], xPos, yPos,
                     width / 2f, height / 2f, width, height, 1f, 1f, getRotation());
         } //if turret is projectile then dont show it at all
     }
+
     public Turret(char turretType, Vector2 pos){
         this.pos = pos;
         this.origPosition= pos.cpy();

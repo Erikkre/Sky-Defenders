@@ -1,555 +1,548 @@
 texturePack0.png
-size: 3883, 4053
+size: 4098, 3636
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+acid
+  rotate: false
+  xy: 1, 1
+  size: 4092, 612
+  orig: 4092, 612
+  offset: 0, 0
+  index: -1
 bgAcid2
   rotate: false
-  xy: 1834, 1
-  size: 2048, 1792
-  orig: 2048, 1792
+  xy: 1, 1843
+  size: 2047, 1792
+  orig: 2047, 1792
   offset: 0, 0
   index: -1
 bgFire2
   rotate: false
-  xy: 1834, 1795
-  size: 2048, 1792
-  orig: 2048, 1792
+  xy: 2050, 1843
+  size: 2047, 1792
+  orig: 2047, 1792
   offset: 0, 0
   index: -1
-dragCirc
-  rotate: true
-  xy: 1989, 4006
-  size: 40, 39
-  orig: 40, 40
-  offset: 0, 1
-  index: -1
-dragLine
-  rotate: true
-  xy: 1834, 4044
-  size: 8, 30
-  orig: 8, 30
-  offset: 0, 0
-  index: -1
-dragLine2
-  rotate: true
-  xy: 2247, 3981
-  size: 9, 54
-  orig: 9, 60
-  offset: 0, 4
-  index: -1
-particle
+fire
   rotate: false
-  xy: 2010, 3869
-  size: 32, 32
-  orig: 32, 32
+  xy: 1, 615
+  size: 4092, 612
+  orig: 4092, 612
   offset: 0, 0
   index: -1
+gold
+  rotate: false
+  xy: 1, 1229
+  size: 4092, 612
+  orig: 4092, 612
+  offset: 0, 0
+  index: -1
+
+texturePack1.png
+size: 4098, 3636
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bgGold2
+  rotate: false
+  xy: 1, 1843
+  size: 2047, 1792
+  orig: 2047, 1792
+  offset: 0, 0
+  index: -1
+bgLunar2
+  rotate: false
+  xy: 2050, 1843
+  size: 2047, 1792
+  orig: 2047, 1792
+  offset: 0, 0
+  index: -1
+lunar
+  rotate: false
+  xy: 1, 1
+  size: 4092, 612
+  orig: 4092, 612
+  offset: 0, 0
+  index: -1
+night
+  rotate: false
+  xy: 1, 615
+  size: 4092, 612
+  orig: 4092, 612
+  offset: 0, 0
+  index: -1
+phoenix
+  rotate: false
+  xy: 1, 1229
+  size: 4092, 612
+  orig: 4092, 612
+  offset: 0, 0
+  index: -1
+
+texturePack2.png
+size: 4098, 3022
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bgNight2
+  rotate: false
+  xy: 1, 1229
+  size: 2047, 1792
+  orig: 2047, 1792
+  offset: 0, 0
+  index: -1
+bgPhoenix2
+  rotate: false
+  xy: 2050, 1229
+  size: 2047, 1792
+  orig: 2047, 1792
+  offset: 0, 0
+  index: -1
+thunder
+  rotate: false
+  xy: 1, 1
+  size: 4092, 612
+  orig: 4092, 612
+  offset: 0, 0
+  index: -1
+water
+  rotate: false
+  xy: 1, 615
+  size: 4092, 612
+  orig: 4092, 612
+  offset: 0, 0
+  index: -1
+
+texturePack3.png
+size: 4098, 3398
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
 armor0
   rotate: false
-  xy: 1932, 3991
-  size: 157, 13
+  xy: 3538, 3225
+  size: 164, 13
   orig: 164, 13
-  offset: 3, 0
+  offset: 0, 0
   index: -1
 armor1
   rotate: false
-  xy: 2058, 4040
+  xy: 3602, 3159
   size: 154, 12
   orig: 154, 12
   offset: 0, 0
   index: -1
 armor2
   rotate: false
-  xy: 2214, 4040
+  xy: 3602, 3173
   size: 154, 12
   orig: 154, 12
   offset: 0, 0
   index: -1
 armor3
   rotate: false
-  xy: 2370, 4040
+  xy: 3602, 3187
   size: 154, 12
   orig: 154, 12
   offset: 0, 0
   index: -1
 armor4
   rotate: false
-  xy: 2526, 4040
+  xy: 3602, 3201
   size: 154, 12
   orig: 154, 12
   offset: 0, 0
   index: -1
 armor5
   rotate: false
-  xy: 2091, 3987
+  xy: 3174, 1795
   size: 154, 12
   orig: 154, 12
   offset: 0, 0
   index: -1
 balloon
   rotate: false
-  xy: 2010, 3589
+  xy: 2050, 3175
   size: 160, 200
   orig: 160, 200
   offset: 0, 0
   index: -1
+bgThunder2
+  rotate: false
+  xy: 1, 1
+  size: 2047, 1792
+  orig: 2047, 1792
+  offset: 0, 0
+  index: -1
+bgWater2
+  rotate: false
+  xy: 2050, 1
+  size: 2047, 1792
+  orig: 2047, 1792
+  offset: 0, 0
+  index: -1
+bow_advanced_fire
+  rotate: false
+  xy: 3208, 3291
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+bow_advanced_toxic
+  rotate: false
+  xy: 3274, 3225
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+bow_explode_ranged
+  rotate: false
+  xy: 3338, 3159
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 burnerPipes
   rotate: false
-  xy: 1902, 4044
+  xy: 2592, 3387
   size: 6, 7
   orig: 6, 7
   offset: 0, 0
   index: -1
+c0
+  rotate: false
+  xy: 3274, 3291
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+c1
+  rotate: false
+  xy: 3340, 3225
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+cloudSeparator
+  rotate: false
+  xy: 1, 1795
+  size: 2047, 1602
+  orig: 2047, 1602
+  offset: 0, 0
+  index: -1
+coin
+  rotate: false
+  xy: 2720, 3365
+  size: 512, 32
+  orig: 512, 32
+  offset: 0, 0
+  index: -1
+companyLogo
+  rotate: false
+  xy: 2050, 1795
+  size: 1100, 800
+  orig: 1100, 800
+  offset: 0, 0
+  index: -1
+d0
+  rotate: false
+  xy: 3404, 3159
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+d1
+  rotate: false
+  xy: 2451, 3387
+  size: 93, 9
+  orig: 93, 9
+  offset: 0, 0
+  index: -1
+d2
+  rotate: false
+  xy: 3208, 3159
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1
+dragCirc
+  rotate: false
+  xy: 2671, 3111
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+dragLine
+  rotate: false
+  xy: 2747, 3111
+  size: 8, 30
+  orig: 8, 30
+  offset: 0, 0
+  index: -1
+dragLine2
+  rotate: false
+  xy: 2660, 3111
+  size: 9, 60
+  orig: 9, 60
+  offset: 0, 0
+  index: -1
+f0
+  rotate: false
+  xy: 2385, 3387
+  size: 64, 10
+  orig: 64, 10
+  offset: 0, 0
+  index: -1
+f1
+  rotate: false
+  xy: 2546, 3387
+  size: 44, 9
+  orig: 44, 9
+  offset: 0, 0
+  index: -1
+f2
+  rotate: false
+  xy: 3340, 3291
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+giant_arrow_explode_ranged
+  rotate: false
+  xy: 3406, 3225
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+Mace
+  rotate: false
+  xy: 2050, 2597
+  size: 608, 576
+  orig: 608, 576
+  offset: 0, 0
+  index: -1
+particle
+  rotate: false
+  xy: 2713, 3111
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+pc0
+  rotate: false
+  xy: 3470, 3159
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+pc1
+  rotate: false
+  xy: 3406, 3291
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+pd2
+  rotate: false
+  xy: 2050, 3393
+  size: 32, 3
+  orig: 32, 3
+  offset: 0, 0
+  index: -1
+pf0
+  rotate: false
+  xy: 2600, 3387
+  size: 12, 6
+  orig: 12, 6
+  offset: 0, 0
+  index: -1
+pf2
+  rotate: false
+  xy: 2614, 3387
+  size: 32, 5
+  orig: 32, 5
+  offset: 0, 0
+  index: -1
 rack0
   rotate: false
-  xy: 2064, 3791
+  xy: 2212, 3175
   size: 164, 194
   orig: 164, 194
   offset: 0, 0
   index: -1
 rack1
   rotate: false
-  xy: 2172, 3589
+  xy: 2378, 3175
   size: 164, 194
   orig: 164, 194
   offset: 0, 0
   index: -1
 rack2
   rotate: false
-  xy: 2230, 3785
+  xy: 2544, 3175
   size: 164, 194
   orig: 164, 194
   offset: 0, 0
   index: -1
 rack3
   rotate: false
-  xy: 2338, 3589
+  xy: 2710, 3169
   size: 164, 194
   orig: 164, 194
   offset: 0, 0
   index: -1
 rack4
   rotate: false
-  xy: 2396, 3785
+  xy: 2876, 3169
   size: 164, 194
   orig: 164, 194
   offset: 0, 0
   index: -1
 rack5
   rotate: false
-  xy: 2504, 3589
+  xy: 3042, 3159
   size: 164, 194
   orig: 164, 194
   offset: 0, 0
   index: -1
-sideThruster
-  rotate: true
-  xy: 1904, 3923
-  size: 81, 12
-  orig: 81, 12
-  offset: 0, 0
-  index: -1
-sideThruster2
-  rotate: true
-  xy: 1918, 3923
-  size: 81, 12
-  orig: 81, 12
-  offset: 0, 0
-  index: -1
-acid
-  rotate: true
-  xy: 1, 1
-  size: 4051, 609
-  orig: 4092, 612
-  offset: 32, 1
-  index: -1
-fire
-  rotate: true
-  xy: 612, 1
-  size: 4051, 609
-  orig: 4092, 612
-  offset: 32, 1
-  index: -1
-gold
-  rotate: true
-  xy: 1223, 1
-  size: 4051, 609
-  orig: 4092, 612
-  offset: 32, 1
-  index: -1
-tinyBird1
-  rotate: true
-  xy: 1834, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-tinyBird2
-  rotate: true
-  xy: 1882, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-tinyBird3
-  rotate: true
-  xy: 1898, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-tinyBird4
-  rotate: true
-  xy: 1914, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-tinyBird5
-  rotate: true
-  xy: 1930, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-tinyBird6
-  rotate: true
-  xy: 1946, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-tinyBird7
-  rotate: true
-  xy: 1962, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-tinyBird8
-  rotate: true
-  xy: 1978, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-tinyBird9
-  rotate: true
-  xy: 1994, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-tinyBird10
-  rotate: true
-  xy: 1850, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-tinyBird11
-  rotate: true
-  xy: 1866, 3589
-  size: 332, 14
-  orig: 333, 14
-  offset: 1, 0
-  index: -1
-c/0
-  rotate: false
-  xy: 1907, 4006
-  size: 51, 36
-  orig: 64, 64
-  offset: 7, 13
-  index: -1
-c/0p
-  rotate: false
-  xy: 2592, 3917
-  size: 30, 30
-  orig: 64, 64
-  offset: 16, 18
-  index: -1
-c/1
-  rotate: false
-  xy: 2010, 3791
-  size: 47, 47
-  orig: 64, 64
-  offset: 9, 9
-  index: -1
-c/1p
-  rotate: true
-  xy: 2010, 3840
-  size: 27, 47
-  orig: 64, 64
-  offset: 19, 10
-  index: -1
-c/maybe/bow_advanced_fire
-  rotate: false
-  xy: 1998, 3923
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-c/maybe/bow_advanced_toxic
-  rotate: false
-  xy: 2572, 3950
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-c/maybe/bow_explode_ranged
-  rotate: false
-  xy: 2592, 3785
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-c/maybe/giant_arrow_explode_ranged
-  rotate: false
-  xy: 2592, 3851
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-c/maybe/short_arrow_fire_ranged
-  rotate: false
-  xy: 2638, 3947
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-c/maybe/short_arrow_toxic_ranged
-  rotate: false
-  xy: 2658, 3785
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-c/maybe/Slingshot
-  rotate: false
-  xy: 2030, 4006
-  size: 26, 38
-  orig: 64, 64
-  offset: 16, 13
-  index: -1
-c/maybe/spear_fire_melee
-  rotate: false
-  xy: 2658, 3851
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-c/maybe/spear_toxic_melee
-  rotate: false
-  xy: 1932, 3923
-  size: 64, 66
-  orig: 64, 66
-  offset: 0, 0
-  index: -1
-d/0
-  rotate: true
-  xy: 1960, 4006
-  size: 46, 16
-  orig: 64, 64
-  offset: 13, 23
-  index: -1
-d/1
-  rotate: false
-  xy: 1893, 3923
-  size: 9, 93
-  orig: 9, 93
-  offset: 0, 0
-  index: -1
-d/2
-  rotate: true
-  xy: 1834, 3923
-  size: 119, 57
-  orig: 128, 64
-  offset: 2, 2
-  index: -1
-d/2p
-  rotate: false
-  xy: 1910, 4044
-  size: 32, 3
-  orig: 32, 3
-  offset: 0, 0
-  index: -1
-f/0
-  rotate: true
-  xy: 2562, 3785
-  size: 163, 28
-  orig: 163, 80
-  offset: 0, 30
-  index: -1
-f/0p
-  rotate: false
-  xy: 1893, 4018
-  size: 12, 24
-  orig: 12, 24
-  offset: 0, 0
-  index: -1
-f/1
-  rotate: true
-  xy: 1978, 4006
-  size: 44, 9
-  orig: 44, 9
-  offset: 0, 0
-  index: -1
-f/2
-  rotate: true
-  xy: 2624, 3917
-  size: 28, 63
-  orig: 64, 64
-  offset: 26, 0
-  index: -1
-f/2p
-  rotate: true
-  xy: 1866, 4044
-  size: 7, 34
-  orig: 64, 64
-  offset: 29, 14
-  index: -1
-coin
-  rotate: false
-  xy: 2058, 4006
-  size: 512, 32
-  orig: 512, 32
-  offset: 0, 0
-  index: -1
-
-texturePack1.png
-size: 4053, 3883
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-bgGold2
-  rotate: false
-  xy: 1, 1
-  size: 2048, 1792
-  orig: 2048, 1792
-  offset: 0, 0
-  index: -1
-bgLunar2
-  rotate: true
-  xy: 2051, 1
-  size: 2048, 1792
-  orig: 2048, 1792
-  offset: 0, 0
-  index: -1
-lunar
-  rotate: false
-  xy: 1, 2051
-  size: 4051, 609
-  orig: 4092, 612
-  offset: 32, 1
-  index: -1
-night
-  rotate: false
-  xy: 1, 2662
-  size: 4051, 609
-  orig: 4092, 612
-  offset: 32, 1
-  index: -1
-thunder
-  rotate: false
-  xy: 1, 3273
-  size: 4051, 609
-  orig: 4092, 612
-  offset: 32, 1
-  index: -1
-
-texturePack2.png
-size: 4053, 3271
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-bgNight2
-  rotate: true
-  xy: 1, 1222
-  size: 2048, 1792
-  orig: 2048, 1792
-  offset: 0, 0
-  index: -1
-bgPhoenix2
-  rotate: false
-  xy: 1795, 1222
-  size: 2048, 1792
-  orig: 2048, 1792
-  offset: 0, 0
-  index: -1
-phoenix
-  rotate: false
-  xy: 1, 612
-  size: 4051, 608
-  orig: 4092, 612
-  offset: 32, 2
-  index: -1
-water
-  rotate: false
-  xy: 1, 1
-  size: 4051, 609
-  orig: 4092, 612
-  offset: 32, 1
-  index: -1
-
-texturePack3.png
-size: 3398, 3844
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-companyLogo
-  rotate: false
-  xy: 2051, 1
-  size: 1100, 800
-  orig: 1100, 800
-  offset: 0, 0
-  index: -1
-bgThunder2
-  rotate: false
-  xy: 1, 1
-  size: 2048, 1792
-  orig: 2048, 1792
-  offset: 0, 0
-  index: -1
-bgWater2
-  rotate: true
-  xy: 1, 1795
-  size: 2048, 1792
-  orig: 2048, 1792
-  offset: 0, 0
-  index: -1
-cloudSeparator
-  rotate: true
-  xy: 1795, 1795
-  size: 2048, 1602
-  orig: 2048, 1602
-  offset: 0, 0
-  index: -1
 reticle
   rotate: false
-  xy: 2051, 1413
+  xy: 3758, 1795
   size: 300, 300
   orig: 300, 300
   offset: 0, 0
   index: -1
 reticle2
   rotate: false
-  xy: 2353, 1413
+  xy: 3427, 1795
   size: 300, 300
   orig: 300, 300
   offset: 0, 0
   index: -1
-c/maybe/Mace
-  rotate: true
-  xy: 2051, 803
-  size: 608, 576
-  orig: 608, 576
-  offset: 0, 0
-  index: -1
-c/maybe/Saw
+Saw
   rotate: false
-  xy: 2629, 803
+  xy: 2660, 2597
   size: 512, 512
   orig: 512, 512
+  offset: 0, 0
+  index: -1
+short_arrow_fire_ranged
+  rotate: false
+  xy: 3472, 3225
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+short_arrow_toxic_ranged
+  rotate: false
+  xy: 3536, 3159
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sideThruster
+  rotate: false
+  xy: 3330, 1795
+  size: 81, 12
+  orig: 81, 12
+  offset: 0, 0
+  index: -1
+sideThruster2
+  rotate: false
+  xy: 3538, 3240
+  size: 81, 12
+  orig: 81, 12
+  offset: 0, 0
+  index: -1
+Slingshot
+  rotate: false
+  xy: 3208, 3225
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+spear_fire_melee
+  rotate: false
+  xy: 3472, 3291
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tinyBird1
+  rotate: false
+  xy: 2050, 3377
+  size: 333, 14
+  orig: 333, 14
+  offset: 0, 0
+  index: -1
+tinyBird2
+  rotate: false
+  xy: 2757, 3111
+  size: 333, 14
+  orig: 333, 14
+  offset: 0, 0
+  index: -1
+tinyBird3
+  rotate: false
+  xy: 2757, 3127
+  size: 333, 14
+  orig: 333, 14
+  offset: 0, 0
+  index: -1
+tinyBird4
+  rotate: false
+  xy: 3006, 3143
+  size: 333, 14
+  orig: 333, 14
+  offset: 0, 0
+  index: -1
+tinyBird5
+  rotate: false
+  xy: 3092, 3111
+  size: 333, 14
+  orig: 333, 14
+  offset: 0, 0
+  index: -1
+tinyBird6
+  rotate: false
+  xy: 3092, 3127
+  size: 333, 14
+  orig: 333, 14
+  offset: 0, 0
+  index: -1
+tinyBird7
+  rotate: false
+  xy: 3234, 3357
+  size: 333, 14
+  orig: 333, 14
+  offset: 0, 0
+  index: -1
+tinyBird8
+  rotate: false
+  xy: 3234, 3373
+  size: 333, 14
+  orig: 333, 14
+  offset: 0, 0
+  index: -1
+tinyBird9
+  rotate: false
+  xy: 3341, 3143
+  size: 333, 14
+  orig: 333, 14
+  offset: 0, 0
+  index: -1
+tinyBird10
+  rotate: false
+  xy: 2385, 3371
+  size: 333, 14
+  orig: 333, 14
+  offset: 0, 0
+  index: -1
+tinyBird11
+  rotate: false
+  xy: 2671, 3153
+  size: 333, 14
+  orig: 333, 14
   offset: 0, 0
   index: -1

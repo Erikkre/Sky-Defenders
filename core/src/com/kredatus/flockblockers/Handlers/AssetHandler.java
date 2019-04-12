@@ -34,7 +34,7 @@ public class AssetHandler {
     public static Animation[] tinyAnims, phoenixAnimations, nightAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
 
     public static TextureAtlas tA;
-    public static Texture sprites, texture;
+
     public static TextureRegion
             bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgNighttexture, bgNighttexture2,bgGoldtexture, bgGoldtexture2,
             bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture,
@@ -246,35 +246,36 @@ public class AssetHandler {
 
         bgCloudSeparatorTexture = tA.findRegion("cloudSeparator");
 
-        bgPhoenixtexture = tA.findRegion("bgPhoenix2");
+        bgPhoenixtexture = new TextureRegion(tA.findRegion("bgPhoenix2"));
         bgPhoenixtexture.flip(false, true);
         bgPhoenixtexture2 = tA.findRegion("bgPhoenix2");
 
-        bgThundertexture = tA.findRegion("bgThunder2");
+        bgThundertexture =  new TextureRegion(tA.findRegion("bgThunder2"));
         bgThundertexture.flip(false, true);
         bgThundertexture2 = tA.findRegion("bgThunder2");
 
-        bgWatertexture = tA.findRegion("bgWater2");
+
+        bgWatertexture = new TextureRegion(tA.findRegion("bgWater2"));
         bgWatertexture.flip(false, true);
         bgWatertexture2 = tA.findRegion("bgWater2");
 
-        bgFiretexture = tA.findRegion("bgFire2");
+        bgFiretexture = new TextureRegion(tA.findRegion("bgFire2"));
         bgFiretexture.flip(false, true);
         bgFiretexture2 = tA.findRegion("bgFire2");
 
-        bgAcidtexture = tA.findRegion("bgAcid2");
+        bgAcidtexture = new TextureRegion(tA.findRegion("bgAcid2"));
         bgAcidtexture.flip(false, true);
         bgAcidtexture2 = tA.findRegion("bgAcid2");
 
-        bgNighttexture = tA.findRegion("bgNight2");
+        bgNighttexture = new TextureRegion(tA.findRegion("bgNight2"));
         bgNighttexture.flip(false, true);
         bgNighttexture2 = tA.findRegion("bgNight2");
 
-        bgLunartexture = tA.findRegion("bgLunar2");
-        bgLunartexture.flip(false, true);
+        bgLunartexture = new TextureRegion(tA.findRegion("bgLunar2"));
+        bgLunartexture.flip(false,  true);
         bgLunartexture2 = tA.findRegion("bgLunar2");
 
-        bgGoldtexture = tA.findRegion("bgGold2");
+        bgGoldtexture = new TextureRegion(tA.findRegion("bgGold2"));
         bgGoldtexture.flip(false, true);
         bgGoldtexture2 = tA.findRegion("bgGold2");
 
@@ -335,7 +336,7 @@ public class AssetHandler {
         boostdown.flip(false, true);*/
 
 
-        Texture coinTexture=tA.findRegion("coin").getTexture();
+        TextureRegion coinTexture=tA.findRegion("coin");
         ArrayList<TextureRegion> tempPosition = new ArrayList<TextureRegion>(16);
         for (int i = 0; i < 17; i++) {
             if (i<16){
@@ -412,49 +413,21 @@ public class AssetHandler {
     }
 
     public static TextureRegion turret(char type, int lvl, boolean proj ) {
-        if (!proj) return tA.findRegion(type+"/"+Integer.toString(lvl));
-        else return tA.findRegion(type+"/"+Integer.toString(lvl)+"p");
+        if (!proj) return tA.findRegion(type+Integer.toString(lvl));
+        else return tA.findRegion("p"+type+Integer.toString(lvl));
     }
 
     public static TextureRegion airshipRack(int armorLvl){
-            return tA.findRegion("rack"+armorLvl);
+            return new TextureRegion(tA.findRegion("rack"+armorLvl));
     }
 
     public static TextureRegion armor(int armorLvl) {
-        /*if (!texture.getTextureData().isPrepared()) {
-    texture.getTextureData().prepare();
-}
-Pixmap pixmap = texture.getTextureData().consumePixmap();*/
         return tA.findRegion("armor"+armorLvl);//see if you can call rotatePixmap every time if rotated, but might not be efficient as might be only done for largest images on png and might want to add property to their objects (i.e. bg objects) instead
-
     }
 
-    public static Pixmap rotatePixmap (Pixmap src, float angle){//only works with -90 and +90, packer makes them +90 so we need to -90 them
-        final int width = src.getHeight();
-        final int height = src.getWidth();
-        Pixmap rotated = new Pixmap(width, height, src.getFormat());
 
-        final double radians = Math.toRadians(angle);
-        final double cos = Math.cos(radians);
-        final double sin = Math.sin(radians);
-
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                final int centerX = width/2;
-                final int centerY = height / 2;
-                final int m = x - centerX;
-                final int n = y - centerY;
-                final int j = ((int) (m * cos + n * sin)) + centerX;
-                final int k = ((int) (n * cos - m * sin)) + centerY;
-                if (j >= 0 && j < width && k >= 0 && k < height){
-                    rotated.drawPixel(x, y, src.getPixel(j, k));
-                }
-            }
-        }
-        return rotated;
-    }
     private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed) {
-        TextureRegion[][] sprites = tA.findRegion(path).rotate.split(372,306);
+        TextureRegion sprites = tA.findRegion(path);
 
         ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>();
         ArrayList<TextureRegion> leftSidePositions = new ArrayList<TextureRegion>();
@@ -513,8 +486,7 @@ Pixmap pixmap = texture.getTextureData().consumePixmap();*/
     }
 
     private static Animation<TextureRegion> tinyBirdTextureToAnimation (String shadeNumber) {
-        texture = tA.findRegion("tinyBird"+shadeNumber).getTexture();
-        texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        TextureRegion texture = tA.findRegion("tinyBird"+shadeNumber);
         ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>(9);
 
         for (int i = 0; i < 9; i++) {
@@ -624,9 +596,6 @@ Pixmap pixmap = texture.getTextureData().consumePixmap();*/
     public static void dispose() {
         // We must dispose of the texture when we are finished.
         tA.dispose();
-        sprites.dispose();
-
-        texture.dispose();
 
         splashdown.dispose();
         swoop.dispose();
