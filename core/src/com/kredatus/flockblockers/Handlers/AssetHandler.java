@@ -418,7 +418,7 @@ public class AssetHandler {
     }
 
     public static TextureRegion airshipRack(int armorLvl){
-            return new TextureRegion(tA.findRegion("rack"+armorLvl));
+            return tA.findRegion("rack"+armorLvl);
     }
 
     public static TextureRegion armor(int armorLvl) {

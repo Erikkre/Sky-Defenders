@@ -19,7 +19,9 @@ public class Projectile {
      public float dmg, pen, spd;
      public TextureRegion texture;
      private Random r=new Random();
-    public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, float rotation, int acc) {
+     public boolean isRotating;
+    public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, float rotation, int acc, boolean isRotating) {
+        this.isRotating=isRotating;
         this.texture=texture;
         this.width    = texture.getRegionWidth() ;
         this.height   = texture.getRegionHeight() ;
@@ -48,9 +50,10 @@ public class Projectile {
         //System.out.println("Bullet fired");
     }
 
-    public void update(float delta) {
+    public void update() {
         position.add(vel.cpy());
         boundingRect.translate(vel.x, vel.y);
+        if (isRotating) {rotation+=10;boundingRect.rotate(rotation);}
         if    ( position.x +  width/2f < 0 ||  position.x - width/2f > camWidth  ||
                 position.y + height/2f < 0 || position.y - height/2f > camHeight   )  {
             isGone = true;

@@ -52,7 +52,7 @@ public class TargetHandler {
         previousBirdHeight=minTargetingHeight; //in case some birds are moved past lead bird before any bird dies, need to check top bird every time
 
         for (Projectile i : projectileList){    //could have dead bird higher than alive bird, so need separate loader, alive, dead lists
-            i.update(delta);
+            i.update();
             if (i.isGone){
                 projectileList.remove(i);
             }

@@ -186,9 +186,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
         setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
-        burnerUp();rackUp();rackUp();speedUp();speedUp();speedUp();speedUp();speedUp();armorUp();
+        burnerUp();rackUp();rackUp();speedUp();speedUp();armorUp();
 
-        addTurret('f');addTurret('f');addTurret('f');addTurret('f');addTurret('f');addTurret('f');
+        addTurret('c');addTurret('c');addTurret('f');addTurret('d');
+        turretList.get(2).lvlUp();turretList.get(2).lvlUp();
         //for (Turret i :turretList){
         //    i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();
         //}
