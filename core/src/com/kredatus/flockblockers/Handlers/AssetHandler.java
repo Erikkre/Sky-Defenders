@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -188,11 +189,9 @@ public class AssetHandler {
         worldStabilizedtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         worldStabilized = new TextureRegion(worldStabilizedtexture, worldStabilizedtexture.getWidth(), worldStabilizedtexture.getHeight());
         worldStabilized.flip(false, true);
-
-        logoTexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"companyLogo.jpg"));
-        logoTexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        logo = new TextureRegion(logoTexture, 0, 0, 1100, 800);
-
+*/
+        logo = tA.findRegion("companyLogo");
+/*
         newHighscoretexture = new Texture(Gdx.files.internal("ui"+File.separator+"newHighscore.png"));
         newHighscoretexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         newHighscore = new TextureRegion(newHighscoretexture, 0, 0, 644, 184);
@@ -350,14 +349,14 @@ public class AssetHandler {
         coinAnimation.setPlayMode(Animation.PlayMode.LOOP); //REMEMBER THIS STEP
 
 
-        phoenixAnimations = birdTextureToAnimation("phoenix.png", 0.05f);
-        thunderAnimations = birdTextureToAnimation("thunder.png", 0.06f);
-        waterAnimations   = birdTextureToAnimation("water.png", 0.06f);
-        fireAnimations    = birdTextureToAnimation("fire.png", 0.06f);
-        nightAnimations   = birdTextureToAnimation("night.png", 0.04f);
-        acidAnimations    = birdTextureToAnimation("acid.png", 0.04f);
-        lunarAnimations   = birdTextureToAnimation("lunar.png", 0.04f);
-        goldAnimations    = birdTextureToAnimation("gold.png", 0.05f);
+        phoenixAnimations = birdTextureToAnimation("phoenix", 0.05f);
+        thunderAnimations = birdTextureToAnimation("thunder", 0.06f);
+        waterAnimations   = birdTextureToAnimation("water", 0.06f);
+        fireAnimations    = birdTextureToAnimation("fire", 0.06f);
+        nightAnimations   = birdTextureToAnimation("night", 0.04f);
+        acidAnimations    = birdTextureToAnimation("acid", 0.04f);
+        lunarAnimations   = birdTextureToAnimation("lunar", 0.04f);
+        goldAnimations    = birdTextureToAnimation("gold", 0.05f);
 
 
         tinyAnim1=tinyBirdTextureToAnimation("1");
@@ -413,8 +412,8 @@ public class AssetHandler {
     }
 
     public static TextureRegion turret(char type, int lvl, boolean proj ) {
-        if (!proj) return tA.findRegion(type+Integer.toString(lvl)+proj );
-        else return tA.findRegion(type+Integer.toString(lvl) );
+        if (!proj) return tA.findRegion(type+"/"+Integer.toString(lvl));
+        else return tA.findRegion(type+"/"+Integer.toString(lvl)+"p");
     }
 
     public static TextureRegion airshipRack(int armorLvl){
@@ -422,19 +421,50 @@ public class AssetHandler {
     }
 
     public static TextureRegion armor(int armorLvl) {
-        return tA.findRegion("armor"+armorLvl);
+        /*if (!texture.getTextureData().isPrepared()) {
+    texture.getTextureData().prepare();
+}
+Pixmap pixmap = texture.getTextureData().consumePixmap();*/
+        return tA.findRegion("armor"+armorLvl);//see if you can call rotatePixmap every time if rotated, but might not be efficient as might be only done for largest images on png and might want to add property to their objects (i.e. bg objects) instead
+
     }
 
+    public static Pixmap rotatePixmap (Pixmap src, float angle){//only works with -90 and +90, packer makes them +90 so we need to -90 them
+        final int width = src.getHeight();
+        final int height = src.getWidth();
+        Pixmap rotated = new Pixmap(width, height, src.getFormat());
+
+        final double radians = Math.toRadians(angle);
+        final double cos = Math.cos(radians);
+        final double sin = Math.sin(radians);
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                final int centerX = width/2;
+                final int centerY = height / 2;
+                final int m = x - centerX;
+                final int n = y - centerY;
+                final int j = ((int) (m * cos + n * sin)) + centerX;
+                final int k = ((int) (n * cos - m * sin)) + centerY;
+                if (j >= 0 && j < width && k >= 0 && k < height){
+                    rotated.drawPixel(x, y, src.getPixel(j, k));
+                }
+            }
+        }
+        return rotated;
+    }
     private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed) {
-        sprites = tA.findRegion(path).getTexture();
+        TextureRegion[][] sprites = tA.findRegion(path).rotate.split(372,306);
 
         ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>();
         ArrayList<TextureRegion> leftSidePositions = new ArrayList<TextureRegion>();
 
-        TextureRegion[] front=new TextureRegion[0];
+        TextureRegion[] front= new TextureRegion[0];
         TextureRegion[] rightSide=new TextureRegion[0];
         TextureRegion[] leftSide=new TextureRegion[0];
         TextureRegion[] back=new TextureRegion[0];
+
+
 
         for (int i=0;i<22;i++) {
             TextureRegion temp;
@@ -483,7 +513,7 @@ public class AssetHandler {
     }
 
     private static Animation<TextureRegion> tinyBirdTextureToAnimation (String shadeNumber) {
-        texture = new Texture(Gdx.files.internal("sprites"+File.separator+"tinyBirds"+File.separator+"tinyBird"+shadeNumber+".png"));
+        texture = tA.findRegion("tinyBird"+shadeNumber).getTexture();
         texture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
         ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>(9);
 

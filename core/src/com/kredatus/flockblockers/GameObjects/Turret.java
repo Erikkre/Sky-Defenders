@@ -31,7 +31,7 @@ public class Turret {
     private Timer timer;
     private TimerTask timerTask;
     public BirdAbstractClass targetBird;
-    public TextureRegion[] texture;
+    public TextureRegion[] texture = new TextureRegion[1];
     public TextureRegion projTexture;
     char turretType;
     public int lvl = 0, firingInterval, timeSinceLastShot, gunTargetPointer=-1;
@@ -43,9 +43,11 @@ public class Turret {
 
     public void draw(SpriteBatch batcher, float xPos, float yPos){
         if (texture.length==1 ||  timeSinceLastShot>1000 ) {//turret has 1 tex or it is after 1s after shot
+            System.out.println(1);
             batcher.draw(texture[0], xPos, yPos,
                     width / 2f, height / 2f, width, height, 1f, 1f, getRotation());
         } else if (timeSinceLastShot<1000 && projTexture!=texture[0]){//turret has a post-firing tex and was just fired and turretIsntProjectile. Doesnt
+            System.out.println(2);
             batcher.draw(texture[1], xPos, yPos,
                     width / 2f, height / 2f, width, height, 1f, 1f, getRotation());
         } //if turret is projectile then dont show it at all
@@ -292,6 +294,8 @@ public class Turret {
 
     private void turretSetup(char turretType, int lvl){
         texture[0]=AssetHandler.turret(turretType,lvl,false);projTexture=AssetHandler.turret(turretType,lvl,true);
+        //System.out.println(texture[0]);
+        //System.out.println(projTexture);
         if (projTexture==null) projTexture = texture[0];    //if texture has multiple anims dont worry because it turret is not thrown
         switch (turretType) {
             case ('f'): //fast firing
@@ -312,7 +316,8 @@ public class Turret {
                 spr = 1;
                 rof = 0.5f;
                 //see if it should be texture[0]=.split()[0][0] or what it is currently
-                if (lvl==2)texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];
+                if (lvl==2){texture[0]=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0][0];texture[1]=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[1][0];}
+                System.out.println(texture[0]+" hello");
                 break;
         }
 

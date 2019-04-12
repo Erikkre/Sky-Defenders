@@ -39,8 +39,7 @@ public class BgHandler {
     /*private ArrayList<Boost> boostlist = new ArrayList<Boost>(), invboostlist = new ArrayList<Boost>(),
             flipboostlist = new ArrayList<Boost>(), invflipboostlist = new ArrayList<Boost>();*/
     public ArrayList<Vector3> boostcoords = AssetHandler.getBoostcoords();
-    int w = AssetHandler.boost.getWidth();
-    int h = AssetHandler.boost.getHeight();
+
     //private Boost tempBoost;
     //private int orgBoostnumber = AssetHandler.getBoostnumber(), coordslistsize=AssetHandler.getcoordslistsize();
     public static int bgw= AssetHandler.bgPhoenixtexture.getRegionWidth();

@@ -409,7 +409,7 @@ f/2p
   orig: 64, 64
   offset: 29, 14
   index: -1
-ui/coin
+coin
   rotate: false
   xy: 2058, 4006
   size: 512, 32

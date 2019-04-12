@@ -189,10 +189,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         burnerUp();rackUp();rackUp();speedUp();speedUp();speedUp();speedUp();speedUp();armorUp();
 
         addTurret('f');addTurret('f');addTurret('f');addTurret('f');addTurret('f');addTurret('f');
-        for (Turret i :turretList){
-            i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();
-        }
-        turretList.get(1).lvlUp();turretList.get(2).lvlUp();turretList.get(2).lvlUp();//max level 3 for now
+        //for (Turret i :turretList){
+        //    i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();
+        //}
+        //turretList.get(1).lvlUp();turretList.get(2).lvlUp();turretList.get(2).lvlUp();//max level 3 for now
     }
 
     private void addTurret(char type){//button will upgrade turret based on position of click choosing which turretPosition on a rack diagram thats blown up on screen when you tap upgrade i.e.
@@ -797,7 +797,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
         } else {
             for (Turret i : turretList) {
-                i.draw(batcher, xOffsetDueToRotation(i.pos.x,startX - i.origPosition.x,startY - i.origPosition.y) - i.width / 2f,
+                 i.draw(batcher, xOffsetDueToRotation(i.pos.x,startX - i.origPosition.x,startY - i.origPosition.y) - i.width / 2f,
                         yOffsetDueToRotation(i.pos.y,startX - i.origPosition.x,startY - i.origPosition.y) - i.height / 2f);
             }
         }

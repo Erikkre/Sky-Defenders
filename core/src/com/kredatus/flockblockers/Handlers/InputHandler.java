@@ -33,7 +33,7 @@ public class InputHandler implements InputProcessor {
         this.scaleFactorX = scaleFactorX;
         this.scaleFactorY = scaleFactorY;
 
-
+/*
         menuButtons = new ArrayList<SimpleButton>();
         playButton = new SimpleButton(camWidth/2- AssetHandler.play.getRegionWidth()/2, camHeight- AssetHandler.play.getRegionHeight()*1.1f,
                 AssetHandler.play.getRegionWidth(), AssetHandler.play.getRegionHeight(), AssetHandler.play, AssetHandler.playdown);
@@ -64,11 +64,11 @@ public class InputHandler implements InputProcessor {
         readyButton = new SimpleButton(9*camWidth/10- AssetHandler.ready.getRegionWidth()/5,camHeight/2- AssetHandler.ready.getRegionHeight()/5,
                 AssetHandler.ready.getRegionWidth()/2.5f, AssetHandler.ready.getRegionHeight()/2.5f, AssetHandler.ready, AssetHandler.readydown);
         nextButton = new SimpleButton(camWidth- AssetHandler.next.getRegionWidth()/2.5f-10, camHeight- AssetHandler.menu.getRegionHeight()/2.5f,
-                AssetHandler.next.getRegionWidth()/2.5f, AssetHandler.next.getRegionHeight()/2.5f, AssetHandler.next, AssetHandler.nextdown);
+                AssetHandler.next.getRegionWidth()/2.5f, AssetHandler.next.getRegionHeight()/2.5f, AssetHandler.next, AssetHandler.nextdown);*/
     }
 
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {/*
         screenX = scaleX(screenX);
         screenY = scaleY(screenY);
 
@@ -95,7 +95,7 @@ public class InputHandler implements InputProcessor {
             menuButton.isTouchDown(screenX, screenY);
         } else if (myWorld.isInstr2()) {
             menuButton.isTouchDown(screenX, screenY);
-    }
+    }*/
         return true; // Return true to say we handled the touch.
     }
 
@@ -124,7 +124,7 @@ public class InputHandler implements InputProcessor {
     }
 
     @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {/*
         screenX = scaleX(screenX);
         screenY = scaleY(screenY);
 
@@ -175,7 +175,7 @@ public class InputHandler implements InputProcessor {
         } else if (myWorld.isInstr2()) {
             if (menuButton.isTouchUp(screenX, screenY)) {
                 myWorld.backToMenu();}
-        }
+        }*/
         return false;
     }
 
