@@ -233,7 +233,7 @@ cloudSeparator
   index: -1
 coin
   rotate: false
-  xy: 2720, 3365
+  xy: 2786, 3365
   size: 512, 32
   orig: 512, 32
   offset: 0, 0
@@ -289,9 +289,9 @@ dragLine2
   index: -1
 f0
   rotate: false
-  xy: 2385, 3387
-  size: 64, 10
-  orig: 64, 10
+  xy: 2050, 3377
+  size: 64, 16
+  orig: 64, 16
   offset: 0, 0
   index: -1
 f1
@@ -345,7 +345,7 @@ pc1
   index: -1
 pd2
   rotate: false
-  xy: 2050, 3393
+  xy: 2116, 3393
   size: 32, 3
   orig: 32, 3
   offset: 0, 0
@@ -471,7 +471,7 @@ spear_fire_melee
   index: -1
 tinyBird1
   rotate: false
-  xy: 2050, 3377
+  xy: 2116, 3377
   size: 333, 14
   orig: 333, 14
   offset: 0, 0
@@ -513,28 +513,28 @@ tinyBird6
   index: -1
 tinyBird7
   rotate: false
-  xy: 3234, 3357
+  xy: 3341, 3143
   size: 333, 14
   orig: 333, 14
   offset: 0, 0
   index: -1
 tinyBird8
   rotate: false
-  xy: 3234, 3373
+  xy: 3300, 3357
   size: 333, 14
   orig: 333, 14
   offset: 0, 0
   index: -1
 tinyBird9
   rotate: false
-  xy: 3341, 3143
+  xy: 3300, 3373
   size: 333, 14
   orig: 333, 14
   offset: 0, 0
   index: -1
 tinyBird10
   rotate: false
-  xy: 2385, 3371
+  xy: 2451, 3371
   size: 333, 14
   orig: 333, 14
   offset: 0, 0
