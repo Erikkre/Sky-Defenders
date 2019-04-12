@@ -305,8 +305,9 @@ public class Turret {
             case ('c'):
                 dmg = 0.3f;
                 pen = 1;
-                spr = 3;
+                spr = 2;
                 rof = 1f;
+
                 if (lvl==0||lvl==1) projIsRotating=true;
                 break;
             case ('d'):
@@ -314,19 +315,19 @@ public class Turret {
                 pen = 4;
                 spr = 1;
                 rof = 0.5f;
-                //see if it should be texture[0]=.split()[0][0] or what it is currently
-                if (lvl==2){
-                    texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];}//texture[1]=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[1][0];}
-                else if (lvl==0) projIsRotating=true;
 
+                if (lvl==0) projIsRotating=true;
+                if (lvl==2) texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];
                 break;
             case ('f'): //fast firing
                 dmg = 1f;
                 pen = 1;
                 spr = 1;
                 rof = 1.5f; //was 0.5f //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots
-                if (lvl==1) projIsRotating=true;
-                else if (lvl==0) barrelLengthFromPos=width/2f;//blowgun barrel
+
+                if (lvl==0) barrelLengthFromPos=width/2f;//blowgun barrel
+                else if (lvl==1) projIsRotating=true;
+                else if (lvl==2) texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];
                 break;
         }
         height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();

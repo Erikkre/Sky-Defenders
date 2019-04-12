@@ -42,6 +42,7 @@ public class AssetHandler {
             menudown, score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized, coinSymbol, reticle,
             bgCloudSeparatorTexture, airshipBalloon, airshipSideThruster, airshipBurnerPipe, dragCircle, dragLine;
 
+    public static TextureRegion[] armorTextures= new TextureRegion[6], rackTextures = new TextureRegion[6];
     public static ArrayList<Vector3> boostcoords;
     public static ArrayList<TextureRegion> bgList;
     public static int bgscaling, gliderscaling, boostnumber, coordslistsize;
@@ -410,6 +411,11 @@ public class AssetHandler {
         reticle = tA.findRegion("reticle");
         dragCircle=tA.findRegion("dragCirc");
         dragLine=tA.findRegion("dragLine");
+
+        for (int i=0;i<6;i++) {
+            armorTextures[i]=tA.findRegion("armor"+i);
+            rackTextures[0]=tA.findRegion("rack"+0);
+        }
     }
 
     public static TextureRegion turret(char type, int lvl, boolean proj ) {
@@ -417,14 +423,13 @@ public class AssetHandler {
         else return tA.findRegion("p"+type+Integer.toString(lvl));
     }
 
-    public static TextureRegion airshipRack(int armorLvl){
+    /*public static TextureRegion airshipRack(int armorLvl){
             return tA.findRegion("rack"+armorLvl);
     }
 
     public static TextureRegion armor(int armorLvl) {
         return tA.findRegion("armor"+armorLvl);//see if you can call rotatePixmap every time if rotated, but might not be efficient as might be only done for largest images on png and might want to add property to their objects (i.e. bg objects) instead
-    }
-
+    }*/
 
     private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed) {
         TextureRegion sprites = tA.findRegion(path);

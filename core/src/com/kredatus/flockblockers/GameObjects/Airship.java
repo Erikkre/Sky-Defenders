@@ -81,9 +81,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public static float[] airshipTint, airShipCloudTint;
     public boolean hitMaxBrightnessCloudBrightening=false;
-    public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850}, 
+    public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850},
             speedValues={55, 65, 75, 88, 103, 119, 136};
-    public static TextureRegion[] armorTextures=new TextureRegion[6], rackTextures=new TextureRegion[6];
+    public TextureRegion[] armorTextures=new TextureRegion[6], rackTextures=new TextureRegion[6];
     
     public int nextTurretPosition;
     public float thrusterYPosition=0.30f;
@@ -186,10 +186,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
         setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
-        burnerUp();rackUp();rackUp();speedUp();speedUp();armorUp();
+        burnerUp();speedUp();speedUp();rackUp();rackUp();//armorUp();
 
-        addTurret('c');addTurret('c');addTurret('d');addTurret('d');addTurret('d');addTurret('f');addTurret('f');addTurret('f');
-        turretList.get(1).lvlUp();turretList.get(3).lvlUp();turretList.get(4).lvlUp();turretList.get(4).lvlUp();turretList.get(6).lvlUp();turretList.get(7).lvlUp();turretList.get(7).lvlUp();
+        addTurret('c');addTurret('c');addTurret('d');addTurret('d');//addTurret('d');addTurret('f');addTurret('f');addTurret('f');
+        turretList.get(1).lvlUp();turretList.get(3).lvlUp();//turretList.get(4).lvlUp();turretList.get(4).lvlUp();turretList.get(6).lvlUp();turretList.get(7).lvlUp();turretList.get(7).lvlUp();
         //for (Turret i :turretList){
         //    i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();
         //}
@@ -299,10 +299,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         dragCircleTexture=AssetHandler.dragCircle;
         dragLineTexture=AssetHandler.dragLine;
 
-        for (int i=0;i<6;i++) {
-            armorTextures[i]=AssetHandler.armor(i);
-            rackTextures[i]=AssetHandler.airshipRack(i);
-        }
+        rackTextures=AssetHandler.rackTextures;
+        armorTextures=AssetHandler.armorTextures;
         assignRackAndArmor(armorLvl,rackLvl);
         armorHeight=armorTexture.getRegionHeight();armorWidth=armorTexture.getRegionWidth();
         balloonWidth=balloonTexture.getRegionWidth(); balloonHeight=balloonTexture.getRegionHeight();
@@ -313,7 +311,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void assignRackAndArmor(int armorLvl, int rackLvl){
         rackTexture=rackTextures[armorLvl];
-        rackTexture.setRegion(0,0,rackTexture.getRegionWidth(),tH*(rackLvl+1));
+        rackTexture.setRegion(rackTexture,0,0,rackTexture.getRegionWidth(),tH*(rackLvl+1));
         rackHeight=rackTexture.getRegionHeight();
 
         armorTexture=armorTextures[armorLvl];
