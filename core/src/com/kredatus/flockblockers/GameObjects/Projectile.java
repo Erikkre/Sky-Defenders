@@ -16,16 +16,17 @@ public class Projectile {
      public boolean isGone;
      public Vector2 position, vel=new Vector2();
      public float camWidth, camHeight, rotation;
-     public float dmg, pen, spd;
+     public float dmg, pen, spd, xPosOffset;
      public TextureRegion texture;
      private Random r=new Random();
      public boolean isRotating;
-    public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, float rotation, int acc, boolean isRotating) {
+    public Projectile(TextureRegion texture, float dmg, float pen, Vector2 position, float camWidth, float camHeight, float rotation, int acc, boolean isRotating, float xPosOffset ) {
+        this.xPosOffset=xPosOffset;
         this.isRotating=isRotating;
         this.texture=texture;
         this.width    = texture.getRegionWidth() ;
         this.height   = texture.getRegionHeight() ;
-        this.position = position.cpy() ;
+        this.position = position ;
         this.spd      = pen*2+4;
 
         this.rotation = rotation -(acc/2f)+r.nextInt(acc);   //accuracy

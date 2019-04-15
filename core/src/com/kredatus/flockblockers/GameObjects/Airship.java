@@ -639,9 +639,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
 
         }
+
         for (Turret i : turretList) {//update turret position no matter what
             i.update();
-            i.pos.set(pos.x - (startX - i.origPosition.x) + i.posOffset.x, pos.y+balloonBob.get() - (startY - i.origPosition.y)+ i.posOffset.y) ;
+
+            i.pos.set(pos.x - (startX - i.origPosition.x) + i.posOffset.x, pos.y+balloonBob.get()- (startY - i.origPosition.y) ) ;
         }
         additiveEffects.get(0).setPosition(pos.x- (pipeWidth * (burnerLvl+1)) + 4, pos.y+balloonBob.get() + 4 + pipeTexture.getRegionHeight());//update burner position no matter what
 
@@ -794,7 +796,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
         } else {
             for (Turret i : turretList) {
-                 i.draw(batcher, xOffsetDueToRotation(i.pos.x,startX - i.origPosition.x,startY - i.origPosition.y) - i.width / 2f,
+                i.draw(batcher, xOffsetDueToRotation(i.pos.x,startX - i.origPosition.x,startY - i.origPosition.y) - i.width / 2f,
                         yOffsetDueToRotation(i.pos.y,startX - i.origPosition.x,startY - i.origPosition.y) - i.height / 2f);
             }
         }
@@ -829,14 +831,14 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         return x1 + worldOriginX;
     }
     public float yOffsetDueToRotation(float y, float originX, float originY ){
-            float worldOriginY = y + originY;
-            float fx = -originX;
-            float fy = -originY;
+        float worldOriginY = y + originY;
+        float fx = -originX;
+        float fy = -originY;
 
-            float u = MathUtils.cosDeg(rotation.get());
-            float v = MathUtils.sinDeg(rotation.get());
-            float y1 = v * fx + u * fy;
+        float u = MathUtils.cosDeg(rotation.get());
+        float v = MathUtils.sinDeg(rotation.get());
+        float y1 = v * fx + u * fy;
 
-            return y1+ worldOriginY;
+        return y1+ worldOriginY;
     }
 }

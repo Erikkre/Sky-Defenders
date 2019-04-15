@@ -655,7 +655,7 @@ public void setRotate(float angle){
 
         for (Projectile j : projectileList) {
             batcher.draw(j.texture, j.position.x-j.width/2, j.position.y-j.height/2,
-                    j.width/2, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
+                    j.width/2-j.xPosOffset, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
         }
 
         for (BirdAbstractClass k : activeBirdQueue) {
