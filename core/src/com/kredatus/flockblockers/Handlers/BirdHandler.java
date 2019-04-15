@@ -3,7 +3,7 @@ package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.Birds.AcidBird;
 import com.kredatus.flockblockers.Birds.FireBird;
 import com.kredatus.flockblockers.Birds.GoldBird;

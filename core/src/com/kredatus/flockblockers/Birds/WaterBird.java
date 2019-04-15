@@ -3,7 +3,6 @@ package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class WaterBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=2;origHealth=health;
-        if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
+         health*=globalHealthMultiplier;
 
         animation=backFlaps;
         origFlapSpeed=animation.getFrameDuration();

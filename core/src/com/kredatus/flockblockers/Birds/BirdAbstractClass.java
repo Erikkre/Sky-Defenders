@@ -1,15 +1,16 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
-package com.kredatus.flockblockers.GameObjects;
+package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
 import com.kredatus.flockblockers.FlockBlockersMain;
+import com.kredatus.flockblockers.GameObjects.Coin;
+import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Handlers.BgHandler;
-import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ Only add health to phoenix each round   after you hit multiples of 500 gold/phoe
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
-    protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 1.0f;
+    protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 6.0f;
 
     public float preX, preY, x, y, yVel, yAcc, xVel,yVelDeath, sizeRatio, finalSizeRatio=1, preTargetY;
     //public Hashtable xMotionTimePositions=new Hashtable();

@@ -1,19 +1,5 @@
 package com.kredatus.flockblockers.UNUSED;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
-import com.kredatus.flockblockers.GameObjects.Projectile;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
-import com.kredatus.flockblockers.Handlers.BirdHandler;
-import com.kredatus.flockblockers.Handlers.InputHandler;
-import com.kredatus.flockblockers.Handlers.TargetHandler;
-
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
 /**
  * Created by Erik Kredatus on 9/9/2018.
  */

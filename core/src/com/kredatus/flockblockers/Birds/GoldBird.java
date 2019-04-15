@@ -4,7 +4,6 @@ package com.kredatus.flockblockers.Birds;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 
@@ -45,7 +44,7 @@ this.flashLengths=flashLengths;
         edge = (camWidth)-width/3;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=15;origHealth=health;
-        if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
+         health*=globalHealthMultiplier;
 
         animation=frontFlaps;// starting animation
         origFlapSpeed=animation.getFrameDuration();

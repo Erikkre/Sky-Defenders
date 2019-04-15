@@ -7,7 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
-import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Turret;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
@@ -23,7 +23,6 @@ import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.TweenAccessors.VectorAccessor;
 
 import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenAccessor;
 import box2dLight.Light;
 
 /**

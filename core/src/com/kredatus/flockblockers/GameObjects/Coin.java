@@ -2,16 +2,13 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
-import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;

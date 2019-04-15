@@ -4,7 +4,6 @@ package com.kredatus.flockblockers.Birds;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 
@@ -43,7 +42,7 @@ public class FireBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=2;origHealth=health;
-        if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
+        health*=globalHealthMultiplier;
 
         //double temp=r.nextGaussian();
         //if (temp<-0.7 || temp >0.7) animation=animSeq[r.nextInt(4)];    //less of a chance for it to be side or back of bird, within standard deviation higher chance of front

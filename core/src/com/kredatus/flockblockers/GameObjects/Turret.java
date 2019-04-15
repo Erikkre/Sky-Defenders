@@ -2,10 +2,10 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
@@ -49,16 +49,19 @@ public class Turret {
 
     public void draw(SpriteBatch batcher, float xPos, float yPos) {
         //System.out.println(rotation);
-        if ( System.currentTimeMillis()-lastShotTime>500 || (texture.length==1 && !projRotates&&projTexture!=texture[0]) ) {//turret has 1 tex or it is after 0.5s after shot
+        if ( firingInterval-(System.currentTimeMillis() - lastShotTime)<400 || (texture.length==1 && !projRotates&&projTexture!=texture[0]) ) {//turret has 1 tex or it is after 0.5s after shot
 
             //System.out.println(1);
             batcher.draw(texture[0], xPos, yPos,
                     width / 2f - posOffset.x , height / 2f , width, height, 1f, 1f, rotation);
-        } else if (System.currentTimeMillis()-lastShotTime<=500 && projTexture!=texture[0] && !projRotates){//turret has a post-firing tex and was just fired and turretIsntProjectile. Doesnt
+        } else if (firingInterval-(System.currentTimeMillis() - lastShotTime)>400 && projTexture!=texture[0] && !projRotates){//turret has a post-firing tex and was just fired and turretIsntProjectile. Doesnt
             //System.out.println(2);
             batcher.draw(texture[1], xPos, yPos,
                     width / 2f - posOffset.x, height / 2f, width, height, 1f, 1f, rotation);
-        } //if turret is projectile then dont show it at all
+        } else if ((projRotates||pullBackThenThrow)&&System.currentTimeMillis() - lastShotTime>600){
+            batcher.draw(texture[0], xPos, yPos,
+                    width / 2f - posOffset.x, height / 2f, width, height, 1f, 1f, rotation);
+        }
 
         if (preThrowSpin) {
             if (!flipSpinDir){rotation+=rotAdded;rotAdded-=2;if (rotAdded<-15){flipSpinDir=true;}}

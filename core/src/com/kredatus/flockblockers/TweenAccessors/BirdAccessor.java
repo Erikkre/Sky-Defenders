@@ -1,7 +1,7 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.TweenAccessors;
 
-import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 
 import aurelienribon.tweenengine.TweenAccessor;
 

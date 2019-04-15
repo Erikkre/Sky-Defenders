@@ -3,7 +3,6 @@ package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class LunarBird extends BirdAbstractClass {
 
         //System.out.println("Height after: " + height+ " width: " + width);
         health=4;origHealth=health;
-        if (FlockBlockersMain.fastTest) health*=globalHealthMultiplier;
+         health*=globalHealthMultiplier;
 
         animation=rightFlaps;
         origFlapSpeed=animation.getFrameDuration();

@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
 //import com.kredatus.flockblockers.GameObjects.Boost;
-import com.kredatus.flockblockers.GameObjects.BirdAbstractClass;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Coin;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameObjects.TinyBird;
