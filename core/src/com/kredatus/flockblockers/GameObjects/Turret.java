@@ -148,25 +148,25 @@ public class Turret {
                 }
                 if (turretType != 'c') {
                     if (spr == 1) {
-                        TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x + posOffset.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))),pos.y-(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
+                        TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))),pos.y-(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
                     } else if (spr == 2) {
                         if (rotation >= 0 && rotation < 90) {
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x + posOffset.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x + posOffset.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation)))+ (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation)))+ (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
                         } else if (rotation >= 90 && rotation < 180) {
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x + posOffset.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x + posOffset.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
                         } else if (rotation >= 180 && rotation < 270) {
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x + posOffset.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x + posOffset.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
                         } else if (rotation >= 270 && rotation < 360) {
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x + posOffset.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x + posOffset.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
+                            TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
                         }
                     }
                 } else {
                     for (int i = 1; i <= spr; i++) {
-                        TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x+ posOffset.x,pos.y), camWidth, camHeight, (rotation - (spreadAngle / 2)) + (spreadAngle / (spr + 1)) * i, acc, projRotates,posOffset.x));
+                        TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos), camWidth, camHeight, (rotation - (spreadAngle / 2)) + (spreadAngle / (spr + 1)) * i, acc, projRotates,posOffset.x));
                     }
                 }
                 lastShotTime = System.currentTimeMillis();
@@ -274,7 +274,7 @@ public class Turret {
                     if (preThrowSpin) preThrowSpin = false;
                 }
             } else if (turretPullsBack){
-                if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur) {//if half a second before throw time
+                if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur+400) {//if half a second before throw time
                     if (!pullBackThenThrow){pullBackThenThrow=true;posOffset.setZero();vel.set(origVel);flipVel=false;}
                 } else {
                     if (pullBackThenThrow) {pullBackThenThrow = false;posOffset.setZero();}
@@ -327,7 +327,7 @@ public class Turret {
                             if (preThrowSpin) preThrowSpin = false;
                         }
                     } else if (turretPullsBack) {
-                        if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur) {//if half a second before throw time
+                        if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur+400) {//if half a second before throw time
                             if (!pullBackThenThrow){pullBackThenThrow=true;vel.set(origVel);flipVel=false;}
                         } else {
                             if (pullBackThenThrow) {pullBackThenThrow = false; posOffset.setZero();}
