@@ -48,19 +48,14 @@ public class Turret {
     public float pullBackScale=4f;
 
     public void draw(SpriteBatch batcher, float xPos, float yPos) {
-        //System.out.println(rotation);
-        if ( firingInterval-(System.currentTimeMillis() - lastShotTime)<400 || (texture.length==1 && !projRotates&&projTexture!=texture[0]) ) {//turret has 1 tex or it is after 0.5s after shot
+        if (texture.length>1 && firingInterval-(System.currentTimeMillis()-lastShotTime)<400){//if there are multiple frames and if 400ms or less before shot draw loaded turret
+            batcher.draw(texture[1], xPos, yPos,
+                    width / 2f - posOffset.x , height / 2f , width, height, 1f, 1f, rotation);
 
-            //System.out.println(1);
+        } else if ( !((projRotates||turretPullsBack)&&System.currentTimeMillis()-lastShotTime<400)) {//if not right after pullbackthrow or preThrowSpin, draw
             batcher.draw(texture[0], xPos, yPos,
                     width / 2f - posOffset.x , height / 2f , width, height, 1f, 1f, rotation);
-        } else if (firingInterval-(System.currentTimeMillis() - lastShotTime)>400 && projTexture!=texture[0] && !projRotates){//turret has a post-firing tex and was just fired and turretIsntProjectile. Doesnt
-            //System.out.println(2);
-            batcher.draw(texture[1], xPos, yPos,
-                    width / 2f - posOffset.x, height / 2f, width, height, 1f, 1f, rotation);
-        } else if ((projRotates||pullBackThenThrow)&&System.currentTimeMillis() - lastShotTime>600){
-            batcher.draw(texture[0], xPos, yPos,
-                    width / 2f - posOffset.x, height / 2f, width, height, 1f, 1f, rotation);
+
         }
 
         if (preThrowSpin) {
@@ -68,7 +63,7 @@ public class Turret {
             else {rotation+=rotAdded;rotAdded+=1.5;}
             
         } else if (pullBackThenThrow){
-            System.out.println(posOffset.x);//check length of pullback is long enough then stop and shoot spear
+            //System.out.println(posOffset.x);//check length of pullback is long enough then stop and shoot spear
             if (!flipVel){
                 posOffset.add(vel);
                 //vel.scl(1.00005f); //x1.01 faster each time
@@ -144,7 +139,7 @@ public class Turret {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                //System.out.println("Added pen of "+pen);
+                System.out.println("################## "+barrelLengthFromPos);
                 //System.out.println("*******************************************Last shot time: "+lastShotTime+"**********************************************************");
                 if (projRotates){
                     rotation=targetRot;
@@ -169,7 +164,7 @@ public class Turret {
                     }
                 } else {
                     for (int i = 1; i <= spr; i++) {
-                        TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos), camWidth, camHeight, (rotation - (spreadAngle / 2)) + (spreadAngle / (spr + 1)) * i, acc, projRotates,posOffset.x));
+                        TargetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x-(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))),pos.y-(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation)))), camWidth, camHeight, (rotation - (spreadAngle / 2f)) + (spreadAngle / (spr + 1f)) * i, acc, projRotates,posOffset.x));
                     }
                 }
                 lastShotTime = System.currentTimeMillis();
@@ -244,9 +239,6 @@ public class Turret {
     }
 
     public void update() {
-
-
-
         if (Gdx.input.justTouched()  && gunTargetPointer==-1 ) {   //airShip updates first so takes the spot
 
             //System.out.println("touched");
@@ -278,7 +270,7 @@ public class Turret {
                 }
             } else if (turretPullsBack){
                 if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur+400) {//if half a second before throw time
-                    if (!pullBackThenThrow){pullBackThenThrow=true;posOffset.setZero();vel.set(origVel);flipVel=false;}
+                    if (!pullBackThenThrow){pullBackThenThrow = true; posOffset.setZero();vel.set(origVel);flipVel=false;}
                 } else {
                     if (pullBackThenThrow) {pullBackThenThrow = false;posOffset.setZero();}
                 }
@@ -311,6 +303,8 @@ public class Turret {
                     }
                 }
             }
+            if (preThrowSpin) preThrowSpin=false;
+            if (pullBackThenThrow) pullBackThenThrow=false;
         } else {    //AI SYSTEM
             //System.out.println("TargetBird: "+targetBird);
 
@@ -366,7 +360,9 @@ public class Turret {
         projRotates=false;
         turretPullsBack=false;
         if (projTexture==null) {projTexture = texture[0];
-            System.out.println("THEY EQUal **************************************");}    //if texture has multiple anims dont worry because it turret is not thrown
+            }    //if texture has multiple anims dont worry because it turret is not thrown
+
+        height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();
         switch (turretType) {
             case ('c'):
                 dmg = 0.3f;
@@ -384,7 +380,7 @@ public class Turret {
 
                 if (lvl==0) projRotates=true;
                 else if (lvl==1) turretPullsBack=true;
-                else if (lvl==2) texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];
+                else if (lvl==2) {texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();}
                 break;
             case ('f'): //fast firing
                 dmg = 1f;
@@ -392,12 +388,12 @@ public class Turret {
                 spr = 1;
                 rof = 1.5f; //was 0.5f //(1/(0.02*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5*1.5))*1000 is ms between shots
 
-                if (lvl==0) barrelLengthFromPos=width/2f;//blowgun barrel
+                if (lvl==0) {barrelLengthFromPos=width/2f; }//blowgun barrel
                 else if (lvl==1) projRotates=true;
-                else if (lvl==2) texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];
+                else if (lvl==2) {texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();}
                 break;
         }
-        height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();
+
 
         for (int i=0;i<lvl;i++){
             dmg*=1.4;

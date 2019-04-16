@@ -128,35 +128,35 @@ armor0
   index: -1
 armor1
   rotate: false
-  xy: 3207, 3143
+  xy: 3150, 3143
   size: 154, 12
   orig: 154, 12
   offset: 0, 0
   index: -1
 armor2
   rotate: false
-  xy: 3454, 1795
+  xy: 3306, 3143
   size: 154, 12
   orig: 154, 12
   offset: 0, 0
   index: -1
 armor3
   rotate: false
-  xy: 3454, 1809
+  xy: 3462, 1795
   size: 154, 12
   orig: 154, 12
   offset: 0, 0
   index: -1
 armor4
   rotate: false
-  xy: 3454, 1823
+  xy: 3462, 1809
   size: 154, 12
   orig: 154, 12
   offset: 0, 0
   index: -1
 armor5
   rotate: false
-  xy: 3454, 1837
+  xy: 3462, 1823
   size: 154, 12
   orig: 154, 12
   offset: 0, 0
@@ -289,9 +289,9 @@ dragLine2
   index: -1
 f0
   rotate: false
-  xy: 3150, 3143
-  size: 55, 13
-  orig: 55, 13
+  xy: 4017, 1889
+  size: 53, 12
+  orig: 53, 12
   offset: 0, 0
   index: -1
 f1
@@ -408,14 +408,14 @@ rack5
   index: -1
 reticle
   rotate: false
-  xy: 3649, 1875
+  xy: 3152, 1795
   size: 300, 300
   orig: 300, 300
   offset: 0, 0
   index: -1
 reticle2
   rotate: false
-  xy: 3152, 2177
+  xy: 3649, 1875
   size: 300, 300
   orig: 300, 300
   offset: 0, 0
