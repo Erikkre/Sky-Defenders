@@ -185,7 +185,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
         setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
-        burnerUp();speedUp();speedUp();rackUp();rackUp();//armorUp();
+        burnerUp();speedUp();speedUp();rackUp();//armorUp();
 
         addTurret('c');addTurret('c');addTurret('d');addTurret('d');addTurret('d');addTurret('f');addTurret('f');addTurret('f');
         turretList.get(1).lvlUp();turretList.get(3).lvlUp();turretList.get(4).lvlUp();turretList.get(4).lvlUp();turretList.get(6).lvlUp();turretList.get(7).lvlUp();turretList.get(7).lvlUp();
@@ -633,10 +633,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         } else {
             flameLights.get(2).setPosition(xOffsetDueToRotation(pos.x - (startX - ((CustomPointLight) flameLights.get(2)).origPos.x),(startX - ((CustomPointLight) flameLights.get(2)).origPos.x),(startY - ((CustomPointLight) flameLights.get(2)).origPos.y)),
                     yOffsetDueToRotation(pos.y+balloonBob.get() - (startY - ((CustomPointLight) flameLights.get(2)).origPos.y), (startX - ((CustomPointLight) flameLights.get(2)).origPos.x),(startY - ((CustomPointLight) flameLights.get(2)).origPos.y)) );
-            if (!rotationTween.isFinished()){//finish rotation
+            if (!rotationTween.isFinished()) { //finish rotation
                 rotationTween.update(delta);
             }
-
         }
 
         for (Turret i : turretList) {//update turret position no matter what

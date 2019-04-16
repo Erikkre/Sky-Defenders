@@ -48,20 +48,19 @@ public class Turret {
     public float pullBackScale=4f;
 
     public void draw(SpriteBatch batcher, float xPos, float yPos) {
-        if (texture.length>1 && firingInterval-(System.currentTimeMillis()-lastShotTime)<400){//if there are multiple frames and if 400ms or less before shot draw loaded turret
+        if (texture.length>1 && firingInterval-(System.currentTimeMillis()-lastShotTime)<400) {//if there are multiple frames and if 400ms or less before shot draw loaded turret
             batcher.draw(texture[1], xPos, yPos,
                     width / 2f - posOffset.x , height / 2f , width, height, 1f, 1f, rotation);
 
         } else if ( !((projRotates||turretPullsBack)&&System.currentTimeMillis()-lastShotTime<400)) {//if not right after pullbackthrow or preThrowSpin, draw
             batcher.draw(texture[0], xPos, yPos,
                     width / 2f - posOffset.x , height / 2f , width, height, 1f, 1f, rotation);
-
         }
 
         if (preThrowSpin) {
             if (!flipSpinDir){rotation+=rotAdded;rotAdded-=2;if (rotAdded<-15){flipSpinDir=true;}}
             else {rotation+=rotAdded;rotAdded+=1.5;}
-            
+
         } else if (pullBackThenThrow){
             //System.out.println(posOffset.x);//check length of pullback is long enough then stop and shoot spear
             if (!flipVel){
@@ -139,7 +138,6 @@ public class Turret {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("################## "+barrelLengthFromPos);
                 //System.out.println("*******************************************Last shot time: "+lastShotTime+"**********************************************************");
                 if (projRotates){
                     rotation=targetRot;
@@ -261,7 +259,7 @@ public class Turret {
             }
         }
 
-        if (gunTargetPointer>=0&&Gdx.input.isTouched(gunTargetPointer)&&!Airship.pointerOnAirship(gunTargetPointer)){
+        if (gunTargetPointer>=0&&Gdx.input.isTouched(gunTargetPointer)&&!Airship.pointerOnAirship(gunTargetPointer)) {
             if (projRotates) {
                 if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur) {//if half a second before throw time
                     if (!preThrowSpin) {preThrowSpin = true;rotAdded=spinStartSpeed;flipSpinDir=false;}
@@ -343,11 +341,15 @@ public class Turret {
                     //System.out.print("Stop firing 1");
                     stopFiring();
                     targetBird=null;
+                    if (preThrowSpin) preThrowSpin=false;
+                    if (pullBackThenThrow) pullBackThenThrow=false;
                 }
             } else if (firing) {
                 //System.out.print("Stop firing 2");
                 stopFiring();
                 targetBird=null;
+                if (preThrowSpin) preThrowSpin=false;
+                if (pullBackThenThrow) pullBackThenThrow=false;
             }
         }
     }
@@ -368,7 +370,7 @@ public class Turret {
                 dmg = 0.3f;
                 pen = 1;
                 spr = 2;
-                rof = 1f;
+                rof = 1.1f;
 
                 if (lvl==0||lvl==1) projRotates=true;
                 break;
@@ -376,7 +378,7 @@ public class Turret {
                 dmg = 4;
                 pen = 4;
                 spr = 1;
-                rof = 0.5f;
+                rof = 0.7f;
 
                 if (lvl==0) projRotates=true;
                 else if (lvl==1) turretPullsBack=true;
@@ -397,7 +399,7 @@ public class Turret {
 
         for (int i=0;i<lvl;i++){
             dmg*=1.4;
-            if (turretType=='d'){rof*=1.06;} else {rof*=1.4;}//if (turretType=='f'){rof*=1.4;} else {;}
+
             rof*= (turretType!='d' ? 1.2 : 1.06);//if not d then rof=1.2 else rof=1.06
 
             pen*= (turretType!='d' ? 1.4 : 1.25);
@@ -409,6 +411,4 @@ public class Turret {
         //width=54;//texture[0].getRegionWidth();
         //height=54;//=texture[0].getRegionHeight();
     }
-
-
 }
