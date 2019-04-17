@@ -1,6 +1,7 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
+import com.badlogic.gdx.audio.Sound;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Projectile;
@@ -18,8 +19,10 @@ public class TargetHandler {
     public static int minTargetingHeight=0;
     private float previousBirdHeight=minTargetingHeight;
     private Airship airship;
+    public Sound hit;
     public TargetHandler(Airship airship){
         this.airship=airship;
+        hit=AssetHandler.birdHit;
     }
 
     public void update(float delta, float runTime) {
@@ -32,8 +35,9 @@ public class TargetHandler {
                 //System.out.println("********************** HIT PRELIM *********************");
             if (i.isAlive && i.collides(airship.rackHitbox) || i.collides(airship.balloonHitbox)) {
                     //System.out.println("********************** HIT REAL *********************");
-                    airship.hit(i.origHealth);
-                    i.hit(i.origHealth);    //lol
+                    airship.hit(i.health);
+                    i.hit(i.origHealth);    //lol I hope bird health is below orig
+                    hit.play(0.10f);
                 //}
             } else if (!i.isAlive){
                 BirdHandler.activeBirdQueue.remove(i);
@@ -57,9 +61,10 @@ public class TargetHandler {
             for (BirdAbstractClass j : BirdHandler.activeBirdQueue) {
                 if (i.pen>0 && !j.hitBulletList.contains(i) && j.y>minTargetingHeight && j.collides(i.boundingRect) && j.health>0) {  //if bird j is colliding with bullet i and was not already hit before
                     j.hit(i.dmg);
+
                     //System.out.println("Bullet --, pen was "+i.pen);
                     i.pen--;
-
+                    hit.play(0.05f);
                     if (i.pen<1){
                         //System.out.println("Bullet exhausted");
                         projectileList.remove(i);

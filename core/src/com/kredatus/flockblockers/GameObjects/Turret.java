@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -46,6 +47,7 @@ public class Turret {
     public boolean turretPullsBack, pullBackThenThrow, flipVel;
     public Vector2 origVel= new Vector2(0.3f,0), vel=new Vector2(), posOffset=new Vector2();
     public float pullBackScale=4f;
+    public static Sound sound;
 
     public void draw(SpriteBatch batcher, float xPos, float yPos) {
         if (texture.length>1 && firingInterval-(System.currentTimeMillis()-lastShotTime)<400) {//if there are multiple frames and if 400ms or less before shot draw loaded turret
@@ -138,6 +140,7 @@ public class Turret {
         timerTask = new TimerTask() {
             @Override
             public void run() {
+                sound.play(0.5f);
                 //System.out.println("*******************************************Last shot time: "+lastShotTime+"**********************************************************");
                 if (projRotates){
                     rotation=targetRot;
@@ -357,7 +360,7 @@ public class Turret {
     private void turretSetup(char turretType, int lvl){
         texture[0]=AssetHandler.turret
                 (turretType,lvl,false);projTexture=AssetHandler.turret(turretType,lvl,true);
-
+        sound=AssetHandler.turretSound(turretType,lvl);
         barrelLengthFromPos=0;//reset barrel length so by default projectile spawns from middle of turret position instead of from end of barrel
         projRotates=false;
         turretPullsBack=false;
@@ -395,7 +398,6 @@ public class Turret {
                 else if (lvl==2) {texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();}
                 break;
         }
-
 
         for (int i=0;i<lvl;i++){
             dmg*=1.4;

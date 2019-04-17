@@ -78,7 +78,7 @@ public class GameWorld {
         //glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
 
 
-        AssetHandler.playnext(AssetHandler.menumusiclist);
+        //AssetHandler.playnext(AssetHandler.menumusiclist);
         updatedboostnumber=orgboostnumber;
     }
 
