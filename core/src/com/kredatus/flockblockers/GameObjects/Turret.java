@@ -47,7 +47,7 @@ public class Turret {
     public boolean turretPullsBack, pullBackThenThrow, flipVel;
     public Vector2 origVel= new Vector2(0.3f,0), vel=new Vector2(), posOffset=new Vector2();
     public float pullBackScale=4f;
-    public static Sound sound;
+    public  Sound sound;
 
     public void draw(SpriteBatch batcher, float xPos, float yPos) {
         if (texture.length>1 && firingInterval-(System.currentTimeMillis()-lastShotTime)<400) {//if there are multiple frames and if 400ms or less before shot draw loaded turret

@@ -425,6 +425,7 @@ public class AssetHandler {
     }
 
     public static Sound turretSound(char type, int lvl) {
+        System.out.println("Turret sound is: "+type+lvl+".mp3");
         return Gdx.audio.newSound(Gdx.files.internal("textures"+File.separator+"sprites"+File.separator+"turrets"+File.separator+type+File.separator+type+lvl+".mp3"));
     }
 
@@ -588,6 +589,7 @@ public class AssetHandler {
             } else{
                 musiciterator=0;
             }
+            list[musiciterator].setVolume(0.2f);
             list[musiciterator].play();
             list[musiciterator].setLooping(true);
         } else{ //menumusic
@@ -597,8 +599,9 @@ public class AssetHandler {
                 list[menumusiciterator].setLooping(true);
             } else{*/
                 menumusiciterator=0;
-                list[menumusiciterator].play();
-                list[menumusiciterator].setLooping(true);
+            list[musiciterator].setVolume(0.2f);
+            list[musiciterator].play();
+            list[musiciterator].setLooping(true);
             //)
         }
     }
