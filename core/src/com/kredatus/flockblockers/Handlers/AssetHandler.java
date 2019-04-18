@@ -589,7 +589,7 @@ public class AssetHandler {
             } else{
                 musiciterator=0;
             }
-            list[musiciterator].setVolume(0.2f);
+            //list[musiciterator].setVolume(0.7f);
             list[musiciterator].play();
             list[musiciterator].setLooping(true);
         } else{ //menumusic
@@ -599,7 +599,7 @@ public class AssetHandler {
                 list[menumusiciterator].setLooping(true);
             } else{*/
                 menumusiciterator=0;
-            list[menumusiciterator].setVolume(0.2f);
+            //list[menumusiciterator].setVolume(0.7f);
             list[menumusiciterator].play();
             list[menumusiciterator].setLooping(true);
             //)
