@@ -599,9 +599,9 @@ public class AssetHandler {
                 list[menumusiciterator].setLooping(true);
             } else{*/
                 menumusiciterator=0;
-            list[musiciterator].setVolume(0.2f);
-            list[musiciterator].play();
-            list[musiciterator].setLooping(true);
+            list[menumusiciterator].setVolume(0.2f);
+            list[menumusiciterator].play();
+            list[menumusiciterator].setLooping(true);
             //)
         }
     }
