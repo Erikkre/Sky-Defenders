@@ -9,6 +9,7 @@ import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Turret;
+import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
@@ -119,12 +120,14 @@ public class GameHandler implements Screen {
             }
 
             birdHandler.pause();
+            AssetHandler.stopMusic(AssetHandler.menumusiclist);
         }
     }
 
     @Override
     public void resume() {
         Gdx.app.log("GameHandler", "resume called");
+        AssetHandler.startMusic(AssetHandler.menumusiclist);
         if (!FlockBlockersMain.dontPauseOnUnfocus) {
             isPaused = false;
 

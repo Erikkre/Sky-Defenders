@@ -46,7 +46,7 @@ public class AssetHandler {
     public static ArrayList<Vector3> boostcoords;
     public static ArrayList<TextureRegion> bgList;
     public static int bgscaling, gliderscaling, boostnumber, coordslistsize;
-    public static Sound splashdown, swoop, fire, birdHit;
+    public static Sound splashdown, swoop, fire, birdHit, balloonHit;
     public static Music deathmenumusic;
 
     public static Animation<TextureRegion> rightSideFlaps, leftSideFlaps,
@@ -379,6 +379,7 @@ public class AssetHandler {
         splashdown = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"splashdown.wav"));
         swoop = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"swoop.wav"));
         birdHit = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"birdHit.mp3"));
+        balloonHit = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"balloonHit.mp3"));
 
         musiclist = new Music[] { Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic2.mp3")),
                 Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic3.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic4.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic5.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic6.mp3"))};
@@ -574,14 +575,20 @@ public class AssetHandler {
         return prefs.getInteger("highScore");
     }
 
-    public static void stopmusic(Music[] list){
+    public static void stopMusic(Music[] list){
         if (list==musiclist){
-            musiclist[musiciterator].stop();
+            musiclist[musiciterator].pause();
         }else{
-            menumusiclist[menumusiciterator].stop();
+            menumusiclist[menumusiciterator].pause();
         }
     }
-
+    public static void startMusic(Music[] list){
+        if (list==musiclist){
+            musiclist[musiciterator].play();
+        }else{
+            menumusiclist[menumusiciterator].play();
+        }
+    }
     public static void playnext(Music[] list) {
         if (list==musiclist){
             if (musiciterator<5){
@@ -589,7 +596,7 @@ public class AssetHandler {
             } else{
                 musiciterator=0;
             }
-            //list[musiciterator].setVolume(0.7f);
+            list[musiciterator].setVolume(0.2f);
             list[musiciterator].play();
             list[musiciterator].setLooping(true);
         } else{ //menumusic
@@ -599,7 +606,7 @@ public class AssetHandler {
                 list[menumusiciterator].setLooping(true);
             } else{*/
                 menumusiciterator=0;
-            //list[menumusiciterator].setVolume(0.7f);
+            list[menumusiciterator].setVolume(0.1f);
             list[menumusiciterator].play();
             list[menumusiciterator].setLooping(true);
             //)

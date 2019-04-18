@@ -179,14 +179,21 @@ public class Turret {
         else timeSinceLastShot=(int) ((System.currentTimeMillis()-GameHandler.timeOfResume)+(GameHandler.timeOfPause-lastShotTime));    //gets time since last shot in game time without real life pause
         //System.out.println("Time since last shot: "+timeSinceLastShot+", firing interval: "+firingInterval);
 
-        if (projRotates||turretPullsBack) {
-            timer.scheduleAtFixedRate(timerTask, (int)preThrowActionDur, firingInterval);
-        } else if (timeSinceLastShot < firingInterval) {
-            timer.scheduleAtFixedRate(timerTask, firingInterval-timeSinceLastShot, firingInterval);
-        } else {
-            timer.scheduleAtFixedRate(timerTask, 0, firingInterval);
+        try {
+
+
+            if (projRotates || turretPullsBack) {
+                timer.scheduleAtFixedRate(timerTask, (int) preThrowActionDur, firingInterval);
+            } else if (timeSinceLastShot < firingInterval) {
+                timer.scheduleAtFixedRate(timerTask, firingInterval - timeSinceLastShot, firingInterval);
+            } else {
+                timer.scheduleAtFixedRate(timerTask, 0, firingInterval);
+            }
+            firing = true;
+        } catch (IllegalStateException e){
+            e.printStackTrace();
         }
-        firing = true;
+
     }
 
     public void stopFiring(){

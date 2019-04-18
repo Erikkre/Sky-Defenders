@@ -181,7 +181,7 @@ public class GameWorld {
         //renderer.sunshineManager.killAll();
         //renderer.sunshineManager2.killAll();
         SplashScreen.getManager().killAll();
-        AssetHandler.stopmusic(AssetHandler.menumusiclist);
+        AssetHandler.stopMusic(AssetHandler.menumusiclist);
         AssetHandler.playnext(AssetHandler.musiclist);
         currentState = GameState.READY;
         renderer.prepareTransition(0, 0, 0, 1f);}

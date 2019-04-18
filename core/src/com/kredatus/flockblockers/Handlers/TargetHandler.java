@@ -6,6 +6,8 @@ import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -19,10 +21,12 @@ public class TargetHandler {
     public static int minTargetingHeight=0;
     private float previousBirdHeight=minTargetingHeight;
     private Airship airship;
-    public Sound hit;
+    public Sound birdHit,balloonHit;
+    public boolean balloonHitPlaying;
     public TargetHandler(Airship airship){
         this.airship=airship;
-        hit=AssetHandler.birdHit;
+        birdHit=AssetHandler.birdHit;
+        balloonHit=AssetHandler.balloonHit;
     }
 
     public void update(float delta, float runTime) {
@@ -33,12 +37,23 @@ public class TargetHandler {
 
             //if (i.collides(airship.prelimBoundPoly1)||i.collides(airship.prelimBoundPoly2)) {
                 //System.out.println("********************** HIT PRELIM *********************");
-            if (i.isAlive && i.collides(airship.rackHitbox) || i.collides(airship.balloonHitbox)) {
+            if (i.isAlive && (i.collides(airship.rackHitbox) || i.collides(airship.balloonHitbox)) ) {
                     //System.out.println("********************** HIT REAL *********************");
                     airship.hit(i.health);
                     i.hit(i.origHealth);    //lol I hope bird health is below orig
-                    hit.play(0.10f);
-                //}
+                    if (!balloonHitPlaying){
+                        balloonHit.play(0.10f);
+                        balloonHitPlaying=true;
+                            System.out.println("made true");
+                            Timer timer=new Timer();
+                            timer.schedule(new TimerTask(){
+                            @Override
+                            public void run(){
+                                balloonHitPlaying=false;
+                                System.out.println("made false");
+                            }
+                        },450);
+                    }
             } else if (!i.isAlive){
                 BirdHandler.activeBirdQueue.remove(i);
                 BirdHandler.deadBirdQueue.add(i);
@@ -64,7 +79,7 @@ public class TargetHandler {
 
                     //System.out.println("Bullet --, pen was "+i.pen);
                     i.pen--;
-                    hit.play(0.05f);
+                    birdHit.play(0.05f);
                     if (i.pen<1){
                         //System.out.println("Bullet exhausted");
                         projectileList.remove(i);
