@@ -42,7 +42,7 @@ public class TargetHandler {
                     airship.hit(i.health);
                     i.hit(i.origHealth);    //lol I hope bird health is below orig
                     if (!balloonHitPlaying){
-                        balloonHit.play(0.10f);
+                        balloonHit.play(0.40f);
                         balloonHitPlaying=true;
                             System.out.println("made true");
                             Timer timer=new Timer();

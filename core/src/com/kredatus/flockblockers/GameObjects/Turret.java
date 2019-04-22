@@ -180,8 +180,6 @@ public class Turret {
         //System.out.println("Time since last shot: "+timeSinceLastShot+", firing interval: "+firingInterval);
 
         try {
-
-
             if (projRotates || turretPullsBack) {
                 timer.scheduleAtFixedRate(timerTask, (int) preThrowActionDur, firingInterval);
             } else if (timeSinceLastShot < firingInterval) {
@@ -190,10 +188,10 @@ public class Turret {
                 timer.scheduleAtFixedRate(timerTask, 0, firingInterval);
             }
             firing = true;
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             e.printStackTrace();
+            timer=new Timer();
         }
-
     }
 
     public void stopFiring(){

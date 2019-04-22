@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
@@ -62,10 +63,10 @@ public class GameRenderer {
     private SimpleButton readyButton, menuButton, nextButton;
     private GameWorld myWorld;
     public OrthographicCamera cam;
-    private FitViewport viewport;
+    public static ExtendViewport viewport;
     private ShapeRenderer shapeRenderer; private ShapeRendererCustom shapeRendererCust;
     boolean turnback=true;
-    private SpriteBatch batcher;
+    public static SpriteBatch batcher;
     private Airship airship;
     public static Vector3 campos;
     private Animation frontFlaps, leftSideFlaps, rightSideFlaps, flipflaps, frontViewFlaps, backFlaps;
@@ -126,16 +127,10 @@ public class GameRenderer {
         this.camHeight=camHeight;
 
 
+       batcher = new SpriteBatch();
 
-        this.menuButtons = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButtons();
-        this.deathButtons = ((InputHandler) Gdx.input.getInputProcessor()).getDeathButtons();
-
-        this.readyButton = ((InputHandler) Gdx.input.getInputProcessor()).getReadyButton();
-        this.menuButton = ((InputHandler) Gdx.input.getInputProcessor()).getMenuButton();
-        this.nextButton =  ((InputHandler) Gdx.input.getInputProcessor()).getNextButton();
-
-        batcher = new SpriteBatch();
         cam = new OrthographicCamera();
+        viewport=new ExtendViewport(camWidth,camHeight, cam);
         cam.setToOrtho(false, camWidth, camHeight);
         cam.position.set(new Vector3(camWidth/2,camHeight/2,0));
         cam.update();
@@ -171,6 +166,14 @@ public class GameRenderer {
         //System.out.println(batcher.getBlendDstFunc()+" "+batcher.getBlendDstFuncAlpha()+" "+batcher.getBlendSrcFunc()+" "+batcher.getBlendSrcFuncAlpha()+" "+batcher.getPackedColor());
     }
 
+    public void assignButtonsUsingInputHandler(InputHandler inputHandler){
+        this.menuButtons = inputHandler.getMenuButtons();
+        this.deathButtons = inputHandler.getDeathButtons();
+
+        this.readyButton = inputHandler.getReadyButton();
+        this.menuButton = inputHandler.getMenuButton();
+        this.nextButton =  inputHandler.getNextButton();
+    }
     /*private void setupTweens() {
         Tween.registerAccessor(Value.class, new ValueAccessor());
         manager = new TweenManager();
@@ -244,7 +247,7 @@ public void setRotate(float angle){
 */
 
         airship = myWorld.airship;
-        table=uiHandler.table;
+        // table=uiHandler.table;
     }
 
     private void smallfontLengthSetup() {

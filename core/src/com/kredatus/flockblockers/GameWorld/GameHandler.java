@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 
 import com.badlogic.gdx.math.Vector2;
@@ -60,7 +61,7 @@ public class GameHandler implements Screen {
         Tween.registerAccessor(Light.class, new LightAccessor());
         Tween.setWaypointsLimit(10);
 
-        uiHandler=new UiHandler();
+
         tinyBirdHandler = new TinyBirdHandler();
         bgHandler = new BgHandler(camWidth, camHeight, birdType);
         birdHandler= new BirdHandler(bgHandler, camWidth, camHeight, birdType);
@@ -71,13 +72,19 @@ public class GameHandler implements Screen {
         targetHandler = new TargetHandler(airship);
 
         world = new GameWorld(airship, camWidth, camHeight, bgHandler,birdHandler, targetHandler,tinyBirdHandler,uiHandler, lightHandler);
-        Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight));
+
 
         renderer = new GameRenderer(world, camWidth, camHeight);
+
         bgHandler.setRendererAndCam(renderer);
         lightHandler.setCam(renderer);
 
         world.setRenderer(renderer);
+
+        uiHandler=new UiHandler(renderer.viewport, renderer.batcher);
+        InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
+        Gdx.input.setInputProcessor(uiHandler.stage);
+        renderer.assignButtonsUsingInputHandler(inputHandler);
     }
 
     @Override
@@ -86,12 +93,17 @@ public class GameHandler implements Screen {
             runTime += delta;
             world.update(delta, runTime);
             renderer.render(delta, runTime);
+
+            //Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
+            //            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            uiHandler.stage.act(delta);
+            uiHandler.stage.draw();
         }
     }
 
     @Override
     public void resize(int width, int height) {
-
+        uiHandler.stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -146,7 +158,8 @@ public class GameHandler implements Screen {
 
     @Override
     public void dispose() {
-        // Leave blank
+        uiHandler.stage.dispose();
+        uiHandler.skin.dispose();
     }
 
 }
