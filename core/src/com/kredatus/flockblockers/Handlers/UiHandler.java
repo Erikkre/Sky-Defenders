@@ -71,11 +71,13 @@ public class UiHandler {
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
+        rootTable.bottom();//.align(Align.center);
         stage.addActor(rootTable);
 
         rootTable.add(new Label("Shade UI", skin, "title")).colspan(3);
         rootTable.row();
 
+        /*
         Table buttonsTable = new Table();
         buttonsTable.defaults().pad(2.0f);
         TextButton dialogButton = new TextButton("Dialog", skin);
@@ -85,12 +87,13 @@ public class UiHandler {
         buttonsTable.row();
         buttonsTable.add(new TextButton("Start Game", skin, "round"));
         buttonsTable.row();
+
         Table subTable = new Table();
         subTable.defaults().pad(2.0f);
         subTable.add(new Button(skin, "music"));
         subTable.add(new Button(skin, "sound"));
         buttonsTable.add(subTable);
-        rootTable.add(buttonsTable);
+        rootTable.add(buttonsTable);*/
 
         Table checksTable = new Table();
         checksTable.defaults().pad(2.0f);
@@ -148,7 +151,7 @@ public class UiHandler {
         }
         tree.expandAll();
         tree.setPadding(2);
-        rootTable.add(tree).fill().pad(5.0f);
+        rootTable.add(tree).fill();
 
         rootTable.row();
         Table progressTable = new Table();
@@ -191,7 +194,7 @@ public class UiHandler {
         window.add(splitPane);
         rootTable.add(window).colspan(3).padTop(5.0f);
 
-        dialogButton.addListener(new ChangeListener() {
+        /*dialogButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 new Dialog("Shade UI", skin, "dialog") {
@@ -201,7 +204,7 @@ public class UiHandler {
                 }.text("Are you sure?").button("Yes", true).button("No", false)
                         .key(Keys.ENTER, true).key(Keys.ESCAPE, false).show(stage).getTitleLabel().setAlignment(Align.center);
             }
-        });
+        });*/
 
         leftButton.addListener(new ChangeListener() {
             @Override
