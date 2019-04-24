@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
@@ -81,7 +82,7 @@ public class GameHandler implements Screen {
 
         world.setRenderer(renderer);
 
-        uiHandler=new UiHandler(renderer.viewport, renderer.batcher);
+        uiHandler=new UiHandler(renderer.viewport, renderer.batcher, camWidth, camHeight);
         InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
         Gdx.input.setInputProcessor(uiHandler.stage);
         renderer.assignButtonsUsingInputHandler(inputHandler);
@@ -98,6 +99,7 @@ public class GameHandler implements Screen {
             //            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             uiHandler.stage.act(delta);
             uiHandler.stage.draw();
+            renderer.batcher.setColor(Color.WHITE);
         }
     }
 

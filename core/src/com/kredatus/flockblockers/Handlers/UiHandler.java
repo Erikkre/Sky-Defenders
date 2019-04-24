@@ -56,7 +56,7 @@ public class UiHandler {
     public  Stage stage;
     public Skin skin;
 
-    public UiHandler(Viewport viewport, SpriteBatch batcher) {
+    public UiHandler(Viewport viewport, SpriteBatch batcher, float camWidth, float camHeight) {
         //nameLabel = new Label("Name: ", skin);
         //TextField nameText = new TextField("Name2: ", skin);
         //TextureAtlas
@@ -71,11 +71,17 @@ public class UiHandler {
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.bottom();//.align(Align.center);
+        rootTable.align(Align.bottomRight);
         stage.addActor(rootTable);
 
-        rootTable.add(new Label("Shade UI", skin, "title")).colspan(3);
+        //rootTable.add(new Label("Shade UI", skin, "title")).colspan(3);
         rootTable.row();
+        Touchpad touchpad = new Touchpad(0, skin);
+        touchpad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
+        //touchpad2.setColor(1,1,1,1f);
+
+        rootTable.add(touchpad).fill(true).width(0.85f*touchpad.getPrefWidth()).height(0.85f*touchpad.getPrefHeight()).align(Align.bottomRight);
+        //rootTable.row();
 
         /*
         Table buttonsTable = new Table();
@@ -93,7 +99,7 @@ public class UiHandler {
         subTable.add(new Button(skin, "music"));
         subTable.add(new Button(skin, "sound"));
         buttonsTable.add(subTable);
-        rootTable.add(buttonsTable);*/
+        rootTable.add(buttonsTable);
 
         Table checksTable = new Table();
         checksTable.defaults().pad(2.0f);
@@ -139,8 +145,10 @@ public class UiHandler {
         rootTable.add(inputTable);
 
         rootTable.row();
-        rootTable.add(new Touchpad(0, skin)).pad(5.0f).colspan(2);
+        */
 
+
+        /*
         Tree tree = new Tree(skin);
         Node parentNode = new Node(new Label("Selection 1", skin));
         tree.add(parentNode);
@@ -204,7 +212,7 @@ public class UiHandler {
                 }.text("Are you sure?").button("Yes", true).button("No", false)
                         .key(Keys.ENTER, true).key(Keys.ESCAPE, false).show(stage).getTitleLabel().setAlignment(Align.center);
             }
-        });*/
+        });
 
         leftButton.addListener(new ChangeListener() {
             @Override
@@ -219,6 +227,6 @@ public class UiHandler {
                 progressBar.setValue(progressBar.getValue() + 5.0f);
             }
         });
+        */
     }
-
 }
