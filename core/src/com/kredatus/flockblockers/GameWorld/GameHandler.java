@@ -6,7 +6,15 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
@@ -24,6 +32,7 @@ import com.kredatus.flockblockers.TweenAccessors.LightAccessor;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.TweenAccessors.VectorAccessor;
+import com.kredatus.flockblockers.ui.SlideMenu;
 
 import aurelienribon.tweenengine.Tween;
 import box2dLight.Light;
@@ -86,6 +95,117 @@ public class GameHandler implements Screen {
         InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
         Gdx.input.setInputProcessor(uiHandler.stage);
         renderer.assignButtonsUsingInputHandler(inputHandler);
+
+
+
+        //private static final String TAG = TestScreen.class.getSimpleName();
+
+
+
+/*
+        // load atlas file
+        TextureAtlas atlas = new TextureAtlas("data/menu_ui.atlas");
+
+        // initialize all menu items from atlas region.
+        final Image logo_crowni = new Image(atlas.findRegion("logo_crowni"));
+        final Image icon_rate = new Image(atlas.findRegion("icon_rate"));
+        final Image icon_share = new Image(atlas.findRegion("icon_share"));
+        final Image icon_music = new Image(atlas.findRegion("icon_music"));
+        final Image icon_off_music = new Image(atlas.findRegion("icon_off_music"));
+
+
+*/
+        // initialize NavigationDrawer
+        final float NAV_WIDTH = 100F;
+        final float NAV_HEIGHT = 900F;
+
+        final SlideMenu slideMenu = new SlideMenu(NAV_WIDTH, NAV_HEIGHT, "right");
+        Sprite temp=new Sprite(AssetHandler.slidemenuBg);
+        temp.setColor(Color.BLACK);
+        final Image image_background = new Image(new SpriteDrawable(temp));
+        final Image menuButton = new Image(AssetHandler.menuButton);
+        final Image shareButton = new Image(AssetHandler.shareButton);
+        final Image rateButton = new Image(AssetHandler.rateButton);
+/*
+        // add items into drawer panel.
+        slideMenu.add(logo_crowni).size(63, 85).pad(0, 52, 5, 52).expandX().row();
+        slideMenu.add().height(950F).row(); // empty
+        slideMenu.add(icon_rate).pad(35, 52, 35, 52).expandX().row();
+        slideMenu.add(icon_share).pad(35, 52, 35, 52).expandX().row();
+
+        icon_off_music.setVisible(false);
+        slideMenu.stack(icon_music, icon_off_music).pad(52, 52, 300, 52).expandX().row();*/
+
+        // setup attributes for menu navigation slideMenu.
+        slideMenu.setBackground(image_background.getDrawable());
+        slideMenu.bottom().right();
+        slideMenu.setWidthStartDrag(40f);
+        slideMenu.setWidthBackDrag(0F);
+        slideMenu.setTouchable(Touchable.enabled);
+
+        /* z-index = 1 */
+        // add image_background as a separating actor into stage to make smooth shadow with dragging value.
+        image_background.setFillParent(true);
+        //uiHandler.stage.addActor(image_background);
+        //slideMenu.setFadeBackground(image_background, 0.5f);
+
+        /* z-index = 2 */
+        uiHandler.stage.addActor(slideMenu);
+
+        /* z-index = 3 */
+        // add button_menu as a separating actor into stage to rotates with dragging value.
+        menuButton.setOrigin(Align.center);
+        uiHandler.stage.addActor(menuButton);
+        slideMenu.setRotateMenuButton(menuButton, 90f);
+
+        /** Optional
+         Image image_shadow = new Image(atlas.findRegion("image_shadow"));
+         image_shadow.setHeight(NAV_HEIGHT);
+         image_shadow.setX(NAV_WIDTH);
+         slideMenu.setAreaWidth(NAV_WIDTH + image_shadow.getWidth());
+         slideMenu.addActor(image_shadow);
+
+         // show the panel
+         slideMenu.showManually(true);
+         /************ add item listener ***********/
+
+
+            /*icon_rate.setName("RATE");
+            icon_share.setName("SHARE");
+            icon_music.setName("MUSIC_ON");
+            icon_off_music.setName("MUSIC_OFF");*/
+            menuButton.setName("menuButton");
+            image_background.setName("IMAGE_BACKGROUND");
+
+            ClickListener listener = new ClickListener() {
+                public void clicked(InputEvent event, float x, float y) {
+                    boolean closed = slideMenu.isCompletelyClosed();
+                    Actor actor = event.getTarget();
+
+                    if (actor.getName().equals("RATE")) {
+                        //Gdx.app.debug(TAG, "Rate button clicked.");
+
+                    } else if (actor.getName().equals("SHARE")) {
+                        //Gdx.app.debug(TAG, "Share button clicked.");
+
+                    } else if (actor.getName().equals("menuButton") || actor.getName().equals("IMAGE_BACKGROUND")) {
+                        //Gdx.app.debug(TAG, "Menu button clicked.");
+                        System.out.println("****************************************************************");
+                        image_background.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
+                        slideMenu.showManually(closed);
+
+                    } else if (actor.getName().contains("MUSIC")) {
+                        //Gdx.app.debug(TAG, "Music button clicked.");
+
+                        //icon_music.setVisible(!icon_music.isVisible());
+                        //icon_off_music.setVisible(!icon_off_music.isVisible());
+                    }
+                }
+            };
+
+            menuButton.addListener(listener);
+        image_background.addListener(listener);
+        //Utils.addListeners(listener, icon_rate, icon_share, icon_music, icon_off_music, menuButton, image_background);
     }
 
     @Override

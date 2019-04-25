@@ -38,7 +38,7 @@ public class AssetHandler {
     public static TextureRegion
             bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgNighttexture, bgNighttexture2,bgGoldtexture, bgGoldtexture2,
             bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture,
-            boosttexture,boostdown,logo, playdown, play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu,
+            boosttexture,boostdown,logo,slidemenuBg, menuButton, rateButton, shareButton, playdown, play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu,
             menudown, score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized, coinSymbol, reticle,
             bgCloudSeparatorTexture, airshipBalloon, airshipSideThruster, airshipBurnerPipe, dragCircle, dragLine;
 
@@ -192,6 +192,10 @@ public class AssetHandler {
         worldStabilized.flip(false, true);
 */
         logo = tA.findRegion("companyLogo");
+        slidemenuBg = tA.findRegion("slideMenuBackground");
+        menuButton = tA.findRegion("menuButton");
+        shareButton = tA.findRegion("shareButton");
+        rateButton = tA.findRegion("rateButton");
 /*
         newHighscoretexture = new Texture(Gdx.files.internal("ui"+File.separator+"newHighscore.png"));
         newHighscoretexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -426,7 +430,6 @@ public class AssetHandler {
     }
 
     public static Sound turretSound(char type, int lvl) {
-        System.out.println("Turret sound is: "+type+lvl+".mp3");
         return Gdx.audio.newSound(Gdx.files.internal("textures"+File.separator+"sprites"+File.separator+"turrets"+File.separator+type+File.separator+type+lvl+".mp3"));
     }
 
@@ -596,7 +599,7 @@ public class AssetHandler {
             } else{
                 musiciterator=0;
             }
-            list[musiciterator].setVolume(0.4f);
+            list[musiciterator].setVolume(0.6f);
             list[musiciterator].play();
             list[musiciterator].setLooping(true);
         } else{ //menumusic
@@ -606,7 +609,7 @@ public class AssetHandler {
                 list[menumusiciterator].setLooping(true);
             } else{*/
                 menumusiciterator=0;
-            list[menumusiciterator].setVolume(0.4f);
+            list[menumusiciterator].setVolume(0.6f);
             list[menumusiciterator].play();
             list[menumusiciterator].setLooping(true);
             //)

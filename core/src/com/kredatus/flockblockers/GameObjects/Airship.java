@@ -287,7 +287,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 }
             }
         }
-        System.out.println("New rackpositions of size "+positions.size());
+        //System.out.println("New rackpositions of size "+positions.size());
     }
 
     private void assignTextures(int armorLvl, int rackLvl) {
