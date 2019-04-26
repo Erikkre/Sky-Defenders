@@ -26,7 +26,7 @@ public class SlideMenu extends Table {
     // when the user swipes a finger from the right edge of the screen, it goes into off-screen after (widthBack = 20F;).
     private float widthBack = 20f;
     private float heightStart = 0f;
-    private float heightBack = 20f;
+    private float heightBack = 0f;
     // speed of dragging
     private float speed = 15f;
 
@@ -130,8 +130,9 @@ public class SlideMenu extends Table {
             } else
                 noDragY();
 
+
             updatePositionY();
-            moving();
+            movingY();
             moveMenuButtonY();
 
         } else if (originEdge.equals("left")) {
@@ -166,7 +167,7 @@ public class SlideMenu extends Table {
                 noDragX();
 
             updatePositionX();
-            moving();
+            movingX();
             moveMenuButtonX();
         }
 
@@ -176,7 +177,7 @@ public class SlideMenu extends Table {
     private boolean isMax = false;
     private boolean isMin = false;
 
-    private void moving() {
+    private void movingX() {
         if (listener == null)
             return;
         if (!isCompletelyClosedX() && !isCompletelyOpenedX()) {
@@ -188,6 +189,24 @@ public class SlideMenu extends Table {
                 listener.moving(clamp);
             }
             if (!isMin && isCompletelyClosedX()) {
+                isMin = true;
+                isMax = false;
+                listener.moving(clamp);
+            }
+        }
+    }
+    private void movingY() {
+        if (listener == null)
+            return;
+        if (!isCompletelyClosedY() && !isCompletelyOpenedY()) {
+            listener.moving(clamp);
+        } else {
+            if (!isMax && isCompletelyOpenedY()) {
+                isMax = true;
+                isMin = false;
+                listener.moving(clamp);
+            }
+            if (!isMin && isCompletelyClosedY()) {
                 isMin = true;
                 isMax = false;
                 listener.moving(clamp);
@@ -349,8 +368,10 @@ public class SlideMenu extends Table {
             menuButton.setPosition(clamp.x,menuButton.getY());
     }
     private void moveMenuButtonY() {
-        if (ismoveMenuButton)
-            menuButton.setPosition(menuButton.getX(),clamp.y);
+        if (ismoveMenuButton) {
+            System.out.println("moving");
+            menuButton.setPosition(menuButton.getX(), clamp.y);
+        }
     }
     
     /*public void setRotateMenuButton(Actor actor, float rotation) {
