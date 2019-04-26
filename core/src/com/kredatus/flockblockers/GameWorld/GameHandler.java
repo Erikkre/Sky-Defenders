@@ -56,7 +56,8 @@ public class GameHandler implements Screen {
     public boolean isPaused=false;
     public static double timeOfPause, timeOfResume;
     public int birdType = FlockBlockersMain.birdType;
-    Airship airship;
+    private Airship airship;
+    private Actor menuButtonActor;
     public GameHandler() {
         float screenWidth = Gdx.graphics.getWidth();
         float screenHeight = Gdx.graphics.getHeight();
@@ -117,9 +118,9 @@ public class GameHandler implements Screen {
 */
         // initialize NavigationDrawer
         final float NAV_WIDTH = 100F;
-        final float NAV_HEIGHT = 900F;
+        final float NAV_HEIGHT = 1000F;
 
-        final SlideMenu slideMenu = new SlideMenu(NAV_WIDTH, NAV_HEIGHT, "right");
+        final SlideMenu slideMenu = new SlideMenu(NAV_WIDTH,NAV_HEIGHT,"left",camWidth,camHeight);//left or down
         Sprite temp=new Sprite(AssetHandler.slidemenuBg);
         temp.setColor(Color.BLACK);
         final Image image_background = new Image(new SpriteDrawable(temp));
@@ -139,13 +140,13 @@ public class GameHandler implements Screen {
         // setup attributes for menu navigation slideMenu.
         slideMenu.setBackground(image_background.getDrawable());
         slideMenu.bottom().right();
-        slideMenu.setWidthStartDrag(40f);
-        slideMenu.setWidthBackDrag(0F);
+        slideMenu.setWidthStartDrag(0);
+        slideMenu.setWidthBackDrag(0);
         slideMenu.setTouchable(Touchable.enabled);
 
         /* z-index = 1 */
         // add image_background as a separating actor into stage to make smooth shadow with dragging value.
-        image_background.setFillParent(true);
+        //image_background.setWidth(slideMenu.getWidth()*0.1f);image_background.setHeight(slideMenu.getHeight());
         //uiHandler.stage.addActor(image_background);
         //slideMenu.setFadeBackground(image_background, 0.5f);
 
@@ -154,7 +155,9 @@ public class GameHandler implements Screen {
 
         /* z-index = 3 */
         // add button_menu as a separating actor into stage to rotates with dragging value.
+        menuButton.setPosition(10,10);menuButton.sizeBy(-30);
         menuButton.setOrigin(Align.center);
+        menuButtonActor=menuButton;
         uiHandler.stage.addActor(menuButton);
         slideMenu.setRotateMenuButton(menuButton, 90f);
 
@@ -190,10 +193,10 @@ public class GameHandler implements Screen {
 
                     } else if (actor.getName().equals("menuButton") || actor.getName().equals("IMAGE_BACKGROUND")) {
                         //Gdx.app.debug(TAG, "Menu button clicked.");
-                        System.out.println("****************************************************************");
+                        //System.out.println("****************************************************************");
                         image_background.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
                         slideMenu.showManually(closed);
-
+                        System.out.println("**************************************************************lol");
                     } else if (actor.getName().contains("MUSIC")) {
                         //Gdx.app.debug(TAG, "Music button clicked.");
 

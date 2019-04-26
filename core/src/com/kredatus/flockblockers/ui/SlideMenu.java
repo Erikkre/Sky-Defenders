@@ -17,6 +17,7 @@ public class SlideMenu extends Table {
     private float areaWidth;
     private float areaHeight;
     private String originEdge;
+    private float camWidth, camHeight;
     private final Rectangle areaBounds = new Rectangle();
     private final Rectangle scissorBounds = new Rectangle();
 
@@ -49,13 +50,13 @@ public class SlideMenu extends Table {
         this.areaHeight = areaHeight;
     }
 
-    public SlideMenu(float width, float height, String originEdge) {
+    public SlideMenu(float width, float height, String originEdge, float camWidth, float camHeight) {
         this.areaWidth = width;
         this.areaHeight = height;
         this.originEdge = originEdge;
         this.setSize(width, height);
-
-
+        this.camWidth=camWidth;
+        this.camHeight=camHeight;
     }
 
     private SlideMenuListener listener;
@@ -97,11 +98,37 @@ public class SlideMenu extends Table {
 
     @Override
     public void draw(Batch batch, float alpha) {
-        if (originEdge.equals("right")) {
+        if (originEdge.equals("down")) {
+            getStage().calculateScissors(areaBounds.set(0, 0, areaWidth, areaHeight), scissorBounds);
+            batch.flush();
+            if (ScissorStack.pushScissors(scissorBounds)) {
+                super.draw(batch, alpha);
+                batch.flush();
+                ScissorStack.popScissors();
+            }
 
-        } else if (originEdge.equals("down")){
+            if (isTouched() && inputX() < stgToScrX(this.getWidth(), 0).x) {
+                auto = false;
+                if (!isTouched) {
+                    isTouched = true;
+                    first.set(scrToStgX(inputX(), 0));
+                }
+                last.set(scrToStgX(inputX(), 0)).sub(first);
 
-        }else if (originEdge.equals("left")){
+                if (isCompletelyClosed()) // open = false, close = true;
+                    startDrag();
+
+                if ((isStart || isBack) && enableDrag) // open = false, close =
+                    // false;
+                    if (inputX() > stgToScrX(widthStart, 0).x)
+                        dragging();
+
+                if (isCompletelyOpened()) // open = true, close = false;
+                    backDrag();
+
+            } else
+                noDrag();
+        } else if (originEdge.equals("left")) {
             getStage().calculateScissors(areaBounds.set(0, 0, areaWidth, areaHeight), scissorBounds);
             batch.flush();
             if (ScissorStack.pushScissors(scissorBounds)) {
