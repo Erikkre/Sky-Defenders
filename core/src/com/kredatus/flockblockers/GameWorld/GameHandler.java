@@ -120,13 +120,12 @@ public class GameHandler implements Screen {
                 boolean closed = slideMenuBottom.isCompletelyClosedY();
                 Actor actor = event.getTarget();
                 //System.out.println(32123132132321f);
-                if (actor.getName().equals("menuButtonY")||actor.getName().equals("IMAGE_BACKGROUNDX")) {
+                if (actor.getName().equals("menuButtonY")||actor.getName().equals("IMAGE_BACKGROUNDY")) {
                     //Gdx.app.debug(TAG, "Menu button clicked.");
-
+                    System.out.println("*********************************************************");
                     image_backgroundY.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
                     slideMenuBottom.showManually(closed);
                     System.out.println("leftSlideMenu clicked");
-                    menuButtonY.rotateBy(180);
                 }
             }
         };
@@ -134,6 +133,7 @@ public class GameHandler implements Screen {
         menuButtonY.addListener(listenerY);
         image_backgroundY.addListener(listenerY);
         //private static final String TAG = TestScreen.class.getSimpleName();
+
 
         /**     ****************************************LEFT SLIDING MENU*****************************************     **/
         final SlideMenu slideMenuLeft = new SlideMenu(camWidth/9f,camHeight,"left",camWidth,camHeight);//left or down
@@ -184,8 +184,8 @@ public class GameHandler implements Screen {
          slideMenuLeft.setAreaWidth(NAV_WIDTH + image_shadow.getWidth());
          slideMenuLeft.addActor(image_shadow);*/
 
-         // show the panel
-         slideMenuLeft.showManually(true);
+        // show the panel
+        slideMenuLeft.showManually(true);
 
 
 
@@ -193,38 +193,38 @@ public class GameHandler implements Screen {
             icon_share.setName("SHARE");
             icon_music.setName("MUSIC_ON");
             icon_off_music.setName("MUSIC_OFF");*/
-            menuButtonX.setName("menuButtonX");
-            image_backgroundX.setName("IMAGE_BACKGROUNDX");
+        menuButtonX.setName("menuButtonX");
+        image_backgroundX.setName("IMAGE_BACKGROUNDX");
 
-            ClickListener listenerX = new ClickListener() {
-                public void clicked(InputEvent event, float x, float y) {
-                    boolean closed = slideMenuLeft.isCompletelyClosedX();
-                    Actor actor = event.getTarget();
-                    //System.out.println(32123132132321f);
-                    if (actor.getName().equals("RATE")) {
-                        //Gdx.app.debug(TAG, "Rate button clicked.");
+        ClickListener listenerX = new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                boolean closed = slideMenuLeft.isCompletelyClosedX();
+                Actor actor = event.getTarget();
+                //System.out.println(32123132132321f);
+                if (actor.getName().equals("RATE")) {
+                    //Gdx.app.debug(TAG, "Rate button clicked.");
 
-                    } else if (actor.getName().equals("SHARE")) {
-                        //Gdx.app.debug(TAG, "Share button clicked.");
+                } else if (actor.getName().equals("SHARE")) {
+                    //Gdx.app.debug(TAG, "Share button clicked.");
 
 
-                    } else if (actor.getName().contains("MUSIC")) {
-                        //Gdx.app.debug(TAG, "Music button clicked.");
+                } else if (actor.getName().contains("MUSIC")) {
+                    //Gdx.app.debug(TAG, "Music button clicked.");
 
-                        //icon_music.setVisible(!icon_music.isVisible());
-                        //icon_off_music.setVisible(!icon_off_music.isVisible());
-                    } else if (actor.getName().equals("menuButtonX")||actor.getName().equals("IMAGE_BACKGROUNDY")) {
-                        //Gdx.app.debug(TAG, "Menu button clicked.");
+                    //icon_music.setVisible(!icon_music.isVisible());
+                    //icon_off_music.setVisible(!icon_off_music.isVisible());
+                } else if (actor.getName().equals("menuButtonX")||actor.getName().equals("IMAGE_BACKGROUNDY")) {
+                    //Gdx.app.debug(TAG, "Menu button clicked.");
 
-                        image_backgroundX.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
-                        slideMenuLeft.showManually(closed);
-                        System.out.println("leftSlideMenu clicked");
-                        menuButtonX.rotateBy(180);
-                    }
+                    image_backgroundX.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
+                    slideMenuLeft.showManually(closed);
+                    System.out.println("leftSlideMenu clicked");
+                    menuButtonX.rotateBy(180);
                 }
-            };
+            }
+        };
 
-            menuButtonX.addListener(listenerX);
+        menuButtonX.addListener(listenerX);
         image_backgroundX.addListener(listenerX);
         //Utils.addListeners(listener, icon_rate, icon_share, icon_music, icon_off_music, menuButton, image_background);
     }
