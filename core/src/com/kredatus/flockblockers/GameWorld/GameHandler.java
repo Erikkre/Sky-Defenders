@@ -98,13 +98,13 @@ public class GameHandler implements Screen {
         renderer.assignButtonsUsingInputHandler(inputHandler);
 
         /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
-        final SlideMenu slideMenuBottom = new SlideMenu(camWidth/8f,camHeight/10f,"down",camWidth,camHeight);
+        final SlideMenu slideMenuBottom = new SlideMenu(80,80,"down",camWidth,camHeight);
         Sprite temp=new Sprite(AssetHandler.slidemenuBg);
         temp.setColor(new Color(0,0,0,0.5f));
         final Image image_backgroundY = new Image(new SpriteDrawable(temp));
         final Image menuButtonY = new Image(AssetHandler.menuButton);
         slideMenuBottom.setBackground(image_backgroundY.getDrawable());
-        slideMenuBottom.top();
+        slideMenuBottom.top().left();
         uiHandler.stage.addActor(slideMenuBottom);
         menuButtonY.rotateBy(90);menuButtonY.setWidth(menuButtonY.getWidth()*0.4f);menuButtonY.setHeight(menuButtonY.getHeight()*0.9f);menuButtonY.setColor(1,1,1,0.5f);
         menuButtonY.setOrigin(Align.center);menuButtonY.setX(camWidth/2f);
@@ -113,7 +113,7 @@ public class GameHandler implements Screen {
         slideMenuBottom.setMoveMenuButton(menuButtonY);
 
         menuButtonY.setName("menuButtonY");
-        image_backgroundY.setName("IMAGE_BACKGROUNDX");
+        image_backgroundY.setName("IMAGE_BACKGROUNDY");
 
         ClickListener listenerY = new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
@@ -135,7 +135,7 @@ public class GameHandler implements Screen {
         image_backgroundY.addListener(listenerY);
         //private static final String TAG = TestScreen.class.getSimpleName();
 
-        /**     ****************************************LEFT SLIDING MENU*****************************************     **//*
+        /**     ****************************************LEFT SLIDING MENU*****************************************     **/
         final SlideMenu slideMenuLeft = new SlideMenu(camWidth/9f,camHeight,"left",camWidth,camHeight);//left or down
         final Image image_backgroundX = new Image(new SpriteDrawable(temp));
         final Image menuButtonX = new Image(AssetHandler.menuButton);
@@ -164,10 +164,10 @@ public class GameHandler implements Screen {
         //uiHandler.stage.addActor(image_background);
         //slideMenuLeft.setFadeBackground(image_background, 0.5f);
 
-        /* z-index = 2 *//*
+        /* z-index = 2 */
         uiHandler.stage.addActor(slideMenuLeft);
 
-        /* z-index = 3 *//*
+        /* z-index = 3 */
         // add button_menu as a separating actor into stage to rotates with dragging value.
         menuButtonX.setY(camHeight/2f);menuButtonX.setWidth(menuButtonX.getWidth()*0.4f);menuButtonX.setHeight(menuButtonX.getHeight()*0.9f);menuButtonX.setColor(1,1,1,0.5f);
         menuButtonX.setOrigin(Align.center);
@@ -177,11 +177,12 @@ public class GameHandler implements Screen {
         //slideMenuLeft.setRotateMenuButton(menuButtonX, 90f);
 
         // Optional
+        /*
          Image image_shadow = new Image(atlas.findRegion("image_shadow"));
          image_shadow.setHeight(NAV_HEIGHT);
          image_shadow.setX(NAV_WIDTH);
          slideMenuLeft.setAreaWidth(NAV_WIDTH + image_shadow.getWidth());
-         slideMenuLeft.addActor(image_shadow);
+         slideMenuLeft.addActor(image_shadow);*/
 
          // show the panel
          slideMenuLeft.showManually(true);
@@ -191,7 +192,7 @@ public class GameHandler implements Screen {
             /*icon_rate.setName("RATE");
             icon_share.setName("SHARE");
             icon_music.setName("MUSIC_ON");
-            icon_off_music.setName("MUSIC_OFF");*//*
+            icon_off_music.setName("MUSIC_OFF");*/
             menuButtonX.setName("menuButtonX");
             image_backgroundX.setName("IMAGE_BACKGROUNDX");
 
@@ -225,7 +226,7 @@ public class GameHandler implements Screen {
 
             menuButtonX.addListener(listenerX);
         image_backgroundX.addListener(listenerX);
-        //Utils.addListeners(listener, icon_rate, icon_share, icon_music, icon_off_music, menuButton, image_background);*/
+        //Utils.addListeners(listener, icon_rate, icon_share, icon_music, icon_off_music, menuButton, image_background);
     }
 
     @Override

@@ -108,7 +108,7 @@ public class SlideMenu extends Table {
                 ScissorStack.popScissors();
             }
 
-            if (isTouched() && inputX() < stgToScrCoords(0, this.getHeight()).y) {
+            if (isTouched() && inputY() < stgToScrCoords(0, this.getHeight()).y) {
                 auto = false;
                 if (!isTouched) {
                     isTouched = true;
@@ -200,6 +200,7 @@ public class SlideMenu extends Table {
             return;
         if (!isCompletelyClosedY() && !isCompletelyOpenedY()) {
             listener.moving(clamp);
+            System.out.println(77);
         } else {
             if (!isMax && isCompletelyOpenedY()) {
                 isMax = true;
@@ -217,10 +218,12 @@ public class SlideMenu extends Table {
     private void updatePositionX() {
         clamp.set(MathUtils.clamp(end.x, 0, this.getWidth()), 0);
         this.setPosition(clamp.x, 0, Align.bottomRight);
+        System.out.println("Left slide menu: x: "+clamp.x+", y: "+clamp.y);
     }
     private void updatePositionY() {
-        clamp.set(MathUtils.clamp(end.y, 0, this.getHeight()), 0);
+        clamp.set(0, MathUtils.clamp(end.y, 0, this.getHeight()) );
         this.setPosition(0, clamp.y, Align.bottomRight);
+        System.out.println("Down slide menu: x: "+clamp.x+", y: "+clamp.y);
     }
     
     private void draggingX() {
@@ -369,7 +372,6 @@ public class SlideMenu extends Table {
     }
     private void moveMenuButtonY() {
         if (ismoveMenuButton) {
-            System.out.println("moving");
             menuButton.setPosition(menuButton.getX(), clamp.y);
         }
     }
