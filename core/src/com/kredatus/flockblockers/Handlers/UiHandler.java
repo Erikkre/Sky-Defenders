@@ -4,10 +4,15 @@ package com.kredatus.flockblockers.Handlers;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -39,11 +44,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
+import com.kredatus.flockblockers.ui.SlideMenu;
 
 import java.io.File;
 
@@ -71,7 +79,7 @@ public class UiHandler {
 
         Table rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.align(Align.bottomRight);
+        rootTable.align(Align.bottom);
         stage.addActor(rootTable);
 
         //rootTable.add(new Label("Shade UI", skin, "title")).colspan(3);
@@ -80,7 +88,14 @@ public class UiHandler {
         touchpad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         //touchpad2.setColor(1,1,1,1f);
 
-        rootTable.add(touchpad).fill(true).width(0.85f*touchpad.getPrefWidth()).height(0.85f*touchpad.getPrefHeight()).align(Align.bottomRight);
+        //keep original height ratio but sized down with current width: .height((touchpad.getPrefHeight()*touchpad.getWidth())/touchpad.getPrefWidth())
+        rootTable.add(touchpad).fill(true).width(camWidth/3.5f).height(camWidth/4f).padRight((camWidth*1.5f)/3.5f);
+
+        Touchpad touchpad2 = new Touchpad(0, skin);
+        touchpad2.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
+        //touchpad2.setColor(1,1,1,1f);
+
+        rootTable.add(touchpad2).fill(true).width(camWidth/3.5f).height(camWidth/4f);
         //rootTable.row();
 
         /*
@@ -228,5 +243,159 @@ public class UiHandler {
             }
         });
         */
+        setupSlidingMenus(camWidth,camHeight);
+    }
+    public void setupSlidingMenus(float camWidth,float camHeight){
+        /**     ****************************************LEFT SLIDING MENU*****************************************     **/
+        final SlideMenu slideMenuLeft = new SlideMenu(camWidth/9f,camHeight,"left",camWidth,camHeight);//left or down
+        Sprite temp=new Sprite(AssetHandler.slidemenuBg);
+        temp.setColor(new Color(0,0,0,0.5f));
+        final Image image_backgroundX = new Image(new SpriteDrawable(temp));
+        final Image menuButtonX = new Image(AssetHandler.menuButton);
+        final Image rateButton = new Image(AssetHandler.rateButton);
+        final Image shareButton = new Image(AssetHandler.shareButton);
+
+        // add items into drawer panel.
+        slideMenuLeft.add(shareButton).size(63, 85).pad(0, 52, 5, 52).expandX().row();
+        //slideMenuLeft.add().height(300f).row(); // empty space
+        slideMenuLeft.add(rateButton).pad(35, 52, 35, 52).expandX().row();
+        //slideMenuLeft.add(icon_share).pad(35, 52, 35, 52).expandX().row();
+
+        //icon_off_music.setVisible(false);
+        //slideMenuLeft.stack(icon_music, icon_off_music).pad(52, 52, 300, 52).expandX().row(); //one on top of the other
+
+        // setup attributes for menu navigation slideMenuLeft.
+        slideMenuLeft.setBackground(image_backgroundX.getDrawable());
+        slideMenuLeft.top().left();
+        //slideMenuLeft.setWidthStartDrag(0);
+        //slideMenuLeft.setWidthBackDrag(0);
+        //slideMenuLeft.setTouchable(Touchable.enabled);
+
+        /* z-index = 1 */
+        // add image_background as a separating actor into stage to make smooth shadow with dragging value.
+        //image_background.setWidth(slideMenuLeft.getWidth()*0.1f);image_background.setHeight(slideMenuLeft.getHeight());
+        //uiHandler.stage.addActor(image_background);
+        //slideMenuLeft.setFadeBackground(image_background, 0.5f);
+
+        /* z-index = 2 */
+        stage.addActor(slideMenuLeft);
+
+        /* z-index = 3 */
+        // add button_menu as a separating actor into stage to rotates with dragging value.
+        menuButtonX.setWidth(menuButtonX.getWidth()*0.4f);menuButtonX.setHeight(menuButtonX.getHeight()*0.9f);menuButtonX.setColor(1,1,1,0.5f);
+        menuButtonX.setOrigin(Align.center);menuButtonX.setY(camHeight/2f);
+        //menuButtonActor=menuButtonX;
+        stage.addActor(menuButtonX);
+        slideMenuLeft.setMoveMenuButton(menuButtonX);
+        //slideMenuLeft.setRotateMenuButton(menuButtonX, 90f);
+
+        // Optional
+        /*
+         Image image_shadow = new Image(atlas.findRegion("image_shadow"));
+         image_shadow.setHeight(NAV_HEIGHT);
+         image_shadow.setX(NAV_WIDTH);
+         slideMenuLeft.setAreaWidth(NAV_WIDTH + image_shadow.getWidth());
+         slideMenuLeft.addActor(image_shadow);*/
+
+        // show the panel
+        //slideMenuLeft.showManually(true);  //show panel manually
+        //System.out.println(image_backgroundX.getImageY());
+        //System.out.println(image_backgroundY.getImageY());
+
+            /*icon_rate.setName("RATE");
+            icon_share.setName("SHARE");
+            icon_music.setName("MUSIC_ON");
+            icon_off_music.setName("MUSIC_OFF");*/
+        menuButtonX.setName("menuButtonX");
+        image_backgroundX.setName("IMAGE_BACKGROUNDX");
+
+        ClickListener listenerX = new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                boolean closed = slideMenuLeft.isCompletelyClosedX();
+                Actor actor = event.getTarget();
+                //System.out.println(32123132132321f);
+                if (actor.getName().equals("RATE")) {
+                    //Gdx.app.debug(TAG, "Rate button clicked.");
+
+                } else if (actor.getName().equals("SHARE")) {
+                    //Gdx.app.debug(TAG, "Share button clicked.");
+
+
+                } else if (actor.getName().contains("MUSIC")) {
+                    //Gdx.app.debug(TAG, "Music button clicked.");
+
+                    //icon_music.setVisible(!icon_music.isVisible());
+                    //icon_off_music.setVisible(!icon_off_music.isVisible());
+                } else if (actor.getName().equals("menuButtonX")||actor.getName().equals("IMAGE_BACKGROUNDY")) {
+                    //Gdx.app.debug(TAG, "Menu button clicked.");
+
+                    image_backgroundX.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
+                    slideMenuLeft.showManually(closed);
+                    System.out.println("leftSlideMenu clicked");
+                    menuButtonX.rotateBy(180);
+                }
+            }
+        };
+
+        menuButtonX.addListener(listenerX);
+        image_backgroundX.addListener(listenerX);
+        //Utils.addListeners(listener, icon_rate, icon_share, icon_music, icon_off_music, menuButton, image_background);
+
+        /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
+        final SlideMenu slideMenuBottom = new SlideMenu(camWidth/2.5f,camHeight/8f,"down",camWidth,camHeight);
+        final Image image_backgroundY = new Image(new SpriteDrawable(temp));
+        final Image menuButtonY = new Image(AssetHandler.menuButton);
+
+
+
+        slideMenuBottom.add(shareButton).size(63, 85).expandX().row();
+        //slideMenuLeft.add().height(300f).row(); // empty space
+        slideMenuBottom.add(rateButton).expandX().row();
+
+
+        slideMenuBottom.background(image_backgroundY.getDrawable());
+        slideMenuBottom.top();
+
+
+        System.out.println(rateButton.getX()+" "+shareButton.getX());
+
+
+        stage.addActor(slideMenuBottom);
+        menuButtonY.rotateBy(90);menuButtonY.setWidth(menuButtonY.getWidth()*0.4f);menuButtonY.setHeight(menuButtonY.getHeight()*0.9f);menuButtonY.setColor(1,1,1,0.5f);
+        menuButtonY.setOrigin(Align.center);menuButtonY.setX(camWidth/2f-menuButtonX.getWidth()/2f);
+        //menuButtonActor=menuButtonY;
+        stage.addActor(menuButtonY);
+        slideMenuBottom.setMoveMenuButton(menuButtonY);
+
+        slideMenuBottom.showManually(true); //show panel
+
+        menuButtonY.setName("menuButtonY");
+        image_backgroundY.setName("IMAGE_BACKGROUNDY");
+
+        ClickListener listenerY = new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                boolean closed = slideMenuBottom.isCompletelyClosedY();
+                Actor actor = event.getTarget();
+                //System.out.println(32123132132321f);
+                if (actor.getName().equals("menuButtonY")||actor.getName().equals("IMAGE_BACKGROUNDY")) {
+                    //Gdx.app.debug(TAG, "Menu button clicked.");
+                    System.out.println("*********************************************************");
+                    image_backgroundY.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
+                    slideMenuBottom.showManually(closed);
+                    System.out.println("leftSlideMenu clicked");
+                }
+            }
+        };
+
+        menuButtonY.addListener(listenerY);
+        image_backgroundY.addListener(listenerY);
+        //private static final String TAG = TestScreen.class.getSimpleName();
+
+        //slideMenuBottom.pack();
+        //slideMenuBottom.setVisible(true);
+        //slideMenuBottom.setWidth(camWidth);
+        //slideMenuBottom.align(Align.center|Align.top);
+        //slideMenuBottom.setPosition(0, Gdx.graphics.getHeight());
+        //slideMenuBottom.setFillParent(true);
     }
 }

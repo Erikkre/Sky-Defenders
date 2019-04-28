@@ -30,7 +30,7 @@ public class SlideMenu extends Table {
     private float heightStart = 30f;
     private float heightBack = -20f;
     // speed of dragging
-    private float speed = 5f;
+    private float speed = 10f;
 
     // some attributes to make real draggingX
     private Vector2 clamp = new Vector2();
@@ -105,10 +105,12 @@ public class SlideMenu extends Table {
 
         //System.out.println(clamp.y);
         if (originEdge.equals("down")) {
+
+            //System.out.println();
             if (menuButton.getY()>areaHeight/2&&menuButton.getRotation()!=270) menuButton.setRotation(270);
             else if ( menuButton.getRotation()!=90&&menuButton.getY()<areaHeight/2 ) menuButton.setRotation(90);
 
-            getStage().calculateScissors(areaBounds.set(0, 0, areaWidth, areaHeight), scissorBounds);
+            getStage().calculateScissors(areaBounds.set(camWidth/2f -areaWidth/2f, 0, areaWidth, areaHeight), scissorBounds);
             batch.flush();
             if (ScissorStack.pushScissors(scissorBounds)) {
                 super.draw(batch, alpha);
@@ -235,7 +237,8 @@ public class SlideMenu extends Table {
     }
     private void updatePositionY() {
         clamp.set(0, MathUtils.clamp(end.y, 0, this.getHeight()) );
-        this.setPosition(0, clamp.y, Align.bottomRight);
+        //System.out.println(clamp.y);
+        this.setPosition(camWidth/2f-this.areaWidth/2f, clamp.y-getHeight());
         //System.out.println("Down slide menu: x: "+clamp.x+", y: "+clamp.y);
     }
     
