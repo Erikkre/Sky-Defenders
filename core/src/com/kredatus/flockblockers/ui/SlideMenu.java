@@ -120,8 +120,7 @@ public class SlideMenu extends Table {
                     ScissorStack.popScissors();
                 }
 
-                if (isTouched() && inputY() > stgToScrCoordsY(0, this.getHeight()).y && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
-                    System.out.println(inputX() + " " + camWidth / 2f + " " + areaWidth);
+                if (isTouched() && ( (isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()/3.5f).y) || (!isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()).y)) && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
                     auto = false;
                     if (!isTouched) {
                         isTouched = true;
@@ -163,7 +162,7 @@ public class SlideMenu extends Table {
                     ScissorStack.popScissors();
                 }
 
-                if (isTouched() && inputX() < stgToScrCoordsX(this.getWidth(), 0).x && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {
+                if (isTouched() && ( (isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth(), 0).x)|| (!isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth(), 0).x) ) && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {
                     auto = false;
                     if (!isTouched) {
                         isTouched = true;
@@ -399,11 +398,11 @@ public class SlideMenu extends Table {
 
     private void moveMenuButtonX() {
         if (ismoveMenuButton)
-            menuButton.setPosition(clamp.x,menuButton.getY());
+            menuButton.setPosition(clamp.x-7,menuButton.getY());
     }
     private void moveMenuButtonY() {
         if (ismoveMenuButton) {
-            menuButton.setPosition(menuButton.getX(), clamp.y-35);
+            menuButton.setPosition(menuButton.getX(), clamp.y-45);
         }
     }
     

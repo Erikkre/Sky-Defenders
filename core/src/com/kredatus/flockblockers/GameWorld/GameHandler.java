@@ -94,15 +94,11 @@ public class GameHandler implements Screen {
 
         world.setRenderer(renderer);
 
+
         uiHandler=new UiHandler(renderer.viewport, renderer.batcher, camWidth, camHeight);
         InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
         Gdx.input.setInputProcessor(uiHandler.stage);
-        renderer.assignButtonsUsingInputHandler(inputHandler);
-
-
-
-
-
+        renderer.assignButtonsUsingInputHandlerAndUiHandler(inputHandler, uiHandler);
     }
 
     @Override
@@ -114,9 +110,7 @@ public class GameHandler implements Screen {
 
             //Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
             //            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            uiHandler.stage.act(delta);
-            uiHandler.stage.draw();
-            renderer.batcher.setColor(Color.WHITE);
+
         }
     }
 

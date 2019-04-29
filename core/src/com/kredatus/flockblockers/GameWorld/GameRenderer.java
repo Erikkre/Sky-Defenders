@@ -166,13 +166,14 @@ public class GameRenderer {
         //System.out.println(batcher.getBlendDstFunc()+" "+batcher.getBlendDstFuncAlpha()+" "+batcher.getBlendSrcFunc()+" "+batcher.getBlendSrcFuncAlpha()+" "+batcher.getPackedColor());
     }
 
-    public void assignButtonsUsingInputHandler(InputHandler inputHandler){
+    public void assignButtonsUsingInputHandlerAndUiHandler(InputHandler inputHandler,UiHandler uiHandler){
         this.menuButtons = inputHandler.getMenuButtons();
         this.deathButtons = inputHandler.getDeathButtons();
 
         this.readyButton = inputHandler.getReadyButton();
         this.menuButton = inputHandler.getMenuButton();
         this.nextButton =  inputHandler.getNextButton();
+        this.uiHandler=uiHandler;
     }
     /*private void setupTweens() {
         Tween.registerAccessor(Value.class, new ValueAccessor());
@@ -769,6 +770,11 @@ public void setRotate(float angle){
             } else {
                 menuButton.draw(batcher);
             }*/
+            batcher.end();
+            uiHandler.stage.act(delta);
+            uiHandler.stage.draw();
+            batcher.setColor(Color.WHITE);
+            batcher.begin();
         }  else if (myWorld.isRunning()) {
             drawBackground();
             drawGlider(runTime);
