@@ -12,9 +12,12 @@ import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
+import com.kredatus.flockblockers.Handlers.UiHandler;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.swing.UIDefaults;
 
 /**
  * Created by Erik Kredatus on 9/9/2018.
@@ -245,7 +248,7 @@ public class Turret {
     }
 
     public void update() {
-        if (Gdx.input.justTouched()  && gunTargetPointer==-1 ) {   //airShip updates first so takes the spot
+        if (Gdx.input.justTouched()  && gunTargetPointer==-1 && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {   //airShip updates first so takes the spot
 
             //System.out.println("touched");
             if (Airship.airshipTouchPointer >= 0) {

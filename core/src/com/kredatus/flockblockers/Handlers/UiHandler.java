@@ -63,13 +63,14 @@ public class UiHandler {
     //public Skin skin=new Skin(Gdx.files.internal("ui/button.png"));
     public  Stage stage;
     public Skin skin;
+    public static Touchpad movPad, aimPad;
 
     public UiHandler(Viewport viewport, SpriteBatch batcher, float camWidth, float camHeight) {
         //nameLabel = new Label("Name: ", skin);
         //TextField nameText = new TextField("Name2: ", skin);
         //TextureAtlas
 
-       // table = new Table();
+        // table = new Table();
         //table.add(nameLabel);              // Row 0, column 0.
         //table.add(nameText).width(100);    // Row 0, column 1.
 
@@ -84,18 +85,19 @@ public class UiHandler {
 
         //rootTable.add(new Label("Shade UI", skin, "title")).colspan(3);
         rootTable.row();
-        Touchpad touchpad = new Touchpad(0, skin);
-        touchpad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
+        movPad = new Touchpad(0, skin);
+        movPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         //touchpad2.setColor(1,1,1,1f);
 
         //keep original height ratio but sized down with current width: .height((touchpad.getPrefHeight()*touchpad.getWidth())/touchpad.getPrefWidth())
-        rootTable.add(touchpad).fill(true).width(camWidth/3.5f).height(camWidth/4f).padRight((camWidth*1.5f)/3.5f);
+        rootTable.add(movPad).fill(true).width(camWidth/3.5f).height(camWidth/4f).padRight((camWidth*1.5f)/3.5f);
 
-        Touchpad touchpad2 = new Touchpad(0, skin);
-        touchpad2.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
+        aimPad = new Touchpad(0, skin);
+        aimPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         //touchpad2.setColor(1,1,1,1f);
 
-        rootTable.add(touchpad2).fill(true).width(camWidth/3.5f).height(camWidth/4f);
+        rootTable.add(aimPad).fill(true).width(camWidth/3.5f).height(camWidth/4f);
+        //aimPad.
         //rootTable.row();
 
         /*
@@ -245,7 +247,8 @@ public class UiHandler {
         */
         setupSlidingMenus(camWidth,camHeight);
     }
-    public void setupSlidingMenus(float camWidth,float camHeight){
+
+    public void setupSlidingMenus(float camWidth,float camHeight) {
         /**     ****************************************LEFT SLIDING MENU*****************************************     **/
         final SlideMenu slideMenuLeft = new SlideMenu(camWidth/9f,camHeight,"left",camWidth,camHeight);//left or down
         Sprite temp=new Sprite(AssetHandler.slidemenuBg);
@@ -348,9 +351,9 @@ public class UiHandler {
 
 
 
-        slideMenuBottom.add(shareButton).size(63, 85).expandX().row();
+        slideMenuBottom.add(shareButton).pad(5).row();
         //slideMenuLeft.add().height(300f).row(); // empty space
-        slideMenuBottom.add(rateButton).expandX().row();
+        slideMenuBottom.add(rateButton).pad(5).row();
 
 
         slideMenuBottom.background(image_backgroundY.getDrawable());
