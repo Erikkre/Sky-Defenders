@@ -203,15 +203,19 @@ public class Turret {
         //System.out.println("cancelled");
     }
 
-    private void setRotation(float xVel, float yVel, float yDistance, float xDistance){
-        float rotCompYDiff=((xVel*(Math.abs(yDistance)/(camHeight*4)))  *1.5f  )/(pen/1.5f);
-        float rotCompXDiff=yVel*((Math.abs(xDistance))/camWidth)*5;   //smaller and should be constant
-        targetRot = (int) (Math.toDegrees(Math.atan(yDistance / xDistance)) + rotCompYDiff + rotCompXDiff); //the further it is the more ahead we aim when vel increases
-        //System.out.println("Rot due to yDiff: " + rotCompYDiff + ", Rot due to xDiff: " + rotCompXDiff);
-        if        (xDistance > 0) { //(xDistance+position.x > position.x) {
-            targetRot += 180;
-        } else if (yDistance > 0) {
-            targetRot += 360;
+    private void setRotation(float xVel, float yVel, float yDistance, float xDistance, boolean aimPadAiming){
+        if (!aimPadAiming) {
+            float rotCompYDiff = ((xVel * (Math.abs(yDistance) / (camHeight * 4))) * 1.5f) / (pen / 1.5f);
+            float rotCompXDiff = yVel * ((Math.abs(xDistance)) / camWidth) * 5;   //smaller and should be constant
+            targetRot = (int) (Math.toDegrees(Math.atan(yDistance / xDistance)) + rotCompYDiff + rotCompXDiff); //the further it is the more ahead we aim when vel increases
+            //System.out.println("Rot due to yDiff: " + rotCompYDiff + ", Rot due to xDiff: " + rotCompXDiff);
+            if (xDistance > 0) { //(xDistance+position.x > position.x) {
+                targetRot += 180;
+            } else if (yDistance > 0) {
+                targetRot += 360;
+            }
+        } else {
+            targetRot = UiHandler.aimPad.getAngle
         }
     }
 
@@ -248,7 +252,7 @@ public class Turret {
     }
 
     public void update() {
-        if (Gdx.input.justTouched()  && gunTargetPointer==-1 && !UiHandler.isTouched) {   //airShip updates first so takes the spot
+        if (!UiHandler.aimPad.isTouched()   ||   (   Gdx.input.justTouched()  && gunTargetPointer==-1 && !UiHandler.isTouched   )    ) {   //airShip updates first so takes the spot
 
             //System.out.println("touched");
             if (Airship.airshipTouchPointer >= 0) {
@@ -270,7 +274,7 @@ public class Turret {
             }
         }
 
-        if (gunTargetPointer>=0&&Gdx.input.isTouched(gunTargetPointer)&&!Airship.pointerOnAirship(gunTargetPointer)) {
+        if (UiHandler.aimPad.isTouched()   ||   (   gunTargetPointer>=0&&Gdx.input.isTouched(gunTargetPointer)&&!Airship.pointerOnAirship(gunTargetPointer)   )   ) {
             if (projRotates) {
                 if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur) {//if half a second before throw time
                     if (!preThrowSpin) {preThrowSpin = true;rotAdded=spinStartSpeed;flipSpinDir=false;}
@@ -285,11 +289,13 @@ public class Turret {
                 }
             }
             lastFingerPosition.set(InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)),-(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight));
-            setRotation(0, 0,  lastFingerPosition.y - pos.y,lastFingerPosition.x  - pos.x);
+            if (!UiHandler.aimPad.isTouched() )   setRotation(0, 0,  lastFingerPosition.y - pos.y,lastFingerPosition.x  - pos.x, false);
+            else setRotation(0, 0,  0,0, true);
+
             if (!preThrowSpin) rotateToTarget();
 
             //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
-            if (!firing && (targetAquired||projRotates)) {
+            if (!firing && (targetAquired)) {
                 startFiring();
             }
         } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
@@ -322,7 +328,7 @@ public class Turret {
 
                     //System.out.println("1");
                     targetBird=TargetHandler.targetBird;
-                    setRotation(targetBird.xVel, targetBird.yVel,targetBird.y- pos.y, targetBird.x- pos.x);
+                    setRotation(targetBird.xVel, targetBird.yVel,targetBird.y- pos.y, targetBird.x- pos.x,false);
                     if (!preThrowSpin) rotateToTarget();
 
                 } else if (targetBird!=null&&targetBird.isAlive&&BirdHandler.activeBirdQueue.contains(targetBird)){
@@ -342,10 +348,10 @@ public class Turret {
                     //System.out.println("2 "+ BirdHandler.activeBirdQueue);
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is vel but needs to be better scaled
-                    setRotation( targetBird.xVel, targetBird.yVel,targetBird.y- pos.y, targetBird.x- pos.x);
+                    setRotation( targetBird.xVel, targetBird.yVel,targetBird.y- pos.y, targetBird.x- pos.x, false);
                     if (!preThrowSpin)rotateToTarget();
                     //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
-                    if (!firing && (targetAquired||projRotates)) {
+                    if (!firing && (targetAquired)) {
                         startFiring();
                     }
                 } else if (firing) {

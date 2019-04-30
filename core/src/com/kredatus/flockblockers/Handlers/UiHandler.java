@@ -98,7 +98,6 @@ public class UiHandler {
             public void touchUp(InputEvent event, float x, float y, int pnt, int btn) {
                 super.touchUp(event, x, y, pnt, btn);
                 isTouched=false;
-                System.out.println("touch made false");
                 super.cancel();
             }});
 
@@ -457,6 +456,6 @@ public class UiHandler {
     }
     public void update(float delta){
         stage.act(delta);//check if listened ui was touched
-        if (anyUITouched()){isTouched=true;    System.out.println("touch made true 4");}//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
+        if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
     }
 }

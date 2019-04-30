@@ -65,7 +65,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public TweenCallback endFlashing, endOfMovement;
     protected ArrayList<Float> flashLengths=new ArrayList<Float>();
 
-    public Tween tween, burnerLightTween, rightThrusterLightTween, leftThrusterLightTween, rotationTween;
+    public Tween movtween, burnerLightTween, rightThrusterLightTween, leftThrusterLightTween, rotationTween;
     float inputX, inputY, speed;
     public static boolean airshipTouched;
 
@@ -139,7 +139,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         thrusterOrigPos=new Vector2(pos.x, pos.y+thrusterYPosition*balloonHeight+thrusterHeight/2f);
 
-        tween=Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(1f).start();
+        movtween =Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(1f).start();
         rotationTween=Tween.to(rotation,0,2).waypoint((pos.x-(camWidth-balloonWidth))/25f).target(0).ease(TweenEquations.easeOutCirc).delay(1).start();
         assignRackPositions();
 
@@ -341,7 +341,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     private void setDestAirship(){
-        if (airshipTouchPointer==-1 && Gdx.input.justTouched()) { //if new press and not pressed before
+        if ( airshipTouchPointer==-1 && Gdx.input.justTouched()) { //if new press and not pressed before
             //System.out.println(InputHandler.scaleX(Gdx.input.getX())+ " *** "+  InputHandler.scaleY(Gdx.input.getY()) );
             airshipTouchPointer=getAirshipTouchPointer();
             if (airshipTouchPointer>=0) {
@@ -351,40 +351,49 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 fingerAirshipXDiff=inputX-pos.x;fingerAirshipYDiff=inputY-pos.y+balloonBob.get();//fingerAirshipDiff doesnt change while finger is pressed which is why we get it once here
             }
 
-        } else if (airshipTouchPointer>=0 && Gdx.input.isTouched(airshipTouchPointer) &&
+        } else if (UiHandler.movPad.isTouched() || (airshipTouchPointer>=0 && Gdx.input.isTouched(airshipTouchPointer) &&
                 (     Math.abs((inputX+fingerAirshipXDiff)-InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer))  ) >0
-                    ||Math.abs((inputY+fingerAirshipYDiff)+(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)  ) >0     )     ) { //if (after first press) and (airship was pressed) and (airship currently pressed)
-            //System.out.println("AIRSHIP POINTER MOVED");
-            inputX = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff ;//input with finger touch difference
-            inputY = -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight) - fingerAirshipYDiff ;
+                    ||Math.abs((inputY+fingerAirshipYDiff)+(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)  ) >0     )     )     ) { //if (after first press) and (airship currently pressed)
 
-            if (isOnCam(inputX, inputY)) {
-                timeToTweenTarget= (float) (Math.sqrt(Math.pow(Math.abs(pos.x-inputX),2)+Math.pow(Math.abs(pos.y+balloonBob.get()-inputY),2)))/speed;
+            //System.out.println("AIRSHIP POINTER MOVED OR MOVPAD MOVED");
+            if (UiHandler.movPad.isTouched()){
+                if (inputX==0)inputX=pos.x;if (inputY==0)inputY=pos.y;
+                airshipTouchPointer=-1; fingerAirshipXDiff=0;fingerAirshipYDiff=0;
+                if (inputX+UiHandler.movPad.getKnobPercentX()*5>0&&inputX+UiHandler.movPad.getKnobPercentX()*5<camWidth)inputX+=UiHandler.movPad.getKnobPercentX()*7;
+                if (inputY+UiHandler.movPad.getKnobPercentY()*5>0&&inputY+UiHandler.movPad.getKnobPercentY()*5<camHeight)inputY+=UiHandler.movPad.getKnobPercentY()*7;
+
+            } else {
+                inputX = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff;//input with finger touch difference
+                inputY = -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer)) - camHeight) - fingerAirshipYDiff;
+            }
+
+            if (UiHandler.movPad.isTouched()|| isOnCam(inputX, inputY)) {
+                timeToTweenTarget = (float) (Math.sqrt(Math.pow(Math.abs(pos.x - inputX), 2) + Math.pow(Math.abs(pos.y + balloonBob.get() - inputY), 2))) / speed;
                 //if (distance/speedDivisor<1.5f){//if distance is so small it takes under 1.5s to get there, take 1.5s anyways
                 //    tween = Tween.to(pos, 0, 1.5f).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
                 //} else {
 
-                tween = Tween.to(pos, 0, timeToTweenTarget ).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
-                tweenTarget.set(inputX+fingerAirshipXDiff,inputY+fingerAirshipYDiff);
+                movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
+                tweenTarget.set(inputX + fingerAirshipXDiff, inputY + fingerAirshipYDiff);
 
                 dragLineOpacity.set(0.4f);
 
-                if (timeToTweenTarget>2) {
+                if (timeToTweenTarget > 2) {
                     dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.24f).target(-1).ease(TweenEquations.easeInSine).start();
                 } else {
                     dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
                 }
 
-                rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x-inputX)/25f).target(0).ease(TweenEquations.easeOutCirc).start();
+                rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
                 //rotate to waypoint based on x distance, then back to itself
             }
 
-            if (Gdx.input.getDeltaX(airshipTouchPointer)<-3) {
+            if (Gdx.input.getDeltaX(airshipTouchPointer) < -3) {
                 fireThruster(2);
                 //System.out.println("Thrust Right");
-            } else if (Gdx.input.getDeltaX(airshipTouchPointer)>3) {
+            } else if (Gdx.input.getDeltaX(airshipTouchPointer) > 3) {
                 fireThruster(1);
-               // System.out.println("Thrust Left");
+                // System.out.println("Thrust Left");
             }
 
             //if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
@@ -593,7 +602,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (rightThrusterLightTween!=null && !rightThrusterLightTween.isFinished()) rightThrusterLightTween.update(delta);
 
         //0 is burner, 1 is thrustLeft, 2 is thrustRight
-        if (!tween.isFinished()) { //if moving
+        if (!movtween.isFinished()) { //if moving
             dragLineFadeout.update(delta);
             if (!BgHandler.isbgVertFast&&!BgHandler.endWaveBgMotion) {
                 burnerOnOff();//if not moving quickly
@@ -610,7 +619,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
             preX=pos.x;
             preY=pos.y+balloonBob.get();
-            tween.update(delta);
+            movtween.update(delta);
             rotationTween.update(delta);
             vel.set(pos.x-preX, pos.y+balloonBob.get()-preY);
 
