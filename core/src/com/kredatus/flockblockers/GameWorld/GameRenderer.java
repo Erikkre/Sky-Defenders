@@ -771,7 +771,6 @@ public void setRotate(float angle){
                 menuButton.draw(batcher);
             }*/
             batcher.end();
-            uiHandler.stage.act(delta);
             uiHandler.stage.draw();
             batcher.setColor(Color.WHITE);
             batcher.begin();

@@ -106,6 +106,7 @@ public class GameWorld {
         bgHandler.update(delta);
         birdHandler.update();
         //turretHandler.update();
+        uiHandler.stage.act(delta);
         airship.update(delta);
         targetHandler.update(delta, runTime);
         tinyBirdHandler.update(delta);
@@ -234,7 +235,8 @@ public class GameWorld {
         return currentState == GameState.CREDITS;
     }
 
-    public void setRenderer(GameRenderer renderer) {
+    public void setRendererAndUIHandler(GameRenderer renderer, UiHandler uiHandler) {
         this.renderer = renderer;
+        this.uiHandler=uiHandler;
     }
 }

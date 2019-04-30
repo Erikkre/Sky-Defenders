@@ -64,7 +64,7 @@ public class UiHandler {
     public  Stage stage;
     public Skin skin;
     public static Touchpad movPad, aimPad;
-
+    public static SlideMenu slideMenuLeft, slideMenuBottom;
     public UiHandler(Viewport viewport, SpriteBatch batcher, float camWidth, float camHeight) {
         //nameLabel = new Label("Name: ", skin);
         //TextField nameText = new TextField("Name2: ", skin);
@@ -250,7 +250,7 @@ public class UiHandler {
 
     public void setupSlidingMenus(float camWidth,float camHeight) {
         /**     ****************************************LEFT SLIDING MENU*****************************************     **/
-        final SlideMenu slideMenuLeft = new SlideMenu(camWidth/9f,camHeight,"left",camWidth,camHeight);//left or down
+        slideMenuLeft = new SlideMenu(camWidth/9f,camHeight,"left",camWidth,camHeight);//left or down
         Sprite temp=new Sprite(AssetHandler.slidemenuBg);
         temp.setColor(new Color(0,0,0,0.5f));
         final Image image_backgroundX = new Image(new SpriteDrawable(temp));
@@ -313,9 +313,9 @@ public class UiHandler {
         menuButtonX.setName("menuButtonX");
         image_backgroundX.setName("IMAGE_BACKGROUNDX");
 
-        ClickListener listenerX = new ClickListener() {
+        slideMenuLeft.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                boolean closed = slideMenuLeft.isCompletelyClosedX();
+                //super.touchUp(event, x, y, 0, 0);
                 Actor actor = event.getTarget();
                 //System.out.println(32123132132321f);
                 if (actor.getName().equals("RATE")) {
@@ -330,25 +330,26 @@ public class UiHandler {
                     System.out.println("Music button clicked.");
                     //icon_music.setVisible(!icon_music.isVisible());
                     //icon_off_music.setVisible(!icon_off_music.isVisible());
-                } else if (actor.getName().equals("menuButtonX")) {
-                    //Gdx.app.debug(TAG, "Menu button clicked.");
+                }
+                super.cancel();
+            }
+        });
 
+        menuButtonX.addListener(new ClickListener(){//separate listener for touch up events
+            public void touchUp(InputEvent event, float x, float y, int pntr, int btton) {
+                if (event.getTarget().getName().equals("menuButtonX")) {
+                    System.out.println("Left menu clicked");
+                    boolean closed = slideMenuLeft.isCompletelyClosedY();
                     image_backgroundX.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
                     slideMenuLeft.showManually(closed);
-                    System.out.println("leftSlideMenu clicked");
-                    menuButtonX.rotateBy(180);
                 }
-            }
-        };
-
-        menuButtonX.addListener(listenerX);
-        //image_backgroundX.addListener(listenerX);
-        slideMenuLeft.addListener(listenerX);
+                super.cancel();
+            }});
         //Utils.addListeners(listener, icon_rate, icon_share, icon_music, icon_off_music, menuButton, image_background);
 
 
         /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
-        final SlideMenu slideMenuBottom = new SlideMenu(camWidth/2.5f,camHeight/8f,"down",camWidth,camHeight);
+        slideMenuBottom = new SlideMenu(camWidth/2.5f,camHeight/8f,"down",camWidth,camHeight);
         final Image image_backgroundY = new Image(new SpriteDrawable(temp));
         final Image menuButtonY = new Image(AssetHandler.menuButton);
 
@@ -373,9 +374,8 @@ public class UiHandler {
         menuButtonY.setName("menuButtonY");
         //image_backgroundY.setName("IMAGE_BACKGROUNDY");
 
-        ClickListener listenerY = new ClickListener() {
+        slideMenuBottom.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                boolean closed = slideMenuBottom.isCompletelyClosedY();
                 Actor actor = event.getTarget();
                 //System.out.println(32123132132321f);
                 if (actor.getName().equals("RATE")) {
@@ -390,19 +390,23 @@ public class UiHandler {
                     System.out.println("Music button clicked.");
                     //icon_music.setVisible(!icon_music.isVisible());
                     //icon_off_music.setVisible(!icon_off_music.isVisible());
-                } else if (actor.getName().equals("menuButtonY")) {
-                    //Gdx.app.debug(TAG, "Menu button clicked.");
-                    System.out.println("*********************************************************");
+                }
+                super.cancel();
+            }
+        });
+
+        menuButtonY.addListener(new ClickListener(){//separate listener for touch up events
+            public void touchUp(InputEvent event, float x, float y, int pntr, int btton) {
+                if (event.getTarget().getName().equals("menuButtonY")) {
+                    boolean closed = slideMenuBottom.isCompletelyClosedY();
                     image_backgroundY.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
                     slideMenuBottom.showManually(closed);
-                    System.out.println("leftSlideMenu clicked");
                 }
-            }
-        };
+                super.cancel();
+            }});
 
-        menuButtonY.addListener(listenerY);
         //image_backgroundY.addListener(listenerY);
-        slideMenuBottom.addListener(listenerY);
+        //slideMenuBottom.addListener(listenerY);
         //private static final String TAG = TestScreen.class.getSimpleName();
 
         //slideMenuBottom.pack();

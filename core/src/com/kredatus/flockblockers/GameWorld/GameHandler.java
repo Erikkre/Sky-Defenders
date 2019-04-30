@@ -67,13 +67,11 @@ public class GameHandler implements Screen {
         camWidth= (int) (camHeight* (screenWidth/screenHeight)) ;
         //System.out.println("width: "+camWidth);
 
-
         Tween.registerAccessor(Value.class, new ValueAccessor());
         Tween.registerAccessor(BirdAbstractClass.class, new BirdAccessor());
         Tween.registerAccessor(Vector2.class, new VectorAccessor());
         Tween.registerAccessor(Light.class, new LightAccessor());
         Tween.setWaypointsLimit(10);
-
 
         tinyBirdHandler = new TinyBirdHandler();
         bgHandler = new BgHandler(camWidth, camHeight, birdType);
@@ -92,10 +90,11 @@ public class GameHandler implements Screen {
         bgHandler.setRendererAndCam(renderer);
         lightHandler.setCam(renderer);
 
-        world.setRenderer(renderer);
+
 
 
         uiHandler=new UiHandler(renderer.viewport, renderer.batcher, camWidth, camHeight);
+        world.setRendererAndUIHandler(renderer, uiHandler);
         InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
         Gdx.input.setInputProcessor(uiHandler.stage);
         renderer.assignButtonsUsingInputHandlerAndUiHandler(inputHandler, uiHandler);
@@ -107,10 +106,8 @@ public class GameHandler implements Screen {
             runTime += delta;
             world.update(delta, runTime);
             renderer.render(delta, runTime);
-
             //Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
             //            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         }
     }
 

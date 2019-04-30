@@ -2,6 +2,7 @@ package com.kredatus.flockblockers.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -25,10 +26,10 @@ public class SlideMenu extends Table {
     private final Rectangle scissorBounds = new Rectangle();
 
     // it's revealed with (widthStart = 60F;) when the user swipes a finger from the left edge of the screen with start touch.
-    private float widthStart = 30f;
+    private float widthStart = 15f;
     // when the user swipes a finger from the right edge of the screen, it goes into off-screen after (widthBack = 20F;).
     private float widthBack = 0f;
-    private float heightStart = 30f;
+    private float heightStart = 15f;
     private float heightBack = 0f;
     // speed of dragging
     private float speed = 15f;
@@ -41,19 +42,11 @@ public class SlideMenu extends Table {
     private Vector2 last = new Vector2();
 
     private boolean show = false;
-    private boolean isTouched = false;
+    public boolean isTouched = false;
     private boolean isStart = false;
     private boolean isBack = false;
     private boolean auto = false;
     private boolean enableDrag = true;
-
-    public void setAreaWidth(float areaWidth) {
-        this.areaWidth = areaWidth;
-    }
-
-    public void setAreaHeight(float areaHeight) {
-        this.areaHeight = areaHeight;
-    }
 
     public SlideMenu(float width, float height, String originEdge, float camWidth, float camHeight) {
         this.areaWidth = width;
@@ -62,25 +55,10 @@ public class SlideMenu extends Table {
         this.setSize(width, height);
         this.camWidth=camWidth;
         this.camHeight=camHeight;
+
+
     }
 
-    private SlideMenuListener listener;
-
-    public interface SlideMenuListener {
-        void moving(Vector2 clamp);
-    }
-
-    public void setSlideMenuListener(SlideMenuListener listener) {
-        this.listener = listener;
-    }
-
-    /*public void setWidthstartDrag(float widthstartDragX) {
-        this.widthStart = widthstartDragX;
-    }
-
-    public void setWidthBackDrag(float widthBackDrag) {
-        this.widthBack = widthBackDrag;
-    }*/
 
     public void setSpeed(float speed) {
         this.speed = speed;
@@ -91,9 +69,12 @@ public class SlideMenu extends Table {
     }
 
     public void showManually(boolean show, float speed) {
-        this.auto = true;
-        this.show = show;
-        this.speed = speed;
+        if (!auto) {
+            this.auto = true;
+            this.show = show;
+            this.speed = speed;
+        }
+        //System.out.println(show);
     }
 
     public void showManually(boolean show) {
@@ -102,135 +83,59 @@ public class SlideMenu extends Table {
 
     @Override
     public void draw(Batch batch, float alpha) {
+        noDrag();
 
-            //System.out.println(clamp.y);
-            if (originEdge.equals("down")) {
+        if (originEdge.equals("down")) {
+            if (menuButton.getY() > areaHeight / 2 && menuButton.getRotation() != 270)
+                menuButton.setRotation(270);
+            else if (menuButton.getRotation() != 90 && menuButton.getY() < areaHeight / 2)
+                menuButton.setRotation(90);
 
-                //System.out.println();
-                if (menuButton.getY() > areaHeight / 2 && menuButton.getRotation() != 270)
-                    menuButton.setRotation(270);
-                else if (menuButton.getRotation() != 90 && menuButton.getY() < areaHeight / 2)
-                    menuButton.setRotation(90);
+            updatePositionY();
+            moveMenuButtonY();
 
-                getStage().calculateScissors(areaBounds.set(camWidth / 2f - areaWidth / 2f, 0, areaWidth, areaHeight), scissorBounds);
-                batch.flush();
-                if (ScissorStack.pushScissors(scissorBounds)) {
-                    super.draw(batch, alpha);
-                    batch.flush();
-                    ScissorStack.popScissors();
-                }
+            if (auto && (isCompletelyClosedY()||isCompletelyOpenedY())) auto = false;
 
-                if (isTouched() && ( (isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()/3.5f).y) || (!isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()).y)) && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
-                    auto = false;
-                    if (!isTouched) {
-                        isTouched = true;
-                        //System.out.println(scrToStgCoordsX(0, inputY()));
-                        first.set(scrToStgCoordsY(0, inputY()));
-                    }
-                    last.set(scrToStgCoordsY(0, inputY())).sub(first);
+                //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and touchpads not touched
+            if (!auto && isTouched() && ( (isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()/2.5f).y) || (!isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()).y)) && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
+                if (!isTouched) isTouched=true;
+                //if closed, in zone and swiping down
+                if (isCompletelyClosedY()&&Gdx.input.getDeltaY()<-3) showManually(true);// open = false, close = true;
 
-                    if (isCompletelyClosedY()) // open = false, close = true;
-                        startDragY();
+                else if (isCompletelyOpenedY()&&Gdx.input.getDeltaY()>3)showManually(false);// open = true, close = false;
+            } else if (isTouched) isTouched=false;
+            //can compare to how it was when edge of menu followed finger in ui v10 git commit
+            getStage().calculateScissors(areaBounds.set(camWidth/2-areaWidth/2, 0, areaWidth, areaHeight), scissorBounds);
 
-                    if ((isStart || isBack) && enableDrag) // open = false, close =
-                        // false;
-                        if (inputY() < stgToScrCoordsY(0, heightStart).y)
-                            draggingY();
+        } else if (originEdge.equals("left")) {
+            if (menuButton.getX() > areaWidth / 2 && menuButton.getRotation() != 180)
+                menuButton.setRotation(180);
+            else if (menuButton.getRotation() != 0 && menuButton.getX() < areaWidth / 2)
+                menuButton.setRotation(0);
 
-                    if (isCompletelyOpenedY()) // open = true, close = false;
-                        backDrag();
+            updatePositionX();
+            moveMenuButtonX();
 
-                } else
-                    noDragY();
+            if (auto && (isCompletelyClosedX() || isCompletelyOpenedX())) auto = false;
 
+            //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and touchpads not touched
+            if (!auto && isTouched() && ( (isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth()/1.5f, 0).x) || (!isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth(), 0).x) ) && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {
+                if (!isTouched) isTouched=true;
+            //if closed, in zone and swiping left
+                if (isCompletelyClosedX() && Gdx.input.getDeltaX() > 3)
+                    showManually(true);// open = false, close = true;
 
-                updatePositionY();
-                movingY();
-                moveMenuButtonY();
-
-            } else if (originEdge.equals("left")) {
-                if (menuButton.getX() > areaWidth / 2 && menuButton.getRotation() != 180)
-                    menuButton.setRotation(180);
-                else if (menuButton.getRotation() != 0 && menuButton.getX() < areaWidth / 2)
-                    menuButton.setRotation(0);
-
-                getStage().calculateScissors(areaBounds.set(0, 0, areaWidth, areaHeight), scissorBounds);
-                batch.flush();
-                if (ScissorStack.pushScissors(scissorBounds)) {
-                    super.draw(batch, alpha);
-                    batch.flush();
-                    ScissorStack.popScissors();
-                }
-
-                if (isTouched() && ( (isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth(), 0).x)|| (!isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth(), 0).x) ) && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {
-                    auto = false;
-                    if (!isTouched) {
-                        isTouched = true;
-                        first.set(scrToStgCoordsX(inputX(), 0));
-                    }
-                    last.set(scrToStgCoordsX(inputX(), 0)).sub(first);
-
-                    if (isCompletelyClosedX()) // open = false, close = true;
-                        startDragX();
-
-                    if ((isStart || isBack) && enableDrag) // open = false, close =
-                        // false;
-                        if (inputX() > stgToScrCoordsX(0, 0).x)
-                            draggingX();
-
-                    if (isCompletelyOpenedX()) // open = true, close = false;
-                        backDrag();
-
-                } else
-                    noDragX();
-
-                updatePositionX();
-                movingX();
-                moveMenuButtonX();
-            }
-
-            //fadeBackground();
-
-    }
-
-    private boolean isMax = false;
-    private boolean isMin = false;
-
-    private void movingX() {
-        if (listener == null)
-            return;
-        if (!isCompletelyClosedX() && !isCompletelyOpenedX()) {
-            listener.moving(clamp);
-        } else {
-            if (!isMax && isCompletelyOpenedX()) {
-                isMax = true;
-                isMin = false;
-                listener.moving(clamp);
-            }
-            if (!isMin && isCompletelyClosedX()) {
-                isMin = true;
-                isMax = false;
-                listener.moving(clamp);
-            }
+                else if (isCompletelyOpenedX() && Gdx.input.getDeltaX() < -3)
+                    showManually(false);// open = true, close = false;
+            } else if (isTouched) isTouched=false;
+            //can compare to how it was when edge of menu followed finger in ui v10 git commit
+            getStage().calculateScissors(areaBounds.set(0, 0, areaWidth, areaHeight), scissorBounds);
         }
-    }
-    private void movingY() {
-        if (listener == null)
-            return;
-        if (!isCompletelyClosedY() && !isCompletelyOpenedY()) {
-            listener.moving(clamp);
-            System.out.println(77);
-        } else {
-            if (!isMax && isCompletelyOpenedY()) {
-                isMax = true;
-                isMin = false;
-                listener.moving(clamp);
-            }
-            if (!isMin && isCompletelyClosedY()) {
-                isMin = true;
-                isMax = false;
-                listener.moving(clamp);
-            }
+        batch.flush();
+        if (ScissorStack.pushScissors(scissorBounds)) {
+            super.draw(batch, alpha);
+            batch.flush();
+            ScissorStack.popScissors();
         }
     }
 
@@ -245,46 +150,8 @@ public class SlideMenu extends Table {
         this.setPosition(camWidth/2f-this.areaWidth/2f, clamp.y-getHeight());
         //System.out.println("Down slide menu: x: "+clamp.x+", y: "+clamp.y);
     }
-    
-    private void draggingX() {
-        if (isStart)
-            end.set(scrToStgCoordsX(inputX(), 0));
 
-        if (isBack && last.x < -widthBack/2)
-            end.set(last.add(this.getWidth() + widthBack, 0));
-    }
-    private void draggingY() {
-        if (isStart)
-            end.set(scrToStgCoordsY(0, inputY()));
-
-        if (isBack && last.y < -heightBack)
-            end.set(last.add(0, this.getHeight() + heightBack));
-    }
-
-    private void backDrag() {
-        isStart = false;
-        isBack = true;
-        show = false;
-    }
-
-    private void startDragX() {
-        // check if the player touch on the drawer to OPEN it.
-        if (inputX() > stgToScrCoordsX(widthStart, 0).x) {
-            isStart = true;
-            isBack = false;
-            hintToOpenX(); // hint to player if he want to open the drawer
-        }
-    }
-    private void startDragY() {
-        // check if the player touch on the drawer to OPEN it.
-        if (inputY() < stgToScrCoordsY(0, heightStart).y) {
-            isStart = true;
-            isBack = false;
-            hintToOpenY(); // hint to player if he want to open the drawer
-        }
-    }
-    
-    private void noDragX() {
+    private void noDrag() {
         isStart = false;
         isBack = false;
         isTouched = false;
@@ -292,42 +159,12 @@ public class SlideMenu extends Table {
         end.set(clamp);
 
         if (auto) {
-            if (show)
-                end.add(speed, 0); // player want to OPEN drawer
-            else
-                end.sub(speed, 0); // player want to CLOSE drawer
-        } else {
-            if (toOpenX())
-                end.add(speed, 0); // player want to OPEN drawer
-            else if (toCloseX())
-                end.sub(speed, 0); // player want to CLOSE drawer
-        }
-    }
-    private void noDragY() {
-        isStart = false;
-        isBack = false;
-        isTouched = false;
-        // set end of X to updated X from clamp
-        end.set(clamp);
-
-        if (auto) {
+            System.out.println("updating");
             if (show)
                 end.add(0, speed); // player want to OPEN drawer
             else
                 end.sub(0, speed); // player want to CLOSE drawer
-        } else {
-            if (toOpenY())
-                end.add(0, speed); // player want to OPEN drawer
-            else if (toCloseY())
-                end.sub(0, speed); // player want to CLOSE drawer
         }
-    }
-    
-    private void hintToOpenX() {
-        end.set(stgToScrCoordsX(widthStart, 0));
-    }
-    private void hintToOpenY() {
-        end.set(stgToScrCoordsY(0, heightStart));
     }
     
     public boolean isCompletelyClosedX() {
@@ -343,19 +180,6 @@ public class SlideMenu extends Table {
     public boolean isCompletelyOpenedY() {
         return clamp.y == this.getHeight();
     }
-    
-    private boolean toOpenX() {
-        return clamp.x > this.getWidth() / 2;
-    }
-    private boolean toOpenY() {
-        return clamp.y > this.getHeight() / 2;
-    }
-    private boolean toCloseX() {
-        return clamp.x < this.getWidth() / 2;
-    }
-    private boolean toCloseY() {
-        return clamp.y < this.getHeight() / 2;
-    }
 
     private Vector2 stgToScrCoordsX(float x, float y) {
         return getStage().stageToScreenCoordinates(posTap.set(x, y));
@@ -365,21 +189,11 @@ public class SlideMenu extends Table {
         return getStage().stageToScreenCoordinates(posTap.set(x, y )  );
     }
 
-    private Vector2 scrToStgCoordsX(float x, float y) {
-        return getStage().screenToStageCoordinates(posTap.set(x, y));
-    }
-    private Vector2 scrToStgCoordsY(float x, float y) {
-        //System.out.println("screen to stage coords: "+ y );
-        return getStage().screenToStageCoordinates(posTap.set(x, y) );
-    }
     private float inputX() {
         return Gdx.input.getX();
     }
 
     private float inputY() {
-        //System.out.println("InputY: "+ -(InputHandler.scaleY(Gdx.input.getY())-camHeight)+", stage y: "+-((stgToScrCoordsY(0, this.getHeight()).y)-camHeight));
-        //-(InputHandler.scaleY(Gdx.input.getY())- camHeight)
-        //System.out.println("InputY: "+Gdx.input.getY());
         return Gdx.input.getY();
     }
     
@@ -388,13 +202,7 @@ public class SlideMenu extends Table {
     }
 
     private Actor menuButton = new Actor();
-    private boolean isRotateMenuButton = false, ismoveMenuButton=false;
-    private float menuButtonRotation = 0f;
-
-    private void rotateMenuButton() {
-        if (isRotateMenuButton)
-            menuButton.setRotation(clamp.x / this.getWidth() * menuButtonRotation);
-    }
+    private boolean ismoveMenuButton=false;
 
     private void moveMenuButtonX() {
         if (ismoveMenuButton)
@@ -402,40 +210,13 @@ public class SlideMenu extends Table {
     }
     private void moveMenuButtonY() {
         if (ismoveMenuButton) {
-            menuButton.setPosition(menuButton.getX(), clamp.y-45);
+            menuButton.setPosition(menuButton.getX(), clamp.y-60);
         }
     }
-    
-    /*public void setRotateMenuButton(Actor actor, float rotation) {
-        this.menuButton = actor;
-        this.isRotateMenuButton = true;
-        this.menuButtonRotation = rotation;
-    }*/
 
     public void setMoveMenuButton(Actor actor) {
         this.menuButton = actor;
         this.ismoveMenuButton = true;
         //this.moveMenuButtonX = rotation;
     }
-
-    public void setEnableDrag(boolean enableDrag) {
-        this.enableDrag = enableDrag;
     }
-
-    private Actor background = new Actor();
-    private boolean isFadeBackground = false;
-    private float maxFade = 1f;
-
-    private void fadeBackground() {
-        if (isFadeBackground)
-            background.setColor(background.getColor().r, background.getColor().g, background.getColor().b,
-                    MathUtils.clamp(clamp.x / this.getWidth() / 2, 0, maxFade));
-    }
-
-    public void setFadeBackground(Actor background, float maxFade) {
-        this.background = background;
-        this.isFadeBackground = true;
-        this.maxFade = maxFade;
-    }
-
-}
