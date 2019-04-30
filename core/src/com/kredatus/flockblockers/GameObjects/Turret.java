@@ -248,7 +248,7 @@ public class Turret {
     }
 
     public void update() {
-        if (Gdx.input.justTouched()  && gunTargetPointer==-1 ) {   //airShip updates first so takes the spot
+        if (Gdx.input.justTouched()  && gunTargetPointer==-1 && !UiHandler.isTouched) {   //airShip updates first so takes the spot
 
             //System.out.println("touched");
             if (Airship.airshipTouchPointer >= 0) {

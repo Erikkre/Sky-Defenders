@@ -32,19 +32,15 @@ public class SlideMenu extends Table {
     private float heightStart = 15f;
     private float heightBack = 0f;
     // speed of dragging
-    private float speed = 15f;
+    private float speed = 20f;
 
     // some attributes to make real draggingX
     private Vector2 clamp = new Vector2();
     private Vector2 posTap = new Vector2();
     private Vector2 end = new Vector2();
-    private Vector2 first = new Vector2();
-    private Vector2 last = new Vector2();
 
     private boolean show = false;
     public boolean isTouched = false;
-    private boolean isStart = false;
-    private boolean isBack = false;
     private boolean auto = false;
     private boolean enableDrag = true;
 
@@ -55,10 +51,7 @@ public class SlideMenu extends Table {
         this.setSize(width, height);
         this.camWidth=camWidth;
         this.camHeight=camHeight;
-
-
     }
-
 
     public void setSpeed(float speed) {
         this.speed = speed;
@@ -82,7 +75,8 @@ public class SlideMenu extends Table {
     }
 
     @Override
-    public void draw(Batch batch, float alpha) {
+    public void act(float delta){
+        super.act(delta);
         noDrag();
 
         if (originEdge.equals("down")) {
@@ -96,7 +90,7 @@ public class SlideMenu extends Table {
 
             if (auto && (isCompletelyClosedY()||isCompletelyOpenedY())) auto = false;
 
-                //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and touchpads not touched
+            //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and touchpads not touched
             if (!auto && isTouched() && ( (isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()/2.5f).y) || (!isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()).y)) && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
                 if (!isTouched) isTouched=true;
                 //if closed, in zone and swiping down
@@ -121,7 +115,7 @@ public class SlideMenu extends Table {
             //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and touchpads not touched
             if (!auto && isTouched() && ( (isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth()/1.5f, 0).x) || (!isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth(), 0).x) ) && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {
                 if (!isTouched) isTouched=true;
-            //if closed, in zone and swiping left
+                //if closed, in zone and swiping left
                 if (isCompletelyClosedX() && Gdx.input.getDeltaX() > 3)
                     showManually(true);// open = false, close = true;
 
@@ -131,6 +125,10 @@ public class SlideMenu extends Table {
             //can compare to how it was when edge of menu followed finger in ui v10 git commit
             getStage().calculateScissors(areaBounds.set(0, 0, areaWidth, areaHeight), scissorBounds);
         }
+    }
+
+    @Override
+    public void draw(Batch batch, float alpha) {
         batch.flush();
         if (ScissorStack.pushScissors(scissorBounds)) {
             super.draw(batch, alpha);
@@ -152,18 +150,19 @@ public class SlideMenu extends Table {
     }
 
     private void noDrag() {
-        isStart = false;
-        isBack = false;
-        isTouched = false;
         // set end of X to updated X from clamp
         end.set(clamp);
 
         if (auto) {
-            System.out.println("updating");
-            if (show)
-                end.add(0, speed); // player want to OPEN drawer
-            else
-                end.sub(0, speed); // player want to CLOSE drawer
+            //System.out.println("updating");
+
+            if (show) {
+                if (originEdge.equals("down")) end.add(0, speed); // player want to OPEN drawer
+                else if (originEdge.equals("left")) end.add(speed, 0);
+            } else {
+                    if (originEdge.equals("down")) end.sub(0, speed); // player want to CLOSE drawer
+                    else if (originEdge.equals("left")) end.sub(speed, 0);
+            }
         }
     }
     

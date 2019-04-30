@@ -106,7 +106,7 @@ public class GameWorld {
         bgHandler.update(delta);
         birdHandler.update();
         //turretHandler.update();
-        uiHandler.stage.act(delta);
+        uiHandler.update(delta);
         airship.update(delta);
         targetHandler.update(delta, runTime);
         tinyBirdHandler.update(delta);

@@ -656,7 +656,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("Turretlist size: " + turretList.size());
             Turret turretAimer = turretList.get(0);
 
-            if (turretAimer.gunTargetPointer != -1&&!Airship.pointerOnAirship(turretAimer.gunTargetPointer)&& !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() &&!UiHandler.slideMenuBottom.isTouched&&!UiHandler.slideMenuLeft.isTouched) {    //if using finger to aim
+            if (turretAimer.gunTargetPointer != -1&&!Airship.pointerOnAirship(turretAimer.gunTargetPointer)) {    //if using finger to aim
                 batcher.draw(reticleTexture, turretAimer.lastFingerPosition.x - reticleTexture.getRegionWidth() / 3f,
                         turretAimer.lastFingerPosition.y - reticleTexture.getRegionWidth() / 3f,
                         reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 1.5f, reticleTexture.getRegionHeight() / 1.5f,reticleSize.get(),reticleSize.get(),reticleRotation--);
