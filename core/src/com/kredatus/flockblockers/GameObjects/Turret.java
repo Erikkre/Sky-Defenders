@@ -7,17 +7,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
+import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
-import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.swing.UIDefaults;
 
 /**
  * Created by Erik Kredatus on 9/9/2018.
@@ -289,14 +287,17 @@ public class Turret {
                     if (pullBackThenThrow) {pullBackThenThrow = false;posOffset.setZero();}
                 }
             }
-            lastFingerPosition.set(InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)),-(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight));
-            if (!UiHandler.aimPad.isTouched() )   setRotation(0, 0,  lastFingerPosition.y - pos.y,lastFingerPosition.x  - pos.x, false);
+
+            if (!UiHandler.aimPad.isTouched() )   {
+                lastFingerPosition.set(InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)),-(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight));
+                setRotation(0, 0,  lastFingerPosition.y - pos.y,lastFingerPosition.x  - pos.x, false);
+            }
             else setRotation(0, 0,  UiHandler.aimPad.getKnobPercentY(),UiHandler.aimPad.getKnobPercentX(), true);
 
             if (!preThrowSpin) rotateToTarget();
 
             //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
-            if (!firing && (targetAquired)) {
+            if (!firing && (targetAquired||projRotates)) {
                 startFiring();
             }
         } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
@@ -352,7 +353,7 @@ public class Turret {
                     setRotation( targetBird.xVel, targetBird.yVel,targetBird.y- pos.y, targetBird.x- pos.x, false);
                     if (!preThrowSpin)rotateToTarget();
                     //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
-                    if (!firing && (targetAquired)) {
+                    if (!firing && (targetAquired||projRotates)) {
                         startFiring();
                     }
                 } else if (firing) {

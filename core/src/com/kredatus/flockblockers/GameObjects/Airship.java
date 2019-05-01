@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -28,8 +29,6 @@ import aurelienribon.tweenengine.TweenEquation;
 import aurelienribon.tweenengine.TweenEquations;
 import box2dLight.Light;
 import box2dLight.PointLight;
-
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
@@ -359,15 +358,31 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             if (UiHandler.movPad.isTouched()){
                 if (inputX==0)inputX=pos.x;if (inputY==0)inputY=pos.y;
                 airshipTouchPointer=-1; fingerAirshipXDiff=0;fingerAirshipYDiff=0;
-                if (inputX+UiHandler.movPad.getKnobPercentX()*5>0&&inputX+UiHandler.movPad.getKnobPercentX()*5<camWidth)inputX+=UiHandler.movPad.getKnobPercentX()*7;
-                if (inputY+UiHandler.movPad.getKnobPercentY()*5>0&&inputY+UiHandler.movPad.getKnobPercentY()*5<camHeight)inputY+=UiHandler.movPad.getKnobPercentY()*7;
+                if (inputX+UiHandler.movPad.getKnobPercentX()*5>0&&inputX+UiHandler.movPad.getKnobPercentX()*5<camWidth)inputX+=UiHandler.movPad.getKnobPercentX()*3;
+                if (inputY+UiHandler.movPad.getKnobPercentY()*5>0&&inputY+UiHandler.movPad.getKnobPercentY()*5<camHeight)inputY+=UiHandler.movPad.getKnobPercentY()*3;
+
+                if (vel.x < -3) {
+                    fireThruster(2);
+                    //System.out.println("Thrust Right");
+                } else if (vel.x > 3) {
+                    fireThruster(1);
+                    // System.out.println("Thrust Left");
+                }
 
             } else {
                 inputX = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff;//input with finger touch difference
                 inputY = -(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer)) - camHeight) - fingerAirshipYDiff;
+
+                if (Gdx.input.getDeltaX(airshipTouchPointer) < -3) {
+                    fireThruster(2);
+                    //System.out.println("Thrust Right");
+                } else if (Gdx.input.getDeltaX(airshipTouchPointer) > 3) {
+                    fireThruster(1);
+                    // System.out.println("Thrust Left");
+                }
             }
 
-            if (UiHandler.movPad.isTouched()|| isOnCam(inputX, inputY)) {
+            if ( isOnCam(inputX, inputY)) {
                 timeToTweenTarget = (float) (Math.sqrt(Math.pow(Math.abs(pos.x - inputX), 2) + Math.pow(Math.abs(pos.y + balloonBob.get() - inputY), 2))) / speed;
                 //if (distance/speedDivisor<1.5f){//if distance is so small it takes under 1.5s to get there, take 1.5s anyways
                 //    tween = Tween.to(pos, 0, 1.5f).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
@@ -384,17 +399,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
                 }
 
-                rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
+                if (UiHandler.movPad.isTouched()) rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
                 //rotate to waypoint based on x distance, then back to itself
             }
 
-            if (Gdx.input.getDeltaX(airshipTouchPointer) < -3) {
-                fireThruster(2);
-                //System.out.println("Thrust Right");
-            } else if (Gdx.input.getDeltaX(airshipTouchPointer) > 3) {
-                fireThruster(1);
-                // System.out.println("Thrust Left");
-            }
+
 
             //if (inputX > balloonWidth/3f   &&  inputX<camWidth-balloonWidth/3f)pos.x=inputX;
             //if (inputY > rackHeight/3f  &&   inputY<camHeight-balloonHeight/4f) pos.y+balloonBob.get()=inputY;
