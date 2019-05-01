@@ -44,13 +44,13 @@ public class TargetHandler {
                     if (!balloonHitPlaying){
                         balloonHit.play(0.40f);
                         balloonHitPlaying=true;
-                            System.out.println("made true");
+                            //System.out.println("made true");
                             Timer timer=new Timer();
                             timer.schedule(new TimerTask(){
                             @Override
                             public void run(){
                                 balloonHitPlaying=false;
-                                System.out.println("made false");
+                                //System.out.println("made false");
                             }
                         },450);
                     }
