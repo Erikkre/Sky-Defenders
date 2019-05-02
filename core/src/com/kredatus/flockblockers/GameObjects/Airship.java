@@ -519,7 +519,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 if (vel.y > 1 ) {   //if moving up fastish and burner set to low (might want to leave out last condition)
                     //System.out.println("2, "+emitters.get(0).getEmission().getHighMax());
                     setEmitterVal(emitters.get(0).getEmission(), 300 + vel.y * 750, false, false);
-                    setBurnerLightTarget(vel.y*(burnerOrigDist/2f)+burnerOrigDist, TweenEquations.easeOutElastic, false);
+                    setBurnerLightTarget(vel.y*(burnerOrigDist)+burnerOrigDist, TweenEquations.easeOutElastic, false);
                     emitters.get(0).start();
                 } else if (vel.y < 1 && emitters.get(0).getEmission().getHighMax() != 300) {    //if moving slow and burner not set to low, reset
                     setEmitterVal(emitters.get(0).getEmission(), 300, false, false);
@@ -617,22 +617,30 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (leftThrusterLightTween!=null && !leftThrusterLightTween.isFinished()) leftThrusterLightTween.update(delta);
         if (rightThrusterLightTween!=null && !rightThrusterLightTween.isFinished()) rightThrusterLightTween.update(delta);
 
+        if (!BgHandler.isbgVertFast&&!BgHandler.endWaveBgMotion) {
+            burnerOnOff();//if not moving quickly
+            //system.out.println("burner change");
+        }
+
         //0 is burner, 1 is thrustLeft, 2 is thrustRight
         if (!movtween.isFinished()) { //if moving
             dragLineFadeout.update(delta);
-            if (!BgHandler.isbgVertFast&&!BgHandler.endWaveBgMotion) {
-                burnerOnOff();//if not moving quickly
-                //system.out.println("burner change");
-            }
+
 
             //if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
 
 
-            additiveEffects.get(1).setPosition(xOffsetDueToRotation(pos.x - thrusterWidth / 2f + 2, (thrusterWidth / 2f - 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f)),
-                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f, (thrusterWidth / 2f + 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f )));//adding a bit of vel for straying thrusters
-            additiveEffects.get(2).setPosition(xOffsetDueToRotation(pos.x + thrusterWidth / 2f + 2, -(thrusterWidth / 2f - 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f)),
-                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f, -(thrusterWidth / 2f + 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f)));//adding a bit of vel for straying thrusters
+            additiveEffects.get(1).setPosition(xOffsetDueToRotation(pos.x - thrusterWidth / 2f + 2, (thrusterWidth / 2f - 2),
+                    -(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f)),
+                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f,
+                            (thrusterWidth / 2f + 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f )));
+            //adding a bit of vel for straying thrusters
 
+            additiveEffects.get(2).setPosition(xOffsetDueToRotation(pos.x + thrusterWidth / 2f + 2, -(thrusterWidth / 2f - 2),
+                    -(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f)),
+                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f,
+                            -(thrusterWidth / 2f + 2),-(thrusterYPosition * balloonHeight + thrusterHeight / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f)));
+            //adding a bit of vel for straying thrusters
             preX=pos.x;
             preY=pos.y+balloonBob.get();
             movtween.update(delta);
