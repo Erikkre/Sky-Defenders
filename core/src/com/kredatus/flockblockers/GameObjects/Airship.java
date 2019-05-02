@@ -185,7 +185,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
         setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
-        burnerUp();speedUp();speedUp();rackUp();//armorUp();
+        burnerUp();rackUp();//armorUp();
 
         addTurret('c');addTurret('c');addTurret('d');addTurret('d');addTurret('d');addTurret('f');addTurret('f');addTurret('f');
         turretList.get(1).lvlUp();turretList.get(3).lvlUp();turretList.get(4).lvlUp();turretList.get(4).lvlUp();turretList.get(6).lvlUp();turretList.get(7).lvlUp();turretList.get(7).lvlUp();
@@ -360,15 +360,15 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 airshipTouchPointer=-1; fingerAirshipXDiff=0;fingerAirshipYDiff=0;
 
                 System.out.println(UiHandler.movPad.getKnobPercentX());
-                if (UiHandler.movPad.getKnobPercentX()*3 < -1.5) {
+                if (UiHandler.movPad.getKnobPercentX()*5 < -1.5) {
                     fireThruster(2);
                     //System.out.println("Thrust Right");
-                } else if (UiHandler.movPad.getKnobPercentX()*3> 1.5) {
+                } else if (UiHandler.movPad.getKnobPercentX()*5> 1.5) {
                     fireThruster(1);
                     // System.out.println("Thrust Left");
                 }
 
-                if (inputX+UiHandler.movPad.getKnobPercentX()*5>0&&inputX+UiHandler.movPad.getKnobPercentX()*5<camWidth)inputX+=UiHandler.movPad.getKnobPercentX()*3;
+                if (inputX+UiHandler.movPad.getKnobPercentX()*5>0&&inputX+UiHandler.movPad.getKnobPercentX()*5<camWidth) inputX+=UiHandler.movPad.getKnobPercentX()*3;
                 if (inputY+UiHandler.movPad.getKnobPercentY()*5>0&&inputY+UiHandler.movPad.getKnobPercentY()*5<camHeight)inputY+=UiHandler.movPad.getKnobPercentY()*3;
 
             } else {
@@ -391,18 +391,22 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 //} else {
 
                 movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
-                tweenTarget.set(inputX + fingerAirshipXDiff, inputY + fingerAirshipYDiff);
 
-                dragLineOpacity.set(0.4f);
 
-                if (timeToTweenTarget > 2) {
-                    dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.24f).target(-1).ease(TweenEquations.easeInSine).start();
-                } else {
-                    dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
-                }
+
                 //System.out.println(inputX);
-                if (!UiHandler.movPad.isTouched()) rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
-                else rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX)*2).target(0).ease(TweenEquations.easeOutCirc).start();
+                if (!UiHandler.movPad.isTouched()) {
+                    rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
+                    dragLineOpacity.set(0.4f);
+
+                    tweenTarget.set(inputX + fingerAirshipXDiff, inputY + fingerAirshipYDiff);
+                    if (timeToTweenTarget > 2) {
+                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.24f).target(-1).ease(TweenEquations.easeInSine).start();
+                    } else {
+                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
+                    }
+
+                } else rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)/5).target(0).ease(TweenEquations.easeOutCirc).start();
                 //rotate to waypoint based on x distance, then back to itself
             }
 
@@ -678,48 +682,55 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             Turret turretAimer = turretList.get(0);
 
             if (turretAimer.gunTargetPointer != -1&&!Airship.pointerOnAirship(turretAimer.gunTargetPointer)) {    //if using finger to aim
+                if (!UiHandler.aimPad.isTouched()) UiHandler.aimPad.calculatePositionAndValue(UiHandler.aimPad.getX()+(turretAimer.lastFingerPosition.x-pos.x)*10,UiHandler.aimPad.getY()+(turretAimer.lastFingerPosition.y-pos.y)*10,false);
+
                 batcher.draw(reticleTexture, turretAimer.lastFingerPosition.x - reticleTexture.getRegionWidth() / 3f,
                         turretAimer.lastFingerPosition.y - reticleTexture.getRegionWidth() / 3f,
                         reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 1.5f, reticleTexture.getRegionHeight() / 1.5f,reticleSize.get(),reticleSize.get(),reticleRotation--);
+
             } else if (turretAimer.targetBird != null) {                                                          //if ai is engaged
+                if (!UiHandler.aimPad.isTouched()) UiHandler.aimPad.calculatePositionAndValue(UiHandler.aimPad.getX()+(turretAimer.targetBird.x-pos.x)*10,UiHandler.aimPad.getY()+(turretAimer.targetBird.y-pos.y)*10,false);
+
                 batcher.draw(reticleTexture, turretAimer.targetBird.x - turretAimer.targetBird.width / 3f, turretAimer.targetBird.y - turretAimer.targetBird.width / 3f,
                         turretAimer.targetBird.width/3f, turretAimer.targetBird.width/3f, turretAimer.targetBird.width/1.5f, turretAimer.targetBird.width/1.5f,reticleSize.get(),reticleSize.get(), reticleRotation--);
                     //System.out.println("Draw reticle with width " + turretAimer.targetBird.width);
             }
+
             batcher.setColor(Color.WHITE);
         }
     }
 
     public void draw(SpriteBatch batcher, float delta) {
-        Color l=dragCircleLight.getColor();
-        dragCircleLight.setColor(l.r, l.g, l.b, dragLineOpacity.get());
-        if (dragLineOpacity.get()>0) {
-            dragCircleLight.setPosition(tweenTarget.x,tweenTarget.y);
+        if (!movtween.isFinished()&&!UiHandler.aimPad.isTouched()) {
+            Color l=dragCircleLight.getColor();
+            dragCircleLight.setColor(l.r, l.g, l.b, dragLineOpacity.get());
+            if (dragLineOpacity.get()>0) {
+                dragCircleLight.setPosition(tweenTarget.x, tweenTarget.y);
 
 
-            float xDist = tweenTarget.x - pos.x, yDist = (tweenTarget.y - (pos.y+balloonHeight/2+balloonBob.get())), width= (float) Math.sqrt(Math.pow(xDist,2)+Math.pow(yDist,2))-dragCircleTexture.getRegionWidth()/2f;
-            float rotation = (float) Math.toDegrees(Math.atan(yDist / xDist));
-            /*if        (xDist > 0) { //(xDistance+position.x > position.x) {
-                rotation += 180;
-            } else if (yDist > 0) {
-                rotation += 360;
-            }*/
-            if (xDist<=0) rotation+=180;
-            //System.out.println(rotation);
+                float xDist = tweenTarget.x - pos.x, yDist = (tweenTarget.y - (pos.y + balloonHeight / 2 + balloonBob.get())), width = (float) Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2)) - dragCircleTexture.getRegionWidth() / 2f;
+                float rotation = (float) Math.toDegrees(Math.atan(yDist / xDist));
+                /*if        (xDist > 0) { //(xDistance+position.x > position.x) {
+                    rotation += 180;
+                } else if (yDist > 0) {
+                    rotation += 360;
+                }*/
+                if (xDist <= 0) rotation += 180;
+                //System.out.println(rotation);
 
-            Color c=batcher.getColor();
-            batcher.setColor(c.r,c.g,c.b,dragLineOpacity.get());
+                Color c = batcher.getColor();
+                batcher.setColor(c.r, c.g, c.b, dragLineOpacity.get());
 
-            batcher.draw(dragLineTexture, pos.x, (pos.y+balloonHeight/2+balloonBob.get())-dragLineTexture.getRegionHeight()/2,
-                    0,dragLineTexture.getRegionHeight()/2,//Math.abs(xDist)/2f, dragLineTexture.getRegionWidth()/2,//dragLineTexture.getRegionWidth()/2f, dragLineTexture.getRegionHeight()/2f,
-                    Math.abs(width), dragLineTexture.getRegionHeight(), 1,1, rotation);//taken from turret
+                batcher.draw(dragLineTexture, pos.x, (pos.y + balloonHeight / 2 + balloonBob.get()) - dragLineTexture.getRegionHeight() / 2,
+                        0, dragLineTexture.getRegionHeight() / 2,//Math.abs(xDist)/2f, dragLineTexture.getRegionWidth()/2,//dragLineTexture.getRegionWidth()/2f, dragLineTexture.getRegionHeight()/2f,
+                        Math.abs(width), dragLineTexture.getRegionHeight(), 1, 1, rotation);//taken from turret
 
 
-                batcher.draw(dragCircleTexture, tweenTarget.x - dragCircleTexture.getRegionWidth() / 2, tweenTarget.y - dragCircleTexture.getRegionHeight()/2,
-                        dragCircleTexture.getRegionWidth()/2,dragCircleTexture.getRegionHeight()/2,
-                        dragCircleTexture.getRegionWidth(), dragCircleTexture.getRegionHeight(), 1,1, rotation);//full height at top, half height at sides*/
+                batcher.draw(dragCircleTexture, tweenTarget.x - dragCircleTexture.getRegionWidth() / 2, tweenTarget.y - dragCircleTexture.getRegionHeight() / 2,
+                        dragCircleTexture.getRegionWidth() / 2, dragCircleTexture.getRegionHeight() / 2,
+                        dragCircleTexture.getRegionWidth(), dragCircleTexture.getRegionHeight(), 1, 1, rotation);//full height at top, half height at sides*/
                 batcher.setColor(Color.WHITE);
-
+            }
         }
 
         //Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);

@@ -29,7 +29,7 @@ public class Turret {
     public Vector2 pos, origPosition;
     private float camWidth, camHeight;
     public float dmg, pen, rof;
-    private int rotation, targetRot, behindRotation, spreadAngle=50;
+    public int rotation, targetRot, behindRotation, spreadAngle=50;
     private Timer timer;
     private TimerTask timerTask;
     public BirdAbstractClass targetBird;

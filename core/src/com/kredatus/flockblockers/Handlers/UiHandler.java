@@ -1,60 +1,24 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree;
-import com.badlogic.gdx.scenes.scene2d.ui.Tree.Node;
-import com.badlogic.gdx.scenes.scene2d.ui.Widget;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.ui.SlideMenu;
+import com.kredatus.flockblockers.ui.TouchRotatePad;
 
 import java.io.File;
 
@@ -66,7 +30,8 @@ public class UiHandler {
     //public Skin skin=new Skin(Gdx.files.internal("ui/button.png"));
     public static Stage stage;
     public Skin skin;
-    public static Touchpad movPad, aimPad;
+    public static Touchpad movPad;
+    public static TouchRotatePad aimPad;
     public static SlideMenu slideMenuLeft, slideMenuBottom;
     public Image menuButtonX, menuButtonY;
     public static boolean isTouched;
@@ -78,6 +43,7 @@ public class UiHandler {
         }
         for (Actor i : rootTable.getChildren()){
             if (i instanceof Touchpad)      {if (((Touchpad) i).isTouched()) return true;}
+            else if (i instanceof TouchRotatePad)      {if (((TouchRotatePad) i).isTouched()) return true;}
         }
         return false;
     }
@@ -110,16 +76,17 @@ public class UiHandler {
         rootTable.row();
         movPad = new Touchpad(0, skin);
         movPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
+
         //touchpad2.setColor(1,1,1,1f);
 
         //keep original height ratio but sized down with current width: .height((touchpad.getPrefHeight()*touchpad.getWidth())/touchpad.getPrefWidth())
-        rootTable.add(movPad).fill(true).width(camWidth/3.5f).height(camWidth/4f).padRight((camWidth*1.5f)/3.5f);
+        rootTable.add(movPad).fill(true).width(camWidth/3f).height(camWidth/3.5f).padRight((camWidth)/3f);
 
-        aimPad = new Touchpad(0, skin);
+        aimPad = new TouchRotatePad(0, skin);
         aimPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         //touchpad2.setColor(1,1,1,1f);
 
-        rootTable.add(aimPad).fill(true).width(camWidth/3.5f).height(camWidth/4f);
+        rootTable.add(aimPad).fill(true).width(camWidth/3f).height(camWidth/3.5f);
         //aimPad.
         //rootTable.row();
 
@@ -381,7 +348,7 @@ public class UiHandler {
 
 
         /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
-        slideMenuBottom = new SlideMenu(camWidth/2.5f,camHeight/8f,"down",camWidth,camHeight);
+        slideMenuBottom = new SlideMenu(camWidth/3f,camHeight/8f,"down",camWidth,camHeight);
         final Image image_backgroundY = new Image(new SpriteDrawable(temp));
         menuButtonY = new Image(AssetHandler.menuButton);
 
