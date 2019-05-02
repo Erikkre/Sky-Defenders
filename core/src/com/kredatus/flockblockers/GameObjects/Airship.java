@@ -406,7 +406,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                         dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
                     }
 
-                } else rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)/5).target(0).ease(TweenEquations.easeOutCirc).start();
+                } else rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)).target(0).ease(TweenEquations.easeOutCirc).start();
                 //rotate to waypoint based on x distance, then back to itself
             }
 
