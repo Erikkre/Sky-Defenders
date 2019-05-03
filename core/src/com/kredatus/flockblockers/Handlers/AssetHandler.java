@@ -42,7 +42,7 @@ public class AssetHandler {
             menudown, score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized, coinSymbol, reticle,
             bgCloudSeparatorTexture, airshipBalloon, airshipSideThruster, airshipBurnerPipe, dragCircle, dragLine;
 
-    public static TextureRegion[] armorTextures= new TextureRegion[6], rackTextures = new TextureRegion[6];
+    public static TextureRegion[] rackTextures = new TextureRegion[7];
     public static ArrayList<Vector3> boostcoords;
     public static ArrayList<TextureRegion> bgList;
     public static int bgscaling, gliderscaling, boostnumber, coordslistsize;
@@ -418,9 +418,8 @@ public class AssetHandler {
         dragCircle=tA.findRegion("dragCirc");
         dragLine=tA.findRegion("dragLine");
 
-        for (int i=0;i<6;i++) {
-            armorTextures[i]=tA.findRegion("armor"+i);
-            rackTextures[0]=tA.findRegion("rack"+0);
+        for (int i=0;i<7;i++) {
+            rackTextures[i]=tA.findRegion("rack"+i);
         }
     }
 
