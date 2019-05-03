@@ -52,7 +52,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public ArrayList<Turret> turretList=new ArrayList<Turret>(13);
     public Polygon rackHitbox, balloonHitbox, prelimBoundPoly1, prelimBoundPoly2;
 
-    public int tW=45, tH=40;
+    public int tW=44, tH=40;
     public static int airshipTouchPointer=-1, camWidth, camHeight;
     public float fingerAirshipXDiff, fingerAirshipYDiff;
     //public static boolean airshipTouched;
@@ -111,9 +111,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     float timeToTweenTarget;
     private int reticleRotation;
-    private Value reticleSize=new Value(0.9f), dragLineOpacity=new Value(); private static Value balloonBob=new Value(-7f);
+    private Value reticleSize=new Value(0.9f), dragLineOpacity=new Value(); private static Value balloonBob=new Value(-10f);
     public Tween reticleSizeTween= Tween.to(reticleSize,1,0.9f).target(1.3f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
-    public Tween balloonBobTween= Tween.to(balloonBob,1,1f).target(7f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
+    public Tween balloonBobTween= Tween.to(balloonBob,1,1f).target(10f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
     public Tween dragLineFadeout= Tween.to(dragLineOpacity,1,timeToTweenTarget*0.5f).target(0).ease(TweenEquations.easeInCubic);
 
     public Airship(int camWidth, int camHeight, int birdType) {

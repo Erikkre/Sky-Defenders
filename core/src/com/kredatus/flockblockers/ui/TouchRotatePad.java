@@ -78,10 +78,7 @@ public class TouchRotatePad extends Widget {
 
 
     public void calculatePositionAndValue(float x, float y, boolean isTouchUp) {
-
         //System.out.println("knobPercent.x: "+knobPercent.x+", knobPercent.y: "+knobPercent.y);
-        System.out.println(knobPosition);
-
         float oldPositionX = this.knobPosition.x;
         float oldPositionY = this.knobPosition.y;
         float oldPercentX = this.knobPercent.x;
