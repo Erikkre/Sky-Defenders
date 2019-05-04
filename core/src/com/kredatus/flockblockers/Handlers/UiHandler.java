@@ -69,7 +69,7 @@ public class UiHandler {
 
         rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.align(Align.bottom);
+        rootTable.center().align(Align.bottom);
         stage.addActor(rootTable);
 
         //rootTable.add(new Label("Shade UI", skin, "title")).colspan(3);
@@ -80,13 +80,13 @@ public class UiHandler {
         //touchpad2.setColor(1,1,1,1f);
 
         //keep original height ratio but sized down with current width: .height((touchpad.getPrefHeight()*touchpad.getWidth())/touchpad.getPrefWidth())
-        rootTable.add(movPad).fill(true).width(camWidth/3f).height(camWidth/3.5f).padRight((camWidth)/3f);
+        rootTable.add(movPad).fill(true).width(camWidth/2.75f).height(camWidth/3f).padRight((.71f*camWidth)/2.75f);
 
         aimPad = new TouchRotatePad(0, skin);
         aimPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         //touchpad2.setColor(1,1,1,1f);
 
-        rootTable.add(aimPad).fill(true).width(camWidth/3f).height(camWidth/3.5f);
+        rootTable.add(aimPad).fill(true).width(camWidth/2.75f).height(camWidth/3f);
         //aimPad.
         //rootTable.row();
 
@@ -242,7 +242,7 @@ public class UiHandler {
 
     public void setupSlidingMenus(float camWidth,float camHeight) {
         /**     ****************************************LEFT SLIDING MENU*****************************************     **/
-        slideMenuLeft = new SlideMenu(camWidth/9f,camHeight,"left",camWidth,camHeight);//left or down
+        slideMenuLeft = new SlideMenu(camWidth/9f,camHeight/2f,"left",camWidth,camHeight,movPad.getHeight()/2);//left or down
         Sprite temp=new Sprite(AssetHandler.slidemenuBg);
         temp.setColor(new Color(0,0,0,0.5f));
         final Image image_backgroundX = new Image(new SpriteDrawable(temp));
@@ -278,7 +278,7 @@ public class UiHandler {
         /* z-index = 3 */
         // add button_menu as a separating actor into stage to rotates with dragging value.
         menuButtonX.setWidth(menuButtonX.getWidth()*0.4f);menuButtonX.setHeight(menuButtonX.getHeight()*0.9f);menuButtonX.setColor(1,1,1,0.5f);
-        menuButtonX.setOrigin(Align.center);menuButtonX.setY(camHeight/2f);
+        menuButtonX.setOrigin(Align.center);
         //menuButtonActor=menuButtonX;
         stage.addActor(menuButtonX);
         slideMenuLeft.setMoveMenuButton(menuButtonX);
@@ -348,7 +348,7 @@ public class UiHandler {
 
 
         /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
-        slideMenuBottom = new SlideMenu(camWidth/3f,camHeight/8f,"down",camWidth,camHeight);
+        slideMenuBottom = new SlideMenu(.7f*camWidth/2.75f,camHeight/7f,"down",camWidth,camHeight, 0);
         final Image image_backgroundY = new Image(new SpriteDrawable(temp));
         menuButtonY = new Image(AssetHandler.menuButton);
 
@@ -363,7 +363,7 @@ public class UiHandler {
 
         stage.addActor(slideMenuBottom);
         menuButtonY.rotateBy(90);menuButtonY.setWidth(menuButtonY.getWidth()*0.4f);menuButtonY.setHeight(menuButtonY.getHeight()*0.9f);menuButtonY.setColor(1,1,1,0.5f);
-        menuButtonY.setOrigin(Align.center);menuButtonY.setX(camWidth/2f-menuButtonX.getWidth()/2f);
+        menuButtonY.setOrigin(Align.center);
         //menuButtonActor=menuButtonY;
         stage.addActor(menuButtonY);
         slideMenuBottom.setMoveMenuButton(menuButtonY);

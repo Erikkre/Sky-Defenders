@@ -2,16 +2,12 @@ package com.kredatus.flockblockers.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
-import com.badlogic.gdx.utils.Align;
-import com.kredatus.flockblockers.GameWorld.GameHandler;
-import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 
 
@@ -44,7 +40,9 @@ public class SlideMenu extends Table {
     private boolean auto = false;
     private boolean enableDrag = true;
 
-    public SlideMenu(float width, float height, String originEdge, float camWidth, float camHeight) {
+    private float offsetFromCenter;
+    public SlideMenu(float width, float height, String originEdge, float camWidth, float camHeight, float offsetFromCenter) {
+        this.offsetFromCenter=offsetFromCenter;
         this.areaWidth = width;
         this.areaHeight = height;
         this.originEdge = originEdge;
@@ -99,7 +97,7 @@ public class SlideMenu extends Table {
                 else if (isCompletelyOpenedY()&&Gdx.input.getDeltaY()>3)showManually(false);// open = true, close = false;
             } else if (isTouched) isTouched=false;
             //can compare to how it was when edge of menu followed finger in ui v10 git commit
-            getStage().calculateScissors(areaBounds.set(camWidth/2-areaWidth/2, 0, areaWidth, areaHeight), scissorBounds);
+            getStage().calculateScissors(areaBounds.set(camWidth/2f+offsetFromCenter-areaWidth/2f , 0, areaWidth, areaHeight), scissorBounds);
 
         } else if (originEdge.equals("left")) {
             if (menuButton.getX() > areaWidth / 2 && menuButton.getRotation() != 180)
@@ -123,7 +121,7 @@ public class SlideMenu extends Table {
                     showManually(false);// open = true, close = false;
             } else if (isTouched) isTouched=false;
             //can compare to how it was when edge of menu followed finger in ui v10 git commit
-            getStage().calculateScissors(areaBounds.set(0, 0, areaWidth, areaHeight), scissorBounds);
+            getStage().calculateScissors(areaBounds.set(0, camHeight/2f+offsetFromCenter-areaHeight/2f, areaWidth, areaHeight), scissorBounds);
         }
     }
 
@@ -139,13 +137,13 @@ public class SlideMenu extends Table {
 
     private void updatePositionX() {
         clamp.set(MathUtils.clamp(end.x, 0, this.getWidth()), 0);
-        this.setPosition(clamp.x-getWidth(), 0);
+        this.setPosition(clamp.x-getWidth(), camHeight/2-areaHeight/2f+offsetFromCenter);
         //System.out.println("Left slide menu: x: "+clamp.x+", y: "+clamp.y);
     }
     private void updatePositionY() {
         clamp.set(0, MathUtils.clamp(end.y, 0, this.getHeight()) );
         //System.out.println(clamp.y);
-        this.setPosition(camWidth/2f-this.areaWidth/2f, clamp.y-getHeight());
+        this.setPosition(camWidth/2f-this.areaWidth/2f+2+offsetFromCenter, clamp.y-getHeight());
         //System.out.println("Down slide menu: x: "+clamp.x+", y: "+clamp.y);
     }
 
@@ -214,8 +212,14 @@ public class SlideMenu extends Table {
     }
 
     public void setMoveMenuButton(Actor actor) {
+        if (originEdge.equals("left")){
+            actor.setY((camHeight/2f +offsetFromCenter)- actor.getHeight()/2f);
+            System.out.println(actor.getY()+"actory");
+        } else if (originEdge.equals("down")){
+            actor.setX((camWidth/2f+offsetFromCenter)-actor.getWidth()/2f);
+        }
         this.menuButton = actor;
         this.ismoveMenuButton = true;
         //this.moveMenuButtonX = rotation;
     }
-    }
+}
