@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
-import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Helpers.InvertedTweenEquations;
@@ -55,7 +53,7 @@ public class BgHandler {
     private OrthographicCamera cam;
     private GameRenderer renderer;
     public static int bgStackStartYHeight=0;
-    public static boolean isMiddleOfCloud, irregularMotion;
+    public static boolean isMiddleOfCloud, irregularMotion, justStarted = true;
     public BgHandler(float camWidth, float camHeight, int birdType){
         //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
         this.camHeight=camHeight;
@@ -235,7 +233,7 @@ public class BgHandler {
                 if (!isbgVertFast) {
                     isbgVertFast=true;
                 }
-                if (vert.get()>0.15*-bgStackHeight||vert.get()<0.85*-bgStackHeight) {
+                if (!justStarted && (vert.get()>0.15*-bgStackHeight||vert.get()<0.85*-bgStackHeight)) {
                     if (!changingBalloonBrightness) {
                         changingBalloonBrightness = true;
                     }
@@ -252,6 +250,7 @@ public class BgHandler {
                     changingBalloonBrightness=false;
                 }
             } else if (isbgVertFast) {
+                    if (justStarted) justStarted=false;
                     isbgVertFast=false;
             }
             //System.out.println("BgVertFast = "+isbgVertFast+", vert: "+vert.get()+", greater than: "+ (0.20*-bgStackHeight)+", lower than: "+ (0.67*-bgStackHeight));

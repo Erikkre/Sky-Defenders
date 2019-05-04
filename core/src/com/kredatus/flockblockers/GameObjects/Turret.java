@@ -195,13 +195,13 @@ public class Turret {
         }
     }
 
-    public void stopFiring(){
+    public void stopFiring() {
         firing = false;
         timerTask.cancel();
         //System.out.println("cancelled");
     }
 
-    private void setRotation(float xVel, float yVel, float yDistance, float xDistance, boolean aimPadAiming){
+    private void setRotation(float xVel, float yVel, float yDistance, float xDistance, boolean aimPadAiming) {
         if (!aimPadAiming) {
             float rotCompYDiff = ((xVel * (Math.abs(yDistance) / (camHeight * 4))) * 1.5f) / (pen / 1.5f);
             float rotCompXDiff = yVel * ((Math.abs(xDistance)) / camWidth) * 5;   //smaller and should be constant
@@ -218,7 +218,7 @@ public class Turret {
         }
     }
 
-    private void rotateToTarget(){
+    private void rotateToTarget() {
         behindRotation=rotation-180;
         if (behindRotation<0){
             behindRotation+=360;
