@@ -33,7 +33,7 @@ public class GameWorld {
 
     private static GameRenderer renderer;
     public enum GameState {
-        MENU, READY, RUNNING, STORY, CREDITS, DEATHMENU, INSTR, INSTR2
+        MENU, SURVIVAL, OPTIONS, BUYMENU, CREDITS, DEATHMENU, INSTR
     }
     public static boolean isFirstTime;
     private GameState currentState;
@@ -68,7 +68,7 @@ public class GameWorld {
 
         if (AssetHandler.getHighScore()==0){
             isFirstTime=true;
-            currentState= GameState.STORY;
+            currentState= GameState.SURVIVAL;
         } else {
             currentState = GameState.MENU;
         }
@@ -85,24 +85,46 @@ public class GameWorld {
     public void update(float delta, float runTime) {
         switch (currentState) {
             case MENU:
+                updateMenu(delta,runTime);
                 break;
-            case READY:
+            case BUYMENU:
+                updateBuyMenu(delta,runTime);
                 break;
-            case DEATHMENU:
-                updateReady(runTime);
-                break;
-            case RUNNING:
-                updateRunning(delta, runTime);
-                break;
-            case STORY:
-                updateStory(delta, runTime);
+            case SURVIVAL:
+                updateSurvival(delta, runTime);
                 break;
             default:
                 break;
         }
     }
 
-    private void updateStory(float delta, float runTime) {
+    private void updateSurvival(float delta, float runTime) {
+        bgHandler.update(delta);
+        birdHandler.update();
+        //turretHandler.update();
+        uiHandler.update(delta);
+        airship.update(delta);
+        targetHandler.update(delta, runTime);
+        tinyBirdHandler.update(delta);
+        lightHandler.update();
+        LightHandler.foreRayHandler.update();  //used for airship and gun lights too
+        LightHandler.backRayHandler.update();
+    }
+
+    private void updateMenu(float delta, float runTime) {
+        bgHandler.update(delta);
+        birdHandler.update();
+        //turretHandler.update();
+        uiHandler.update(delta);
+        airship.update(delta);
+        targetHandler.update(delta, runTime);
+        tinyBirdHandler.update(delta);
+        lightHandler.update();
+        LightHandler.foreRayHandler.update();  //used for airship and gun lights too
+        LightHandler.backRayHandler.update();
+    }
+
+    private void updateBuyMenu(float delta, float runTime) {
         bgHandler.update(delta);
         birdHandler.update();
         //turretHandler.update();
@@ -150,7 +172,7 @@ public class GameWorld {
     }
 
     public void start() {
-        currentState = GameState.RUNNING;
+        currentState = GameState.SURVIVAL;
         boost=5;
         //AssetHandler.frontFlaps.setFrameDuration(0.12f);
     }
@@ -163,10 +185,14 @@ public class GameWorld {
         AssetHandler.deathmenumusic.stop();
         AssetHandler.playnext(AssetHandler.musiclist);
         //AssetHandler.frontFlaps.setFrameDuration(0.2f);
-        currentState = GameState.READY;
+        //currentState = GameState.READY;
         renderer.prepareTransition(0, 0, 0, 1f);}
 
-    public void backToMenu() {
+    public void buyMenu() {
+        currentState = GameState.BUYMENU;
+    }
+
+    public void menu() {
         boost = 0;
         //glider.onRestart();
         //bgHandler.onRestart();
@@ -174,9 +200,7 @@ public class GameWorld {
         currentState = GameState.MENU;
         renderer.prepareTransition(0, 0, 0, 1f);}
 
-    public boolean isReady() {
-        return currentState == GameState.READY;
-    }
+
 
     public void ready() {
         //renderer.sunshineManager.killAll();
@@ -184,7 +208,7 @@ public class GameWorld {
         SplashScreen.getManager().killAll();
         AssetHandler.stopMusic(AssetHandler.menumusiclist);
         AssetHandler.playnext(AssetHandler.musiclist);
-        currentState = GameState.READY;
+        //currentState = GameState.READY;
         renderer.prepareTransition(0, 0, 0, 1f);}
 
     public void exit() {
@@ -193,7 +217,8 @@ public class GameWorld {
 
     public void story() {
         renderer.prepareTransition(0, 0, 0, 1f);
-        currentState = GameState.STORY;}
+        //currentState = GameState.STORY;
+        }
 
     public void credits() {
         renderer.prepareTransition(0, 0, 0, 1f);
@@ -205,7 +230,8 @@ public class GameWorld {
 
     public void instr2() {
         renderer.prepareTransition(0, 0, 0, 1f);
-        currentState = GameState.INSTR2;}
+        //currentState = GameState.INSTR2;
+        }
 
     public boolean isMenu() {
         return currentState == GameState.MENU;
@@ -215,20 +241,12 @@ public class GameWorld {
         return currentState == GameState.DEATHMENU;
     }
 
-    public boolean isRunning() {
-        return currentState == GameState.RUNNING;
-    }
-
-    public boolean isStory() {
-        return currentState == GameState.STORY;
+    public boolean isSurvival() {
+        return currentState == GameState.SURVIVAL;
     }
 
     public boolean isInstr() {
         return currentState == GameState.INSTR;
-    }
-
-    public boolean isInstr2() {
-        return currentState == GameState.INSTR2;
     }
 
     public boolean isCredits() {

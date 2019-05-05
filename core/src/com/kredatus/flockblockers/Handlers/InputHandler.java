@@ -1,13 +1,11 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -102,14 +100,14 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         // Can now use Space Bar to play the game
-        if (keycode == Input.Keys.SPACE) {
+        /*if (keycode == Input.Keys.SPACE) {
             if (myWorld.isMenu()) {
                 myWorld.ready();
             } else if (myWorld.isReady()) {
                 myWorld.start();
             }
             //myGlider.onClick();
-        }
+        }*/
         return false;
     }
 

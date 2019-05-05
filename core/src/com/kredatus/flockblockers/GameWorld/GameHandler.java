@@ -2,23 +2,11 @@
 package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.utils.Align;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
-import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Turret;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -33,7 +21,6 @@ import com.kredatus.flockblockers.TweenAccessors.LightAccessor;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 import com.kredatus.flockblockers.TweenAccessors.VectorAccessor;
-import com.kredatus.flockblockers.ui.SlideMenu;
 
 import aurelienribon.tweenengine.Tween;
 import box2dLight.Light;
@@ -93,7 +80,7 @@ public class GameHandler implements Screen {
 
 
 
-        uiHandler=new UiHandler(renderer.viewport, renderer.batcher, camWidth, camHeight);
+        uiHandler=new UiHandler(renderer.viewport, renderer.batcher, camWidth, camHeight, world);
         world.setRendererAndUIHandler(renderer, uiHandler);
         InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
         Gdx.input.setInputProcessor(uiHandler.stage);

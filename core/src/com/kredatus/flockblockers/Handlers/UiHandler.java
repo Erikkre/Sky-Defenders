@@ -12,11 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
 
@@ -35,6 +38,7 @@ public class UiHandler {
     public static SlideMenu slideMenuLeft, slideMenuBottom;
     public Image menuButtonX, menuButtonY;
     public static boolean isTouched;
+    private GameWorld myWorld;
 
     //might want to implement a current stage for new screens
     public static boolean anyUITouched(){
@@ -48,7 +52,8 @@ public class UiHandler {
         return false;
     }
 
-    public UiHandler(Viewport viewport, SpriteBatch batcher, float camWidth, float camHeight) {
+    public UiHandler(Viewport viewport, SpriteBatch batcher, float camWidth, float camHeight, GameWorld myWorld) {
+        this.myWorld=myWorld;
         //nameLabel = new Label("Name: ", skin);
         //TextField nameText = new TextField("Name2: ", skin);
         //TextureAtlas
@@ -349,47 +354,65 @@ public class UiHandler {
 
         /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
         slideMenuBottom = new SlideMenu(.7f*camWidth/2.75f,camHeight/7f,"down",camWidth,camHeight, 0);
+        stage.addActor(slideMenuBottom);
         final Image image_backgroundY = new Image(new SpriteDrawable(temp));
         menuButtonY = new Image(AssetHandler.menuButton);
-
-        slideMenuBottom.add(shareButton).pad(5).row();
-        //slideMenuLeft.add().height(300f).row(); // empty space
-        slideMenuBottom.add(rateButton).pad(5).row();
-
-        slideMenuBottom.background(image_backgroundY.getDrawable());
-        slideMenuBottom.top();
-
-        //System.out.println(rateButton.getX()+" "+shareButton.getX());
-
-        stage.addActor(slideMenuBottom);
         menuButtonY.rotateBy(90);menuButtonY.setWidth(menuButtonY.getWidth()*0.4f);menuButtonY.setHeight(menuButtonY.getHeight()*0.9f);menuButtonY.setColor(1,1,1,0.5f);
         menuButtonY.setOrigin(Align.center);
         //menuButtonActor=menuButtonY;
         stage.addActor(menuButtonY);
         slideMenuBottom.setMoveMenuButton(menuButtonY);
 
+
+        /******* BUTTONS ******/
+        final TextButton buyButton = new TextButton("Buy", skin);    //set button style
+        slideMenuBottom.add(buyButton).expandX().row();
+        slideMenuBottom.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                if (actor.equals(buyButton))
+                    myWorld.buyMenu();
+            }
+        });
+        final TextButton menuButton = new TextButton("Menu", skin);    //set button style
+        slideMenuBottom.add(menuButton).expandX().row();
+        slideMenuBottom.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                if (actor.equals(menuButton))
+                    myWorld.menu();
+            }
+        });
+        //slideMenuLeft.add().height(300f).row(); // empty space
+        //slideMenuBottom.add(rateButton).pad(5).row();
+
+
+
+        slideMenuBottom.background(image_backgroundY.getDrawable());
+        slideMenuBottom.top();
+
+        //System.out.println(rateButton.getX()+" "+shareButton.getX());
+
+
+
+
         //slideMenuBottom.showManually(true); //show panel
+
 
         menuButtonY.setName("menuButtonY");
         image_backgroundY.setName("IMAGE_BACKGROUNDY");
 
-        slideMenuBottom.addListener(new ClickListener() {
+        /*slideMenuBottom.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 Actor actor = event.getTarget();
                 //System.out.println(32123132132321f);
-                if (actor.getName().equals("RATE")) {
+                if (actor.getName().equals("BUY")) {
                     //Gdx.app.debug(TAG, "Rate button clicked.");
                     System.out.println("Rate button clicked.");
                     isTouched=true;
-                } else if (actor.getName().equals("SHARE")) {
+                } else if (actor.getName().equals("MENU")) {
                     //Gdx.app.debug(TAG, "Share button clicked.");
                     System.out.println("Share button clicked.");
-                    isTouched=true;
-                } else if (actor.getName().contains("MUSIC")) {
-                    //Gdx.app.debug(TAG, "Music button clicked.");
-                    System.out.println("Music button clicked.");
-                    //icon_music.setVisible(!icon_music.isVisible());
-                    //icon_off_music.setVisible(!icon_off_music.isVisible());
                     isTouched=true;
                 } else if (actor.getName().equals("IMAGE_BACKGROUNDY")){
                     System.out.println("backgroundY touched");
@@ -397,7 +420,7 @@ public class UiHandler {
                 }
                 super.cancel();
             }
-        });
+        });*/
 
         menuButtonY.addListener(new ClickListener(){//separate listener for touch up events
             public boolean touchDown(InputEvent event, float x, float y, int pnt, int btn) {

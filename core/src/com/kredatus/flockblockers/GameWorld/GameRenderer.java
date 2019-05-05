@@ -18,11 +18,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
-//import com.kredatus.flockblockers.GameObjects.Boost;
-import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Coin;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameObjects.TinyBird;
@@ -39,13 +37,14 @@ import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
-
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
+
+//import com.kredatus.flockblockers.GameObjects.Boost;
 
 /**
  * Created by Mr. Kredatus on 8/5/2017.
@@ -511,10 +510,7 @@ public void setRotate(float angle){
     }
 
     private void drawSpritesMenu(float runTime) {
-        rotate += 3;
-        batcher.draw(gliderbg, cam.position.x-beta.get(), camHeight/2-50 -beta.get(), beta.get(), beta.get(),
-                beta.get()*2, beta.get()*2, 1, 1, rotate);
-        frontTexture = (TextureRegion) frontFlaps.getKeyFrame(runTime+0.5f);
+
 
     }
 
@@ -576,7 +572,7 @@ public void setRotate(float angle){
 
     private void drawScore() {
         //scorenumber=
-        font.draw(batcher, "Gold: " + GameWorld.gold, (camWidth / 2f) - scorelen*2, 19.5f*camHeight/20f);
+        font.draw(batcher,  Integer.toString(GameWorld.gold), (camWidth / 2f) - scorelen*2, 19.5f*camHeight/20f);
         //droidSerifFont.draw(batcher, "%", cam.position.x + (camWidth / 2) - 40, cam.position.y - camHeight / 2 + 5);
         //font.draw(batcher, "POWER: " + (int)myWorld.boost, cam.position.x - (camWidth / 2) + 5, cam.position.y - camHeight / 2 + 5 );
     }
@@ -734,47 +730,25 @@ public void setRotate(float angle){
 
         //batcher.enableBlending();
 
-        if (myWorld.isStory()) {
-
-            //System.out.println(glider.getPosition());
-            //System.out.print("Cam position:" + cam.position);
-            if (runTime<2){ //start of game intro
-//                System.out.println(cam.position);
+        if (myWorld.isSurvival()) {
+            if (runTime<2){
             prepareTransition(0, 0, 0, 10f);}
-            //if (!bgHandler.vertPositionBg.isStarted()){
-                //bgHandler.vertPositionBg.start(manager);
-                //bgHandler.horizPositionBg.start(manager);
-            //}
-            drawBackground();
 
-           // table.draw(batcher, 1);
-            /*
-            cam.position.y+=10;
-            cam.update();
-            batcher.setProjectionMatrix(cam.combined);*/
+            drawBackground();
             batcher.end();
-            //batcher.begin();
             LightHandler.renderBack();
-            //batcher.end();
             batcher.begin();
             drawStory(runTime, delta);
 
-
-            //batcher.flush();
-
-            //batcher.flush();
             drawScore();
-            /*
-            if (AssetHandler.getHighScore() == 0) {
-                nextButton.draw(batcher);
-            } else {
-                menuButton.draw(batcher);
-            }*/
+            //batcher.flush()?
             batcher.end();
             uiHandler.stage.draw();
             batcher.setColor(Color.WHITE);
             batcher.begin();
-        }  else if (myWorld.isRunning()) {
+
+
+       /* }  else if (myWorld.isRunning()) {
             drawBackground();
             drawGlider(runTime);
             //drawBoosts();
@@ -789,12 +763,12 @@ public void setRotate(float angle){
             drawGlider(runTime);
             readyButton.draw(batcher);
             drawScore();
-
+*/
         } else if (myWorld.isMenu()) {
             drawBackground();
             //sunshineManager.update(delta);
-            drawSpritesMenu(runTime);
-            drawMenuUI();
+            //drawSpritesMenu(runTime);
+            //drawMenuUI();
 
         } else if (myWorld.isDeathMenu()) {
             drawBackground();
@@ -811,10 +785,10 @@ public void setRotate(float angle){
             menuButton.draw(batcher);
             nextButton.draw(batcher);
 
-        } else if (myWorld.isInstr2()) {
+        } /*else if (myWorld.isInstr2()) {
             drawInstr();
             menuButton.draw(batcher);
-        }
+        }*/
         batcher.end();
         LightHandler.renderFront();//make usre having outside of batcher does nothing
 
