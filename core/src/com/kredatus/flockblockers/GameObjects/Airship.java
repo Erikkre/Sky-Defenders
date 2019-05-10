@@ -392,7 +392,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
 
 
-
                 //System.out.println(inputX);
                 if (!UiHandler.movPad.isTouched()) {
                     rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();

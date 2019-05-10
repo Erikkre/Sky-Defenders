@@ -2,6 +2,8 @@
 package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
@@ -12,6 +14,12 @@ import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Screens.SplashScreen;
+import com.kredatus.flockblockers.TweenAccessors.Value;
+
+import aurelienribon.tweenengine.BaseTween;
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
+import aurelienribon.tweenengine.TweenEquations;
 
 /**
  * Created by Mr. Kredatus on 8/5/2017.
@@ -33,7 +41,7 @@ public class GameWorld {
 
     private static GameRenderer renderer;
     public enum GameState {
-        MENU, SURVIVAL, OPTIONS, BUYMENU, CREDITS, DEATHMENU, INSTR
+        MENU, SURVIVAL, OPTIONS, BUYMENU, CREDITS, DEATHMENU, INSTR, LOGOS
     }
     public static boolean isFirstTime;
     private GameState currentState;
@@ -56,6 +64,10 @@ public class GameWorld {
 
     public static int gold, diamonds, score;
 
+    public Value alpha =new Value(0);
+    public Tween logoTween, timerTween;
+    public boolean startGame;
+    private TextureRegion logo;
     public GameWorld(Airship airship, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler) {
         this.bgHandler = bgHandler;
         this.birdHandler = birdHandler;
@@ -66,13 +78,14 @@ public class GameWorld {
         this.lightHandler=lightHandler;
         this.airship=airship;
 
-        if (AssetHandler.getHighScore()==0){
+        currentState=GameState.LOGOS;
+        /*if (AssetHandler.getHighScore()==0){
             isFirstTime=true;
             currentState= GameState.SURVIVAL;
         } else {
             currentState = GameState.MENU;
         }
-
+*/
         //this.camWidth=camWidth;
         //this.midPointY=midPointY;
         //glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
@@ -80,6 +93,35 @@ public class GameWorld {
 
         AssetHandler.playnext(AssetHandler.menumusiclist);
         updatedboostnumber=orgboostnumber;
+
+        startLogos();
+    }
+
+    public void startLogos(){
+        logo=AssetHandler.logo;
+
+        TweenCallback cb = new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                startGame=true;
+            }
+        };
+
+        float dur=1f;
+
+        logoTween=Tween.to(alpha, 0, dur).target(1)
+                .ease(TweenEquations.easeInOutQuad).repeatYoyo(1, .0f)
+                .start();
+
+        timerTween=Tween.to(0, 0, dur).setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE);
+    }
+sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
+        sprite.setPosition((width / 2) - (sprite.getWidth() / 2), (height / 2)
+            - (sprite.getHeight() / 2));
+    setupTween();
+
+    public void drawLogos(SpriteBatch batch){
+        batch.draw();
     }
 
     public void update(float delta, float runTime) {
@@ -92,6 +134,9 @@ public class GameWorld {
                 break;
             case SURVIVAL:
                 updateSurvival(delta, runTime);
+                break;
+            case LOGOS:
+                updateLogos(delta, runTime);
                 break;
             default:
                 break;
@@ -109,6 +154,23 @@ public class GameWorld {
         lightHandler.update();
         LightHandler.foreRayHandler.update();  //used for airship and gun lights too
         LightHandler.backRayHandler.update();
+    }
+
+    private void updateLogos(float delta, float runTime) {
+        timerTween.update(delta);
+        logoTween.update(delta);
+        if (startGame) {
+            bgHandler.update(delta);
+            birdHandler.update();
+            //turretHandler.update();
+            uiHandler.update(delta);
+            airship.update(delta);
+            targetHandler.update(delta, runTime);
+            tinyBirdHandler.update(delta);
+            lightHandler.update();
+            LightHandler.foreRayHandler.update();  //used for airship and gun lights too
+            LightHandler.backRayHandler.update();
+        }
     }
 
     private void updateMenu(float delta, float runTime) {
@@ -228,8 +290,8 @@ public class GameWorld {
         renderer.prepareTransition(0, 0, 0, 1f);
         currentState = GameState.INSTR;}
 
-    public void instr2() {
-        renderer.prepareTransition(0, 0, 0, 1f);
+    public boolean isLogos() {
+        return currentState == GameState.LOGOS;
         //currentState = GameState.INSTR2;
         }
 

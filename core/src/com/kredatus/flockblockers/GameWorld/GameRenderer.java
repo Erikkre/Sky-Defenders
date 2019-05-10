@@ -610,7 +610,6 @@ public void setRotate(float angle){
             //flashShader.begin();
         }
 
-
         for (BirdAbstractClass k : deadBirdQueue) {
             if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.get());
@@ -639,7 +638,6 @@ public void setRotate(float angle){
                 }
             }
         }
-
 
         airship.draw(batcher, delta);   //after deadBirds but before activeBirds
         if (airship.isFlashing){
@@ -685,8 +683,6 @@ public void setRotate(float angle){
             }
 
             //batcher.end();
-
-
             //batcher.begin();
         }
         airship.drawReticle(batcher);
@@ -724,7 +720,6 @@ public void setRotate(float angle){
         Gdx.gl20.glClearColor(0.25f, 0.25f, 0.25f, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
         //batcher.disableBlending();
         batcher.begin();
 
@@ -746,7 +741,6 @@ public void setRotate(float angle){
             uiHandler.stage.draw();
             batcher.setColor(Color.WHITE);
             batcher.begin();
-
 
        /* }  else if (myWorld.isRunning()) {
             drawBackground();
@@ -785,10 +779,13 @@ public void setRotate(float angle){
             menuButton.draw(batcher);
             nextButton.draw(batcher);
 
-        } /*else if (myWorld.isInstr2()) {
-            drawInstr();
-            menuButton.draw(batcher);
-        }*/
+        } else if (myWorld.isLogos()) {
+            myWorld.drawLogo();
+            if (myWorld.startGame) {
+                drawInstr();
+                menuButton.draw(batcher);
+            }
+        }
         batcher.end();
         LightHandler.renderFront();//make usre having outside of batcher does nothing
 
@@ -806,16 +803,16 @@ public void setRotate(float angle){
     }
 
     private void drawTransition(float delta) {
-     //   if (alpha.get() > 0) {
-         //   manager.update(delta);
-          //  Gdx.gl.glEnable(GL30.GL_BLEND);
-          //  Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
-           // shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-          //  shapeRenderer.setColor(transitionColor.r, transitionColor.g,transitionColor.b, alpha.get());
-          //  shapeRenderer.rect(-camWidth*5000, -camHeight*5000, camWidth*10000, camHeight*10000);
-          //  shapeRenderer.end();
-          //  Gdx.gl.glDisable(GL30.GL_BLEND);
-      //  }
+        if (alpha.get() > 0) {
+            manager.update(delta);
+            Gdx.gl.glEnable(GL30.GL_BLEND);
+            Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(transitionColor.r, transitionColor.g,transitionColor.b, alpha.get());
+            shapeRenderer.rect(0, 0, camWidth, camHeight);
+            shapeRenderer.end();
+            Gdx.gl.glDisable(GL30.GL_BLEND);
+        }
     }
 
     public static Vector3 getCameraPosition() { return campos; }
