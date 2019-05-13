@@ -42,7 +42,7 @@ public class BgHandler {
     //private int orgBoostnumber = AssetHandler.getBoostnumber(), coordslistsize=AssetHandler.getcoordslistsize();
     public static int bgw= AssetHandler.bgPhoenixtexture.getRegionWidth();
     public static int bgh = AssetHandler.bgPhoenixtexture.getRegionHeight(), separatorHeight=AssetHandler.bgCloudSeparatorTexture.getRegionHeight();    //height of separator is different, and there are 2 combined with eachother
-//    float preVert, yVelAbs;
+
     public static int bgNumber;
 
     //private TweenManager manager;
@@ -54,6 +54,9 @@ public class BgHandler {
     private GameRenderer renderer;
     public static int bgStackStartYHeight=0;
     public static boolean isMiddleOfCloud, irregularMotion, justStarted = true;
+    public int waveDuration, sideToSideMotionDuration=30;
+
+    float preYVel, yVel;
     public BgHandler(float camWidth, float camHeight, int birdType){
         //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
         this.camHeight=camHeight;
@@ -111,7 +114,7 @@ public class BgHandler {
         };
 
         (horizPositionBg = Timeline.createSequence()
-                .push(Tween.to(horiz, -1, 30f).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .push(Tween.to(horiz, -1, sideToSideMotionDuration).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start();
 //System.out.println("First easing target: "+(-bgh+camHeight/2)  /2);
 
@@ -223,9 +226,9 @@ public class BgHandler {
                     //stop running once done
             //if(vert.get()<bgStackHeight+35)backgroundStackReset();
 
-            //preVert=vert.get();
+            preYVel=vert.get();
             vertPositionBg.update(delta);
-            //yVelAbs=Math.abs(vert.get()-preVert);
+            yVel=Math.abs(vert.get()-preYVel);
 
 
             //System.out.println(vert.get()+" "+isbgVertFast);
@@ -313,7 +316,7 @@ public class BgHandler {
                 bgNumber = 0;
             }
 
-            if (background.addedY<3000 && background2.addedY<3000) {//in case the tween lags, we make sure reset stack is called back instead of whats below
+            if (background.addedY<3000 && background2.addedY<3000) { //in case the tween lags, we make sure reset stack is called back instead of whats below
                 if (background.isScrolledDown()) {
                     //System.out.println("reset 1 to 2 +bgh, 1 is " + background.y + ", set to " + background2.getTailY());
                     background2.addedY += background.height + background.addedY;

@@ -3,11 +3,11 @@
 
 package com.kredatus.flockblockers;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
-import com.kredatus.flockblockers.Screens.SplashScreen;
 
 
 public class FlockBlockersMain extends Game {
@@ -17,7 +17,7 @@ public class FlockBlockersMain extends Game {
     public void create() {
         Gdx.app.log("CloudDefenders", "created");
         AssetHandler.load();
-        setScreen(new SplashScreen(this));
+        setScreen(new GameHandler());
     }
 
     @Override

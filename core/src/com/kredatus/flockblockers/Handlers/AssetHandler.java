@@ -5,18 +5,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -284,8 +282,8 @@ public class AssetHandler {
         bgGoldtexture.flip(false, true);
         bgGoldtexture2 = tA.findRegion("bgGold2");
 
-        //               9                       18                      27                      36                      45                        54                      63
-        //1 2  4 5  7 8     10 11  13 14  16 17     19 20  22 23  25 26     28 29  31 32  34 35     37 38  40 41  43 44       46 47  49 50  52 53     55 56  58 59  61 62     64 65  67 68  70 71
+        //   0                 9                       18                      27                      36                      45                        54                      63
+        //      1 2  4 5  7 8     10 11  13 14  16 17     19 20  22 23  25 26     28 29  31 32  34 35     37 38  40 41  43 44       46 47  49 50  52 53     55 56  58 59  61 62     64 65  67 68  70 71
         bgList = new ArrayList<TextureRegion>();    //3 times each to ensure speedy movement upwards, slower thru cities faster thru clouds
         Collections.addAll(bgList, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2,
                 bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2,

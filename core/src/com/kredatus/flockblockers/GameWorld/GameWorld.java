@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -67,7 +68,9 @@ public class GameWorld {
     public Value alpha =new Value(0);
     public Tween logoTween, timerTween;
     public boolean startGame;
-    private TextureRegion logo;
+    private TextureRegion logo,logoBg;
+    private float logoScale;
+
     public GameWorld(Airship airship, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler) {
         this.bgHandler = bgHandler;
         this.birdHandler = birdHandler;
@@ -78,7 +81,6 @@ public class GameWorld {
         this.lightHandler=lightHandler;
         this.airship=airship;
 
-        currentState=GameState.LOGOS;
         /*if (AssetHandler.getHighScore()==0){
             isFirstTime=true;
             currentState= GameState.SURVIVAL;
@@ -90,38 +92,52 @@ public class GameWorld {
         //this.midPointY=midPointY;
         //glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
 
-
         AssetHandler.playnext(AssetHandler.menumusiclist);
         updatedboostnumber=orgboostnumber;
 
         startLogos();
     }
 
-    public void startLogos(){
+    public void startLogos() {
+        LightHandler.rayHandlerAmbLightLvl=0;
+        currentState=GameState.LOGOS;
         logo=AssetHandler.logo;
+        logoBg=AssetHandler.slidemenuBg;
 
+        /*Sprite temp=new Sprite(AssetHandler.slidemenuBg);
+        temp.setColor(new Color(0,0,0,0.5f));
+        final Image image_backgroundX = new Image(new SpriteDrawable(temp));*/
         TweenCallback cb = new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                startGame=true;
+                if (!startGame) {
+                    startGame = true;
+                    System.out.println("start game");
+                } else {
+                    currentState=GameState.SURVIVAL;
+                    System.out.println("switch to survival");
+                }
             }
         };
 
         float dur=1f;
-
-        logoTween=Tween.to(alpha, 0, dur).target(1)
-                .ease(TweenEquations.easeInOutQuad).repeatYoyo(1, .0f)
+        logoScale=(float)GameHandler.camHeight/logo.getRegionHeight()/2;
+        logoTween=(Tween.to(alpha, 0, dur).target(1)
+                .ease(TweenEquations.easeInOutQuad).repeatYoyo(1, .0f)).setCallback(cb).setCallbackTriggers(TweenCallback.END)
                 .start();
 
         timerTween=Tween.to(0, 0, dur).setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE);
     }
-sprite.setSize(sprite.getWidth() * scale, sprite.getHeight() * scale);
-        sprite.setPosition((width / 2) - (sprite.getWidth() / 2), (height / 2)
-            - (sprite.getHeight() / 2));
-    setupTween();
 
-    public void drawLogos(SpriteBatch batch){
-        batch.draw();
+    public void drawLogos(SpriteBatch batch, float camWidth, float camHeight){
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        //glBlendEquation();
+        //Gdx.gl.glClearColor(1, 1, 1, alpha.get());
+        System.out.println(alpha.get());
+        //Gdx.gl.glClear( GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+        batch.setColor(1,1,1,alpha.get());
+        batch.draw(logo,camWidth/2 - logo.getRegionWidth()*logoScale/2,camHeight/2-logo.getRegionHeight()*logoScale/2, logo.getRegionWidth()*logoScale, logo.getRegionHeight()*logoScale);
+        batch.setColor(1,1,1,1);
     }
 
     public void update(float delta, float runTime) {

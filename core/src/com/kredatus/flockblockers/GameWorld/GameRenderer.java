@@ -33,7 +33,6 @@ import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Helpers.ShapeRendererCustom;
-import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
@@ -160,7 +159,8 @@ public class GameRenderer {
         instrFontSetup();
         //creditsFontSetup();
         transitionColor = new Color();
-        prepareTransition(255, 255, 255, .5f);
+        //prepareTransition(255, 255, 255, .5f);
+        manager = new TweenManager();
         //prepareSunshine();
         //System.out.println(batcher.getBlendDstFunc()+" "+batcher.getBlendDstFuncAlpha()+" "+batcher.getBlendSrcFunc()+" "+batcher.getBlendSrcFuncAlpha()+" "+batcher.getPackedColor());
     }
@@ -741,7 +741,7 @@ public void setRotate(float angle){
             uiHandler.stage.draw();
             batcher.setColor(Color.WHITE);
             batcher.begin();
-
+            LightHandler.renderFront();
        /* }  else if (myWorld.isRunning()) {
             drawBackground();
             drawGlider(runTime);
@@ -780,16 +780,27 @@ public void setRotate(float angle){
             nextButton.draw(batcher);
 
         } else if (myWorld.isLogos()) {
-            myWorld.drawLogo();
             if (myWorld.startGame) {
-                drawInstr();
-                menuButton.draw(batcher);
+                drawBackground();
+                batcher.end();
+                LightHandler.renderBack();
+                batcher.begin();
+                drawStory(runTime, delta);
+
+                drawScore();
+                //batcher.flush()?
+                batcher.end();
+                uiHandler.stage.draw();
+                batcher.setColor(Color.WHITE);
+                batcher.begin();
+                //LightHandler.renderFront();
             }
+            myWorld.drawLogos(batcher,camWidth,camHeight);
         }
         batcher.end();
-        LightHandler.renderFront();//make usre having outside of batcher does nothing
+        //make usre having outside of batcher does nothing
 
-        drawTransition(delta);
+        //drawTransition(delta);
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
         //System.out.println("gameRenderer edge:"+(cam.position.x - camWidth / 2));
     }
@@ -797,7 +808,6 @@ public void setRotate(float angle){
     public void prepareTransition(int r, int g, int b, float duration) {
         transitionColor.set(r / 255.0f, g / 255.0f, b / 255.0f, 1);
         alpha.set(1);
-        manager = SplashScreen.getManager();
         Tween.to(alpha, -1, duration).target(0)
                 .ease(TweenEquations.easeOutQuad).start(manager);
     }
