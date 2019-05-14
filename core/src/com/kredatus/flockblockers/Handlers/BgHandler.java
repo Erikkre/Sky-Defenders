@@ -56,7 +56,9 @@ public class BgHandler {
     public static boolean isMiddleOfCloud, irregularMotion, justStarted = true;
     public int waveDuration, sideToSideMotionDuration=30;
 
-    float preYVel, yVel;
+    public static float preYVel, yVel;
+    public static boolean lightsBrightening;
+
     public BgHandler(float camWidth, float camHeight, int birdType){
         //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
         this.camHeight=camHeight;
@@ -228,7 +230,7 @@ public class BgHandler {
 
             preYVel=vert.get();
             vertPositionBg.update(delta);
-            yVel=Math.abs(vert.get()-preYVel);
+            yVel=preYVel-vert.get();
 
 
             //System.out.println(vert.get()+" "+isbgVertFast);
@@ -270,7 +272,9 @@ public class BgHandler {
                         .push(Tween.to(vert, -1, 2).targetRelative(-(separatorHeight + bgh + bgh)-vert.get()).ease(TweenEquations.easeInQuint).setCallback(backgroundStackReset).setCallbackTriggers(TweenCallback.END))
                 ).start();
                 //System.out.println("irregular motion");
-            }
+            }   //fix this stuff up but be careful because could cause unexpected bugs. shouldnt if statement before this have an if (!endwavebgmotion) at the beginning of it?
+            //*********************************
+
 
             if (endWaveBgMotion && vertPositionBg.isFinished() ) {   //check if we need to keep ending wave quickly or new wave begins
                 //System.out.println("vert position finished bgNum now "+bgNumber);

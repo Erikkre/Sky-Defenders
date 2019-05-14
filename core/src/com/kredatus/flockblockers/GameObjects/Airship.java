@@ -326,7 +326,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public boolean isOnCam(float x, float y){
-        return x > 0 && x < camWidth && y < camHeight && y > 0;
+        return x > 2*balloonWidth/3 && x < camWidth-2*balloonWidth/3 && y < camHeight - 2*balloonHeight/3 && y > rackHeight/1.2;
     }
 
     private int getAirshipTouchPointer() {

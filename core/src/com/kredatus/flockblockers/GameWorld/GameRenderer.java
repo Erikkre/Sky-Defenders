@@ -106,7 +106,7 @@ public class GameRenderer {
     //private TurretHandler turretHandler;
     private UiHandler uiHandler;
 
-    Table table;
+    //Table table;
 
     private ShaderProgram flashShader;
 
@@ -125,12 +125,12 @@ public class GameRenderer {
         this.camHeight=camHeight;
 
 
-       batcher = new SpriteBatch();
-
+        batcher = new SpriteBatch();
+        //System.out.println("batcher color: "+batcher.getColor()+", white: "+new Color(1,1,1,1));
         cam = new OrthographicCamera();
         viewport=new ExtendViewport(camWidth,camHeight, cam);
         cam.setToOrtho(false, camWidth, camHeight);
-        cam.position.set(new Vector3(camWidth/2,camHeight/2,0));
+        cam.position.set(new Vector3(camWidth/2f,camHeight/2f,0));
         cam.update();
         batcher.setProjectionMatrix(cam.combined);
         System.out.println("Height: "+camHeight);
@@ -367,12 +367,13 @@ public void setRotate(float angle){
     }
 
     private void drawBackground() {
+    batcher.disableBlending();
         batcher.draw(background.getTexture(), background.getX(), background.getY(),
                 background.getWidth(), background.getHeight());
 
         batcher.draw(background2.getTexture(), background2.getX(), background2.getY(),
                background2.getWidth(), background2.getHeight());
-
+        batcher.enableBlending();
         //flip world
         //batcher.draw(vertflipbgtexture, background3.getX(), background3.getY(),
          //       background3.getWidth(), background3.getHeight());
@@ -717,8 +718,8 @@ public void setRotate(float angle){
     public void render(float delta, float runTime) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        Gdx.gl20.glClearColor(0.25f, 0.25f, 0.25f, 1);
-        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //Gdx.gl20.glClearColor(0.25f, 0.25f, 0.25f, 1);
+        //Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //batcher.disableBlending();
         batcher.begin();
@@ -726,8 +727,8 @@ public void setRotate(float angle){
         //batcher.enableBlending();
 
         if (myWorld.isSurvival()) {
-            if (runTime<2){
-            prepareTransition(0, 0, 0, 10f);}
+            /*if (runTime<2){
+            prepareTransition(0, 0, 0, 10f);}*/
 
             drawBackground();
             batcher.end();
@@ -736,12 +737,13 @@ public void setRotate(float angle){
             drawStory(runTime, delta);
 
             drawScore();
-            //batcher.flush()?
+            batcher.flush();
             batcher.end();
             uiHandler.stage.draw();
-            batcher.setColor(Color.WHITE);
-            batcher.begin();
+            //batcher.setColor(Color.WHITE);
+
             LightHandler.renderFront();
+            batcher.begin();
        /* }  else if (myWorld.isRunning()) {
             drawBackground();
             drawGlider(runTime);
@@ -788,15 +790,19 @@ public void setRotate(float angle){
                 drawStory(runTime, delta);
 
                 drawScore();
-                //batcher.flush()?
+                // batcher.flush();
                 batcher.end();
                 uiHandler.stage.draw();
-                batcher.setColor(Color.WHITE);
+                //batcher.setColor(Color.WHITE);
+
+                LightHandler.renderFront();
                 batcher.begin();
-                //LightHandler.renderFront();
+
             }
             myWorld.drawLogos(batcher,camWidth,camHeight);
         }
+        //`System.out.println(batcher.getColor());
+        //System.out.println(batcher.getColor().r+" "+batcher.getColor().g+" "+batcher.getColor().b+" "+batcher.getColor().a);
         batcher.end();
         //make usre having outside of batcher does nothing
 

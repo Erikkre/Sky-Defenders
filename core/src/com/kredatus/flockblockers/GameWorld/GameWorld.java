@@ -2,7 +2,10 @@
 package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -96,6 +99,7 @@ public class GameWorld {
         updatedboostnumber=orgboostnumber;
 
         startLogos();
+        //currentState=GameState.SURVIVAL;
     }
 
     public void startLogos() {
@@ -120,24 +124,29 @@ public class GameWorld {
             }
         };
 
-        float dur=1f;
+        float dur=2f;
         logoScale=(float)GameHandler.camHeight/logo.getRegionHeight()/2;
         logoTween=(Tween.to(alpha, 0, dur).target(1)
-                .ease(TweenEquations.easeInOutQuad).repeatYoyo(1, .0f)).setCallback(cb).setCallbackTriggers(TweenCallback.END)
+                .ease(TweenEquations.easeOutSine).repeatYoyo(1, .5f)).setCallback(cb).setCallbackTriggers(TweenCallback.END)
                 .start();
 
         timerTween=Tween.to(0, 0, dur).setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE);
     }
 
     public void drawLogos(SpriteBatch batch, float camWidth, float camHeight){
+        //System.out.println(alpha.get());
+
         Gdx.gl.glEnable(GL20.GL_BLEND);
-        //glBlendEquation();
-        //Gdx.gl.glClearColor(1, 1, 1, alpha.get());
-        System.out.println(alpha.get());
-        //Gdx.gl.glClear( GL30.GL_COLOR_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT);
+        //Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+        Color origColor = batch.getColor();
+        batch.setColor(0,0,0,alpha.get());
+        batch.draw(logoBg,0,0,camWidth,camHeight);
         batch.setColor(1,1,1,alpha.get());
         batch.draw(logo,camWidth/2 - logo.getRegionWidth()*logoScale/2,camHeight/2-logo.getRegionHeight()*logoScale/2, logo.getRegionWidth()*logoScale, logo.getRegionHeight()*logoScale);
-        batch.setColor(1,1,1,1);
+
+        batch.setColor(origColor);
+
     }
 
     public void update(float delta, float runTime) {
@@ -153,6 +162,7 @@ public class GameWorld {
                 break;
             case LOGOS:
                 updateLogos(delta, runTime);
+                if (startGame) updateSurvival(delta,runTime);
                 break;
             default:
                 break;
@@ -175,18 +185,6 @@ public class GameWorld {
     private void updateLogos(float delta, float runTime) {
         timerTween.update(delta);
         logoTween.update(delta);
-        if (startGame) {
-            bgHandler.update(delta);
-            birdHandler.update();
-            //turretHandler.update();
-            uiHandler.update(delta);
-            airship.update(delta);
-            targetHandler.update(delta, runTime);
-            tinyBirdHandler.update(delta);
-            lightHandler.update();
-            LightHandler.foreRayHandler.update();  //used for airship and gun lights too
-            LightHandler.backRayHandler.update();
-        }
     }
 
     private void updateMenu(float delta, float runTime) {
