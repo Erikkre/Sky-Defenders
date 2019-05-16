@@ -29,7 +29,7 @@ public class FireBird extends BirdAbstractClass {
         coinNumber=1;
 
         sizeVariance=100;
-        sizeRatio=0.4f;
+        sizeRatio=0.3f;
 
         animSeq = AssetHandler.fireAnimations;
         animSetup();

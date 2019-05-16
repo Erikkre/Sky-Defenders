@@ -24,8 +24,8 @@ public class WaterBird extends BirdAbstractClass {
         coinNumber=1;
         origYVel=yVel;
 
-        sizeVariance=100;
-        sizeRatio=0.5f;
+        sizeVariance=130;
+        sizeRatio=0.4f;
 
         animSeq = AssetHandler.waterAnimations;
         animSetup();

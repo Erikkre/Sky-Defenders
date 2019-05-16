@@ -325,13 +325,22 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         return y < pos.y+balloonBob.get() + balloonHeight && y > pos.y+balloonBob.get() - rackHeight && x < pos.x + ((balloonWidth + rackWidth) / 4f) && x > pos.x - ((balloonWidth + rackWidth) / 4f);//average width of airship between balloon and rack
     }
 
-    public boolean isOnCam(float x, float y){
-        return x > rackWidth/2 && x < camWidth-rackWidth/2 && y < camHeight - 2*balloonHeight/3 && y > rackHeight/1.2;
+    /*public boolean bothOnCam(float x, float y){
+        return x > mvBnds("l") && x < mvBnds("r") && (y < mvBnds("u") && y > mvBnds("d"));
+    }*/
+    public boolean eitherOnCam(float x, float y){
+        return x > mvBnds("l") && x < mvBnds("r") || (y < mvBnds("u") && y > mvBnds("d"));
+    }
+    public boolean isOnCam(float input, String xOrY){
+        if (xOrY.equals("x")) {System.out.println("1");return input > mvBnds("l") && input < mvBnds("r");}
+        else {System.out.println("2");return input < mvBnds("u") && input > mvBnds("d"); }
     }
 
-    public boolean isOnCam(float input, String xOrY){
-        if (xOrY.equals("x")) return input > rackWidth/2 && input < camWidth-rackWidth/2;
-        else return input < camHeight - 2*balloonHeight/3 && input > rackHeight/1.1;
+    public float mvBnds(String edge){
+        if (edge.equals("l")) return rackWidth/2f;
+        else if (edge.equals("r")) return camWidth  - rackWidth/2f;
+        else if (edge.equals("u")) return camHeight - 2*balloonHeight/3f;
+        else return rackHeight/1.1f;
     }
 
     private int getAirshipTouchPointer() {
@@ -359,21 +368,26 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     ||Math.abs((inputY+fingerAirshipYDiff)+(InputHandler.scaleY(Gdx.input.getY(airshipTouchPointer))-camHeight)  ) >0     )     )     ) { //if (after first press) and (airship currently pressed)
 
             //System.out.println("AIRSHIP POINTER MOVED OR MOVPAD MOVED");
-            if (UiHandler.movPad.isTouched()){
-                if (inputX==0)inputX=pos.x;if (inputY==0)inputY=pos.y;
-                airshipTouchPointer=-1; fingerAirshipXDiff=0;fingerAirshipYDiff=0;
+            if (UiHandler.movPad.isTouched()) {
+                if (inputX == 0) inputX = pos.x;
+                if (inputY == 0) inputY = pos.y;
+                airshipTouchPointer = -1;
+                fingerAirshipXDiff = 0;
+                fingerAirshipYDiff = 0;
 
-                System.out.println(UiHandler.movPad.getKnobPercentX());
-                if (UiHandler.movPad.getKnobPercentX()*5 < -1.5) {
+                //System.out.println(UiHandler.movPad.getKnobPercentX());
+                if (UiHandler.movPad.getKnobPercentX() * 5 < -1.5) {
                     fireThruster(2);
                     //System.out.println("Thrust Right");
-                } else if (UiHandler.movPad.getKnobPercentX()*5> 1.5) {
+                } else if (UiHandler.movPad.getKnobPercentX() * 5 > 1.5) {
                     fireThruster(1);
                     // System.out.println("Thrust Left");
                 }
 
-                if (inputX+UiHandler.movPad.getKnobPercentX()*5>0&&inputX+UiHandler.movPad.getKnobPercentX()*5<camWidth) inputX+=UiHandler.movPad.getKnobPercentX()*3;
-                if (inputY+UiHandler.movPad.getKnobPercentY()*5>0&&inputY+UiHandler.movPad.getKnobPercentY()*5<camHeight)inputY+=UiHandler.movPad.getKnobPercentY()*3;
+                if (inputX + UiHandler.movPad.getKnobPercentX() * 5 > 0 && inputX + UiHandler.movPad.getKnobPercentX() * 5 < camWidth)
+                    inputX += UiHandler.movPad.getKnobPercentX() * 4;
+                if (inputY + UiHandler.movPad.getKnobPercentY() * 5 > 0 && inputY + UiHandler.movPad.getKnobPercentY() * 5 < camHeight)
+                    inputY += UiHandler.movPad.getKnobPercentY() * 4;
 
             } else {
                 inputX = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff;//input with finger touch difference
@@ -388,57 +402,44 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 }
             }
 
-            if ( isOnCam(inputX, inputY)) {
-                timeToTweenTarget = (float) (Math.sqrt(Math.pow(Math.abs(pos.x - inputX), 2) + Math.pow(Math.abs(pos.y + balloonBob.get() - inputY), 2))) / speed;
-                //if (distance/speedDivisor<1.5f){//if distance is so small it takes under 1.5s to get there, take 1.5s anyways
-                //    tween = Tween.to(pos, 0, 1.5f).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
-                //} else {
+            if (eitherOnCam(inputX, inputY)) {
+                System.out.println("either are on cam");
+                if (!isOnCam(inputY,"y")) {
+                    System.out.println("x is on cam");
+                    fingerAirshipYDiff=0;
+                    if (inputY>camHeight/2) inputY=mvBnds("u");
+                    else inputY=mvBnds("d");
 
-                movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
+                } else if (!isOnCam(inputX,"x")) {
+                    System.out.println("y is on cam");
+                    fingerAirshipXDiff = 0;
+                    if (inputX > camWidth / 2) inputX = mvBnds("r");
+                    else inputX = mvBnds("l");
+                } else System.out.println("both are on cam");
 
-                if (!UiHandler.movPad.isTouched()) {
-                    rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
-                    dragLineOpacity.set(0.4f);
+                    timeToTweenTarget = (float) (Math.sqrt(Math.pow(Math.abs(pos.x - inputX), 2) + Math.pow(Math.abs(pos.y + balloonBob.get() - inputY), 2))) / speed;
+                    //if (distance/speedDivisor<1.5f){//if distance is so small it takes under 1.5s to get there, take 1.5s anyways
+                    //    tween = Tween.to(pos, 0, 1.5f).target(inputX, inputY).ease(TweenEquations.easeOutQuint).start();
+                    //} else {
 
-                    tweenTarget.set(inputX + fingerAirshipXDiff, inputY + fingerAirshipYDiff);
-                    if (timeToTweenTarget > 2) {
-                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.24f).target(-1).ease(TweenEquations.easeInSine).start();
+                    movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
+
+                    if (!UiHandler.movPad.isTouched()) {
+                        rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
+                        dragLineOpacity.set(0.4f);
+
+                        tweenTarget.set(inputX + fingerAirshipXDiff, inputY + fingerAirshipYDiff);
+                        if (timeToTweenTarget > 2) {
+                            dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.24f).target(-1).ease(TweenEquations.easeInSine).start();
+                        } else {
+                            dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
+                        }
+
                     } else {
-                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
+                        rotation.set(0);
+                        rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)).target(0).ease(TweenEquations.easeOutCirc).start();
                     }
-
-                } else {rotation.set(0);rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)).target(0).ease(TweenEquations.easeOutCirc).start();}
-                //rotate to waypoint based on x distance, then back to itself
-            } else if (isOnCam(inputX, "x")||isOnCam(pos.x, "x")){
-                timeToTweenTarget = Math.abs(pos.x - inputX) / speed;
-                movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, pos.y).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
-
-                if (!UiHandler.movPad.isTouched()) {
-                    rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
-                    dragLineOpacity.set(0.4f);
-
-                    tweenTarget.set(inputX + fingerAirshipXDiff, pos.y);
-                    if (timeToTweenTarget > 2) {
-                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.24f).target(-1).ease(TweenEquations.easeInSine).start();
-                    } else {
-                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
-                    }
-                } else {rotation.set(0);rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)).target(0).ease(TweenEquations.easeOutCirc).start();}
-            }else if (isOnCam(inputY, "y")||isOnCam(pos.y,"y")){
-                timeToTweenTarget = Math.abs(pos.y + balloonBob.get() - inputY) / speed;
-                movtween = Tween.to(pos, 0, timeToTweenTarget).target(pos.x, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
-
-                if (!UiHandler.movPad.isTouched()) {
-                    if (!rotationTween.isFinished()) rotationTween.kill();
-                    dragLineOpacity.set(0.4f);
-
-                    tweenTarget.set(pos.x, inputY + fingerAirshipYDiff);
-                    if (timeToTweenTarget > 2) {
-                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.24f).target(-1).ease(TweenEquations.easeInSine).start();
-                    } else {
-                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
-                    }
-                }
+                    //rotate to waypoint based on x distance, then back to itself
             }
 
 

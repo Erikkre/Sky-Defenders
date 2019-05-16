@@ -308,7 +308,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl-0.15f);
             backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
         }
-        System.out.println(rayHandlerAmbLightLvl);
+        //System.out.println(rayHandlerAmbLightLvl);
 
         //System.out.println(Math.abs(BgHandler.vert.get()/BgHandler.bgStackHeight));
         float bgVert = BgHandler.vert.get();
