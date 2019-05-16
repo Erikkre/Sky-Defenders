@@ -57,7 +57,7 @@ public class BgHandler {
     public int waveDuration, sideToSideMotionDuration=30;
 
     public static float preYVel, yVel;
-    public static boolean lightsBrightening;
+    public static boolean lightsBrightening=true;
 
     public BgHandler(float camWidth, float camHeight, int birdType){
         //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
@@ -218,9 +218,9 @@ public class BgHandler {
     //      1 2  4 5  7 8     10 11  13 14  16 17     19 20  22 23  25 26     28 29  31 32  34 35     37 38  40 41  43 44       46 47  49 50  52 53     55 56  58 59  61 62     64 65  67 68  70 71
     public void update(float delta) {
         //basically if middle of each wave start brightening, i.e. 6, if beginning of new wave start darkening
-        if (lightsBrightening && ((bgNumber-2)%9)==0) {lightsBrightening=false;
+        if (lightsBrightening && ((bgNumber-4)%9)==0) {lightsBrightening=false;
             System.out.println("start darkening");}
-        else if (!lightsBrightening && ((bgNumber+3)%9)==0) {lightsBrightening=true;System.out.println("start brightening");}
+        else if (!lightsBrightening && ((bgNumber+2)%9)==0) {lightsBrightening=true;System.out.println("start brightening");}
 
         //System.out.println(endWaveBgMotion);
         //System.out.println("1: "+ Math.round(background.y) + " 2: "+Math.round(background2.y));
