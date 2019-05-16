@@ -3,9 +3,6 @@ package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -133,7 +130,7 @@ public class GameWorld {
 
     public void drawLogos(SpriteBatch batch, float camWidth, float camHeight) {
         batch.setColor(1, 1, 1, alpha.get());
-        batch.draw(logo, camWidth / 2 - logo.getRegionWidth() * GameHandler.camWidth/logo.getRegionWidth() / 2, camHeight / 2 - logo.getRegionHeight() * GameHandler.camHeight/logo.getRegionHeight() / 2, logo.getRegionWidth() * GameHandler.camWidth/logo.getRegionWidth(), logo.getRegionHeight() * GameHandler.camHeight/logo.getRegionHeight());
+        batch.draw(logo, camWidth / 2f - logo.getRegionWidth() * GameHandler.camWidth/(float)logo.getRegionWidth() / 2f, camHeight / 2f - logo.getRegionHeight() * GameHandler.camHeight/(float)logo.getRegionHeight() / 2f, logo.getRegionWidth() * GameHandler.camWidth/(float)logo.getRegionWidth(), logo.getRegionHeight() * GameHandler.camHeight/(float)logo.getRegionHeight());
         batch.setColor(Color.WHITE);
     }
 

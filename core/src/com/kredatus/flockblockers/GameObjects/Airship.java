@@ -326,7 +326,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public boolean isOnCam(float x, float y){
-        return x > 2*balloonWidth/3 && x < camWidth-2*balloonWidth/3 && y < camHeight - 2*balloonHeight/3 && y > rackHeight/1.2;
+        return x > rackWidth/2 && x < camWidth-rackWidth/2 && y < camHeight - 2*balloonHeight/3 && y > rackHeight/1.2;
+    }
+
+    public boolean isOnCam(float input, String xOrY){
+        if (xOrY.equals("x")) return input > rackWidth/2 && input < camWidth-rackWidth/2;
+        else return input < camHeight - 2*balloonHeight/3 && input > rackHeight/1.1;
     }
 
     private int getAirshipTouchPointer() {
@@ -391,8 +396,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
                 movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
 
-
-                //System.out.println(inputX);
                 if (!UiHandler.movPad.isTouched()) {
                     rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
                     dragLineOpacity.set(0.4f);
@@ -404,8 +407,38 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                         dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
                     }
 
-                } else rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)).target(0).ease(TweenEquations.easeOutCirc).start();
+                } else {rotation.set(0);rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)).target(0).ease(TweenEquations.easeOutCirc).start();}
                 //rotate to waypoint based on x distance, then back to itself
+            } else if (isOnCam(inputX, "x")||isOnCam(pos.x, "x")){
+                timeToTweenTarget = Math.abs(pos.x - inputX) / speed;
+                movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, pos.y).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
+
+                if (!UiHandler.movPad.isTouched()) {
+                    rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
+                    dragLineOpacity.set(0.4f);
+
+                    tweenTarget.set(inputX + fingerAirshipXDiff, pos.y);
+                    if (timeToTweenTarget > 2) {
+                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.24f).target(-1).ease(TweenEquations.easeInSine).start();
+                    } else {
+                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
+                    }
+                } else {rotation.set(0);rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)).target(0).ease(TweenEquations.easeOutCirc).start();}
+            }else if (isOnCam(inputY, "y")||isOnCam(pos.y,"y")){
+                timeToTweenTarget = Math.abs(pos.y + balloonBob.get() - inputY) / speed;
+                movtween = Tween.to(pos, 0, timeToTweenTarget).target(pos.x, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
+
+                if (!UiHandler.movPad.isTouched()) {
+                    if (!rotationTween.isFinished()) rotationTween.kill();
+                    dragLineOpacity.set(0.4f);
+
+                    tweenTarget.set(pos.x, inputY + fingerAirshipYDiff);
+                    if (timeToTweenTarget > 2) {
+                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.24f).target(-1).ease(TweenEquations.easeInSine).start();
+                    } else {
+                        dragLineFadeout = Tween.to(dragLineOpacity, 1, timeToTweenTarget * 0.21f).target(-1).ease(TweenEquations.easeInCubic).start();//no delay if very close
+                    }
+                }
             }
 
 

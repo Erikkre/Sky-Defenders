@@ -220,7 +220,7 @@ public class BgHandler {
         //basically if middle of each wave start brightening, i.e. 6, if beginning of new wave start darkening
         if (lightsBrightening && ((bgNumber-4)%9)==0) {lightsBrightening=false;
             System.out.println("start darkening");}
-        else if (!lightsBrightening && ((bgNumber+2)%9)==0) {lightsBrightening=true;System.out.println("start brightening");}
+        else if (!lightsBrightening && ((bgNumber+1)%9)==0) {lightsBrightening=true;System.out.println("start brightening");}
 
         //System.out.println(endWaveBgMotion);
         //System.out.println("1: "+ Math.round(background.y) + " 2: "+Math.round(background2.y));

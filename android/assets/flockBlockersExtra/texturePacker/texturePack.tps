@@ -292,36 +292,6 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../../textures/sprites/balloons/armor0.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>41,3,82,7</rect>
-                <key>scale9Paddings</key>
-                <rect>41,3,82,7</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../../textures/sprites/balloons/armor1.png</key>
-            <key type="filename">../../textures/sprites/balloons/armor2.png</key>
-            <key type="filename">../../textures/sprites/balloons/armor3.png</key>
-            <key type="filename">../../textures/sprites/balloons/armor4.png</key>
-            <key type="filename">../../textures/sprites/balloons/armor5.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>39,3,77,6</rect>
-                <key>scale9Paddings</key>
-                <rect>39,3,77,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">../../textures/sprites/balloons/balloon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -363,6 +333,19 @@
                 <rect>41,49,82,97</rect>
                 <key>scale9Paddings</key>
                 <rect>41,49,82,97</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../../textures/sprites/balloons/rack6.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>42,49,83,97</rect>
+                <key>scale9Paddings</key>
+                <rect>42,49,83,97</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
