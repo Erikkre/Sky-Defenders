@@ -88,13 +88,15 @@ public class SlideMenu extends Table {
 
             if (auto && (isCompletelyClosedY()||isCompletelyOpenedY())) auto = false;
 
-            //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and touchpads not touched
-            if (!auto && isTouched() && ( (isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()/2.5f).y) || (!isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()).y)) && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
+            //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and    inputX is on menu button   and  touchpads not touched
+            if (!auto && isTouched() && ( (isCompletelyClosedY() && inputY() > stgToScrCoordsY(0, this.getHeight()/3f).y) || (!isCompletelyClosedY()&&inputY() > stgToScrCoordsY(0, this.getHeight()).y))
+                    && inputX() > menuButton.getX()-menuButton.getHeight()/5 && inputX() < menuButton.getX()+menuButton.getHeight()/3
+                    && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
                 if (!isTouched) isTouched=true;
                 //if closed, in zone and swiping down
                 if (isCompletelyClosedY()&&Gdx.input.getDeltaY()<-3) showManually(true);// open = false, close = true;
 
-                else if (isCompletelyOpenedY()&&Gdx.input.getDeltaY()>3)showManually(false);// open = true, close = false;
+                else if (isCompletelyOpenedY()&&Gdx.input.getDeltaY()>3) showManually(false);// open = true, close = false;
             } else if (isTouched) isTouched=false;
             //can compare to how it was when edge of menu followed finger in ui v10 git commit
             getStage().calculateScissors(areaBounds.set(camWidth/2f+offsetFromCenter-areaWidth/2f , 0, areaWidth, areaHeight), scissorBounds);
@@ -110,15 +112,19 @@ public class SlideMenu extends Table {
 
             if (auto && (isCompletelyClosedX() || isCompletelyOpenedX())) auto = false;
 
-            //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and touchpads not touched
-            if (!auto && isTouched() && ( (isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth()/1.5f, 0).x) || (!isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth(), 0).x) ) && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {
+            /*if (isTouched()){
+                System.out.println("inputY: "+inputY()+", menuButtonTopEdge: "+(menuButton.getY()-menuButton.getHeight()*1.35)+", menuButtonBottEdge: "+(menuButton.getY()-menuButton.getHeight()/1.45));
+            }//used to test if drag input is on button*/
+
+            //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and    inputY is on menu button   and  touchpads not touched
+            if (!auto && isTouched() && ( (isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth()/1.5f, 0).x) || (!isCompletelyClosedX()&&inputX() < stgToScrCoordsX(this.getWidth(), 0).x) )
+                    && inputY() > menuButton.getY()-menuButton.getHeight()*1.35 && inputY() < menuButton.getY()-menuButton.getHeight()/1.45
+                    && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {
                 if (!isTouched) isTouched=true;
                 //if closed, in zone and swiping left
-                if (isCompletelyClosedX() && Gdx.input.getDeltaX() > 3)
-                    showManually(true);// open = false, close = true;
+                if (isCompletelyClosedX() && Gdx.input.getDeltaX() > 3) showManually(true);// open = false, close = true;
 
-                else if (isCompletelyOpenedX() && Gdx.input.getDeltaX() < -3)
-                    showManually(false);// open = true, close = false;
+                else if (isCompletelyOpenedX() && Gdx.input.getDeltaX() < -3) showManually(false);// open = true, close = false;
             } else if (isTouched) isTouched=false;
             //can compare to how it was when edge of menu followed finger in ui v10 git commit
             getStage().calculateScissors(areaBounds.set(0, camHeight/2f+offsetFromCenter-areaHeight/2f, areaWidth, areaHeight), scissorBounds);
