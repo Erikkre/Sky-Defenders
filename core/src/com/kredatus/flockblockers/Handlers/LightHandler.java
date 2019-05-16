@@ -299,13 +299,13 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         if (rayHandlerAmbLightLvl<=0.75&&BgHandler.lightsBrightening) {
             rayHandlerAmbLightLvl+=Math.abs(BgHandler.yVel/17000f);
             //System.out.println("+ "+BgHandler.yVel/7000f);
-                foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl-0.05f);
+                foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl-0.10f);
                 backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
 
-        } else if (rayHandlerAmbLightLvl>=0.40&&!BgHandler.lightsBrightening) {
+        } else if (rayHandlerAmbLightLvl>=0.45&&!BgHandler.lightsBrightening) {
             rayHandlerAmbLightLvl-=Math.abs(BgHandler.yVel/13000f);
             //System.out.println("- "+BgHandler.yVel/7000f);
-            foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl-0.05f);
+            foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl-0.10f);
             backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
         }
         System.out.println(rayHandlerAmbLightLvl);
