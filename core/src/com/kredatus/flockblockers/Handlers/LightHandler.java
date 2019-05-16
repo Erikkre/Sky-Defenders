@@ -296,20 +296,21 @@ public class LightHandler { //consider making barlight and mirroring on each sid
                 backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
         }*/
     public void update() {
-        if (rayHandlerAmbLightLvl<0.75&&BgHandler.lightsBrightening) {
-            rayHandlerAmbLightLvl+=Math.abs(BgHandler.yVel/7000f);
-            System.out.println(BgHandler.yVel/7000f);
+        if (rayHandlerAmbLightLvl<=0.75&&BgHandler.lightsBrightening) {
+            rayHandlerAmbLightLvl+=Math.abs(BgHandler.yVel/16000f);
+            //System.out.println("+ "+BgHandler.yVel/7000f);
             if (rayHandlerAmbLightLvl <= 0.70)
                 foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
             if (rayHandlerAmbLightLvl <= 0.75);
                 backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
 
-        } else if (rayHandlerAmbLightLvl>0.05&&BgHandler.lightsBrightening) {
-            rayHandlerAmbLightLvl-=Math.abs(BgHandler.yVel/7000f);
+        } else if (rayHandlerAmbLightLvl>=0.35&&!BgHandler.lightsBrightening) {
+            rayHandlerAmbLightLvl-=Math.abs(BgHandler.yVel/16000f);
+            //System.out.println("- "+BgHandler.yVel/7000f);
             backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
             foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
         }
-        //System.out.println(rayHandlerAmbLightLvl);
+        System.out.println(rayHandlerAmbLightLvl);
 
         //System.out.println(Math.abs(BgHandler.vert.get()/BgHandler.bgStackHeight));
         float bgVert = BgHandler.vert.get();

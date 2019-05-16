@@ -213,8 +213,15 @@ public class BgHandler {
         renderer.setRotate((-(float)Math.atan2(cam.up.x,cam.up.y)*MathUtils.radiansToDegrees) +shake.get() ); //subtract last angle and add next one
         //+ (-1+2*r.nextFloat())
     }
-//PointLight
+
+    //   0                 9                       18                      27                      36                      45                        54                      63
+    //      1 2  4 5  7 8     10 11  13 14  16 17     19 20  22 23  25 26     28 29  31 32  34 35     37 38  40 41  43 44       46 47  49 50  52 53     55 56  58 59  61 62     64 65  67 68  70 71
     public void update(float delta) {
+        //basically if middle of each wave start brightening, i.e. 6, if beginning of new wave start darkening
+        if (lightsBrightening && ((bgNumber-2)%9)==0) {lightsBrightening=false;
+            System.out.println("start darkening");}
+        else if (!lightsBrightening && ((bgNumber+3)%9)==0) {lightsBrightening=true;System.out.println("start brightening");}
+
         //System.out.println(endWaveBgMotion);
         //System.out.println("1: "+ Math.round(background.y) + " 2: "+Math.round(background2.y));
         if (isCameraShake) {
@@ -230,7 +237,7 @@ public class BgHandler {
 
             preYVel=vert.get();
             vertPositionBg.update(delta);
-            yVel=preYVel-vert.get();
+            if (Math.abs(preYVel-vert.get())<bgStackHeight/10)yVel=preYVel-vert.get();
 
 
             //System.out.println(vert.get()+" "+isbgVertFast);
@@ -262,7 +269,7 @@ public class BgHandler {
 
             //if end of wave close or 1 background away from ending dont end wave quickly, bgNumber multiples of 10 are wave end bg's
             //System.out.println(isBirdSpawning +" "+ BirdHandler.birdQueue.isEmpty() +" "+ BirdHandler.activeBirdQueue.isEmpty() +" "+ !(bgNumber%10==0) +" "+ !((bgNumber+1)%10==0));
-            if (bgNumber>1 && !((bgNumber-1)%9==0) && !((bgNumber-2)%9==0) && isBirdSpawning && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty() ) {//stop spawning
+            if ( !endWaveBgMotion && isBirdSpawning && bgNumber>1 && !((bgNumber-1)%9==0) && !((bgNumber-2)%9==0)  && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty() ) {//stop spawning
                 //System.out.println(bgNumber);
                 endWaveBgMotion = true;
                 isBirdSpawning = false;

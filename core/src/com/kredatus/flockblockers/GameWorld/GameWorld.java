@@ -72,7 +72,6 @@ public class GameWorld {
     public Tween logoTween, timerTween;
     public boolean startGame;
     private TextureRegion logo,logoBg;
-    private float logoScale;
 
     public GameWorld(Airship airship, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler) {
         this.bgHandler = bgHandler;
@@ -103,7 +102,7 @@ public class GameWorld {
     }
 
     public void startLogos() {
-        LightHandler.rayHandlerAmbLightLvl=0;
+        LightHandler.rayHandlerAmbLightLvl=0.75f;
         currentState=GameState.LOGOS;
         logo=AssetHandler.logo;
         logoBg=AssetHandler.slidemenuBg;
@@ -125,28 +124,17 @@ public class GameWorld {
         };
 
         float dur=2f;
-        logoScale=(float)GameHandler.camHeight/logo.getRegionHeight()/2;
         logoTween=(Tween.to(alpha, 0, dur).target(1)
-                .ease(TweenEquations.easeOutSine).repeatYoyo(1, .5f)).setCallback(cb).setCallbackTriggers(TweenCallback.END)
+                .ease(TweenEquations.easeOutQuart).repeatYoyo(1, 0)).setCallback(cb).setCallbackTriggers(TweenCallback.END)
                 .start();
 
         timerTween=Tween.to(0, 0, dur).setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE);
     }
 
-    public void drawLogos(SpriteBatch batch, float camWidth, float camHeight){
-        //System.out.println(alpha.get());
-
-        Gdx.gl.glEnable(GL20.GL_BLEND);
-        //Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-
-        Color origColor = batch.getColor();
-        batch.setColor(0,0,0,alpha.get());
-        batch.draw(logoBg,0,0,camWidth,camHeight);
-        batch.setColor(1,1,1,alpha.get());
-        batch.draw(logo,camWidth/2 - logo.getRegionWidth()*logoScale/2,camHeight/2-logo.getRegionHeight()*logoScale/2, logo.getRegionWidth()*logoScale, logo.getRegionHeight()*logoScale);
-
-        batch.setColor(origColor);
-
+    public void drawLogos(SpriteBatch batch, float camWidth, float camHeight) {
+        batch.setColor(1, 1, 1, alpha.get());
+        batch.draw(logo, camWidth / 2 - logo.getRegionWidth() * GameHandler.camWidth/logo.getRegionWidth() / 2, camHeight / 2 - logo.getRegionHeight() * GameHandler.camHeight/logo.getRegionHeight() / 2, logo.getRegionWidth() * GameHandler.camWidth/logo.getRegionWidth(), logo.getRegionHeight() * GameHandler.camHeight/logo.getRegionHeight());
+        batch.setColor(Color.WHITE);
     }
 
     public void update(float delta, float runTime) {
