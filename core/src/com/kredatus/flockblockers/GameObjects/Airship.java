@@ -136,7 +136,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         height=balloonHeight+rackHeight+armorHeight;
 
-        thrusterOrigPos=new Vector2(pos.x, pos.y+thrusterYPosition*balloonHeight+thrusterHeight/2f);
+        thrusterOrigPos=new Vector2(pos.x, pos.y+balloonBob.get()+thrusterYPosition*balloonHeight+thrusterHeight/2f);
 
         movtween =Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-height).ease(TweenEquations.easeOutCirc).delay(1f).start();
         rotationTween=Tween.to(rotation,0,2).waypoint((pos.x-(camWidth-balloonWidth))/25f).target(0).ease(TweenEquations.easeOutCirc).delay(1).start();
@@ -185,7 +185,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
         setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
-        burnerUp();rackUp();armorUp();armorUp();armorUp();armorUp();armorUp();armorUp();
+        burnerUp();rackUp();//armorUp();armorUp();armorUp();armorUp();armorUp();armorUp();
 
 
         addTurret('c');addTurret('c');addTurret('d');addTurret('d');addTurret('d');addTurret('f');addTurret('f');addTurret('f');
@@ -274,17 +274,16 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     private void assignRackPositions() {
-
         positions.clear();
         float leftXOfRack=pos.x-rackWidth/2f;
         for (int i=0;i<=rackLvl;i++) {
             if (i<2) {
                 for (int j=0;j<4;j++) {
-                    positions.add(new Vector2(leftXOfRack+j*tW+tW/2f,        pos.y+balloonBob.get()-i*tH - (tH /2f) + 7 ));
+                    positions.add(new Vector2(leftXOfRack+j*tW+tW/2f,        pos.y+balloonBob.get()-i*tH - (tH /2f) + 9 ));
                 }
             } else {
                 for (int j=0;j<3;j++) {
-                    positions.add(new Vector2(leftXOfRack+j*tW+ tW,pos.y+balloonBob.get()-i*tH - (tH/2f) ));
+                    positions.add(new Vector2(leftXOfRack+j*tW+ tW,pos.y+balloonBob.get()-i*tH - (tH/2f) + 9));
                 }
             }
         }
@@ -332,14 +331,14 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         return x > mvBnds("l") && x < mvBnds("r") || (y < mvBnds("u") && y > mvBnds("d"));
     }
     public boolean isOnCam(float input, String xOrY){
-        if (xOrY.equals("x")) {System.out.println("1");return input > mvBnds("l") && input < mvBnds("r");}
-        else {System.out.println("2");return input < mvBnds("u") && input > mvBnds("d"); }
+        if (xOrY.equals("x")) return input > mvBnds("l") && input < mvBnds("r");
+        else return input < mvBnds("u") && input > mvBnds("d");
     }
 
     public float mvBnds(String edge){
         if (edge.equals("l")) return rackWidth/2f;
         else if (edge.equals("r")) return camWidth  - rackWidth/2f;
-        else if (edge.equals("u")) return camHeight - 2*balloonHeight/3f;
+        else if (edge.equals("u")) return camHeight - balloonHeight/2f;
         else return rackHeight/1.1f;
     }
 
@@ -370,7 +369,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("AIRSHIP POINTER MOVED OR MOVPAD MOVED");
             if (UiHandler.movPad.isTouched()) {
                 if (inputX == 0) inputX = pos.x;
-                if (inputY == 0) inputY = pos.y;
+                if (inputY == 0) inputY = pos.y+balloonBob.get();
                 airshipTouchPointer = -1;
                 fingerAirshipXDiff = 0;
                 fingerAirshipYDiff = 0;
@@ -384,9 +383,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     // System.out.println("Thrust Left");
                 }
 
-                if (inputX + UiHandler.movPad.getKnobPercentX() * 5 > 0 && inputX + UiHandler.movPad.getKnobPercentX() * 5 < camWidth)
+                if (inputX + UiHandler.movPad.getKnobPercentX() * 5 > mvBnds("l") && inputX + UiHandler.movPad.getKnobPercentX() * 5 < mvBnds("r"))
                     inputX += UiHandler.movPad.getKnobPercentX() * 4;
-                if (inputY + UiHandler.movPad.getKnobPercentY() * 5 > 0 && inputY + UiHandler.movPad.getKnobPercentY() * 5 < camHeight)
+                if (inputY + UiHandler.movPad.getKnobPercentY() * 5 > mvBnds("d") && inputY + UiHandler.movPad.getKnobPercentY() * 5 < mvBnds("u"))
                     inputY += UiHandler.movPad.getKnobPercentY() * 4;
 
             } else {
@@ -403,19 +402,19 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
 
             if (eitherOnCam(inputX, inputY)) {
-                System.out.println("either are on cam");
+                //System.out.println("either are on cam");
                 if (!isOnCam(inputY,"y")) {
-                    System.out.println("x is on cam");
+                    //System.out.println("x is on cam");
                     fingerAirshipYDiff=0;
                     if (inputY>camHeight/2) inputY=mvBnds("u");
                     else inputY=mvBnds("d");
 
                 } else if (!isOnCam(inputX,"x")) {
-                    System.out.println("y is on cam");
+                    //System.out.println("y is on cam");
                     fingerAirshipXDiff = 0;
                     if (inputX > camWidth / 2) inputX = mvBnds("r");
                     else inputX = mvBnds("l");
-                } else System.out.println("both are on cam");
+                }
 
                     timeToTweenTarget = (float) (Math.sqrt(Math.pow(Math.abs(pos.x - inputX), 2) + Math.pow(Math.abs(pos.y + balloonBob.get() - inputY), 2))) / speed;
                     //if (distance/speedDivisor<1.5f){//if distance is so small it takes under 1.5s to get there, take 1.5s anyways
@@ -748,7 +747,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 dragCircleLight.setPosition(tweenTarget.x, tweenTarget.y);
 
 
-                float xDist = tweenTarget.x - pos.x, yDist = (tweenTarget.y - (pos.y + balloonHeight / 2 + balloonBob.get())), width = (float) Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2)) - dragCircleTexture.getRegionWidth() / 2f;
+                float xDist = tweenTarget.x - pos.x, yDist = (tweenTarget.y - (pos.y + balloonBob.get() + balloonHeight / 2 )), width = (float) Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2)) - dragCircleTexture.getRegionWidth() / 2f;
                 float rotation = (float) Math.toDegrees(Math.atan(yDist / xDist));
                 /*if        (xDist > 0) { //(xDistance+position.x > position.x) {
                     rotation += 180;
