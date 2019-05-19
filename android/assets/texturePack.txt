@@ -119,6 +119,20 @@ size: 4098, 3606
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+aimLine
+  rotate: false
+  xy: 995, 3589
+  size: 992, 4
+  orig: 992, 4
+  offset: 0, 0
+  index: -1
+aimLineOrigThicc
+  rotate: false
+  xy: 1, 3589
+  size: 992, 8
+  orig: 992, 8
+  offset: 0, 0
+  index: -1
 balloon
   rotate: false
   xy: 3762, 1
@@ -163,7 +177,7 @@ bow_explode_ranged
   index: -1
 burnerPipes
   rotate: false
-  xy: 3781, 1078
+  xy: 2033, 3589
   size: 6, 7
   orig: 6, 7
   offset: 0, 0
@@ -317,7 +331,7 @@ pc1
   index: -1
 pd2
   rotate: false
-  xy: 3737, 1078
+  xy: 3666, 1075
   size: 42, 13
   orig: 42, 13
   offset: 0, 0
@@ -331,7 +345,7 @@ pf0
   index: -1
 pf2
   rotate: false
-  xy: 3666, 1075
+  xy: 1989, 3589
   size: 42, 15
   orig: 42, 15
   offset: 0, 0
@@ -450,7 +464,7 @@ sideThruster2
   index: -1
 slideMenuBackground
   rotate: false
-  xy: 3732, 1075
+  xy: 2033, 3598
   size: 3, 3
   orig: 3, 3
   offset: 0, 0

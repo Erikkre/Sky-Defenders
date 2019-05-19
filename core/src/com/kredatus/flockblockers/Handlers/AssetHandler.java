@@ -38,7 +38,7 @@ public class AssetHandler {
             bgLunartexture, bgLunartexture2,bgThundertexture, bgThundertexture2,bgWatertexture, bgWatertexture2,horflipbgtexture, vertflipbgtexture, horvertflipbgtexture,
             boosttexture,boostdown,logo,slidemenuBg, menuButton, rateButton, shareButton, playdown, play, credits, creditsdown, exit, exitdown, retry, retrydown, ready, readydown, story, storydown, instr, instrdown, menu,
             menudown, score, rating, topscore, youvedied, newHighscore, creditsbg, deathmenubg, gliderbg, instrbg, readybg, next, nextdown, worldStabilized, coinSymbol, reticle,
-            bgCloudSeparatorTexture, airshipBalloon, airshipSideThruster, airshipBurnerPipe, dragCircle, dragLine;
+            bgCloudSeparatorTexture, airshipBalloon, airshipSideThruster, airshipBurnerPipe, dragCircle, dragLine, aimLine;
 
     public static TextureRegion[] rackTextures = new TextureRegion[7];
     public static ArrayList<Vector3> boostcoords;
@@ -415,6 +415,7 @@ public class AssetHandler {
         reticle = tA.findRegion("reticle");
         dragCircle=tA.findRegion("dragCirc");
         dragLine=tA.findRegion("dragLine");
+        aimLine=tA.findRegion("aimLine");
 
         for (int i=0;i<7;i++) {
             rackTextures[i]=tA.findRegion("rack"+i);
