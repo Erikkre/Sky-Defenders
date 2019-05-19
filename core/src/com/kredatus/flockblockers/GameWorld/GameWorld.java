@@ -159,8 +159,9 @@ public class GameWorld {
         birdHandler.update();
         //turretHandler.update();
         uiHandler.update(delta);
-        airship.update(delta);
         targetHandler.update(delta, runTime);
+        airship.update(delta);
+
         tinyBirdHandler.update(delta);
         lightHandler.update();
         LightHandler.foreRayHandler.update();  //used for airship and gun lights too
@@ -177,8 +178,9 @@ public class GameWorld {
         birdHandler.update();
         //turretHandler.update();
         uiHandler.update(delta);
-        airship.update(delta);
         targetHandler.update(delta, runTime);
+        airship.update(delta);
+
         tinyBirdHandler.update(delta);
         lightHandler.update();
         LightHandler.foreRayHandler.update();  //used for airship and gun lights too
@@ -190,8 +192,8 @@ public class GameWorld {
         birdHandler.update();
         //turretHandler.update();
         uiHandler.update(delta);
-        airship.update(delta);
         targetHandler.update(delta, runTime);
+        airship.update(delta);
         tinyBirdHandler.update(delta);
         lightHandler.update();
         LightHandler.foreRayHandler.update();  //used for airship and gun lights too

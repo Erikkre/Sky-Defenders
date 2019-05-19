@@ -347,7 +347,7 @@ public class Turret {
                             if (pullBackThenThrow) {pullBackThenThrow = false; posOffset.setZero();}
                         }
                     }
-                    //System.out.println("2 "+ BirdHandler.activeBirdQueue);
+                    //`System.out.println("2 "+ BirdHandler.activeBirdQueue);
                     //ask haoran for a better equation
                     //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is vel but needs to be better scaled
                     setRotation( targetBird.xVel, targetBird.yVel,targetBird.y- pos.y, targetBird.x- pos.x, false);

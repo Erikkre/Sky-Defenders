@@ -188,11 +188,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
         setEmitterVal(emitters.get(0).getSpawnWidth(), (burnerLvl+1)*pipeWidth*1.6f, false, false);
-        burnerUp();rackUp();//armorUp();armorUp();armorUp();armorUp();armorUp();armorUp();
+        burnerUp();rackUp();speedUp();speedUp();armorUp();armorUp();armorUp();armorUp();armorUp();armorUp();
 
 
         addTurret('c');addTurret('c');addTurret('d');addTurret('d');addTurret('d');addTurret('f');addTurret('f');addTurret('f');
         turretList.get(1).lvlUp();turretList.get(3).lvlUp();turretList.get(4).lvlUp();turretList.get(4).lvlUp();turretList.get(6).lvlUp();turretList.get(7).lvlUp();turretList.get(7).lvlUp();
+        //addTurret('d');turretList.get(0).lvlUp();turretList.get(0).lvlUp();
         for (Turret i :turretList){
             i.accUp();i.accUp();i.accUp();
             //i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();i.rotUp();
@@ -385,10 +386,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     // System.out.println("Thrust Left");
                 }
 
-                if (inputX + UiHandler.movPad.getKnobPercentX() * 5 > mvBnds("l") && inputX + UiHandler.movPad.getKnobPercentX() * 5 < mvBnds("r"))
-                    inputX += UiHandler.movPad.getKnobPercentX() * 4;
-                if (inputY + UiHandler.movPad.getKnobPercentY() * 5 > mvBnds("d") && inputY + UiHandler.movPad.getKnobPercentY() * 5 < mvBnds("u"))
-                    inputY += UiHandler.movPad.getKnobPercentY() * 4;
+                if (inputX + UiHandler.movPad.getKnobPercentX() * 5f > mvBnds("l") && inputX + UiHandler.movPad.getKnobPercentX() * 5 < mvBnds("r"))
+                    inputX += UiHandler.movPad.getKnobPercentX() * 4f * speed/50f;
+                if (inputY + UiHandler.movPad.getKnobPercentY() * 5f > mvBnds("d") && inputY + UiHandler.movPad.getKnobPercentY() * 5 < mvBnds("u"))
+                    inputY += UiHandler.movPad.getKnobPercentY() * 4f * speed/50f;
 
             } else {
                 inputX = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff;//input with finger touch difference
@@ -632,7 +633,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         balloonBobTween.update(delta);
 
 
-        setEmitterVal(emitters.get(0).getAngle(), 90 - rotation.get() * 3, true, true);//always change angle of burner fire based on arship rot
+        setEmitterVal(emitters.get(0).getAngle(), 90 - rotation.get() * 3, true, true);//always change angle of burner fire based on airship rot
 
         //System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing+", velX: "+vel.x);
         setDestAirship();
@@ -717,7 +718,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void drawReticle(SpriteBatch batcher) {
-        if (turretList.size() > 0) {
+        if (turretList.size() > 0 && !UiHandler.aimPad.isTouched()) {
             if (BgHandler.changingBalloonBrightness) batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
             else batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
             //System.out.println("Turretlist size: " + turretList.size());
@@ -749,7 +750,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             float targetRot=turretList.get(0).targetRot;
             if (preAimLineRotation>targetRot+180)extraRot+=360;
             else if (preAimLineRotation<targetRot-180)extraRot-=360;
-            aimLineRotationSmoothing = Tween.to(aimLineRotation, 1, 1).ease(TweenEquations.easeOutQuart).target(targetRot+180+extraRot).start();
+            aimLineRotationSmoothing = Tween.to(aimLineRotation, 1, 0.5f).ease(TweenEquations.easeOutQuart).target(targetRot+180+extraRot).start();
             preAimLineRotation=targetRot;
         } else if (extraRot!=0) extraRot=0;
 

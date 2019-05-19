@@ -67,7 +67,7 @@ public class GameHandler implements Screen {
         //turretHandler = new TurretHandler(camWidth, camHeight);
         lightHandler= new LightHandler(bgHandler);
         airship=new Airship(camWidth, camHeight, birdType);
-        targetHandler = new TargetHandler(airship);
+        targetHandler = new TargetHandler(airship,birdHandler.activeBirdQueue,birdHandler.deadBirdQueue);
 
         world = new GameWorld(airship, camWidth, camHeight, bgHandler,birdHandler, targetHandler,tinyBirdHandler,uiHandler, lightHandler);
 
