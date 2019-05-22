@@ -44,7 +44,7 @@ public class TargetHandler {
         //if (activeBirdQueue.size()!=activeQueueSize) closestBirdDist = Float.POSITIVE_INFINITY;
         //System.out.println(BirdHandler.activeBirdQueue);
         //System.out.println(activeQueueSize+" "+targetBird);
-        for (BirdAbstractClass i : activeBirdQueue){
+        for (BirdAbstractClass i : activeBirdQueue) {
             i.update(delta, runTime);
 
 

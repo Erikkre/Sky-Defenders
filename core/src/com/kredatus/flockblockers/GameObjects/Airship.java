@@ -750,9 +750,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             float targetRot=turretList.get(0).targetRot;
             if (preAimLineRotation>targetRot+180)extraRot+=360;
             else if (preAimLineRotation<targetRot-180)extraRot-=360;
-            aimLineRotationSmoothing = Tween.to(aimLineRotation, 1, 0.5f).ease(TweenEquations.easeOutQuart).target(targetRot+180+extraRot).start();
+            aimLineRotationSmoothing = Tween.to(aimLineRotation, 1, 0.5f).ease(TweenEquations.easeOutCirc).target(targetRot+180+extraRot).start();
             preAimLineRotation=targetRot;
-        } else if (extraRot!=0) extraRot=0;
+        } //else if (extraRot!=0) extraRot=0;
 
         Color c = batcher.getColor();
         batcher.setColor(c.r, c.g, c.b, aimLineOpacity.get());

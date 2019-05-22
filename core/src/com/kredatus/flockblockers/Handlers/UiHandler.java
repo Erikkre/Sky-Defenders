@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -24,6 +25,8 @@ import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
 
 import java.io.File;
+
+import javax.xml.soap.Text;
 
 public class UiHandler {
 
@@ -366,21 +369,20 @@ public class UiHandler {
 
         /******* BUTTONS ******/
         final TextButton buyButton = new TextButton("Buy", skin);    //set button style
-        slideMenuBottom.add(buyButton).expandX().row();
+        buyButton.setStyle(skin.get("round", buyButton.getStyle().getClass()));
+        slideMenuBottom.add(buyButton).expand().fill().row();
+
+        final TextButton menuButton = new TextButton("Menu", skin);    //set button style
+        menuButton.setStyle(skin.get("round", menuButton.getStyle().getClass()));
+        slideMenuBottom.add(menuButton).expand().fill().row();
+
         slideMenuBottom.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (actor.equals(buyButton))
                     myWorld.buyMenu();
-            }
-        });
-        final TextButton menuButton = new TextButton("Menu", skin);    //set button style
-        slideMenuBottom.add(menuButton).expandX().row();
-        slideMenuBottom.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (actor.equals(menuButton))
-                    myWorld.menu();
+                else if (actor.equals(menuButton))
+                    myWorld.buyMenu();
             }
         });
         //slideMenuLeft.add().height(300f).row(); // empty space
@@ -388,7 +390,7 @@ public class UiHandler {
 
 
 
-        slideMenuBottom.background(image_backgroundY.getDrawable());
+        //slideMenuBottom.background(image_backgroundY.getDrawable());
         slideMenuBottom.top();
 
         //System.out.println(rateButton.getX()+" "+shareButton.getX());
