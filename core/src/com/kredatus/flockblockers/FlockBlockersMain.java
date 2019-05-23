@@ -15,18 +15,21 @@ import static java.lang.Thread.sleep;
 public class FlockBlockersMain extends Game {
     public static final boolean fastTest = false, dontPauseOnUnfocus = false;
     public static int birdType=1;
+    public AssetHandler assetHandler=new AssetHandler();
+
+
     @Override
     public void create() {
         Gdx.app.log("CloudDefenders", "created");
-        AssetHandler.load();
-        //this.wait();
+        //this.wait();\
+        assetHandler.load();
         setScreen(new GameHandler());
     }
 
     @Override
     public void dispose() {
         //super.dispose();
-        AssetHandler.dispose();
+        assetHandler.dispose();
         GameRenderer.dispose();
     }
 }

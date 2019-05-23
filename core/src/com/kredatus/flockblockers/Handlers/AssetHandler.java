@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -61,6 +62,7 @@ public class AssetHandler {
     public static ParticleEffectPool burnerFirePool, thrusterFireLeftPool, thrusterFireRightPool;
     public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>(), nonAdditiveEffects;
     public static Array<ParticleEmitter> emitters=new Array<ParticleEmitter>();
+    public AssetManager assetManager= new AssetManager();
     public static void load() {
         tA=new TextureAtlas("texturePack.txt");
         //textureAtlas.findRegion()
@@ -614,8 +616,9 @@ public class AssetHandler {
         }
     }
 
-    public static void dispose() {
+    public void dispose() {
         // We must dispose of the texture when we are finished.
+        assetManager.dispose();
         tA.dispose();
 
         splashdown.dispose();
