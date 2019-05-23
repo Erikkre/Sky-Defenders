@@ -3,11 +3,13 @@ package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Created by Erik Kredatus on 9/8/2018.
@@ -19,8 +21,8 @@ public class FireBird extends BirdAbstractClass {
 
     //public final int[] animSeqList = {0,1,2,3};
     boolean newBirdOverlaps;
-    public FireBird(float camHeight, float camWidth, ArrayList flashLengths){
-        super();
+    public FireBird(Vector2 airshipPos,float camHeight, float camWidth, ArrayList flashLengths, ConcurrentLinkedQueue<BirdAbstractClass> birdQueue){
+        super(airshipPos);
         this.flashLengths=flashLengths;
 
         yVel=0.85f*globalSpeedMultiplier;
@@ -60,7 +62,7 @@ public class FireBird extends BirdAbstractClass {
         newYWithinHeight();
 
         BirdAbstractClass[] fireBirdList = new BirdAbstractClass[0];
-        if (!BirdHandler.birdQueue.isEmpty()) fireBirdList =  BirdHandler.birdQueue.toArray(fireBirdList);
+        if (!birdQueue.isEmpty()) fireBirdList =  birdQueue.toArray(fireBirdList);
 
         do  {
             newBirdOverlaps=false;

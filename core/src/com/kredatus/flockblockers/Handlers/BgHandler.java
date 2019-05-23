@@ -4,8 +4,10 @@ package com.kredatus.flockblockers.Handlers;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Background;
+import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Helpers.InvertedTweenEquations;
@@ -13,6 +15,7 @@ import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
@@ -59,7 +62,11 @@ public class BgHandler {
     public static float preYVel, yVel;
     public static boolean lightsBrightening=true;
 
-    public BgHandler(float camWidth, float camHeight, int birdType){
+    ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,birdQueue;
+    public BgHandler(float camWidth, float camHeight, int birdType, BirdHandler birdHandler, TinyBirdHandler tinyBirdHandler){
+        this.activeBirdQueue=birdHandler.activeBirdQueue;
+        this.birdQueue=birdHandler.birdQueue;
+
         //bgStackStartYHeight= (int)(separatorHeight/2-camHeight/2);
         this.camHeight=camHeight;
         this.camWidth =camWidth;
@@ -76,14 +83,14 @@ public class BgHandler {
         //this.manager= SplashScreen.getManager();
         //System.out.println("vert.get() " + vert.get());
         isCameraShake=false;
-        setupTweens(camWidth, camHeight);
+        setupTweens(camWidth, camHeight,tinyBirdHandler);
         isPastStoryIntro=true;
         //isBirdSpawning=true;
 
         //TinyBirdHandler.addTinyBirdsNextCity(camWidth,camHeight);
     }
 
-    private void setupTweens(final float camWidth, final float camHeight){
+    private void setupTweens(final float camWidth, final float camHeight, final TinyBirdHandler tinyBirdHandler){
         //final float camHeight2=camHeight;
         startStoryIntroAndSpawns=new TweenCallback() {
             @Override
@@ -160,8 +167,8 @@ public class BgHandler {
         backgroundStackReset=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                TinyBirdHandler.addVertValueToBirdsSurvivingWavePart(vert.get());
-                TinyBirdHandler.addTinyBirdsNextCity(camWidth, camHeight);
+                tinyBirdHandler.addVertValueToBirdsSurvivingWavePart(vert.get());
+                tinyBirdHandler.addTinyBirdsNextCity(camWidth, camHeight);
                 //System.out.println("Reset stack");
                 stackJustReset=true;
                 if (bgNumber == AssetHandler.bgList.size()) {
@@ -270,7 +277,7 @@ public class BgHandler {
 
             //if end of wave close or 1 background away from ending dont end wave quickly, bgNumber multiples of 10 are wave end bg's
             //System.out.println(isBirdSpawning +" "+ BirdHandler.birdQueue.isEmpty() +" "+ BirdHandler.activeBirdQueue.isEmpty() +" "+ !(bgNumber%10==0) +" "+ !((bgNumber+1)%10==0));
-            if ( !endWaveBgMotion && isBirdSpawning && bgNumber>1 && !((bgNumber-1)%9==0) && !((bgNumber-2)%9==0)  && BirdHandler.birdQueue.isEmpty() && BirdHandler.activeBirdQueue.isEmpty() ) {//stop spawning
+            if ( !endWaveBgMotion && isBirdSpawning && bgNumber>1 && !((bgNumber-1)%9==0) && !((bgNumber-2)%9==0)  && birdQueue.isEmpty() && activeBirdQueue.isEmpty() ) {//stop spawning
                 //System.out.println(bgNumber);
                 endWaveBgMotion = true;
                 isBirdSpawning = false;

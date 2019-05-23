@@ -33,7 +33,7 @@ public class GameHandler implements Screen {
     private GameWorld world;
     private GameRenderer renderer;
     public BgHandler bgHandler;
-    private BirdHandler birdHandler;
+    public BirdHandler birdHandler;
     private TargetHandler targetHandler;
     //private TurretHandler turretHandler;
     private TinyBirdHandler tinyBirdHandler;
@@ -61,15 +61,19 @@ public class GameHandler implements Screen {
         Tween.setWaypointsLimit(10);
 
         tinyBirdHandler = new TinyBirdHandler();
-        bgHandler = new BgHandler(camWidth, camHeight, birdType);
-        birdHandler= new BirdHandler(bgHandler, camWidth, camHeight, birdType);
+
+        birdHandler= new BirdHandler(camWidth, camHeight, birdType);
+        bgHandler = new BgHandler(camWidth, camHeight, birdType,birdHandler,tinyBirdHandler);
 
         //turretHandler = new TurretHandler(camWidth, camHeight);
         lightHandler= new LightHandler(bgHandler);
-        airship=new Airship(camWidth, camHeight, birdType);
-        targetHandler = new TargetHandler(airship,birdHandler.activeBirdQueue,birdHandler.deadBirdQueue);
 
-        world = new GameWorld(airship, camWidth, camHeight, bgHandler,birdHandler, targetHandler,tinyBirdHandler,uiHandler, lightHandler);
+        targetHandler = new TargetHandler(birdHandler);
+        airship=new Airship(camWidth, camHeight, birdType, birdHandler,targetHandler);
+        birdHandler.setAirshipPos(airship);
+        targetHandler.setAirship(airship);
+
+        world = new GameWorld(airship, camWidth, camHeight, bgHandler,birdHandler,targetHandler,tinyBirdHandler,uiHandler,lightHandler);
 
 
         renderer = new GameRenderer(world, camWidth, camHeight);
@@ -80,7 +84,7 @@ public class GameHandler implements Screen {
 
 
 
-        uiHandler=new UiHandler(renderer.viewport, renderer.batcher, camWidth, camHeight, world);
+        uiHandler=new UiHandler(renderer, camWidth, camHeight, world);
         world.setRendererAndUIHandler(renderer, uiHandler);
         InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
         Gdx.input.setInputProcessor(uiHandler.stage);

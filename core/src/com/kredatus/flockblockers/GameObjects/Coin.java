@@ -24,7 +24,9 @@ public class Coin {
     public Tween firstXMotion, secondXMotion, firstYMotion, secondYMotion;
     public double startTime;
 
-    public Coin(float rotation, BirdAbstractClass thisBird, boolean phoenixCoin){
+    Vector2 airshipPos;
+    public Coin(float rotation, BirdAbstractClass thisBird, boolean phoenixCoin, Vector2 airshipPos){
+        this.airshipPos=airshipPos;
         this.phoenixCoin=phoenixCoin;
         animation = AssetHandler.coinAnimation;
         width = ((TextureRegion) animation.getKeyFrame(0)).getRegionWidth();
@@ -44,7 +46,7 @@ public class Coin {
             y1 = (float) (Math.sin(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
         }
 
-        dest=new Vector2(Airship.pos.x,Airship.pos.y+Airship.balloonHeight/2f);
+        dest=new Vector2(airshipPos.x,airshipPos.y+Airship.balloonHeight/2f);
         lastDest=new Vector2(0,0);
 
         motion1TimePhoenix=0.7f;
@@ -93,7 +95,7 @@ public class Coin {
     }
 
     public void update(float delta){
-        dest.set(Airship.pos.x,Airship.pos.y+Airship.balloonHeight/2f);
+        dest.set(airshipPos.x,airshipPos.y+Airship.balloonHeight/2f);
         differenceVector=dest.cpy().sub(lastDest);
         airshipMoved=Math.abs(differenceVector.x)>0 || Math.abs(differenceVector.y)>0;
 

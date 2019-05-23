@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -19,8 +20,8 @@ import aurelienribon.tweenengine.TweenEquations;
 public class AcidBird extends BirdAbstractClass {
 
     int angle=25;
-    public AcidBird(float camHeight, float camWidth, ArrayList flashLengths){
-        super();
+    public AcidBird(Vector2 airshipPos, float camHeight, float camWidth, ArrayList flashLengths){
+        super(airshipPos);
         this.flashLengths=flashLengths;
 
         rotStep=1.4f;

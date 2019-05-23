@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Coin;
 import com.kredatus.flockblockers.GameObjects.Projectile;
@@ -108,7 +109,9 @@ public abstract class BirdAbstractClass {
             TweenEquations.easeOutCubic,TweenEquations.easeOutQuad,TweenEquations.easeOutSine,
             TweenEquations.easeNone};*/
 
-    public BirdAbstractClass() {
+    Vector2 airshipPos;
+    public BirdAbstractClass(Vector2 airshipPos) {
+        this.airshipPos=airshipPos;
         outroY=Tween.to(this, 2, 2).target(GameHandler.camHeight*1.2f).ease(TweenEquations.easeInExpo); //hit wall when not killed at end of spawning period
 
         if (FlockBlockersMain.fastTest) {globalSpeedMultiplier = 3f; globalHealthMultiplier=0.1f;}
@@ -358,7 +361,7 @@ public abstract class BirdAbstractClass {
         if (coinNumber<25) {  //if not a phoenix or goldbird
             final float rotationIncrement = 360 / coinNumber;
             for (int i=0;i<coinNumber;i++) {
-                coinList.add(new Coin(rotationIncrement * rotationCounter++, thisBird, false));
+                coinList.add(new Coin(rotationIncrement * rotationCounter++, thisBird, false,  airshipPos));
             }
         } else {
             //(0.5*yAcc)
@@ -391,7 +394,7 @@ public abstract class BirdAbstractClass {
                         task.cancel();
                     }
                     rotationCounter++;
-                    coinList.add(new Coin(r.nextInt(360), thisBird, true));   //random spurting for phoenix
+                    coinList.add(new Coin(r.nextInt(360), thisBird, true,airshipPos));   //random spurting for phoenix
                     //System.out.println("Coin added at rotation"+rotationIncrement*rotationCounter);
                 }
             };

@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
@@ -20,8 +21,8 @@ import aurelienribon.tweenengine.TweenEquations;
 public class NightBird extends BirdAbstractClass {
 
     //public final int[] animSeqList = {0,1,2,3};
-    public NightBird(float camHeight, float camWidth, ArrayList flashLengths){
-        super();
+    public NightBird(Vector2 airshipPos, float camHeight, float camWidth, ArrayList flashLengths){
+        super(airshipPos);
 this.flashLengths=flashLengths;
 
         //yVel=10;

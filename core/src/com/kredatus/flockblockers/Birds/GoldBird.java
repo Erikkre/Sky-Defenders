@@ -3,6 +3,7 @@ package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -21,8 +22,8 @@ import aurelienribon.tweenengine.TweenEquations;
 public class GoldBird extends BirdAbstractClass {
     public float targetY, targetX;//, preTargetY;
 
-    public GoldBird(float camHeight, float camWidth, ArrayList flashLengths){
-        super();
+    public GoldBird(Vector2 airshipPos, float camHeight, float camWidth, ArrayList flashLengths){
+        super(airshipPos);
 this.flashLengths=flashLengths;
         yAcc=-0.2f;
         yVelDeath=10;

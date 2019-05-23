@@ -9,6 +9,8 @@ import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
+import static java.lang.Thread.sleep;
+
 
 public class FlockBlockersMain extends Game {
     public static final boolean fastTest = false, dontPauseOnUnfocus = false;
@@ -17,12 +19,13 @@ public class FlockBlockersMain extends Game {
     public void create() {
         Gdx.app.log("CloudDefenders", "created");
         AssetHandler.load();
+        //this.wait();
         setScreen(new GameHandler());
     }
 
     @Override
     public void dispose() {
-        super.dispose();
+        //super.dispose();
         AssetHandler.dispose();
         GameRenderer.dispose();
     }

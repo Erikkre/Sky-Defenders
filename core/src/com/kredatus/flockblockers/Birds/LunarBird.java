@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
@@ -21,8 +22,8 @@ public class LunarBird extends BirdAbstractClass {
     float randomizedTime, waitingTime = 0.9f, minDashTime = 0.7f; //dashtime is up to 0.33f greater than minDashTime
     private Tween wait1SecondX, wait1SecondY;
     private TweenEquation tweenEquation = Circ.INOUT;
-    public LunarBird(float camHeight, float camWidth, ArrayList flashLengths){
-        super();
+    public LunarBird(Vector2 airshipPos, float camHeight, float camWidth, ArrayList flashLengths){
+        super(airshipPos);
         this.flashLengths=flashLengths;
 
         rotStep=5f;

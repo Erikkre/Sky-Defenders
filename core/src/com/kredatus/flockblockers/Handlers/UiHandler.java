@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
@@ -55,7 +56,7 @@ public class UiHandler {
         return false;
     }
 
-    public UiHandler(Viewport viewport, SpriteBatch batcher, float camWidth, float camHeight, GameWorld myWorld) {
+    public UiHandler(GameRenderer renderer, float camWidth, float camHeight, GameWorld myWorld) {
         this.myWorld=myWorld;
         //nameLabel = new Label("Name: ", skin);
         //TextField nameText = new TextField("Name2: ", skin);
@@ -67,7 +68,7 @@ public class UiHandler {
 
 
         skin = new Skin(Gdx.files.internal("ui"+File.separator+"shadeui"+File.separator+"uiskin.json"));
-        stage = new Stage(viewport, batcher);
+        stage = new Stage(renderer.viewport, renderer.batcher);
         stage.addCaptureListener(new ClickListener(){//tocuh up anywhere on screen means not touching ui
             public void touchUp(InputEvent event, float x, float y, int pnt, int btn) {
                 super.touchUp(event, x, y, pnt, btn);

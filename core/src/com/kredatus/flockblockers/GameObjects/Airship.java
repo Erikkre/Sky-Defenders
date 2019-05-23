@@ -11,16 +11,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.CustomLights.CustomPointLight;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
+import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.LightHandler;
+import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -32,7 +36,7 @@ import box2dLight.PointLight;
 
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
-    public static Vector2 pos, vel=new Vector2(), thrusterOrigPos, tweenTarget=new Vector2(); //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
+    public  Vector2 pos, vel=new Vector2(), thrusterOrigPos, tweenTarget=new Vector2(); //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
 
     public static int pipeWidth, balloonWidth, balloonHeight, rackWidth, rackHeight, thrusterWidth, thrusterHeight, armorWidth, armorHeight, height; //x and y are at middle of textures, bottom of balloonTexture,top of rack
@@ -118,8 +122,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public Tween aimLineFadeout= Tween.to(aimLineOpacity,1,1).target(0).ease(TweenEquations.easeInCubic);
     public static Tween aimLineRotationSmoothing= Tween.to(aimLineRotation,1,1).target(0).ease(TweenEquations.easeInCubic);
 
+    BirdHandler birdHandler;TargetHandler targetHandler;
+
     float preAimLineRotation, extraRot;
-    public Airship(int camWidth, int camHeight, int birdType) {
+    public Airship(int camWidth, int camHeight, int birdType, BirdHandler birdHandler, TargetHandler targetHandler) {
+        this.targetHandler=targetHandler;
+        this.birdHandler=birdHandler;
         this.camWidth =camWidth;
         this.camHeight=camHeight;
 
@@ -203,7 +211,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void addTurret(char type){//button will upgrade turret based on position of click choosing which turretPosition on a rack diagram thats blown up on screen when you tap upgrade i.e.
         if (nextTurretPosition<positions.size()) {
-            turretList.add(nextTurretPosition, new Turret(type, positions.get(nextTurretPosition++)));   //turretlist(position).lvlUp or whatever upgrades you're giving
+            turretList.add(nextTurretPosition, new Turret(type, positions.get(nextTurretPosition++),this,birdHandler,targetHandler));   //turretlist(position).lvlUp or whatever upgrades you're giving
         }
     }//draw a screen with a diagram of the upgrades
 
@@ -321,7 +329,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         assignRackPositions();
     }
 
-    public static boolean pointerOnAirship(int pointer) {
+    public  boolean pointerOnAirship(int pointer) {
         //System.out.println("NEW TOUCH ON AIRSHIP as y: "+y+", posY: "+pos.y+balloonBob.get()+", x: "+x+", posX: "+x);
         float y = -(InputHandler.scaleY(Gdx.input.getY(pointer))-camHeight), x = InputHandler.scaleX(Gdx.input.getX(pointer));
         return y < pos.y+balloonBob.get() + balloonHeight && y > pos.y+balloonBob.get() - rackHeight && x < pos.x + ((balloonWidth + rackWidth) / 4f) && x > pos.x - ((balloonWidth + rackWidth) / 4f);//average width of airship between balloon and rack
@@ -724,7 +732,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             //System.out.println("Turretlist size: " + turretList.size());
             Turret turretAimer = turretList.get(0);
 
-            if (turretAimer.gunTargetPointer != -1&&!Airship.pointerOnAirship(turretAimer.gunTargetPointer)) {    //if using finger to aim
+            if (turretAimer.gunTargetPointer != -1&&!pointerOnAirship(turretAimer.gunTargetPointer)) {    //if using finger to aim
                 if (!UiHandler.aimPad.isTouched()) UiHandler.aimPad.calculatePositionAndValue(UiHandler.aimPad.getX()+(turretAimer.lastFingerPosition.x-pos.x)*10,UiHandler.aimPad.getY()+(turretAimer.lastFingerPosition.y-pos.y)*10,false);
 
                 batcher.draw(reticleTexture, turretAimer.lastFingerPosition.x - reticleTexture.getRegionWidth() / 3f,

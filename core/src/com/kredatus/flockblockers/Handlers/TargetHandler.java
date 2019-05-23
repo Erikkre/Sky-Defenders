@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 
 public class TargetHandler {
-    public static ConcurrentLinkedQueue<Projectile> projectileList=new ConcurrentLinkedQueue<Projectile>();
+    public  ConcurrentLinkedQueue<Projectile> projectileList=new ConcurrentLinkedQueue<Projectile>();
 
     public static BirdAbstractClass targetBird;
     //public static int minTargetingHeight=0;
@@ -29,13 +29,15 @@ public class TargetHandler {
 
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,deadBirdQueue;
 
-    public TargetHandler(Airship airship,ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,ConcurrentLinkedQueue<BirdAbstractClass> deadBirdQueue ){
-        this.activeBirdQueue=activeBirdQueue; this.deadBirdQueue=deadBirdQueue;
-        this.airship=airship;
+    public TargetHandler(BirdHandler birdHandler){
+        this.activeBirdQueue=birdHandler.activeBirdQueue; this.deadBirdQueue=birdHandler.deadBirdQueue;
+
         birdHit=AssetHandler.birdHit;
         balloonHit=AssetHandler.balloonHit;
     }
-
+    public void setAirship(Airship airship){
+        this.airship=airship;
+    }
     public boolean isOnScreen(BirdAbstractClass b){
         return b.y>-b.height/2&&b.y< GameHandler.camHeight+b.height/2;
     }

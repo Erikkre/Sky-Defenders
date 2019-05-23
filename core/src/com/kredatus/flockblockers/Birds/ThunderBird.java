@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -24,8 +25,8 @@ public class ThunderBird extends BirdAbstractClass {
     Random r = new Random();
     Tween second;
     int angle=35;
-    public ThunderBird(float camHeight, float camWidth, ArrayList flashLengths){
-        super();
+    public ThunderBird(Vector2 airshipPos, float camHeight, float camWidth, ArrayList flashLengths){
+        super(airshipPos);
 this.flashLengths=flashLengths;
 
         rotStep=1.4f;

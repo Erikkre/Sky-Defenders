@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.Birds.AcidBird;
@@ -12,6 +13,7 @@ import com.kredatus.flockblockers.Birds.NightBird;
 import com.kredatus.flockblockers.Birds.PhoenixBird;
 import com.kredatus.flockblockers.Birds.ThunderBird;
 import com.kredatus.flockblockers.Birds.WaterBird;
+import com.kredatus.flockblockers.GameObjects.Airship;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -20,10 +22,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BirdHandler {
     //public  static Class[] birdList ={PhoenixBird.class,  WaterBird.class,  NightBird.class, AcidBird.class, FireBird.class, ThunderBird.class, LunarBird.class, GoldBird.class};
-    public static ConcurrentLinkedQueue<BirdAbstractClass> birdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
+    public  ConcurrentLinkedQueue<BirdAbstractClass> birdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
-    public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
-    public static ConcurrentLinkedQueue<BirdAbstractClass> deadBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
+    public  ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
+    public  ConcurrentLinkedQueue<BirdAbstractClass> deadBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
                                                 //0    1    2    3    4    5    6    7
     //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
@@ -39,10 +41,11 @@ public class BirdHandler {
     boolean taskRunning;
     public double lastBirdSpawnTime;
     private ArrayList<Float> flashLengths=new ArrayList<Float>();
+    Vector2 airshipPos;
 
-    public BirdHandler(BgHandler bgHandler,  float camWidth, float camHeight, int birdType) {
+    public BirdHandler( float camWidth, float camHeight, int birdType) {
         waveTypeCnt=birdType;
-        this.bgHandler = bgHandler;
+        //this.bgHandler = bgHandler;
         this.camHeight = camHeight;
         this.camWidth  = camWidth ;
 
@@ -63,7 +66,9 @@ public class BirdHandler {
 
         flashLengths();
     }
-
+    public void setAirshipPos(Airship airship){
+        this.airshipPos=airship.pos;
+    }
     private void flashLengths() {
         for (double i = 0.4f; i <= 6; i += 0.1f) { //  5.6/0.05=66 poss, maxes out at a 13 second flash
             flashLengths.add((float) (Math.pow(flashLengths.size(), 0.7) / 3f + 0.3f));//desmos:y=\left(x^{0.5}+0.3\right)
@@ -107,23 +112,23 @@ public class BirdHandler {
                 //for the amount of birds in the wave,
                 if (waveTypeCnt == 0) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new PhoenixBird(camHeight, camWidth, flashLengths));
+                        birdQueue.add(new PhoenixBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
                     //System.out.println("add birds");
                 } else if (waveTypeCnt == 1) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new ThunderBird(camHeight, camWidth, flashLengths));
+                        birdQueue.add(new ThunderBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
                     //System.out.println("add birds");
                 } else if (waveTypeCnt == 2) {
                     float height = ((TextureRegion) AssetHandler.waterAnimations[3].getKeyFrames()[3]).getRegionHeight();
                     //float width  =((TextureRegion)AssetHandler.waterAnimations[3].getKeyFrames()[0]).getRegionWidth();
                     for (int i = 0; i < birdNumberList[waveTypeCnt] / 5; i++) {
-                        birdQueue.add(new WaterBird(camHeight, camWidth,  (camWidth / 6) * 1, (-height / 3) * 2f,  flashLengths));
-                        birdQueue.add(new WaterBird(camHeight, camWidth,  (camWidth/ 6) * 2, (-height / 3) * 1.5f, flashLengths));
-                        birdQueue.add(new WaterBird(camHeight, camWidth,  (camWidth/ 6) * 3,          (-height / 3),        flashLengths));
-                        birdQueue.add(new WaterBird(camHeight, camWidth,  (camWidth/ 6) * 4, (-height / 3) * 1.5f, flashLengths));
-                        birdQueue.add(new WaterBird(camHeight, camWidth,  (camWidth/ 6) * 5, (-height / 3) * 2,    flashLengths));
+                        birdQueue.add(new WaterBird(airshipPos,camHeight, camWidth,  (camWidth / 6) * 1, (-height / 3) * 2f,  flashLengths));
+                        birdQueue.add(new WaterBird(airshipPos,camHeight, camWidth,  (camWidth/ 6) * 2, (-height / 3) * 1.5f, flashLengths));
+                        birdQueue.add(new WaterBird(airshipPos,camHeight, camWidth,  (camWidth/ 6) * 3,          (-height / 3),        flashLengths));
+                        birdQueue.add(new WaterBird(airshipPos,camHeight, camWidth,  (camWidth/ 6) * 4, (-height / 3) * 1.5f, flashLengths));
+                        birdQueue.add(new WaterBird(airshipPos,camHeight, camWidth,  (camWidth/ 6) * 5, (-height / 3) * 2,    flashLengths));
 
                         /*waterArrowHeads.add(new WaterBird(camHeight, camWidth, flashLengths, (camWidth, flashLengths/6)*3));
                         waterArrowHeads.add(new WaterBird(camHeight, camWidth, flashLengths, (camWidth, flashLengths/6)*2));
@@ -132,23 +137,23 @@ public class BirdHandler {
                     }
                 } else if (waveTypeCnt == 3) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new FireBird(camHeight, camWidth, flashLengths));
+                        birdQueue.add(new FireBird(airshipPos,camHeight, camWidth, flashLengths, birdQueue));
                     }
                 } else if (waveTypeCnt == 4) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new AcidBird(camHeight, camWidth, flashLengths));
+                        birdQueue.add(new AcidBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
                 } else if (waveTypeCnt == 5) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new NightBird(camHeight, camWidth, flashLengths));
+                        birdQueue.add(new NightBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
                 } else if (waveTypeCnt == 6) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new LunarBird(camHeight, camWidth, flashLengths));
+                        birdQueue.add(new LunarBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
                 } else if (waveTypeCnt == 7) {
                     for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
-                        birdQueue.add(new GoldBird(camHeight, camWidth, flashLengths));
+                        birdQueue.add(new GoldBird(airshipPos, camHeight, camWidth, flashLengths));
                     }
                 }
                 setUpTask();
@@ -180,11 +185,11 @@ public class BirdHandler {
     }
 
     public void pause(){
-        if (waveTypeCnt!=3 && waveTypeCnt!=0 && bgHandler.isBirdSpawning && taskRunning) task.cancel();    //if not fire or phoenix, cancel. dont make taskRunning=false
+        if (waveTypeCnt!=3 && waveTypeCnt!=0 && BgHandler.isBirdSpawning && taskRunning) task.cancel();    //if not fire or phoenix, cancel. dont make taskRunning=false
     }
 
     public void resume(){
-        if (waveTypeCnt!=3 && waveTypeCnt!=0 && bgHandler.isBirdSpawning) {//if not fire or phoenix, restart
+        if (waveTypeCnt!=3 && waveTypeCnt!=0 && BgHandler.isBirdSpawning) {//if not fire or phoenix, restart
             setUpTask();
             int timeSinceLastBirdSpawn= (int) (System.currentTimeMillis() - lastBirdSpawnTime);
             int spawningInterval;

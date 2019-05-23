@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 
@@ -17,8 +18,8 @@ public class WaterBird extends BirdAbstractClass {
 
     //public final int[] animSeqList = {0,1,2,3};
     Tween second;
-    public WaterBird(float camHeight, float camWidth, float xPosition, float yPosition, ArrayList flashLengths){
-        super();
+    public WaterBird(Vector2 airshipPos, float camHeight, float camWidth, float xPosition, float yPosition, ArrayList flashLengths){
+        super(airshipPos);
         this.flashLengths=flashLengths;
         yVel=1.3f*globalSpeedMultiplier;
         coinNumber=1;
