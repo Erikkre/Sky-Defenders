@@ -85,17 +85,17 @@ public class UiHandler {
         rootTable.row();
         movPad = new Touchpad(0, skin);
         movPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
-
+        skin.getDrawable("touchpad-knob").setMinWidth(50);skin.getDrawable("touchpad-knob").setMinHeight(50);
         //touchpad2.setColor(1,1,1,1f);
 
         //keep original height ratio but sized down with current width: .height((touchpad.getPrefHeight()*touchpad.getWidth())/touchpad.getPrefWidth())
-        rootTable.add(movPad).fill(true).width(camWidth/2.75f).height(camWidth/3f).padRight((.71f*camWidth)/2.75f);
+        rootTable.add(movPad).fill(true).width(camHeight/9f).height(camHeight/8.5f).padRight(camWidth-(camHeight/9f)*2);
 
         aimPad = new TouchRotatePad(0, skin);
         aimPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         //touchpad2.setColor(1,1,1,1f);
 
-        rootTable.add(aimPad).fill(true).width(camWidth/2.75f).height(camWidth/3f);
+        rootTable.add(aimPad).fill(true).width(camHeight/9f).height(camHeight/8.5f);
         //aimPad.
         //rootTable.row();
 

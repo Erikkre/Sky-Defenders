@@ -28,7 +28,7 @@ public class LoadScreen implements Screen {
         queueAssets();
     }
     private void queueAssets(){
-        game.a
+        //game.a
     }
 
     @Override
@@ -50,7 +50,6 @@ public class LoadScreen implements Screen {
     }
 
     private void setupTween() {
-
         manager = new TweenManager();
 
         TweenCallback cb = new TweenCallback() {
@@ -62,10 +61,7 @@ public class LoadScreen implements Screen {
 //1.8 originally
         Tween.to(sprite, SpriteAccessor.ALPHA, 1f).target(1)
                 .ease(TweenEquations.easeInOutQuad).setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE).repeatYoyo(1, .0f)
-
                 .start(manager);
-
-
 
         //Tween.to(sprite, SpriteAccessor.ALPHA, 2f).target(30)
         //.ease(TweenEquations.easeInOutQuad).repeatYoyo(1, .4f)

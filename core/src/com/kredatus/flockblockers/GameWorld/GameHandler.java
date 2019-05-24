@@ -104,7 +104,6 @@ public class GameHandler implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        uiHandler.stage.getViewport().update(width, height, true);
     }
 
     @Override
