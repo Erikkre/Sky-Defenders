@@ -125,7 +125,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     BirdHandler birdHandler;TargetHandler targetHandler;
 
     float preAimLineRotation, extraRot;
-    public Airship(int camWidth, int camHeight, int birdType, BirdHandler birdHandler, TargetHandler targetHandler) {
+    public Airship(int camWidth, int camHeight, int birdType, BirdHandler birdHandler, TargetHandler targetHandler, LightHandler lightHandler) {
         this.targetHandler=targetHandler;
         this.birdHandler=birdHandler;
         this.camWidth =camWidth;
@@ -189,7 +189,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         loadEffects();
 
         //also done in BirdHandler class every time background changes
-        setupLights();
+        setupLights(lightHandler);
         setFireColor(birdType);
         airshipTint=chooseColorBasedOnWave(birdType, true);
         airShipCloudTint=airshipTint.clone();
@@ -215,15 +215,15 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
     }//draw a screen with a diagram of the upgrades
 
-    private void setupLights(){
+    private void setupLights(LightHandler lightHandler){
         //thrusterOrigPos=new Vector2(pos.x);
-        dragCircleLight=LightHandler.newPointLight(LightHandler.backRayHandler, 255,255,255,1,50, new Vector2(0, -camHeight));
+        dragCircleLight=LightHandler.newPointLight(lightHandler.backRayHandler, 255,255,255,1,50, new Vector2(0, -camHeight));
         //dragCircleLight.setXray(true);
         //dragCircleLight.setActive(false);
 
-        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x-thrusterWidth/1.1f, thrusterOrigPos.y)));
-        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x+thrusterWidth/1.1f, thrusterOrigPos.y)));
-        flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,  0, new Vector2(pos.x,pos.y+balloonBob.get()+pipeTexture.getRegionHeight()*4)));//position same as bottom of burner
+        flameLights.add(LightHandler.newPointLight(lightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x-thrusterWidth/1.1f, thrusterOrigPos.y)));
+        flameLights.add(LightHandler.newPointLight(lightHandler.foreRayHandler, 255,255,255,thrusterOrigAlpha,0, new Vector2(thrusterOrigPos.x+thrusterWidth/1.1f, thrusterOrigPos.y)));
+        flameLights.add(LightHandler.newPointLight(lightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,  0, new Vector2(pos.x,pos.y+balloonBob.get()+pipeTexture.getRegionHeight()*4)));//position same as bottom of burner
         //flameLights.add(LightHandler.newPointLight(LightHandler.foreRayHandler, 255,255,255,burnerOrigAlpha,0, new Vector2(pos.x+15,pos.y+balloonBob.get()+15)));
          //leftThrusterLightTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);
         //rightThrusterLightTween=Tween.to(flameLights.get(0), 1, 1f).target(thrusterOrigDist).repeatYoyo(2,0);

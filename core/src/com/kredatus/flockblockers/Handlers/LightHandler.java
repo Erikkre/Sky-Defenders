@@ -18,8 +18,8 @@ import box2dLight.RayHandler;
 public class LightHandler { //consider making barlight and mirroring on each side of city
     private OrthographicCamera cam;
     public static ConcurrentLinkedQueue<Light> bgLights = new ConcurrentLinkedQueue<Light>();   //max number of lights probably
-    public static RayHandler foreRayHandler = new RayHandler(null);
-    public static RayHandler backRayHandler = new RayHandler(null);
+    public  RayHandler foreRayHandler = new RayHandler(null);
+    public  RayHandler backRayHandler = new RayHandler(null);
     private static float bgw = BgHandler.bgw, bgStackHeight= BgHandler.bgStackHeight, cloudBottomY= 0.154454f * bgStackHeight, cloudTopY=cloudBottomY+bgStackHeight;
     private static final Vector2        //light positions in Vector2
             cloudBottomLeftPos  = new Vector2(0,   cloudBottomY),
@@ -110,7 +110,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         return new CustomConeLight[]{invBgCoinlight, noninvBgCoinlight};
     }
 
-    public static void newBgLighting(int bgNumber) {
+    public  void newBgLighting(int bgNumber) {
         for (Light i : bgLights) { //if bg is reset we have to add - height of bg back to lights that are still in play when vert resets
             if (i instanceof CustomPointLight)      {((CustomPointLight) i).origPos= new Vector2(((CustomPointLight) i).origPos.x, ((CustomPointLight) i).origPos.y  -bgStackHeight);}
 
@@ -321,10 +321,10 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         }
     }
 
-    public static void renderFront() {
+    public  void renderFront() {
         foreRayHandler.updateAndRender();
     }
-    public static void renderBack() {
+    public  void renderBack() {
         backRayHandler.updateAndRender();
     }
 }

@@ -83,14 +83,14 @@ public class BgHandler {
         //this.manager= SplashScreen.getManager();
         //System.out.println("vert.get() " + vert.get());
         isCameraShake=false;
-        setupTweens(camWidth, camHeight,tinyBirdHandler);
+
         isPastStoryIntro=true;
         //isBirdSpawning=true;
 
         //TinyBirdHandler.addTinyBirdsNextCity(camWidth,camHeight);
     }
 
-    private void setupTweens(final float camWidth, final float camHeight, final TinyBirdHandler tinyBirdHandler){
+    public void setupTweens(final float camWidth, final float camHeight, final TinyBirdHandler tinyBirdHandler, final LightHandler lightHandler){
         //final float camHeight2=camHeight;
         startStoryIntroAndSpawns=new TweenCallback() {
             @Override
@@ -175,7 +175,7 @@ public class BgHandler {
                     //waveNumber+=1;
                     bgNumber = 0;
                 }
-                LightHandler.newBgLighting(bgNumber);
+                lightHandler.newBgLighting(bgNumber);
                 if (background.addedY>background2.addedY){ background.reset(background2.getTailY(), bgNumber++);}//lights for new backgrounds
                 else { background2.reset(background.getTailY(), bgNumber++);}
                 background2.addedY = 0;

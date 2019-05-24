@@ -46,10 +46,10 @@ public class GameHandler implements Screen {
     public int birdType = FlockBlockersMain.birdType;
     private Airship airship;
     //private Actor menuButtonActor;
-
+    public float screenWidth, screenHeight;
     public GameHandler() {
-        float screenWidth = Gdx.graphics.getWidth();
-        float screenHeight = Gdx.graphics.getHeight();
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
         camHeight=1000;
         camWidth= (int) (camHeight* (screenWidth/screenHeight)) ;
         //System.out.println("width: "+camWidth);
@@ -67,9 +67,9 @@ public class GameHandler implements Screen {
 
         //turretHandler = new TurretHandler(camWidth, camHeight);
         lightHandler= new LightHandler(bgHandler);
-
+        bgHandler.setupTweens(camWidth, camHeight,tinyBirdHandler,lightHandler);
         targetHandler = new TargetHandler(birdHandler);
-        airship=new Airship(camWidth, camHeight, birdType, birdHandler,targetHandler);
+        airship=new Airship(camWidth, camHeight, birdType, birdHandler,targetHandler,lightHandler);
         birdHandler.setAirshipPos(airship);
         targetHandler.setAirship(airship);
 
@@ -80,8 +80,6 @@ public class GameHandler implements Screen {
 
         bgHandler.setRendererAndCam(renderer);
         lightHandler.setCam(renderer);
-
-
 
 
         uiHandler=new UiHandler(renderer, camWidth, camHeight, world);

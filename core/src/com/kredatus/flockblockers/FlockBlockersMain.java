@@ -8,16 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
-import com.kredatus.flockblockers.TweenAccessors.Value;
-import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
 
-import javax.swing.Timer;
-
-import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
-
-import static java.lang.Thread.sleep;
 
 
 public class FlockBlockersMain extends Game {
@@ -26,10 +17,11 @@ public class FlockBlockersMain extends Game {
     public AssetHandler assetHandler=new AssetHandler();
     public GameHandler gameHandler;
     long startTime;
+
     @Override
     public void resize(int width, int height) {
         System.out.println("************************************");
-        if (System.currentTimeMillis()-startTime>5000) {
+        if (System.currentTimeMillis()-startTime>5000 && (width!=gameHandler.screenWidth || height!=gameHandler.screenHeight)) {
             super.resize(width, height);
             gameHandler = new GameHandler();
             setScreen(gameHandler);

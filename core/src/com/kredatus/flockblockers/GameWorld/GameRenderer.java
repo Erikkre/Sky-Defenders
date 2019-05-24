@@ -105,7 +105,7 @@ public class GameRenderer {
     private TargetHandler targetHandler;
     //private TurretHandler turretHandler;
     private UiHandler uiHandler;
-
+    private LightHandler lightHandler;
     //Table table;
 
     private ShaderProgram flashShader;
@@ -113,7 +113,7 @@ public class GameRenderer {
 
     public GameRenderer(GameWorld world, int camWidth, int camHeight) {
         myWorld = world;
-
+        this.lightHandler=myWorld.lightHandler;
         this.tinyBirdHandler=myWorld.tinyBirdHandler;
         this.birdHandler=myWorld.birdHandler;
         this.bgHandler=myWorld.bgHandler;
@@ -732,7 +732,7 @@ public void setRotate(float angle){
 
             drawBackground();
             batcher.end();
-            LightHandler.renderBack();
+            lightHandler.renderBack();
             batcher.begin();
             drawStory(runTime, delta);
 
@@ -742,7 +742,7 @@ public void setRotate(float angle){
             uiHandler.stage.draw();
             //batcher.setColor(Color.WHITE);
 
-            LightHandler.renderFront();
+            lightHandler.renderFront();
             batcher.begin();
        /* }  else if (myWorld.isRunning()) {
             drawBackground();
@@ -785,7 +785,7 @@ public void setRotate(float angle){
             if (myWorld.startGame) {
                 drawBackground();
                 batcher.end();
-                LightHandler.renderBack();
+                lightHandler.renderBack();
                 batcher.begin();
                 drawStory(runTime, delta);
 
@@ -795,7 +795,7 @@ public void setRotate(float angle){
                 uiHandler.stage.draw();
                 //batcher.setColor(Color.WHITE);
 
-                LightHandler.renderFront();
+                lightHandler.renderFront();
                 batcher.begin();
 
             }

@@ -33,7 +33,7 @@ public class GameWorld {
     //public TurretHandler turretHandler;
     public TinyBirdHandler tinyBirdHandler;
     public UiHandler uiHandler;
-    private LightHandler lightHandler;
+    public LightHandler lightHandler;
     //private boolean isAlive = true;
     private Rectangle ground;
     public Airship airship;
@@ -164,8 +164,8 @@ public class GameWorld {
 
         tinyBirdHandler.update(delta);
         lightHandler.update();
-        LightHandler.foreRayHandler.update();  //used for airship and gun lights too
-        LightHandler.backRayHandler.update();
+        lightHandler.foreRayHandler.update();  //used for airship and gun lights too
+        lightHandler.backRayHandler.update();
     }
 
     private void updateLogos(float delta, float runTime) {
@@ -183,8 +183,8 @@ public class GameWorld {
 
         tinyBirdHandler.update(delta);
         lightHandler.update();
-        LightHandler.foreRayHandler.update();  //used for airship and gun lights too
-        LightHandler.backRayHandler.update();
+        lightHandler.foreRayHandler.update();  //used for airship and gun lights too
+        lightHandler.backRayHandler.update();
     }
 
     private void updateBuyMenu(float delta, float runTime) {
@@ -196,8 +196,8 @@ public class GameWorld {
         airship.update(delta);
         tinyBirdHandler.update(delta);
         lightHandler.update();
-        LightHandler.foreRayHandler.update();  //used for airship and gun lights too
-        LightHandler.backRayHandler.update();
+        lightHandler.foreRayHandler.update();  //used for airship and gun lights too
+        lightHandler.backRayHandler.update();
     }
 
     private void updateReady(float runTime) {
