@@ -7,8 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -20,15 +19,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.kredatus.flockblockers.FlockBlockersMain;
+import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.TweenAccessors.SpriteAccessor;
 
@@ -73,7 +71,7 @@ public class Loader implements Screen {
 
 
    // private static TweenManager manager;
-    private SpriteBatch batcher;
+
     private Sprite sprite, sunshine;
     private FlockBlockersMain game;
     public static final int width= 1;
@@ -81,8 +79,10 @@ public class Loader implements Screen {
     public AssetHandler assets=new AssetHandler();
     public AssetManager manager=assets.manager;
     ProgressBar loadBar;
-    Stage stage;
-    private float camWidth,camHeight;
+    public Stage stage;
+    private int camWidth,camHeight;
+    public int screenWidth, screenHeight;
+    public GameHandler gameHandler;
     public Loader(FlockBlockersMain game) {
         Texture.setAssetManager(manager);
         this.game = game;
@@ -91,25 +91,36 @@ public class Loader implements Screen {
         assets.load();
 
         skin = manager.get(assets.skin);
-        Table progressTable = new Table();
-        progressTable.defaults().pad(2.0f);
-        loadBar = new ProgressBar(0, 100, 0.1f, false, skin);
-        loadBar.setValue(50);
-        loadBar.setAnimateDuration(.3f);
-        progressTable.add(loadBar);
+
+        loadBar = new ProgressBar(0, 100, 0.01f, false, skin);
+        ProgressBar.ProgressBarStyle pbStyle=loadBar.getStyle();
+        //for the knobBefore
+
+
+
+        //for the background
+        pbStyle.background.setLeftWidth(11);
+        pbStyle.knob.setLeftWidth(11);
+        loadBar = new ProgressBar(0, 100, 0.01f, false, pbStyle);
+
+
+        loadBar.setAnimateDuration(0.5f);
+        loadBar.setColor(Color.FIREBRICK);
+
+        Table loadTable = new Table();
+        loadTable.setFillParent(true);
+
+        loadTable.add(loadBar).padTop(4*camHeight/5).width(290) ;
+
+        stage.addActor(loadTable);
     }
 
     private void setupStage(){
-
-        Camera cam = new OrthographicCamera();
-        ExtendViewport viewport=new ExtendViewport(camWidth,camHeight, cam);
-        stage = new Stage(viewport, renderer.batcher);
-        stage.addCaptureListener(new ClickListener(){//tocuh up anywhere on screen means not touching ui
-            public void touchUp(InputEvent event, float x, float y, int pnt, int btn) {
-                super.touchUp(event, x, y, pnt, btn);
-                isTouched=false;
-                super.cancel();
-            }});
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
+        camHeight=1000;
+        camWidth=(int)  (camHeight* (screenWidth/(float)screenHeight)) ;
+        stage = new Stage(new ExtendViewport(camWidth,camHeight, new OrthographicCamera()), new SpriteBatch());
     }
     private void load(){
 
@@ -117,6 +128,9 @@ public class Loader implements Screen {
             System.out.println(manager.getProgress());
         } else {
             loaded();
+            stage.clear();
+            gameHandler=new GameHandler(skin,camWidth,camHeight);
+            game.setScreen(gameHandler);
         }
     }
 
@@ -137,7 +151,7 @@ public class Loader implements Screen {
         TweenCallback cb = new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                game.newGameHandler(skin);
+
                 System.out.println("new gamehandler");
             }
         };
@@ -156,12 +170,11 @@ public class Loader implements Screen {
 
     @Override
     public void render(float delta) {
-        loadBar.setValue(100*manager.getProgress());
+
         load();
-
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-
+        loadBar.setValue(100*manager.getProgress());
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override

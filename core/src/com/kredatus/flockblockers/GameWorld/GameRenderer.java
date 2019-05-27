@@ -124,10 +124,10 @@ public class GameRenderer {
         this.camHeight=camHeight;
 
 
-        batcher = new SpriteBatch();
+        batcher = (SpriteBatch) ((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.stage.getBatch();
         //System.out.println("batcher color: "+batcher.getColor()+", white: "+new Color(1,1,1,1));
 
-
+        cam=(OrthographicCamera)((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.stage.getCamera();
         cam.setToOrtho(false, camWidth, camHeight);
         cam.position.set(new Vector3(camWidth/2f,camHeight/2f,0));
         cam.update();
@@ -803,11 +803,6 @@ public void setRotate(float angle){
 
     public static void dispose(){
         //foreRayHandler.dispose();
-        font.dispose();
-        gamefont.dispose();
-        otherfont.dispose();
-        instrfont.dispose();
-        titlefont.dispose();
-        droidSerifFont.dispose();
+
     }
 }

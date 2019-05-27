@@ -28,7 +28,7 @@ public class UiHandler {
     //public ScrollPane scrollPane;
     //public Label nameLabel;
     //public Skin skin=new Skin(Gdx.files.internal("ui/button.png"));
-    public static Stage stage;
+    public  Stage stage;
     public Skin skin;
     public static Touchpad movPad;
     public static TouchRotatePad aimPad;
@@ -38,7 +38,7 @@ public class UiHandler {
     private GameWorld myWorld;
 
     //might want to implement a current stage for new screens
-    public static boolean anyUITouched(){
+    public  boolean anyUITouched(){
         for (Actor i : stage.getActors()){
             if (i instanceof SlideMenu)      {if (((SlideMenu) i).isTouched) return true;}
         }
@@ -60,7 +60,13 @@ public class UiHandler {
         //table.add(nameLabel);              // Row 0, column 0.
         //table.add(nameText).width(100);    // Row 0, column 1.
 
-
+        stage=(((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.stage);
+        stage.addCaptureListener(new ClickListener(){//tocuh up anywhere on screen means not touching ui
+            public void touchUp(InputEvent event, float x, float y, int pnt, int btn) {
+                super.touchUp(event, x, y, pnt, btn);
+                isTouched=false;
+                super.cancel();
+            }});
 
 
 
@@ -376,7 +382,7 @@ public class UiHandler {
                 if (actor.equals(buyButton))
                     myWorld.buyMenu();
                 else if (actor.equals(menuButton))
-                    myWorld.buyMenu();
+                    myWorld.menu();
             }
         });
         //slideMenuLeft.add().height(300f).row(); // empty space

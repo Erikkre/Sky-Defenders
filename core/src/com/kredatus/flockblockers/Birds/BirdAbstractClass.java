@@ -5,13 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
-
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Coin;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
-import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
@@ -201,7 +199,7 @@ public abstract class BirdAbstractClass {
                 for (Coin i : coinList){
                     i.update(delta);
                     if (i.secondYMotion.isFinished()) {
-                        ((FlockBlockersMain) Gdx.app.getApplicationListener()).gameHandler.world.addGold(1);
+                        ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.world.addGold(1);
                         coinList.remove(i);
                     }
                 }

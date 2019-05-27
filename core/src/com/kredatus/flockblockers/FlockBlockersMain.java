@@ -18,12 +18,11 @@ public class FlockBlockersMain extends Game {
     long startTime;
 
     public void newGameHandler(Skin skin){
-        gameHandler=new GameHandler(skin);
-        setScreen(gameHandler);
+
     }
     @Override
     public void resize(int width, int height) {//if after 5s since last screen created and done loading and width/height changed
-        if (System.currentTimeMillis()-startTime>5000 && gameHandler!=null && (width!=gameHandler.screenWidth || height!=gameHandler.screenHeight)) {
+        if (System.currentTimeMillis()-startTime>5000 && loader.gameHandler!=null && (width!=loader.screenWidth || height!=loader.screenHeight)) {
             super.resize(width, height);
             loader=new Loader(this);
             setScreen(loader);

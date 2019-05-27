@@ -40,18 +40,16 @@ public class GameHandler implements Screen {
     public UiHandler uiHandler;
     public LightHandler lightHandler;
     public static float runTime;
-    public static int camWidth, camHeight;
     public boolean isPaused=false;
     public static double timeOfPause, timeOfResume;
     public int birdType = FlockBlockersMain.birdType;
     private Airship airship;
     //private Actor menuButtonActor;
     public float screenWidth, screenHeight;
-    public GameHandler(Skin skin) {
-        screenWidth = Gdx.graphics.getWidth();
-        screenHeight = Gdx.graphics.getHeight();
-        camHeight=1000;
-        camWidth= (int) (camHeight* (screenWidth/screenHeight)) ;
+    public static int camWidth, camHeight;
+    public GameHandler(Skin skin, int camWidth, int camHeight) {
+        screenWidth=((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.screenWidth;screenHeight=((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.screenHeight;
+        this.camWidth=camWidth;this.camHeight=camHeight;
         //System.out.println("width: "+camWidth);
 
         Tween.registerAccessor(Value.class, new ValueAccessor());
