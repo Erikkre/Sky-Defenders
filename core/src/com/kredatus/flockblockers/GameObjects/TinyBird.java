@@ -3,8 +3,8 @@ package com.kredatus.flockblockers.GameObjects;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -51,9 +51,9 @@ public class TinyBird {
         //if yvel>0 set to anywhere between 100ms per frame to 30ms by multiplying by yVel/(possible y vel:range-min), so as to use percentage of maximum speed to get flap speed relative to yMovement speed
 
         float frameDuration=flapSpeedIntervals.get( (int) (((vel.y-minSpeed)/(speedRange))*flapSpeedIntervals.size()));
-        if      ((pos.y>separatorHeight&&pos.y<(bgh/2) +separatorHeight) || (pos.y>separatorHeight+bgh*(1.5f)&&pos.y<separatorHeight+(bgh*2))) animation = new Animation<TextureRegion>(frameDuration,(TextureRegion[]) AssetHandler.tinyAnims[4+r.nextInt(5)].getKeyFrames());
-        else if ( pos.y>separatorHeight+(bgh/2)&&pos.y<separatorHeight+(bgh*1.5f)) animation = new Animation<TextureRegion>(frameDuration,(TextureRegion[]) AssetHandler.tinyAnims[6+r.nextInt(4)].getKeyFrames());
-        else if ((pos.y>separatorHeight+(bgh*2)&&pos.y<separatorHeight+((bgh*2)+separatorHeight)) || (pos.y>camHeight&&pos.y<separatorHeight)) animation = new Animation<TextureRegion>(frameDuration,(TextureRegion[]) AssetHandler.tinyAnims[r.nextInt(6)].getKeyFrames());
+        if      ((pos.y>separatorHeight&&pos.y<(bgh/2) +separatorHeight) || (pos.y>separatorHeight+bgh*(1.5f)&&pos.y<separatorHeight+(bgh*2))) animation = new Animation<TextureRegion>(frameDuration,(TextureRegion[]) Loader.tinyAnims[4+r.nextInt(5)].getKeyFrames());
+        else if ( pos.y>separatorHeight+(bgh/2)&&pos.y<separatorHeight+(bgh*1.5f)) animation = new Animation<TextureRegion>(frameDuration,(TextureRegion[]) Loader.tinyAnims[6+r.nextInt(4)].getKeyFrames());
+        else if ((pos.y>separatorHeight+(bgh*2)&&pos.y<separatorHeight+((bgh*2)+separatorHeight)) || (pos.y>camHeight&&pos.y<separatorHeight)) animation = new Animation<TextureRegion>(frameDuration,(TextureRegion[]) Loader.tinyAnims[r.nextInt(6)].getKeyFrames());
 
         animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 

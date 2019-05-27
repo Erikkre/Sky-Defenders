@@ -4,9 +4,7 @@ package com.kredatus.flockblockers.Birds;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
-import com.kredatus.flockblockers.Handlers.BirdHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -33,7 +31,7 @@ public class FireBird extends BirdAbstractClass {
         sizeVariance=100;
         sizeRatio=0.3f;
 
-        animSeq = AssetHandler.fireAnimations;
+        animSeq = Loader.fireAnims;
         animSetup();
 
         //System.out.println("Height before: " + height+ " width: " + width);

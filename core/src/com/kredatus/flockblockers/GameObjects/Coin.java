@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import aurelienribon.tweenengine.BaseTween;
@@ -28,7 +28,7 @@ public class Coin {
     public Coin(float rotation, BirdAbstractClass thisBird, boolean phoenixCoin, Vector2 airshipPos){
         this.airshipPos=airshipPos;
         this.phoenixCoin=phoenixCoin;
-        animation = AssetHandler.coinAnimation;
+        animation = Loader.coinAnimation;
         width = ((TextureRegion) animation.getKeyFrame(0)).getRegionWidth();
 
         height = width;

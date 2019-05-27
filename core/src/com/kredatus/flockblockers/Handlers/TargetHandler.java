@@ -1,9 +1,11 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
+import com.kredatus.flockblockers.FlockBlockersMain;
+import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 
@@ -32,8 +34,8 @@ public class TargetHandler {
     public TargetHandler(BirdHandler birdHandler){
         this.activeBirdQueue=birdHandler.activeBirdQueue; this.deadBirdQueue=birdHandler.deadBirdQueue;
 
-        birdHit=AssetHandler.birdHit;
-        balloonHit=AssetHandler.balloonHit;
+        birdHit= ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.manager.get(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.assets.birdHit);
+        balloonHit=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.manager.get(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.assets.balloonHit);;
     }
     public void setAirship(Airship airship){
         this.airship=airship;

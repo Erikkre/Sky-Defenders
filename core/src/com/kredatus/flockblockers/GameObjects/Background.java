@@ -2,7 +2,7 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.
@@ -47,7 +47,7 @@ public class Background {
     public void reset(float newY, int bgNumber) {
         y = newY;
 
-        texture= AssetHandler.bgList.get(bgNumber);
+        texture= Loader.bgList.get(bgNumber);
         height=texture.getRegionHeight();
         isScrolledDown = false;
     }

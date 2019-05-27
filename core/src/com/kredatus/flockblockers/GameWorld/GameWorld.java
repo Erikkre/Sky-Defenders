@@ -3,17 +3,19 @@ package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 import com.kredatus.flockblockers.Screens.SplashScreen;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
@@ -38,7 +40,6 @@ public class GameWorld {
     private Rectangle ground;
     public Airship airship;
     public double boost = 0;  //boostamount
-    public int updatedboostnumber, orgboostnumber= AssetHandler.getBoostnumber();
 
     private static GameRenderer renderer;
     public enum GameState {
@@ -47,7 +48,7 @@ public class GameWorld {
     public static boolean isFirstTime;
     private GameState currentState;
 
-    public static void addGold(int goldAddition) {
+    public  void addGold(int goldAddition) {
             gold += goldAddition;
     }
 
@@ -63,13 +64,13 @@ public class GameWorld {
         this.score = score;
     }
 
-    public static int gold, diamonds, score;
+    public int gold, diamonds, score;
 
-    public Value alpha =new Value(0);
-    public Tween logoTween, timerTween;
+    public Value alpha =new Value(0),alphaBg=new Value(0);
+    public Tween logoTween, logoBgTween, timerTween;
     public boolean startGame;
-    private TextureRegion logo,logoBg;
-
+    private TextureRegion logo;
+    private Sprite logoBg;
     public GameWorld(Airship airship, int camWidth, int camHeight, BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler) {
         this.bgHandler = bgHandler;
         this.birdHandler = birdHandler;
@@ -91,18 +92,21 @@ public class GameWorld {
         //this.midPointY=midPointY;
         //glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
 
-        AssetHandler.playnext(AssetHandler.menumusiclist);
-        updatedboostnumber=orgboostnumber;
+        Loader.playnext(Loader.menumusiclist);
 
-        startLogos();
+        currentState=GameState.SURVIVAL;
+        //startLogos(camWidth,camHeight);
+        System.out.println("start logos");
         //currentState=GameState.SURVIVAL;
     }
 
-    public void startLogos() {
+    public void startLogos(int camWidth,int camHeight) {
         LightHandler.rayHandlerAmbLightLvl=0.75f;
         currentState=GameState.LOGOS;
-        logo=AssetHandler.logo;
-        logoBg=AssetHandler.slidemenuBg;
+        logo=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("companyLogo");
+        logoBg=new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
+        logoBg.setSize(camWidth,camHeight);
+        logoBg.setColor(new Color(0,0,0,1f));
 
         /*Sprite temp=new Sprite(AssetHandler.slidemenuBg);
         temp.setColor(new Color(0,0,0,0.5f));
@@ -120,17 +124,27 @@ public class GameWorld {
             }
         };
 
-        float dur=2f;
+        float dur=0.7f;
         logoTween=(Tween.to(alpha, 0, dur).target(1)
-                .ease(TweenEquations.easeOutQuart).repeatYoyo(1, 0)).setCallback(cb).setCallbackTriggers(TweenCallback.END)
-                .start();
-
-        timerTween=Tween.to(0, 0, dur).setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE);
+                .ease(TweenEquations.easeInSine).repeatYoyo(1, 1.4f));
+                //.start();
+        logoBgTween=(Tween.to(alphaBg, 0, dur).target(1)
+                .ease(TweenEquations.easeOutQuint).repeatYoyo(1, 1.5f)).setCallback(cb).setCallbackTriggers(TweenCallback.END);
+                //.start();
+        //timerTween=Tween.to(0, 0, dur).setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE);
     }
 
     public void drawLogos(SpriteBatch batch, float camWidth, float camHeight) {
+        if (!logoTween.isStarted()) logoTween.start();
+        if (!logoBgTween.isStarted()) logoBgTween.start();
+
+
+        logoBg.setAlpha(alphaBg.get());
+        System.out.println("A: "+alpha.get()+", eq: "+ alphaBg.get());
+        logoBg.draw(batch);
+
         batch.setColor(1, 1, 1, alpha.get());
-        batch.draw(logo, camWidth / 2f - logo.getRegionWidth() * GameHandler.camWidth/(float)logo.getRegionWidth() / 2f, camHeight / 2f - logo.getRegionHeight() * GameHandler.camHeight/(float)logo.getRegionHeight() / 2f, logo.getRegionWidth() * GameHandler.camWidth/(float)logo.getRegionWidth(), logo.getRegionHeight() * GameHandler.camHeight/(float)logo.getRegionHeight());
+        batch.draw(logo, camWidth / 2f - ( logo.getRegionWidth() * camHeight/(float)logo.getRegionHeight())/2, 0, logo.getRegionWidth() * camHeight/(float)logo.getRegionHeight(), camHeight);
         batch.setColor(Color.WHITE);
     }
 
@@ -169,8 +183,9 @@ public class GameWorld {
     }
 
     private void updateLogos(float delta, float runTime) {
-        timerTween.update(delta);
+        //timerTween.update(delta);
         logoTween.update(delta);
+        logoBgTween.update(delta);
     }
 
     private void updateMenu(float delta, float runTime) {
@@ -205,7 +220,7 @@ public class GameWorld {
     }
 
     private void updateRunning(float delta, float runTime) {
-        updatedboostnumber=(int)((-orgboostnumber*renderer.scorenumber/105f)+orgboostnumber);//keep rendering boosts until 130
+
         //System.out.println((int)((-renderer.scorenumber/5f)+orgboostnumber));
         if (delta > .15f) {
             delta = .15f;}
@@ -245,8 +260,8 @@ public class GameWorld {
         //glider.onRestart();
         //renderer.setCamPositionOriginal();
         renderer.scorenumber=0;
-        AssetHandler.deathmenumusic.stop();
-        AssetHandler.playnext(AssetHandler.musiclist);
+        Loader.deathmenumusic.stop();
+        Loader.playnext(Loader.musiclist);
         //AssetHandler.frontFlaps.setFrameDuration(0.2f);
         //currentState = GameState.READY;
         renderer.prepareTransition(0, 0, 0, 1f);}
@@ -269,8 +284,8 @@ public class GameWorld {
         //renderer.sunshineManager.killAll();
         //renderer.sunshineManager2.killAll();
         SplashScreen.getManager().killAll();
-        AssetHandler.stopMusic(AssetHandler.menumusiclist);
-        AssetHandler.playnext(AssetHandler.musiclist);
+        Loader.stopMusic(Loader.menumusiclist);
+        Loader.playnext(Loader.musiclist);
         //currentState = GameState.READY;
         renderer.prepareTransition(0, 0, 0, 1f);}
 

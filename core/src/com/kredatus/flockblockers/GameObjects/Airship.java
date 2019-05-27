@@ -11,20 +11,19 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.CustomLights.CustomPointLight;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -243,7 +242,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         balloonHitbox.setOrigin(startX,startY);
     }
 
-    private void changeRackBounds(){
+    private void changeRackBounds() {
         float x = pos.x, y = pos.y+balloonBob.get();
                 if (rackLvl==0){
                 rackHitbox = new Polygon(new float[] {
@@ -301,16 +300,15 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     private void assignTextures(int armorLvl, int rackLvl) {
-        pipeTexture=AssetHandler.airshipBurnerPipe;
-        balloonTexture=AssetHandler.airshipBalloon;
-        sideThrustTexture=AssetHandler.airshipSideThruster;
+        balloonTexture = Loader.tA.findRegion("balloon");
+        sideThrustTexture = Loader.tA.findRegion("sideThruster");
+        pipeTexture = Loader.tA.findRegion("burnerPipes");
+        reticleTexture = Loader.tA.findRegion("reticle");
+        dragCircleTexture=Loader.tA.findRegion("dragCirc");
+        dragLineTexture=Loader.tA.findRegion("dragLine");
+        aimLineTexture=Loader.tA.findRegion("aimLine");
 
-        reticleTexture=AssetHandler.reticle;
-        dragCircleTexture=AssetHandler.dragCircle;
-        dragLineTexture=AssetHandler.dragLine;
-        aimLineTexture=AssetHandler.aimLine;
-
-        rackTextures=AssetHandler.rackTextures;
+        rackTextures=Loader.rackTextures;
         assignRackAndArmor(armorLvl,rackLvl);
 
         balloonWidth=balloonTexture.getRegionWidth(); balloonHeight=balloonTexture.getRegionHeight();
@@ -468,11 +466,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void loadEffects () {
         //burnerFire=AssetHandler.burnerFirePool.obtain(); thrusterFireLeft=AssetHandler.thrusterFireLeftPool.obtain(); thrusterFireUp=AssetHandler.thrusterFireUpPool.obtain();
-        additiveEffects = AssetHandler.additiveEffects;
+        additiveEffects = ((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.additiveEffects;
         additiveEffects.get(0).scaleEffect(0.20f);
         additiveEffects.get(1).scaleEffect(0.30f);
         additiveEffects.get(2).scaleEffect(0.30f);
-        emitters=AssetHandler.emitters;
+        emitters= Loader.emitters;
         //burnerFire.scaleEffect(0.3f);
         //burnerFire.start();
     }

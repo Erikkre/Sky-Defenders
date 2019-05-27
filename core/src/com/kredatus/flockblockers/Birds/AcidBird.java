@@ -4,9 +4,8 @@ package com.kredatus.flockblockers.Birds;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 
 import java.util.ArrayList;
 
@@ -35,7 +34,7 @@ public class AcidBird extends BirdAbstractClass {
         sizeVariance=40;
         sizeRatio=0.6f;
 
-        animSeq = AssetHandler.acidAnimations;
+        animSeq = Loader.acidAnims;
         animSetup();
 
 

@@ -1,38 +1,23 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
-import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 /**
  * Created by Mr. Kredatus on 8/27/2017.
  **/
 
-public class AssetHandler {
+public class AssetHandler {/*
     public static Random r = new Random();
     public static int menumusiciterator, musiciterator;
     public static  Music[] musiclist, menumusiclist;
     public static Animation[] tinyAnims, phoenixAnimations, nightAnimations,waterAnimations,fireAnimations, acidAnimations,thunderAnimations,goldAnimations,lunarAnimations;
-
-    public static TextureAtlas tA;
 
     public static TextureRegion
             bgPhoenixtexture, bgPhoenixtexture2, bgAcidtexture,bgAcidtexture2, bgFiretexture, bgFiretexture2, bgNighttexture, bgNighttexture2,bgGoldtexture, bgGoldtexture2,
@@ -52,466 +37,65 @@ public class AssetHandler {
             tinyAnim1, tinyAnim2,tinyAnim3, tinyAnim4, tinyAnim5, tinyAnim6,tinyAnim7,tinyAnim8,tinyAnim9,tinyAnim10,tinyAnim11,
             coinAnimation;
     //public static TextureRegion gliderMid, gliderDown, gliderUp ,vertflipgliderMid, vertflipgliderDown, vertflipgliderUp,
-            //frontGliderMid, frontGliderDown, frontGliderUp, frontGliderUpHigh, backgliderMid, backgliderDown, backgliderUp;
+    //frontGliderMid, frontGliderDown, frontGliderUp, frontGliderUpHigh, backgliderMid, backgliderDown, backgliderUp;
 
     public static Preferences prefs;
 
     public static ShaderProgram flashShader;
 
     public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireRight=new ParticleEffect(); //thrusterFireUp=new ParticleEffect();
-    public static ParticleEffectPool burnerFirePool, thrusterFireLeftPool, thrusterFireRightPool;
-    public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>(), nonAdditiveEffects;
+    public static Array<ParticleEffectPool.PooledEffect> additiveEffects = new Array<ParticleEffectPool.PooledEffect>(3), nonAdditiveEffects;
     public static Array<ParticleEmitter> emitters=new Array<ParticleEmitter>();
-    public AssetManager assetManager= new AssetManager();
-    public static void load() {
-        tA=new TextureAtlas("texturePack.txt");
+*/
+
+
+    public  AssetManager manager= new AssetManager();
+
+    public   String textures="textures/texturePack.txt",
+    burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
+    fire="sound/fire.wav", swoop="sound/swoop.wav",birdHit="sound/birdHit.mp3",balloonHit="sound/balloonHit.mp3",
+    music0="music/music0.mp3",
+    skin="ui/shadeui/uiskin.json",
+    flashShader="shaders/flash.vert";
+
+    public void load() {
+
+        manager.load(skin, Skin.class);//syncronous loading, done on loader line assets.load();
+        manager.finishLoading();
+
+        manager.load(burnerFire, ParticleEffect.class);//asyncronous loading, continued along using update(); in loader
+        manager.load(thrusterFireLeft,ParticleEffect.class);
+        manager.load(thrusterFireRight,ParticleEffect.class);
+
+        manager.load(fire, Sound.class);
+        manager.load(swoop,Sound.class);
+        manager.load(birdHit,Sound.class);
+        manager.load(balloonHit,Sound.class);
+
+        manager.load(music0, Music.class);
+
+        ShaderProgram.pedantic = false;
+        manager.load(flashShader,ShaderProgram.class);
+
+
+        manager.load(textures, TextureAtlas.class);
+
+
         //textureAtlas.findRegion()
         //If your particle effect includes additive or pre-multiplied particle emitters
         //you can turn off blend function clean-up to save a lot of draw calls, but
         //remember to switch the Batch back to GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
         //before drawing "regular" sprites or your Stage.
 
-        burnerFire.load(Gdx.files.internal("effects"+File.separator+"burnerFire.p"),Gdx.files.internal("textures"+File.separator+"particles"));
-        //burnerFire.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
-        burnerFirePool= new ParticleEffectPool(burnerFire,1,2);
-        PooledEffect pooledEffect=burnerFirePool.obtain();
-        additiveEffects.add(pooledEffect);
-
-        /*thrusterFireUp.load(Gdx.files.internal("effects"+File.separator+"thrusterFireUp.p"),Gdx.files.internal("textures"+File.separator+"particles"));
-        //thrusterFireUp.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
-        thrusterFireUpPool= new ParticleEffectPool(thrusterFireUp,1,2);
-        pooledEffect=thrusterFireUpPool.obtain();
-        additiveEffects.add(pooledEffect);*/
-
-        thrusterFireLeft.load(Gdx.files.internal("effects"+File.separator+"thrusterFireLeft.p"),Gdx.files.internal("textures"+File.separator+"particles"));
-        //thrusterFireLeft.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
-        thrusterFireLeftPool= new ParticleEffectPool(thrusterFireLeft,1,2);
-        pooledEffect=thrusterFireLeftPool.obtain();
-        additiveEffects.add(pooledEffect);
-
-        thrusterFireRight.load(Gdx.files.internal("effects"+File.separator+"thrusterFireRight.p"),Gdx.files.internal("textures"+File.separator+"particles"));
-        //thrusterFireRight.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
-        thrusterFireRightPool= new ParticleEffectPool(thrusterFireRight,1,2);
-        pooledEffect=thrusterFireRightPool.obtain();
-        additiveEffects.add(pooledEffect);
-
-        for (PooledEffect i: additiveEffects){
-            emitters.add(i.getEmitters().get(0));
-        }
-
-        menumusiciterator = r.nextInt(3);
-        musiciterator = r.nextInt(6);
-
-        /*
-        //button textures
-        playtexture = new Texture(Gdx.files.internal("ui"+File.separator+"play.png"));
-        playtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        playdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"playdown.png"));
-        playdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        playdown = new TextureRegion(playdowntexture, 0, 0, 347, 220);
-        play = new TextureRegion(playtexture, 0, 0, 347, 220);
-        play.flip(false, true);
-        playdown.flip(false, true);
-
-        creditstexture = new Texture(Gdx.files.internal("ui"+File.separator+"credits.png"));
-        creditstexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        creditsdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"creditsdown.png"));
-        creditsdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        credits = new TextureRegion(creditstexture, 0, 0, 536, 221);
-        credits.flip(false, true);
-        creditsdown = new TextureRegion(creditsdowntexture, 0, 0, 536, 221);
-        creditsdown.flip(false, true);
-
-        exittexture = new Texture(Gdx.files.internal("ui"+File.separator+"exit.png"));
-        exittexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        exitdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"exitdown.png"));
-        exitdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        exit = new TextureRegion(exittexture, 0, 0, 350, 221);
-        exit.flip(false, true);
-        exitdown = new TextureRegion(exitdowntexture, 0, 0, 350, 221);
-        exitdown.flip(false, true);
-
-        retrytexture = new Texture(Gdx.files.internal("ui"+File.separator+"retry.png"));
-        retrytexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        retrydowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"retrydown.png"));
-        retrydowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        retry = new TextureRegion(retrytexture, 0, 0, 465, 222);
-        retry.flip(false, true);
-        retrydown = new TextureRegion(retrydowntexture, 0, 0, 465, 222);
-        retrydown.flip(false, true);
-
-        readytexture = new Texture(Gdx.files.internal("ui"+File.separator+"ready.png"));
-        readytexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        readydowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"readydown.png"));
-        readydowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        ready = new TextureRegion(readytexture, 0, 0, 495, 222);
-        ready.flip(false, true);
-        readydown = new TextureRegion(readydowntexture, 0, 0, 495, 222);
-        readydown.flip(false, true);
-
-        storytexture = new Texture(Gdx.files.internal("ui"+File.separator+"story.png"));
-        storytexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        storydowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"storydown.png"));
-        storydowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        story = new TextureRegion(storytexture, 0, 0, 426, 221);
-        story.flip(false, true);
-        storydown = new TextureRegion(storydowntexture, 0, 0, 426, 221);
-        storydown.flip(false, true);
-
-        instrtexture = new Texture(Gdx.files.internal("ui"+File.separator+"instr.png"));
-        instrtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        instrdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"instrdown.png"));
-        instrdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        instr = new TextureRegion(instrtexture, instrtexture.getWidth(), instrtexture.getHeight());
-        instr.flip(false, true);
-        instrdown = new TextureRegion(instrdowntexture, instrdowntexture.getWidth(), instrdowntexture.getHeight());
-        instrdown.flip(false, true);
-
-        menutexture = new Texture(Gdx.files.internal("ui"+File.separator+"menu.png"));
-        menutexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        menudowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"menudown.png"));
-        menudowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        menu = new TextureRegion(menutexture, 0, 0, 409, 221);
-        menu.flip(false, true);
-        menudown = new TextureRegion(menudowntexture, 0, 0, 409, 221);
-        menudown.flip(false, true);
-
-        nexttexture = new Texture(Gdx.files.internal("ui"+File.separator+"next.png"));
-        nexttexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        nextdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"nextdown.png"));
-        nextdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        nextdown = new TextureRegion(nextdowntexture, 0, 0, 347, 220);
-        next = new TextureRegion(nexttexture, 0, 0, 347, 220);
-        next.flip(false, true);
-        nextdown.flip(false, true);
-
-        //non-button textures *************************************************************************************************
-        worldStabilizedtexture = new Texture(Gdx.files.internal("ui"+File.separator+"worldStabilized.png"));
-        worldStabilizedtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        worldStabilized = new TextureRegion(worldStabilizedtexture, worldStabilizedtexture.getWidth(), worldStabilizedtexture.getHeight());
-        worldStabilized.flip(false, true);
-*/
-        logo = tA.findRegion("companyLogo");
-        slidemenuBg = tA.findRegion("slideMenuBackground");
-        menuButton = tA.findRegion("menuButton");
-        shareButton = tA.findRegion("shareButton");
-        rateButton = tA.findRegion("rateButton");
-/*
-        newHighscoretexture = new Texture(Gdx.files.internal("ui"+File.separator+"newHighscore.png"));
-        newHighscoretexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        newHighscore = new TextureRegion(newHighscoretexture, 0, 0, 644, 184);
-        newHighscore.flip(false, true);
-
-        youvediedtexture = new Texture(Gdx.files.internal("ui"+File.separator+"youveDied.png"));
-        youvediedtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        youvedied = new TextureRegion(youvediedtexture, 0, 0, 782, 182);
-        youvedied.flip(false, true);
-
-        scoretexture = new Texture(Gdx.files.internal("ui"+File.separator+"score.png"));
-        scoretexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        score = new TextureRegion(scoretexture, 0, 0, 446, 221);
-        score.flip(false, true);
-
-        ratingtexture = new Texture(Gdx.files.internal("ui"+File.separator+"rating.png"));
-        ratingtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        rating = new TextureRegion(ratingtexture, 0, 0, 507, 221);
-        rating.flip(false, true);
-
-        topscoretexture = new Texture(Gdx.files.internal("ui"+File.separator+"topscore.png"));
-        topscoretexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        topscore = new TextureRegion(topscoretexture, 0, 0, 680, 221);
-        topscore.flip(false, true);
-
-        //BACKGROUNDS **************************************************************************************************************
-        gliderbgtexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"gliderbg.png"));
-        gliderbgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        gliderbg = new TextureRegion(gliderbgtexture, gliderbgtexture.getWidth(), gliderbgtexture.getHeight());
-        gliderbg.flip(false, true);*/
-
-        /*creditsbgtexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"creditsbg.jpg"));
-        creditsbgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        creditsbg = new TextureRegion(creditsbgtexture, creditsbgtexture.getWidth(), creditsbgtexture.getHeight());
-        creditsbg.flip(false, true);
-
-        deathmenubgtexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"deathmenubg.png"));
-        deathmenubgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        deathmenubg = new TextureRegion(deathmenubgtexture, deathmenubgtexture.getWidth(), deathmenubgtexture.getHeight());
-        deathmenubg.flip(false, true);
-
-        instrbgtexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"instrbg.png"));
-        instrbgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        instrbg = new TextureRegion(instrbgtexture, instrbgtexture.getWidth(), instrbgtexture.getHeight());
-        instrbg.flip(false, true);
-
-        readybgtexture = new Texture(Gdx.files.internal("backgrounds"+File.separator+"readybg.png"));
-        readybgtexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        readybg = new TextureRegion(readybgtexture, readybgtexture.getWidth(), readybgtexture.getHeight());
-        readybg.flip(false, true);*/
-
-
-        bgCloudSeparatorTexture = tA.findRegion("cloudSeparator");
-
-        bgPhoenixtexture = new TextureRegion(tA.findRegion("bgPhoenix2"));
-        bgPhoenixtexture.flip(false, true);
-        bgPhoenixtexture2 = tA.findRegion("bgPhoenix2");
-
-        bgThundertexture =  new TextureRegion(tA.findRegion("bgThunder2"));
-        bgThundertexture.flip(false, true);
-        bgThundertexture2 = tA.findRegion("bgThunder2");
-
-
-        bgWatertexture = new TextureRegion(tA.findRegion("bgWater2"));
-        bgWatertexture.flip(false, true);
-        bgWatertexture2 = tA.findRegion("bgWater2");
-
-        bgFiretexture = new TextureRegion(tA.findRegion("bgFire2"));
-        bgFiretexture.flip(false, true);
-        bgFiretexture2 = tA.findRegion("bgFire2");
-
-        bgAcidtexture = new TextureRegion(tA.findRegion("bgAcid2"));
-        bgAcidtexture.flip(false, true);
-        bgAcidtexture2 = tA.findRegion("bgAcid2");
-
-        bgNighttexture = new TextureRegion(tA.findRegion("bgNight2"));
-        bgNighttexture.flip(false, true);
-        bgNighttexture2 = tA.findRegion("bgNight2");
-
-        bgLunartexture = new TextureRegion(tA.findRegion("bgLunar2"));
-        bgLunartexture.flip(false,  true);
-        bgLunartexture2 = tA.findRegion("bgLunar2");
-
-        bgGoldtexture = new TextureRegion(tA.findRegion("bgGold2"));
-        bgGoldtexture.flip(false, true);
-        bgGoldtexture2 = tA.findRegion("bgGold2");
-
-        //   0                 9                       18                      27                      36                      45                        54                      63
-        //      1 2  4 5  7 8     10 11  13 14  16 17     19 20  22 23  25 26     28 29  31 32  34 35     37 38  40 41  43 44       46 47  49 50  52 53     55 56  58 59  61 62     64 65  67 68  70 71
-        bgList = new ArrayList<TextureRegion>();    //3 times each to ensure speedy movement upwards, slower thru cities faster thru clouds
-        Collections.addAll(bgList, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2,
-                bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2,
-                bgCloudSeparatorTexture,  bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture,  bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture,  bgWatertexture, bgWatertexture2,
-                bgCloudSeparatorTexture,  bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture,  bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture,  bgFiretexture, bgFiretexture2,
-                bgCloudSeparatorTexture,  bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture,  bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture,  bgAcidtexture, bgAcidtexture2,
-                bgCloudSeparatorTexture,  bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture,  bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture,  bgNighttexture, bgNighttexture2,
-                bgCloudSeparatorTexture,  bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture,  bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture,  bgLunartexture, bgLunartexture2,
-                bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2);
-
-                /*
-        coordslistsize=22;
-        boostnumber=20; //14 boosts for 2 map sizes: 50% random chance of each boost being rendered in its coordinate
-        ArrayList<Vector3> boostcoordslist = new ArrayList<Vector3>();      //there will be 7 variables for this map
-
-        //Coords for locations of boost for each map, 3rd coord is size: (3 charges) 6=large, 20=medium, 40=small, (1 charge)
-        p0  = new Vector3(451,694,20);
-        p1  = new Vector3(490,230,40);
-        p2  = new Vector3(600,230,40);
-        p3  = new Vector3(690,260,40);
-        p4  = new Vector3(750,330,40);
-        p5  = new Vector3(1040,470,20);
-        p6  = new Vector3(1330,660,20);
-        p7  = new Vector3(1570,730,20);
-        p8  = new Vector3(1590,458,40);
-        p9  = new Vector3(1680,400,40);
-        p10 = new Vector3(1820,350,40);
-        p11 = new Vector3(1930,385,40);
-        p12 = new Vector3(2048,1070,6);
-        p13 = new Vector3(2200,280,40);
-        p14 = new Vector3(2400,230,40);
-        p15 = new Vector3(2470,790,20);
-        p16 = new Vector3(2570,330,40);
-        p17 = new Vector3(2800,540,20);
-        p18 = new Vector3(3390,300,40);
-        p19 = new Vector3(3470,240,40);
-        p20 = new Vector3(3610,210,40);
-        p21 = new Vector3(3740,260,40);
-
-
-        Collections.addAll(boostcoordslist, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31);
-        boostcoords=boostcoordslist;
-*/
-        //SPRITEWORK
-        /*gliderscaling = 1;
-        boost = new Texture(Gdx.files.internal("sprites"+File.separator+"boost.png"));
-        boost.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        boosttexture = tA.findRegion()boost, boost.getWidth(), boost.getHeight());
-        boosttexture.flip(false, true);
-        boostdowntexture = new Texture(Gdx.files.internal("ui"+File.separator+"boostdown.png"));
-        boostdowntexture.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-        boostdown = tA.findRegion()boostdowntexture, boostdowntexture.getWidth(), boostdowntexture.getHeight());
-        boostdown.flip(false, true);*/
-
-
-        TextureRegion coinTexture=tA.findRegion("coin");
-        ArrayList<TextureRegion> tempPosition = new ArrayList<TextureRegion>(16);
-        for (int i = 0; i < 17; i++) {
-            if (i<16){
-            TextureRegion temp = new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
-            tempPosition.add(temp);
-            } else {
-                coinSymbol= new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
-            }
-        }
-        coinAnimation=new Animation<TextureRegion>(0.03f, tempPosition.toArray(new TextureRegion[16]));
-        coinAnimation.setPlayMode(Animation.PlayMode.LOOP); //REMEMBER THIS STEP
-
-
-        phoenixAnimations = birdTextureToAnimation("phoenix", 0.05f);
-        thunderAnimations = birdTextureToAnimation("thunder", 0.06f);
-        waterAnimations   = birdTextureToAnimation("water", 0.06f);
-        fireAnimations    = birdTextureToAnimation("fire", 0.06f);
-        nightAnimations   = birdTextureToAnimation("night", 0.04f);
-        acidAnimations    = birdTextureToAnimation("acid", 0.04f);
-        lunarAnimations   = birdTextureToAnimation("lunar", 0.04f);
-        goldAnimations    = birdTextureToAnimation("gold", 0.05f);
-
-
-        tinyAnim1=tinyBirdTextureToAnimation("1");
-        tinyAnim2=tinyBirdTextureToAnimation("2");
-        tinyAnim3=tinyBirdTextureToAnimation("3");
-        tinyAnim4=tinyBirdTextureToAnimation("4");
-        tinyAnim5=tinyBirdTextureToAnimation("5");
-        tinyAnim6=tinyBirdTextureToAnimation("6");
-        tinyAnim7=tinyBirdTextureToAnimation("7");
-        tinyAnim8=tinyBirdTextureToAnimation("8");
-        tinyAnim9=tinyBirdTextureToAnimation("9");
-        tinyAnim10=tinyBirdTextureToAnimation("10");
-        tinyAnim11=tinyBirdTextureToAnimation("11");
-        tinyAnims=new Animation[]{tinyAnim1,tinyAnim2,tinyAnim3,tinyAnim4,tinyAnim5,tinyAnim6,tinyAnim7,tinyAnim8, tinyAnim9, tinyAnim10, tinyAnim11};
-
-        //SOUNDWORK
-        fire = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"fire.wav"));
-        splashdown = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"splashdown.wav"));
-        swoop = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"swoop.wav"));
-        birdHit = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"birdHit.mp3"));
-        balloonHit = Gdx.audio.newSound(Gdx.files.internal("sound"+File.separator+"balloonHit.mp3"));
-
-        musiclist = new Music[] { Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic2.mp3")),
-                Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic3.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic4.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic5.mp3")), Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"bgMusic6.mp3"))};
-        menumusiclist = new Music[] {Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"menuMusic.mp3"))};//, Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"menuMusic2.mp3"))};
-        deathmenumusic = Gdx.audio.newMusic(Gdx.files.internal("music"+File.separator+"deathmenuMusic.mp3"));
 
         // Create (or retrieve existing) preferences file
-        prefs = Gdx.app.getPreferences("GlideorDie");
-        if (!prefs.contains("highScore")) {
-            prefs.putInteger("highScore", 0);
-        }
 
-        ShaderProgram.pedantic = false;
-        flashShader = new ShaderProgram(Gdx.files.internal(
-                "shaders"+File.separator+"flash-vert.glsl").readString(),
-                Gdx.files.internal("shaders"+ File.separator+"flash-frag.glsl").readString());
-       //flashShader.begin();
-        if (!flashShader.isCompiled()) {
-            System.err.println(flashShader.getLog());
-            System.exit(0);
-        }
 
-        if (flashShader.getLog().length()!=0){
-            System.out.println(flashShader.getLog());
-        }
 
-        //160*180, let player choose color but tint it in a batcher pass (batcher.setColorTint)
-        airshipBalloon = tA.findRegion("balloon");
-        airshipSideThruster = tA.findRegion("sideThruster");
-        airshipBurnerPipe = tA.findRegion("burnerPipes");
-        reticle = tA.findRegion("reticle");
-        dragCircle=tA.findRegion("dragCirc");
-        dragLine=tA.findRegion("dragLine");
-        aimLine=tA.findRegion("aimLine");
 
-        for (int i=0;i<7;i++) {
-            rackTextures[i]=tA.findRegion("rack"+i);
-        }
     }
 
-    public static TextureRegion turret(char type, int lvl, boolean proj ) {
-        if (!proj) return tA.findRegion(type+Integer.toString(lvl));
-        else return tA.findRegion("p"+type+Integer.toString(lvl));
-    }
 
-    public static Sound turretSound(char type, int lvl) {
-        return Gdx.audio.newSound(Gdx.files.internal("textures"+File.separator+"sprites"+File.separator+"turrets"+File.separator+type+File.separator+type+lvl+".mp3"));
-    }
-
-    /*public static TextureRegion airshipRack(int armorLvl){
-            return tA.findRegion("rack"+armorLvl);
-    }
-
-    public static TextureRegion armor(int armorLvl) {
-        return tA.findRegion("armor"+armorLvl);//see if you can call rotatePixmap every time if rotated, but might not be efficient as might be only done for largest images on png and might want to add property to their objects (i.e. bg objects) instead
-    }*/
-
-    private static Animation<TextureRegion>[] birdTextureToAnimation(String path, float flapSpeed) {
-        TextureRegion sprites = tA.findRegion(path);
-
-        ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>();
-        ArrayList<TextureRegion> leftSidePositions = new ArrayList<TextureRegion>();
-
-        TextureRegion[] front= new TextureRegion[0];
-        TextureRegion[] rightSide=new TextureRegion[0];
-        TextureRegion[] leftSide=new TextureRegion[0];
-        TextureRegion[] back=new TextureRegion[0];
-
-
-
-        for (int i=0;i<22;i++) {
-            TextureRegion temp;
-            if (i<11) {
-                temp = new TextureRegion(sprites, 372 * i, 0, 372, 306);
-            } else {
-                temp = new TextureRegion(sprites, 372 * (i-11), 306, 372, 306);
-            }
-            poss.add(temp);
-
-            if (i<6){
-                TextureRegion flipTemp = new TextureRegion(sprites, 372 * i, 0, 373, 306);
-                flipTemp.flip(true,false);
-                leftSidePositions.add(flipTemp);
-            }
-
-            if (i == 5){
-                rightSide=poss.toArray(new TextureRegion[6]);
-                leftSide =leftSidePositions.toArray(new TextureRegion[6]);
-                poss.clear();
-                leftSidePositions.clear();
-            } else if (i == 11) {
-                back = poss.toArray(new TextureRegion[6]);
-                poss.clear();
-            } else if (i==21){
-                front =  poss.toArray(new TextureRegion[10]);
-            }
-        }
-
-        Animation frontFlaps= new Animation<TextureRegion>(flapSpeed, front);
-        frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
-
-        Animation deathFlaps= new Animation<TextureRegion>(0.015f, front);
-        deathFlaps.setPlayMode(Animation.PlayMode.LOOP);
-
-        Animation rightFlaps= new Animation<TextureRegion>(flapSpeed, rightSide);
-        rightFlaps.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-
-        Animation leftFlaps= new Animation<TextureRegion>(flapSpeed, leftSide);
-        leftFlaps.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-
-        Animation backFlaps= new Animation<TextureRegion>(flapSpeed, back);
-        backFlaps.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-
-        return new Animation[]{frontFlaps, leftFlaps, rightFlaps, backFlaps, deathFlaps};
-    }
-
-    private static Animation<TextureRegion> tinyBirdTextureToAnimation (String shadeNumber) {
-        TextureRegion texture = tA.findRegion("tinyBird"+shadeNumber);
-        ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>(9);
-
-        for (int i = 0; i < 9; i++) {
-            TextureRegion temp = new TextureRegion(texture, 37 * i, 0, 37, 14);
-            poss.add(temp);
-        }
-        Animation animation = new Animation<TextureRegion>(0.1f, poss.toArray((new TextureRegion[9])));
-        animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-        return animation;
-    }
 /*
     public static Animation[] birdTextureToSprite (Texture texture) {
         ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>();
@@ -521,7 +105,7 @@ public class AssetHandler {
         TextureRegion[] back = new TextureRegion[0];
 
         for (int i = 0; i < 16; i++) {
-            TextureRegion temp = tA.findRegion()texture, 481 * i, 0, 481, 423);
+            TextureRegion temp = manager.get()texture, 481 * i, 0, 481, 423);
             poss.add(temp);
             if (i == 5) {
                 front = poss.toArray(new TextureRegion[6]);
@@ -560,78 +144,6 @@ public class AssetHandler {
         return animationList;
 
     }*/
-    public static int getbgScaling(){
-        return bgscaling;
-    }
-    public static int getgliderScaling(){
-        return gliderscaling;
-    }
-    public static int getBoostnumber(){return boostnumber;}
-    public static int getcoordslistsize(){return coordslistsize;}
-    public static ArrayList<Vector3> getBoostcoords() {return boostcoords;}
 
-    public static void setHighScore(int val) {
-        prefs.putInteger("highScore", val);
-        prefs.flush();
-    }
-    public static int getHighScore() {
-        return prefs.getInteger("highScore");
-    }
 
-    public static void stopMusic(Music[] list){
-        if (list==musiclist){
-            musiclist[musiciterator].pause();
-        }else{
-            menumusiclist[menumusiciterator].pause();
-        }
-    }
-    public static void startMusic(Music[] list){
-        if (list==musiclist){
-            musiclist[musiciterator].play();
-        }else{
-            menumusiclist[menumusiciterator].play();
-        }
-    }
-    public static void playnext(Music[] list) {
-        if (list==musiclist){
-            if (musiciterator<5){
-                musiciterator++;
-            } else{
-                musiciterator=0;
-            }
-            list[musiciterator].setVolume(0.6f);
-            list[musiciterator].play();
-            list[musiciterator].setLooping(true);
-        } else{ //menumusic
-            /*if (menumusiciterator<1){
-                menumusiciterator++;
-                list[menumusiciterator].play();
-                list[menumusiciterator].setLooping(true);
-            } else{*/
-                menumusiciterator=0;
-            list[menumusiciterator].setVolume(0.6f);
-            list[menumusiciterator].play();
-            list[menumusiciterator].setLooping(true);
-            //)
-        }
-    }
-
-    public void dispose() {
-        // We must dispose of the texture when we are finished.
-        assetManager.dispose();
-        tA.dispose();
-
-        splashdown.dispose();
-        swoop.dispose();
-        fire.dispose();
-        deathmenumusic.dispose();
-
-        flashShader.dispose();
-        for (Music music : musiclist){
-            music.dispose();
-        }
-        for (Music music : menumusiclist){
-            music.dispose();
-        }
-    }
 }

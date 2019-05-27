@@ -3,9 +3,8 @@ package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,7 +39,7 @@ this.flashLengths=flashLengths;
         sizeVariance=100;
         sizeRatio=0.5f;
 
-        animSeq = AssetHandler.thunderAnimations;
+        animSeq = Loader.thunderAnims;
         animSetup();
 
         //System.out.println("Height before: " + height+ " width: " + width);

@@ -4,8 +4,7 @@ package com.kredatus.flockblockers.Birds;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 
 import java.util.ArrayList;
 
@@ -33,7 +32,7 @@ this.flashLengths=flashLengths;
         sizeVariance=50;
         sizeRatio=0.65f;
 
-        animSeq = AssetHandler.nightAnimations;
+        animSeq = Loader.nightAnims;
         animSetup();
 
 

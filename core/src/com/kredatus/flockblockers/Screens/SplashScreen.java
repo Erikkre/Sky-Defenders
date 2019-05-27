@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.GameWorld.GameHandler;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.TweenAccessors.SpriteAccessor;
 
 import aurelienribon.tweenengine.BaseTween;
@@ -30,7 +28,7 @@ public class SplashScreen implements Screen {
     @Override
     public void show() {
         Tween.registerAccessor(Sprite.class, new SpriteAccessor());
-        sprite = new Sprite(AssetHandler.logo);
+        sprite = new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("logo"));
         sprite.setColor(1, 1, 1, 0);
 
         float width = Gdx.graphics.getWidth();
@@ -52,7 +50,7 @@ public class SplashScreen implements Screen {
         TweenCallback cb = new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                game.setScreen(new GameHandler());
+               // game.setScreen(new GameHandler(ski));
             }
         };
 //1.8 originally

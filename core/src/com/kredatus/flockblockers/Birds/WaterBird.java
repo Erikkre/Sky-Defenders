@@ -3,8 +3,7 @@ package com.kredatus.flockblockers.Birds;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 
 import java.util.ArrayList;
 
@@ -28,7 +27,7 @@ public class WaterBird extends BirdAbstractClass {
         sizeVariance=130;
         sizeRatio=0.4f;
 
-        animSeq = AssetHandler.waterAnimations;
+        animSeq = Loader.waterAnims;
         animSetup();
 
         //System.out.println("Height before: " + height+ " width: " + width);

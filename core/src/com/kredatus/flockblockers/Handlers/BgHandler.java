@@ -1,19 +1,18 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Handlers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector3;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Background;
-import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Helpers.InvertedTweenEquations;
+import com.kredatus.flockblockers.Screens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -39,12 +38,11 @@ public class BgHandler {
     boolean same = false;
     /*private ArrayList<Boost> boostlist = new ArrayList<Boost>(), invboostlist = new ArrayList<Boost>(),
             flipboostlist = new ArrayList<Boost>(), invflipboostlist = new ArrayList<Boost>();*/
-    public ArrayList<Vector3> boostcoords = AssetHandler.getBoostcoords();
 
     //private Boost tempBoost;
     //private int orgBoostnumber = AssetHandler.getBoostnumber(), coordslistsize=AssetHandler.getcoordslistsize();
-    public static int bgw= AssetHandler.bgPhoenixtexture.getRegionWidth();
-    public static int bgh = AssetHandler.bgPhoenixtexture.getRegionHeight(), separatorHeight=AssetHandler.bgCloudSeparatorTexture.getRegionHeight();    //height of separator is different, and there are 2 combined with eachother
+    public static int bgw= (((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("bgPhoenix2")).getRegionWidth();
+    public static int bgh = (((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("bgPhoenix2")).getRegionHeight(), separatorHeight=(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("cloudSeparator")).getRegionHeight();    //height of separator is different, and there are 2 combined with eachother
 
     public static int bgNumber;
 
@@ -77,8 +75,8 @@ public class BgHandler {
         vert.set(0);//everything is done in negative (camera goes up by that amount
         shake.set(0);                              //but in reality its the bg's lowering by that much
 
-        background = new Background(horiz.get(), vert.get(), bgw, separatorHeight, AssetHandler.bgList.get(bgNumber++));
-        background2 = new Background(horiz.get(), background.getTailY(), bgw, bgh, AssetHandler.bgList.get(bgNumber++));
+        background = new Background(horiz.get(), vert.get(), bgw, separatorHeight, Loader.bgList.get(bgNumber++));
+        background2 = new Background(horiz.get(), background.getTailY(), bgw, bgh, Loader.bgList.get(bgNumber++));
 
         //this.manager= SplashScreen.getManager();
         //System.out.println("vert.get() " + vert.get());
@@ -171,7 +169,7 @@ public class BgHandler {
                 tinyBirdHandler.addTinyBirdsNextCity(camWidth, camHeight);
                 //System.out.println("Reset stack");
                 stackJustReset=true;
-                if (bgNumber == AssetHandler.bgList.size()) {
+                if (bgNumber == Loader.bgList.size()) {
                     //waveNumber+=1;
                     bgNumber = 0;
                 }
@@ -330,7 +328,7 @@ public class BgHandler {
             background.update();
             background2.update();
 
-            if (bgNumber== AssetHandler.bgList.size()) {
+            if (bgNumber== Loader.bgList.size()) {
                 //waveNumber+=1;
                 bgNumber = 0;
             }

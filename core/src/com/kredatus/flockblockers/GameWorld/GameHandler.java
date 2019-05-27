@@ -4,11 +4,11 @@ package com.kredatus.flockblockers.GameWorld;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Turret;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
@@ -30,7 +30,7 @@ import box2dLight.Light;
  */
 
 public class GameHandler implements Screen {
-    private GameWorld world;
+    public GameWorld world;
     private GameRenderer renderer;
     public BgHandler bgHandler;
     public BirdHandler birdHandler;
@@ -47,7 +47,7 @@ public class GameHandler implements Screen {
     private Airship airship;
     //private Actor menuButtonActor;
     public float screenWidth, screenHeight;
-    public GameHandler() {
+    public GameHandler(Skin skin) {
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
         camHeight=1000;
@@ -82,7 +82,7 @@ public class GameHandler implements Screen {
         lightHandler.setCam(renderer);
 
 
-        uiHandler=new UiHandler(renderer, camWidth, camHeight, world);
+        uiHandler=new UiHandler(camWidth, camHeight, world, skin);
         world.setRendererAndUIHandler(renderer, uiHandler);
         InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
         Gdx.input.setInputProcessor(uiHandler.stage);
@@ -130,14 +130,14 @@ public class GameHandler implements Screen {
             }
 
             birdHandler.pause();
-            AssetHandler.stopMusic(AssetHandler.menumusiclist);
+            ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.stopMusic(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.menumusiclist);
         }
     }
 
     @Override
     public void resume() {
         Gdx.app.log("GameHandler", "resume called");
-        AssetHandler.startMusic(AssetHandler.menumusiclist);
+        ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.startMusic(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.menumusiclist);
         if (!FlockBlockersMain.dontPauseOnUnfocus) {
             isPaused = false;
 

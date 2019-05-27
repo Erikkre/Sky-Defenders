@@ -3,9 +3,8 @@ package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.Birds.AcidBird;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.Birds.FireBird;
 import com.kredatus.flockblockers.Birds.GoldBird;
 import com.kredatus.flockblockers.Birds.LunarBird;
@@ -13,7 +12,9 @@ import com.kredatus.flockblockers.Birds.NightBird;
 import com.kredatus.flockblockers.Birds.PhoenixBird;
 import com.kredatus.flockblockers.Birds.ThunderBird;
 import com.kredatus.flockblockers.Birds.WaterBird;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
+import com.kredatus.flockblockers.Screens.Loader;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -121,7 +122,7 @@ public class BirdHandler {
                     }
                     //System.out.println("add birds");
                 } else if (waveTypeCnt == 2) {
-                    float height = ((TextureRegion) AssetHandler.waterAnimations[3].getKeyFrames()[3]).getRegionHeight();
+                    float height = ((TextureRegion) Loader.waterAnims[3].getKeyFrames()[3]).getRegionHeight();
                     //float width  =((TextureRegion)AssetHandler.waterAnimations[3].getKeyFrames()[0]).getRegionWidth();
                     for (int i = 0; i < birdNumberList[waveTypeCnt] / 5; i++) {
                         birdQueue.add(new WaterBird(airshipPos,camHeight, camWidth,  (camWidth / 6) * 1, (-height / 3) * 2f,  flashLengths));

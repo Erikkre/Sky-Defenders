@@ -3,7 +3,6 @@ package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,15 +15,14 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
 import com.kredatus.flockblockers.GameObjects.Coin;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameObjects.TinyBird;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
@@ -33,6 +31,7 @@ import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Helpers.ShapeRendererCustom;
+import com.kredatus.flockblockers.Screens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
@@ -69,8 +68,8 @@ public class GameRenderer {
     public static Vector3 campos;
     private Animation frontFlaps, leftSideFlaps, rightSideFlaps, flipflaps, frontViewFlaps, backFlaps;
     //private TextureRegion gliderMid, vertflipgliderMid;
-    private int gliderscaling= AssetHandler.getgliderScaling();
-    private TextureRegion  horflipbgtexture, vertflipbgtexture, horvertflipbgtexture, boosttexture, frontTexture,
+
+    private TextureRegion
             creditsbg, deathmenubg, newHighscore, topscore, deathmenuscore, rating, youvedied, boostdown,
             gliderbg, instrbg, readybg, frontglidermid, worldStabilized, gun, projectile, reticle;
 
@@ -127,8 +126,8 @@ public class GameRenderer {
 
         batcher = new SpriteBatch();
         //System.out.println("batcher color: "+batcher.getColor()+", white: "+new Color(1,1,1,1));
-        cam = new OrthographicCamera();
-        viewport=new ExtendViewport(camWidth,camHeight, cam);
+
+
         cam.setToOrtho(false, camWidth, camHeight);
         cam.position.set(new Vector3(camWidth/2f,camHeight/2f,0));
         cam.update();
@@ -153,10 +152,10 @@ public class GameRenderer {
         //setupTweens();
         bigfont = new FreeTypeFontGenerator.FreeTypeFontParameter();
         smallfont = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        smallfontLengthSetup();
-        bigfontLengthSetup();
-        storyFontSetup();
-        instrFontSetup();
+        //smallfontLengthSetup();
+        //bigfontLengthSetup();
+        //storyFontSetup();
+        //instrFontSetup();
         //creditsFontSetup();
         transitionColor = new Color();
         //prepareTransition(255, 255, 255, .5f);
@@ -188,17 +187,7 @@ public void setRotate(float angle){
 }
     private void initAssets() {
 
-
-       //bgPhoenix = AssetHandler.bgPhoenixtexture;
-        horflipbgtexture = AssetHandler.horflipbgtexture;
-
-        //flipworld
-        vertflipbgtexture = AssetHandler.vertflipbgtexture;
-        horvertflipbgtexture = AssetHandler.horvertflipbgtexture;
-
-        boosttexture = AssetHandler.boosttexture;
-
-        reticle=AssetHandler.reticle;
+        reticle=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("reticle");
 
         //gliderMid = AssetHandler.gliderMid;
         //vertflipgliderMid = AssetHandler.vertflipgliderMid;
@@ -208,29 +197,8 @@ public void setRotate(float angle){
         tinyBirdQueue= tinyBirdHandler.tinyBirdQueue;
 
         projectileList= targetHandler.projectileList;
-        //tinyBirdList=birdHandler.activeBirdQueue;
 
-        //frontFlaps = AssetHandler.frontFlaps;
-        //flipflaps = AssetHandler.flipflaps;
-        //frontViewFlaps = null;
-        //frontglidermid=AssetHandler.frontGliderMid;
-        //backFlaps= AssetHandler.backFlaps;
-
-        creditsbg = AssetHandler.creditsbg;
-        deathmenubg = AssetHandler.deathmenubg;
-        gliderbg = AssetHandler.gliderbg;
-        readybg = AssetHandler.readybg;
-        instrbg = AssetHandler.instrbg;
-
-        worldStabilized = AssetHandler.worldStabilized;
-        newHighscore = AssetHandler.newHighscore;
-        topscore = AssetHandler.topscore;
-        deathmenuscore = AssetHandler.score;
-        rating = AssetHandler.rating;
-        youvedied = AssetHandler.youvedied;
-        boostdown = AssetHandler.boostdown;
-
-        flashShader = AssetHandler.flashShader;
+        flashShader = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.manager.get(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.assets.flashShader);
     }
 
     private void initGameObjects() {
@@ -534,7 +502,7 @@ public void setRotate(float angle){
         batcher.draw(boostdown, cam.position.x - 325, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
         batcher.draw(boostdown, cam.position.x - 420, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
 
-        if (scorenumber >= 20) {
+        /*if (scorenumber >= 20) {
             batcher.draw(boosttexture, cam.position.x - 420, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
         }
         if (scorenumber >= 40) {
@@ -548,13 +516,13 @@ public void setRotate(float angle){
         }
         if (scorenumber >= 100) {
             batcher.draw(boosttexture, cam.position.x - 40, camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+140, 105, 120);
-        }
+        }*/
 
-        if (scorenumber== AssetHandler.getHighScore()){
+        if (scorenumber== Loader.getHighScore()){
             font.draw(batcher,""+scorenumber, cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 40 , camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+230);
             batcher.draw(newHighscore, cam.position.x - newHighscore.getRegionWidth() / 4, camHeight -(newHighscore.getRegionHeight()/2)-10, newHighscore.getRegionWidth()/2, newHighscore.getRegionHeight()/2);
-        } else if (scorenumber< AssetHandler.getHighScore()) {
-            font.draw(batcher, "" + AssetHandler.getHighScore(), cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 40 , camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+230);
+        } else if (scorenumber< Loader.getHighScore()) {
+            font.draw(batcher, "" + Loader.getHighScore(), cam.position.x + deathmenubg.getRegionWidth() / 3 - topscore.getRegionWidth() / 4 + 40 , camHeight-newHighscore.getRegionHeight()/2-deathmenubg.getRegionHeight()+230);
             batcher.draw(youvedied, cam.position.x - youvedied.getRegionWidth() / 4, camHeight - (youvedied.getRegionHeight() / 2) - 10, youvedied.getRegionWidth() / 2, youvedied.getRegionHeight() / 2);
         }
         if (scorenumber>=100) {
@@ -573,7 +541,7 @@ public void setRotate(float angle){
 
     private void drawScore() {
         //scorenumber=
-        font.draw(batcher,  Integer.toString(GameWorld.gold), (camWidth / 2f) - scorelen*2, 19.5f*camHeight/20f);
+        //font.draw(batcher,  Integer.toString(myWorld.gold), (camWidth / 2f) - scorelen*2, 19.5f*camHeight/20f);
         //droidSerifFont.draw(batcher, "%", cam.position.x + (camWidth / 2) - 40, cam.position.y - camHeight / 2 + 5);
         //font.draw(batcher, "POWER: " + (int)myWorld.boost, cam.position.x - (camWidth / 2) + 5, cam.position.y - camHeight / 2 + 5 );
     }

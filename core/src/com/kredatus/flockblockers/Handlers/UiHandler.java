@@ -4,12 +4,10 @@ package com.kredatus.flockblockers.Handlers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -19,15 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.kredatus.flockblockers.GameWorld.GameRenderer;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
-
-import java.io.File;
-
-import javax.xml.soap.Text;
 
 public class UiHandler {
 
@@ -56,7 +49,8 @@ public class UiHandler {
         return false;
     }
 
-    public UiHandler(GameRenderer renderer, float camWidth, float camHeight, GameWorld myWorld) {
+    public UiHandler(float camWidth, float camHeight, GameWorld myWorld, Skin skin) {
+        this.skin=skin;
         this.myWorld=myWorld;
         //nameLabel = new Label("Name: ", skin);
         //TextField nameText = new TextField("Name2: ", skin);
@@ -67,14 +61,8 @@ public class UiHandler {
         //table.add(nameText).width(100);    // Row 0, column 1.
 
 
-        skin = new Skin(Gdx.files.internal("ui"+File.separator+"shadeui"+File.separator+"uiskin.json"));
-        stage = new Stage(renderer.viewport, renderer.batcher);
-        stage.addCaptureListener(new ClickListener(){//tocuh up anywhere on screen means not touching ui
-            public void touchUp(InputEvent event, float x, float y, int pnt, int btn) {
-                super.touchUp(event, x, y, pnt, btn);
-                isTouched=false;
-                super.cancel();
-            }});
+
+
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -250,14 +238,19 @@ public class UiHandler {
     }
 
     public void setupSlidingMenus(float camWidth,float camHeight) {
+        /*logo = tA.findRegion("companyLogo");
+        slidemenuBg = tA.findRegion("slideMenuBackground");
+        menuButton = tA.findRegion("menuButton");
+        shareButton = tA.findRegion("shareButton");
+        rateButton = tA.findRegion("rateButton");*/
         /**     ****************************************LEFT SLIDING MENU*****************************************     **/
         slideMenuLeft = new SlideMenu(camWidth/9f,camHeight/2f,"left",camWidth,camHeight,movPad.getHeight()/2);//left or down
-        Sprite temp=new Sprite(AssetHandler.slidemenuBg);
+        Sprite temp=new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
         temp.setColor(new Color(0,0,0,0.5f));
         final Image image_backgroundX = new Image(new SpriteDrawable(temp));
-        menuButtonX = new Image(AssetHandler.menuButton);
-        final Image rateButton = new Image(AssetHandler.rateButton);
-        final Image shareButton = new Image(AssetHandler.shareButton);
+        menuButtonX = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
+        final Image rateButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rateButton"));
+        final Image shareButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
 
         // add items into drawer panel.
         slideMenuLeft.add(shareButton).size(63, 85).pad(0, 52, 5, 52).expandX().row();
@@ -360,7 +353,7 @@ public class UiHandler {
         slideMenuBottom = new SlideMenu(.7f*camWidth/2.75f,camHeight/7f,"down",camWidth,camHeight, 0);
         stage.addActor(slideMenuBottom);
         final Image image_backgroundY = new Image(new SpriteDrawable(temp));
-        menuButtonY = new Image(AssetHandler.menuButton);
+        menuButtonY = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
         menuButtonY.rotateBy(90);menuButtonY.setWidth(menuButtonY.getWidth()*0.4f);menuButtonY.setHeight(menuButtonY.getHeight()*0.9f);menuButtonY.setColor(1,1,1,0.5f);
         menuButtonY.setOrigin(Align.center);
         //menuButtonActor=menuButtonY;

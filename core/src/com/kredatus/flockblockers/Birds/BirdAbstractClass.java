@@ -1,6 +1,7 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Birds;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
@@ -200,7 +201,7 @@ public abstract class BirdAbstractClass {
                 for (Coin i : coinList){
                     i.update(delta);
                     if (i.secondYMotion.isFinished()) {
-                        GameWorld.addGold(1);
+                        ((FlockBlockersMain) Gdx.app.getApplicationListener()).gameHandler.world.addGold(1);
                         coinList.remove(i);
                     }
                 }

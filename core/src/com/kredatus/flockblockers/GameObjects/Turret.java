@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
+import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
-import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
+import com.kredatus.flockblockers.Screens.Loader;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -383,9 +384,8 @@ public class Turret {
     }
 
     private void turretSetup(char turretType, int lvl){
-        texture[0]=AssetHandler.turret
-                (turretType,lvl,false);projTexture=AssetHandler.turret(turretType,lvl,true);
-        sound=AssetHandler.turretSound(turretType,lvl);
+        texture[0]=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.turret(turretType,lvl,false);projTexture= ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.turret(turretType,lvl,true);
+        sound=Loader.turretSound(turretType,lvl);
         barrelLengthFromPos=0;//reset barrel length so by default projectile spawns from middle of turret position instead of from end of barrel
         projRotates=false;
         turretPullsBack=false;
@@ -410,7 +410,7 @@ public class Turret {
 
                 if (lvl==0) projRotates=true;
                 else if (lvl==1) turretPullsBack=true;
-                else if (lvl==2) {texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();}
+                else if (lvl==2) {texture=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();}
                 break;
             case ('f'): //fast firing
                 dmg = 1f;
@@ -420,7 +420,7 @@ public class Turret {
 
                 if (lvl==0) {barrelLengthFromPos=width/2f; }//blowgun barrel
                 else if (lvl==1) projRotates=true;
-                else if (lvl==2) {texture=AssetHandler.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();}
+                else if (lvl==2) {texture=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.turret(turretType,lvl,false).split(texture[0].getRegionWidth()/2,texture[0].getRegionHeight())[0];height=texture[0].getRegionHeight();width=texture[0].getRegionWidth();}
                 break;
         }
 
