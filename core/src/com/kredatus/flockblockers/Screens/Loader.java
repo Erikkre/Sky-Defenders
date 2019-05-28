@@ -92,17 +92,12 @@ public class Loader implements Screen {
 
         skin = manager.get(assets.skin);
 
-        loadBar = new ProgressBar(0, 100, 0.01f, false, skin);
-        ProgressBar.ProgressBarStyle pbStyle=loadBar.getStyle();
-        //for the knobBefore
 
-
-
+        ProgressBar.ProgressBarStyle pbStyle = new ProgressBar.ProgressBarStyle();
         //for the background
-        pbStyle.background.setLeftWidth(11);
-        pbStyle.knob.setLeftWidth(11);
-        loadBar = new ProgressBar(0, 100, 0.01f, false, pbStyle);
-
+        //pbStyle.background.setLeftWidth(11);
+        //pbStyle.knobBefore.setRightWidth(11);
+        loadBar = new ProgressBar(0, 100, 0.01f, false, skin);
 
         loadBar.setAnimateDuration(0.5f);
         loadBar.setColor(Color.FIREBRICK);
@@ -110,7 +105,7 @@ public class Loader implements Screen {
         Table loadTable = new Table();
         loadTable.setFillParent(true);
 
-        loadTable.add(loadBar).padTop(4*camHeight/5).width(290) ;
+        loadTable.add(loadBar).padTop(4*camHeight/5).width(camWidth/1.7f) ;
 
         stage.addActor(loadTable);
     }
