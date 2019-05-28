@@ -85,7 +85,7 @@ public class GameRenderer {
     public static BitmapFont font, titlefont, storyfont, instrfont, droidSerifFont;
 
 
-    public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,deadBirdQueue;
+    public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue, deadBirdQueue;
     public static ConcurrentLinkedQueue<TinyBird> tinyBirdQueue;
     //public ArrayList<Turret> turretList;
     public ConcurrentLinkedQueue<Projectile> projectileList;

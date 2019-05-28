@@ -27,9 +27,9 @@ public class UiHandler {
     public static Table rootTable;
     //public ScrollPane scrollPane;
     //public Label nameLabel;
-    //public Skin skin=new Skin(Gdx.files.internal("ui/button.png"));
+    //public Skin shadeSkin=new Skin(Gdx.files.internal("ui/button.png"));
     public  Stage stage;
-    public Skin skin;
+    public Skin shadeSkin;
     public static Touchpad movPad;
     public static TouchRotatePad aimPad;
     public static SlideMenu slideMenuLeft, slideMenuBottom;
@@ -49,11 +49,11 @@ public class UiHandler {
         return false;
     }
 
-    public UiHandler(float camWidth, float camHeight, GameWorld myWorld, Skin skin) {
-        this.skin=skin;
+    public UiHandler(float camWidth, float camHeight, GameWorld myWorld, Skin shadeSkin) {
+        this.shadeSkin=shadeSkin;
         this.myWorld=myWorld;
-        //nameLabel = new Label("Name: ", skin);
-        //TextField nameText = new TextField("Name2: ", skin);
+        //nameLabel = new Label("Name: ", shadeSkin);
+        //TextField nameText = new TextField("Name2: ", shadeSkin);
         //TextureAtlas
 
         // table = new Table();
@@ -75,17 +75,17 @@ public class UiHandler {
         rootTable.center().align(Align.bottom);
         stage.addActor(rootTable);
 
-        //rootTable.add(new Label("Shade UI", skin, "title")).colspan(3);
+        //rootTable.add(new Label("Shade UI", shadeSkin, "title")).colspan(3);
         rootTable.row();
-        movPad = new Touchpad(0, skin);
+        movPad = new Touchpad(0, shadeSkin);
         movPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
-        skin.getDrawable("touchpad-knob").setMinWidth(50);skin.getDrawable("touchpad-knob").setMinHeight(50);
+        shadeSkin.getDrawable("touchpad-knob").setMinWidth(50);shadeSkin.getDrawable("touchpad-knob").setMinHeight(50);
         //touchpad2.setColor(1,1,1,1f);
 
         //keep original height ratio but sized down with current width: .height((touchpad.getPrefHeight()*touchpad.getWidth())/touchpad.getPrefWidth())
         rootTable.add(movPad).fill(true).width(camHeight/9f).height(camHeight/8.5f).padRight(camWidth-(camHeight/9f)*2);
 
-        aimPad = new TouchRotatePad(0, skin);
+        aimPad = new TouchRotatePad(0, shadeSkin);
         aimPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         //touchpad2.setColor(1,1,1,1f);
 
@@ -96,31 +96,31 @@ public class UiHandler {
         /*
         Table buttonsTable = new Table();
         buttonsTable.defaults().pad(2.0f);
-        TextButton dialogButton = new TextButton("Dialog", skin);
+        TextButton dialogButton = new TextButton("Dialog", shadeSkin);
         buttonsTable.add(dialogButton);
         buttonsTable.row();
-        buttonsTable.add(new TextButton("Toggle", skin, "toggle"));
+        buttonsTable.add(new TextButton("Toggle", shadeSkin, "toggle"));
         buttonsTable.row();
-        buttonsTable.add(new TextButton("Start Game", skin, "round"));
+        buttonsTable.add(new TextButton("Start Game", shadeSkin, "round"));
         buttonsTable.row();
 
         Table subTable = new Table();
         subTable.defaults().pad(2.0f);
-        subTable.add(new Button(skin, "music"));
-        subTable.add(new Button(skin, "sound"));
+        subTable.add(new Button(shadeSkin, "music"));
+        subTable.add(new Button(shadeSkin, "sound"));
         buttonsTable.add(subTable);
         rootTable.add(buttonsTable);
 
         Table checksTable = new Table();
         checksTable.defaults().pad(2.0f);
-        checksTable.add(new CheckBox(" Standard Checkbox", skin));
+        checksTable.add(new CheckBox(" Standard Checkbox", shadeSkin));
         checksTable.row();
-        checksTable.add(new CheckBox(" Switch Checkbox", skin, "switch"));
+        checksTable.add(new CheckBox(" Switch Checkbox", shadeSkin, "switch"));
         checksTable.row();
         ButtonGroup radioButtonGroup = new ButtonGroup();
         Array<Button> buttons = new Array<Button>();
         for (int i = 1; i <= 5; i++) {
-            buttons.add(new TextButton("Selection " + Integer.toString(i), skin, "radio"));
+            buttons.add(new TextButton("Selection " + Integer.toString(i), shadeSkin, "radio"));
             checksTable.add(buttons.peek());
             checksTable.row();
             radioButtonGroup.add(buttons.peek());
@@ -130,25 +130,25 @@ public class UiHandler {
 
         Table inputTable = new Table();
         inputTable.defaults().pad(2.0f);
-        inputTable.add(new Label("Login Page", skin, "title-plain")).colspan(2);
+        inputTable.add(new Label("Login Page", shadeSkin, "title-plain")).colspan(2);
         inputTable.row();
-        inputTable.add(new Label(" Username: ", skin, "subtitle"));
-        TextField textField = new TextField("", skin);
+        inputTable.add(new Label(" Username: ", shadeSkin, "subtitle"));
+        TextField textField = new TextField("", shadeSkin);
         textField.setMessageText("Username or Email");
         textField.setFocusTraversal(true);
         inputTable.add(textField);
         inputTable.row();
-        inputTable.add(new Label(" Password: ", skin, "subtitle"));
-        textField = new TextField("", skin);
+        inputTable.add(new Label(" Password: ", shadeSkin, "subtitle"));
+        textField = new TextField("", shadeSkin);
         textField.setMessageText("Password");
         textField.setFocusTraversal(true);
         textField.setPasswordMode(true);
         textField.setPasswordCharacter('*');
         inputTable.add(textField);
         inputTable.row();
-        inputTable.add(new Label("Choose a Server:", skin)).colspan(2).padTop(10.0f);
+        inputTable.add(new Label("Choose a Server:", shadeSkin)).colspan(2).padTop(10.0f);
         inputTable.row();
-        SelectBox selectBox = new SelectBox<String>(skin);
+        SelectBox selectBox = new SelectBox<String>(shadeSkin);
         selectBox.setItems(new Object[]{"United States (East)", "United States (West)", "China", "Europe", "Australia", "India"});
         selectBox.setMaxListCount(4);
         inputTable.add(selectBox).colspan(2);
@@ -159,11 +159,11 @@ public class UiHandler {
 
 
         /*
-        Tree tree = new Tree(skin);
-        Node parentNode = new Node(new Label("Selection 1", skin));
+        Tree tree = new Tree(shadeSkin);
+        Node parentNode = new Node(new Label("Selection 1", shadeSkin));
         tree.add(parentNode);
         for (int i = 2; i <= 4; i++) {
-            Node node = new Node(new Label("Selection " + i, skin));
+            Node node = new Node(new Label("Selection " + i, shadeSkin));
             parentNode.add(node);
             parentNode = node;
         }
@@ -174,48 +174,48 @@ public class UiHandler {
         rootTable.row();
         Table progressTable = new Table();
         progressTable.defaults().pad(2.0f);
-        Button leftButton = new Button(skin, "left");
+        Button leftButton = new Button(shadeSkin, "left");
         progressTable.add(leftButton);
-        final ProgressBar progressBar = new ProgressBar(0, 100, 1, false, skin);
+        final ProgressBar progressBar = new ProgressBar(0, 100, 1, false, shadeSkin);
         progressBar.setValue(50);
         progressBar.setAnimateDuration(.3f);
         progressTable.add(progressBar);
-        Button rightButton = new Button(skin, "right");
+        Button rightButton = new Button(shadeSkin, "right");
         progressTable.add(rightButton);
         rootTable.add(progressTable).padTop(5.0f).colspan(3);
 
         rootTable.row();
-        Slider slider = new Slider(0, 100, 1, false, skin);
+        Slider slider = new Slider(0, 100, 1, false, shadeSkin);
         slider.setValue(50);
         rootTable.add(slider).colspan(3).fillX().padTop(5.0f);
 
         rootTable.row();
 
-        Window window = new Window("Window", skin);
+        Window window = new Window("Window", shadeSkin);
         window.getTitleLabel().setAlignment(Align.center);
-        ScrollPane scrollPane = new ScrollPane(new Label("ScrollPane. ScrollPane. ScrollPane.\nScrollPane. ScrollPane. ScrollPane.\nScrollPane. ScrollPane. ScrollPane.\nScrollPane. ScrollPane. ScrollPane.\nScrollPane. ScrollPane. ScrollPane.\n", skin), skin);
+        ScrollPane scrollPane = new ScrollPane(new Label("ScrollPane. ScrollPane. ScrollPane.\nScrollPane. ScrollPane. ScrollPane.\nScrollPane. ScrollPane. ScrollPane.\nScrollPane. ScrollPane. ScrollPane.\nScrollPane. ScrollPane. ScrollPane.\n", shadeSkin), shadeSkin);
         scrollPane.setFadeScrollBars(false);
-        ScrollPane androidScrollPane = new ScrollPane(new Label("Android ScrollPane. Android ScrollPane.\nAndroid ScrollPane. Android ScrollPane.\nAndroid ScrollPane. Android ScrollPane.\nAndroid ScrollPane. Android ScrollPane.\nAndroid ScrollPane. Android ScrollPane.\n", skin), skin, "android");
-        SplitPane splitPane2 = new SplitPane(scrollPane, androidScrollPane, false, skin);
+        ScrollPane androidScrollPane = new ScrollPane(new Label("Android ScrollPane. Android ScrollPane.\nAndroid ScrollPane. Android ScrollPane.\nAndroid ScrollPane. Android ScrollPane.\nAndroid ScrollPane. Android ScrollPane.\nAndroid ScrollPane. Android ScrollPane.\n", shadeSkin), shadeSkin, "android");
+        SplitPane splitPane2 = new SplitPane(scrollPane, androidScrollPane, false, shadeSkin);
 
 
         Table infoTable = new Table();
-        Label authorLabel = new Label("Created by Raymond \"Raeleus\" Buckley", skin, "error");
+        Label authorLabel = new Label("Created by Raymond \"Raeleus\" Buckley", shadeSkin, "error");
         authorLabel.setAlignment(Align.center);
         infoTable.add(authorLabel);
         infoTable.row();
-        Label webLabel = new Label("Visit ray3k.com for more stuff!", skin, "optional");
+        Label webLabel = new Label("Visit ray3k.com for more stuff!", shadeSkin, "optional");
         webLabel.setAlignment(Align.center);
         infoTable.add(webLabel);
 
-        SplitPane splitPane = new SplitPane(infoTable, splitPane2, true, skin);
+        SplitPane splitPane = new SplitPane(infoTable, splitPane2, true, shadeSkin);
         window.add(splitPane);
         rootTable.add(window).colspan(3).padTop(5.0f);
 
         /*dialogButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                new Dialog("Shade UI", skin, "dialog") {
+                new Dialog("Shade UI", shadeSkin, "dialog") {
                     protected void result(Object object) {
                         System.out.println("Chosen: " + object);
                     }
@@ -368,12 +368,12 @@ public class UiHandler {
 
 
         /******* BUTTONS ******/
-        final TextButton buyButton = new TextButton("Buy", skin);    //set button style
-        buyButton.setStyle(skin.get("round", buyButton.getStyle().getClass()));
+        final TextButton buyButton = new TextButton("Buy", shadeSkin);    //set button style
+        buyButton.setStyle(shadeSkin.get("round", buyButton.getStyle().getClass()));
         slideMenuBottom.add(buyButton).expand().fill().row();
 
-        final TextButton menuButton = new TextButton("Menu", skin);    //set button style
-        menuButton.setStyle(skin.get("round", menuButton.getStyle().getClass()));
+        final TextButton menuButton = new TextButton("Menu", shadeSkin);    //set button style
+        menuButton.setStyle(shadeSkin.get("round", menuButton.getStyle().getClass()));
         slideMenuBottom.add(menuButton).expand().fill().row();
 
         slideMenuBottom.addListener(new ChangeListener() {

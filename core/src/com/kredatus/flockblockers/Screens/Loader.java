@@ -75,7 +75,7 @@ public class Loader implements Screen {
     private Sprite sprite, sunshine;
     private FlockBlockersMain game;
     public static final int width= 1;
-    private Skin skin;
+    private Skin niteSkin, shadeSkin;
     public AssetHandler assets=new AssetHandler();
     public AssetManager manager=assets.manager;
     ProgressBar loadBar;
@@ -90,22 +90,24 @@ public class Loader implements Screen {
         setupStage();
         assets.load();
 
-        skin = manager.get(assets.skin);
+        niteSkin = manager.get(assets.niteRideUI);
 
 
         ProgressBar.ProgressBarStyle pbStyle = new ProgressBar.ProgressBarStyle();
         //for the background
         //pbStyle.background.setLeftWidth(11);
         //pbStyle.knobBefore.setRightWidth(11);
-        loadBar = new ProgressBar(0, 100, 0.01f, false, skin);
+        niteSkin.getDrawable("progress-bar-red-h").setMinHeight(200);niteSkin.getDrawable("progress-bar-bg").setMinHeight(200);
+        loadBar = new ProgressBar(0, 100, 0.01f, false, niteSkin);
 
         loadBar.setAnimateDuration(0.5f);
         loadBar.setColor(Color.FIREBRICK);
 
+
         Table loadTable = new Table();
         loadTable.setFillParent(true);
 
-        loadTable.add(loadBar).padTop(4*camHeight/5).width(camWidth/1.7f) ;
+        loadTable.add(loadBar).padTop(4*camHeight/5).width(camWidth/1.7f).height(camWidth) ;
 
         stage.addActor(loadTable);
     }
@@ -124,7 +126,7 @@ public class Loader implements Screen {
         } else {
             loaded();
             stage.clear();
-            gameHandler=new GameHandler(skin,camWidth,camHeight);
+            gameHandler=new GameHandler(shadeSkin,camWidth,camHeight);
             game.setScreen(gameHandler);
         }
     }
@@ -198,6 +200,9 @@ public class Loader implements Screen {
 
 
     public void loaded(){
+        shadeSkin = manager.get(assets.shadeUI);
+
+
         //burnerFire.setEmittersCleanUpBlendFunction(false);//Stop the additive effect resetting, speeding up batcher
         burnerFire=manager.get(assets.burnerFire);
         ParticleEffectPool burnerFirePool= new ParticleEffectPool(burnerFire,1,2);

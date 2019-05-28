@@ -55,13 +55,15 @@ public class AssetHandler {/*
     burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
     fire="sound/fire.wav", swoop="sound/swoop.wav",birdHit="sound/birdHit.mp3",balloonHit="sound/balloonHit.mp3",
     music0="music/music0.mp3",
-    skin="ui/shadeui/uiskin.json",
+    shadeUI="ui/shadeui/uiskin.json", niteRideUI="ui/niteRideUI/nite-ride-ui.json",
     flashShader="shaders/flash.vert";
 
     public void load() {
 
-        manager.load(skin, Skin.class);//syncronous loading, done on loader line assets.load();
+        manager.load(niteRideUI, Skin.class);//syncronous loading, done on loader line assets.load();
         manager.finishLoading();
+
+        manager.load(shadeUI, Skin.class);
 
         manager.load(burnerFire, ParticleEffect.class);//asyncronous loading, continued along using update(); in loader
         manager.load(thrusterFireLeft,ParticleEffect.class);

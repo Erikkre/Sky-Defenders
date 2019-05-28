@@ -47,7 +47,7 @@ public class GameHandler implements Screen {
     //private Actor menuButtonActor;
     public float screenWidth, screenHeight;
     public static int camWidth, camHeight;
-    public GameHandler(Skin skin, int camWidth, int camHeight) {
+    public GameHandler(Skin shadeSkin, int camWidth, int camHeight) {
         screenWidth=((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.screenWidth;screenHeight=((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.screenHeight;
         this.camWidth=camWidth;this.camHeight=camHeight;
         //System.out.println("width: "+camWidth);
@@ -80,7 +80,7 @@ public class GameHandler implements Screen {
         lightHandler.setCam(renderer);
 
 
-        uiHandler=new UiHandler(camWidth, camHeight, world, skin);
+        uiHandler=new UiHandler(camWidth, camHeight, world, shadeSkin);
         world.setRendererAndUIHandler(renderer, uiHandler);
         InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
         Gdx.input.setInputProcessor(uiHandler.stage);
@@ -155,7 +155,7 @@ public class GameHandler implements Screen {
     @Override
     public void dispose() {
         uiHandler.stage.dispose();
-        uiHandler.skin.dispose();
+        uiHandler.shadeSkin.dispose();
     }
 
 }
