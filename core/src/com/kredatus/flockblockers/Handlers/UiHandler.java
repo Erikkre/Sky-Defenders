@@ -83,7 +83,7 @@ public class UiHandler {
         ProgressBar loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin);
         loadBar.setColor(1,0,0,0.5f);
         loadBar.setAnimateDuration(0.7f);
-        loadBar.setPosition(0,camHeight/5f);
+        loadBar.setPosition((camHeight-camWidth/1.1f)/2,camHeight-20);
         loadBar.setWidth(camWidth/1.1f);
         loadBar.setValue(1.5f);//3.2% is the minimum value right now
         stage.addActor(loadBar);

@@ -75,13 +75,15 @@ public class AssetHandler {/*
         manager.load(birdHit,Sound.class);
         manager.load(balloonHit,Sound.class);
 
+
         manager.load(music0, Music.class);
 
         ShaderProgram.pedantic = false;
         manager.load(flashShader,ShaderProgram.class);
 
-
         manager.load(textures, TextureAtlas.class);
+
+
 
 
         //textureAtlas.findRegion()

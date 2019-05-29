@@ -100,11 +100,11 @@ public class Loader implements Screen {
         //shadeSkin.getTiledDrawable("loading-bar-fill").setRegion(region); //= new DrawableTegetRegion("loading-bar-fill").setRegionWidth(300);
         loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin);
         loadBar.setColor(1,0,0,0.5f);
-        loadBar.setAnimateDuration(0.1f);
+        loadBar.setAnimateDuration(0.5f);
         loadBar.setWidth(camWidth/1.1f);
         loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f);
 
-        loadBar.setValue(1.5f);//3.2% is the minimum value right now
+     //3.2% is the minimum value right now
         stage.addActor(loadBar);
         //loadTable.setFillParent(true);
 
@@ -170,7 +170,7 @@ public class Loader implements Screen {
     public void render(float delta) {
 
         load();
-        loadBar.setValue(manager.getProgress()+0.03f);
+        loadBar.setValue(manager.getProgress()+0.04f);
 
         stage.draw();
         stage.act(delta);
