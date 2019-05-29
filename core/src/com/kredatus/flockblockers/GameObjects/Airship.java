@@ -392,9 +392,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     // System.out.println("Thrust Left");
                 }
 
-                if (inputX + UiHandler.movPad.getKnobPercentX() * 5f > mvBnds("l") && inputX + UiHandler.movPad.getKnobPercentX() * 5 < mvBnds("r"))
+                if (isOnCam(inputX + UiHandler.movPad.getKnobPercentX() * 5f,"x")||isOnCam(inputX + UiHandler.movPad.getKnobPercentX() * 150f,"x"))
                     inputX += UiHandler.movPad.getKnobPercentX() * 4f * speed/50f;
-                if (inputY + UiHandler.movPad.getKnobPercentY() * 5f > mvBnds("d") && inputY + UiHandler.movPad.getKnobPercentY() * 5 < mvBnds("u"))
+                if (isOnCam(inputY + UiHandler.movPad.getKnobPercentY() * 5f,"y")||isOnCam(inputY + UiHandler.movPad.getKnobPercentY() * 150f,"y"))
                     inputY += UiHandler.movPad.getKnobPercentY() * 4f * speed/50f;
 
             } else {
@@ -411,6 +411,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
 
             if (eitherOnCam(inputX, inputY)) {
+                System.out.println(inputX+" "+inputY);
                 //System.out.println("either are on cam");
                 if (!isOnCam(inputY,"y")) {
                     //System.out.println("x is on cam");
@@ -433,7 +434,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
 
                 if (!UiHandler.movPad.isTouched()) {
-                    rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 25f).target(0).ease(TweenEquations.easeOutCirc).start();
+                    rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 10f).target(0).ease(TweenEquations.easeOutCirc).start();
                     dragLineOpacity.set(0.4f);
 
                     tweenTarget.set(inputX + fingerAirshipXDiff, inputY + fingerAirshipYDiff);
@@ -444,8 +445,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     }
 
                 } else {
-                    rotation.set(0);
-                    rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)).target(0).ease(TweenEquations.easeOutCirc).start();
+                    rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)/3).target(0).ease(TweenEquations.easeOutCirc).start();
+
                 }
                 //rotate to waypoint based on x distance, then back to itself
             }

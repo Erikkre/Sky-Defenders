@@ -86,11 +86,11 @@ public class UiHandler {
 
         loadBar.setWidth(camWidth/1.1f);
         loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight-25);
-        loadBar.setValue(1.5f);//3.2% is the minimum value right now
+        loadBar.setValue(.5f);//3.2% is the minimum value right now
         stage.addActor(loadBar);
 
         movPad = new Touchpad(0, shadeSkin);
-        movPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
+        movPad.setColor(1,1,1,0.5f);//touchpad.settouchpad.scaleBy(0.7f);
         shadeSkin.getDrawable("touchpad-knob").setMinWidth(50);shadeSkin.getDrawable("touchpad-knob").setMinHeight(50);
         //touchpad2.setColor(1,1,1,1f);
 
