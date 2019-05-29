@@ -7,7 +7,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -22,7 +21,6 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.kredatus.flockblockers.FlockBlockersMain;
@@ -68,7 +66,7 @@ public class Loader implements Screen {
     public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireRight=new ParticleEffect(); //thrusterFireUp=new ParticleEffect();
     public static Array<ParticleEffectPool.PooledEffect> additiveEffects = new Array<ParticleEffectPool.PooledEffect>(3), nonAdditiveEffects;
     public static Array<ParticleEmitter> emitters=new Array<ParticleEmitter>();
-
+    public ProgressBar loadBar;
 
    // private static TweenManager manager;
 
@@ -78,7 +76,6 @@ public class Loader implements Screen {
     private Skin niteSkin, shadeSkin;
     public AssetHandler assets=new AssetHandler();
     public AssetManager manager=assets.manager;
-    ProgressBar loadBar;
     public Stage stage;
     private int camWidth,camHeight;
     public int screenWidth, screenHeight;
@@ -90,26 +87,30 @@ public class Loader implements Screen {
         setupStage();
         assets.load();
 
-        niteSkin = manager.get(assets.niteRideUI);
+        //niteSkin = manager.get(assets.niteRideUI);
+        shadeSkin = manager.get(assets.shadeUI);
 
-
-        ProgressBar.ProgressBarStyle pbStyle = new ProgressBar.ProgressBarStyle();
         //for the background
         //pbStyle.background.setLeftWidth(11);
         //pbStyle.knobBefore.setRightWidth(11);
-        niteSkin.getDrawable("progress-bar-red-h").setMinHeight(200);niteSkin.getDrawable("progress-bar-bg").setMinHeight(200);
-        loadBar = new ProgressBar(0, 100, 0.01f, false, niteSkin);
+        //niteSkin.getDrawable("progress-bar-red-h").setMinHeight(10);niteSkin.getDrawable("progress-bar-bg").setMinHeight(10);
+        //shadeSkin.getDrawable("loading-bar-fill").setLeftWidth(20); shadeSkin.getDrawable("loading-bar-fill").setRightWidth(20);shadeSkin.getDrawable("loading-bar-fill").setMinWidth(500);
+        //shadeSkin.getDrawable("loading-bar-fill").setLeftWidth(20);
+        //TextureRegion region=shadeSkin.getRegion("loading-bar-fill");
+        //shadeSkin.getTiledDrawable("loading-bar-fill").setRegion(region); //= new DrawableTegetRegion("loading-bar-fill").setRegionWidth(300);
+        loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin);
+        loadBar.setColor(1,0,0,0.5f);
+        loadBar.setAnimateDuration(0.1f);
+        loadBar.setWidth(camWidth/1.1f);
+        loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f);
 
-        loadBar.setAnimateDuration(0.5f);
-        loadBar.setColor(Color.FIREBRICK);
+        loadBar.setValue(1.5f);//3.2% is the minimum value right now
+        stage.addActor(loadBar);
+        //loadTable.setFillParent(true);
 
+        //loadTable.add(loadBar).padTop(4*camHeight/5f);
 
-        Table loadTable = new Table();
-        loadTable.setFillParent(true);
-
-        loadTable.add(loadBar).padTop(4*camHeight/5).width(camWidth/1.7f).height(camWidth) ;
-
-        stage.addActor(loadTable);
+        stage.addActor(loadBar);
     }
 
     private void setupStage(){
@@ -169,9 +170,10 @@ public class Loader implements Screen {
     public void render(float delta) {
 
         load();
-        loadBar.setValue(100*manager.getProgress());
-        stage.act(delta);
+        loadBar.setValue(manager.getProgress()+0.03f);
+
         stage.draw();
+        stage.act(delta);
     }
 
     @Override

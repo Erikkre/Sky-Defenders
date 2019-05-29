@@ -60,10 +60,11 @@ public class AssetHandler {/*
 
     public void load() {
 
-        manager.load(niteRideUI, Skin.class);//syncronous loading, done on loader line assets.load();
+        //manager.load(niteRideUI, Skin.class);//syncronous loading, done on loader line assets.load();
+        manager.load(shadeUI, Skin.class);
         manager.finishLoading();
 
-        manager.load(shadeUI, Skin.class);
+
 
         manager.load(burnerFire, ParticleEffect.class);//asyncronous loading, continued along using update(); in loader
         manager.load(thrusterFireLeft,ParticleEffect.class);

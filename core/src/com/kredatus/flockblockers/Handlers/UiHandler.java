@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -75,8 +76,18 @@ public class UiHandler {
         rootTable.center().align(Align.bottom);
         stage.addActor(rootTable);
 
+
         //rootTable.add(new Label("Shade UI", shadeSkin, "title")).colspan(3);
         rootTable.row();
+        shadeSkin.getDrawable("loading-bar").setMinHeight(20);shadeSkin.getDrawable("loading-bar-fill").setMinHeight(20);
+        ProgressBar loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin);
+        loadBar.setColor(1,0,0,0.5f);
+        loadBar.setAnimateDuration(0.7f);
+        loadBar.setPosition(0,camHeight/5f);
+        loadBar.setWidth(camWidth/1.1f);
+        loadBar.setValue(1.5f);//3.2% is the minimum value right now
+        stage.addActor(loadBar);
+
         movPad = new Touchpad(0, shadeSkin);
         movPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         shadeSkin.getDrawable("touchpad-knob").setMinWidth(50);shadeSkin.getDrawable("touchpad-knob").setMinHeight(50);

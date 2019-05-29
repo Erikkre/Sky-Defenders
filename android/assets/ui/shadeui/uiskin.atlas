@@ -172,24 +172,24 @@ list-selection
   index: -1
 loading-bar
   rotate: false
-  xy: 376, 237
-  size: 202, 18
+  xy: 374, 237
+  size: 203, 18
   split: 0, 0, 0, 0
   pad: 5, 0, 0, 0
-  orig: 202, 18
+  orig: 203, 18
   offset: 0, 0
   index: -1
 loading-bar-fill
   rotate: false
   xy: 902, 199
-  size: 12, 18
-  split: 0, 11, 0, 0
-  orig: 12, 18
+  size: 23, 18
+  split: 11, 11, 0, 0
+  orig: 23, 18
   offset: 0, 0
   index: -1
 loading-bar-knob
   rotate: false
-  xy: 915, 199
+  xy: 926, 199
   size: 12, 18
   orig: 12, 18
   offset: 0, 0
@@ -241,7 +241,7 @@ panel2
   index: -1
 plus
   rotate: false
-  xy: 928, 203
+  xy: 939, 203
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
