@@ -40,12 +40,10 @@ import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.scaleTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
@@ -93,7 +91,7 @@ public class Loader implements Screen {
     public int screenWidth, screenHeight;
     public GameHandler gameHandler;
     public Loader(FlockBlockersMain game) {
-        Texture.setAssetManager(manager);
+        //Texture.setAssetManager(manager);
         this.game = game;
 
         setupStage();
@@ -120,7 +118,7 @@ public class Loader implements Screen {
         Runnable transitionRunnable = new Runnable() {
             @Override
             public void run() {
-                //app.setScreen(app.mainMenuScreen);
+                //if (manager.)
             }
         };
 
@@ -129,11 +127,11 @@ public class Loader implements Screen {
         splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
         //splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f - splashImg.getHeight() / 2);
 
+
         splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
                 parallel(fadeIn(2f, Interpolation.pow2),
                         scaleTo(2f, 2f, 2.5f, Interpolation.pow5),
-                        moveTo(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f - splashImg.getHeight() / 2, 2f, Interpolation.swing)),
-                delay(1.5f), fadeOut(1.25f), run(transitionRunnable)));
+                        moveTo(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f - splashImg.getHeight() / 2, 2f, Interpolation.swing)), fadeOut(1.25f)));
 
         stage.addActor(splashImg);
     }
@@ -196,8 +194,9 @@ public class Loader implements Screen {
         load();
         loadBar.setValue(manager.getProgress()+0.04f);
 
-        stage.draw();
+
         stage.act(delta);
+        stage.draw();
     }
 
     @Override

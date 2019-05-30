@@ -23,6 +23,7 @@ public class FlockBlockersMain extends Game {
     @Override
     public void resize(int width, int height) {//if after 5s since last screen created and done loading and width/height changed
         if (System.currentTimeMillis()-startTime>5000 && loader.gameHandler!=null && (width!=loader.screenWidth || height!=loader.screenHeight)) {
+            Gdx.app.log("CloudDefenders", "resized");
             super.resize(width, height);
             loader=new Loader(this);
             setScreen(loader);
@@ -35,7 +36,7 @@ public class FlockBlockersMain extends Game {
         Gdx.app.log("CloudDefenders", "created");
 
         loader=new Loader(this);
-        setScreen(loader);
+        this.setScreen(loader);
 
     }
 
