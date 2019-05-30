@@ -4,6 +4,7 @@ package com.kredatus.flockblockers.Handlers;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -51,7 +52,7 @@ public class AssetHandler {/*
 
     public  AssetManager manager= new AssetManager();
 
-    public   String textures="textures/texturePack.txt",
+    public   String textures="textures/texturePack.txt", logo="textures/logo.png",
     burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
     fire="sound/fire.wav", swoop="sound/swoop.wav",birdHit="sound/birdHit.mp3",balloonHit="sound/balloonHit.mp3",
     music0="music/music0.mp3",
@@ -62,6 +63,7 @@ public class AssetHandler {/*
 
         //manager.load(niteRideUI, Skin.class);//syncronous loading, done on loader line assets.load();
         manager.load(shadeUI, Skin.class);
+        manager.load(logo, Texture.class);
         manager.finishLoading();
 
 

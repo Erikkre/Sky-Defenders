@@ -18,7 +18,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
@@ -36,6 +38,16 @@ import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.scaleTo;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 
 public class Loader implements Screen {
@@ -86,33 +98,45 @@ public class Loader implements Screen {
 
         setupStage();
         assets.load();
+        setupLoadingBarAndLogo();
+    }
 
+    private void setupLoadingBarAndLogo(){
         //niteSkin = manager.get(assets.niteRideUI);
         shadeSkin = manager.get(assets.shadeUI);
-
-        //for the background
-        //pbStyle.background.setLeftWidth(11);
-        //pbStyle.knobBefore.setRightWidth(11);
-        //niteSkin.getDrawable("progress-bar-red-h").setMinHeight(10);niteSkin.getDrawable("progress-bar-bg").setMinHeight(10);
-        //shadeSkin.getDrawable("loading-bar-fill").setLeftWidth(20); shadeSkin.getDrawable("loading-bar-fill").setRightWidth(20);shadeSkin.getDrawable("loading-bar-fill").setMinWidth(500);
-        //shadeSkin.getDrawable("loading-bar-fill").setLeftWidth(20);
-        //TextureRegion region=shadeSkin.getRegion("loading-bar-fill");
-        //shadeSkin.getTiledDrawable("loading-bar-fill").setRegion(region); //= new DrawableTegetRegion("loading-bar-fill").setRegionWidth(300);
         loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin);
         loadBar.setColor(1,0,0,0.5f);
         loadBar.setAnimateDuration(0.5f);
         loadBar.setWidth(camWidth/1.1f);
         loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f);
 
-     //3.2% is the minimum value right now
+        //3.2% is the minimum value right now
         stage.addActor(loadBar);
         //loadTable.setFillParent(true);
-
         //loadTable.add(loadBar).padTop(4*camHeight/5f);
 
-        stage.addActor(loadBar);
-    }
 
+
+        Runnable transitionRunnable = new Runnable() {
+            @Override
+            public void run() {
+                //app.setScreen(app.mainMenuScreen);
+            }
+        };
+
+        Texture splashTex = manager.get(assets.logo);
+        Image splashImg = new Image(splashTex);
+        splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
+        //splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f - splashImg.getHeight() / 2);
+
+        splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
+                parallel(fadeIn(2f, Interpolation.pow2),
+                        scaleTo(2f, 2f, 2.5f, Interpolation.pow5),
+                        moveTo(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f - splashImg.getHeight() / 2, 2f, Interpolation.swing)),
+                delay(1.5f), fadeOut(1.25f), run(transitionRunnable)));
+
+        stage.addActor(splashImg);
+    }
     private void setupStage(){
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
