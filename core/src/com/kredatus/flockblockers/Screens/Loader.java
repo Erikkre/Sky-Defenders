@@ -130,10 +130,13 @@ public class Loader implements Screen {
         //niteSkin = manager.get(assets.niteRideUI);
         shadeSkin = manager.get(assets.shadeUI);
         loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin);
+        shadeSkin.getDrawable("loading-bar-fill").setMinHeight(loadBar.getPrefHeight()*1.2f);
+        shadeSkin.getDrawable("loading-bar").setMinHeight(loadBar.getPrefHeight()*1.2f);
         //`loadBar.setColor(1,0,0,1f);
         loadBar.setAnimateDuration(0.5f);
         loadBar.setWidth(camWidth/1.5f);
         loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f);
+
 
         //3.2% is the minimum value right now
         stage.addActor(loadBar);
@@ -173,9 +176,9 @@ public class Loader implements Screen {
         splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
         splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()*2.2f);
 
-        splashImg.addAction(sequence(alpha(0),delay(1.5f),
+        splashImg.addAction(sequence(alpha(0),delay(1f),
                 parallel(fadeIn(2.5f, Interpolation.pow2Out),
-                delay(2.5f), run(transitionRunnable))));
+                delay(3f), run(transitionRunnable))));
 
         /*splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
                 parallel(fadeIn(3f, Interpolation.pow2),
