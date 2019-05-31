@@ -52,9 +52,11 @@ public class AssetHandler {/*
 
     public static AssetManager manager= new AssetManager();
 
-    public   String textures="textures/texturePack.txt", logo="textures/logo.png",
+    public static   String textures="textures/texturePack.txt", logo="textures/logo.png",
     logoFire= "effects/logoFire.p", logoFire2= "effects/logoFire2.p", burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
-    fire="sound/fire.wav", swoop="sound/swoop.wav",birdHit="sound/birdHit.mp3",balloonHit="sound/balloonHit.mp3",
+    ignitionFire0Deignition7s="sound/ignitionFire0Deignition7s.wav",ignition="sound/ignition.wav", fire0="sound/fire0.wav", fire1="sound/fire1.wav",
+    swoop="sound/swoop.wav",
+    birdHit="sound/birdHit.mp3",balloonHit="sound/balloonHit.mp3",
     music0="music/music0.mp3",
     shadeUI="ui/shadeUI/uiskin.json", niteRideUI="ui/niteRideUI/nite-ride-ui.json",
     flashShader="shaders/flash.vert";
@@ -66,26 +68,25 @@ public class AssetHandler {/*
         manager.load(logo, Texture.class);
 
         manager.load(logoFire, ParticleEffect.class);
+        manager.load(ignitionFire0Deignition7s, Sound.class);
         manager.finishLoading();
 
         manager.load(burnerFire, ParticleEffect.class);
-        manager.load(thrusterFireLeft,ParticleEffect.class);//asyncronous loading, continued along using update(); in loader
-        manager.load(thrusterFireRight,ParticleEffect.class);
+        manager.load(thrusterFireLeft, ParticleEffect.class);//asyncronous loading, continued along using update(); in loader
+        manager.load(thrusterFireRight, ParticleEffect.class);
 
-        manager.load(fire, Sound.class);
-        manager.load(swoop,Sound.class);
-        manager.load(birdHit,Sound.class);
-        manager.load(balloonHit,Sound.class);
+        manager.load(textures, TextureAtlas.class);
+
+        manager.load(fire0, Sound.class);
+        manager.load(swoop, Sound.class);
+        manager.load(birdHit, Sound.class);
+        manager.load(balloonHit, Sound.class);
 
 
         manager.load(music0, Music.class);
 
         ShaderProgram.pedantic = false;
-        manager.load(flashShader,ShaderProgram.class);
-
-        manager.load(textures, TextureAtlas.class);
-
-
+        manager.load(flashShader, ShaderProgram.class);
 
 
         //textureAtlas.findRegion()
@@ -94,63 +95,6 @@ public class AssetHandler {/*
         //remember to switch the Batch back to GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
         //before drawing "regular" sprites or your Stage.
 
-
         // Create (or retrieve existing) preferences file
-
-
-
-
     }
-
-
-/*
-    public static Animation[] birdTextureToSprite (Texture texture) {
-        ArrayList<TextureRegion> poss = new ArrayList<TextureRegion>();
-
-        TextureRegion[] front = new TextureRegion[0];
-        TextureRegion[] side = new TextureRegion[0];
-        TextureRegion[] back = new TextureRegion[0];
-
-        for (int i = 0; i < 16; i++) {
-            TextureRegion temp = manager.get()texture, 481 * i, 0, 481, 423);
-            poss.add(temp);
-            if (i == 5) {
-                front = poss.toArray(new TextureRegion[6]);
-                poss.clear();
-            } else if (i == 11) {
-                side = poss.toArray(new TextureRegion[6]);
-                poss.clear();
-                if (texture != phoenixBird) {
-                    break;
-                }
-            } else if (i == 15) {
-                back = poss.toArray(new TextureRegion[4]);
-                poss.clear();
-            }
-        }
-
-        frontFlaps = new Animation<TextureRegion>(0.15f, front);
-        frontFlaps.setPlayMode(Animation.PlayMode.LOOP);
-
-        rightSideFlaps = new Animation<TextureRegion>(0.12f, side);
-        rightSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
-        for (TextureRegion i : side) {
-            i.flip(true, false);
-        }
-        leftSideFlaps = new Animation<TextureRegion>(0.12f, side);
-        leftSideFlaps.setPlayMode(Animation.PlayMode.LOOP);
-
-        Animation[] animationList;
-        if (texture==phoenixBird){
-            backFlaps = new Animation<TextureRegion>(0.12f, back);
-            backFlaps.setPlayMode(Animation.PlayMode.LOOP);
-            animationList= new Animation[]{frontFlaps, rightSideFlaps, leftSideFlaps, backFlaps};
-        } else {
-            animationList = new Animation[]{frontFlaps, rightSideFlaps, leftSideFlaps};
-        }
-        return animationList;
-
-    }*/
-
-
 }

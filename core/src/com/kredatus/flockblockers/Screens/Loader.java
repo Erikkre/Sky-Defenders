@@ -30,14 +30,19 @@ import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
 import com.kredatus.flockblockers.Helpers.CustomParticleEffectActor;
+import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenEquations;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
@@ -90,38 +95,61 @@ public class Loader implements Screen {
     CustomParticleEffectActor logoFire;
 
     int middleFirstLast=0, hueValue=66, hueAdder=4;
+
+    Value loadBarAlpha= new Value(1);
+    Tween glowingLoadingBarTween=Tween.to(loadBarAlpha,0,0.5f).target(0).repeatYoyo(1,0).ease(TweenEquations.easeInCubic).start();
+
     public Loader(FlockBlockersMain game) {
         Texture.setAssetManager(manager);
+
+        assets.load();
+        ((Sound) manager.get(assets.ignitionFire0Deignition7s)).play(0.8f);
+
         this.game = game;
 
         setupStage();
-        assets.load();
         setupLoadingBarAndLogo();
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        stage.act(delta);
-        stage.draw();
-        load();
-        loadBar.setValue(manager.getProgress()+0.01f);
+        if (System.currentTimeMillis()-game.startTime>550) {
+            load();
+            System.out.println(loadBar.getPercent()+" "+(manager.getProgress() + 0.02f));
+            glowingLoadingBarTween.update(delta);
+            if (manager.getProgress()!=1.0 && loadBar.getVisualPercent() < manager.getProgress()+0.02f && glowingLoadingBarTween.isFinished()){
+                glowingLoadingBarTween=Tween.to(loadBarAlpha,0,0.5f).target(0).repeatYoyo(1,0).ease(TweenEquations.easeInCubic).start();
+            }
 
-        System.out.println(logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0] );
-        if (middleFirstLast==0) {
-            logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0] , (hueValue+=hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2] });
-        } else if (middleFirstLast==1) {
-            logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{ (hueValue+=hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[1] , logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2] });
-        } else if (middleFirstLast==2){
-            logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0] ,  logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[1] ,  (hueValue+=hueAdder) / 255f});
-        }
-        if (hueValue>194||hueValue<16){
-            if (middleFirstLast<2) {middleFirstLast++;}
-            else {middleFirstLast=0;}
+            loadBar.setColor(1,1,1,loadBarAlpha.get());
+            //shadeSkin.getTiledDrawable("loading-bar-fill").tint(new Color(1,1,1,loadBarAlpha.get()));
 
-            if (hueAdder==4) hueAdder=-4;
-            else hueAdder=4;
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+            stage.act(delta);
+            stage.draw();
+
+
+            loadBar.setValue(manager.getProgress() + 0.032f);
+
+            //System.out.println(logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0]);
+            if (middleFirstLast == 0) {
+                logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0], (hueValue += hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2]});
+            } else if (middleFirstLast == 1) {
+                logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{(hueValue += hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[1], logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2]});
+            } else if (middleFirstLast == 2) {
+                logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0], logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[1], (hueValue += hueAdder) / 255f});
+            }
+            if (hueValue > 194 || hueValue < 16) {
+                if (middleFirstLast < 2) {
+                    middleFirstLast++;
+                } else {
+                    middleFirstLast = 0;
+                }
+
+                if (hueAdder == 4) hueAdder = -4;
+                else hueAdder = 4;
+            }
         }
     }
 
@@ -129,11 +157,11 @@ public class Loader implements Screen {
         /********************************************************LOADBAR*/
         //niteSkin = manager.get(assets.niteRideUI);
         shadeSkin = manager.get(assets.shadeUI);
-        loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin);
-        shadeSkin.getDrawable("loading-bar-fill").setMinHeight(loadBar.getPrefHeight()*1.2f);
-        shadeSkin.getDrawable("loading-bar").setMinHeight(loadBar.getPrefHeight()*1.2f);
+        loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("gradient-white-rim", ProgressBar.ProgressBarStyle.class));
+        shadeSkin.getDrawable("loading-bar-fill").setMinHeight(loadBar.getPrefHeight()*1.1f);
+        shadeSkin.getDrawable("loading-bar-gradient-white-rim").setMinHeight(loadBar.getPrefHeight()*1.2f);
         //`loadBar.setColor(1,0,0,1f);
-        loadBar.setAnimateDuration(0.5f);
+        loadBar.setAnimateDuration(0.6f);
         loadBar.setWidth(camWidth/1.5f);
         loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f);
 
@@ -153,7 +181,7 @@ public class Loader implements Screen {
         logoFire.particleEffect.getEmitters().get(0).getVelocity().setHigh(200);
         logoFire.particleEffect.getEmitters().get(0).getLife().setHigh(900);
         logoFire.particleEffect.getEmitters().get(0).getDuration().setLow(10,90);*/
-        logoFire.particleEffect.scaleEffect(1.1f);
+        logoFire.particleEffect.scaleEffect(1.2f);
 
 //- logoFire.particleEffect.getEmitters().get(0).getSpawnWidth().getHighMax()/2f``
         logoFire.setPosition(camWidth / 2f , camHeight / 2f );
@@ -163,7 +191,7 @@ public class Loader implements Screen {
         stage.addActor(logoFire);
 
         /********************************************************LOGO*/
-        Runnable transitionRunnable = new Runnable() {
+        Runnable endLoad = new Runnable() {
             @Override
             public void run() {
                 if (manager.getProgress()==1.0) {
@@ -171,14 +199,19 @@ public class Loader implements Screen {
                 }
             }
         };
-
+        Runnable endFire = new Runnable() {
+            @Override
+            public void run() {
+                logoFire.particleEffect.allowCompletion();
+            }
+        };
 
         splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
-        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()*2.2f);
+        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()*2.4f);
 
-        splashImg.addAction(sequence(alpha(0),delay(1f),
-                parallel(fadeIn(2.5f, Interpolation.pow2Out),
-                delay(3f), run(transitionRunnable))));
+        splashImg.addAction(sequence(alpha(0),delay(0.7f),
+                fadeIn(2.5f, Interpolation.pow2Out), delay(1),
+                parallel(sequence(delay(1.2f),run(endFire)),fadeOut(2.5f)), run(endLoad)));
 
         /*splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
                 parallel(fadeIn(3f, Interpolation.pow2),
@@ -207,6 +240,7 @@ public class Loader implements Screen {
     }
 
     private void postLoad(){
+        shadeSkin.getSprite("loading-bar-fill").setAlpha(1);
         stage.clear();
         gameHandler=new GameHandler(shadeSkin,camWidth,camHeight);
         game.setScreen(gameHandler);

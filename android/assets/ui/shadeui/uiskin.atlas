@@ -173,10 +173,19 @@ list-selection
 loading-bar
   rotate: false
   xy: 374, 237
-  size: 203, 18
+  size: 203, 20
   split: 0, 0, 0, 0
   pad: 5, 0, 0, 0
-  orig: 203, 18
+  orig: 203, 20
+  offset: 0, 0
+  index: -1
+loading-bar-gradient-white-rim
+  rotate: false
+  xy: 253, 1
+  size: 203, 20
+  split: 0, 0, 0, 0
+  pad: 5, 0, 0, 0
+  orig: 203, 20
   offset: 0, 0
   index: -1
 loading-bar-fill

@@ -3,9 +3,7 @@ package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Turret;
@@ -16,14 +14,6 @@ import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
-import com.kredatus.flockblockers.TweenAccessors.BirdAccessor;
-import com.kredatus.flockblockers.TweenAccessors.LightAccessor;
-import com.kredatus.flockblockers.TweenAccessors.Value;
-import com.kredatus.flockblockers.TweenAccessors.ValueAccessor;
-import com.kredatus.flockblockers.TweenAccessors.VectorAccessor;
-
-import aurelienribon.tweenengine.Tween;
-import box2dLight.Light;
 
 /**
  * Created by Mr. Kredatus on 8/5/2017.
@@ -51,12 +41,6 @@ public class GameHandler implements Screen {
         screenWidth=((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.screenWidth;screenHeight=((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.screenHeight;
         this.camWidth=camWidth;this.camHeight=camHeight;
         //System.out.println("width: "+camWidth);
-
-        Tween.registerAccessor(Value.class, new ValueAccessor());
-        Tween.registerAccessor(BirdAbstractClass.class, new BirdAccessor());
-        Tween.registerAccessor(Vector2.class, new VectorAccessor());
-        Tween.registerAccessor(Light.class, new LightAccessor());
-        Tween.setWaypointsLimit(10);
 
         tinyBirdHandler = new TinyBirdHandler();
 

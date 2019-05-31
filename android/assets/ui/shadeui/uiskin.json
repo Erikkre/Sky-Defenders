@@ -21,6 +21,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: { background: loading-bar, knobBefore: loading-bar-fill }
+    gradient-white-rim: { background: loading-bar-gradient-white-rim, knobBefore: loading-bar-fill }
 	default-vertical: { background: loading-bar, knob: loading-bar-knob, knobBefore: loading-bar-fill }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
