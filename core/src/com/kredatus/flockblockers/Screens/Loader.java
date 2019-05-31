@@ -89,6 +89,9 @@ public class Loader implements Screen {
     public int screenWidth, screenHeight;
     public GameHandler gameHandler;
     Image splashImg;
+    CustomParticleEffectActor logoFire;
+
+    int middleFirstLast=0, hueValue=66, hueAdder=4;
     public Loader(FlockBlockersMain game) {
         Texture.setAssetManager(manager);
         this.game = game;
@@ -102,11 +105,26 @@ public class Loader implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        load();
-        loadBar.setValue(manager.getProgress()+0.01f);
         stage.act(delta);
         stage.draw();
+        load();
+        loadBar.setValue(manager.getProgress()+0.01f);
 
+        System.out.println(logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0] );
+        if (middleFirstLast==0) {
+            logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0] , (hueValue+=hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2] });
+        } else if (middleFirstLast==1) {
+            logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{ (hueValue+=hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[1] , logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2] });
+        } else if (middleFirstLast==2){
+            logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0] ,  logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[1] ,  (hueValue+=hueAdder) / 255f});
+        }
+        if (hueValue>194||hueValue<16){
+            if (middleFirstLast<2) {middleFirstLast++;}
+            else {middleFirstLast=0;}
+
+            if (hueAdder==4) hueAdder=-4;
+            else hueAdder=4;
+        }
     }
 
     private void setupLoadingBarAndLogo(){
@@ -114,10 +132,10 @@ public class Loader implements Screen {
         //niteSkin = manager.get(assets.niteRideUI);
         shadeSkin = manager.get(assets.shadeUI);
         loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin);
-        loadBar.setColor(1,0,0,1f);
+        //`loadBar.setColor(1,0,0,1f);
         loadBar.setAnimateDuration(0.5f);
-        loadBar.setWidth(camWidth/1.1f);
-        loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/7f);
+        loadBar.setWidth(camWidth/1.5f);
+        loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f);
 
         //3.2% is the minimum value right now
         stage.addActor(loadBar);
@@ -128,15 +146,18 @@ public class Loader implements Screen {
         Texture splashTex = manager.get(assets.logo);
         splashImg = new Image(splashTex);
         /********************************************************PARTICLE EFFECT ACTOR BURNERFIRE*/
-        CustomParticleEffectActor logoFire = new CustomParticleEffectActor((ParticleEffect) manager.get(assets.logoFire2));
+        logoFire = new CustomParticleEffectActor((ParticleEffect) manager.get(assets.logoFire));
         /*logoFire.particleEffect.getEmitters().get(0).getSpawnWidth().setHigh(splashImg.getWidth());
         logoFire.particleEffect.getEmitters().get(0).getEmission().setHigh(2000);
         logoFire.particleEffect.getEmitters().get(0).getVelocity().setHigh(200);
         logoFire.particleEffect.getEmitters().get(0).getLife().setHigh(900);
         logoFire.particleEffect.getEmitters().get(0).getDuration().setLow(10,90);*/
-        //logoFire.particleEffect.scaleEffect(1.2f);
+        logoFire.particleEffect.scaleEffect(1.1f);
 
-        logoFire.setPosition(camWidth / 2f - logoFire.particleEffect.getEmitters().get(0).getSpawnWidth().getHighMax()/2, camHeight / 2f );
+//- logoFire.particleEffect.getEmitters().get(0).getSpawnWidth().getHighMax()/2f``
+        logoFire.setPosition(camWidth / 2f , camHeight / 2f );
+
+        logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{194/255f,16/255f,16/255f});
 
         stage.addActor(logoFire);
 
@@ -152,13 +173,13 @@ public class Loader implements Screen {
 
 
         splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
-        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f + splashImg.getHeight()/1.5f);
+        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()/1.5f);
 
         splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
                 parallel(fadeIn(3f, Interpolation.pow2),
                         scaleTo(1f, 1f, 2f, Interpolation.pow5),
-                        moveTo(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f + splashImg.getHeight()*1.2f, 1.5f, Interpolation.swing)),
-                delay(2f), run(transitionRunnable)));
+                        moveTo(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f + splashImg.getHeight()*2.3f, 1.5f, Interpolation.swing)),
+                delay(2.5f), run(transitionRunnable)));
 
         stage.addActor(splashImg);
     }
@@ -173,7 +194,7 @@ public class Loader implements Screen {
     private void load(){
 
         if (!manager.update()){
-            System.out.println(manager.getProgress());
+            //System.out.println(manager.getProgress());
         } else {
             loaded();
             if (splashImg.getActions().size<=0) postLoad();

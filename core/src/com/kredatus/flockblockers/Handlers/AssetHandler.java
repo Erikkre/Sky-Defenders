@@ -65,7 +65,7 @@ public class AssetHandler {/*
         manager.load(shadeUI, Skin.class);
         manager.load(logo, Texture.class);
 
-        manager.load(logoFire2, ParticleEffect.class);
+        manager.load(logoFire, ParticleEffect.class);
         manager.finishLoading();
 
         manager.load(burnerFire, ParticleEffect.class);
