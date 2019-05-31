@@ -38,10 +38,8 @@ import java.util.Random;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.scaleTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 
@@ -173,13 +171,17 @@ public class Loader implements Screen {
 
 
         splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
-        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()/1.5f);
+        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()*2.2f);
 
-        splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
+        splashImg.addAction(sequence(alpha(0),delay(1.5f),
+                parallel(fadeIn(2.5f, Interpolation.pow2Out),
+                delay(2.5f), run(transitionRunnable))));
+
+        /*splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
                 parallel(fadeIn(3f, Interpolation.pow2),
                         scaleTo(1f, 1f, 2f, Interpolation.pow5),
                         moveTo(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f + splashImg.getHeight()*2.3f, 1.5f, Interpolation.swing)),
-                delay(2.5f), run(transitionRunnable)));
+                delay(2.5f), run(transitionRunnable)));*/
 
         stage.addActor(splashImg);
     }
