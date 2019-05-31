@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -28,22 +29,18 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
-import com.kredatus.flockblockers.TweenAccessors.SpriteAccessor;
+import com.kredatus.flockblockers.Helpers.CustomParticleEffectActor;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import aurelienribon.tweenengine.BaseTween;
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.TweenEquations;
-
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.scaleTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
@@ -71,11 +68,12 @@ public class Loader implements Screen {
 
     public static Preferences prefs;
 
-    public static ShaderProgram flashShader;
+    public  ShaderProgram flashShader;
 
     public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireRight=new ParticleEffect(); //thrusterFireUp=new ParticleEffect();
     public static Array<ParticleEffectPool.PooledEffect> additiveEffects = new Array<ParticleEffectPool.PooledEffect>(3), nonAdditiveEffects;
     public static Array<ParticleEmitter> emitters=new Array<ParticleEmitter>();
+
     public ProgressBar loadBar;
 
    // private static TweenManager manager;
@@ -90,8 +88,9 @@ public class Loader implements Screen {
     private int camWidth,camHeight;
     public int screenWidth, screenHeight;
     public GameHandler gameHandler;
+    Image splashImg;
     public Loader(FlockBlockersMain game) {
-        //Texture.setAssetManager(manager);
+        Texture.setAssetManager(manager);
         this.game = game;
 
         setupStage();
@@ -99,14 +98,26 @@ public class Loader implements Screen {
         setupLoadingBarAndLogo();
     }
 
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        load();
+        loadBar.setValue(manager.getProgress()+0.01f);
+        stage.act(delta);
+        stage.draw();
+
+    }
+
     private void setupLoadingBarAndLogo(){
+        /********************************************************LOADBAR*/
         //niteSkin = manager.get(assets.niteRideUI);
         shadeSkin = manager.get(assets.shadeUI);
         loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin);
-        loadBar.setColor(1,0,0,0.5f);
+        loadBar.setColor(1,0,0,1f);
         loadBar.setAnimateDuration(0.5f);
         loadBar.setWidth(camWidth/1.1f);
-        loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f);
+        loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/7f);
 
         //3.2% is the minimum value right now
         stage.addActor(loadBar);
@@ -114,27 +125,44 @@ public class Loader implements Screen {
         //loadTable.add(loadBar).padTop(4*camHeight/5f);
 
 
+        Texture splashTex = manager.get(assets.logo);
+        splashImg = new Image(splashTex);
+        /********************************************************PARTICLE EFFECT ACTOR BURNERFIRE*/
+        CustomParticleEffectActor logoFire = new CustomParticleEffectActor((ParticleEffect) manager.get(assets.logoFire2));
+        /*logoFire.particleEffect.getEmitters().get(0).getSpawnWidth().setHigh(splashImg.getWidth());
+        logoFire.particleEffect.getEmitters().get(0).getEmission().setHigh(2000);
+        logoFire.particleEffect.getEmitters().get(0).getVelocity().setHigh(200);
+        logoFire.particleEffect.getEmitters().get(0).getLife().setHigh(900);
+        logoFire.particleEffect.getEmitters().get(0).getDuration().setLow(10,90);*/
+        //logoFire.particleEffect.scaleEffect(1.2f);
 
+        logoFire.setPosition(camWidth / 2f - logoFire.particleEffect.getEmitters().get(0).getSpawnWidth().getHighMax()/2, camHeight / 2f );
+
+        stage.addActor(logoFire);
+
+        /********************************************************LOGO*/
         Runnable transitionRunnable = new Runnable() {
             @Override
             public void run() {
-                //if (manager.)
+                if (manager.getProgress()==1.0) {
+                    postLoad();
+                }
             }
         };
 
-        Texture splashTex = manager.get(assets.logo);
-        Image splashImg = new Image(splashTex);
-        splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
-        //splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f - splashImg.getHeight() / 2);
 
+        splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
+        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f + splashImg.getHeight()/1.5f);
 
         splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
-                parallel(fadeIn(2f, Interpolation.pow2),
-                        scaleTo(2f, 2f, 2.5f, Interpolation.pow5),
-                        moveTo(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f - splashImg.getHeight() / 2, 2f, Interpolation.swing)), fadeOut(1.25f)));
+                parallel(fadeIn(3f, Interpolation.pow2),
+                        scaleTo(1f, 1f, 2f, Interpolation.pow5),
+                        moveTo(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f + splashImg.getHeight()*1.2f, 1.5f, Interpolation.swing)),
+                delay(2f), run(transitionRunnable)));
 
         stage.addActor(splashImg);
     }
+
     private void setupStage(){
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
@@ -148,81 +176,31 @@ public class Loader implements Screen {
             System.out.println(manager.getProgress());
         } else {
             loaded();
-            stage.clear();
-            gameHandler=new GameHandler(shadeSkin,camWidth,camHeight);
-            game.setScreen(gameHandler);
+            if (splashImg.getActions().size<=0) postLoad();
         }
     }
 
     private void postLoad(){
-
+        stage.clear();
+        gameHandler=new GameHandler(shadeSkin,camWidth,camHeight);
+        game.setScreen(gameHandler);
     }
 
     @Override
     public void show() {
-
-
-
     }
-
-    private void setupTween() {
-
-
-        TweenCallback cb = new TweenCallback() {
-            @Override
-            public void onEvent(int type, BaseTween<?> source) {
-
-                System.out.println("new gamehandler");
-            }
-        };
-//1.8 originally
-        Tween.to(sprite, SpriteAccessor.ALPHA, 1f).target(1)
-                .ease(TweenEquations.easeInOutQuad).setCallback(cb).setCallbackTriggers(TweenCallback.COMPLETE).repeatYoyo(1, .0f)
-                .start();
-
-        //Tween.to(sprite, SpriteAccessor.ALPHA, 2f).target(30)
-        //.ease(TweenEquations.easeInOutQuad).repeatYoyo(1, .4f)
-        //.start(manager);
-
-    }
-
-    
-
-    @Override
-    public void render(float delta) {
-
-        load();
-        loadBar.setValue(manager.getProgress()+0.04f);
-
-
-        stage.act(delta);
-        stage.draw();
-    }
-
     @Override
     public void resize(int width, int height) {
-
     }
-
     @Override
     public void hide() {
-        // TODO Auto-generated method stub
-
     }
-
     @Override
     public void pause() {
-        // TODO Auto-generated method stub
-
     }
-
     @Override
     public void resume() {
-        // TODO Auto-generated method stub
-
     }
-
-
 
     public void loaded(){
         shadeSkin = manager.get(assets.shadeUI);

@@ -30,7 +30,7 @@ import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
-import com.kredatus.flockblockers.Helpers.ShapeRendererCustom;
+import com.kredatus.flockblockers.Helpers.CustomShapeRenderer;
 import com.kredatus.flockblockers.Screens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.ui.SimpleButton;
@@ -61,7 +61,7 @@ public class GameRenderer {
     private GameWorld myWorld;
     public OrthographicCamera cam;
     public static ExtendViewport viewport;
-    private ShapeRenderer shapeRenderer; private ShapeRendererCustom shapeRendererCust;
+    private ShapeRenderer shapeRenderer; private CustomShapeRenderer shapeRendererCust;
     boolean turnback=true;
     public static SpriteBatch batcher;
     private Airship airship;
@@ -128,10 +128,7 @@ public class GameRenderer {
         //System.out.println("batcher color: "+batcher.getColor()+", white: "+new Color(1,1,1,1));
 
         cam=(OrthographicCamera)((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.stage.getCamera();
-        cam.setToOrtho(false, camWidth, camHeight);
-        cam.position.set(new Vector3(camWidth/2f,camHeight/2f,0));
-        cam.update();
-        batcher.setProjectionMatrix(cam.combined);
+
         System.out.println("Height: "+camHeight);
         //cam.position.set(new Vector3(0,0,0));
         //cam.position.x=9*camWidth/10;  //seems random but is 1/2(glider position in camWidth) + 2/5
@@ -140,7 +137,7 @@ public class GameRenderer {
         //viewport.apply();
 
 
-        shapeRendererCust= new ShapeRendererCustom();
+        shapeRendererCust= new CustomShapeRenderer();
         shapeRendererCust.setProjectionMatrix(cam.combined);
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(cam.combined);

@@ -50,13 +50,13 @@ public class AssetHandler {/*
 */
 
 
-    public  AssetManager manager= new AssetManager();
+    public static AssetManager manager= new AssetManager();
 
     public   String textures="textures/texturePack.txt", logo="textures/logo.png",
-    burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
+    logoFire= "effects/logoFire.p", logoFire2= "effects/logoFire2.p", burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
     fire="sound/fire.wav", swoop="sound/swoop.wav",birdHit="sound/birdHit.mp3",balloonHit="sound/balloonHit.mp3",
     music0="music/music0.mp3",
-    shadeUI="ui/shadeui/uiskin.json", niteRideUI="ui/niteRideUI/nite-ride-ui.json",
+    shadeUI="ui/shadeUI/uiskin.json", niteRideUI="ui/niteRideUI/nite-ride-ui.json",
     flashShader="shaders/flash.vert";
 
     public void load() {
@@ -64,12 +64,12 @@ public class AssetHandler {/*
         //manager.load(niteRideUI, Skin.class);//syncronous loading, done on loader line assets.load();
         manager.load(shadeUI, Skin.class);
         manager.load(logo, Texture.class);
+
+        manager.load(logoFire2, ParticleEffect.class);
         manager.finishLoading();
 
-
-
-        manager.load(burnerFire, ParticleEffect.class);//asyncronous loading, continued along using update(); in loader
-        manager.load(thrusterFireLeft,ParticleEffect.class);
+        manager.load(burnerFire, ParticleEffect.class);
+        manager.load(thrusterFireLeft,ParticleEffect.class);//asyncronous loading, continued along using update(); in loader
         manager.load(thrusterFireRight,ParticleEffect.class);
 
         manager.load(fire, Sound.class);

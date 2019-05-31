@@ -1,10 +1,11 @@
+// Copyright (c) 2019 Erik Kredatus. All rights reserved.
 package com.kredatus.flockblockers.Helpers;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.EarClippingTriangulator;
 import com.badlogic.gdx.utils.ShortArray;
 
-public class ShapeRendererCustom extends ShapeRenderer {
+public class CustomShapeRenderer extends ShapeRenderer {
     EarClippingTriangulator ear = new EarClippingTriangulator();
 
     public void polygon(float[] vertices, int offset, int count)

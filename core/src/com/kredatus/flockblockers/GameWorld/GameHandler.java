@@ -83,7 +83,7 @@ public class GameHandler implements Screen {
         uiHandler=new UiHandler(camWidth, camHeight, world, shadeSkin);
         world.setRendererAndUIHandler(renderer, uiHandler);
         InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
-        Gdx.input.setInputProcessor(uiHandler.stage);
+
         renderer.assignButtonsUsingInputHandlerAndUiHandler(inputHandler, uiHandler);
     }
 
