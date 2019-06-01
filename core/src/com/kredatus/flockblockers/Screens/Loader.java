@@ -119,7 +119,7 @@ public class Loader implements Screen {
             glowingLoadingBarTween.update(delta);
             if (manager.getProgress() != 1.0 && loadBar.getVisualPercent() < manager.getProgress() + 0.02f && glowingLoadingBarTween.isFinished()) {
                 glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 0.5f).target(0).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start();
-            }
+            } else if (manager.getProgress() == 1.0 && glowingLoadingBarTween.isFinished()) glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 1.5f).target(0).delay(2).ease(TweenEquations.easeInCubic).start();
 
             loadBar.setColor(1, 1, 1, loadBarAlpha.get());
             //shadeSkin.getTiledDrawable("loading-bar-fill").tint(new Color(1,1,1,loadBarAlpha.get()));
@@ -190,11 +190,11 @@ public class Loader implements Screen {
         };
 
         splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
-        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()*2.8f);
+        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()*2.7f);
 
         splashImg.addAction(sequence(alpha(0),delay(0.7f),
                 fadeIn(2.5f, Interpolation.pow2Out), delay(1),
-                parallel(sequence(delay(1.2f),run(endFire)),fadeOut(2.5f,Interpolation.pow2Out)), run(endLoad)));
+                parallel(sequence(delay(1.2f),run(endFire)),fadeOut(2.5f,Interpolation.exp10)), run(endLoad)));
 
         /*splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
                 parallel(fadeIn(3f, Interpolation.pow2),
@@ -218,7 +218,7 @@ public class Loader implements Screen {
             //System.out.println(manager.getProgress());
         } else {
             loaded();
-            if (splashImg.getActions().size<=0) postLoad();
+            postLoad();
         }
     }
 
