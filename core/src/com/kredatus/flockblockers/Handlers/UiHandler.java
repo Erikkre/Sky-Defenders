@@ -62,6 +62,7 @@ public class UiHandler {
         //table.add(nameText).width(100);    // Row 0, column 1.
 
         stage=(((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.stage);
+        Gdx.input.setInputProcessor(stage);
         stage.addCaptureListener(new ClickListener(){//tocuh up anywhere on screen means not touching ui
             public void touchUp(InputEvent event, float x, float y, int pnt, int btn) {
                 super.touchUp(event, x, y, pnt, btn);

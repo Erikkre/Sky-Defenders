@@ -33,7 +33,7 @@ public class Core extends ApplicationAdapter {
         skin.load(Gdx.files.internal("nite-ride-ui.json"));
         
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
+        //Gdx.input.setInputProcessor(stage);
         
         Table root = new Table();
         root.setFillParent(true);

@@ -112,16 +112,16 @@ public class Loader implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(final float delta) {
         if (System.currentTimeMillis()-game.startTime>550) {
             load();
-            System.out.println(loadBar.getPercent()+" "+(manager.getProgress() + 0.02f));
+            System.out.println(loadBar.getPercent() + " " + (manager.getProgress() + 0.02f));
             glowingLoadingBarTween.update(delta);
-            if (manager.getProgress()!=1.0 && loadBar.getVisualPercent() < manager.getProgress()+0.02f && glowingLoadingBarTween.isFinished()){
-                glowingLoadingBarTween=Tween.to(loadBarAlpha,0,0.5f).target(0).repeatYoyo(1,0).ease(TweenEquations.easeInCubic).start();
+            if (manager.getProgress() != 1.0 && loadBar.getVisualPercent() < manager.getProgress() + 0.02f && glowingLoadingBarTween.isFinished()) {
+                glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 0.5f).target(0).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start();
             }
 
-            loadBar.setColor(1,1,1,loadBarAlpha.get());
+            loadBar.setColor(1, 1, 1, loadBarAlpha.get());
             //shadeSkin.getTiledDrawable("loading-bar-fill").tint(new Color(1,1,1,loadBarAlpha.get()));
 
             Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -132,24 +132,7 @@ public class Loader implements Screen {
 
             loadBar.setValue(manager.getProgress() + 0.032f);
 
-            //System.out.println(logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0]);
-            if (middleFirstLast == 0) {
-                logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0], (hueValue += hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2]});
-            } else if (middleFirstLast == 1) {
-                logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{(hueValue += hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[1], logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2]});
-            } else if (middleFirstLast == 2) {
-                logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0], logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[1], (hueValue += hueAdder) / 255f});
-            }
-            if (hueValue > 194 || hueValue < 16) {
-                if (middleFirstLast < 2) {
-                    middleFirstLast++;
-                } else {
-                    middleFirstLast = 0;
-                }
-
-                if (hueAdder == 4) hueAdder = -4;
-                else hueAdder = 4;
-            }
+            setFireColor();
         }
     }
 
@@ -207,11 +190,11 @@ public class Loader implements Screen {
         };
 
         splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
-        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()*2.4f);
+        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()*2.8f);
 
         splashImg.addAction(sequence(alpha(0),delay(0.7f),
                 fadeIn(2.5f, Interpolation.pow2Out), delay(1),
-                parallel(sequence(delay(1.2f),run(endFire)),fadeOut(2.5f)), run(endLoad)));
+                parallel(sequence(delay(1.2f),run(endFire)),fadeOut(2.5f,Interpolation.pow2Out)), run(endLoad)));
 
         /*splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
                 parallel(fadeIn(3f, Interpolation.pow2),
@@ -246,6 +229,26 @@ public class Loader implements Screen {
         game.setScreen(gameHandler);
     }
 
+    public void setFireColor(){
+        //System.out.println(logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0]);
+        if (middleFirstLast == 0) {
+            logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0], (hueValue += hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2]});
+        } else if (middleFirstLast == 1) {
+            logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{(hueValue += hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[1], logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2]});
+        } else if (middleFirstLast == 2) {
+            logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0], logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[1], (hueValue += hueAdder) / 255f});
+        }
+        if (hueValue > 194 || hueValue < 16) {
+            if (middleFirstLast < 2) {
+                middleFirstLast++;
+            } else {
+                middleFirstLast = 0;
+            }
+
+            if (hueAdder == 4) hueAdder = -4;
+            else hueAdder = 4;
+        }
+    }
     @Override
     public void show() {
     }
