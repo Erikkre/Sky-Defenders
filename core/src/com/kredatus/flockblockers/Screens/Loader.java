@@ -131,7 +131,7 @@ public class Loader implements Screen {
             glowingLoadingBarTween.update(delta);
             if (manager.getProgress() != 1.0 && loadBar.getVisualPercent() < manager.getProgress() + 0.02f && glowingLoadingBarTween.isFinished()) {
                 glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 0.5f).target(0).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start();
-            } else if (manager.getProgress() == 1.0 && glowingLoadingBarTween.isYoyo()) glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 1.2f).target(0).ease(TweenEquations.easeInCubic).start();
+            } else if (manager.getProgress() == 1.0 && glowingLoadingBarTween.isYoyo()) glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 1f).target(0).ease(TweenEquations.easeNone).start();
 
             if (manager.getProgress() == 1.0 && !glowingLoadingBarTween.isYoyo() && !isFirstTime) {
                 ((Sound) manager.get(assets.ignitionFire0Deignition7s)).setVolume(soundID,loadBarAlpha.get());
@@ -156,9 +156,9 @@ public class Loader implements Screen {
         /********************************************************LOADBAR*/
         //niteSkin = manager.get(assets.niteRideUI);
         shadeSkin = manager.get(assets.shadeUI);
-        loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("gradient-white-rim", ProgressBar.ProgressBarStyle.class));
+        loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("rim-gradient", ProgressBar.ProgressBarStyle.class));
         shadeSkin.getDrawable("loading-bar-fill").setMinHeight(loadBar.getPrefHeight()*1.1f);
-        shadeSkin.getDrawable("loading-bar-gradient-white-rim").setMinHeight(loadBar.getPrefHeight()*1.2f);
+        shadeSkin.getDrawable("loading-bar-rim-gradient").setMinHeight(loadBar.getPrefHeight()*1.2f);
         //`loadBar.setColor(1,0,0,1f);
         loadBar.setAnimateDuration(0.8f);
         loadBar.setWidth(camWidth/1.5f);

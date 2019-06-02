@@ -411,7 +411,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
 
             if (eitherOnCam(inputX, inputY)) {
-                System.out.println(inputX+" "+inputY);
                 //System.out.println("either are on cam");
                 if (!isOnCam(inputY,"y")) {
                     //System.out.println("x is on cam");
@@ -434,7 +433,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
 
                 if (!UiHandler.movPad.isTouched()) {
-                    rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 10f).target(0).ease(TweenEquations.easeOutCirc).start();
+                    if (Math.abs((pos.x - inputX) / 10f)<30) rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - inputX) / 10f).target(0).ease(TweenEquations.easeOutCirc).start();
+                    else if (pos.x-inputX>0) rotationTween = Tween.to(rotation, 0, 1.5f).waypoint(30).target(0).ease(TweenEquations.easeOutCirc).start();
+                    else rotationTween = Tween.to(rotation, 0, 1.5f).waypoint(-30).target(0).ease(TweenEquations.easeOutCirc).start();
+
                     dragLineOpacity.set(0.4f);
 
                     tweenTarget.set(inputX + fingerAirshipXDiff, inputY + fingerAirshipYDiff);
@@ -445,8 +447,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     }
 
                 } else {
-                    rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)/3).target(0).ease(TweenEquations.easeOutCirc).start();
-
+                    if (Math.abs((pos.x - inputX)/2)<20) rotationTween = Tween.to(rotation, 0, .7f).waypoint((pos.x - inputX)/2).target(0).ease(TweenEquations.easeOutCirc).start();
+                    else if (pos.x-inputX>0) rotationTween = Tween.to(rotation, 0, .7f).waypoint(20).target(0).ease(TweenEquations.easeOutCirc).start();
+                    else rotationTween = Tween.to(rotation, 0, .7f).waypoint(-20).target(0).ease(TweenEquations.easeOutCirc).start();
                 }
                 //rotate to waypoint based on x distance, then back to itself
             }

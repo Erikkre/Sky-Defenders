@@ -179,7 +179,7 @@ loading-bar
   orig: 203, 20
   offset: 0, 0
   index: -1
-loading-bar-gradient-white-rim
+loading-bar-rim-gradient
   rotate: false
   xy: 253, 1
   size: 203, 20
