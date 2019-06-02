@@ -791,7 +791,7 @@ public void setRotate(float angle){
             Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
             shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(transitionColor.r, transitionColor.g,transitionColor.b, alpha.get());
-            shapeRenderer.rect(0, 0, camWidth, camHeight);
+            shapeRenderer.rect(-camWidth*.1f, -camHeight*.1f, camWidth*1.1f, camHeight*1.1f);
             shapeRenderer.end();
             Gdx.gl.glDisable(GL30.GL_BLEND);
         }

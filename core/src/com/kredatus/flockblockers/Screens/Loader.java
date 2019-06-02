@@ -65,7 +65,7 @@ public class Loader implements Screen {
     //public static Sound splashdown, swoop, fire, birdHit, balloonHit;
     public static Music deathmenumusic;
 
-    public static Animation<TextureRegion> rightSideFlaps, leftSideFlaps,
+    public static Animation<TextureRegion>
             tinyAnim1, tinyAnim2,tinyAnim3, tinyAnim4, tinyAnim5, tinyAnim6,tinyAnim7,tinyAnim8,tinyAnim9,tinyAnim10,tinyAnim11,
             coinAnimation;
 
@@ -131,7 +131,7 @@ public class Loader implements Screen {
             glowingLoadingBarTween.update(delta);
             if (manager.getProgress() != 1.0 && loadBar.getVisualPercent() < manager.getProgress() + 0.02f && glowingLoadingBarTween.isFinished()) {
                 glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 0.5f).target(0).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start();
-            } else if (manager.getProgress() == 1.0 && glowingLoadingBarTween.isFinished()) glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 0.7f).target(0).ease(TweenEquations.easeInCubic).start();
+            } else if (manager.getProgress() == 1.0 && glowingLoadingBarTween.isYoyo()) glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 1.2f).target(0).ease(TweenEquations.easeInCubic).start();
 
             if (manager.getProgress() == 1.0 && !glowingLoadingBarTween.isYoyo() && !isFirstTime) {
                 ((Sound) manager.get(assets.ignitionFire0Deignition7s)).setVolume(soundID,loadBarAlpha.get());
@@ -231,13 +231,12 @@ public class Loader implements Screen {
         stage = new Stage(new ExtendViewport(camWidth,camHeight, new OrthographicCamera()), new SpriteBatch());
     }
     private void load(){
-
         if (!manager.update()){
             //System.out.println(manager.getProgress());
         } else if (!isFirstTime){
             logoFire.particleEffect.allowCompletion();
             splashImg.clearActions();
-            if (loadBarAlpha.get()==0){
+            if (!glowingLoadingBarTween.isYoyo()&&loadBarAlpha.get()==0){
                 ((Sound) manager.get(assets.ignitionFire0Deignition7s)).stop();
                 loaded();
                 postLoad();
