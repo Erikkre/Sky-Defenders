@@ -75,7 +75,6 @@ public class AssetHandler {/*
         manager.load(thrusterFireLeft, ParticleEffect.class);//asyncronous loading, continued along using update(); in loader
         manager.load(thrusterFireRight, ParticleEffect.class);
 
-        manager.load(textures, TextureAtlas.class);
 
         manager.load(fire0, Sound.class);
         manager.load(swoop, Sound.class);
@@ -87,6 +86,8 @@ public class AssetHandler {/*
 
         ShaderProgram.pedantic = false;
         manager.load(flashShader, ShaderProgram.class);
+
+        manager.load(textures, TextureAtlas.class);
 
 
         //textureAtlas.findRegion()

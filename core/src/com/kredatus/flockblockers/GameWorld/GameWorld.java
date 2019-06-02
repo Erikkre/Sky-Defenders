@@ -96,8 +96,8 @@ public class GameWorld {
 
         currentState=GameState.SURVIVAL;
         //startLogos(camWidth,camHeight);
-        System.out.println("start logos");
-        //currentState=GameState.SURVIVAL;
+
+
     }
 
     public void startLogos(int camWidth,int camHeight) {

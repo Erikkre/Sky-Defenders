@@ -771,9 +771,10 @@ public void setRotate(float angle){
         batcher.end();
         //make usre having outside of batcher does nothing
 
-        //drawTransition(delta);
+        drawTransition(delta);
         //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
         //System.out.println("gameRenderer edge:"+(cam.position.x - camWidth / 2));
+
     }
 
     public void prepareTransition(int r, int g, int b, float duration) {

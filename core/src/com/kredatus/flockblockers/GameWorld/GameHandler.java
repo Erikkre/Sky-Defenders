@@ -59,7 +59,7 @@ public class GameHandler implements Screen {
 
 
         renderer = new GameRenderer(world, camWidth, camHeight);
-
+        renderer.prepareTransition(0,0,0,3);
         bgHandler.setRendererAndCam(renderer);
         lightHandler.setCam(renderer);
 

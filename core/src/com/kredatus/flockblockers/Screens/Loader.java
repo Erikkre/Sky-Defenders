@@ -98,29 +98,45 @@ public class Loader implements Screen {
 
     Value loadBarAlpha= new Value(1);
     Tween glowingLoadingBarTween=Tween.to(loadBarAlpha,0,0.5f).target(0).repeatYoyo(1,0).ease(TweenEquations.easeInCubic).start();
+    boolean isFirstTime;
 
+    long soundID;
     public Loader(FlockBlockersMain game) {
         Texture.setAssetManager(manager);
 
         assets.load();
-        ((Sound) manager.get(assets.ignitionFire0Deignition7s)).play(0.8f);
+
 
         this.game = game;
 
+        // Create (or retrieve existing) preferences file
+        prefs = Gdx.app.getPreferences("skyDefenders");
+        if (!prefs.contains("highScore")) {
+            System.out.println("make true");
+            isFirstTime=true;
+            prefs.putInteger("highScore", 1);
+            prefs.flush();
+        }
+
         setupStage();
         setupLoadingBarAndLogo();
+        soundID= ((Sound) manager.get(assets.ignitionFire0Deignition7s)).play(1f);
     }
 
     @Override
     public void render(final float delta) {
         if (System.currentTimeMillis()-game.startTime>550) {
             load();
-            System.out.println(loadBar.getPercent() + " " + (manager.getProgress() + 0.02f));
+            //System.out.println(loadBar.getPercent() + " " + (manager.getProgress() + 0.02f));
             glowingLoadingBarTween.update(delta);
             if (manager.getProgress() != 1.0 && loadBar.getVisualPercent() < manager.getProgress() + 0.02f && glowingLoadingBarTween.isFinished()) {
                 glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 0.5f).target(0).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start();
-            } else if (manager.getProgress() == 1.0 && glowingLoadingBarTween.isFinished()) glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 1.5f).target(0).delay(2).ease(TweenEquations.easeInCubic).start();
+            } else if (manager.getProgress() == 1.0 && glowingLoadingBarTween.isFinished()) glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 0.7f).target(0).ease(TweenEquations.easeInCubic).start();
 
+            if (manager.getProgress() == 1.0 && !glowingLoadingBarTween.isYoyo() && !isFirstTime) {
+                ((Sound) manager.get(assets.ignitionFire0Deignition7s)).setVolume(soundID,loadBarAlpha.get());
+                //System.out.println("sound set to: "+loadBarAlpha.get());
+            }
             loadBar.setColor(1, 1, 1, loadBarAlpha.get());
             //shadeSkin.getTiledDrawable("loading-bar-fill").tint(new Color(1,1,1,loadBarAlpha.get()));
 
@@ -144,7 +160,7 @@ public class Loader implements Screen {
         shadeSkin.getDrawable("loading-bar-fill").setMinHeight(loadBar.getPrefHeight()*1.1f);
         shadeSkin.getDrawable("loading-bar-gradient-white-rim").setMinHeight(loadBar.getPrefHeight()*1.2f);
         //`loadBar.setColor(1,0,0,1f);
-        loadBar.setAnimateDuration(0.6f);
+        loadBar.setAnimateDuration(0.8f);
         loadBar.setWidth(camWidth/1.5f);
         loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f);
 
@@ -177,7 +193,9 @@ public class Loader implements Screen {
         Runnable endLoad = new Runnable() {
             @Override
             public void run() {
+                isFirstTime=false;
                 if (manager.getProgress()==1.0) {
+                    loaded();
                     postLoad();
                 }
             }
@@ -216,9 +234,14 @@ public class Loader implements Screen {
 
         if (!manager.update()){
             //System.out.println(manager.getProgress());
-        } else {
-            loaded();
-            postLoad();
+        } else if (!isFirstTime){
+            logoFire.particleEffect.allowCompletion();
+            splashImg.clearActions();
+            if (loadBarAlpha.get()==0){
+                ((Sound) manager.get(assets.ignitionFire0Deignition7s)).stop();
+                loaded();
+                postLoad();
+            }
         }
     }
 
@@ -266,6 +289,7 @@ public class Loader implements Screen {
     }
 
     public void loaded(){
+
         shadeSkin = manager.get(assets.shadeUI);
 
 
