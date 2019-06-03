@@ -47,7 +47,7 @@ public class ScrollingTiledDrawable extends TextureRegionDrawable {
     }
 
     public void draw(Batch batch, float x, float y, float width, float height) {
-        float batchColor = batch.getPackedColor();
+        Color batchColor = batch.getColor();
         batch.setColor(batch.getColor().mul(color));
 
         TextureRegion region = getRegion();

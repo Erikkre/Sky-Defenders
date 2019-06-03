@@ -58,7 +58,7 @@ public class AssetHandler {/*
     swoop="sound/swoop.wav",
     birdHit="sound/birdHit.mp3",balloonHit="sound/balloonHit.mp3",
     music0="music/music0.mp3",
-    shadeUI="ui/shadeUI/uiskin.json", niteRideUI="ui/niteRideUI/nite-ride-ui.json",
+    shadeUI="ui/textures/ui/shadeUI-decolored/uiskin.json", niteRideUI="ui/niteRideUI/nite-ride-ui.json",
     flashShader="shaders/flash.vert";
 
     public void load() {
