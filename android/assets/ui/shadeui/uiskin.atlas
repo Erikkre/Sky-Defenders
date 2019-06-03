@@ -172,20 +172,74 @@ list-selection
   index: -1
 loading-bar
   rotate: false
-  xy: 374, 237
-  size: 203, 20
+  xy: 375, 237
+  size: 203, 18
   split: 0, 0, 0, 0
   pad: 5, 0, 0, 0
-  orig: 203, 20
+  orig: 203, 18
   offset: 0, 0
   index: -1
-loading-bar-rim-gradient
+loading-bar-18
   rotate: false
-  xy: 253, 1
-  size: 203, 20
+  xy: 821, 1
+  size: 202, 18
   split: 0, 0, 0, 0
   pad: 5, 0, 0, 0
-  orig: 203, 20
+  orig: 202, 18
+  offset: 0, 0
+  index: -1
+loading-bar-20
+  rotate: false
+  xy: 821, 20
+  size: 202, 20
+  split: 0, 0, 0, 0
+  pad: 5, 0, 0, 0
+  orig: 202, 20
+  offset: 0, 0
+  index: -1
+loading-bar-22
+  rotate: false
+  xy: 821, 41
+  size: 202, 22
+  split: 0, 0, 0, 0
+  pad: 5, 0, 0, 0
+  orig: 202, 22
+  offset: 0, 0
+  index: -1
+loading-bar-24
+  rotate: false
+  xy: 821, 54
+  size: 202, 24
+  split: 0, 0, 0, 0
+  pad: 5, 0, 0, 0
+  orig: 202, 24
+  offset: 0, 0
+  index: -1
+loading-bar-26
+  rotate: false
+  xy: 821, 89
+  size: 202, 26
+  split: 0, 0, 0, 0
+  pad: 5, 0, 0, 0
+  orig: 202, 26
+  offset: 0, 0
+  index: -1
+loading-bar-28
+  rotate: false
+  xy: 821, 116
+  size: 202, 28
+  split: 0, 0, 0, 0
+  pad: 5, 0, 0, 0
+  orig: 202, 28
+  offset: 0, 0
+  index: -1
+loading-bar-30
+  rotate: false
+  xy: 821, 145
+  size: 202, 30
+  split: 0, 0, 0, 0
+  pad: 5, 0, 0, 0
+  orig: 202, 30
   offset: 0, 0
   index: -1
 loading-bar-fill

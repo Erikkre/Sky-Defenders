@@ -1,3 +1,6 @@
 look at finished open source games https://www.reddit.com/r/libgdx/comments/brlc33/any_good_opensource_libgdx_games/
 get shadeui project to see if making progressbar correctly
 look through gdx skins master for all different ui's
+
+touchpad=arcade style
+menus=lgdxs? neon ui
