@@ -172,87 +172,24 @@ list-selection
   index: -1
 loading-bar
   rotate: false
-  xy: 375, 237
-  size: 203, 18
-  split: 0, 0, 0, 0
-  pad: 5, 0, 0, 0
-  orig: 203, 18
-  offset: 0, 0
-  index: -1
-loading-bar-18
-  rotate: false
-  xy: 821, 1
+  xy: 376, 237
   size: 202, 18
   split: 0, 0, 0, 0
   pad: 5, 0, 0, 0
   orig: 202, 18
   offset: 0, 0
   index: -1
-loading-bar-20
-  rotate: false
-  xy: 821, 20
-  size: 202, 20
-  split: 0, 0, 0, 0
-  pad: 5, 0, 0, 0
-  orig: 202, 20
-  offset: 0, 0
-  index: -1
-loading-bar-22
-  rotate: false
-  xy: 821, 41
-  size: 202, 22
-  split: 0, 0, 0, 0
-  pad: 5, 0, 0, 0
-  orig: 202, 22
-  offset: 0, 0
-  index: -1
-loading-bar-24
-  rotate: false
-  xy: 821, 54
-  size: 202, 24
-  split: 0, 0, 0, 0
-  pad: 5, 0, 0, 0
-  orig: 202, 24
-  offset: 0, 0
-  index: -1
-loading-bar-26
-  rotate: false
-  xy: 821, 89
-  size: 202, 26
-  split: 0, 0, 0, 0
-  pad: 5, 0, 0, 0
-  orig: 202, 26
-  offset: 0, 0
-  index: -1
-loading-bar-28
-  rotate: false
-  xy: 821, 116
-  size: 202, 28
-  split: 0, 0, 0, 0
-  pad: 5, 0, 0, 0
-  orig: 202, 28
-  offset: 0, 0
-  index: -1
-loading-bar-30
-  rotate: false
-  xy: 821, 145
-  size: 202, 30
-  split: 0, 0, 0, 0
-  pad: 5, 0, 0, 0
-  orig: 202, 30
-  offset: 0, 0
-  index: -1
 loading-bar-fill
   rotate: false
   xy: 902, 199
-  size: 23, 18
-  split: 11, 11, 0, 0
-  orig: 23, 18
+  size: 12, 18
+  split: 0, 11, 0, 0
+  orig: 12, 18
   offset: 0, 0
   index: -1
 loading-bar-knob
   rotate: false
-  xy: 926, 199
+  xy: 915, 199
   size: 12, 18
   orig: 12, 18
   offset: 0, 0
@@ -304,7 +241,7 @@ panel2
   index: -1
 plus
   rotate: false
-  xy: 939, 203
+  xy: 928, 203
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
