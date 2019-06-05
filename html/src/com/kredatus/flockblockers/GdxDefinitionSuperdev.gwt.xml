@@ -8,6 +8,7 @@
 	<inherits name='com.badlogic.gdx.ai' />
 	<inherits name='libgdx-utils-box2d' />
 	<inherits name='libgdx-utils' />
+	<inherits name='com.kotcrab.vis.vis-ui' />
 
     <inherits name='com.kredatus.flockblockers.GdxDefinition' />
     

@@ -1,0 +1,298 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	font-button: {
+		file: font-button.fnt
+	}
+	font-label: {
+		file: font-label.fnt
+	}
+	font-title: {
+		file: font-title.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	green: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	light_grey: {
+		r: 0.8
+		g: 0.8
+		b: 0.8
+		a: 1
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	red: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	grey: {
+		r: 0.7
+		g: 0.7
+		b: 0.7
+		a: 1
+	}
+	Flamingo: {
+		r: 1
+		g: 0.2
+		b: 1
+		a: 1
+	}
+	black: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	dialogDim: {
+		name: white
+		color: {
+			r: 0.2
+			g: 0.2
+			b: 0.2
+			a: 1
+		}
+	}
+}
+com.ray3k.tenpatch.TenPatchDrawable: {
+	loading-bar-fill-10patch: {
+		region: loading-bar-fill
+		horizontalStretchAreas: [ 17, 17 ]
+		verticalStretchAreas: []
+		tiling: false
+		minWidth: 35
+		minHeight: 62
+		rightWidth: 17
+		leftWidth: 17
+		bottomHeight: 1
+		topHeight: 1
+	}
+}
+com.kotcrab.vis.ui.Sizes: {
+	default: {
+		scaleFactor: 1
+		spacingBottom: 8
+		spacingRight: 6
+		buttonBarSpacing: 10
+		menuItemIconSize: 22
+		borderSize: 1
+		spinnerButtonHeight: 12
+		spinnerFieldSize: 50
+		fileChooserViewModeBigIconsSize: 200
+		fileChooserViewModeMediumIconsSize: 128
+		fileChooserViewModeSmallIconsSize: 64
+		fileChooserViewModeListWidthSize: 150
+	}
+}
+com.kotcrab.vis.ui.widget.Separator$SeparatorStyle: {
+	default: {
+		thickness: 4
+	}
+	menu: {
+		thickness: 1
+	}
+}
+com.kotcrab.vis.ui.widget.tabbedpane.TabbedPane$TabbedPaneStyle: {
+	default: {
+		vertical: false
+		draggable: false
+	}
+}
+com.kotcrab.vis.ui.widget.BusyBar$BusyBarStyle: {
+	default: {
+		height: 5
+		segmentWidth: 150
+		segmentOverflow: 10
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: button
+		down: button-down
+	}
+	toggle: {
+		up: toggle-button-off
+		down: toggle-button-down
+		checked: toggle-button
+	}
+	music: {
+		up: music-off
+		down: music-down
+		checked: music
+	}
+	left: {
+		up: left-button
+		down: left-button-down
+	}
+	sound: {
+		up: sound-off
+		down: sound-down
+		checked: sound
+	}
+	right: {
+		up: right-button
+		down: right-button-down
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: check-on
+		checkboxOff: check-off
+		font: font-label
+	}
+	switch: {
+		checkboxOn: switch
+		checkboxOff: switch-off
+		font: font-label
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		up: button
+		down: button-down
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: font-label
+	}
+	title: {
+		font: font-title
+		background: panel2
+	}
+	optional: {
+		font: font-label
+	}
+	error: {
+		font: font-label
+	}
+	title-plain: {
+		font: font-title
+	}
+	subtitle: {
+		font: font-label
+		background: label
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: font-label
+		fontColorSelected: Flamingo
+		fontColorUnselected: white
+		selection: list-selection
+		background: list
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-horizontal: {
+		background: loading-bar-bg
+		knobBefore: loading-bar-fill-10patch
+	}
+	default-vertical: {
+		background: loading-bar-bg
+		knobBefore: loading-bar-fill-10patch
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		background: panel1
+		hScroll: horizontal-scrollbar
+		hScrollKnob: horizontal-scrollbar-knob
+		vScroll: vertical-scrollbar
+		vScrollKnob: vertical-scrollbar-knob
+	}
+	android: {
+		background: panel1
+		hScroll: android-horizontal-scrollbar
+		hScrollKnob: android-horizontal-scrollbar-knob
+		vScroll: android-vertical-scrollbar
+		vScrollKnob: android-vertical-scrollbar-knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		background: slider-bar
+		knob: slider-bar-knob
+		knobBefore: slider-bar-fill
+	}
+	default-vertical: {
+		background: slider-bar
+		knob: slider-bar-knob
+		knobBefore: slider-bar-fill
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
+	default-vertical: {
+		handle: vertical-splitpane
+	}
+	default-horizontal: {
+		parent: default-vertical
+		handle: horizontal-splitplane
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: font-button
+		up: button
+		down: button-down
+	}
+	toggle: {
+		font: font-button
+		up: toggle-button-off
+		down: toggle-button-down
+		checked: toggle-button
+	}
+	round: {
+		font: font-title
+		up: round-button
+		down: round-button-down
+	}
+	radio: {
+		font: font-label
+		up: radio-button-off
+		down: radio-button
+		checked: radio-button
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
+	default: {
+		background: touchpad
+		knob: touchpad-knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
+	default: {
+		plus: plus
+		minus: minus
+		selection: list-selection
+		background: list
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: window
+		titleFont: font-title
+	}
+	dialog: {
+		background: window
+		titleFont: font-title
+		stageBackground: list
+	}
+}
+}

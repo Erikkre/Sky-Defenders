@@ -30,6 +30,7 @@ allprojects {
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
+        visuiVersion = '1.4.2'
     }
 
     repositories {
@@ -38,6 +39,7 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -141,7 +143,8 @@ project(":core") {
         implementation "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.1"
         implementation "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.4"
         implementation "net.dermetfan.libgdx-utils:libgdx-utils:0.13.4"
-        
+        implementation 'com.github.raeleus.TenPatch:tenpatch:2.0'
+        implementation "com.kotcrab.vis:vis-ui:$visuiVersion"
     }
 }
 

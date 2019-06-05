@@ -3,7 +3,7 @@ atlasData: {
 	atlasCurrent: true
 	drawables: [
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/android-horizontal-scrollbar.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/android-horizontal-scrollbar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -20,7 +20,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/android-horizontal-scrollbar-knob.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/android-horizontal-scrollbar-knob.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -37,7 +37,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/android-vertical-scrollbar.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/android-vertical-scrollbar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -54,7 +54,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/android-vertical-scrollbar-knob.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/android-vertical-scrollbar-knob.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -71,7 +71,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/button.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/button.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -88,7 +88,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/button-down.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/button-down.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -105,7 +105,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/check-off.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/check-off.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -122,7 +122,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/check-on.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/check-on.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -139,7 +139,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/cursor.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/cursor.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -156,7 +156,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/horizontal-scrollbar.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/horizontal-scrollbar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -173,7 +173,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/horizontal-scrollbar-knob.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/horizontal-scrollbar-knob.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -190,7 +190,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/horizontal-splitplane.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/horizontal-splitplane.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -207,7 +207,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/label.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/label.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -224,7 +224,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/left-button.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/left-button.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -241,7 +241,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/left-button-down.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/left-button-down.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -258,7 +258,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/list.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/list.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -275,7 +275,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/list-selection.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/list-selection.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -292,7 +292,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/loading-bar.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/loading-bar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -309,41 +309,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/loading-bar-fill.9.png
-			bgColor: {
-				r: 0
-				g: 0
-				b: 0
-				a: 1
-			}
-			tint: null
-			tintName: null
-			name: loading-bar-fill
-			tiled: false
-			minWidth: -1
-			minHeight: -1
-			customized: false
-			tenPatchData: null
-		}
-		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/loading-bar-knob.png
-			bgColor: {
-				r: 0
-				g: 0
-				b: 0
-				a: 1
-			}
-			tint: null
-			tintName: null
-			name: loading-bar-knob
-			tiled: false
-			minWidth: -1
-			minHeight: -1
-			customized: false
-			tenPatchData: null
-		}
-		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/minus.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/minus.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -360,7 +326,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/music.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/music.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -377,7 +343,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/music-down.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/music-down.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -394,7 +360,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/music-off.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/music-off.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -411,7 +377,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/panel1.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/panel1.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -428,7 +394,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/panel2.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/panel2.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -445,7 +411,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/plus.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/plus.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -462,7 +428,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/radio-button.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/radio-button.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -479,7 +445,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/radio-button-off.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/radio-button-off.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -496,7 +462,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/right-button.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/right-button.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -513,7 +479,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/right-button-down.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/right-button-down.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -530,7 +496,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/round-button.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/round-button.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -547,7 +513,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/round-button-down.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/round-button-down.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -564,7 +530,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/select-box.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/select-box.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -581,7 +547,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/select-box-down.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/select-box-down.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -598,7 +564,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/slider-bar.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/slider-bar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -615,7 +581,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/slider-bar-fill.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/slider-bar-fill.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -632,7 +598,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/slider-bar-knob.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/slider-bar-knob.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -649,7 +615,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/sound.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/sound.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -666,7 +632,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/sound-down.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/sound-down.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -683,7 +649,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/sound-off.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/sound-off.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -700,7 +666,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/switch.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/switch.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -717,7 +683,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/switch-off.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/switch-off.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -734,7 +700,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/text-selection.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/text-selection.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -751,7 +717,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/textfield.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/textfield.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -768,7 +734,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/toggle-button.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/toggle-button.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -785,7 +751,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/toggle-button-down.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/toggle-button-down.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -802,7 +768,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/toggle-button-off.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/toggle-button-off.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -819,7 +785,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/touchpad.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/touchpad.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -836,7 +802,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/touchpad-knob.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/touchpad-knob.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -853,7 +819,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/tree-minus.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/tree-minus.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -870,7 +836,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/tree-plus.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/tree-plus.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -887,7 +853,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/vertical-scrollbar.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/vertical-scrollbar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -904,7 +870,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/vertical-scrollbar-knob.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/vertical-scrollbar-knob.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -921,7 +887,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/vertical-splitpane.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/vertical-splitpane.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -938,7 +904,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/white.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/white.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -955,7 +921,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/window.9.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/window.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -972,7 +938,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/white.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/white.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -994,7 +960,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/loading-bar-bg.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/loading-bar-bg.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -1010,10 +976,61 @@ atlasData: {
 			customized: false
 			tenPatchData: null
 		}
+		{
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/loading-bar-fill.9.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: loading-bar-fill
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+		}
+		{
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/loading-bar-fill.9.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: loading-bar-fill-10patch
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: {
+				horizontalStretchAreas: {
+					items: [ 17, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+					size: 2
+					ordered: true
+				}
+				verticalStretchAreas: {
+					items: [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+					size: 0
+					ordered: true
+				}
+				contentLeft: 17
+				contentRight: 17
+				contentTop: 1
+				contentBottom: 1
+				tile: false
+				colorName: null
+			}
+		}
 	]
 	fontDrawables: [
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/font-button.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/font-button.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1030,7 +1047,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/font-label.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/font-label.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1047,7 +1064,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/font-title.png
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/font-title.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -1142,17 +1159,17 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: font-button
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/font-button.fnt
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/font-button.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: font-label
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/font-label.fnt
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/font-label.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: font-title
-			file: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject_data/font-title.fnt
+			file: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject_data/font-title.fnt
 		}
 	]
 	freeTypeFonts: []
@@ -3815,7 +3832,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: background
 						optional: false
-						value: loading-bar
+						value: loading-bar-bg
 					}
 					disabledBackground: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -3829,7 +3846,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: knob
 						optional: true
-						value: loading-bar-knob
+						value: null
 					}
 					disabledKnob: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -3843,7 +3860,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: knobBefore
 						optional: true
-						value: loading-bar-fill
+						value: loading-bar-fill-10patch
 					}
 					knobAfter: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -3880,7 +3897,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: background
 						optional: false
-						value: loading-bar
+						value: loading-bar-bg
 					}
 					disabledBackground: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -3894,7 +3911,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: knob
 						optional: true
-						value: loading-bar-knob
+						value: null
 					}
 					disabledKnob: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -3908,7 +3925,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: knobBefore
 						optional: true
-						value: loading-bar-fill
+						value: loading-bar-fill-10patch
 					}
 					knobAfter: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -9208,7 +9225,7 @@ preferences: {
 	}
 	last-import-export-path: {
 		class: java.lang.String
-		value: C:/Development/flockBlockers/android/assets/textures/ui/shadeUI-colored/uiskin.json
+		value: C:/Development/flockBlockers/android/assets/textures/ui/shadeUI/shadeUI-decolored/uiskin.json
 	}
 	id: {
 		class: java.lang.Integer
@@ -9222,6 +9239,10 @@ preferences: {
 		class: java.lang.Integer
 		value: 1024
 	}
+	simple-names: {
+		class: java.lang.Boolean
+		value: false
+	}
 	resources-relative: {
 		class: java.lang.Boolean
 		value: true
@@ -9231,6 +9252,6 @@ preferences: {
 		value: E:/workspace/Neon UI/skin-export
 	}
 }
-saveFile: C:/Development/flockBlockers/android/assets/textures/ui/shadeUIv2SkinComposerProject.scmp
+saveFile: E:/Development/AndroidStudioProjects/flockBlockers/android/assets/textures/ui/shadeUI/shadeUIv2SkinComposerProject.scmp
 version: 30
 }
