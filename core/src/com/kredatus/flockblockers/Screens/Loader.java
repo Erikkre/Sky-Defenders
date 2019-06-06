@@ -22,6 +22,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
@@ -78,7 +79,7 @@ public class Loader implements Screen {
     public static Array<ParticleEmitter> emitters=new Array<ParticleEmitter>();
 
     public ProgressBar loadBar;
-
+    public Label percentDoneLabel;
    // private static TweenManager manager;
 
     private Sprite sprite, sunshine;
@@ -149,6 +150,7 @@ public class Loader implements Screen {
             loadBar.setValue(manager.getProgress() + 0.032f);
 
             //setFireColor();
+            percentDoneLabel.setText((int)(manager.getProgress()*100)+"%");
         }
     }
 
@@ -157,9 +159,9 @@ public class Loader implements Screen {
         //niteSkin = manager.get(assets.niteRideUI);
         shadeSkin = manager.get(assets.shadeUI);
         loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        shadeSkin.getDrawable("loading-bar-fill").setMinHeight(loadBar.getPrefHeight()*1.1f);
-        //shadeSkin.getDrawable("loading-bar-rim-gradient").setMinHeight(loadBar.getPrefHeight()*1.2f);
+        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(loadBar.getPrefHeight()/3f);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(loadBar.getPrefHeight()/3f+4);
         //`loadBar.setColor(1,0,0,1f);
+
         loadBar.setAnimateDuration(0.8f);
         loadBar.setWidth(camWidth/1.5f);
         loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f);
@@ -169,7 +171,10 @@ public class Loader implements Screen {
         stage.addActor(loadBar);
         //loadTable.setFillParent(true);
         //loadTable.add(loadBar).padTop(4*camHeight/5f);
+        percentDoneLabel=new Label(manager.getProgress()*100+"%",shadeSkin.get("title-plain", Label.LabelStyle.class));
+        percentDoneLabel.setPosition((camWidth-percentDoneLabel.getWidth())/2,camHeight/5f-loadBar.getHeight());
 
+        stage.addActor(percentDoneLabel);
 
         Texture splashTex = manager.get(assets.logo);
         splashImg = new Image(splashTex);
@@ -245,7 +250,7 @@ public class Loader implements Screen {
     }
 
     private void postLoad(){
-        shadeSkin.getSprite("loading-bar-fill").setAlpha(1);
+        shadeSkin.getSprite("loading-bar-fill-3d").setAlpha(1);
         stage.clear();
         gameHandler=new GameHandler(shadeSkin,camWidth,camHeight);
         game.setScreen(gameHandler);

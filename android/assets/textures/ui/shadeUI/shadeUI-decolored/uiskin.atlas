@@ -186,7 +186,7 @@ loading-bar-bg
   orig: 508, 74
   offset: 0, 0
   index: -1
-loading-bar-fill-3d
+loading-bar-fill
   rotate: false
   xy: 321, 179
   size: 21, 64

@@ -80,7 +80,7 @@ public class UiHandler {
 
         //rootTable.add(new Label("Shade UI", shadeSkin, "title")).colspan(3);
         rootTable.row();
-        shadeSkin.getDrawable("loading-bar").setMinHeight(20);shadeSkin.getDrawable("loading-bar-fill").setMinHeight(20);
+        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(20);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(24);
         ProgressBar loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
         loadBar.setColor(1,0,0,0.5f);
         loadBar.setAnimateDuration(0.7f);
