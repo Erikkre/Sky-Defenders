@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Projectile;
+import com.kredatus.flockblockers.GameObjects.Turret;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.LightHandler;
@@ -210,18 +211,38 @@ public class GameWorld {
         renderer.prepareTransition(0, 0, 0, 1f);}
 
     public void buyMenu() {
+        GameHandler.timeOfPause = System.currentTimeMillis();
+
         currentState = GameState.BUYMENU;
         airship.buyMenu();
         bgHandler.buyMenu();
-        renderer.prepareTransition(0, 0, 0, 0.7f);
+        for (Turret i : airship.turretList){
+            if (i.firing) {
+                i.stopFiring();
+                i.firingStoppedByGamePause = true;
+                i.targetBird=null;
+            }
+        }
+
+        birdHandler.pause();
+
+        //renderer.prepareTransition(0, 0, 0, 0.7f);
     }
     public void survival() {
+        GameHandler.timeOfResume = System.currentTimeMillis();
+
         currentState = GameState.SURVIVAL;
         airship.survival();
         bgHandler.survival(tinyBirdHandler,lightHandler);
         renderer.prepareTransition(0, 0, 0, 1.7f);
+        for (Turret i : airship.turretList) {
+            if (i.firingStoppedByGamePause) {
+                i.startFiring();
+                i.firingStoppedByGamePause = false;
+            }
+        }
     }
-    public void survival(TinyBirdHandler tinyBirdHandler,LightHandler lightHandler,Airship airship,BgHandler bgHandler) {
+    public void survival(TinyBirdHandler tinyBirdHandler,LightHandler lightHandler,Airship airship,BgHandler bgHandler) {//the one that survival starts with
         currentState = GameState.SURVIVAL;
         airship.survival();
         bgHandler.survival(tinyBirdHandler,lightHandler);

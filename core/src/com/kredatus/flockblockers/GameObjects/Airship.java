@@ -128,16 +128,19 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     float buyMenuXLSizeMultiplier;
     public void buyMenu(){
         startX=pos.x;startY=pos.y;//need to reset for all hitboxes and turret positions that use start as reference
+
         assignTextures(armorLvl,rackLvl,"xL");
-        movtween =Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-balloonHeight).ease(TweenEquations.easeOutCirc).delay(1f).start();
+        movtween =Tween.to(pos,0,2).target(camWidth/2f,camHeight/2f).ease(TweenEquations.easeOutCirc).start();
         airshipSetupUsingNewTextures();
+        rotation.set(0);
+        rotationTween.kill();
     }
     public void survival(){
         assignTextures(armorLvl,rackLvl,"");
         movtween =Tween.to(pos,0,4).target(camWidth-balloonWidth,camHeight-balloonHeight).ease(TweenEquations.easeOutCirc).delay(1f).start();
         airshipSetupUsingNewTextures();
 
-        burnerUp();rackUp();speedUp();speedUp();armorUp();armorUp();armorUp();armorUp();armorUp();armorUp();
+        burnerUp();rackUp();speedUp();speedUp();rackUp();//armorUp();armorUp();armorUp();armorUp();armorUp();armorUp();
         addTurret('c');addTurret('c');addTurret('d');addTurret('d');addTurret('d');addTurret('f');addTurret('f');addTurret('f');
         turretList.get(1).lvlUp();turretList.get(3).lvlUp();turretList.get(4).lvlUp();turretList.get(4).lvlUp();turretList.get(6).lvlUp();turretList.get(7).lvlUp();turretList.get(7).lvlUp();
         //addTurret('d');turretList.get(0).lvlUp();turretList.get(0).lvlUp();
@@ -275,7 +278,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackTexture=rackTextures[armorLvl];
         //System.out.println("actual width+height: "+rackTexture.getRegionWidth()+" "+rackTexture.getRegionHeight()+" XLSizeMultiplier: "+buyMenuXLSizeMultiplier+" rackWidth+rackHeight: "+rackWidth+" "+rackHeight);
 
-        rackTexture.setRegion(rackTexture,0,0, rackTexture.getRegionWidth(), (int) ((tH/buyMenuXLSizeMultiplier)*(rackLvl+1)- 9.5*rackTexture.getRegionHeight()/195f));
+        rackTexture.setRegion(rackTexture,0,0, rackTexture.getRegionWidth(), (int) ((tH/buyMenuXLSizeMultiplier)*(rackLvl+1)- (9.5*(tH/41f))/buyMenuXLSizeMultiplier  )    );
         rackHeight=(int)(rackTexture.getRegionHeight()*buyMenuXLSizeMultiplier);
         //System.out.println("actual width+height: "+rackTexture.getRegionWidth()+" "+rackTexture.getRegionHeight()+" XLSizeMultiplier: "+buyMenuXLSizeMultiplier+" rackWidth+rackHeight: "+rackWidth+" "+rackHeight);
 
@@ -749,7 +752,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             else batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
             //System.out.println("Turretlist size: " + turretList.size());
             Turret turretAimer = turretList.get(0);
-
+            System.out.println(turretAimer.firingStoppedByGamePause+" "+turretAimer.targetBird);
             if (turretAimer.gunTargetPointer != -1&&!pointerOnAirship(turretAimer.gunTargetPointer)) {    //if using finger to aim
                 if (!UiHandler.aimPad.isTouched()) UiHandler.aimPad.calculatePositionAndValue(UiHandler.aimPad.getX()+(turretAimer.lastFingerPosition.x-pos.x)*10,UiHandler.aimPad.getY()+(turretAimer.lastFingerPosition.y-pos.y)*10,false);
 

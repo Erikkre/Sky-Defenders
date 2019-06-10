@@ -182,29 +182,35 @@ public class Turret {
     }
 
     public void startFiring() {
-        setupFiring();
-        if (!firingStoppedByGamePause) timeSinceLastShot=(int) (System.currentTimeMillis()-lastShotTime);
-        else timeSinceLastShot=(int) ((System.currentTimeMillis()-GameHandler.timeOfResume)+(GameHandler.timeOfPause-lastShotTime));    //gets time since last shot in game time without real life pause
-        //System.out.println("Time since last shot: "+timeSinceLastShot+", firing interval: "+firingInterval);
+        if (!firing) {
+            setupFiring();
+            if (!firingStoppedByGamePause)
+                timeSinceLastShot = (int) (System.currentTimeMillis() - lastShotTime);
+            else
+                timeSinceLastShot = (int) ((System.currentTimeMillis() - GameHandler.timeOfResume) + (GameHandler.timeOfPause - lastShotTime));    //gets time since last shot in game time without real life pause
+            //System.out.println("Time since last shot: "+timeSinceLastShot+", firing interval: "+firingInterval);
 
-        try {
-            if (projRotates || turretPullsBack) {
-                timer.scheduleAtFixedRate(timerTask, (int) preThrowActionDur, firingInterval);
-            } else if (timeSinceLastShot < firingInterval) {
-                timer.scheduleAtFixedRate(timerTask, firingInterval - timeSinceLastShot, firingInterval);
-            } else {
-                timer.scheduleAtFixedRate(timerTask, 0, firingInterval);
+            try {
+                if (projRotates || turretPullsBack) {
+                    timer.scheduleAtFixedRate(timerTask, (int) preThrowActionDur, firingInterval);
+                } else if (timeSinceLastShot < firingInterval) {
+                    timer.scheduleAtFixedRate(timerTask, firingInterval - timeSinceLastShot, firingInterval);
+                } else {
+                    timer.scheduleAtFixedRate(timerTask, 0, firingInterval);
+                }
+                firing = true;
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                timer = new Timer();
             }
-            firing = true;
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-            timer=new Timer();
         }
     }
 
     public void stopFiring() {
-        firing = false;
-        timerTask.cancel();
+        if (firing) {
+            firing = false;
+            timerTask.cancel();
+        }
         //System.out.println("cancelled");
     }
 
@@ -310,7 +316,7 @@ public class Turret {
             if (!firing && (targetAquired||projRotates)) {
                 startFiring();
             }
-        } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
+        } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer))&&!firingStoppedByGamePause) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
             gunTargetPointer=-1;                                                   //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
             //System.out.println("GunTargetPointer set to: "+gunTargetPointer+" because "+(!Gdx.input.isTouched(gunTargetPointer))+" and "+(Airship.airshipTouchPointer==gunTargetPointer));
 
@@ -332,7 +338,7 @@ public class Turret {
             }
             if (preThrowSpin) preThrowSpin=false;
             if (pullBackThenThrow) pullBackThenThrow=false;
-        } else {    //AI SYSTEM
+        } else if (!firingStoppedByGamePause) {    //AI SYSTEM
             //System.out.println("TargetBird: "+targetBird);
 
             if (activeBirdQueue.size() > 0) {

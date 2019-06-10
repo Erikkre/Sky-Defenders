@@ -597,15 +597,18 @@ public void setRotate(float angle){
             drawScore();
 */      } else if (world.isBuyMenu()){
             drawBackground();
+            batcher.end();
+            lightHandler.renderBack();
+            batcher.begin();
+            drawSurvival(runTime, delta);
 
-            drawAirship(delta);
-            drawAirshipReticle();
-            drawProjectiles();
             drawScore();
             batcher.flush();
             batcher.end();
             uiHandler.stage.draw();
-            //batcher.setColor(1,1,1,batcher.getColor().a);
+            //batcher.setColor(Color.WHITE);
+
+            lightHandler.renderFront();
             batcher.begin();
 
         } else if (world.isMenu()) {
