@@ -137,7 +137,7 @@ public class Core extends ApplicationAdapter {
         table.add(imageTextButton).growX().padBottom(15.0f);
     }
 
-    @Override
+    /*@Override
     public void render() {
         stage.act();
         stage.draw();
@@ -162,7 +162,7 @@ public class Core extends ApplicationAdapter {
             dispose();
             create();
         }
-    }
+    }*/
 
     @Override
     public void resize(int width, int height) {

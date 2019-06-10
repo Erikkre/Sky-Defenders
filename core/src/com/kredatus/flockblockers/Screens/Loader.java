@@ -59,7 +59,6 @@ public class Loader implements Screen {
 
     public static TextureRegion coinSymbol;
 
-    public static TextureRegion[] rackTextures = new TextureRegion[7];
 
     public static ArrayList<TextureRegion> bgList;
 
@@ -109,7 +108,6 @@ public class Loader implements Screen {
 
 
         this.game = game;
-
         // Create (or retrieve existing) preferences file
         prefs = Gdx.app.getPreferences("skyDefenders");
         if (!prefs.contains("highScore")) {
@@ -139,6 +137,7 @@ public class Loader implements Screen {
                 //System.out.println("sound set to: "+loadBarAlpha.get());
             }
             loadBar.setColor(1, 1, 1, loadBarAlpha.get());
+            percentDoneLabel.setColor(1, 1, 1, loadBarAlpha.get());
             //shadeSkin.getTiledDrawable("loading-bar-fill").tint(new Color(1,1,1,loadBarAlpha.get()));
 
             Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -162,9 +161,9 @@ public class Loader implements Screen {
         shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(loadBar.getPrefHeight()/3f);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(loadBar.getPrefHeight()/3f+4);
         //`loadBar.setColor(1,0,0,1f);
 
-        loadBar.setAnimateDuration(0.8f);
+        loadBar.setAnimateDuration(0.3f);
         loadBar.setWidth(camWidth/1.5f);
-        loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f);
+        loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight/5f-loadBar.getHeight()/2.7f);
 
 
         //3.2% is the minimum value right now
@@ -172,7 +171,7 @@ public class Loader implements Screen {
         //loadTable.setFillParent(true);
         //loadTable.add(loadBar).padTop(4*camHeight/5f);
         percentDoneLabel=new Label(manager.getProgress()*100+"%",shadeSkin.get("title-plain", Label.LabelStyle.class));
-        percentDoneLabel.setPosition((camWidth-percentDoneLabel.getWidth())/2,camHeight/5f-loadBar.getHeight());
+        percentDoneLabel.setPosition((camWidth-percentDoneLabel.getWidth())/2,camHeight/5f-loadBar.getHeight()/2);
 
         stage.addActor(percentDoneLabel);
 
@@ -435,16 +434,20 @@ public class Loader implements Screen {
         dragLine=manager.get("dragLine");
         aimLine=manager.get("aimLine");*/
 
-        for (int i=0;i<7;i++) {
-            rackTextures[i]=tA.findRegion("rack"+i);
-        }
+
 
         menumusiclist = new Music[] {manager.get(assets.music0)};
 
         TextureLoader.TextureParameter linearFilterParams=new TextureLoader.TextureParameter();
         linearFilterParams.minFilter=Texture.TextureFilter.Linear;linearFilterParams.magFilter=Texture.TextureFilter.Linear;
     }
-
+    public static TextureRegion[] getRacks(String name){
+        TextureRegion[] temp=new TextureRegion[7];
+        for (int i=0;i<7;i++) {
+            temp[i]=tA.findRegion(name+i);
+        }
+        return temp;
+    }
 
     public static void setHighScore(int val) {
         prefs.putInteger("highScore", val);
@@ -492,6 +495,7 @@ public class Loader implements Screen {
         }
     }
 
+    @Override
     public void dispose() {
         // We must dispose of the texture when we are finished.
         manager.dispose();

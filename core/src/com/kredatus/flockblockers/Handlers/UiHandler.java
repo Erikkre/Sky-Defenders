@@ -36,23 +36,25 @@ public class UiHandler {
     public static SlideMenu slideMenuLeft, slideMenuBottom;
     public Image menuButtonX, menuButtonY;
     public static boolean isTouched;
-    private GameWorld myWorld;
-
+    float camWidth,camHeight;
+    public GameWorld world;
     //might want to implement a current stage for new screens
     public  boolean anyUITouched(){
         for (Actor i : stage.getActors()){
-            if (i instanceof SlideMenu)      {if (((SlideMenu) i).isTouched) return true;}
+            if (i instanceof SlideMenu)      {if (((SlideMenu) i).isTouched){ return true;}}
         }
-        for (Actor i : rootTable.getChildren()){
-            if (i instanceof Touchpad)      {if (((Touchpad) i).isTouched()) return true;}
-            else if (i instanceof TouchRotatePad)      {if (((TouchRotatePad) i).isTouched()) return true;}
+        for (Actor i : rootTable.getChildren()){//check if rootTable is removed when stage.clear is called
+            if (i instanceof Touchpad)      {if (((Touchpad) i).isTouched()){ return true;}}
+            else if (i instanceof TouchRotatePad)      {if (((TouchRotatePad) i).isTouched()){ return true;}}
         }
+
         return false;
     }
 
-    public UiHandler(float camWidth, float camHeight, GameWorld myWorld, Skin shadeSkin) {
-        this.shadeSkin=shadeSkin;
-        this.myWorld=myWorld;
+    public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
+        this.world=world;
+        this.camWidth=camWidth;this.camHeight=camHeight;
+        this.shadeSkin = shadeSkin;
         //nameLabel = new Label("Name: ", shadeSkin);
         //TextField nameText = new TextField("Name2: ", shadeSkin);
         //TextureAtlas
@@ -61,22 +63,44 @@ public class UiHandler {
         //table.add(nameLabel);              // Row 0, column 0.
         //table.add(nameText).width(100);    // Row 0, column 1.
 
-        stage=(((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.stage);
-        Gdx.input.setInputProcessor(stage);
-        stage.addCaptureListener(new ClickListener(){//tocuh up anywhere on screen means not touching ui
+        stage = (((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.stage);
+
+        stage.addCaptureListener(new ClickListener() {//tocuh up anywhere on screen means not touching ui
             public void touchUp(InputEvent event, float x, float y, int pnt, int btn) {
                 super.touchUp(event, x, y, pnt, btn);
-                isTouched=false;
+                isTouched = false;
                 super.cancel();
-            }});
+            }
+        });
+        rootTable = new Table();
+        rootTable.setFillParent(true);
+        rootTable.center().align(Align.bottom);
+        stage.addActor(rootTable);
+        loadSurvivalStage();
+    }
 
-
-
+    public void loadBuyStage(){
         rootTable = new Table();
         rootTable.setFillParent(true);
         rootTable.center().align(Align.bottom);
         stage.addActor(rootTable);
 
+        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(20);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(24);
+        ProgressBar loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
+        loadBar.setColor(1,0,0,0.5f);
+        loadBar.setAnimateDuration(0.3f);
+
+        loadBar.setWidth(camWidth/1.1f);
+        loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight-25);
+        loadBar.setValue(.5f);//3.2% is the minimum value right now
+        rootTable.addActor(loadBar);
+    }
+
+    public void loadSurvivalStage(){
+        rootTable = new Table();
+        rootTable.setFillParent(true);
+        rootTable.center().align(Align.bottom);
+        stage.addActor(rootTable);
 
         //rootTable.add(new Label("Shade UI", shadeSkin, "title")).colspan(3);
         rootTable.row();
@@ -103,8 +127,221 @@ public class UiHandler {
         //touchpad2.setColor(1,1,1,1f);
 
         rootTable.add(aimPad).fill(true).width(camHeight/9f).height(camHeight/8.5f);
-        //aimPad.
-        //rootTable.row();
+
+        //stage.addCaptureListener(slideMenuLeft.getListeners().get(0));stage.addCaptureListener(slideMenuBottom.getListeners().get(0));
+        //  stage.addCaptureListener(menuButtonX.getListeners().get(0));stage.addCaptureListener(men    uButtonY.getListeners().get(0));
+
+        /*logo = tA.findRegion("companyLogo");
+        slidemenuBg = tA.findRegion("slideMenuBackground");
+        menuButton = tA.findRegion("menuButton");
+        shareButton = tA.findRegion("shareButton");
+        rateButton = tA.findRegion("rateButton");*/
+        /**     ****************************************LEFT SLIDING MENU*****************************************     **/
+        slideMenuLeft = new SlideMenu(camWidth/9f,camHeight/2f,"left",camWidth,camHeight,movPad.getHeight()/2);//left or down
+        Sprite temp=new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
+        temp.setColor(new Color(0,0,0,0.5f));
+        final Image image_backgroundX = new Image(new SpriteDrawable(temp));
+        menuButtonX = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
+        final Image rateButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rateButton"));
+        final Image shareButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
+
+        // add items into drawer panel.
+        slideMenuLeft.add(shareButton).size(63, 85).pad(0, 52, 5, 52).expandX().row();
+        //slideMenuLeft.add().height(300f).row(); // empty space
+        slideMenuLeft.add(rateButton).pad(35, 52, 35, 52).expandX().row();
+        //slideMenuLeft.add(icon_share).pad(35, 52, 35, 52).expandX().row();
+
+        //icon_off_music.setVisible(false);
+        //slideMenuLeft.stack(icon_music, icon_off_music).pad(52, 52, 300, 52).expandX().row(); //one on top of the other
+
+        // setup attributes for menu navigation slideMenuLeft.
+        slideMenuLeft.setBackground(image_backgroundX.getDrawable());
+        slideMenuLeft.top().left();
+        //slideMenuLeft.setWidthStartDrag(0);
+        //slideMenuLeft.setWidthBackDrag(0);
+        //slideMenuLeft.setTouchable(Touchable.enabled);
+
+        /* z-index = 1 */
+        // add image_background as a separating actor into stage to make smooth shadow with dragging value.
+        //image_background.setWidth(slideMenuLeft.getWidth()*0.1f);image_background.setHeight(slideMenuLeft.getHeight());
+        //uiHandler.stage.addActor(image_background);
+        //slideMenuLeft.setFadeBackground(image_background, 0.5f);
+
+        /* z-index = 2 */
+        stage.addActor(slideMenuLeft);
+
+        /* z-index = 3 */
+        // add button_menu as a separating actor into stage to rotates with dragging value.
+        menuButtonX.setWidth(menuButtonX.getWidth()*0.4f);menuButtonX.setHeight(menuButtonX.getHeight()*0.9f);menuButtonX.setColor(1,1,1,0.5f);
+        menuButtonX.setOrigin(Align.center);
+        //menuButtonActor=menuButtonX;
+        stage.addActor(menuButtonX);
+        slideMenuLeft.setMoveMenuButton(menuButtonX);
+        //slideMenuLeft.setRotateMenuButton(menuButtonX, 90f);
+
+        // Optional
+        /*
+         Image image_shadow = new Image(atlas.findRegion("image_shadow"));
+         image_shadow.setHeight(NAV_HEIGHT);
+         image_shadow.setX(NAV_WIDTH);
+         slideMenuLeft.setAreaWidth(NAV_WIDTH + image_shadow.getWidth());
+         slideMenuLeft.addActor(image_shadow);*/
+
+        // show the panel
+        //slideMenuLeft.showManually(true);  //show panel manually
+        //System.out.println(image_backgroundX.getImageY());
+        //System.out.println(image_backgroundY.getImageY());
+
+            rateButton.setName("RATE");
+            shareButton.setName("SHARE");
+            //icon_music.setName("MUSIC_ON");
+            //icon_off_music.setName("MUSIC_OFF");
+
+        menuButtonX.setName("menuButtonX");
+        //image_backgroundX.setName("IMAGE_BACKGROUNDX");
+
+        slideMenuLeft.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                //super.touchUp(event, x, y, 0, 0);
+                Actor actor = event.getTarget();
+                //System.out.println(32123132132321f);
+                if (actor.getName().equals("RATE")) {
+                    //Gdx.app.debug(TAG, "Rate button clicked.");
+                    System.out.println("Rate button clicked.");
+                    isTouched=true;
+                } else if (actor.getName().equals("SHARE")) {
+                    //Gdx.app.debug(TAG, "Share button clicked.");
+                    System.out.println("Share button clicked.");
+                    isTouched=true;
+                } else if (actor.getName().contains("MUSIC")) {
+                    //Gdx.app.debug(TAG, "Music button clicked.");
+                    System.out.println("Music button clicked.");
+                    //icon_music.setVisible(!icon_music.isVisible());
+                    //icon_off_music.setVisible(!icon_off_music.isVisible());
+                    isTouched=true;
+                } else if (actor.getName().equals("IMAGE_BACKGROUNDX")){
+                    System.out.println("backgroundX touched");
+                    isTouched=true;
+                }
+                super.cancel();
+            }
+        });
+
+        menuButtonX.addListener(new ClickListener(){//separate listener for touch up events
+            public boolean touchDown(InputEvent event, float x, float y, int pnt, int btn) {
+                System.out.println(Math.abs(Gdx.input.getDeltaX()));
+                if (event.getTarget().getName().equals("menuButtonX")) {
+                    System.out.println("Left menu clicked");
+                    boolean closed = slideMenuLeft.isCompletelyClosedX();
+                    image_backgroundX.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
+                    slideMenuLeft.showManually(closed);
+                    isTouched=true;
+                }
+                super.cancel(); return true;
+            }});
+        //Utils.addListeners(listener, icon_rate, icon_share, icon_music, icon_off_music, menuButton, image_background);
+
+
+        /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
+        slideMenuBottom = new SlideMenu(.7f*camWidth/2.75f,camHeight/7f,"down",camWidth,camHeight, 0);
+        stage.addActor(slideMenuBottom);
+        final Image image_backgroundY = new Image(new SpriteDrawable(temp));
+        menuButtonY = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
+        menuButtonY.rotateBy(90);menuButtonY.setWidth(menuButtonY.getWidth()*0.4f);menuButtonY.setHeight(menuButtonY.getHeight()*0.9f);menuButtonY.setColor(1,1,1,0.5f);
+        menuButtonY.setOrigin(Align.center);
+        //menuButtonActor=menuButtonY;
+        stage.addActor(menuButtonY);
+        slideMenuBottom.setMoveMenuButton(menuButtonY);
+
+
+        /******* BUTTONS ******/
+        final TextButton buyButton = new TextButton("Buy", shadeSkin);    //set button style
+        buyButton.setStyle(shadeSkin.get("round", buyButton.getStyle().getClass()));
+        slideMenuBottom.add(buyButton).expand().fill().row();
+
+        final TextButton menuButton = new TextButton("Menu", shadeSkin);    //set button style
+        menuButton.setStyle(shadeSkin.get("round", menuButton.getStyle().getClass()));
+        slideMenuBottom.add(menuButton).expand().fill().row();
+
+        slideMenuBottom.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                if (actor.equals(buyButton)) {
+                    stage.clear();
+                    loadBuyStage();
+                    world.buyMenu();
+                } else if (actor.equals(menuButton))
+                    world.menu();
+            }
+        });
+        //slideMenuLeft.add().height(300f).row(); // empty space
+        //slideMenuBottom.add(rateButton).pad(5).row();
+
+
+
+        //slideMenuBottom.background(image_backgroundY.getDrawable());
+        slideMenuBottom.top();
+
+        //System.out.println(rateButton.getX()+" "+shareButton.getX());
+
+
+
+
+        //slideMenuBottom.showManually(true); //show panel
+
+
+        menuButtonY.setName("menuButtonY");
+        image_backgroundY.setName("IMAGE_BACKGROUNDY");
+
+        /*slideMenuBottom.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                Actor actor = event.getTarget();
+                //System.out.println(32123132132321f);
+                if (actor.getName().equals("BUY")) {
+                    //Gdx.app.debug(TAG, "Rate button clicked.");
+                    System.out.println("Rate button clicked.");
+                    isTouched=true;
+                } else if (actor.getName().equals("MENU")) {
+                    //Gdx.app.debug(TAG, "Share button clicked.");
+                    System.out.println("Share button clicked.");
+                    isTouched=true;
+                } else if (actor.getName().equals("IMAGE_BACKGROUNDY")){
+                    System.out.println("backgroundY touched");
+                    isTouched=true;
+                }
+                super.cancel();
+            }
+        });*/
+
+        menuButtonY.addListener(new ClickListener(){//separate listener for touch up events
+            public boolean touchDown(InputEvent event, float x, float y, int pnt, int btn) {
+                if (event.getTarget().getName().equals("menuButtonY")) {//have to be moving mouse slow enough to touch
+                    boolean closed = slideMenuBottom.isCompletelyClosedY();
+                    image_backgroundY.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
+                    slideMenuBottom.showManually(closed);
+                    isTouched=true;
+                }
+                super.cancel(); return true;
+            }});
+
+        //image_backgroundY.addListener(listenerY);
+        //slideMenuBottom.addListener(listenerY);
+        //private static final String TAG = TestScreen.class.getSimpleName();
+
+        //slideMenuBottom.pack();
+        //slideMenuBottom.setVisible(true);
+        //slideMenuBottom.setWidth(camWidth);
+        //slideMenuBottom.align(Align.center|Align.top);
+        //slideMenuBottom.setPosition(0, Gdx.graphics.getHeight());
+        //slideMenuBottom.setFillParent(true);
+    }
+    public void update(float delta){
+        stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
+        if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
+    }
+}
+//aimPad.
+//rootTable.row();
 
         /*
         Table buttonsTable = new Table();
@@ -251,216 +488,3 @@ public class UiHandler {
             }
         });
         */
-        setupSlidingMenus(camWidth,camHeight);
-        //stage.addCaptureListener(slideMenuLeft.getListeners().get(0));stage.addCaptureListener(slideMenuBottom.getListeners().get(0));
-        //  stage.addCaptureListener(menuButtonX.getListeners().get(0));stage.addCaptureListener(men    uButtonY.getListeners().get(0));
-    }
-
-    public void setupSlidingMenus(float camWidth,float camHeight) {
-        /*logo = tA.findRegion("companyLogo");
-        slidemenuBg = tA.findRegion("slideMenuBackground");
-        menuButton = tA.findRegion("menuButton");
-        shareButton = tA.findRegion("shareButton");
-        rateButton = tA.findRegion("rateButton");*/
-        /**     ****************************************LEFT SLIDING MENU*****************************************     **/
-        slideMenuLeft = new SlideMenu(camWidth/9f,camHeight/2f,"left",camWidth,camHeight,movPad.getHeight()/2);//left or down
-        Sprite temp=new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
-        temp.setColor(new Color(0,0,0,0.5f));
-        final Image image_backgroundX = new Image(new SpriteDrawable(temp));
-        menuButtonX = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
-        final Image rateButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rateButton"));
-        final Image shareButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
-
-        // add items into drawer panel.
-        slideMenuLeft.add(shareButton).size(63, 85).pad(0, 52, 5, 52).expandX().row();
-        //slideMenuLeft.add().height(300f).row(); // empty space
-        slideMenuLeft.add(rateButton).pad(35, 52, 35, 52).expandX().row();
-        //slideMenuLeft.add(icon_share).pad(35, 52, 35, 52).expandX().row();
-
-        //icon_off_music.setVisible(false);
-        //slideMenuLeft.stack(icon_music, icon_off_music).pad(52, 52, 300, 52).expandX().row(); //one on top of the other
-
-        // setup attributes for menu navigation slideMenuLeft.
-        slideMenuLeft.setBackground(image_backgroundX.getDrawable());
-        slideMenuLeft.top().left();
-        //slideMenuLeft.setWidthStartDrag(0);
-        //slideMenuLeft.setWidthBackDrag(0);
-        //slideMenuLeft.setTouchable(Touchable.enabled);
-
-        /* z-index = 1 */
-        // add image_background as a separating actor into stage to make smooth shadow with dragging value.
-        //image_background.setWidth(slideMenuLeft.getWidth()*0.1f);image_background.setHeight(slideMenuLeft.getHeight());
-        //uiHandler.stage.addActor(image_background);
-        //slideMenuLeft.setFadeBackground(image_background, 0.5f);
-
-        /* z-index = 2 */
-        stage.addActor(slideMenuLeft);
-
-        /* z-index = 3 */
-        // add button_menu as a separating actor into stage to rotates with dragging value.
-        menuButtonX.setWidth(menuButtonX.getWidth()*0.4f);menuButtonX.setHeight(menuButtonX.getHeight()*0.9f);menuButtonX.setColor(1,1,1,0.5f);
-        menuButtonX.setOrigin(Align.center);
-        //menuButtonActor=menuButtonX;
-        stage.addActor(menuButtonX);
-        slideMenuLeft.setMoveMenuButton(menuButtonX);
-        //slideMenuLeft.setRotateMenuButton(menuButtonX, 90f);
-
-        // Optional
-        /*
-         Image image_shadow = new Image(atlas.findRegion("image_shadow"));
-         image_shadow.setHeight(NAV_HEIGHT);
-         image_shadow.setX(NAV_WIDTH);
-         slideMenuLeft.setAreaWidth(NAV_WIDTH + image_shadow.getWidth());
-         slideMenuLeft.addActor(image_shadow);*/
-
-        // show the panel
-        //slideMenuLeft.showManually(true);  //show panel manually
-        //System.out.println(image_backgroundX.getImageY());
-        //System.out.println(image_backgroundY.getImageY());
-
-            rateButton.setName("RATE");
-            shareButton.setName("SHARE");
-            //icon_music.setName("MUSIC_ON");
-            //icon_off_music.setName("MUSIC_OFF");
-
-        menuButtonX.setName("menuButtonX");
-        //image_backgroundX.setName("IMAGE_BACKGROUNDX");
-
-        slideMenuLeft.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                //super.touchUp(event, x, y, 0, 0);
-                Actor actor = event.getTarget();
-                //System.out.println(32123132132321f);
-                if (actor.getName().equals("RATE")) {
-                    //Gdx.app.debug(TAG, "Rate button clicked.");
-                    System.out.println("Rate button clicked.");
-                    isTouched=true;
-                } else if (actor.getName().equals("SHARE")) {
-                    //Gdx.app.debug(TAG, "Share button clicked.");
-                    System.out.println("Share button clicked.");
-                    isTouched=true;
-                } else if (actor.getName().contains("MUSIC")) {
-                    //Gdx.app.debug(TAG, "Music button clicked.");
-                    System.out.println("Music button clicked.");
-                    //icon_music.setVisible(!icon_music.isVisible());
-                    //icon_off_music.setVisible(!icon_off_music.isVisible());
-                    isTouched=true;
-                } else if (actor.getName().equals("IMAGE_BACKGROUNDX")){
-                    System.out.println("backgroundX touched");
-                    isTouched=true;
-                }
-                super.cancel();
-            }
-        });
-
-        menuButtonX.addListener(new ClickListener(){//separate listener for touch up events
-            public boolean touchDown(InputEvent event, float x, float y, int pnt, int btn) {
-                System.out.println(Math.abs(Gdx.input.getDeltaX()));
-                if (event.getTarget().getName().equals("menuButtonX")) {
-                    System.out.println("Left menu clicked");
-                    boolean closed = slideMenuLeft.isCompletelyClosedX();
-                    image_backgroundX.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
-                    slideMenuLeft.showManually(closed);
-                    isTouched=true;
-                }
-                super.cancel(); return true;
-            }});
-        //Utils.addListeners(listener, icon_rate, icon_share, icon_music, icon_off_music, menuButton, image_background);
-
-
-        /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
-        slideMenuBottom = new SlideMenu(.7f*camWidth/2.75f,camHeight/7f,"down",camWidth,camHeight, 0);
-        stage.addActor(slideMenuBottom);
-        final Image image_backgroundY = new Image(new SpriteDrawable(temp));
-        menuButtonY = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
-        menuButtonY.rotateBy(90);menuButtonY.setWidth(menuButtonY.getWidth()*0.4f);menuButtonY.setHeight(menuButtonY.getHeight()*0.9f);menuButtonY.setColor(1,1,1,0.5f);
-        menuButtonY.setOrigin(Align.center);
-        //menuButtonActor=menuButtonY;
-        stage.addActor(menuButtonY);
-        slideMenuBottom.setMoveMenuButton(menuButtonY);
-
-
-        /******* BUTTONS ******/
-        final TextButton buyButton = new TextButton("Buy", shadeSkin);    //set button style
-        buyButton.setStyle(shadeSkin.get("round", buyButton.getStyle().getClass()));
-        slideMenuBottom.add(buyButton).expand().fill().row();
-
-        final TextButton menuButton = new TextButton("Menu", shadeSkin);    //set button style
-        menuButton.setStyle(shadeSkin.get("round", menuButton.getStyle().getClass()));
-        slideMenuBottom.add(menuButton).expand().fill().row();
-
-        slideMenuBottom.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (actor.equals(buyButton))
-                    myWorld.buyMenu();
-                else if (actor.equals(menuButton))
-                    myWorld.menu();
-            }
-        });
-        //slideMenuLeft.add().height(300f).row(); // empty space
-        //slideMenuBottom.add(rateButton).pad(5).row();
-
-
-
-        //slideMenuBottom.background(image_backgroundY.getDrawable());
-        slideMenuBottom.top();
-
-        //System.out.println(rateButton.getX()+" "+shareButton.getX());
-
-
-
-
-        //slideMenuBottom.showManually(true); //show panel
-
-
-        menuButtonY.setName("menuButtonY");
-        image_backgroundY.setName("IMAGE_BACKGROUNDY");
-
-        /*slideMenuBottom.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                Actor actor = event.getTarget();
-                //System.out.println(32123132132321f);
-                if (actor.getName().equals("BUY")) {
-                    //Gdx.app.debug(TAG, "Rate button clicked.");
-                    System.out.println("Rate button clicked.");
-                    isTouched=true;
-                } else if (actor.getName().equals("MENU")) {
-                    //Gdx.app.debug(TAG, "Share button clicked.");
-                    System.out.println("Share button clicked.");
-                    isTouched=true;
-                } else if (actor.getName().equals("IMAGE_BACKGROUNDY")){
-                    System.out.println("backgroundY touched");
-                    isTouched=true;
-                }
-                super.cancel();
-            }
-        });*/
-
-        menuButtonY.addListener(new ClickListener(){//separate listener for touch up events
-            public boolean touchDown(InputEvent event, float x, float y, int pnt, int btn) {
-                if (event.getTarget().getName().equals("menuButtonY")) {//have to be moving mouse slow enough to touch
-                    boolean closed = slideMenuBottom.isCompletelyClosedY();
-                    image_backgroundY.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
-                    slideMenuBottom.showManually(closed);
-                    isTouched=true;
-                }
-                super.cancel(); return true;
-            }});
-
-        //image_backgroundY.addListener(listenerY);
-        //slideMenuBottom.addListener(listenerY);
-        //private static final String TAG = TestScreen.class.getSimpleName();
-
-        //slideMenuBottom.pack();
-        //slideMenuBottom.setVisible(true);
-        //slideMenuBottom.setWidth(camWidth);
-        //slideMenuBottom.align(Align.center|Align.top);
-        //slideMenuBottom.setPosition(0, Gdx.graphics.getHeight());
-        //slideMenuBottom.setFillParent(true);
-    }
-    public void update(float delta){
-        stage.act(delta);//check if listened ui was touched
-        if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
-    }
-}

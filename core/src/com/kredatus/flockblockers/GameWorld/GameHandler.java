@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.GameWorld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.kredatus.flockblockers.FlockBlockersMain;
@@ -26,7 +27,7 @@ public class GameHandler implements Screen {
     public BirdHandler birdHandler;
     private TargetHandler targetHandler;
     //private TurretHandler turretHandler;
-    private TinyBirdHandler tinyBirdHandler;
+    public TinyBirdHandler tinyBirdHandler;
     public UiHandler uiHandler;
     public LightHandler lightHandler;
     public static float runTime;
@@ -37,38 +38,46 @@ public class GameHandler implements Screen {
     //private Actor menuButtonActor;
     public float screenWidth, screenHeight;
     public static int camWidth, camHeight;
+    public Preferences prefs=Gdx.app.getPreferences("skyDefenders");
     public GameHandler(Skin shadeSkin, int camWidth, int camHeight) {
         screenWidth=((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.screenWidth;screenHeight=((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.screenHeight;
         this.camWidth=camWidth;this.camHeight=camHeight;
+        world = new GameWorld(camWidth, camHeight);
+
         //System.out.println("width: "+camWidth);
 
         tinyBirdHandler = new TinyBirdHandler();
 
         birdHandler= new BirdHandler(camWidth, camHeight, birdType);
-        bgHandler = new BgHandler(camWidth, camHeight, birdType,birdHandler,tinyBirdHandler);
+        bgHandler = new BgHandler(world,camWidth,camHeight,birdType,birdHandler);
 
         //turretHandler = new TurretHandler(camWidth, camHeight);
-        lightHandler= new LightHandler(bgHandler);
-        bgHandler.setupTweens(camWidth, camHeight,tinyBirdHandler,lightHandler);
+        lightHandler = new LightHandler(bgHandler);
+        bgHandler.survivalBgTweens(tinyBirdHandler,lightHandler);
         targetHandler = new TargetHandler(birdHandler);
-        airship=new Airship(camWidth, camHeight, birdType, birdHandler,targetHandler,lightHandler);
+
+        uiHandler=new UiHandler(world, camWidth, camHeight, shadeSkin);
+
+        airship=new Airship(world,camWidth, camHeight, birdType, birdHandler,targetHandler,lightHandler);
+
         birdHandler.setAirshipPos(airship);
         targetHandler.setAirship(airship);
 
-        world = new GameWorld(airship, camWidth, camHeight, bgHandler,birdHandler,targetHandler,tinyBirdHandler,uiHandler,lightHandler);
+        world.survival(tinyBirdHandler,lightHandler,airship,bgHandler);
+        renderer = new GameRenderer(world,lightHandler,tinyBirdHandler,birdHandler,bgHandler,targetHandler,uiHandler,airship, camWidth, camHeight);
+        renderer.prepareTransition(0, 0, 0, 1.7f);
 
-
-        renderer = new GameRenderer(world, camWidth, camHeight);
-        renderer.prepareTransition(0,0,0,3);
         bgHandler.setRendererAndCam(renderer);
         lightHandler.setCam(renderer);
 
 
-        uiHandler=new UiHandler(camWidth, camHeight, world, shadeSkin);
-        world.setRendererAndUIHandler(renderer, uiHandler);
+
+        world.initialize(bgHandler,birdHandler,targetHandler,tinyBirdHandler,uiHandler,lightHandler,renderer,airship);
+
         InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
 
         renderer.assignButtonsUsingInputHandlerAndUiHandler(inputHandler, uiHandler);
+        Gdx.input.setInputProcessor(((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.stage);
     }
 
     @Override
@@ -138,6 +147,15 @@ public class GameHandler implements Screen {
 
     @Override
     public void dispose() {
+
+        prefs.putInteger("burnerLvl",airship.burnerLvl);
+        prefs.putInteger("healthLvl",airship.healthLvl);
+        prefs.putInteger("armorLvl",airship.armorLvl);
+        prefs.putInteger("rackLvl",airship.rackLvl);
+        prefs.putInteger("speedLvl",airship.speedLvl);
+        prefs.putInteger("bgNumber",bgHandler.bgNumber);
+        prefs.flush();
+
         uiHandler.stage.dispose();
         uiHandler.shadeSkin.dispose();
     }

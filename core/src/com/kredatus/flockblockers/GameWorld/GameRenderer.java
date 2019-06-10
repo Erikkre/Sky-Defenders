@@ -58,7 +58,7 @@ public class GameRenderer {
     private List<SimpleButton> menuButtons;
     private List<SimpleButton> deathButtons;
     private SimpleButton readyButton, menuButton, nextButton;
-    private GameWorld myWorld;
+    private GameWorld world;
     public OrthographicCamera cam;
     public static ExtendViewport viewport;
     private ShapeRenderer shapeRenderer; private CustomShapeRenderer shapeRendererCust;
@@ -110,24 +110,25 @@ public class GameRenderer {
     private ShaderProgram flashShader;
 
 
-    public GameRenderer(GameWorld world, int camWidth, int camHeight) {
-        myWorld = world;
-        this.lightHandler=myWorld.lightHandler;
-        this.tinyBirdHandler=myWorld.tinyBirdHandler;
-        this.birdHandler=myWorld.birdHandler;
-        this.bgHandler=myWorld.bgHandler;
-        this.targetHandler =myWorld. targetHandler;
-        //this.turretHandler=myWorld.turretHandler;
-        this.uiHandler=myWorld.uiHandler;
-
+    public GameRenderer(GameWorld world,LightHandler lightHandler, TinyBirdHandler tinyBirdHandler, BirdHandler birdHandler, BgHandler bgHandler, TargetHandler targetHandler, UiHandler uiHandler, Airship airship, int camWidth, int camHeight) {
+        this.world = world;
+        this.lightHandler=lightHandler;
+        this.tinyBirdHandler=tinyBirdHandler;
+        this.birdHandler=birdHandler;
+        this.bgHandler=bgHandler;
+        this.targetHandler = targetHandler;
+        //this.turretHandler=turretHandler;
+        this.uiHandler=uiHandler;
+        this.airship = airship;
         this.camWidth=camWidth;
         this.camHeight=camHeight;
 
 
-        batcher = (SpriteBatch) ((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.stage.getBatch();
+        batcher = new SpriteBatch();
         //System.out.println("batcher color: "+batcher.getColor()+", white: "+new Color(1,1,1,1));
 
         cam=(OrthographicCamera)((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.stage.getCamera();
+        batcher.setProjectionMatrix(cam.combined);
 
         System.out.println("Height: "+camHeight);
         //cam.position.set(new Vector3(0,0,0));
@@ -146,7 +147,7 @@ public class GameRenderer {
         // Call helper methods to initialize instance variables
         initGameObjects();
         initAssets();
-        //setupTweens();
+        //survivalBgTweens();
         bigfont = new FreeTypeFontGenerator.FreeTypeFontParameter();
         smallfont = new FreeTypeFontGenerator.FreeTypeFontParameter();
         //smallfontLengthSetup();
@@ -170,7 +171,7 @@ public class GameRenderer {
         this.nextButton =  inputHandler.getNextButton();
         this.uiHandler=uiHandler;
     }
-    /*private void setupTweens() {
+    /*private void survivalBgTweens() {
         Tween.registerAccessor(Value.class, new ValueAccessor());
         manager = new TweenManager();
         Tween.to(alpha, -1, 0).target(0).ease(TweenEquations.easeOutQuad)
@@ -211,7 +212,7 @@ public void setRotate(float angle){
         invflipboostlist = bgHandler.getinvflipboostlist();
 */
 
-        airship = myWorld.airship;
+
         // table=uiHandler.table;
     }
 
@@ -264,30 +265,6 @@ public void setRotate(float angle){
 
         s0 = new GlyphLayout(storyfont, "Stories are told of a hero that only appears in times of great chaos,");
         s0len = s0.width;
-        s1 = new GlyphLayout(storyfont, "an elemental deity known simply as The Phoenix. Since the dawn of");
-        s1len = s1.width;
-        s2 = new GlyphLayout(storyfont, "time, it's infinite lives and elemental power are fueled by its home");
-        s2len = s2.width;
-        s3 = new GlyphLayout(storyfont, "star, Sol. After an impossible cosmic event, the universe has begun");
-        s3len = s3.width;
-        s4 = new GlyphLayout(storyfont, "to collapse. Reality is folding in on itself, worlds are destabilizing");
-        s4len = s4.width;
-        s5 = new GlyphLayout(storyfont, "and the Phoenix's purpose has been made clear. It must save the");
-        s5len = s5.width;
-        s6 = new GlyphLayout(storyfont, "universe once more. Able to traverse all planes of reality, it uses Sol's");
-        s6len = s6.width;
-        s7 = new GlyphLayout(storyfont, "power to stabilize worlds that it travels through. Only by absorbing");
-        s7len = s7.width;
-        s8 = new GlyphLayout(storyfont, "faraway fragments of Sol is it able to keep flying further away from");
-        s8len = s8.width;
-        s9 = new GlyphLayout(storyfont, "home. However, the closer it comes to saving a world, the less fragments");
-        s9len = s9.width;
-        s10 = new GlyphLayout(storyfont, "appear there for the Phoenix to use. The Phoenix will stop at nothing");
-        s10len = s10.width;
-        s11 = new GlyphLayout(storyfont, "to prevent the collapse of reality by travelling the universe and");
-        s11len = s11.width;
-        s12 = new GlyphLayout(storyfont, "stabilizing every last world.");
-        s12len = s12.width;
     }
 
     private void instrFontSetup() {
@@ -296,39 +273,10 @@ public void setRotate(float angle){
         instrfont = gamefont.generateFont(xxsmallfont);
         c0 = new GlyphLayout(instrfont, "1. TAP THE SCREEN TO MAKE THE PHOENIX FLY AWAY FROM THE CLOSEST GROUND");
         c0len = c0.width;
-        c1 = new GlyphLayout(instrfont, "2. DO NOT CRASH PHOENIX INTO WATER/EDGES; HE WILL HAVE TO REVIVE");
-        c1len = c1.width;
-        c2 = new GlyphLayout(instrfont, "3. GAIN POWER TO FLAP WINGS BY ABSORBING FIREBALLS, OR FRAGMENTS OF SOL");
-        c2len = c2.width;
-        c3 = new GlyphLayout(instrfont, "4. LARGER FRAGMENTS THAT GATHER AT EDGES OF THE WORLD HAVE MORE POWER");
-        c3len = c3.width;
-        c4 = new GlyphLayout(instrfont, "5. USABLE POWER TO FLAP WINGS-NUMBER AT TOP LEFT");
-        c4len = c4.width;
-        c5 = new GlyphLayout(instrfont, "6. FLYING FURTHER INCREASES WORLD STABILITY-PERCENTAGE AT TOP RIGHT");
-        c5len = c5.width;
-        c6 = new GlyphLayout(instrfont, "7. LESS FRAGMENTS APPEAR THE MORE THE PHOENIX STABILIZES THE WORLD");
-        c6len = c6.width;
-        c7 = new GlyphLayout(instrfont, "8. IF STABILITY REACHES 100 THEN PHOENIX WILL HAVE SAVED THE WORLD");
-        c7len = c7.width;/*
-        c7 = new GlyphLayout(instrfont, "\"Music: https://www.bensound.com/royalty-free-music");
-        c7len = c7.width;
-        c8 = new GlyphLayout(instrfont, "\"Fire.wav\" by SGAK of http://freesound.org");
-        c8len = c8.width;
-        c9 = new GlyphLayout(instrfont, "\nAll under CREATIVE COMMONS LICENSE");
-        c9len = c9.width;
-        c10 = new GlyphLayout(instrfont, "\n\n");
-        c10len = c10.width;*/
     }
 
     public void drawInstr() {
         instrfont.draw(batcher, "1. TAP THE SCREEN TO MAKE THE PHOENIX FLY AWAY FROM THE CLOSEST GROUND", cam.position.x - c0len / 2, camHeight / 11);
-        instrfont.draw(batcher, "2. DO NOT CRASH PHOENIX INTO WATER/EDGES; HE WILL HAVE TO REVIVE", cam.position.x - c1len / 2, 2 * camHeight / 11);
-        instrfont.draw(batcher, "3. GAIN POWER TO FLAP WINGS BY ABSORBING FIREBALLS, OR FRAGMENTS OF SOL", cam.position.x - c2len / 2, 3 * camHeight / 11);
-        instrfont.draw(batcher, "4. LARGER FRAGMENTS THAT GATHER AT EDGES OF THE WORLD HAVE MORE POWER", cam.position.x - c3len / 2, 4 * camHeight / 11);
-        instrfont.draw(batcher, "5. USABLE POWER TO FLAP WINGS-NUMBER AT TOP LEFT", cam.position.x - c4len / 2, 5 * camHeight / 11);
-        instrfont.draw(batcher, "6. FLYING FURTHER INCREASES WORLD STABILITY-PERCENTAGE AT TOP RIGHT", cam.position.x - c5len / 2, 6 * camHeight / 11);
-        instrfont.draw(batcher, "7. LESS FRAGMENTS APPEAR THE MORE THE PHOENIX STABILIZES THE WORLD", cam.position.x - c6len / 2, 7 * camHeight / 11);
-        instrfont.draw(batcher, "8. IF STABILITY REACHES 100 THEN PHOENIX WILL HAVE SAVED THE WORLD", cam.position.x - c7len / 2, 8 * camHeight / 11);
     }
 
     private void drawBackground() {
@@ -339,75 +287,7 @@ public void setRotate(float angle){
         batcher.draw(background2.getTexture(), background2.getX(), background2.getY(),
                background2.getWidth(), background2.getHeight());
         batcher.enableBlending();
-        //flip world
-        //batcher.draw(vertflipbgtexture, background3.getX(), background3.getY(),
-         //       background3.getWidth(), background3.getHeight());
 
-       //batcher.draw(horvertflipbgtexture, background4.getX(), background4.getY(),
-       //         background4.getWidth(), background4.getHeight());
-    }
-
-/*
-    private void specificdrawBoosts(ArrayList<Boost> boostlist) {
-        for (int i = 0; i < boostlist.size(); i++) {
-            rotate += 0.3;
-            batcher.draw(boosttexture, boostlist.get(i).getX(), boostlist.get(i).getY(), boostlist.get(i).getWidth() / 2.0f, boostlist.get(i).getHeight() / 2.0f, boostlist.get(i).getWidth(),
-                    boostlist.get(i).getHeight(), 1, 1, rotate);
-        }
-    }
-
-    private void drawBoosts() {
-        specificdrawBoosts(boostlist);
-        specificdrawBoosts(invboostlist);
-        specificdrawBoosts(flipboostlist);
-        specificdrawBoosts(invflipboostlist);
-    }*/
-
-    private void drawGlider(float runTime){
-        /*if (glider.isAlive()){
-            //setCamPosition( glider.getPosition().x + camWidth / 2.5f, glider.getPosition().y+glider.getHeight()/2);
-
-            if (glider.isNormalWorld()) {
-                if (glider.shouldntFlap()&& !myWorld.isReady()) {
-                    batcher.draw(gliderMid, glider.getPosition().x, glider.getPosition().y,
-                            glider.getWidth() / 2.0f, glider.getHeight() / 2.0f, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());
-                } else {
-                    batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x, glider.getPosition().y,
-                            glider.getWidth() / 2.0f, glider.getHeight() / 2.0f, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());
-                }
-            }
-            //inbetween flip world
-            else if (glider.betweenWorlds()) {
-                frontTexture = (TextureRegion) frontViewFlaps.getKeyFrame(runTime);
-                batcher.draw(frontTexture, glider.getPosition().x, glider.getPosition().y,
-                        (frontTexture.getRegionWidth()/gliderscaling)/ 2.0f, (frontTexture.getRegionHeight()/gliderscaling) / 2.0f,
-                        frontTexture.getRegionWidth()/gliderscaling, frontTexture.getRegionHeight()/gliderscaling, 1, 1, glider.getRotation() + 90);
-            } else {
-                if (glider.shouldntFlap()) {
-                    batcher.draw(vertflipgliderMid, glider.getPosition().x, glider.getPosition().y,
-                            glider.getWidth() / 2.0f, glider.getHeight() / 2.0f, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());
-                } else {
-                    batcher.draw((TextureRegion) flipflaps.getKeyFrame(runTime), glider.getPosition().x, glider.getPosition().y,
-                            glider.getWidth() / 2.0f, glider.getHeight() / 2.0f, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());
-                }
-            }
-        }else{
-            /*if (splashdown) {
-                if (glider.isNormalWorld()){
-                    cam.position.x = glider.getPosition().x - camWidth;
-                    cam.position.y = glider.getPosition().y - camHeight;
-                }else{
-                    cam.position.x = glider.getPosition().x - camWidth;
-                    cam.position.y = glider.getPosition().y + camHeight;
-                }
-                prepareTransition(0, 0, 0, 3f);
-                setCamPosition( glider.getPosition().x + camWidth / 2.5f, glider.getPosition().y);
-                splashdown=false;}
-            AssetHandler.frontViewFlaps.setFrameDuration((glider.distanceAfterDeath() / 200 + 0.17f));
-            frontTexture = (TextureRegion) frontViewFlaps.getKeyFrame(runTime);
-            batcher.draw(frontTexture, glider.getPosition().x, glider.getPosition().y, frontTexture.getRegionWidth() /gliderscaling/ 2.0f, frontTexture.getRegionHeight() /gliderscaling/ 2.0f,
-                    frontTexture.getRegionWidth()/gliderscaling, frontTexture.getRegionHeight()/gliderscaling, 1, 1, glider.getRotation() - 90);
-        }*/
     }
 
     public void drawCreditsbg() {
@@ -538,9 +418,9 @@ public void setRotate(float angle){
 
     private void drawScore() {
         //scorenumber=
-        //font.draw(batcher,  Integer.toString(myWorld.gold), (camWidth / 2f) - scorelen*2, 19.5f*camHeight/20f);
+        //font.draw(batcher,  Integer.toString(world.gold), (camWidth / 2f) - scorelen*2, 19.5f*camHeight/20f);
         //droidSerifFont.draw(batcher, "%", cam.position.x + (camWidth / 2) - 40, cam.position.y - camHeight / 2 + 5);
-        //font.draw(batcher, "POWER: " + (int)myWorld.boost, cam.position.x - (camWidth / 2) + 5, cam.position.y - camHeight / 2 + 5 );
+        //font.draw(batcher, "POWER: " + (int)world.boost, cam.position.x - (camWidth / 2) + 5, cam.position.y - camHeight / 2 + 5 );
     }
     /*
         public void setCamPositionOriginal(){
@@ -560,7 +440,7 @@ public void setRotate(float angle){
         }
     */
 
-    public void drawStory(float runTime, float delta) {
+    public void drawSurvival(float runTime, float delta) {
 //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
         for (TinyBird i : tinyBirdQueue){
             batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime+i.flapRandomFactor), i.pos.x-i.width/2, i.pos.y-i.height/2,
@@ -605,7 +485,7 @@ public void setRotate(float angle){
             }
         }
 
-        airship.draw(batcher, delta);   //after deadBirds but before activeBirds
+        drawAirship(delta);   //after deadBirds but before activeBirds
         if (airship.isFlashing){
             //batcher.setColor(1,1,1,1);
             batcher.setShader(null);
@@ -617,10 +497,7 @@ public void setRotate(float angle){
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.getRotation());
         } delegated to airship*/
 
-        for (Projectile j : projectileList) {
-            batcher.draw(j.texture, j.position.x-j.width/2, j.position.y-j.height/2,
-                    j.width/2-j.xPosOffset, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
-        }
+        drawProjectiles();
 
         for (BirdAbstractClass k : activeBirdQueue) {
             /*shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -651,7 +528,7 @@ public void setRotate(float angle){
             //batcher.end();
             //batcher.begin();
         }
-        airship.drawReticle(batcher);
+        drawAirshipReticle();
         /*
         shapeRendererCust.begin(ShapeRenderer.ShapeType.Line);
         shapeRendererCust.setColor(255,0,0, 1f);
@@ -660,26 +537,20 @@ public void setRotate(float angle){
         shapeRendererCust.polygon(airship.balloonHitbox.getTransformedVertices());
         shapeRendererCust.end();
 
-        /*
-        batcher.draw((TextureRegion) frontFlaps.getKeyFrame(runTime+0.1f), glider.getPosition().x-glider.getWidth()/2, glider.getPosition().y-glider.getHeight()/2,
-                glider.getPosition().x-glider.getWidth()/2,glider.getPosition().y-glider.getHeight()/2, glider.getWidth(), glider.getHeight(), 1, 1, glider.getRotation());*/
-
-        /*
-        storyfont.draw(batcher, "Stories are told of a hero that only appears in times of great chaos,", cam.position.x - s0len / 2, camHeight / 15);
-        storyfont.draw(batcher, "an elemental deity known simply as The Phoenix. Since the dawn of", cam.position.x - s2len / 2, 2 * camHeight / 15);
-        storyfont.draw(batcher, "time, its infinite lives and elemental power are fueled by its home", cam.position.x - s1len / 2, 3 * camHeight / 15);
-        storyfont.draw(batcher, "star, Sol. After an impossible cosmic event, the universe has begun", cam.position.x - s3len / 2, 4 * camHeight / 15);
-        storyfont.draw(batcher, "to collapse. Reality is folding in on itself, worlds are destabilizing", cam.position.x - s4len / 2, 5 * camHeight / 15);
-        storyfont.draw(batcher, "and the Phoenix's purpose has been made clear. It must save the", cam.position.x - s5len / 2, 6 * camHeight / 15);
-        storyfont.draw(batcher, "universe once more. Able to traverse all planes of reality, it uses Sol's", cam.position.x - s6len / 2, 7 * camHeight / 15);
-        storyfont.draw(batcher, "power to stabilize the worlds it travels through. Only by absorbing", cam.position.x - s7len / 2, 8 * camHeight / 15);
-        storyfont.draw(batcher, "faraway fragments of Sol is it able to keep flying further away from", cam.position.x - s8len / 2, 9 * camHeight / 15);
-        storyfont.draw(batcher, "home. However, the closer it comes to saving a world, the less fragments", cam.position.x - s9len / 2, 10 * camHeight / 15);
-        storyfont.draw(batcher, "appear there for the Phoenix to use. The Phoenix will stop at nothing", cam.position.x - s10len / 2, 11 * camHeight / 15);
-        storyfont.draw(batcher, "to prevent the collapse of reality by travelling the universe and", cam.position.x - s11len / 2, 12 * camHeight / 15);
-        storyfont.draw(batcher, "stabilizing every last world.", cam.position.x - s12len / 2, 13 * camHeight / 15);*/
+*/
     }
-
+    public void drawAirshipReticle(){
+        airship.drawReticle(batcher);
+    }
+    public void drawAirship(float delta){
+        airship.draw(batcher, delta);
+    }
+    public void drawProjectiles(){
+        for (Projectile j : projectileList) {
+            batcher.draw(j.texture, j.position.x-j.width/2, j.position.y-j.height/2,
+                    j.width/2-j.xPosOffset, j.height/2, j.width, j.height, 1f, 1f, j.rotation);
+        }
+    }
     public void render(float delta, float runTime) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
@@ -691,7 +562,7 @@ public void setRotate(float angle){
 
         //batcher.enableBlending();
 
-        if (myWorld.isSurvival()) {
+        if (world.isSurvival()) {
             /*if (runTime<2){
             prepareTransition(0, 0, 0, 10f);}*/
 
@@ -699,7 +570,7 @@ public void setRotate(float angle){
             batcher.end();
             lightHandler.renderBack();
             batcher.begin();
-            drawStory(runTime, delta);
+            drawSurvival(runTime, delta);
 
             drawScore();
             batcher.flush();
@@ -709,13 +580,13 @@ public void setRotate(float angle){
 
             lightHandler.renderFront();
             batcher.begin();
-       /* }  else if (myWorld.isRunning()) {
+       /* }  else if (world.isRunning()) {
             drawBackground();
             drawGlider(runTime);
             //drawBoosts();
             drawScore();
 
-        } else if (myWorld.isReady()) {
+        } else if (world.isReady()) {
             drawBackground();
             //drawBoosts();
             if (AssetHandler.getHighScore()<15){
@@ -724,35 +595,47 @@ public void setRotate(float angle){
             drawGlider(runTime);
             readyButton.draw(batcher);
             drawScore();
-*/
-        } else if (myWorld.isMenu()) {
+*/      } else if (world.isBuyMenu()){
+            drawBackground();
+
+            drawAirship(delta);
+            drawAirshipReticle();
+            drawProjectiles();
+            drawScore();
+            batcher.flush();
+            batcher.end();
+            uiHandler.stage.draw();
+            //batcher.setColor(1,1,1,batcher.getColor().a);
+            batcher.begin();
+
+        } else if (world.isMenu()) {
             drawBackground();
             //sunshineManager.update(delta);
             //drawSpritesMenu(runTime);
             //drawMenuUI();
 
-        } else if (myWorld.isDeathMenu()) {
+        } else if (world.isDeathMenu()) {
             drawBackground();
             //sunshineManager2.update(delta);
             drawSpritesDeathMenu(runTime);
             drawDeathMenu();
 
-        } else if (myWorld.isCredits()) {
+        } else if (world.isCredits()) {
             drawCreditsbg();
             menuButton.draw(batcher);
 
-        } else if (myWorld.isInstr()) {
+        } else if (world.isInstr()) {
             drawInstrbg();
             menuButton.draw(batcher);
             nextButton.draw(batcher);
 
-        } else if (myWorld.isLogos()) {
-            if (myWorld.startGame) {
+        } else if (world.isLogos()) {
+            /*if (world.startGame) {
                 drawBackground();
                 batcher.end();
                 lightHandler.renderBack();
                 batcher.begin();
-                drawStory(runTime, delta);
+                drawSurvival(runTime, delta);
 
                 drawScore();
                 // batcher.flush();
@@ -764,10 +647,11 @@ public void setRotate(float angle){
                 batcher.begin();
 
             }
-            myWorld.drawLogos(batcher,camWidth,camHeight);
+            world.drawLogos(batcher,camWidth,camHeight);*/
         }
         //`System.out.println(batcher.getColor());
         //System.out.println(batcher.getColor().r+" "+batcher.getColor().g+" "+batcher.getColor().b+" "+batcher.getColor().a);
+
         batcher.end();
         //make usre having outside of batcher does nothing
 
@@ -780,6 +664,7 @@ public void setRotate(float angle){
     public void prepareTransition(int r, int g, int b, float duration) {
         transitionColor.set(r / 255.0f, g / 255.0f, b / 255.0f, 1);
         alpha.set(1);
+        manager.killAll();
         Tween.to(alpha, -1, duration).target(0)
                 .ease(TweenEquations.easeOutQuad).start(manager);
     }
