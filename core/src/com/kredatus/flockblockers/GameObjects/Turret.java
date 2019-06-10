@@ -148,7 +148,7 @@ public class Turret {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                sound.play(0.5f);
+                try{sound.play(0.5f);}catch(Exception e){}
                 //System.out.println("*******************************************Last shot time: "+lastShotTime+"**********************************************************");
                 if (projRotates){
                     rotation=targetRot;
@@ -298,7 +298,7 @@ public class Turret {
                 }
             }
 
-            if (!UiHandler.aimPad.isTouched() )   {
+            if (!UiHandler.aimPad.isTouched() ) {
                 lastFingerPosition.set(InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)),-(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight));
                 setRotation(0, 0,  lastFingerPosition.y - pos.y,lastFingerPosition.x  - pos.x, false);
             }

@@ -54,7 +54,8 @@ public class UiHandler {
 
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
         //https://github.com/kotcrab/vis-ui
-        VisUI.load(shadeSkin);
+        if (!VisUI.isLoaded())VisUI.load(shadeSkin);
+
         this.world=world;
         this.camWidth=camWidth;this.camHeight=camHeight;
         this.shadeSkin = shadeSkin;
