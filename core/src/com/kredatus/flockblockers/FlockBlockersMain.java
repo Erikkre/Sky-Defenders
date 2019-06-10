@@ -20,7 +20,7 @@ import box2dLight.Light;
 
 
 public class FlockBlockersMain extends Game {
-    public static final boolean fastTest = false, dontPauseOnUnfocus = false;
+    public static final boolean fastTest = false, dontPauseOnUnfocus = true;
     public static int birdType=1;
     public Loader loader;
     public static long startTime;

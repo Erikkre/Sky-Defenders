@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.kotcrab.vis.ui.VisUI;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.ui.SlideMenu;
@@ -52,6 +53,8 @@ public class UiHandler {
     }
 
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
+        //https://github.com/kotcrab/vis-ui
+        VisUI.load(shadeSkin);
         this.world=world;
         this.camWidth=camWidth;this.camHeight=camHeight;
         this.shadeSkin = shadeSkin;

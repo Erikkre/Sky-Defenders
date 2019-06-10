@@ -189,7 +189,7 @@ public class Loader implements Screen {
 //- logoFire.particleEffect.getEmitters().get(0).getSpawnWidth().getHighMax()/2f``
         logoFire.setPosition(camWidth / 2f , camHeight / 2f );
 
-        logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{244/255f,216/255f,216/255f});
+        //logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{244/255f,216/255f,216/255f});
 
         stage.addActor(logoFire);
 
