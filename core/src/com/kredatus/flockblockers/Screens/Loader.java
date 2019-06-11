@@ -148,7 +148,7 @@ public class Loader implements Screen {
 
             loadBar.setValue(manager.getProgress() + 0.032f);
 
-            //setFireColor();
+            setFireColor();
             percentDoneLabel.setText((int)(manager.getProgress()*100)+"%");
         }
     }

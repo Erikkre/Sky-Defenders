@@ -80,7 +80,7 @@ public class BgHandler {
         isPastStoryIntro=true;
         background = new Background(horiz.get(), vert.get(), bgw, separatorHeight, Loader.bgList.get(bgNumber++));
         background2 = new Background(horiz.get(), background.getTailY(), bgw, bgh, Loader.bgList.get(bgNumber++));
-        System.out.println(((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.gameHandler);
+        //System.out.println(((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.gameHandler);
         survivalBgTweens(tinyBirdHandler,lightHandler);
     }
 

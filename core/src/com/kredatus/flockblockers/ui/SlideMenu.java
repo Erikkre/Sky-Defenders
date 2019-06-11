@@ -220,7 +220,6 @@ public class SlideMenu extends Table {
     public void setMoveMenuButton(Actor actor) {
         if (originEdge.equals("left")){
             actor.setY((camHeight/2f +offsetFromCenter)- actor.getHeight()/2f);
-            System.out.println(actor.getY()+"actory");
         } else if (originEdge.equals("down")){
             actor.setX((camWidth/2f+offsetFromCenter)-actor.getWidth()/2f);
         }

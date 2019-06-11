@@ -49,8 +49,8 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             cityP17 = new Vector2(0.9953515625f   * bgw, 0.60302776707f * bgStackHeight);
 
     //PARAMETER CONFIG
-    private static int cloudDia=1700, sunDia=1000, xxxxsDia=30, xxxsDia=50, xxsDia=80,xsDia=130, sDia=180, smDia=230, mDia=280, mlDia=350, lDia=450, xlDia=700, xxlDia=1000, xxxlDia=1300, xxxxlDia=1600;
-    private static float cloudA=1.00f, sunA=0.85f,  xxsA=0.23f, xsA=0.35f, sA=0.46f,smA=0.56f,mA=0.65f,mlA=0.73f, lA =0.80f,xlA=0.86f, xxlA=0.91f, xxxlA=0.95f, xxxxlA=1.00f;
+    private static int cloudDia=3000, sunDia=1000, xxxxsDia=30, xxxsDia=50, xxsDia=80,xsDia=130, sDia=180, smDia=230, mDia=280, mlDia=350, lDia=450, xlDia=700, xxlDia=1000, xxxlDia=1300, xxxxlDia=1600;
+    private static float cloudA=0.60f, sunA=0.85f,  xxsA=0.23f, xsA=0.35f, sA=0.46f,smA=0.56f,mA=0.65f,mlA=0.73f, lA =0.80f,xlA=0.86f, xxlA=0.91f, xxxlA=0.95f, xxxxlA=1.00f;
 
     public static float rayHandlerAmbLightLvl=0.75f;
     public LightHandler(BgHandler bgHandler) {

@@ -54,7 +54,7 @@ public class TargetHandler {
 
             if (activeBirdQueue.size()!=activeQueueSize){
                 //System.out.println("update size");
-                curDist= (float) Math.sqrt(Math.pow(Math.abs(airship.pos.x-i.x),2) + Math.pow(Math.abs(airship.pos.y-airship.rackHeight-i.y),2));
+                curDist= (float) Math.sqrt(Math.pow(Math.abs(airship.pos.x-i.x),2) + Math.pow(Math.abs(airship.pos.y-airship.rackHeight.get()-i.y),2));
             }
 
             //System.out.println(curDist);

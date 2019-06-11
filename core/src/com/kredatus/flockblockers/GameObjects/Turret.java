@@ -182,35 +182,29 @@ public class Turret {
     }
 
     public void startFiring() {
-        if (!firing) {
-            setupFiring();
-            if (!firingStoppedByGamePause)
-                timeSinceLastShot = (int) (System.currentTimeMillis() - lastShotTime);
-            else
-                timeSinceLastShot = (int) ((System.currentTimeMillis() - GameHandler.timeOfResume) + (GameHandler.timeOfPause - lastShotTime));    //gets time since last shot in game time without real life pause
-            //System.out.println("Time since last shot: "+timeSinceLastShot+", firing interval: "+firingInterval);
+        setupFiring();
+        if (!firingStoppedByGamePause) timeSinceLastShot=(int) (System.currentTimeMillis()-lastShotTime);
+        else timeSinceLastShot=(int) ((System.currentTimeMillis()-GameHandler.timeOfResume)+(GameHandler.timeOfPause-lastShotTime));    //gets time since last shot in game time without real life pause
+        //System.out.println("Time since last shot: "+timeSinceLastShot+", firing interval: "+firingInterval);
 
-            try {
-                if (projRotates || turretPullsBack) {
-                    timer.scheduleAtFixedRate(timerTask, (int) preThrowActionDur, firingInterval);
-                } else if (timeSinceLastShot < firingInterval) {
-                    timer.scheduleAtFixedRate(timerTask, firingInterval - timeSinceLastShot, firingInterval);
-                } else {
-                    timer.scheduleAtFixedRate(timerTask, 0, firingInterval);
-                }
-                firing = true;
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-                timer = new Timer();
+        try {
+            if (projRotates || turretPullsBack) {
+                timer.scheduleAtFixedRate(timerTask, (int) preThrowActionDur, firingInterval);
+            } else if (timeSinceLastShot < firingInterval) {
+                timer.scheduleAtFixedRate(timerTask, firingInterval - timeSinceLastShot, firingInterval);
+            } else {
+                timer.scheduleAtFixedRate(timerTask, 0, firingInterval);
             }
+            firing = true;
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            timer=new Timer();
         }
     }
 
     public void stopFiring() {
-        if (firing) {
-            firing = false;
-            timerTask.cancel();
-        }
+        firing = false;
+        timerTask.cancel();
         //System.out.println("cancelled");
     }
 
@@ -267,7 +261,7 @@ public class Turret {
         /*if (turretType=='c'&&lvl==0){
             System.out.print("targetPointer: "+gunTargetPointer+", turret's target bird: "+targetBird+" ");
         }*/
-        if (     Gdx.input.justTouched()  && gunTargetPointer==-1 && !UiHandler.isTouched   ) {   //airShip updates first so takes the spot
+        if (   Gdx.input.justTouched()  && gunTargetPointer==-1 && !UiHandler.isTouched   ) {   //airShip updates first so takes the spot
 
             //System.out.println("touched");
             if (Airship.airshipTouchPointer >= 0) {
@@ -284,7 +278,6 @@ public class Turret {
             } else {
                 gunTargetPointer = 0;
                 //if (targetBird!=null)targetBird=null;
-
                 //System.out.println("Not set and GunTargetPointer set to: " + gunTargetPointer);
             }
         }
@@ -316,25 +309,34 @@ public class Turret {
             if (!firing && (targetAquired||projRotates)) {
                 startFiring();
             }
-        } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer))&&!firingStoppedByGamePause) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
+        } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
             gunTargetPointer=-1;                                                   //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
             //System.out.println("GunTargetPointer set to: "+gunTargetPointer+" because "+(!Gdx.input.isTouched(gunTargetPointer))+" and "+(Airship.airshipTouchPointer==gunTargetPointer));
 
             //System.out.println("Set Bird if closer*****************************************");
-            BirdAbstractClass target=null;
-            double distance;
-            if (targetBird!=null){
-                if (activeBirdQueue.size()>1) {//need min 2 birds to switch between
-                    double minDistance=camHeight*3f;
-                    for (BirdAbstractClass i : activeBirdQueue) {//if theres a bird closer to the reticle when we drop it than the current targetBird would be
-                        distance=Math.sqrt(Math.pow(lastFingerPosition.x - i.x, 2) + (Math.pow(lastFingerPosition.y - i.y, 2)));
-                        if (distance<minDistance) {minDistance=distance;target=i;}
+            if (!firingStoppedByGamePause) {
+                BirdAbstractClass target = null;
+                double distance;
+                if (targetBird != null) {
+                    if (activeBirdQueue.size() > 1) {//need min 2 birds to switch between
+                        double minDistance = camHeight * 3f;
+                        for (BirdAbstractClass i : activeBirdQueue) {//if theres a bird closer to the reticle when we drop it than the current targetBird would be
+                            distance = Math.sqrt(Math.pow(lastFingerPosition.x - i.x, 2) + (Math.pow(lastFingerPosition.y - i.y, 2)));
+                            if (distance < minDistance) {
+                                minDistance = distance;
+                                target = i;
+                            }
+                        }
+                        if (minDistance < Math.sqrt(Math.pow(lastFingerPosition.x - targetBird.x, 2) + (Math.pow(lastFingerPosition.y - targetBird.y, 2)))) {
+                            targetBird = target;
+                            //System.out.println("Change target");
+                        }
                     }
-                    if (minDistance < Math.sqrt(Math.pow(lastFingerPosition.x - targetBird.x, 2) + (Math.pow(lastFingerPosition.y - targetBird.y, 2)))) {
-                        targetBird = target;
-                        //System.out.println("Change target");
-                    }
+                } else if (firing) {
+                    stopFiring();
                 }
+            } else if (targetBird==null&&firing){
+                    stopFiring();
             }
             if (preThrowSpin) preThrowSpin=false;
             if (pullBackThenThrow) pullBackThenThrow=false;
