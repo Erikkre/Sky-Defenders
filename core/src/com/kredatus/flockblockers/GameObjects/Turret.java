@@ -28,7 +28,7 @@ public class Turret {
     private int[] rotList =new int[] {1,2,3, 5, 7, 10, 13, 17, 22, 30}, accList=new int[] {28, 22, 16, 10, 2};    //rotation rates, accuracy disparity in degrees (divide by 2), so highest innacuracy is 14 lowest is 1 degree off from target
     public int dmgUpCounter, penUpCounter, rofUpCounter, sprUpCounter, rotUpCounter, accUpCounter,  spr, acc=accList[0], rot=rotList[0];   //rot = rotationSpeed
     public int width,height;
-    public Vector2 pos, origPosition;
+    public Vector2 pos, distanceFromAirship;
     private float camWidth, camHeight;
     public float dmg, pen, rof;
     public int rotation, targetRot, behindRotation, spreadAngle=50;
@@ -82,12 +82,12 @@ public class Turret {
         }
     }
 
-    public Turret(char turretType, Vector2 pos, Airship airship, BirdHandler birdHandler, TargetHandler targetHandler){
+    public Turret(char turretType, Vector2 distanceFromAirship, Airship airship, BirdHandler birdHandler, TargetHandler targetHandler){
         this.targetHandler=targetHandler;
         this.airship=airship;
         this.activeBirdQueue=birdHandler.activeBirdQueue;
-        this.pos = pos;
-        this.origPosition= pos.cpy();
+        this.pos = new Vector2(airship.pos.x+ distanceFromAirship.x,airship.pos.y- distanceFromAirship.y);
+        this.distanceFromAirship = distanceFromAirship;
         this.camWidth = GameHandler.camWidth;
         this.camHeight=GameHandler.camHeight;
         this.turretType= turretType;
