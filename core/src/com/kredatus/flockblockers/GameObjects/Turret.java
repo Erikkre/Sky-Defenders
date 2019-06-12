@@ -205,6 +205,8 @@ public class Turret {
     public void stopFiring() {
         firing = false;
         timerTask.cancel();
+        if (preThrowSpin) preThrowSpin=false;
+        if (pullBackThenThrow) pullBackThenThrow=false;
         //System.out.println("cancelled");
     }
 
@@ -378,15 +380,11 @@ public class Turret {
                     //System.out.print("Stop firing 1");
                     stopFiring();
                     targetBird=null;
-                    if (preThrowSpin) preThrowSpin=false;
-                    if (pullBackThenThrow) pullBackThenThrow=false;
                 }
             } else if (firing) {
                 //System.out.print("Stop firing 2");
                 stopFiring();
                 targetBird=null;
-                if (preThrowSpin) preThrowSpin=false;
-                if (pullBackThenThrow) pullBackThenThrow=false;
             }
         }
     }
