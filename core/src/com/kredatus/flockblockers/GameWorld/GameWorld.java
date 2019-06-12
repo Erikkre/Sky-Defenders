@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameObjects.Turret;
@@ -158,7 +159,14 @@ public class GameWorld {
     private void updateBuyMenu(float delta, float runTime) {
         bgHandler.update(delta);
         uiHandler.update(delta);
+
         for (Projectile i : targetHandler.projectileList){ i.update();}
+        for (BirdAbstractClass i : birdHandler.deadBirdQueue){
+                i.update(delta, runTime);
+                if (i.isOffCam()&&i.coinList==null) {
+                    birdHandler.deadBirdQueue.remove(i);
+                }
+        }
         airship.update(delta);
         //tinyBirdHandler.update(delta);
         //lightHandler.foreRayHandler.update();  //used for airship and gun lights too
@@ -252,9 +260,8 @@ public class GameWorld {
         //bgHandler.onRestart();
         //renderer.setCamPositionOriginal();
         currentState = GameState.MENU;
-        renderer.prepareTransition(0, 0, 0, 0.7f);}
-
-
+        renderer.prepareTransition(0, 0, 0, 0.7f);
+    }
 
     public void ready() {
         //renderer.sunshineManager.killAll();

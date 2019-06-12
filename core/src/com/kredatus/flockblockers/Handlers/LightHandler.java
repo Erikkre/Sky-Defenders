@@ -89,6 +89,14 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         newPointLight.setXray(false);
         return newPointLight;
     }
+    public static CustomPointLight newPointLight(Vector2 distanceFromAirship,RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos) {
+        CustomPointLight newPointLight = new CustomPointLight(distanceFromAirship,rayHandler, r, g, b, a, lightDistance, origPos);
+        newPointLight.setSoft(false);
+        newPointLight.setStaticLight(false);
+        newPointLight.setXray(false);
+        return newPointLight;
+    }
+
     public static CustomConeLight newConeLight(RayHandler rayHandler, int r, int g, int b, float a, int lightDistance, Vector2 origPos, float dirDeg, float coneDegHalf) {
         CustomConeLight newConeLight = new CustomConeLight(rayHandler, r, g, b, a, lightDistance, origPos,dirDeg,coneDegHalf);
         newConeLight.setSoft(false);
