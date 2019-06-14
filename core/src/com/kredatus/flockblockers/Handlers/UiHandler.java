@@ -84,20 +84,7 @@ public class UiHandler {
     }
 
     public void loadBuyStage(){
-        rootTable = new Table();
-        rootTable.setFillParent(true);
-        rootTable.center().align(Align.bottom);
-        stage.addActor(rootTable);
 
-        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(20);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(24);
-        ProgressBar loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        loadBar.setColor(1,0,0,0.5f);
-        loadBar.setAnimateDuration(0.3f);
-
-        loadBar.setWidth(camWidth/1.1f);
-        loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight-25);
-        loadBar.setValue(.5f);//3.2% is the minimum value right now
-        rootTable.addActor(loadBar);
     }
 
     public void loadSurvivalStage(){
@@ -271,7 +258,6 @@ public class UiHandler {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (actor.equals(buyButton)) {
-                    stage.clear();
                     loadBuyStage();
                     world.buyMenu();
                 } else if (actor.equals(menuButton))
