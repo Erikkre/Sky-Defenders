@@ -616,19 +616,18 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public void burnerOnOff() {
             if (vel.y >= 0) {   //if moving up
-                //System.out.println("1, "+emitters.get(0).getEmission().getHighMax());
+                //System.out.println("1, "+emitters.get(0).isComplete());
                 for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                     setEmitterVal(i.getVelocity(), 80 + vel.y * 12, true, false);//always change vel based on airship vel
                 }
                 if (vel.y > 1) {   //if moving up fastish and burner set to low (might want to leave out last condition)
-                    //System.out.println("2, "+emitters.get(0).getEmission().getHighMax());
                     for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
-                        setEmitterVal(i.getEmission(), 300 + vel.y * 750, false, false);
+                        setEmitterVal(i.getEmission(), 300 + vel.y * 500, false, false);
                         i.start();
                     }
-                    setBurnerLightTarget(vel.y*(burnerOrigDist)+burnerOrigDist, TweenEquations.easeOutElastic, false);
-
-                } else if (vel.y < 1 && emitters.get(0).getEmission().getHighMax() != 300) {    //if moving slow and burner not set to low, reset
+                    setBurnerLightTarget((vel.y)/1.3f*(burnerOrigDist)+burnerOrigDist, TweenEquations.easeOutElastic, false);
+                    //System.out.println("2, "+emitters.get(0).getEmission().getHighMax());
+                } else if (vel.y < 1 && (emitters.get(0).getEmission().getHighMax() != 300||emitters.get(0).isComplete())) {    //if moving slow and burner not set to low, reset
                     for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                         setEmitterVal(i.getEmission(), 300, false, false);
                         i.start();
@@ -647,7 +646,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 //System.out.println("4, "+emitters.get(0).getEmission().getHighMax());
             } else if (vel.y >= -2.5f ) {//if stopped falling go back to flame
                 //System.out.println("5, "+emitters.get(0).getEmission().getHighMax());
-                if (emitters.get(0).getEmission().getHighMax() != 300) {
+                if (emitters.get(0).getEmission().getHighMax() != 300||emitters.get(0).isComplete()) {
                     //System.out.println("6, "+emitters.get(0).getEmission().getHighMax());
                     for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                         setEmitterVal(i.getEmission(), 300, false, false);
@@ -725,7 +724,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         balloonBobTween.update(delta);
 
         for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
-            setEmitterVal(i.getAngle(), 90 - rotation.get() * 3, true, true);//always change angle of burner fire based on airship rot
+            setEmitterVal(i.getAngle(), 90 - rotation.get()*1.5f, true, true);//always change angle of burner fire based on airship rot
         }
 
         //System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing+", velX: "+vel.x);
