@@ -607,8 +607,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (emitters.get(0).getEmission().getHighMax() < 2000) {
             for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                 setEmitterVal(i.getEmission(), 2000, false, false);
-                i.start();
             }
+            additiveEffects.get(0).start();
             setBurnerLightTarget(burnerOrigDist*5,TweenEquations.easeOutElastic, false);
         }
         //setEmitterVal(i.getAngle(), 90 - rotation.get() * 10, true, true);
@@ -623,15 +623,15 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 if (vel.y > 1) {   //if moving up fastish and burner set to low (might want to leave out last condition)
                     for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                         setEmitterVal(i.getEmission(), 300 + vel.y * 500, false, false);
-                        i.start();
                     }
+                    additiveEffects.get(0).start();
                     setBurnerLightTarget((vel.y)/1.3f*(burnerOrigDist)+burnerOrigDist, TweenEquations.easeOutElastic, false);
                     //System.out.println("2, "+emitters.get(0).getEmission().getHighMax());
                 } else if (vel.y < 1 && (emitters.get(0).getEmission().getHighMax() != 300||emitters.get(0).isComplete())) {    //if moving slow and burner not set to low, reset
                     for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                         setEmitterVal(i.getEmission(), 300, false, false);
-                        i.start();
                     }
+                    additiveEffects.get(0).start();
                     setBurnerLightTarget( burnerOrigDist, TweenEquations.easeOutElastic, false);
                     //System.out.println("3, "+emitters.get(0).getEmission().getHighMax());
                 }
@@ -650,8 +650,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     //System.out.println("6, "+emitters.get(0).getEmission().getHighMax());
                     for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                         setEmitterVal(i.getEmission(), 300, false, false);
-                        i.start();
                     }
+                    additiveEffects.get(0).start();
                 }
                     setBurnerLightTarget(burnerOrigDist, TweenEquations.easeOutElastic, false);
             }
