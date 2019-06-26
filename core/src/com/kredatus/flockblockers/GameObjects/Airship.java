@@ -136,25 +136,29 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     float preAimLineRotation, extraRot;
     float buyMenuXLSizeMultiplier,sizeChangeDur=2f;
     public Timeline sizeChangeTween;
+    public String sizeChangeType;
     public void buyMenu(){
         startX=pos.x;startY=pos.y;//need to reset for all hitboxes and turret turretPositionOffsets that use start as reference
 
+        sizeChangeType="survivalToBuyMenu";
         assignTextures(armorLvl,rackLvl,"xL");
         movtween =Tween.to(pos,0,sizeChangeDur).target(camWidth/2f,camHeight/2f).ease(TweenEquations.easeInOutCubic).start();
 
         rotation.set(0);
         rotationTween.kill();
-        scaleFireEffects((1+newTexturesSizeRatio)/2f);
+        //scaleFireEffects((1+newTexturesSizeRatio)/2f);
     }
-    public void survival(){
+    public void survival(String sizeChangeType){
         rackSetup();
 
+        if (sizeChangeType==null) this.sizeChangeType="buyMenuToSurvival";
+        else this.sizeChangeType=sizeChangeType;
         assignTextures(armorLvl,rackLvl,"");
         movtween =Tween.to(pos,0,4).target(camWidth-balloonWidth.get(),camHeight-balloonHeight.get()).ease(TweenEquations.easeOutCirc).delay(1f).start();
         assignBalloonBounds();
         if (flameLights.size==0) setupLights(lightHandler);
         rotationTween=Tween.to(rotation,0,2).waypoint((pos.x-(camWidth-balloonWidth.get()))/25f).target(0).ease(TweenEquations.easeOutCirc).start();
-        scaleFireEffects((1+newTexturesSizeRatio)/2f);
+        //scaleFireEffects((1+newTexturesSizeRatio)/2f);
     }
     public void rackSetup(){
         burnerUp();burnerUp();burnerUp();rackUp();speedUp();speedUp();
@@ -314,6 +318,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     private void updateRackAndPositionsDuringSizeChangeTween(){
         updateLightDistanceFromAirship();
+            if (sizeChangeType.equals("startToSurvival")) scaleFireEffects(1.00005f);
+            else if (sizeChangeType.equals("survivalToBuyMenu")) scaleFireEffects(1.007f);
+            else if (sizeChangeType.equals("buyMenuToSurvival")) scaleFireEffects(0.993f);
+
         assignRackPositions();
     }
     private void assignRackBounds() {
@@ -522,6 +530,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     private void scaleFireEffects (float multiplier) {
         additiveEffects.get(0).scaleEffect(multiplier);
+        //additiveEffects.get(0).
         additiveEffects.get(1).scaleEffect(multiplier);
         additiveEffects.get(2).scaleEffect(multiplier);
     }
@@ -724,7 +733,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         balloonBobTween.update(delta);
 
         for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
-            setEmitterVal(i.getAngle(), 90 - rotation.get()*1.5f, true, true);//always change angle of burner fire based on airship rot
+            setEmitterVal(i.getAngle(), 90 - rotation.get()*2f, true, true);//always change angle of burner fire based on airship rot
         }
 
         //System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing+", velX: "+vel.x);
@@ -803,8 +812,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
             for (int i = 0; i <= burnerLvl; i++) {
                 //change originX x100 multiplier for burnerFire rotation,
-                setEmitterVal(additiveEffects.get(0).getEmitters().get(3-i).getYOffsetValue(),yOffsetDueToRotation(pos.y+pipeHeight.get()*3,((pipeWidth.get() * (i+1))-pipeWidth.get()/2f)*120,-(pos.y+pipeHeight.get()*3))/180f,false);
-                setEmitterVal(additiveEffects.get(0).getEmitters().get(4+i).getYOffsetValue(),yOffsetDueToRotation(pos.y+pipeHeight.get()*3,(-(pipeWidth.get() * (i+1))+pipeWidth.get()/2f)*120,-(pos.y+pipeHeight.get()*3))/180f,false);
+                setEmitterVal(additiveEffects.get(0).getEmitters().get(3-i).getYOffsetValue(),yOffsetDueToRotation(pos.y+pipeHeight.get()*3,((pipeWidth.get() * (i+1))-pipeWidth.get()/2f)*150,-(pos.y+pipeHeight.get()*3))/180f,false);
+                setEmitterVal(additiveEffects.get(0).getEmitters().get(4+i).getYOffsetValue(),yOffsetDueToRotation(pos.y+pipeHeight.get()*3,(-(pipeWidth.get() * (i+1))+pipeWidth.get()/2f)*150,-(pos.y+pipeHeight.get()*3))/180f,false);
             }
         } else {
             flameLights.get(0).setPosition (
@@ -820,7 +829,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
             i.pos.set( pos.x + i.distanceFromAirship.x + i.posOffset.x, pos.y+balloonBob.get() + i.distanceFromAirship.y );
         }
-        additiveEffects.get(0).setPosition(pos.x- (pipeWidth.get() * (burnerLvl+1)*0.13f), pos.y+balloonBob.get() + pipeHeight.get()*1.25f); //update burner position no matter what
+        additiveEffects.get(0).setPosition(pos.x- (pipeWidth.get() * (burnerLvl+1)*0.13f), pos.y+balloonBob.get() + (float) Math.pow(pipeHeight.get(),1.3f)-7); //update burner position no matter what
+        System.out.println(pipeHeight.get());
     }
 
     public void drawReticle(SpriteBatch batcher) {

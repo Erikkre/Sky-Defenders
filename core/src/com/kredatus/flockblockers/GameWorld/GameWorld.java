@@ -240,7 +240,7 @@ public class GameWorld {
         GameHandler.timeOfResume = System.currentTimeMillis();
 
         currentState = GameState.SURVIVAL;
-        airship.survival();
+        airship.survival(null);
         bgHandler.survival(tinyBirdHandler,lightHandler);
         renderer.prepareTransition(0, 0, 0, 1.7f);
         for (Turret i : airship.turretList) {
@@ -252,7 +252,7 @@ public class GameWorld {
     }
     public void survival(TinyBirdHandler tinyBirdHandler,LightHandler lightHandler,Airship airship,BgHandler bgHandler) {//the one that survival starts with
         currentState = GameState.SURVIVAL;
-        airship.survival();
+        airship.survival("startToSurvival");
         bgHandler.survival(tinyBirdHandler,lightHandler);
     }
     public void menu() {
