@@ -69,7 +69,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public boolean isFlashing;
     public Value flashOpacityValue = new Value(), rotation = new Value();
     public Tween flashTween;
-    public TweenCallback endFlashing, endOfMovement;
+    public TweenCallback endFlashing, endOfMovement,endSizeChange;
     protected ArrayList<Float> flashLengths=new ArrayList<Float>();
 
     public Tween movtween, burnerLightTween, rightThrusterLightTween, leftThrusterLightTween, rotationTween;
@@ -80,7 +80,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     //public static PooledEffect burnerFire, thrusterFireLeft, thrusterFireUp;
     public static Array<PooledEffect> additiveEffects = new Array<PooledEffect>();
-    public static Array<ParticleEmitter> emitters = new Array<ParticleEmitter>();
+    public static Array<ParticleEmitter> firstEmittersOfEachEffect = new Array<ParticleEmitter>();
 
     //public boolean isMovingLeftAndSlowing, isMovingRightAndSlowing;
     public static Array<Light> flameLights = new Array<Light>(3);
@@ -115,11 +115,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (speedLvl<speedValues.length) {
             speed = speedValues[++speedLvl];
             thrusterHeight.set((int) (thrusterHeight.get() * (1 + 0.2f * speedLvl)));
-            setEmitterVal(emitters.get(1).getSpawnHeight(), speedLvl * 3, false, false);
-            setEmitterVal(emitters.get(1).getEmission(), emitters.get(1).getEmission().getHighMax() * speedLvl, false, false);
+            setEmitterVal(firstEmittersOfEachEffect.get(1).getSpawnHeight(), speedLvl * 3, false, false);
+            setEmitterVal(firstEmittersOfEachEffect.get(1).getEmission(), firstEmittersOfEachEffect.get(1).getEmission().getHighMax() * speedLvl, false, false);
 
-            setEmitterVal(emitters.get(2).getSpawnHeight(), speedLvl * 3, false, false);
-            setEmitterVal(emitters.get(2).getEmission(), emitters.get(2).getEmission().getHighMax() * speedLvl, false, false);
+            setEmitterVal(firstEmittersOfEachEffect.get(2).getSpawnHeight(), speedLvl * 3, false, false);
+            setEmitterVal(firstEmittersOfEachEffect.get(2).getEmission(), firstEmittersOfEachEffect.get(2).getEmission().getHighMax() * speedLvl, false, false);
             //System.out.println(thrusterHeight+" ssssssssssssssssss");
         }
     }
@@ -134,7 +134,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
     float preAimLineRotation, extraRot;
-    float buyMenuXLSizeMultiplier,sizeChangeDur=2f;
+    float buyMenuXLSizeMultiplier,sizeChangeDur=2f,baseBurnerVelocityPostSizeChange;
     public Timeline sizeChangeTween;
     public String sizeChangeType;
     public void buyMenu(){
@@ -146,7 +146,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         rotation.set(0);
         rotationTween.kill();
-        //scaleFireEffects((1+newTexturesSizeRatio)/2f);
+        //scaleFireEffects((1+finalNewTexturesSizeRatio)/2f);
     }
     public void survival(String sizeChangeType){
         rackSetup();
@@ -158,7 +158,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         assignBalloonBounds();
         if (flameLights.size==0) setupLights(lightHandler);
         rotationTween=Tween.to(rotation,0,2).waypoint((pos.x-(camWidth-balloonWidth.get()))/25f).target(0).ease(TweenEquations.easeOutCirc).start();
-        //scaleFireEffects((1+newTexturesSizeRatio)/2f);
+        //scaleFireEffects((1+finalNewTexturesSizeRatio)/2f);
     }
     public void rackSetup(){
         burnerUp();burnerUp();burnerUp();rackUp();speedUp();speedUp();
@@ -177,9 +177,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     BirdHandler birdHandler;TargetHandler targetHandler;LightHandler lightHandler;
     public Airship(GameWorld world, int camWidth, int camHeight, int birdStartType, BirdHandler birdHandler, TargetHandler targetHandler, LightHandler lightHandler) {
         rackTextures=Loader.getRacks("rack");
-        newTexturesSizeRatio=rackTextures[0].getRegionHeight()/195f;
-        newTextureFullSizeTurretHeight=41 * newTexturesSizeRatio;
-        newTextureFullSizeTurretWidth= 44 * newTexturesSizeRatio;
+        finalNewTexturesSizeRatio=rackTextures[0].getRegionHeight()/195f;
+        newTextureFullSizeTurretHeight=41 * finalNewTexturesSizeRatio;
+        newTextureFullSizeTurretWidth= 44 * finalNewTexturesSizeRatio;
 
         this.lightHandler=lightHandler;
         this.birdStartType=birdStartType;
@@ -195,7 +195,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         speedLvl=  prefs.getInteger("speedLvl",0);
         burnerLvl=prefs.getInteger("burnerLvl",0);
         loadFireEffects();
-        for (int i = 3; i-burnerLvl>0; i--) {//turn off 6/8 of the burnerFire additive effect emitters (0-2 and 5-7) when burnerLvl==0, 4/8 when burnerLvl==1 etc
+        for (int i = 3; i-burnerLvl>0; i--) {//turn off 6/8 of the burnerFire additive effect firstEmittersOfEachEffect (0-2 and 5-7) when burnerLvl==0, 4/8 when burnerLvl==1 etc
             setEmitterVal(additiveEffects.get(0).getEmitters().get(3-i).getEmission(),0,false);
             setEmitterVal(additiveEffects.get(0).getEmitters().get(4+i).getYOffsetValue(),0,false);
         }
@@ -212,12 +212,18 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 tweenTarget.setZero();
             }
         };
-
         endFlashing = new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
                 isFlashing = false;
                 flashTween = null;
+            }
+        };
+        endSizeChange= new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                //baseBurnerVelocityPostSizeChange= additiveEffects.get(0).getEmitters().get(0).getVelocity().getHighMax();
+                //System.out.println("baseBurnerVelocityPostSizeChange set to "+baseBurnerVelocityPostSizeChange);
             }
         };
 
@@ -271,9 +277,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         });
         balloonHitbox.setOrigin(pos.x,pos.y);
     }
-    float newTextureFullSizeTurretHeight,newTexturesSizeRatio,newTextureFullSizeTurretWidth;
+    float newTextureFullSizeTurretHeight,newTextureFullSizeTurretWidth, finalNewTexturesSizeRatio,currentNewTexturesSizeRatio;
     private void assignTextures(int armorLvl, int rackLvl, String eitherXlorEmptyString) {
-        if (eitherXlorEmptyString.equals("xL"))    buyMenuXLSizeMultiplier=0.6f;
+        if (eitherXlorEmptyString.equals("xL"))    buyMenuXLSizeMultiplier=0.5f;
         else if (eitherXlorEmptyString.equals("")) buyMenuXLSizeMultiplier=1f;
 
         balloonTexture = Loader.tA.findRegion(eitherXlorEmptyString+"balloon");
@@ -286,9 +292,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         if (!Loader.getRacks(eitherXlorEmptyString+"rack")[0].equals(rackTextures[0])){//if we change textures and therefore sizes, change ratios
             rackTextures=Loader.getRacks(eitherXlorEmptyString+"rack");
-            newTexturesSizeRatio=rackTextures[0].getRegionHeight()/195f;
-            newTextureFullSizeTurretHeight=41 * newTexturesSizeRatio;
-            newTextureFullSizeTurretWidth= 44 * newTexturesSizeRatio;
+            finalNewTexturesSizeRatio=rackTextures[0].getRegionHeight()/195f;
+            newTextureFullSizeTurretHeight=41 * finalNewTexturesSizeRatio;
+            newTextureFullSizeTurretWidth= 44 * finalNewTexturesSizeRatio;
         }
 
         // 167x195 is res of small balloon, 640x800 is res of big balloon. 44 is turretWidth relative to original rack width of x167
@@ -299,28 +305,30 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 push( Tween.to(thrusterWidth,0,sizeChangeDur).target((int)(sideThrustTexture.getRegionWidth()*buyMenuXLSizeMultiplier)).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(thrusterHeight,0,sizeChangeDur).target((int)(sideThrustTexture.getRegionHeight()*buyMenuXLSizeMultiplier*(1+0.2f*speedLvl))).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(rackWidth,0,sizeChangeDur).target((int)(rackTextures[0].getRegionWidth()*buyMenuXLSizeMultiplier)).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(rackHeight,0,sizeChangeDur).target((int) ( newTextureFullSizeTurretHeight*(rackLvl+1)  -  9.5*newTexturesSizeRatio  )*buyMenuXLSizeMultiplier).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(rackHeight,0,sizeChangeDur).target((int) ( newTextureFullSizeTurretHeight*(rackLvl+1)  -  9.5*finalNewTexturesSizeRatio  )*buyMenuXLSizeMultiplier).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(pipeWidth,0,sizeChangeDur).target((int)(pipeTexture.getRegionWidth()*buyMenuXLSizeMultiplier)).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(pipeHeight,0,sizeChangeDur).target((int)(pipeTexture.getRegionHeight()*buyMenuXLSizeMultiplier)).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(tW,0,sizeChangeDur).target(newTextureFullSizeTurretWidth*buyMenuXLSizeMultiplier).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(tH,0,sizeChangeDur).target(newTextureFullSizeTurretHeight*buyMenuXLSizeMultiplier).ease(TweenEquations.easeInOutCubic))
-        ).start();
+        ).setCallback(endSizeChange).setCallbackTriggers(TweenCallback.COMPLETE).start();
         //rackpositions needs to be updated every time, as well as startX and startY
 
         assignRackAndArmor(armorLvl,rackLvl);
     }
     private void assignRackAndArmor(int armorLvl, int rackLvl) {
         rackTexture=rackTextures[armorLvl];
-        rackTexture.setRegion(rackTexture, 0, 0, rackTexture.getRegionWidth(), (int) (newTextureFullSizeTurretHeight*(rackLvl + 1)  -  9.5*newTexturesSizeRatio) );
+        rackTexture.setRegion(rackTexture, 0, 0, rackTexture.getRegionWidth(), (int) (newTextureFullSizeTurretHeight*(rackLvl + 1)  -  9.5*finalNewTexturesSizeRatio) );
 
         armor=armorValues[armorLvl];
         assignRackPositions();
     }
     private void updateRackAndPositionsDuringSizeChangeTween(){
         updateLightDistanceFromAirship();
-            if (sizeChangeType.equals("startToSurvival")) scaleFireEffects(1.00005f);
-            else if (sizeChangeType.equals("survivalToBuyMenu")) scaleFireEffects(1.007f);
-            else if (sizeChangeType.equals("buyMenuToSurvival")) scaleFireEffects(0.993f);
+        currentNewTexturesSizeRatio=rackWidth.get()/167f;
+
+        if (sizeChangeType.equals("startToSurvival")) scaleFireEffects(1.00005f);
+        else if (sizeChangeType.equals("survivalToBuyMenu")) scaleFireEffects(1.006f);
+        else if (sizeChangeType.equals("buyMenuToSurvival")) scaleFireEffects(0.994f);
 
         assignRackPositions();
     }
@@ -540,7 +548,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         additiveEffects.get(0).scaleEffect(0.13f);
         additiveEffects.get(1).scaleEffect(0.30f);
         additiveEffects.get(2).scaleEffect(0.30f);
-        emitters= Loader.emitters;
+        firstEmittersOfEachEffect = Loader.firstEmittersOfEachEffect;
         //burnerFire.scaleEffect(0.3f);
         //burnerFire.start();
     }
@@ -569,7 +577,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public static void setFireColor(int waveTypeCnt){
-        //System.out.println("Was "+emitters.get(i).getTint().getColors()[0]+", "+emitters.get(i).getTint().getColors()[1]+", "+emitters.get(i).getTint().getColors()[2]);
+        //System.out.println("Was "+firstEmittersOfEachEffect.get(i).getTint().getColors()[0]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[1]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[2]);
         //{"pB","tB","wB","fB","aB","nB","lB","gB"};
         //  0    1    2    3    4    5    6    7
 
@@ -590,17 +598,17 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             j.setColor(color[0],color[1],color[2],j.getColor().a);
         }
         //dragCircleLight.setColor(color[0],color[1],color[2],dragCircleLight.getColor().a);
-        //System.out.println("Was "+emitters.get(i).getTint().getColors()[0]+", "+emitters.get(i).getTint().getColors()[1]+", "+emitters.get(i).getTint().getColors()[2]);
+        //System.out.println("Was "+firstEmittersOfEachEffect.get(i).getTint().getColors()[0]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[1]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[2]);
     }
 
     public void fireThruster(int i){
-        emitters.get(i).allowCompletion();
+        firstEmittersOfEachEffect.get(i).allowCompletion();
         if (i==1) {
-            setEmitterVal(emitters.get(i).getAngle(), 180 + rotation.get(), true, true);
-            leftThrusterLightTween=Tween.to(flameLights.get(1), 1, 1.5f).waypoint(thrusterOrigDist).target(0).repeatYoyo(0,0).ease(TweenEquations.easeOutQuint).start();
+            setEmitterVal(firstEmittersOfEachEffect.get(i).getAngle(), 180 + rotation.get(), true, true);
+            leftThrusterLightTween=Tween.to(flameLights.get(1), 1, 1.5f).target(0).waypoint(thrusterOrigDist).repeatYoyo(0,0).ease(TweenEquations.easeOutQuint).start();
         }
         else if(i==2) {
-            setEmitterVal(emitters.get(i).getAngle(), 0 + rotation.get(), true, true);//thrust right
+            setEmitterVal(firstEmittersOfEachEffect.get(i).getAngle(), 0 + rotation.get(), true, true);//thrust right
             rightThrusterLightTween=Tween.to(flameLights.get(2), 1, 1.5f).target(0).waypoint(thrusterOrigDist).repeatYoyo(0,0).ease(TweenEquations.easeOutQuint).start();
         }
         additiveEffects.get(i).start();
@@ -612,10 +620,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void fastBurner() {
-        //System.out.println("8, "+emitters.get(0).getEmission().getHighMax());
-        if (emitters.get(0).getEmission().getHighMax() < 2000) {
+        //System.out.println("8, "+firstEmittersOfEachEffect.get(0).getEmission().getHighMax());
+        if (firstEmittersOfEachEffect.get(0).getEmission().getHighMax() != 500||firstEmittersOfEachEffect.get(0).getVelocity().getHighMax() != 70) {
             for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
-                setEmitterVal(i.getEmission(), 1500, false, false);
+                setEmitterVal(i.getEmission(), 500, false, false);
+                setEmitterVal(i.getVelocity(), 70, true, false);//always change vel based on airship vel
             }
             additiveEffects.get(0).start();
             setBurnerLightTarget(burnerOrigDist*5,TweenEquations.easeOutElastic, false);
@@ -625,11 +634,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public void burnerOnOff() {
             if (vel.y >= 0) {   //if moving up
-                //System.out.println("1, "+emitters.get(0).isComplete());
-                System.out.println(additiveEffects.get(0).getEmitters().get(0).getVelocity().getHighMax());
-                /*for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
-                    setEmitterVal(i.getVelocity(), 300 + vel.y, true, false);//always change vel based on airship vel
-                }*/
+                //System.out.println("1, "+firstEmittersOfEachEffect.get(0).isComplete());
+
+                for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
+                    setEmitterVal(i.getVelocity(), 40*currentNewTexturesSizeRatio+(vel.y*5*currentNewTexturesSizeRatio), true, false);//always change vel based on airship vel
+                }
 
                 if (vel.y > 1) {   //if moving up fastish and burner set to low (might want to leave out last condition)
                     for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
@@ -637,28 +646,28 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                     }
                     additiveEffects.get(0).start();
                     setBurnerLightTarget((vel.y)/1.3f*(burnerOrigDist)+burnerOrigDist, TweenEquations.easeOutElastic, false);
-                    //System.out.println("2, "+emitters.get(0).getEmission().getHighMax());
-                } else if (vel.y < 1 && (emitters.get(0).getEmission().getHighMax() != 200||emitters.get(0).isComplete())) {    //if moving slow and burner not set to low, reset
+                    //System.out.println("2, "+firstEmittersOfEachEffect.get(0).getEmission().getHighMax());
+                } else if (vel.y < 1 && (firstEmittersOfEachEffect.get(0).getEmission().getHighMax() != 200|| firstEmittersOfEachEffect.get(0).isComplete())) {    //if moving slow and burner not set to low, reset
                     for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                         setEmitterVal(i.getEmission(), 200, false, false);
                     }
                     additiveEffects.get(0).start();
                     setBurnerLightTarget( burnerOrigDist, TweenEquations.easeOutElastic, false);
-                    //System.out.println("3, "+emitters.get(0).getEmission().getHighMax());
+                    //System.out.println("3, "+firstEmittersOfEachEffect.get(0).getEmission().getHighMax());
                 }
 
-            } else if (vel.y < -2.5 && !emitters.get(0).isComplete()) { //if descending let current burner anim finish then turn it off
+            } else if (vel.y < -2.5 && !firstEmittersOfEachEffect.get(0).isComplete()) { //if descending let current burner anim finish then turn it off
                 for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                     i.allowCompletion();
                 }
                 if (getLightDist("burner")!=0 && burnerLightTween.getTargetValues()[0]!=0){
                     setBurnerLightTarget( 0, TweenEquations.easeOutCirc, true);
                 }
-                //System.out.println("4, "+emitters.get(0).getEmission().getHighMax());
+                //System.out.println("4, "+firstEmittersOfEachEffect.get(0).getEmission().getHighMax());
             } else if (vel.y >= -2.5f ) {//if stopped falling go back to flame
-                //System.out.println("5, "+emitters.get(0).getEmission().getHighMax());
-                if (emitters.get(0).getEmission().getHighMax() != 200||emitters.get(0).isComplete()) {
-                    //System.out.println("6, "+emitters.get(0).getEmission().getHighMax());
+                //System.out.println("5, "+firstEmittersOfEachEffect.get(0).getEmission().getHighMax());
+                if (firstEmittersOfEachEffect.get(0).getEmission().getHighMax() != 200|| firstEmittersOfEachEffect.get(0).isComplete()) {
+                    //System.out.println("6, "+firstEmittersOfEachEffect.get(0).getEmission().getHighMax());
                     for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                         setEmitterVal(i.getEmission(), 200, false, false);
                     }
@@ -747,7 +756,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (BgHandler.isbgVertFast||BgHandler.endWaveBgMotion) {
             fastBurner();
             //System.out.println("very fast");
-        } /*else if (emitters.get(0).getEmission().getHighMax() == 2000){ //if past fastBurning stage, change emission to 200
+        } /*else if (firstEmittersOfEachEffect.get(0).getEmission().getHighMax() == 2000){ //if past fastBurning stage, change emission to 200
             for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
                 setEmitterVal(i.getEmission(), 200, false, false);
             }
@@ -768,23 +777,23 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (!movtween.isFinished()) { //if moving
             dragLineFadeout.update(delta);
 
-            //if (vel.y>-2&&emitters.get(0).isComplete()) emitters.get(0).reset();
+            //if (vel.y>-2&&firstEmittersOfEachEffect.get(0).isComplete()) firstEmittersOfEachEffect.get(0).reset();
 
 
             additiveEffects.get(1).setPosition(
                     xOffsetDueToRotation(pos.x - thrusterWidth.get() / 2f + 2,
-                            (thrusterWidth.get() / 2f - 2), -(thrusterYposOffset + thrusterHeight.get() / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f)),
+                            (thrusterWidth.get() / 2f - 2), -(thrusterYposOffset + thrusterHeight.get() / 2f - firstEmittersOfEachEffect.get(1).getSpawnHeight().getHighMax()/2f)),
 
-                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYposOffset + thrusterHeight.get() / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f,
-                            (thrusterWidth.get() / 2f + 2),-(thrusterYposOffset + thrusterHeight.get() / 2f - emitters.get(1).getSpawnHeight().getHighMax()/2f )));
+                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYposOffset + thrusterHeight.get() / 2f - firstEmittersOfEachEffect.get(1).getSpawnHeight().getHighMax()/2f,
+                            (thrusterWidth.get() / 2f + 2),-(thrusterYposOffset + thrusterHeight.get() / 2f - firstEmittersOfEachEffect.get(1).getSpawnHeight().getHighMax()/2f )));
             //adding a bit of vel for straying thrusters
 
             additiveEffects.get(2).setPosition(
                     xOffsetDueToRotation(pos.x + thrusterWidth.get() / 2f + 2,
-                            -(thrusterWidth.get() / 2f - 2), -(thrusterYposOffset + thrusterHeight.get() / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f)),
+                            -(thrusterWidth.get() / 2f - 2), -(thrusterYposOffset + thrusterHeight.get() / 2f - firstEmittersOfEachEffect.get(2).getSpawnHeight().getHighMax()/2f)),
 
-                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYposOffset + thrusterHeight.get() / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f,
-                            -(thrusterWidth.get() / 2f + 2), -(thrusterYposOffset + thrusterHeight.get() / 2f - emitters.get(2).getSpawnHeight().getHighMax()/2f))
+                    yOffsetDueToRotation(pos.y+balloonBob.get() + thrusterYposOffset + thrusterHeight.get() / 2f - firstEmittersOfEachEffect.get(2).getSpawnHeight().getHighMax()/2f,
+                            -(thrusterWidth.get() / 2f + 2), -(thrusterYposOffset + thrusterHeight.get() / 2f - firstEmittersOfEachEffect.get(2).getSpawnHeight().getHighMax()/2f))
             );
             //adding a bit of vel for straying thrusters
             preX=pos.x;

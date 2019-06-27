@@ -46,7 +46,7 @@ public class AssetHandler {/*
 
     public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireRight=new ParticleEffect(); //thrusterFireUp=new ParticleEffect();
     public static Array<ParticleEffectPool.PooledEffect> additiveEffects = new Array<ParticleEffectPool.PooledEffect>(3), nonAdditiveEffects;
-    public static Array<ParticleEmitter> emitters=new Array<ParticleEmitter>();
+    public static Array<ParticleEmitter> firstEmittersOfEachEffect=new Array<ParticleEmitter>();
 */
 
 
@@ -91,7 +91,7 @@ public class AssetHandler {/*
 
 
         //textureAtlas.findRegion()
-        //If your particle effect includes additive or pre-multiplied particle emitters
+        //If your particle effect includes additive or pre-multiplied particle firstEmittersOfEachEffect
         //you can turn off blend function clean-up to save a lot of draw calls, but
         //remember to switch the Batch back to GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA
         //before drawing "regular" sprites or your Stage.

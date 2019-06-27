@@ -39,8 +39,9 @@ public class UiHandler {
     public static boolean isTouched;
     float camWidth,camHeight;
     public GameWorld world;
+    public TextButton buyButton,menuButton,playButton;
     //might want to implement a current stage for new screens
-    public  boolean anyUITouched(){
+    public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
             if (i instanceof SlideMenu)      {if (((SlideMenu) i).isTouched){ return true;}}
         }
@@ -48,11 +49,21 @@ public class UiHandler {
             if (i instanceof Touchpad)      {if (((Touchpad) i).isTouched()){ return true;}}
             else if (i instanceof TouchRotatePad)      {if (((TouchRotatePad) i).isTouched()){ return true;}}
         }
-
         return false;
     }
 
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
+        /******* BUTTONS *******/
+        buyButton  = new TextButton("Buy", shadeSkin);    //set button style
+        buyButton .setStyle(shadeSkin.get("round", buyButton.getStyle().getClass()));
+
+        playButton  = new TextButton("Play", shadeSkin);    //set button style
+        playButton .setStyle(shadeSkin.get("round", buyButton.getStyle().getClass()));
+
+        menuButton = new TextButton("Menu", shadeSkin);    //set button style
+        menuButton.setStyle(shadeSkin.get("round", menuButton.getStyle().getClass()));
+
+
         //https://github.com/kotcrab/vis-ui
         if (!VisUI.isLoaded())VisUI.load(shadeSkin);
 
@@ -84,7 +95,8 @@ public class UiHandler {
     }
 
     public void loadBuyStage(){
-
+        slideMenuBottom.removeActor(buyButton);
+        slideMenuBottom.add(playButton).expand().fill();
     }
 
     public void loadSurvivalStage(){
@@ -245,13 +257,10 @@ public class UiHandler {
         slideMenuBottom.setMoveMenuButton(menuButtonY);
 
 
-        /******* BUTTONS ******/
-        final TextButton buyButton = new TextButton("Buy", shadeSkin);    //set button style
-        buyButton.setStyle(shadeSkin.get("round", buyButton.getStyle().getClass()));
+
         slideMenuBottom.add(buyButton).expand().fill().row();
 
-        final TextButton menuButton = new TextButton("Menu", shadeSkin);    //set button style
-        menuButton.setStyle(shadeSkin.get("round", menuButton.getStyle().getClass()));
+
         slideMenuBottom.add(menuButton).expand().fill().row();
 
         slideMenuBottom.addListener(new ChangeListener() {

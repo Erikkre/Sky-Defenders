@@ -75,7 +75,7 @@ public class Loader implements Screen {
 
     public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireRight=new ParticleEffect(); //thrusterFireUp=new ParticleEffect();
     public static Array<ParticleEffectPool.PooledEffect> additiveEffects = new Array<ParticleEffectPool.PooledEffect>(3), nonAdditiveEffects;
-    public static Array<ParticleEmitter> emitters=new Array<ParticleEmitter>();
+    public static Array<ParticleEmitter> firstEmittersOfEachEffect=new Array<ParticleEmitter>();
 
     public ProgressBar loadBar;
     public Label percentDoneLabel;
@@ -315,7 +315,7 @@ public class Loader implements Screen {
         additiveEffects.add(pooledEffect);
 
         for (ParticleEffectPool.PooledEffect i: additiveEffects){
-            emitters.add(i.getEmitters().get(0));
+            firstEmittersOfEachEffect.add(i.getEmitters().get(0));
         }
 
         menumusiciterator = r.nextInt(3);

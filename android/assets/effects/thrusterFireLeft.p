@@ -10,8 +10,8 @@ max: 300
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 15.0
-highMax: 15.0
+highMin: 90.0
+highMax: 90.0
 relative: false
 scalingCount: 3
 scaling0: 0.0
@@ -35,8 +35,10 @@ timelineCount: 3
 timeline0: 0.0
 timeline1: 0.6917808
 timeline2: 1.0
+independent: false
 - Life Offset - 
 active: false
+independent: false
 - X Offset - 
 active: false
 - Y Offset - 
@@ -81,18 +83,18 @@ timeline2: 1.0
 active: false
 - Velocity - 
 active: true
-lowMin: 0.0
-lowMax: 0.0
-highMin: 300.0
-highMax: 300.0
+lowMin: 300.0
+lowMax: 300.0
+highMin: 600.0
+highMax: 600.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
-scaling1: 0.60784316
-scaling2: 1.0
+scaling1: 0.0
+scaling2: 0.0
 timelineCount: 3
 timeline0: 0.0
-timeline1: 0.5
+timeline1: 0.589
 timeline2: 1.0
 - Angle - 
 active: true
@@ -155,12 +157,12 @@ relative: false
 scalingCount: 4
 scaling0: 0.0
 scaling1: 1.0
-scaling2: 0.75
+scaling2: 0.54385966
 scaling3: 0.0
 timelineCount: 4
 timeline0: 0.0
 timeline1: 0.2
-timeline2: 0.8
+timeline2: 0.30821916
 timeline3: 1.0
 - Options - 
 attached: true
