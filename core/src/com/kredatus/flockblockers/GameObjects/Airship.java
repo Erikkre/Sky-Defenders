@@ -134,14 +134,15 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
 
     float preAimLineRotation, extraRot;
-    float buyMenuXLSizeMultiplier,sizeChangeDur=2f,baseBurnerVelocityPostSizeChange;
+    float sizeTargetRatio,sizeChangeDur=2f,baseBurnerVelocityPostSizeChange;
+    final float tWOrig=62,tHOrig=65;
     public Timeline sizeChangeTween;
     public String sizeChangeType;
     public void survivalToBuyMenu(){
         startX=pos.x;startY=pos.y;//need to reset for all hitboxes and turret turretPositionOffsets that use start as reference
 
         sizeChangeType="survivalToBuyMenu";
-        assignTextures(armorLvl,rackLvl,"xL");
+        changeTextureSizes(armorLvl,rackLvl,"buyMenu");
         movtween =Tween.to(pos,0,sizeChangeDur).target(camWidth/2f,camHeight/2f).ease(TweenEquations.easeInOutCubic).start();
 
         rotation.set(0);
@@ -153,9 +154,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         if (sizeChangeType==null) this.sizeChangeType="buyMenuToSurvival";
         else this.sizeChangeType=sizeChangeType;
-        assignTextures(armorLvl,rackLvl,"");
+        changeTextureSizes(armorLvl,rackLvl,"survival");
         movtween =Tween.to(pos,0,sizeChangeDur).target(camWidth/2f,camHeight/2f).ease(TweenEquations.easeInOutCubic).delay(1f).start();
-        assignBalloonBounds();
+
         if (flameLights.size==0) setupLights(lightHandler);
         rotationTween=Tween.to(rotation,0,2).waypoint((pos.x-(camWidth-balloonWidth.get()))/25f).target(0).ease(TweenEquations.easeOutCirc).start();
         //scaleFireEffects((1+finalNewTexturesSizeRatio)/2f);
@@ -177,9 +178,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     BirdHandler birdHandler;TargetHandler targetHandler;LightHandler lightHandler;
     public Airship(GameWorld world, int camWidth, int camHeight, int birdStartType, BirdHandler birdHandler, TargetHandler targetHandler, LightHandler lightHandler) {
         rackTextures=Loader.getRacks("rack");
-        finalNewTexturesSizeRatio=rackTextures[0].getRegionHeight()/195f;
-        newTextureFullSizeTurretHeight=41 * finalNewTexturesSizeRatio;
-        newTextureFullSizeTurretWidth= 44 * finalNewTexturesSizeRatio;
+        sizeTargetRatio=rackTextures[0].getRegionHeight()/195f;
+        newTurretHeightTarget=tHOrig * sizeTargetRatio;
+        newTurretWidthTarget= tWOrig * sizeTargetRatio;
 
         this.lightHandler=lightHandler;
         this.birdStartType=birdStartType;
@@ -194,6 +195,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackLvl=    prefs.getInteger("rackLvl",0);
         speedLvl=  prefs.getInteger("speedLvl",0);
         burnerLvl=prefs.getInteger("burnerLvl",0);
+        loadTextures();
+        
         loadFireEffects();
         for (int i = 3; i-burnerLvl>0; i--) {//turn off 6/8 of the burnerFire additive effect firstEmittersOfEachEffect (0-2 and 5-7) when burnerLvl==0, 4/8 when burnerLvl==1 etc
             setEmitterVal(additiveEffects.get(0).getEmitters().get(3-i).getEmission(),0,false);
@@ -239,6 +242,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         airshipTint=chooseColorBasedOnWave(birdStartType, true);
         airShipCloudTint=airshipTint.clone();
         rackSetup();
+        assignRackBounds();
+        assignBalloonBounds();
     }
 
     private void addTurret(char type){//button will upgrade turret based on position of click choosing which turretPosition on a rack diagram thats blown up on screen when you tap upgrade i.e.
@@ -273,46 +278,45 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //prelimBoundPoly1 = new Polygon(new float[]{x - rackWidth / 2f, y, x - rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y});
 
         balloonHitbox = new Polygon(new float[]{
-                x, y + hB, x - rB * 0.60f, y + hB * 0.92f, x - rB * 0.95f, y + hB * 0.74f, x - rB * 0.88f, y + hB * 0.45f, x - rB * 0.15f, y-tH.get()*0.2f,  //top to bottom left of burner
-                x + rB * 0.15f, y-tH.get()*0.2f, x + rB * 0.88f, y + hB * 0.45f, x + rB * 0.95f, y + hB * 0.74f, x + rB * 0.60f, y + hB * 0.92f //to top of balloon
+                x, y + hB, x - rB * 0.60f, y + hB * 0.92f, x - rB * 0.95f, y + hB * 0.74f, x - rB * 0.88f, y + hB * 0.45f, x - rB * 0.15f, y-tHOrig*0.2f,  //top to bottom left of burner
+                x + rB * 0.15f, y-tHOrig*0.2f, x + rB * 0.88f, y + hB * 0.45f, x + rB * 0.95f, y + hB * 0.74f, x + rB * 0.60f, y + hB * 0.92f //to top of balloon
         });
         balloonHitbox.setOrigin(pos.x,pos.y);
     }
-    float newTextureFullSizeTurretHeight,newTextureFullSizeTurretWidth, finalNewTexturesSizeRatio,currentNewTexturesSizeRatio;
-    private void assignTextures(int armorLvl, int rackLvl, String eitherXlorEmptyString) {
-        if (eitherXlorEmptyString.equals("xL"))    buyMenuXLSizeMultiplier=0.5f;
-        else if (eitherXlorEmptyString.equals("")) buyMenuXLSizeMultiplier=1f;
+    float newTurretHeightTarget,newTurretWidthTarget,currentNewTexturesSizeRatio;
 
-        balloonTexture = Loader.tA.findRegion(eitherXlorEmptyString+"balloon");
-        sideThrustTexture = Loader.tA.findRegion(eitherXlorEmptyString+"sideThruster");
-        pipeTexture = Loader.tA.findRegion(eitherXlorEmptyString+"burnerPipes");
+    private void loadTextures(){
+        balloonTexture = Loader.tA.findRegion("balloon");
+        sideThrustTexture = Loader.tA.findRegion("sideThruster");
+        pipeTexture = Loader.tA.findRegion("burnerPipes");
         reticleTexture = Loader.tA.findRegion("reticle");
         dragCircleTexture=Loader.tA.findRegion("dragCirc");
         dragLineTexture=Loader.tA.findRegion("dragLine");
         aimLineTexture=Loader.tA.findRegion("aimLine");
+    }
+    private void changeTextureSizes(int armorLvl, int rackLvl, String buyMenuOrSurvivalSize) {
+        if (buyMenuOrSurvivalSize.equals("buyMenu"))    sizeTargetRatio=1f;
+        else if (buyMenuOrSurvivalSize.equals("survival"))    sizeTargetRatio=0.66f;
+        
+            newTurretHeightTarget=tHOrig * sizeTargetRatio;
+            newTurretWidthTarget= tWOrig * sizeTargetRatio;
 
-        if (!Loader.getRacks(eitherXlorEmptyString+"rack")[0].equals(rackTextures[0])){//if we change textures and therefore sizes, change ratios
-            rackTextures=Loader.getRacks(eitherXlorEmptyString+"rack");
-            finalNewTexturesSizeRatio=rackTextures[0].getRegionWidth()/167f;
-            newTextureFullSizeTurretHeight=41 * finalNewTexturesSizeRatio;
-            newTextureFullSizeTurretWidth= 44 * finalNewTexturesSizeRatio;
-
-            System.out.println("***"+newTextureFullSizeTurretWidth+" "+buyMenuXLSizeMultiplier);
-        }
+            System.out.println("***"+newTurretWidthTarget+" "+sizeTargetRatio);
+    
 
         // 167x195 is res of small balloon, 640x800 is res of big balloon. 44 is turretWidth relative to original rack width of x167
         //make tweens for all these float values from current vals to new ones, including tW and tH, and set one for startX and startY to move towards whatever current pos is
         (sizeChangeTween= Timeline.createParallel().
-                push( Tween.to(balloonWidth,0,sizeChangeDur).target((int)(balloonTexture.getRegionWidth()*buyMenuXLSizeMultiplier)).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(balloonHeight,0,sizeChangeDur).target((int)(balloonTexture.getRegionHeight()*buyMenuXLSizeMultiplier)).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(thrusterWidth,0,sizeChangeDur).target((int)(sideThrustTexture.getRegionWidth()*buyMenuXLSizeMultiplier)).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(thrusterHeight,0,sizeChangeDur).target((int)(sideThrustTexture.getRegionHeight()*buyMenuXLSizeMultiplier*(1+0.2f*speedLvl))).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(rackWidth,0,sizeChangeDur).target((int)(rackTextures[0].getRegionWidth()*buyMenuXLSizeMultiplier)).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(rackHeight,0,sizeChangeDur).target((int) ( newTextureFullSizeTurretHeight*(rackLvl+1)  -  9.5*finalNewTexturesSizeRatio  )*buyMenuXLSizeMultiplier).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(pipeWidth,0,sizeChangeDur).target((int)(pipeTexture.getRegionWidth()*buyMenuXLSizeMultiplier)).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(pipeHeight,0,sizeChangeDur).target((int)(pipeTexture.getRegionHeight()*buyMenuXLSizeMultiplier)).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(tW,0,sizeChangeDur).target(newTextureFullSizeTurretWidth*buyMenuXLSizeMultiplier).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(tH,0,sizeChangeDur).target(newTextureFullSizeTurretHeight*buyMenuXLSizeMultiplier).ease(TweenEquations.easeInOutCubic))
+                push( Tween.to(balloonWidth,0,sizeChangeDur).target((int)(balloonTexture.getRegionWidth()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(balloonHeight,0,sizeChangeDur).target((int)(balloonTexture.getRegionHeight()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(thrusterWidth,0,sizeChangeDur).target((int)(sideThrustTexture.getRegionWidth()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(thrusterHeight,0,sizeChangeDur).target((int)(sideThrustTexture.getRegionHeight()*sizeTargetRatio*(1+0.2f*speedLvl))).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(rackWidth,0,sizeChangeDur).target((int)(rackTextures[0].getRegionWidth()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(rackHeight,0,sizeChangeDur).target((int) ( newTurretHeightTarget*(rackLvl+1)  -  9.5*sizeTargetRatio  )*sizeTargetRatio).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(pipeWidth,0,sizeChangeDur).target((int)(pipeTexture.getRegionWidth()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(pipeHeight,0,sizeChangeDur).target((int)(pipeTexture.getRegionHeight()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(tW,0,sizeChangeDur).target(newTurretWidthTarget).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(tH,0,sizeChangeDur).target(newTurretHeightTarget).ease(TweenEquations.easeInOutCubic))
         ).setCallback(endSizeChange).setCallbackTriggers(TweenCallback.COMPLETE).start();
         //rackpositions needs to be updated every time, as well as startX and startY
 
@@ -320,7 +324,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     private void assignRackAndArmor(int armorLvl, int rackLvl) {
         rackTexture=rackTextures[armorLvl];
-        rackTexture.setRegion(rackTexture, 0, 0, rackTexture.getRegionWidth(), (int) (newTextureFullSizeTurretHeight*(rackLvl + 1)  -  9.5*finalNewTexturesSizeRatio) );
+        rackTexture.setRegion(rackTexture, 0, 0, rackTexture.getRegionWidth(), (int) (newTurretHeightTarget*(rackLvl + 1)  -  9.5*sizeTargetRatio) );
 
         armor=armorValues[armorLvl];
         assignRackPositions();
@@ -328,7 +332,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private void updateRackAndPositionsDuringSizeChangeTween(){
         System.out.println(tW.get());
         updateLightDistanceFromAirship();
-        currentNewTexturesSizeRatio=rackWidth.get()/167f;
+        currentNewTexturesSizeRatio=rackWidth.get()/rackTexture.getRegionWidth();
 
         if (sizeChangeType.equals("startToSurvival")) scaleFireEffects(1.00005f);
         else if (sizeChangeType.equals("survivalToBuyMenu")) scaleFireEffects(1.006f);
@@ -362,37 +366,37 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         float x = pos.x, y = pos.y+balloonBob.get();
         if (rackLvl==0){
             rackHitbox = new Polygon(new float[] {
-                    x - tW.get() * 2, y -tH.get()*0.2f,         x - tW.get() * 2, y - 1 * tH.get() , //bottom left rack
-                    x, y - (1 * tH.get()),  //tip of bottom of armor
-                    x + tW.get() * 2, y - 1 * tH.get() ,     x + tW.get() * 2, y-tH.get()*0.2f ,     //bottom right of burner
+                    x - tWOrig * 2, y -tHOrig*0.2f,         x - tWOrig * 2, y - 1 * tHOrig , //bottom left rack
+                    x, y - (1 * tHOrig),  //tip of bottom of armor
+                    x + tWOrig * 2, y - 1 * tHOrig ,     x + tWOrig * 2, y-tHOrig*0.2f ,     //bottom right of burner
             }
             );
         } else if (rackLvl==1) {
             rackHitbox = new Polygon(new float[]{
-                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,//bottom left rack
-                    x, y - (2 * tH.get()),  //tip of bottom f armor
-                    x + tW.get() * 2, y - 2 * tH.get() ,   x + tW.get() * 2, y -tH.get()*0.2f ,     //bottom right of burner
+                    x - tWOrig * 2, y -tHOrig*0.2f,     x - tWOrig * 2, y - 2 * tHOrig ,//bottom left rack
+                    x, y - (2 * tHOrig),  //tip of bottom f armor
+                    x + tWOrig * 2, y - 2 * tHOrig ,   x + tWOrig * 2, y -tHOrig*0.2f ,     //bottom right of burner
             }
             );
         } else if (rackLvl==2) {
             rackHitbox = new Polygon(new float[]{
-                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,     x - tW.get() * 1.5f, y - 3 * tH.get() ,//bottom left rack
-                    x, y - (3 * tH.get()),  //tip of bottom of armor
-                    x + tW.get() * 1.5f, y - 3 * tH.get() ,        x + tW.get() * 2, y - 2 * tH.get() ,    x + tW.get() * 2, y -tH.get()*0.2f,     //bottom right of burner
+                    x - tWOrig * 2, y -tHOrig*0.2f,     x - tWOrig * 2, y - 2 * tHOrig ,     x - tWOrig * 1.5f, y - 3 * tHOrig ,//bottom left rack
+                    x, y - (3 * tHOrig),  //tip of bottom of armor
+                    x + tWOrig * 1.5f, y - 3 * tHOrig ,        x + tWOrig * 2, y - 2 * tHOrig ,    x + tWOrig * 2, y -tHOrig*0.2f,     //bottom right of burner
             }
             );
         } else if (rackLvl==3) {
             rackHitbox = new Polygon(new float[]{
-                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,     x - tW.get() * 1.5f, y - 4 * tH.get() ,//bottom left rack
-                    x, y - (4 * tH.get()),  //tip of bottom of armor
-                    x + tW.get() * 1.5f, y - 4 * tH.get() ,        x + tW.get() * 2, y - 2 * tH.get() ,    x + tW.get() * 2, y -tH.get()*0.2f,     //bottom right of burner
+                    x - tWOrig * 2, y -tHOrig*0.2f,     x - tWOrig * 2, y - 2 * tHOrig ,     x - tWOrig * 1.5f, y - 4 * tHOrig ,//bottom left rack
+                    x, y - (4 * tHOrig),  //tip of bottom of armor
+                    x + tWOrig * 1.5f, y - 4 * tHOrig ,        x + tWOrig * 2, y - 2 * tHOrig ,    x + tWOrig * 2, y -tHOrig*0.2f,     //bottom right of burner
             }
             );
         } else if (rackLvl==4) {
             rackHitbox = new Polygon(new float[]{
-                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,     x - tW.get() * 1.5f, y - 4 * tH.get() ,      x - tW.get() * 1f, y - 5 * tH.get() ,//bottom left rack
-                    x, y - (5 * tH.get()),  //tip of bottom of armor
-                    x + tW.get() * 1f, y - 5 * tH.get() , x + tW.get() * 1.5f, y - 4 * tH.get() , x + tW.get() * 2, y - 2 * tH.get() , x + tW.get() * 2, y -tH.get()*0.2f,     //bottom right of burner
+                    x - tWOrig * 2, y -tHOrig*0.2f,     x - tWOrig * 2, y - 2 * tHOrig ,     x - tWOrig * 1.5f, y - 4 * tHOrig ,      x - tWOrig * 1f, y - 5 * tHOrig ,//bottom left rack
+                    x, y - (5 * tHOrig),  //tip of bottom of armor
+                    x + tWOrig * 1f, y - 5 * tHOrig , x + tWOrig * 1.5f, y - 4 * tHOrig , x + tWOrig * 2, y - 2 * tHOrig , x + tWOrig * 2, y -tHOrig*0.2f,     //bottom right of burner
             }
             );
         }
