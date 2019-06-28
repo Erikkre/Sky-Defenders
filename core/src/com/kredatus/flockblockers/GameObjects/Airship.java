@@ -91,7 +91,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public boolean hitMaxBrightnessCloudBrightening=false;
     public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850, 2500},
             speedValues={55, 65, 75, 88, 103, 119, 136};
-    public TextureRegion[] rackTextures=new TextureRegion[6];
+    public TextureRegion[] rackTextures=new TextureRegion[7];
     
     public int nextTurretPosition;
     public float thrusterYposOffset;
@@ -151,7 +151,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     public void backToSurvival(String sizeChangeType){
 
-
         if (sizeChangeType==null) this.sizeChangeType="buyMenuToSurvival";
         else this.sizeChangeType=sizeChangeType;
         changeTextureSizes(armorLvl,rackLvl,"survival");
@@ -177,10 +176,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     Preferences prefs = Gdx.app.getPreferences("skyDefenders");
     BirdHandler birdHandler;TargetHandler targetHandler;LightHandler lightHandler;
     public Airship(GameWorld world, int camWidth, int camHeight, int birdStartType, BirdHandler birdHandler, TargetHandler targetHandler, LightHandler lightHandler) {
-        rackTextures=Loader.getRacks("rack");
-        sizeTargetRatio=rackTextures[0].getRegionHeight()/195f;
-        newTurretHeightTarget=tHOrig * sizeTargetRatio;
-        newTurretWidthTarget= tWOrig * sizeTargetRatio;
 
         this.lightHandler=lightHandler;
         this.birdStartType=birdStartType;
@@ -286,6 +281,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     float newTurretHeightTarget,newTurretWidthTarget,currentNewTexturesSizeRatio;
 
     private void loadTextures(){
+        rackTextures=Loader.getRacks("rack");
         balloonTexture = Loader.tA.findRegion("balloon");
         sideThrustTexture = Loader.tA.findRegion("sideThruster");
         pipeTexture = Loader.tA.findRegion("burnerPipes");
@@ -296,7 +292,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     private void changeTextureSizes(int armorLvl, int rackLvl, String buyMenuOrSurvivalSize) {
         if (buyMenuOrSurvivalSize.equals("buyMenu"))    sizeTargetRatio=1f;
-        else if (buyMenuOrSurvivalSize.equals("survival"))    sizeTargetRatio=0.66f;
+        else if (buyMenuOrSurvivalSize.equals("survival"))    sizeTargetRatio=0.661f;
         
             newTurretHeightTarget=tHOrig * sizeTargetRatio;
             newTurretWidthTarget= tWOrig * sizeTargetRatio;
@@ -312,7 +308,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 push( Tween.to(thrusterWidth,0,sizeChangeDur).target((int)(sideThrustTexture.getRegionWidth()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(thrusterHeight,0,sizeChangeDur).target((int)(sideThrustTexture.getRegionHeight()*sizeTargetRatio*(1+0.2f*speedLvl))).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(rackWidth,0,sizeChangeDur).target((int)(rackTextures[0].getRegionWidth()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(rackHeight,0,sizeChangeDur).target((int) ( newTurretHeightTarget*(rackLvl+1)  -  9.5*sizeTargetRatio  )*sizeTargetRatio).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(rackHeight,0,sizeChangeDur).target((int) ( tHOrig*(rackLvl+1)  - 20)*sizeTargetRatio).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(pipeWidth,0,sizeChangeDur).target((int)(pipeTexture.getRegionWidth()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(pipeHeight,0,sizeChangeDur).target((int)(pipeTexture.getRegionHeight()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(tW,0,sizeChangeDur).target(newTurretWidthTarget).ease(TweenEquations.easeInOutCubic)).
@@ -324,19 +320,19 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     private void assignRackAndArmor(int armorLvl, int rackLvl) {
         rackTexture=rackTextures[armorLvl];
-        rackTexture.setRegion(rackTexture, 0, 0, rackTexture.getRegionWidth(), (int) (newTurretHeightTarget*(rackLvl + 1)  -  9.5*sizeTargetRatio) );
+        rackTexture.setRegion(rackTexture, 0, 0, rackTexture.getRegionWidth(), (int) (tHOrig*(rackLvl + 1)  -  20) );
 
         armor=armorValues[armorLvl];
         assignRackPositions();
     }
     private void updateRackAndPositionsDuringSizeChangeTween(){
-        System.out.println(tW.get());
+
         updateLightDistanceFromAirship();
         currentNewTexturesSizeRatio=rackWidth.get()/rackTexture.getRegionWidth();
 
-        if (sizeChangeType.equals("startToSurvival")) scaleFireEffects(1.00005f);
-        else if (sizeChangeType.equals("survivalToBuyMenu")) scaleFireEffects(1.006f);
-        else if (sizeChangeType.equals("buyMenuToSurvival")) scaleFireEffects(0.994f);
+        if (sizeChangeType.equals("startToSurvival")) scaleFireEffects(1.002f);
+        else if (sizeChangeType.equals("survivalToBuyMenu")) scaleFireEffects(1.0042f);
+        else if (sizeChangeType.equals("buyMenuToSurvival")) scaleFireEffects(0.9958f);
 
         assignRackPositions();
     }
@@ -389,7 +385,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             rackHitbox = new Polygon(new float[]{
                     x - tWOrig * 2, y -tHOrig*0.2f,     x - tWOrig * 2, y - 2 * tHOrig ,     x - tWOrig * 1.5f, y - 4 * tHOrig ,//bottom left rack
                     x, y - (4 * tHOrig),  //tip of bottom of armor
-                    x + tWOrig * 1.5f, y - 4 * tHOrig ,        x + tWOrig * 2, y - 2 * tHOrig ,    x + tWOrig * 2, y -tHOrig*0.2f,     //bottom right of burner
+                    x + tWOrig * 1.5f, y - 4 * tHOrig ,          x + tWOrig * 2, y - 2 * tHOrig ,    x + tWOrig * 2, y -tHOrig*0.2f,     //bottom right of burner
             }
             );
         } else if (rackLvl==4) {
@@ -848,8 +844,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
             i.pos.set( pos.x + i.distanceFromAirship.x + i.posOffset.x, pos.y+balloonBob.get() + i.distanceFromAirship.y );
         }
-        additiveEffects.get(0).setPosition(pos.x- (pipeWidth.get() * (burnerLvl+1)*0.13f), pos.y+balloonBob.get() + (float) Math.pow(pipeHeight.get(),1.3f)-7); //update burner position no matter what
-        //System.out.println(pipeHeight.get());
+        additiveEffects.get(0).setPosition(pos.x- ((additiveEffects.get(0).getEmitters().get(0).getSpawnWidth().getHighMax()) * (burnerLvl+1))/8f+ (float)Math.pow(pipeWidth.get()/10f,4), pos.y+balloonBob.get() + pipeHeight.get()*1.45f); //update burner position no matter what
+        System.out.println(additiveEffects.get(0).getEmitters().get(0).getSpawnWidth().getHighMax()/8f);
     }
     public void drawReticle(SpriteBatch batcher) {
         if (turretList.size() > 0 && !UiHandler.aimPad.isTouched()) {
@@ -985,13 +981,14 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         if (burnerLvl>0) {//if theres 4 pipes or up to 8 with higher burner levels
             for (float i = 2; i < burnerLvl + 2; i++) {
-                batcher.draw(pipeTexture, pos.x - (pipeWidth.get() * i), pos.y+balloonBob.get() + (int)(pipeHeight.get()/2.5f),
+                batcher.draw(pipeTexture, pos.x - (pipeWidth.get() * i), pos.y+balloonBob.get() + 2+currentNewTexturesSizeRatio*2,
                         (pipeWidth.get() * i), -(int)(pipeHeight.get()/2.5f), pipeWidth.get(), pipeHeight.get(), 1, 1, rotation.get()); //originX and Y work as: starting with (0,0) being at the bottom left corner of wherever the image currently is,
                                                                                                                                     // set the point of rotation (irrelevant to world or camera coordinates)
-                batcher.draw(pipeTexture, pos.x + (pipeWidth.get() * (i-1)), pos.y+balloonBob.get() + (int)(pipeHeight.get()/2.5f),
+                batcher.draw(pipeTexture, pos.x + (pipeWidth.get() * (i-1)), pos.y+balloonBob.get() + 2+currentNewTexturesSizeRatio*2,
                         -(pipeWidth.get() * (i-1)), -(int)(pipeHeight.get()/2.5f), pipeWidth.get(), pipeHeight.get(), 1, 1, rotation.get());
             }
         }
+
         c=batcher.getColor();
         //************************* 30% of the tint ****************************
         batcher.setColor((c.r+2f)/3f,(c.g+2f)/3f,(c.b+2f)/3f,c.a);
