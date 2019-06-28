@@ -63,9 +63,9 @@ public class GameHandler implements Screen {
         birdHandler.setAirshipPos(airship);
         targetHandler.setAirship(airship);
 
-        world.survival(tinyBirdHandler,lightHandler,airship,bgHandler);
+        world.startToSurvival(tinyBirdHandler,lightHandler,airship,bgHandler);
         renderer = new GameRenderer(world,lightHandler,tinyBirdHandler,birdHandler,bgHandler,targetHandler,uiHandler,airship, camWidth, camHeight);
-        renderer.prepareTransition(0, 0, 0, 1.7f);
+        renderer.makeTransition(0, 0, 0, 1.7f);
 
         bgHandler.setRendererAndCam(renderer);
         lightHandler.setCam(renderer);

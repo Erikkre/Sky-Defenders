@@ -54,14 +54,14 @@ public class Turret {
 
     ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue;
     Airship airship;TargetHandler targetHandler;
-    public void draw(SpriteBatch batcher, float xPos, float yPos) {
+    public void draw(SpriteBatch batcher, float xPos, float yPos, float scale) {
         if (texture.length>1 && firingInterval-(System.currentTimeMillis()-lastShotTime)<400) {//if there are multiple frames and if 400ms or less before shot draw loaded turret
             batcher.draw(texture[1], xPos, yPos,
-                    width / 2f - posOffset.x , height / 2f , width, height, 1f, 1f, rotation);
+                    width / 2f - posOffset.x , height / 2f , width, height, scale, scale, rotation);
 
         } else if ( !((projRotates||turretPullsBack)&&System.currentTimeMillis()-lastShotTime<400)) {//if not right after pullbackthrow or preThrowSpin, draw
             batcher.draw(texture[0], xPos, yPos,
-                    width / 2f - posOffset.x , height / 2f , width, height, 1f, 1f, rotation);
+                    width / 2f - posOffset.x , height / 2f , width, height, scale, scale, rotation);
         }
 
         if (preThrowSpin) {

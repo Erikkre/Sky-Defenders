@@ -135,13 +135,26 @@ public class GameWorld {
         lightHandler.foreRayHandler.update();  //used for airship and gun lights too
         lightHandler.backRayHandler.update();
     }
+    private void updateBuyMenu(float delta, float runTime) {
+        bgHandler.update(delta);
+        uiHandler.update(delta);
 
+        for (Projectile i : targetHandler.projectileList){ i.update();}
+        for (BirdAbstractClass i : birdHandler.deadBirdQueue){
+            i.update(delta, runTime);
+            if (i.isOffCam()&&i.coinList==null) {
+                birdHandler.deadBirdQueue.remove(i);
+            }
+        }
+        airship.update(delta);
+        //tinyBirdHandler.update(delta);
+        //lightHandler.foreRayHandler.update();  //used for airship and gun lights too
+    }
     private void updateLogos(float delta, float runTime) {
         //timerTween.update(delta);
         logoTween.update(delta);
         logoBgTween.update(delta);
     }
-
     private void updateMenu(float delta, float runTime) {
         bgHandler.update(delta);
         birdHandler.update();
@@ -155,29 +168,10 @@ public class GameWorld {
         lightHandler.foreRayHandler.update();  //used for airship and gun lights too
         lightHandler.backRayHandler.update();
     }
-
-    private void updateBuyMenu(float delta, float runTime) {
-        bgHandler.update(delta);
-        uiHandler.update(delta);
-
-        for (Projectile i : targetHandler.projectileList){ i.update();}
-        for (BirdAbstractClass i : birdHandler.deadBirdQueue){
-                i.update(delta, runTime);
-                if (i.isOffCam()&&i.coinList==null) {
-                    birdHandler.deadBirdQueue.remove(i);
-                }
-        }
-        airship.update(delta);
-        //tinyBirdHandler.update(delta);
-        //lightHandler.foreRayHandler.update();  //used for airship and gun lights too
-    }
-
     private void updateReady(float runTime) {
         //glider.updateReady(runTime);
     }
-
     private void updateRunning(float delta, float runTime) {
-
         //System.out.println((int)((-renderer.scorenumber/5f)+orgboostnumber));
         if (delta > .15f) {
             delta = .15f;}
@@ -193,20 +187,16 @@ public class GameWorld {
             //bgHandler.onRestart();
            // AssetHandler.frontViewFlaps.setFrameDuration(0.2f);
            //renderer.setCamPositionOriginal();
-            renderer.prepareTransition(255, 255, 255, 1);
+            renderer.makeTransition(255, 255, 255, 1);
         }*/
     }
 
     public void addBoost(double increment) {
         boost += increment;
     }
-
-
     public BgHandler getbgHandler() {
         return bgHandler;
     }
-
-
     public void restart() {
         boost = 0;
         //glider.onRestart();
@@ -216,14 +206,16 @@ public class GameWorld {
         Loader.playnext(Loader.musiclist);
         //AssetHandler.frontFlaps.setFrameDuration(0.2f);
         //currentState = GameState.READY;
-        renderer.prepareTransition(0, 0, 0, 1f);}
+        renderer.makeTransition(0, 0, 0, 1f);
+    }
 
-    public void buyMenu() {
+    public void survivalToBuyMenu() {
+        uiHandler.survivalToBuyMenu();
         GameHandler.timeOfPause = System.currentTimeMillis();
 
         currentState = GameState.BUYMENU;
-        airship.buyMenu();
-        bgHandler.buyMenu();
+        airship.survivalToBuyMenu();
+        bgHandler.survivalToBuyMenu();
         for (Turret i : airship.turretList){
             if (i.firing) {
                 i.stopFiring();
@@ -233,34 +225,36 @@ public class GameWorld {
         }
 
         birdHandler.pause();
-
-        //renderer.prepareTransition(0, 0, 0, 0.7f);
+        //renderer.makeTransition(0, 0, 0, 0.7f);
     }
-    public void survival() {
+    public void buyMenuToSurvival() {
+        uiHandler.buyMenuToSurvival();
         GameHandler.timeOfResume = System.currentTimeMillis();
 
         currentState = GameState.SURVIVAL;
-        airship.survival(null);
-        bgHandler.survival(tinyBirdHandler,lightHandler);
-        renderer.prepareTransition(0, 0, 0, 1.7f);
+        airship.backToSurvival(null);
+        bgHandler.buyMenuToSurvival();
+
         for (Turret i : airship.turretList) {
             if (i.firingStoppedByGamePause) {
                 i.startFiring();
                 i.firingStoppedByGamePause = false;
             }
         }
+        birdHandler.resume();
     }
-    public void survival(TinyBirdHandler tinyBirdHandler,LightHandler lightHandler,Airship airship,BgHandler bgHandler) {//the one that survival starts with
+    public void startToSurvival(TinyBirdHandler tinyBirdHandler, LightHandler lightHandler, Airship airship, BgHandler bgHandler) {//the one that startSurvival starts with
         currentState = GameState.SURVIVAL;
-        airship.survival("startToSurvival");
-        bgHandler.survival(tinyBirdHandler,lightHandler);
+        airship.backToSurvival("startToSurvival");
+        bgHandler.startToSurvival(tinyBirdHandler,lightHandler);
     }
-    public void menu() {
+    public void survivalToMenu() {
         //glider.onRestart();
         //bgHandler.onRestart();
         //renderer.setCamPositionOriginal();
         currentState = GameState.MENU;
-        renderer.prepareTransition(0, 0, 0, 0.7f);
+        renderer.makeTransition(0, 0, 0, 0.7f);
+        GameHandler.timeOfPause = System.currentTimeMillis();
     }
 
     public void ready() {
@@ -270,23 +264,23 @@ public class GameWorld {
         Loader.stopMusic(Loader.menumusiclist);
         Loader.playnext(Loader.musiclist);
         //currentState = GameState.READY;
-        renderer.prepareTransition(0, 0, 0, 1f);}
+        renderer.makeTransition(0, 0, 0, 1f);}
 
     public void exit() {
         Gdx.app.exit();
     }
 
     public void story() {
-        renderer.prepareTransition(0, 0, 0, 1f);
+        renderer.makeTransition(0, 0, 0, 1f);
         //currentState = GameState.STORY;
         }
 
     public void credits() {
-        renderer.prepareTransition(0, 0, 0, 1f);
+        renderer.makeTransition(0, 0, 0, 1f);
         currentState = GameState.CREDITS;}
 
     public void instr() {
-        renderer.prepareTransition(0, 0, 0, 1f);
+        renderer.makeTransition(0, 0, 0, 1f);
         currentState = GameState.INSTR;}
 
     public boolean isLogos() {
@@ -333,7 +327,7 @@ public class GameWorld {
                     System.out.println("start game");
                 } else {
                     currentState=GameState.SURVIVAL;
-                    System.out.println("switch to survival");
+                    System.out.println("switch to startToSurvival");
                 }
             }
         };

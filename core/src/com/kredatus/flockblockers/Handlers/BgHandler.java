@@ -66,14 +66,17 @@ public class BgHandler {
     public GameWorld world;
     Preferences prefs=Gdx.app.getPreferences("skyDefenders");
 
-    public void buyMenu(){
-        background = new Background(horiz.get(), vert.get(), bgw, separatorHeight, Loader.bgList.get(0));
-        background2 = new Background(horiz.get(), background.getTailY(), bgw, separatorHeight, Loader.bgList.get(0));
-        buyMenuBgTweens(((FlockBlockersMain)Gdx.app.getApplicationListener()).loader.gameHandler.tinyBirdHandler);
+    public void buyMenuToSurvival(){
+        vertPositionBg.resume();
     }
-    public void survival(TinyBirdHandler tinyBirdHandler,LightHandler lightHandler){
+    public void survivalToBuyMenu(){
+        //background = new Background(horiz.get(), vert.get(), bgw, separatorHeight, Loader.bgList.get(0));
+        //background2 = new Background(horiz.get(), background.getTailY(), bgw, separatorHeight, Loader.bgList.get(0));
+        buyMenuBgTweens();
+    }
+    public void startToSurvival(TinyBirdHandler tinyBirdHandler,LightHandler lightHandler){
         horiz.set(0);
-        vert.set(0);//everything is done in negative (camera goes up by that amount
+        vert.set(0); //everything is done in negative (camera goes up by that amount
         shake.set(0);                              //but in reality its the bg's lowering by that much
 
         isCameraShake=false;
@@ -84,15 +87,16 @@ public class BgHandler {
         survivalBgTweens(tinyBirdHandler,lightHandler);
     }
 
-    public void buyMenuBgTweens(final TinyBirdHandler tinyBirdHandler){
-        horiz.set(0);
-        vert.set(0);
+    public void buyMenuBgTweens(){
+        vertPositionBg.pause();
+        /*horiz.set(0);
+        //vert.set(0);
         (horizPositionBg = Timeline.createSequence()
                 .push(Tween.to(horiz, -1, sideToSideMotionDuration).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
                 .repeatYoyo(Tween.INFINITY, 0).start();
-        (vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
+        /*(vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
                 .push(Tween.to(vert, -1, 5).target(-bgh)))
-                .repeatYoyo(Tween.INFINITY,0).start();
+                .repeatYoyo(Tween.INFINITY,0).start();*/
     }
 
     public BgHandler(GameWorld world, float camWidth, float camHeight, int birdType, BirdHandler birdHandler){

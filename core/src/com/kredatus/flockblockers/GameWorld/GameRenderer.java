@@ -156,7 +156,7 @@ public class GameRenderer {
         //instrFontSetup();
         //creditsFontSetup();
         transitionColor = new Color();
-        //prepareTransition(255, 255, 255, .5f);
+        //makeTransition(255, 255, 255, .5f);
         manager = new TweenManager();
         //prepareSunshine();
         //System.out.println(batcher.getBlendDstFunc()+" "+batcher.getBlendDstFuncAlpha()+" "+batcher.getBlendSrcFunc()+" "+batcher.getBlendSrcFuncAlpha()+" "+batcher.getPackedColor());
@@ -564,7 +564,7 @@ public void setRotate(float angle){
 
         if (world.isSurvival()) {
             /*if (runTime<2){
-            prepareTransition(0, 0, 0, 10f);}*/
+            makeTransition(0, 0, 0, 10f);}*/
 
             drawBackground();
             batcher.end();
@@ -664,7 +664,7 @@ public void setRotate(float angle){
 
     }
 
-    public void prepareTransition(int r, int g, int b, float duration) {
+    public void makeTransition(int r, int g, int b, float duration) {
         transitionColor.set(r / 255.0f, g / 255.0f, b / 255.0f, 1);
         alpha.set(1);
         manager.killAll();

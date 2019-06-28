@@ -39,8 +39,9 @@ public class UiHandler {
     public static boolean isTouched;
     float camWidth,camHeight;
     public GameWorld world;
+    public TextButton buyButton,menuButton,playButton;
     //might want to implement a current stage for new screens
-    public  boolean anyUITouched( ) {
+    public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
             if (i instanceof SlideMenu)      {if (((SlideMenu) i).isTouched){ return true;}}
         }
@@ -54,6 +55,17 @@ public class UiHandler {
     }
 
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
+        /******* BUTTONS *******/
+        buyButton  = new TextButton("Buy", shadeSkin);    //set button style
+        buyButton .setStyle(shadeSkin.get("round", buyButton.getStyle().getClass()));
+
+        playButton  = new TextButton("Play", shadeSkin);    //set button style
+        playButton .setStyle(shadeSkin.get("round", buyButton.getStyle().getClass()));
+
+        menuButton = new TextButton("Menu", shadeSkin);    //set button style
+        menuButton.setStyle(shadeSkin.get("round", menuButton.getStyle().getClass()));
+
+
         //https://github.com/kotcrab/vis-ui
         if (!VisUI.isLoaded())VisUI.load(shadeSkin);
 
@@ -84,10 +96,12 @@ public class UiHandler {
         loadSurvivalStage();
     }
 
-    public void loadBuyStage(){
-
+    public void survivalToBuyMenu(){
+        slideMenuBottom.getCell(buyButton).setActor(playButton);
     }
-
+    public void buyMenuToSurvival(){
+        slideMenuBottom.getCell(playButton).setActor(buyButton);
+    }
     public void loadSurvivalStage(){
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -246,23 +260,21 @@ public class UiHandler {
         slideMenuBottom.setMoveMenuButton(menuButtonY);
 
 
-        /******* BUTTONS ******/
-        final TextButton buyButton = new TextButton("Buy", shadeSkin);    //set button style
-        buyButton.setStyle(shadeSkin.get("round", buyButton.getStyle().getClass()));
-        slideMenuBottom.add(buyButton).expand().fill().row();
 
-        final TextButton menuButton = new TextButton("Menu", shadeSkin);    //set button style
-        menuButton.setStyle(shadeSkin.get("round", menuButton.getStyle().getClass()));
-        slideMenuBottom.add(menuButton).expand().fill().row();
+        slideMenuBottom.add(buyButton).grow().row();
+
+
+        slideMenuBottom.add(menuButton).grow().row();
 
         slideMenuBottom.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (actor.equals(buyButton)) {
-                    loadBuyStage();
-                    world.buyMenu();
+                    world.survivalToBuyMenu();
                 } else if (actor.equals(menuButton))
-                    world.menu();
+                    world.survivalToMenu();
+                else if (actor.equals(playButton))
+                    world.buyMenuToSurvival();
             }
         });
         //slideMenuLeft.add().height(300f).row(); // empty space
