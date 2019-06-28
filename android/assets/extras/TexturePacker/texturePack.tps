@@ -344,121 +344,62 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/balloon.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/balloon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>40,50,80,100</rect>
+                <rect>80,100,160,200</rect>
                 <key>scale9Paddings</key>
-                <rect>40,50,80,100</rect>
+                <rect>80,100,160,200</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/burnerPipes.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/burnerPipes.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>2,2,3,3</rect>
+                <rect>3,3,5,6</rect>
                 <key>scale9Paddings</key>
-                <rect>2,2,3,3</rect>
+                <rect>3,3,5,6</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/rack0.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/rack1.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/rack2.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/rack3.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/rack4.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/rack5.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/rack6.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/rack0.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/rack1.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/rack2.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/rack3.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/rack4.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/rack5.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/rack6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>42,49,83,97</rect>
+                <rect>63,74,127,148</rect>
                 <key>scale9Paddings</key>
-                <rect>42,49,83,97</rect>
+                <rect>63,74,127,148</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/sideThruster.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x160/sideThruster2.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/sideThruster.png</key>
+            <key type="filename">../texturesToPack/sprites/balloons/x300/sideThrusterLight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>20,3,41,6</rect>
+                <rect>25,4,51,7</rect>
                 <key>scale9Paddings</key>
-                <rect>20,3,41,6</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLballoon.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>160,200,320,400</rect>
-                <key>scale9Paddings</key>
-                <rect>160,200,320,400</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLburnerPipes.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,6,11,11</rect>
-                <key>scale9Paddings</key>
-                <rect>6,6,11,11</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLrack0.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLrack1.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLrack2.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLrack3.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLrack4.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLrack5.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLrack6.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>126,148,253,295</rect>
-                <key>scale9Paddings</key>
-                <rect>126,148,253,295</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLsideThruster.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x600/xLsideThrusterLight.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>51,7,101,15</rect>
-                <key>scale9Paddings</key>
-                <rect>51,7,101,15</rect>
+                <rect>25,4,51,7</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
