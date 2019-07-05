@@ -61,7 +61,7 @@ public class GameWorld {
         this.score = score;
     }
 
-    public int gold, diamonds, score;
+    public static int gold, diamonds, score, fuel, ammo;
 
     public Value alpha =new Value(0),alphaBg=new Value(0);
     public Tween logoTween, logoBgTween, timerTween;

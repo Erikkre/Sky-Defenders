@@ -108,7 +108,8 @@ public class BgHandler {
         this.camHeight=camHeight;
         this.camWidth =camWidth;
                           // 0    1    2    3    4    5    6    7
-        bgNumber=prefs.getInteger("bgNumber",0);
+        bgNumber=prefs.getInteger("bgNumber",0)/9;
+        if (bgNumber!=birdType * 9) bgNumber = 9 * birdType;
         //bgNumber = 9 * birdType;// "pB","tB","wB","fB","aB","nB","lB","gB"
         //System.out.print("Start height of bg1: "+-bgStackStartYHeight);
 

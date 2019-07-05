@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -40,6 +41,7 @@ public class UiHandler {
     float camWidth,camHeight;
     public GameWorld world;
     public TextButton buyButton,menuButton,playButton;
+    public Label fuelLabel,scoreLabel,goldLabel,diamondLabel,ammunitionLabel,experienceLabel;
     //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
@@ -103,9 +105,10 @@ public class UiHandler {
         slideMenuBottom.getCell(playButton).setActor(buyButton);
     }
     public void loadSurvivalStage(){
+        stage.clear();
         rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.center().align(Align.bottom);
+        //rootTable.center();
         stage.addActor(rootTable);
 
         //rootTable.add(new Label("Shade UI", shadeSkin, "title")).colspan(3);
@@ -116,9 +119,27 @@ public class UiHandler {
         loadBar.setAnimateDuration(0.7f);
 
         loadBar.setWidth(camWidth/1.1f);
-        loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight-25);
+        //loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight-25);
         loadBar.setValue(.5f);//3.2% is the minimum value right now
-        stage.addActor(loadBar);
+        rootTable.addActor(loadBar);
+
+        rootTable.row();
+        diamondLabel= new Label("0", shadeSkin);
+        diamondLabel.setSize(camWidth/100f,diamondLabel.getPrefHeight());
+
+        fuelLabel= new Label("0", shadeSkin);
+        rootTable.addActor(fuelLabel);
+        ammunitionLabel= new Label("0", shadeSkin);
+        rootTable.addActor(ammunitionLabel);
+        scoreLabel= new Label("0", shadeSkin);
+        rootTable.addActor(scoreLabel);
+        goldLabel= new Label("0", shadeSkin);
+        rootTable.addActor(goldLabel);
+        rootTable.addActor(diamondLabel);
+        experienceLabel= new Label("0", shadeSkin);
+        rootTable.addActor(experienceLabel);
+
+        rootTable.row();
 
         movPad = new Touchpad(0, shadeSkin);
         movPad.setColor(1,1,1,0.5f);//touchpad.settouchpad.scaleBy(0.7f);
@@ -133,6 +154,7 @@ public class UiHandler {
         //touchpad2.setColor(1,1,1,1f);
 
         rootTable.add(aimPad).fill(true).width(camHeight/9f).height(camHeight/8.5f);
+        //change fill
 
         //stage.addCaptureListener(slideMenuLeft.getListeners().get(0));stage.addCaptureListener(slideMenuBottom.getListeners().get(0));
         //  stage.addCaptureListener(menuButtonX.getListeners().get(0));stage.addCaptureListener(men    uButtonY.getListeners().get(0));
@@ -174,14 +196,14 @@ public class UiHandler {
         //slideMenuLeft.setFadeBackground(image_background, 0.5f);
 
         /* z-index = 2 */
-        stage.addActor(slideMenuLeft);
+        rootTable.addActor(slideMenuLeft);
 
         /* z-index = 3 */
         // add button_menu as a separating actor into stage to rotates with dragging value.
         menuButtonX.setWidth(menuButtonX.getWidth()*0.4f);menuButtonX.setHeight(menuButtonX.getHeight()*0.9f);menuButtonX.setColor(1,1,1,0.5f);
         menuButtonX.setOrigin(Align.center);
         //menuButtonActor=menuButtonX;
-        stage.addActor(menuButtonX);
+        rootTable.addActor(menuButtonX);
         slideMenuLeft.setMoveMenuButton(menuButtonX);
         //slideMenuLeft.setRotateMenuButton(menuButtonX, 90f);
 
@@ -250,13 +272,13 @@ public class UiHandler {
 
         /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
         slideMenuBottom = new SlideMenu(.7f*camWidth/2.75f,camHeight/7f,"down",camWidth,camHeight, 0);
-        stage.addActor(slideMenuBottom);
+        rootTable.addActor(slideMenuBottom);
         final Image image_backgroundY = new Image(new SpriteDrawable(temp));
         menuButtonY = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
         menuButtonY.rotateBy(90);menuButtonY.setWidth(menuButtonY.getWidth()*0.4f);menuButtonY.setHeight(menuButtonY.getHeight()*0.9f);menuButtonY.setColor(1,1,1,0.5f);
         menuButtonY.setOrigin(Align.center);
         //menuButtonActor=menuButtonY;
-        stage.addActor(menuButtonY);
+        rootTable.addActor(menuButtonY);
         slideMenuBottom.setMoveMenuButton(menuButtonY);
 
 
