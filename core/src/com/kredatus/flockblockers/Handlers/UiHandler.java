@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
 import com.kredatus.flockblockers.FlockBlockersMain;
+import com.kredatus.flockblockers.GameObjects.Coin;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
@@ -41,7 +42,7 @@ public class UiHandler {
     float camWidth,camHeight;
     public GameWorld world;
     public TextButton buyButton,menuButton,playButton;
-    public Label fuelLabel,scoreLabel,goldLabel,diamondLabel,ammunitionLabel,experienceLabel;
+    public Label fuelLabel,scoreLabel,goldLabel,diamondLabel,ammoLabel,expLabel;
     //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
@@ -83,7 +84,6 @@ public class UiHandler {
         //table.add(nameText).width(100);    // Row 0, column 1.
 
         stage = (((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.stage);
-
         stage.addCaptureListener(new ClickListener() {//tocuh up anywhere on screen means not touching ui
             public void touchUp(InputEvent event, float x, float y, int pnt, int btn) {
                 super.touchUp(event, x, y, pnt, btn);
@@ -91,10 +91,12 @@ public class UiHandler {
                 super.cancel();
             }
         });
+        stage.setDebugAll(true);
+
         rootTable = new Table();
         rootTable.setFillParent(true);
-        rootTable.center().align(Align.bottom);
         stage.addActor(rootTable);
+
         loadSurvivalStage();
     }
 
@@ -105,41 +107,61 @@ public class UiHandler {
         slideMenuBottom.getCell(playButton).setActor(buyButton);
     }
     public void loadSurvivalStage(){
-        stage.clear();
-        rootTable = new Table();
-        rootTable.setFillParent(true);
-        //rootTable.center();
-        stage.addActor(rootTable);
+        Table table0=new Table().top();
+        rootTable.add(table0).growX();
 
-        //rootTable.add(new Label("Shade UI", shadeSkin, "title")).colspan(3);
         rootTable.row();
+
+        Table table1=new Table().top();
+        rootTable.add(table1).growX();
+
+        rootTable.row();
+
+        Table bottomTable=new Table().bottom();//aligns elements of table to bottom
+        rootTable.add(bottomTable).grow();     //grows table equally with table0 to share space
+
+        /***********************************************************************************each of these is a row*/
+        expLabel= new Label("x", shadeSkin);
+        expLabel.setSize(camWidth/50f,expLabel.getPrefHeight());
+        table0.add(expLabel).size(camWidth/10f,expLabel.getPrefHeight());;
+
         shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(20);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(24);
         ProgressBar loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
         loadBar.setColor(1,0,0,0.5f);
         loadBar.setAnimateDuration(0.7f);
 
-        loadBar.setWidth(camWidth/1.1f);
-        //loadBar.setPosition((camWidth-loadBar.getWidth())/2,camHeight-25);
-        loadBar.setValue(.5f);//3.2% is the minimum value right now
-        rootTable.addActor(loadBar);
 
-        rootTable.row();
-        diamondLabel= new Label("0", shadeSkin);
-        diamondLabel.setSize(camWidth/100f,diamondLabel.getPrefHeight());
 
-        fuelLabel= new Label("0", shadeSkin);
-        rootTable.addActor(fuelLabel);
-        ammunitionLabel= new Label("0", shadeSkin);
-        rootTable.addActor(ammunitionLabel);
-        scoreLabel= new Label("0", shadeSkin);
-        rootTable.addActor(scoreLabel);
-        goldLabel= new Label("0", shadeSkin);
-        rootTable.addActor(goldLabel);
-        rootTable.addActor(diamondLabel);
-        experienceLabel= new Label("0", shadeSkin);
-        rootTable.addActor(experienceLabel);
+        loadBar.setValue(.001f);//3.2% is the minimum value right now
+        table0.add(loadBar).growX();//colSpan of this must be equal to # of however many labels there are under it
 
-        rootTable.row();
+        table0.row().padTop(5);/******************************************************************************************/
+        scoreLabel= new Label("score", shadeSkin);
+        scoreLabel.setSize(camWidth/50f,scoreLabel.getPrefHeight());
+        goldLabel= new Label("gold", shadeSkin);
+        goldLabel.setSize(camWidth/50f,goldLabel.getPrefHeight());
+        fuelLabel= new Label("fuel", shadeSkin);
+        fuelLabel.setSize(camWidth/50f,fuelLabel.getPrefHeight());
+        ammoLabel= new Label("ammo", shadeSkin);
+        ammoLabel.setSize(camWidth/50f,ammoLabel.getPrefHeight());
+        diamondLabel= new Label("diamonds", shadeSkin);
+        diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
+
+        table1.add(scoreLabel);//.size(camWidth/5f,scoreLabel.getPrefHeight());
+
+
+        table1.add(new Coin());
+        table1.add(goldLabel);//.size(camWidth/5f,goldLabel.getPrefHeight());
+
+
+
+        table1.add(fuelLabel);//.size(camWidth/5f,fuelLabel.getPrefHeight());
+        table1.add(ammoLabel);//.size(camWidth/5f,ammoLabel.getPrefHeight());
+        table1.add(diamondLabel);//.size(camWidth/5f,diamondLabel.getPrefHeight());
+
+        /******************************************************************************************/
+
+
 
         movPad = new Touchpad(0, shadeSkin);
         movPad.setColor(1,1,1,0.5f);//touchpad.settouchpad.scaleBy(0.7f);
@@ -147,13 +169,13 @@ public class UiHandler {
         //touchpad2.setColor(1,1,1,1f);
 
         //keep original height ratio but sized down with current width: .height((touchpad.getPrefHeight()*touchpad.getWidth())/touchpad.getPrefWidth())
-        rootTable.add(movPad).fill(true).width(camHeight/9f).height(camHeight/8.5f).padRight(camWidth-(camHeight/9f)*2);
+        bottomTable.add(movPad).width(camHeight/9f).height(camHeight/8.5f).left().expand();
 
         aimPad = new TouchRotatePad(0, shadeSkin);
         aimPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         //touchpad2.setColor(1,1,1,1f);
 
-        rootTable.add(aimPad).fill(true).width(camHeight/9f).height(camHeight/8.5f);
+        bottomTable.add(aimPad).width(camHeight/9f).height(camHeight/8.5f).right().expand();
         //change fill
 
         //stage.addCaptureListener(slideMenuLeft.getListeners().get(0));stage.addCaptureListener(slideMenuBottom.getListeners().get(0));
@@ -362,6 +384,12 @@ public class UiHandler {
     }
     public void update(float delta){
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
+        expLabel.setText("Exp: "+ GameWorld.exp);
+        scoreLabel.setText("Score: "+GameWorld.score);
+        goldLabel.setText("Gold: "+GameWorld.gold);
+        fuelLabel.setText("Fuel: "+GameWorld.fuel);
+        ammoLabel.setText("Ammo: "+GameWorld.ammo);
+        diamondLabel.setText("Diamonds: "+GameWorld.diamonds);
         if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
     }
 }

@@ -96,30 +96,36 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public int nextTurretPosition;
     public float thrusterYposOffset;
     public void healthUp(){
-        health=healthValues[++healthLvl];
+        if (healthLvl<healthValues.length-1) {
+            health = healthValues[++healthLvl];
+        }
     }
     public void armorUp(){
-        assignRackAndArmor(++armorLvl,rackLvl);
+        if (armorLvl<armorValues.length-1) {
+            assignRackAndArmor(++armorLvl, rackLvl);
+        }
     }
     public void rackUp(){
-        assignRackAndArmor(armorLvl,++rackLvl);
-        assignRackBounds();
+        if (rackLvl<4) {
+            assignRackAndArmor(armorLvl, ++rackLvl);
+            assignRackBounds();
+        }
     }
     public void burnerUp(){
-        if (burnerLvl<=3) {
+        if (burnerLvl<3) {
             setEmitterVal(additiveEffects.get(0).getEmitters().get(3- ++burnerLvl).getEmission(),300,false);
             setEmitterVal(additiveEffects.get(0).getEmitters().get(4+ burnerLvl).getYOffsetValue(),300,false);
         }
     }
     public void speedUp(){
-        if (speedLvl<speedValues.length) {
+        if (speedLvl<speedValues.length-1) {
             speed = speedValues[++speedLvl];
             thrusterHeight.set((int) (thrusterHeight.get() * (1 + 0.2f * speedLvl)));
-            setEmitterVal(firstEmittersOfEachEffect.get(1).getSpawnHeight(), speedLvl * 3, false, false);
-            setEmitterVal(firstEmittersOfEachEffect.get(1).getEmission(), firstEmittersOfEachEffect.get(1).getEmission().getHighMax() * speedLvl, false, false);
+            setEmitterVal(firstEmittersOfEachEffect.get(1).getSpawnHeight(), speedLvl * 2, false, false);
+            setEmitterVal(firstEmittersOfEachEffect.get(1).getEmission(), firstEmittersOfEachEffect.get(1).getEmission().getHighMax() * (speedLvl/3f), false, false);
 
-            setEmitterVal(firstEmittersOfEachEffect.get(2).getSpawnHeight(), speedLvl * 3, false, false);
-            setEmitterVal(firstEmittersOfEachEffect.get(2).getEmission(), firstEmittersOfEachEffect.get(2).getEmission().getHighMax() * speedLvl, false, false);
+            setEmitterVal(firstEmittersOfEachEffect.get(2).getSpawnHeight(), speedLvl * 2, false, false);
+            setEmitterVal(firstEmittersOfEachEffect.get(2).getEmission(), firstEmittersOfEachEffect.get(2).getEmission().getHighMax() * (speedLvl/3f), false, false);
             //System.out.println(thrusterHeight+" ssssssssssssssssss");
         }
     }
@@ -297,7 +303,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             newTurretHeightTarget=tHOrig * sizeTargetRatio;
             newTurretWidthTarget= tWOrig * sizeTargetRatio;
 
-            System.out.println("***"+newTurretWidthTarget+" "+sizeTargetRatio);
+            //System.out.println("***"+newTurretWidthTarget+" "+sizeTargetRatio);
     
 
         // 167x195 is res of small balloon, 640x800 is res of big balloon. 44 is turretWidth relative to original rack width of x167
@@ -308,7 +314,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 push( Tween.to(thrusterWidth,0,sizeChangeDur).target((int)(sideThrustTexture.getRegionWidth()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(thrusterHeight,0,sizeChangeDur).target((int)(sideThrustTexture.getRegionHeight()*sizeTargetRatio*(1+0.2f*speedLvl))).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(rackWidth,0,sizeChangeDur).target((int)(rackTextures[0].getRegionWidth()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
-                push( Tween.to(rackHeight,0,sizeChangeDur).target((int) ( tHOrig*(rackLvl+1)  - 20)*sizeTargetRatio).ease(TweenEquations.easeInOutCubic)).
+                push( Tween.to(rackHeight,0,sizeChangeDur).target((int) ( tHOrig*(rackLvl+1) - 20 )*sizeTargetRatio).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(pipeWidth,0,sizeChangeDur).target((int)(pipeTexture.getRegionWidth()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(pipeHeight,0,sizeChangeDur).target((int)(pipeTexture.getRegionHeight()*sizeTargetRatio)).ease(TweenEquations.easeInOutCubic)).
                 push( Tween.to(tW,0,sizeChangeDur).target(newTurretWidthTarget).ease(TweenEquations.easeInOutCubic)).
@@ -845,7 +851,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             i.pos.set( pos.x + i.distanceFromAirship.x + i.posOffset.x, pos.y+balloonBob.get() + i.distanceFromAirship.y );
         }
         additiveEffects.get(0).setPosition(pos.x- ((additiveEffects.get(0).getEmitters().get(0).getSpawnWidth().getHighMax()) * (burnerLvl+1))/8f+ (float)Math.pow(pipeWidth.get()/10f,4), pos.y+balloonBob.get() + pipeHeight.get()*1.45f); //update burner position no matter what
-        System.out.println(additiveEffects.get(0).getEmitters().get(0).getSpawnWidth().getHighMax()/8f);
+        //System.out.println(additiveEffects.get(0).getEmitters().get(0).getSpawnWidth().getHighMax()/8f);
     }
     public void drawReticle(SpriteBatch batcher) {
         if (turretList.size() > 0 && !UiHandler.aimPad.isTouched()) {

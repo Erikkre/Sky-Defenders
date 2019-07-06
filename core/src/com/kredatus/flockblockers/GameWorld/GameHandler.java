@@ -104,6 +104,7 @@ public class GameHandler implements Screen {
     @Override
     public void hide() {
         Gdx.app.log("GameHandler", "hide called");
+
     }
 
     @Override
@@ -123,6 +124,21 @@ public class GameHandler implements Screen {
             birdHandler.pause();
             ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.stopMusic(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.menumusiclist);
         }
+
+        prefs.putInteger("burnerLvl",airship.burnerLvl);
+        prefs.putInteger("healthLvl",airship.healthLvl);
+        prefs.putInteger("armorLvl",airship.armorLvl);
+        prefs.putInteger("rackLvl",airship.rackLvl);
+        prefs.putInteger("speedLvl",airship.speedLvl);
+        prefs.putInteger("bgNumber",bgHandler.bgNumber);
+
+        prefs.putInteger("exp",world.exp);
+        prefs.putInteger("score",world.score);
+        prefs.putInteger("gold",world.gold);
+        prefs.putInteger("fuel",world.fuel);
+        prefs.putInteger("ammo",world.ammo);
+        prefs.putInteger("diamonds",world.diamonds);
+        prefs.flush();
     }
 
     @Override
@@ -147,13 +163,20 @@ public class GameHandler implements Screen {
 
     @Override
     public void dispose() {
-
+        Gdx.app.log("GameHandler", "dispose called");
         prefs.putInteger("burnerLvl",airship.burnerLvl);
         prefs.putInteger("healthLvl",airship.healthLvl);
         prefs.putInteger("armorLvl",airship.armorLvl);
         prefs.putInteger("rackLvl",airship.rackLvl);
         prefs.putInteger("speedLvl",airship.speedLvl);
         prefs.putInteger("bgNumber",bgHandler.bgNumber);
+
+        prefs.putInteger("exp",world.exp);
+        prefs.putInteger("score",world.score);
+        prefs.putInteger("gold",world.gold);
+        prefs.putInteger("fuel",world.fuel);
+        prefs.putInteger("ammo",world.ammo);
+        prefs.putInteger("diamonds",world.diamonds);
         prefs.flush();
 
         uiHandler.stage.dispose();

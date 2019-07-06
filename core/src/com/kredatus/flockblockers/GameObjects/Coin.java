@@ -4,7 +4,10 @@ package com.kredatus.flockblockers.GameObjects;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
+import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Screens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
@@ -13,11 +16,11 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 
-public class Coin {
+public class Coin extends Image {
     private Vector2 dest, lastDest, differenceVector;
     public float y1, x1, width, height, x, y, motion1TimePhoenix,motion2TimePhoenix,motion1Time,motion2Time;
     public Value tweenX=new Value(), tweenY=new Value();
-    public Animation animation;
+    public  Animation animation= Loader.coinAnimation;
     public boolean firstMovementEndedX=false, firstMovementEndedY=false, phoenixCoin, airshipMoved;
     public TweenCallback endFirstMovementX, endFirstMovementY;
     public BirdAbstractClass thisBird;
@@ -25,10 +28,19 @@ public class Coin {
     public double startTime;
 
     Vector2 airshipPos;
+
+    public Coin(){
+        super();
+    }
+    @Override
+    public void act(float delta){
+        //super.act(delta);
+        this.setDrawable(new TextureRegionDrawable((TextureRegion) animation.getKeyFrame(GameHandler.runTime/2)));
+    }
+
     public Coin(float rotation, BirdAbstractClass thisBird, boolean phoenixCoin, Vector2 airshipPos){
         this.airshipPos=airshipPos;
         this.phoenixCoin=phoenixCoin;
-        animation = Loader.coinAnimation;
         width = ((TextureRegion) animation.getKeyFrame(0)).getRegionWidth();
 
         height = width;
