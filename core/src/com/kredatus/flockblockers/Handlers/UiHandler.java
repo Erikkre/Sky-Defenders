@@ -91,7 +91,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        //stage.setDebugAll(true);
+        stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -130,7 +130,7 @@ public class UiHandler {
 
         shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(20);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(24);
         ProgressBar loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        loadBar.setColor(1,0,0,0.5f);
+        loadBar.setColor(1,0,0,0.7f);
         loadBar.setAnimateDuration(0.7f);
 
 
@@ -139,31 +139,31 @@ public class UiHandler {
         table0.add(loadBar).growX();//colSpan of this must be equal to # of however many labels there are under it
 
         table0.row().padTop(5);/******************************************************************************************/
-        scoreLabel= new Label("score", shadeSkin);
-        scoreLabel.setSize(camWidth/50f,scoreLabel.getPrefHeight());
-        goldLabel= new Label("0", shadeSkin);
+        scoreLabel= new Label("", shadeSkin,"title-plain");
+        scoreLabel.setSize(scoreLabel.getPrefWidth()*1.3f,scoreLabel.getPrefHeight()*1.3f);
+        goldLabel= new Label("", shadeSkin,"title-plain");
         goldLabel.setSize(camWidth/50f,goldLabel.getPrefHeight());
-        fuelLabel= new Label("fuel", shadeSkin);
+        fuelLabel= new Label("", shadeSkin,"title-plain");
         fuelLabel.setSize(camWidth/50f,fuelLabel.getPrefHeight());
-        ammoLabel= new Label("ammo", shadeSkin);
+        ammoLabel= new Label("", shadeSkin,"title-plain");
         ammoLabel.setSize(camWidth/50f,ammoLabel.getPrefHeight());
-        diamondLabel= new Label("diamonds", shadeSkin);
+        diamondLabel= new Label("", shadeSkin,"title-plain");
         diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
 
-        table1.add(new Coin()).padLeft(20);
-        table1.add(scoreLabel).size(scoreLabel.getPrefWidth(),scoreLabel.getPrefHeight()).padRight(35);
+        table1.add(new Coin()).padLeft(10);
+        table1.add(scoreLabel).size(scoreLabel.getPrefWidth()*1.3f,scoreLabel.getPrefHeight()*1.3f).padRight(15);
 
-        table1.add(new Coin()).padLeft(20);
-        table1.add(goldLabel).size(goldLabel.getPrefWidth(),goldLabel.getPrefHeight()).padRight(35);
+        table1.add(new Coin()).padLeft(10);
+        table1.add(goldLabel).size(goldLabel.getPrefWidth(),goldLabel.getPrefHeight()).padRight(15);
 
-        table1.add(new Coin()).padLeft(20);
-        table1.add(fuelLabel).size(fuelLabel.getPrefWidth(),fuelLabel.getPrefHeight()).padRight(35);
+        table1.add(new Coin()).padLeft(10);
+        table1.add(fuelLabel).size(fuelLabel.getPrefWidth(),fuelLabel.getPrefHeight()).padRight(15);
 
-        table1.add(new Coin()).padLeft(20);
-        table1.add(ammoLabel).size(ammoLabel.getPrefWidth(),ammoLabel.getPrefHeight()).padRight(35);
+        table1.add(new Coin()).padLeft(10);
+        table1.add(ammoLabel).size(ammoLabel.getPrefWidth(),ammoLabel.getPrefHeight()).padRight(15);
 
-        table1.add(new Coin()).padLeft(20);
-        table1.add(diamondLabel).size(diamondLabel.getPrefWidth(),diamondLabel.getPrefHeight()).padRight(35);
+        table1.add(new Coin()).padLeft(10);
+        table1.add(diamondLabel).size(diamondLabel.getPrefWidth(),diamondLabel.getPrefHeight()).padRight(15);
 
         /******************************************************************************************/
 
@@ -390,12 +390,12 @@ public class UiHandler {
     }
     public void update(float delta){
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
-        expLabel.setText("Exp: "+ GameWorld.exp);
-        scoreLabel.setText("Score: "+GameWorld.score);
+        expLabel.setText(GameWorld.exp);
+        scoreLabel.setText(GameWorld.score);
         goldLabel.setText(GameWorld.gold);
-        fuelLabel.setText("Fuel: "+GameWorld.fuel);
-        ammoLabel.setText("Ammo: "+GameWorld.ammo);
-        diamondLabel.setText("Diamonds: "+GameWorld.diamonds);
+        fuelLabel.setText(GameWorld.fuel);
+        ammoLabel.setText(GameWorld.ammo);
+        diamondLabel.setText(GameWorld.diamonds);
         if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
     }
 }

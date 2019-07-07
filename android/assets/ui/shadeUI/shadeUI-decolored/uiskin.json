@@ -184,6 +184,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: font-label
 		background: label
 	}
+	buttonFont: {
+		font: font-button
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
