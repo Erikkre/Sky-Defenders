@@ -91,7 +91,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -108,9 +108,9 @@ public class UiHandler {
     }
     public void loadSurvivalStage(){
         Table table0=new Table().top();
-        rootTable.add(table0).growX();
+        rootTable.add(table0).growX().padTop(1);
 
-        rootTable.row();
+        rootTable.row().padTop(6);
 
         Table table1=new Table().top();
         rootTable.add(table1).growX();
@@ -123,47 +123,49 @@ public class UiHandler {
         Table bottomTable=new Table().bottom();//aligns elements of table to bottom
         rootTable.add(bottomTable).grow();     //grows table equally with table0 to share space
 
-        /***********************************************************************************each of these is a row*/
-        expLabel= new Label("x", shadeSkin);
+        /***********************************************************************************each of these is a table in a different row*/
+        expLabel= new Label("x", shadeSkin,"title-plain");
         expLabel.setSize(camWidth/50f,expLabel.getPrefHeight());
-        table0.add(expLabel).size(camWidth/10f,expLabel.getPrefHeight());;
+
+        table0.add(new Coin()).size(40);
+        table0.add(expLabel).size((camWidth-(40*5))/5f,expLabel.getPrefHeight());;
 
         shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(20);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(24);
         ProgressBar loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        loadBar.setColor(1,0,0,0.7f);
-        loadBar.setAnimateDuration(0.7f);
+        loadBar.setColor(1,0,0,0.8f);
+        loadBar.setAnimateDuration(0.3f);
 
 
 
         loadBar.setValue(.001f);//3.2% is the minimum value right now
         table0.add(loadBar).growX();//colSpan of this must be equal to # of however many labels there are under it
 
-        table0.row().padTop(5);/******************************************************************************************/
+        /******************************************************************************************/
         scoreLabel= new Label("", shadeSkin,"title-plain");
-        scoreLabel.setSize(scoreLabel.getPrefWidth()*1.3f,scoreLabel.getPrefHeight()*1.3f);
+        //scoreLabel.setSize(scoreLabel.getPrefWidth()*1.3f,scoreLabel.getPrefHeight()*1.3f);
         goldLabel= new Label("", shadeSkin,"title-plain");
-        goldLabel.setSize(camWidth/50f,goldLabel.getPrefHeight());
+        //goldLabel.setSize(camWidth/50f,goldLabel.getPrefHeight());
         fuelLabel= new Label("", shadeSkin,"title-plain");
-        fuelLabel.setSize(camWidth/50f,fuelLabel.getPrefHeight());
+        //fuelLabel.setSize(camWidth/50f,fuelLabel.getPrefHeight());
         ammoLabel= new Label("", shadeSkin,"title-plain");
-        ammoLabel.setSize(camWidth/50f,ammoLabel.getPrefHeight());
+        //ammoLabel.setSize(camWidth/50f,ammoLabel.getPrefHeight());
         diamondLabel= new Label("", shadeSkin,"title-plain");
-        diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
+        //diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
 
-        table1.add(new Coin()).padLeft(10);
-        table1.add(scoreLabel).size(scoreLabel.getPrefWidth()*1.3f,scoreLabel.getPrefHeight()*1.3f).padRight(15);
+        table1.add(new Coin()).size(40);
+        table1.add(scoreLabel).size((camWidth-(40*5))/5f,scoreLabel.getPrefHeight());
 
-        table1.add(new Coin()).padLeft(10);
-        table1.add(goldLabel).size(goldLabel.getPrefWidth(),goldLabel.getPrefHeight()).padRight(15);
+        table1.add(new Coin()).size(40);
+        table1.add(goldLabel).size((camWidth-(40*5))/5f,goldLabel.getPrefHeight());
 
-        table1.add(new Coin()).padLeft(10);
-        table1.add(fuelLabel).size(fuelLabel.getPrefWidth(),fuelLabel.getPrefHeight()).padRight(15);
+        table1.add(new Coin()).size(40);
+        table1.add(fuelLabel).size((camWidth-(40*5))/5f,fuelLabel.getPrefHeight());
 
-        table1.add(new Coin()).padLeft(10);
-        table1.add(ammoLabel).size(ammoLabel.getPrefWidth(),ammoLabel.getPrefHeight()).padRight(15);
+        table1.add(new Coin()).size(40);
+        table1.add(ammoLabel).size((camWidth-(40*5))/5f,ammoLabel.getPrefHeight());
 
-        table1.add(new Coin()).padLeft(10);
-        table1.add(diamondLabel).size(diamondLabel.getPrefWidth(),diamondLabel.getPrefHeight()).padRight(15);
+        table1.add(new Coin()).size(40);
+        table1.add(diamondLabel).size((camWidth-(40*5))/5f,diamondLabel.getPrefHeight());
 
         /******************************************************************************************/
 
@@ -228,7 +230,7 @@ public class UiHandler {
 
         /* z-index = 3 */
         // add button_menu as a separating actor into stage to rotates with dragging value.
-        menuButtonX.setWidth(menuButtonX.getWidth()*0.4f);menuButtonX.setHeight(menuButtonX.getHeight()*0.9f);menuButtonX.setColor(1,1,1,0.5f);
+        menuButtonX.setWidth(menuButtonX.getWidth()*0.4f);menuButtonX.setHeight(menuButtonX.getHeight()*0.9f);menuButtonX.setColor(1,1,1,0.7f);
         menuButtonX.setOrigin(Align.center);
         //menuButtonActor=menuButtonX;
         rootTable.addActor(menuButtonX);
