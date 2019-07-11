@@ -1,0 +1,14 @@
+rank guide (line is rank number): copper
+bronze
+silver
+gold
+diamond
+emerald
+sapphire
+amethyst
+ruby
+pearl
+onyx
+Usage: Rank: Sapphire level 12
+Ranks: 1-11 Levels: 1-78
+858 levels with all ranks combined

@@ -21,8 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
 import com.kredatus.flockblockers.FlockBlockersMain;
-import com.kredatus.flockblockers.GameObjects.Coin;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.Screens.Loader;
 import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
 
@@ -42,7 +42,7 @@ public class UiHandler {
     float camWidth,camHeight;
     public GameWorld world;
     public TextButton buyButton,menuButton,playButton;
-    public Label fuelLabel,scoreLabel,goldLabel,diamondLabel,ammoLabel,expLabel;
+    public Label fuelLabel,goldLabel,diamondLabel,ammoLabel,expLabel;
     //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
@@ -108,9 +108,9 @@ public class UiHandler {
     }
     public void loadSurvivalStage(){
         Table table0=new Table().top();
-        rootTable.add(table0).growX().padTop(1);
+        rootTable.add(table0).growX().padTop(5).padBottom(5);
 
-        rootTable.row().padTop(6);
+        rootTable.row();
 
         Table table1=new Table().top();
         rootTable.add(table1).growX();
@@ -124,25 +124,20 @@ public class UiHandler {
         rootTable.add(bottomTable).grow();     //grows table equally with table0 to share space
 
         /***********************************************************************************each of these is a table in a different row*/
-        expLabel= new Label("x", shadeSkin,"title-plain");
-        expLabel.setSize(camWidth/50f,expLabel.getPrefHeight());
 
-        table0.add(new Coin()).size(40);
-        table0.add(expLabel).size((camWidth-(40*5))/5f,expLabel.getPrefHeight());;
 
-        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(20);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(24);
-        ProgressBar loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
+
+
+        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
+        ProgressBar loadBar = new ProgressBar(0, 100, 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
         loadBar.setColor(1,0,0,0.8f);
         loadBar.setAnimateDuration(0.3f);
-
-
-
-        loadBar.setValue(.001f);//3.2% is the minimum value right now
-        table0.add(loadBar).growX();//colSpan of this must be equal to # of however many labels there are under it
+        loadBar.setValue(1f);//3.2% is the minimum value right now
+        loadBar.setRange(0,100);
 
         /******************************************************************************************/
-        scoreLabel= new Label("", shadeSkin,"title-plain");
-        //scoreLabel.setSize(scoreLabel.getPrefWidth()*1.3f,scoreLabel.getPrefHeight()*1.3f);
+        expLabel= new Label("x", shadeSkin,"title-plain");
+        //expLabel.setSize(camWidth/50f,expLabel.getPrefHeight());
         goldLabel= new Label("", shadeSkin,"title-plain");
         //goldLabel.setSize(camWidth/50f,goldLabel.getPrefHeight());
         fuelLabel= new Label("", shadeSkin,"title-plain");
@@ -152,20 +147,21 @@ public class UiHandler {
         diamondLabel= new Label("", shadeSkin,"title-plain");
         //diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
 
-        table1.add(new Coin()).size(40);
-        table1.add(scoreLabel).size((camWidth-(40*5))/5f,scoreLabel.getPrefHeight());
+        table0.add(new Image(Loader.ranksList[666])).size(35).padLeft(6);
+        table0.add(expLabel).size(expLabel.getPrefWidth(),expLabel.getPrefHeight()).padLeft(6).padRight(3);
+        table0.add(loadBar).grow();//colSpan of this must be equal to # of however many labels there are under it
 
-        table1.add(new Coin()).size(40);
-        table1.add(goldLabel).size((camWidth-(40*5))/5f,goldLabel.getPrefHeight());
+        table1.add(new Image(Loader.tA.findRegion("gold2"))).size(40);
+        table1.add(goldLabel).size((camWidth-(40*5))/4.2f,goldLabel.getPrefHeight()).padLeft(3);
 
-        table1.add(new Coin()).size(40);
-        table1.add(fuelLabel).size((camWidth-(40*5))/5f,fuelLabel.getPrefHeight());
+        table1.add(new Image(Loader.tA.findRegion("fuel"))).size(40);
+        table1.add(fuelLabel).size((camWidth-(40*5))/6f,fuelLabel.getPrefHeight()).padLeft(3);
 
-        table1.add(new Coin()).size(40);
-        table1.add(ammoLabel).size((camWidth-(40*5))/5f,ammoLabel.getPrefHeight());
+        table1.add(new Image(Loader.tA.findRegion("ammo"))).size(40);
+        table1.add(ammoLabel).size((camWidth-(40*5))/5f,ammoLabel.getPrefHeight()).padLeft(3);
 
-        table1.add(new Coin()).size(40);
-        table1.add(diamondLabel).size((camWidth-(40*5))/5f,diamondLabel.getPrefHeight());
+        table1.add(new Image(Loader.tA.findRegion("diamond"))).size(40);
+        table1.add(diamondLabel).size(diamondLabel.getPrefWidth(),diamondLabel.getPrefHeight()).padLeft(3);
 
         /******************************************************************************************/
 
@@ -393,7 +389,6 @@ public class UiHandler {
     public void update(float delta){
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
         expLabel.setText(GameWorld.exp);
-        scoreLabel.setText(GameWorld.score);
         goldLabel.setText(GameWorld.gold);
         fuelLabel.setText(GameWorld.fuel);
         ammoLabel.setText(GameWorld.ammo);

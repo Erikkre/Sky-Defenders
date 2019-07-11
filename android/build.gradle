@@ -1,6 +1,11 @@
 android {
     signingConfigs {
 
+    debug {
+        storeFile file('C:\\Development\\debug.keystore')
+        storePassword '19980131Sk'
+        keyPassword '19980131Sk'
+    }
     }
     compileSdkVersion 27
     sourceSets {
@@ -29,6 +34,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
     buildToolsVersion '28.0.3'

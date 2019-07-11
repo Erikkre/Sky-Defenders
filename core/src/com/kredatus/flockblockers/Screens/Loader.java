@@ -57,8 +57,6 @@ public class Loader implements Screen {
 
     public static TextureAtlas tA;
 
-    public static TextureRegion coinSymbol;
-
 
     public static ArrayList<TextureRegion> bgList;
 
@@ -101,6 +99,7 @@ public class Loader implements Screen {
     boolean isFirstTime;
 
     long soundID;
+    public static TextureRegion[] ranksList;
     public Loader(FlockBlockersMain game) {
         Texture.setAssetManager(manager);
 
@@ -382,10 +381,8 @@ public class Loader implements Screen {
         ArrayList<TextureRegion> tempPosition = new ArrayList<TextureRegion>(16);
         for (int i = 0; i < 17; i++) {
             if (i<16){
-                TextureRegion temp = new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
+                TextureRegion temp = new TextureRegion(coinTexture, i*coinTexture.getRegionWidth()/16, 0, coinTexture.getRegionWidth()/16, coinTexture.getRegionWidth()/16);
                 tempPosition.add(temp);
-            } else {
-                coinSymbol= new TextureRegion(coinTexture, 32 * i, 0, 32, 32);
             }
         }
         coinAnimation=new Animation<TextureRegion>(0.03f, tempPosition.toArray(new TextureRegion[16]));
@@ -437,6 +434,7 @@ public class Loader implements Screen {
 
 
         menumusiclist = new Music[] {manager.get(assets.music0)};
+        ranksList=ranksToList();
 
         TextureLoader.TextureParameter linearFilterParams=new TextureLoader.TextureParameter();
         linearFilterParams.minFilter=Texture.TextureFilter.Linear;linearFilterParams.magFilter=Texture.TextureFilter.Linear;
@@ -599,5 +597,17 @@ public class Loader implements Screen {
         Animation animation = new Animation<TextureRegion>(0.1f, poss.toArray((new TextureRegion[9])));
         animation.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         return animation;
+    }
+    public TextureRegion[] ranksToList () {
+        TextureRegion[] ranksToList=new TextureRegion[858];//858 levels wit hall ranks combined
+        for (int i = 1; i <= 11; i++) { //11 ranks
+        TextureRegion texture = tA.findRegion("rank"+i);
+            for (int k = 0; k < 6; k++) { //6 rows
+                for (int j = 0; j < 13; j++) { //13 columns
+                    ranksToList[((i-1)*78) + (k*13) + j]=new TextureRegion(texture,j*texture.getRegionWidth()/13,k*texture.getRegionHeight()/6,texture.getRegionWidth()/13,texture.getRegionHeight()/6);
+                }
+            }
+        }
+        return ranksToList;
     }
 }
