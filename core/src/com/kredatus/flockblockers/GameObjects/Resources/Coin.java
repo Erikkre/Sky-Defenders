@@ -1,5 +1,5 @@
 // Copyright (c) 2019 Erik Kredatus. All rights reserved.
-package com.kredatus.flockblockers.GameObjects;
+package com.kredatus.flockblockers.GameObjects.Resources;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -7,7 +7,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
+import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
+import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Screens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
@@ -22,7 +25,7 @@ public class Coin extends Image {
     public Value tweenX=new Value(), tweenY=new Value();
     public  Animation animation= Loader.coinAnimation;
     public boolean firstMovementEndedX=false, firstMovementEndedY=false, phoenixCoin, airshipMoved;
-    public TweenCallback endFirstMovementX, endFirstMovementY;
+    public TweenCallback endFirstMovementX, endFirstMovementY,endSecondMovementY;
     public BirdAbstractClass thisBird;
     public Tween firstXMotion, secondXMotion, firstYMotion, secondYMotion;
     public double startTime;
@@ -58,7 +61,8 @@ public class Coin extends Image {
             y1 = (float) (Math.sin(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
         }
 
-        dest=new Vector2(airshipPos.x,airshipPos.y+Airship.balloonHeight.get()/2f);
+        System.out.println(UiHandler.goldSymbol.getY());
+        dest=UiHandler.goldSymbol.localToParentCoordinates(new Vector2(UiHandler.table0.getX()+UiHandler.goldSymbol.getWidth()/2, UiHandler.table0.getY()));
         lastDest=new Vector2(0,0);
 
         motion1TimePhoenix=0.7f;
@@ -70,6 +74,15 @@ public class Coin extends Image {
     }
 
     private void setupTweens(){
+        final Coin thisCoin=this;
+        endSecondMovementY=new TweenCallback() {
+            @Override
+            public void onEvent(int i, BaseTween<?> baseTween) {
+                GameWorld.addGold(1);
+                thisBird.coinList.remove(thisCoin);
+            }
+        };
+
         endFirstMovementX=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
@@ -103,11 +116,12 @@ public class Coin extends Image {
             firstYMotion = Tween.to(tweenY, -1, motion1Time).target(y1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementY).start();
             secondYMotion= Tween.to(tweenY, -1, motion2Time).target(dest.y).ease(TweenEquations.easeNone);
         }
+        secondYMotion.setCallback(endSecondMovementY);
         startTime=System.currentTimeMillis();
     }
 
     public void update(float delta){
-        dest.set(airshipPos.x,airshipPos.y+Airship.balloonHeight.get()/2f);
+        dest.set(airshipPos.x,airshipPos.y+ Airship.balloonHeight.get()/2f);
         differenceVector=dest.cpy().sub(lastDest);
         airshipMoved=Math.abs(differenceVector.x)>0 || Math.abs(differenceVector.y)>0;
 

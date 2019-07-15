@@ -20,7 +20,7 @@ import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
-import com.kredatus.flockblockers.GameObjects.Coin;
+import com.kredatus.flockblockers.GameObjects.Resources.Coin;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameObjects.TinyBird;
 import com.kredatus.flockblockers.Handlers.BgHandler;

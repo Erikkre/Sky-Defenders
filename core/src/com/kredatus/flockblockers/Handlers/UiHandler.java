@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
 import com.kredatus.flockblockers.FlockBlockersMain;
+import com.kredatus.flockblockers.GameObjects.Resources.Rank;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Screens.Loader;
 import com.kredatus.flockblockers.ui.SlideMenu;
@@ -28,7 +30,7 @@ import com.kredatus.flockblockers.ui.TouchRotatePad;
 
 public class UiHandler {
 
-    public static Table rootTable;
+    public static Table rootTable,table0,table1;
     //public ScrollPane scrollPane;
     //public Label nameLabel;
     //public Skin shadeSkin=new Skin(Gdx.files.internal("ui/button.png"));
@@ -42,7 +44,7 @@ public class UiHandler {
     float camWidth,camHeight;
     public GameWorld world;
     public TextButton buyButton,menuButton,playButton;
-    public Label fuelLabel,goldLabel,diamondLabel,ammoLabel,expLabel;
+    public Label fuelLabel,goldLabel,diamondLabel,ammoLabel,expLabel,rankLabel;
     //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
@@ -57,7 +59,8 @@ public class UiHandler {
         return false;
     }
 
-    public float rankSize;public Color rankColor;
+    public static Actor goldSymbol,rankImage;public Rank rank;
+    Preferences prefs = Gdx.app.getPreferences("skyDefenders");
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
         /******* BUTTONS *******/
         buyButton  = new TextButton("Buy", shadeSkin);    //set button style
@@ -92,7 +95,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        //stage.setDebugAll(true);
+        stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -108,12 +111,12 @@ public class UiHandler {
         slideMenuBottom.getCell(playButton).setActor(buyButton);
     }
     public void loadSurvivalStage(){
-        Table table0=new Table().top();
-        rootTable.add(table0).growX().padTop(5).padBottom(5);
+        table0=new Table().top();
+        rootTable.add(table0).growX().padTop(5).padBottom(-5);
 
         rootTable.row();
 
-        Table table1=new Table().top();
+        table1=new Table().top();
         rootTable.add(table1).growX();
 
         rootTable.row();
@@ -137,7 +140,9 @@ public class UiHandler {
         loadBar.setRange(0,100);
 
         /******************************************************************************************/
-        expLabel= new Label("x", shadeSkin,"title-plain");
+        expLabel= new Label("", shadeSkin,"title-plain");
+        rankLabel= new Label("Onyx", shadeSkin,"title-plain");
+        rankLabel.setFontScale(0.5f);
         //expLabel.setSize(camWidth/50f,expLabel.getPrefHeight());
         goldLabel= new Label("", shadeSkin,"title-plain");
         //goldLabel.setSize(camWidth/50f,goldLabel.getPrefHeight());
@@ -148,13 +153,16 @@ public class UiHandler {
         diamondLabel= new Label("", shadeSkin,"title-plain");
         //diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
 
-        rankSize=35;rankColor=Color.RED;
-        Gdx.gl20.glLineWidth(2);
-        table0.add(new Image(Loader.ranksList[0])).size(rankSize).padLeft(6);
-        table0.add(expLabel).size(expLabel.getPrefWidth(),expLabel.getPrefHeight()).padLeft(6).padRight(3);
-        table0.add(loadBar).grow();//colSpan of this must be equal to # of however many labels there are under it
 
-        table1.add(new Image(Loader.tA.findRegion("gold2"))).size(40);
+        Rank rank = new Rank(prefs.getInteger("rank",0),prefs.getInteger("exp",0));
+        rankImage=new Image(Loader.ranksList[rank.lvl]);
+        table0.add(rankImage).size(35).colspan(1).padLeft(3);
+        table0.add(expLabel).colspan(1);
+        table0.add(loadBar).grow();//colSpan of this must be equal to # of however many labels there are under it
+        table0.row();table0.add(rankLabel).colspan(1).padLeft(3);
+
+        goldSymbol=new Image(Loader.tA.findRegion("gold2"));
+        table1.add(goldSymbol).size(40);
         table1.add(goldLabel).size((camWidth-(40*5))/4.2f,goldLabel.getPrefHeight()).padLeft(3);
 
         table1.add(new Image(Loader.tA.findRegion("fuel"))).size(40);

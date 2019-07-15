@@ -599,7 +599,7 @@ public class Loader implements Screen {
         return animation;
     }
     public TextureRegion[] ranksToList () {
-        TextureRegion[] ranksToList=new TextureRegion[858];//858 levels wit hall ranks combined
+        TextureRegion[] ranksToList=new TextureRegion[858];//0-857 levels (858 levels including copper level 0) with all ranks combined
         for (int i = 1; i <= 11; i++) { //11 ranks
         TextureRegion texture = tA.findRegion("rank"+i);
             for (int k = 0; k < 6; k++) { //6 rows

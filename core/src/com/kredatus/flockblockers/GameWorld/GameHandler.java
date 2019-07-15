@@ -138,6 +138,9 @@ public class GameHandler implements Screen {
         prefs.putInteger("fuel",world.fuel);
         prefs.putInteger("ammo",world.ammo);
         prefs.putInteger("diamonds",world.diamonds);
+
+        prefs.putInteger("rank", uiHandler.rank.lvl);
+        prefs.putInteger("exp",uiHandler.rank.expGained);
         prefs.flush();
     }
 
@@ -164,20 +167,7 @@ public class GameHandler implements Screen {
     @Override
     public void dispose() {
         Gdx.app.log("GameHandler", "dispose called");
-        prefs.putInteger("burnerLvl",airship.burnerLvl);
-        prefs.putInteger("healthLvl",airship.healthLvl);
-        prefs.putInteger("armorLvl",airship.armorLvl);
-        prefs.putInteger("rackLvl",airship.rackLvl);
-        prefs.putInteger("speedLvl",airship.speedLvl);
-        prefs.putInteger("bgNumber",bgHandler.bgNumber);
 
-        prefs.putInteger("exp",world.exp);
-        prefs.putInteger("score",world.score);
-        prefs.putInteger("gold",world.gold);
-        prefs.putInteger("fuel",world.fuel);
-        prefs.putInteger("ammo",world.ammo);
-        prefs.putInteger("diamonds",world.diamonds);
-        prefs.flush();
 
         uiHandler.stage.dispose();
         uiHandler.shadeSkin.dispose();

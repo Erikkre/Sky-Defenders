@@ -46,7 +46,7 @@ public class GameWorld {
     public  boolean isFirstTime;
     private  GameState currentState;
 
-    public  void addGold(int goldAddition) {
+    public static void addGold(int goldAddition) {
             gold += goldAddition;
     }
 
