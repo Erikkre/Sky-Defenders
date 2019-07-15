@@ -59,6 +59,7 @@ public class UiHandler {
         return false;
     }
 
+    public int rankSize;public Color rankColor;
     public static Actor goldSymbol,rankImage;public Rank rank;
     Preferences prefs = Gdx.app.getPreferences("skyDefenders");
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
@@ -153,7 +154,8 @@ public class UiHandler {
         diamondLabel= new Label("", shadeSkin,"title-plain");
         //diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
 
-
+        rankSize=35;rankColor=Color.RED;
+        Gdx.gl20.glLineWidth(2);
         Rank rank = new Rank(prefs.getInteger("rank",0),prefs.getInteger("exp",0));
         rankImage=new Image(Loader.ranksList[rank.lvl]);
         table0.add(rankImage).size(35).colspan(1).padLeft(3);
