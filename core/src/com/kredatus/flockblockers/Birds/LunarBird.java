@@ -30,6 +30,7 @@ public class LunarBird extends BirdAbstractClass {
         yVel=10*globalSpeedMultiplier;
         origYVel=yVel;
 
+        expNumber=5;
         coinNumber=5;
 
         sizeVariance=50;
@@ -47,7 +48,7 @@ public class LunarBird extends BirdAbstractClass {
 
         //System.out.println("Height after: " + height+ " width: " + width);
         health=4;origHealth=health;
-         health*=globalHealthMultiplier;
+
 
         animation=rightFlaps;
         origFlapSpeed=animation.getFrameDuration();
@@ -57,8 +58,7 @@ public class LunarBird extends BirdAbstractClass {
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
-        setBoundingPoly(x,y,width,height);
-        flapSpeedIntervals();
+        postInitSetup();
     }
 
     private void animSetup(){

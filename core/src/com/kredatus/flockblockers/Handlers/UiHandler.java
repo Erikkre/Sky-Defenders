@@ -44,7 +44,7 @@ public class UiHandler {
     float camWidth,camHeight;
     public GameWorld world;
     public TextButton buyButton,menuButton,playButton;
-    public Label fuelLabel,goldLabel,diamondLabel,ammoLabel,expLabel,rankLabel;
+    public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel,expLabel,rankLabel;
     //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
@@ -60,7 +60,7 @@ public class UiHandler {
     }
 
     public int rankSize;public Color rankColor;
-    public static Actor goldSymbol,rankImage;public Rank rank;
+    public static Actor goldSymbol,rankImage;public static Rank rank; ProgressBar loadBar;
     Preferences prefs = Gdx.app.getPreferences("skyDefenders");
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
         /******* BUTTONS *******/
@@ -75,7 +75,7 @@ public class UiHandler {
 
 
         //https://github.com/kotcrab/vis-ui
-        if (!VisUI.isLoaded())VisUI.load(shadeSkin);
+        if (!VisUI.isLoaded()) VisUI.load(shadeSkin);
 
         this.world=world;
         this.camWidth=camWidth;this.camHeight=camHeight;
@@ -133,16 +133,11 @@ public class UiHandler {
 
 
 
-        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
-        ProgressBar loadBar = new ProgressBar(0, 100, 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        loadBar.setColor(1,0,0,0.8f);
-        loadBar.setAnimateDuration(0.3f);
-        loadBar.setValue(1f);//3.2% is the minimum value right now
-        loadBar.setRange(0,100);
+
 
         /******************************************************************************************/
         expLabel= new Label("", shadeSkin,"title-plain");
-        rankLabel= new Label("Onyx", shadeSkin,"title-plain");
+        rankLabel= new Label("Copper", shadeSkin,"title-plain");
         rankLabel.setFontScale(0.5f);
         //expLabel.setSize(camWidth/50f,expLabel.getPrefHeight());
         goldLabel= new Label("", shadeSkin,"title-plain");
@@ -156,8 +151,15 @@ public class UiHandler {
 
         rankSize=35;rankColor=Color.RED;
         Gdx.gl20.glLineWidth(2);
+
         Rank rank = new Rank(prefs.getInteger("rank",0),prefs.getInteger("exp",0));
+        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
+        loadBar = new ProgressBar(0, rank.expValues[rank.lvl], 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
+        loadBar.setColor(1,0,0,0.8f);
+        loadBar.setAnimateDuration(0.3f);
+        loadBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
         rankImage=new Image(Loader.ranksList[rank.lvl]);
+
         table0.add(rankImage).size(35).colspan(1).padLeft(3);
         table0.add(expLabel).colspan(1);
         table0.add(loadBar).grow();//colSpan of this must be equal to # of however many labels there are under it

@@ -21,7 +21,10 @@ public class WaterBird extends BirdAbstractClass {
         super(airshipPos);
         this.flashLengths=flashLengths;
         yVel=1.3f*globalSpeedMultiplier;
+
+        expNumber=1;
         coinNumber=1;
+
         origYVel=yVel;
 
         sizeVariance=130;
@@ -38,7 +41,7 @@ public class WaterBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=2;origHealth=health;
-         health*=globalHealthMultiplier;
+
 
         animation=backFlaps;
         origFlapSpeed=animation.getFrameDuration();
@@ -49,8 +52,7 @@ public class WaterBird extends BirdAbstractClass {
         this.camWidth = camWidth;
         this.camHeight = camHeight;
 
-        setBoundingPoly(x,y,width,height);
-        flapSpeedIntervals();
+        postInitSetup();
     }
 
     private void animSetup(){

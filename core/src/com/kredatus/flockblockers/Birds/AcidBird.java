@@ -29,7 +29,8 @@ public class AcidBird extends BirdAbstractClass {
         yVel=5*globalSpeedMultiplier;
         origYVel=yVel;
 
-        coinNumber=3;
+        expNumber=3;
+        coinNumber=43;
 
         sizeVariance=40;
         sizeRatio=0.6f;
@@ -46,7 +47,7 @@ public class AcidBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=4;origHealth=health;
-         health*=globalHealthMultiplier;
+
 
 
         x=0;
@@ -58,10 +59,8 @@ public class AcidBird extends BirdAbstractClass {
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
-        setBoundingPoly(x,y,width,height);
-        flapSpeedIntervals();
 
-        //System.out.println(width + " " + camWidth/3);
+        postInitSetup();
     }
 
     private void animSetup(){

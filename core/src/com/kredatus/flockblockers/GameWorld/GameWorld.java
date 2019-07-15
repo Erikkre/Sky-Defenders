@@ -96,7 +96,7 @@ public class GameWorld {
         gold=prefs.getInteger("gold",0);
         fuel=prefs.getInteger("fuel",0);
         ammo=prefs.getInteger("ammo",0);
-        diamonds=prefs.getInteger("diamonds",0);
+        diamonds=prefs.getInteger("diamondNumber",0);
     }
 
     public void initialize(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler,GameRenderer renderer, Airship airship) {
@@ -150,7 +150,7 @@ public class GameWorld {
         for (Projectile i : targetHandler.projectileList){ i.update();}
         for (BirdAbstractClass i : birdHandler.deadBirdQueue){
             i.update(delta, runTime);
-            if (i.isOffCam()&&i.coinList==null) {
+            if (i.isOffCam()&&i.dropsList==null) {
                 birdHandler.deadBirdQueue.remove(i);
             }
         }

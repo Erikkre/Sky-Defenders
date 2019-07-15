@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Projectile;
-import com.kredatus.flockblockers.GameObjects.Resources.Coin;
+import com.kredatus.flockblockers.GameObjects.Resources.MovingImageContainer;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.TweenAccessors.Value;
@@ -41,11 +41,11 @@ import aurelienribon.tweenengine.TweenEquations;
  * LunarBird  =     4(M)    12    .6    5(35)           7              B S                 Diagonal side to side
  * GoldBird   =     15(XL)  3     .8     25(75)          3              F S                 Random Positions but stay from beginning to end
  * PhoenixBird=     60(XXL) 3     1      100||diamond    1              F B S               Random poss tweened to (only front-Story intro has back, side, front) then hit wall at end of wave
-Only add health to phoenix each round   after you hit multiples of 500 gold/phoenix add chance to drop that multiple of diamonds instead
+Only add health to phoenix each round   after you hit multiples of 500 gold/phoenix add chance to drop that multiple of diamondNumber instead
                                         i.e. 1 diamond OR 500 gold (1 Dia=1000 Go)
 
  1 dia=1000 go, 5000 go=1 dia		90c/100 0.9c/dia	$2/300 0.7c/dia	$5/1000 0.5c/dia	$2/no ads
- cost	        500	            1500	    4500	        13500	        40500	        121500          	364500	            1000 diamonds	3000 diamonds	10000 diamonds
+ cost	        500	            1500	    4500	        13500	        40500	        121500          	364500	            1000 diamondNumber	3000 diamondNumber	10000 diamondNumber
                 I	            II	        III	            IV	            V           	VI	                VII	                VIII	    IX	                X       Dmg	  RoF	  Pen         Spr
  (Fast Firing)	knife thrower	bow	        Machine Pistol  assault rifle	machinegun	    Minigun	            AA Autocannon	    Laser	    Ion cannon	        ???	    1	  1/s	  2 birds     +1 upgradeable (last upgrade cuz pretty op, maybe lower fire rate)
  (Damage Dealer)spear thrower	crossbow	Ballistae	    Hand Cannon	    sniper rifle	grenade launcher	anti-tank rifle	    Artillery	gauss cannon	    ???	    4	  0.1/s	  3 birds
@@ -57,7 +57,7 @@ Only add health to phoenix each round   after you hit multiples of 500 gold/phoe
 
  Gun upgrades work as: each can be upgraded once, to upgrade to level 2 must upgrade turret's main stat, each upgrade is worth .2 of gun's value and does *1.2 of the stat (so main stat is more worth upgradng)  see .excel file (Dmg, RoF, Pen)
 
- Powerups: Climate Cooling(10 diamonds), Overclock Turrets(30 diamonds), Nuclear Bomb (100 Diamonds)
+ Powerups: Climate Cooling(10 diamondNumber), Overclock Turrets(30 diamondNumber), Nuclear Bomb (100 Diamonds)
 
  Birds will be targeting a hot air balloon with 5 racks of turrets under it (5 4 3 2 1 = 15 gun slots)
  */
@@ -65,7 +65,7 @@ Only add health to phoenix each round   after you hit multiples of 500 gold/phoe
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
-    protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 7.0f;
+    protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 7.0f, globalDropMultiplier=1.0f;
 
     public float preX, preY, x, y, yVel, yAcc, xVel,yVelDeath, sizeRatio, finalSizeRatio=1, preTargetY;
     //public Hashtable xMotionTimePositions=new Hashtable();
@@ -74,12 +74,12 @@ public abstract class BirdAbstractClass {
     protected float camWidth, camHeight, edge;
     public boolean isOffCam, isColliding;
     public ArrayList<Projectile> hitBulletList = new ArrayList<Projectile>(30);
-    public ConcurrentLinkedQueue<Coin> coinList= new ConcurrentLinkedQueue<Coin>();
+    public ConcurrentLinkedQueue<MovingImageContainer> dropsList= new ConcurrentLinkedQueue<MovingImageContainer>();
     public float  starty;
     public boolean isAlive, firstxMotion=true;
     protected Random r =new Random();
     public Animation frontFlaps, backFlaps, leftFlaps, rightFlaps, deathFlaps, animation;
-    public int sizeVariance, coinNumber,  diamonds, cnt=0, rotationCounter;
+    public int sizeVariance, coinNumber, expNumber, diamondNumber, dropsNumber, cnt=0, rotationCounter;
     //protected Timeline xMotion;
     protected Tween introX, introY, first, firstX, firstY, currentX, currentY;
     public Polygon boundingPoly;
@@ -132,6 +132,19 @@ public abstract class BirdAbstractClass {
         //this.manager=manager;
         flapRandomFactor=r.nextFloat()*0.5f;
     }
+
+    public void postInitSetup(){
+        setBoundingPoly(x,y,width,height);
+        flapSpeedIntervals();
+        globallyMultiplyDropsAndHealth();
+        dropsNumber=coinNumber+expNumber+diamondNumber;
+    }
+    public void globallyMultiplyDropsAndHealth(){//speed is multiplied in a more customized way
+        health*=globalHealthMultiplier;
+        coinNumber*=globalDropMultiplier;
+        expNumber*=globalDropMultiplier;
+        diamondNumber*=globalDropMultiplier;
+    }
     protected void flapSpeedIntervals(){
         for (float i=1.6f; i>=1;i-=0.05f){
             flapSpeedIntervals.add(origFlapSpeed/i); //fast to slow
@@ -172,10 +185,10 @@ public abstract class BirdAbstractClass {
             }
 
             if (health <= 0) {
-                setCoinList(delta);
+                setDropsList(delta);
                 die();
             }
-            /*if (y > camHeight +height/2) { //0 being height of top of tower where score & diamonds are
+            /*if (y > camHeight +height/2) { //0 being height of top of tower where score & diamondNumber are
                 BirdHandler.activeBirdQueue.remove(this);
 
                System.out.println(this+" removed");
@@ -194,8 +207,8 @@ public abstract class BirdAbstractClass {
             y+=yVelDeath;
             yVelDeath+=yAcc;
             x+=xVel;
-            if (coinList!=null){
-                for (Coin i : coinList){
+            if (dropsList!=null){
+                for (MovingImageContainer i : dropsList){
                     i.update(delta);
                 }
             }
@@ -351,11 +364,11 @@ public abstract class BirdAbstractClass {
             }*/
     }
 
-    private  void setCoinList(float delta) {
-        if (coinNumber<25) {  //if not a phoenix or goldbird
-            final float rotationIncrement = 360 / coinNumber;
+    private  void setDropsList(float delta) {
+        if (!(this instanceof PhoenixBird||this instanceof GoldBird)) {  //if not a phoenix or goldbird
+            final float rotationIncrement = 360 / dropsNumber;
             for (int i=0;i<coinNumber;i++) {
-                coinList.add(new Coin(rotationIncrement * rotationCounter++, thisBird, false,  airshipPos));
+                dropsList.add(new MovingImageContainer("Coin",rotationIncrement * rotationCounter++, thisBird, false));
             }
         } else {
             //(0.5*yAcc)
@@ -388,8 +401,8 @@ public abstract class BirdAbstractClass {
                         task.cancel();
                     }
                     rotationCounter++;
-                    coinList.add(new Coin(r.nextInt(360), thisBird, true,airshipPos));   //random spurting for phoenix
-                    //System.out.println("Coin added at rotation"+rotationIncrement*rotationCounter);
+                    dropsList.add(new MovingImageContainer("Coin",r.nextInt(360), thisBird, true));   //random spurting for phoenix
+                    //System.out.println("MovingImageContainer added at rotation"+rotationIncrement*rotationCounter);
                 }
             };
             float timerIntervals = (timeToOffCam * delta * 1.05f) / coinNumber;  //because yacc and yvel are added every frameTimeDifference, we must multiply by delta to get seconds approximation

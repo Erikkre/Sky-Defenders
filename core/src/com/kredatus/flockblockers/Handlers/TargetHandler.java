@@ -123,7 +123,7 @@ public class TargetHandler {
         }
         for (BirdAbstractClass i : deadBirdQueue){
             i.update(delta, runTime);
-            if (i.isOffCam()&&i.coinList==null) {
+            if (i.isOffCam()&&i.dropsList==null) {
                 deadBirdQueue.remove(i);
 
             }

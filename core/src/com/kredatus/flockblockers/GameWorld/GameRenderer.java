@@ -20,7 +20,7 @@ import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
-import com.kredatus.flockblockers.GameObjects.Resources.Coin;
+import com.kredatus.flockblockers.GameObjects.Resources.MovingImageContainer;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameObjects.TinyBird;
 import com.kredatus.flockblockers.Handlers.BgHandler;
@@ -472,8 +472,8 @@ public void setRotate(float angle){
                 k.flashTween.update(delta);
                 //flashShader.end();
             }
-            if (!k.coinList.isEmpty()) {
-                for (Coin l : k.coinList) {
+            if (!k.dropsList.isEmpty()) {
+                for (MovingImageContainer l : k.dropsList) {
                     if (l.firstMovementEndedX) {
                         batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x - l.width / 2, l.y - l.height / 2,
                                 l.width, l.height);

@@ -26,11 +26,14 @@ public float targetY, targetX;//, preTargetY;
         yAcc=-0.2f;
         yVelDeath=10;
         yVel=1*globalSpeedMultiplier;
-        diamonds=1;
+
+        diamondNumber =1;
+        expNumber=100;
         coinNumber=100;
+
         origYVel=yVel;
         health=60;origHealth=health;
-         health*=globalHealthMultiplier;
+
 
         sizeVariance=1;
         sizeRatio=0.9f;
@@ -59,8 +62,7 @@ public float targetY, targetX;//, preTargetY;
         this.camHeight = camHeight;
         setManager(camWidth);
 
-        setBoundingPoly(x,y,width,height);
-        flapSpeedIntervals();
+        postInitSetup();
     }
 
     private void animSetup(){

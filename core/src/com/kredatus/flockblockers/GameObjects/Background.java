@@ -9,7 +9,6 @@ import com.kredatus.flockblockers.Screens.Loader;
  */
 
 public class Background {
-    // Protected is similar to private, but allows inheritance by subclasses.
 
     public float x, y;
     protected int width;

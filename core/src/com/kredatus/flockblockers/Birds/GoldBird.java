@@ -29,7 +29,9 @@ this.flashLengths=flashLengths;
         yVel=1*globalSpeedMultiplier;
         origYVel=yVel;
 
+        expNumber=25;
         coinNumber=25;
+
 
         sizeVariance=60;
         sizeRatio=0.8f;
@@ -44,7 +46,7 @@ this.flashLengths=flashLengths;
         edge = (camWidth)-width/3;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=15;origHealth=health;
-         health*=globalHealthMultiplier;
+
 
         animation=frontFlaps;// starting animation
         origFlapSpeed=animation.getFrameDuration();
@@ -55,8 +57,7 @@ this.flashLengths=flashLengths;
         this.camWidth = camWidth;
         this.camHeight = camHeight;
         setManager(camWidth);
-        setBoundingPoly(x,y,width,height);
-        flapSpeedIntervals();
+        postInitSetup();
     }
 
     private void animSetup(){

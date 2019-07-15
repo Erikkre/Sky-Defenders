@@ -26,6 +26,7 @@ public class FireBird extends BirdAbstractClass {
         yVel=0.85f*globalSpeedMultiplier;
         origYVel=yVel;
 
+        expNumber=1;
         coinNumber=1;
 
         sizeVariance=100;
@@ -42,7 +43,7 @@ public class FireBird extends BirdAbstractClass {
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
         health=2;origHealth=health;
-        health*=globalHealthMultiplier;
+
 
         //double temp=r.nextGaussian();
         //if (temp<-0.7 || temp >0.7) animation=animSeq[r.nextInt(4)];    //less of a chance for it to be side or back of bird, within standard deviation higher chance of front
@@ -76,8 +77,7 @@ public class FireBird extends BirdAbstractClass {
         } while (newBirdOverlaps);
 
         setManager(camWidth);
-        setBoundingPoly(x,y,width,height);
-        flapSpeedIntervals();
+        postInitSetup();
     }
 
     private void newXWithinWidth(){

@@ -137,7 +137,7 @@ public class GameHandler implements Screen {
         prefs.putInteger("gold",world.gold);
         prefs.putInteger("fuel",world.fuel);
         prefs.putInteger("ammo",world.ammo);
-        prefs.putInteger("diamonds",world.diamonds);
+        prefs.putInteger("diamondNumber",world.diamonds);
 
         prefs.putInteger("rank", uiHandler.rank.lvl);
         prefs.putInteger("exp",uiHandler.rank.expGained);
