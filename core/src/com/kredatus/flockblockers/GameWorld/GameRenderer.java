@@ -576,6 +576,12 @@ public void setRotate(float angle){
             batcher.flush();
             batcher.end();
             uiHandler.stage.draw();
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);//topPadding is 5, left padding is 6
+            shapeRenderer.setColor(Color.BLACK);
+            shapeRenderer.rect(6-2,camHeight-5-(uiHandler.rankSize)-2,uiHandler.rankSize+5,uiHandler.rankSize+4);
+
+            //shapeRenderer.rect(6-1,camHeight-5-(uiHandler.rankSize)-1,uiHandler.rankSize+3,uiHandler.rankSize+2);
+            shapeRenderer.end();
             //batcher.setColor(Color.WHITE);
 
             lightHandler.renderFront();

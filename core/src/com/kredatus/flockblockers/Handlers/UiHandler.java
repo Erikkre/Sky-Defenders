@@ -57,6 +57,7 @@ public class UiHandler {
         return false;
     }
 
+    public float rankSize;public Color rankColor;
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
         /******* BUTTONS *******/
         buyButton  = new TextButton("Buy", shadeSkin);    //set button style
@@ -147,7 +148,9 @@ public class UiHandler {
         diamondLabel= new Label("", shadeSkin,"title-plain");
         //diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
 
-        table0.add(new Image(Loader.ranksList[666])).size(35).padLeft(6);
+        rankSize=35;rankColor=Color.RED;
+        Gdx.gl20.glLineWidth(2);
+        table0.add(new Image(Loader.ranksList[0])).size(rankSize).padLeft(6);
         table0.add(expLabel).size(expLabel.getPrefWidth(),expLabel.getPrefHeight()).padLeft(6).padRight(3);
         table0.add(loadBar).grow();//colSpan of this must be equal to # of however many labels there are under it
 
