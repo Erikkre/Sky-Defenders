@@ -245,6 +245,13 @@ dragLine2
   orig: 9, 60
   offset: 0, 0
   index: -1
+exp
+  rotate: false
+  xy: 2934, 2364
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 f0
   rotate: false
   xy: 3630, 1801

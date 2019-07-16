@@ -44,7 +44,7 @@ public class UiHandler {
     float camWidth,camHeight;
     public GameWorld world;
     public TextButton buyButton,menuButton,playButton;
-    public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel,expLabel,rankLabel;
+    public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel, lvlLabel, rankNameLabel;
     //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
@@ -60,7 +60,7 @@ public class UiHandler {
     }
 
     public int rankSize;public Color rankColor;
-    public static Actor goldSymbol,rankImage;public static Rank rank; ProgressBar loadBar;
+    public static Actor goldSymbol;public static Rank rank; public static ProgressBar loadBar;public static Image rankImage;
     Preferences prefs = Gdx.app.getPreferences("skyDefenders");
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
         /******* BUTTONS *******/
@@ -96,7 +96,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        stage.setDebugAll(true);
+        //4stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -136,10 +136,8 @@ public class UiHandler {
 
 
         /******************************************************************************************/
-        expLabel= new Label("", shadeSkin,"title-plain");
-        rankLabel= new Label("Copper", shadeSkin,"title-plain");
-        rankLabel.setFontScale(0.5f);
-        //expLabel.setSize(camWidth/50f,expLabel.getPrefHeight());
+
+        //lvlLabel.setSize(camWidth/50f,lvlLabel.getPrefHeight());
         goldLabel= new Label("", shadeSkin,"title-plain");
         //goldLabel.setSize(camWidth/50f,goldLabel.getPrefHeight());
         fuelLabel= new Label("", shadeSkin,"title-plain");
@@ -149,21 +147,29 @@ public class UiHandler {
         diamondLabel= new Label("", shadeSkin,"title-plain");
         //diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
 
+
         rankSize=35;rankColor=Color.RED;
         Gdx.gl20.glLineWidth(2);
 
-        Rank rank = new Rank(prefs.getInteger("rank",0),prefs.getInteger("exp",0));
+        rank = new Rank(prefs.getInteger("lvl",0),prefs.getInteger("exp",0));
+        System.out.println("lvl: "+rank.lvl+", exp: "+rank.expGained+", rank values: "+rank.expValues[rank.lvl]);
+        lvlLabel = new Label(Integer.toString(rank.lvl%78), shadeSkin,"title-plain");
+        rankNameLabel = new Label(rank.rankNames[rank.lvl/78], shadeSkin,"title-plain");
+        rankNameLabel.setFontScale(0.5f);
+
         shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
         loadBar = new ProgressBar(0, rank.expValues[rank.lvl], 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
         loadBar.setColor(1,0,0,0.8f);
-        loadBar.setAnimateDuration(0.3f);
+        loadBar.setAnimateDuration(0.1f);
         loadBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
+
         rankImage=new Image(Loader.ranksList[rank.lvl]);
+        rankImage.setName("rankImage");
 
         table0.add(rankImage).size(35).colspan(1).padLeft(3);
-        table0.add(expLabel).colspan(1);
+        table0.add(lvlLabel).colspan(1);
         table0.add(loadBar).grow();//colSpan of this must be equal to # of however many labels there are under it
-        table0.row();table0.add(rankLabel).colspan(1).padLeft(3);
+        table0.row();table0.add(rankNameLabel).colspan(1).padLeft(3);
 
         goldSymbol=new Image(Loader.tA.findRegion("gold2"));
         table1.add(goldSymbol).size(40);
@@ -403,7 +409,6 @@ public class UiHandler {
     }
     public void update(float delta){
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
-        expLabel.setText(GameWorld.exp);
         goldLabel.setText(GameWorld.gold);
         fuelLabel.setText(GameWorld.fuel);
         ammoLabel.setText(GameWorld.ammo);

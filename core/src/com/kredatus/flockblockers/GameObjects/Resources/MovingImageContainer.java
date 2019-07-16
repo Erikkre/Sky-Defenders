@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.GameObjects.Resources;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
@@ -27,36 +28,37 @@ public class MovingImageContainer {
     public double startTime;
     public Character type;
     /*
-    @Override
+    @Overrided
     public void act(float delta){
         //super.act(delta);
         this.setDrawable(new TextureRegionDrawable((TextureRegion) animation.getKeyFrame(GameHandler.runTime/2)));
     }*/
 
     public MovingImageContainer(String type, float rotation, BirdAbstractClass bird, boolean phoenixOrGoldBirdMovementType){
-
-        height = width;
-        if (type.equals("Coin")) {
+        if (type.equals("coin")) {
             animation = Loader.coinAnimation;
             width = ((TextureRegion) animation.getKeyFrame(0)).getRegionWidth();height=width;
 
             dest=UiHandler.goldSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.goldSymbol.getWidth()/2, UiHandler.table1.getY()));
 
             this.type='c';
-        } else if (type.equals("Exp")) {
-            texture = Loader.tA.findRegion("Exp");
+        } else if (type.equals("exp")) {
+            texture = Loader.tA.findRegion("exp");
             width = texture.getRegionWidth();height=width;
 
-            dest=UiHandler.expLabel.localToParentCoordinates(new Vector2(UiHandler.table0.getX()+UiHandler.expLabel.getWidth(), UiHandler.table0.getY()));
+            dest=UiHandler.lvlLabel.localToParentCoordinates(new Vector2(UiHandler.table0.getX()+UiHandler.lvlLabel.getWidth(), UiHandler.table0.getY()));
 
             this.type='e';
+        } else if (type.equals("diamond")) {
+            texture = Loader.tA.findRegion("diamond");
+            width = texture.getRegionWidth();height = width;
+
+            dest = UiHandler.diamondLabel.localToParentCoordinates(new Vector2(UiHandler.table1.getX() + UiHandler.diamondLabel.getWidth()/2, UiHandler.table1.getY()));
+
+            this.type = 'd';
         }
 
-
         this.phoenixOrGoldBirdMovementType=phoenixOrGoldBirdMovementType;
-
-
-
         this.thisBird=bird;
 
         if (phoenixOrGoldBirdMovementType) {
@@ -87,8 +89,9 @@ public class MovingImageContainer {
         endSecondMovementY=new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
-                if (type=='c') GameWorld.addGold(1);
+                if (type=='c') GameWorld.gold+=1;
                 else if (type=='e') UiHandler.rank.addExp(1);
+                else if (type=='d') GameWorld.diamonds+=1;
                 thisBird.dropsList.remove(thisMovingImageContainer);
             }
         };
@@ -157,5 +160,20 @@ public class MovingImageContainer {
             secondYMotion.update(delta);
         }
         //lastDest = dest.cpy();
+    }
+    
+    public void draw(float runTime, SpriteBatch batcher){
+        if (type=='c') {
+            if (firstMovementEndedX) {
+                batcher.draw((TextureRegion) animation.getKeyFrame(runTime), x - width / 2, y - height / 2,
+                        width, height);
+            } else {
+                batcher.draw((TextureRegion) animation.getKeyFrame(0), x - width / 2, y - height / 2,
+                        width, height);
+            }
+        } else if (type=='e'||type=='d'){
+            batcher.draw(texture, x - width / 2, y - height / 2,
+                    width, height);
+        }
     }
 }

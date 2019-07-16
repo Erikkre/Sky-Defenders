@@ -44,7 +44,7 @@ this.flashLengths=flashLengths;
         height *= finalSizeRatio;
         edge = (camWidth)-width/2;
         //System.out.println("Height after: " + height+ " width: " + width);
-        health=4;origHealth=health;
+        health=4;
 
 
         animation=animSeq[r.nextInt(2)];

@@ -474,13 +474,7 @@ public void setRotate(float angle){
             }
             if (!k.dropsList.isEmpty()) {
                 for (MovingImageContainer l : k.dropsList) {
-                    if (l.firstMovementEndedX) {
-                        batcher.draw((TextureRegion) l.animation.getKeyFrame(runTime), l.x - l.width / 2, l.y - l.height / 2,
-                                l.width, l.height);
-                    } else {
-                        batcher.draw((TextureRegion) l.animation.getKeyFrame(0), l.x - l.width / 2, l.y - l.height / 2,
-                                l.width, l.height);
-                    }
+                    l.draw(runTime, batcher);
                 }
             }
         }

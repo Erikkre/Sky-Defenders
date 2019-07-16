@@ -139,7 +139,7 @@ public class GameHandler implements Screen {
         prefs.putInteger("ammo",world.ammo);
         prefs.putInteger("diamondNumber",world.diamonds);
 
-        prefs.putInteger("rank", uiHandler.rank.lvl);
+        prefs.putInteger("lvl", uiHandler.rank.lvl);
         prefs.putInteger("exp",uiHandler.rank.expGained);
         prefs.flush();
     }

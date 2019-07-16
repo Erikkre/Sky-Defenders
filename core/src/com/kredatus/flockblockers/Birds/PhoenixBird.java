@@ -32,7 +32,7 @@ public float targetY, targetX;//, preTargetY;
         coinNumber=100;
 
         origYVel=yVel;
-        health=60;origHealth=health;
+        health=10;
 
 
         sizeVariance=1;

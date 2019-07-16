@@ -65,7 +65,7 @@ Only add health to phoenix each round   after you hit multiples of 500 gold/phoe
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
-    protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 7.0f, globalDropMultiplier=1.0f;
+    protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 2.0f, globalDropMultiplier=1.0f;
 
     public float preX, preY, x, y, yVel, yAcc, xVel,yVelDeath, sizeRatio, finalSizeRatio=1, preTargetY;
     //public Hashtable xMotionTimePositions=new Hashtable();
@@ -141,6 +141,8 @@ public abstract class BirdAbstractClass {
     }
     public void globallyMultiplyDropsAndHealth(){//speed is multiplied in a more customized way
         health*=globalHealthMultiplier;
+        origHealth=health;
+
         coinNumber*=globalDropMultiplier;
         expNumber*=globalDropMultiplier;
         diamondNumber*=globalDropMultiplier;
@@ -367,9 +369,12 @@ public abstract class BirdAbstractClass {
     private  void setDropsList(float delta) {
         if (!(this instanceof PhoenixBird||this instanceof GoldBird)) {  //if not a phoenix or goldbird
             final float rotationIncrement = 360 / dropsNumber;
-            for (int i=0;i<coinNumber;i++) {
-                dropsList.add(new MovingImageContainer("Coin",rotationIncrement * rotationCounter++, thisBird, false));
+            for (int i=0;i<dropsNumber;i++) {
+                if (i<coinNumber)dropsList.add(new MovingImageContainer("coin",rotationIncrement * rotationCounter++, thisBird, false));
+                else if (i<coinNumber+expNumber)dropsList.add(new MovingImageContainer("exp",rotationIncrement * rotationCounter++, thisBird, false));
+                else if (i<coinNumber+expNumber+diamondNumber)dropsList.add(new MovingImageContainer("diamond",rotationIncrement * rotationCounter++, thisBird, false));
             }
+
         } else {
             //(0.5*yAcc)
             float realYAcc = yAcc / 2;
@@ -397,15 +402,18 @@ public abstract class BirdAbstractClass {
             task = new TimerTask() {
                 @Override
                 public void run() {
-                    if (rotationCounter > coinNumber) {
+                    if (rotationCounter > dropsNumber) {
                         task.cancel();
                     }
                     rotationCounter++;
-                    dropsList.add(new MovingImageContainer("Coin",r.nextInt(360), thisBird, true));   //random spurting for phoenix
+                    System.out.println(dropsList.size());
+                    if (dropsList.size()<diamondNumber)dropsList.add(new MovingImageContainer("diamond",r.nextInt(360), thisBird, true));   //random spurting for phoenix
+                    else if (dropsList.size()<diamondNumber+expNumber)dropsList.add(new MovingImageContainer("exp",r.nextInt(360), thisBird, true));
+                    else if (dropsList.size()<diamondNumber+expNumber+coinNumber)dropsList.add(new MovingImageContainer("coin",r.nextInt(360), thisBird, true));
                     //System.out.println("MovingImageContainer added at rotation"+rotationIncrement*rotationCounter);
                 }
             };
-            float timerIntervals = (timeToOffCam * delta * 1.05f) / coinNumber;  //because yacc and yvel are added every frameTimeDifference, we must multiply by delta to get seconds approximation
+            float timerIntervals = (timeToOffCam * delta * 1.05f) / dropsNumber;  //because yacc and yvel are added every frameTimeDifference, we must multiply by delta to get seconds approximation
             timer.scheduleAtFixedRate(task, 0, (int) (timerIntervals * 1000)+1);
         }
     }

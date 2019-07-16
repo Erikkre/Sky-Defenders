@@ -1,6 +1,6 @@
 package com.kredatus.flockblockers.GameObjects.Resources;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Screens.Loader;
 
@@ -11,11 +11,12 @@ public class Rank {
     public int lvl,expGained,remExp;
 
     public Rank(int lvl, int expGained){
-        if (lvl<857) this.lvl=lvl; else lvl=857;
+        if (lvl<857) this.lvl=lvl; else this.lvl=857;
 
-        expValues[0]=100;
+        expValues[0]=10;
         for (int i=1;i<=857;i++){
-            expValues[i]*=expValues[i-1]*1.5;
+            expValues[i]=expValues[0]+(i*i);
+            System.out.println(expValues[i]);
         }
         remExp=expValues[lvl]-expGained;
         this.expGained=expGained;
@@ -26,6 +27,7 @@ public class Rank {
             if (expToAdd < remExp) {//if gaining exp without gaining a lvl
                 expGained += expToAdd;
                 remExp = expValues[lvl] - expGained;
+                UiHandler.loadBar.setValue(expGained);
             } else if (expToAdd - (remExp + expValues[lvl + 1]) >= 0) {//if gaining so much exp that you gain 2 or more levels
                 expToAdd -= remExp + expValues[lvl + 1];
                 remExp = expValues[lvl + 2] = (expToAdd - (remExp) - expValues[lvl + 1]);
@@ -37,14 +39,16 @@ public class Rank {
                 remExp = expValues[lvl++] - expGained;
                 levelUp();
             }
-
         }
     }
 
     public void levelUp(){
-        UiHandler.rankImage = new Image(Loader.ranksList[lvl]);
+        UiHandler.rankImage.setDrawable(new TextureRegionDrawable(Loader.ranksList[lvl]));
+        UiHandler.lvlLabel.setText(lvl);
+        UiHandler.loadBar.setRange(0,expValues[lvl]);
+        UiHandler.loadBar.setValue(0);
         if (lvl%78==0){ //if multiple of 78 on level up (level 0 of new rank), change name
-            UiHandler.rankLabel.setText(rankNames[(lvl/78)-1]);
+            UiHandler.rankNameLabel.setText(rankNames[lvl/78]);
         }
     }
 }
