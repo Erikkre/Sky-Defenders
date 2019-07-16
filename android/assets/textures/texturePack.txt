@@ -252,6 +252,13 @@ exp
   orig: 32, 32
   offset: 0, 0
   index: -1
+exp1
+  rotate: false
+  xy: 2968, 2367
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 f0
   rotate: false
   xy: 3630, 1801

@@ -131,12 +131,6 @@ public class UiHandler {
         /***********************************************************************************each of these is a table in a different row*/
 
 
-
-
-
-
-        /******************************************************************************************/
-
         //lvlLabel.setSize(camWidth/50f,lvlLabel.getPrefHeight());
         goldLabel= new Label("", shadeSkin,"title-plain");
         //goldLabel.setSize(camWidth/50f,goldLabel.getPrefHeight());
@@ -148,7 +142,7 @@ public class UiHandler {
         //diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
 
 
-        rankSize=35;rankColor=Color.RED;
+        rankSize=35;rankColor=Color.GREEN;
         Gdx.gl20.glLineWidth(2);
 
         rank = new Rank(prefs.getInteger("lvl",0),prefs.getInteger("exp",0));
@@ -159,7 +153,7 @@ public class UiHandler {
 
         shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
         loadBar = new ProgressBar(0, rank.expValues[rank.lvl], 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        loadBar.setColor(1,0,0,0.8f);
+        loadBar.setColor(0,1,0,0.8f);
         loadBar.setAnimateDuration(0.1f);
         loadBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
 
