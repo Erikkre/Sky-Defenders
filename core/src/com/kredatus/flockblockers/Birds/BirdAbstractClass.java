@@ -367,12 +367,12 @@ public abstract class BirdAbstractClass {
     }
 
     private  void setDropsList(float delta) {
-        if (!(this instanceof PhoenixBird||this instanceof GoldBird)) {  //if not a phoenix or goldbird
+        if (dropsNumber<30) {
             final float rotationIncrement = 360f / dropsNumber;
             for (int i=0;i<dropsNumber;i++) {
-                if (i<coinNumber)dropsList.add(new MovingImageContainer("coin",rotationIncrement * rotationCounter++, thisBird, false));
-                else if (i<coinNumber+expNumber)dropsList.add(new MovingImageContainer("exp",rotationIncrement * rotationCounter++, thisBird, false));
-                else if (i<coinNumber+expNumber+diamondNumber)dropsList.add(new MovingImageContainer("diamond",rotationIncrement * rotationCounter++, thisBird, false));
+                if (diamondNumber-- >0) dropsList.add(new MovingImageContainer("diamond",rotationIncrement * rotationCounter++, thisBird, true));   //random spurting for phoenix
+                if (expNumber-- >0)     dropsList.add(new MovingImageContainer("exp",rotationIncrement * rotationCounter++, thisBird, true));
+                if (coinNumber-- >0)    dropsList.add(new MovingImageContainer("coin",rotationIncrement * rotationCounter++, thisBird, true));
             }
 
         } else {
@@ -406,9 +406,9 @@ public abstract class BirdAbstractClass {
                         task.cancel();
                     }
                     rotationCounter++;
-                    if (diamondNumber-- >0)dropsList.add(new MovingImageContainer("diamond",r.nextInt(360), thisBird, true));   //random spurting for phoenix
-                    if (expNumber-- >0)    dropsList.add(new MovingImageContainer("exp",r.nextInt(360), thisBird, true));
-                    if (coinNumber-- >0)   dropsList.add(new MovingImageContainer("coin",r.nextInt(360), thisBird, true));
+                    if (diamondNumber-- >0) dropsList.add(new MovingImageContainer("diamond",r.nextInt(360), thisBird, true));   //random spurting for phoenix
+                    if (expNumber-- >0)     dropsList.add(new MovingImageContainer("exp",r.nextInt(360), thisBird, true));
+                    if (coinNumber-- >0)    dropsList.add(new MovingImageContainer("coin",r.nextInt(360), thisBird, true));
                     //System.out.println("MovingImageContainer added at rotation"+rotationIncrement*rotationCounter);
                 }
             };

@@ -29,8 +29,8 @@ public class AcidBird extends BirdAbstractClass {
         yVel=5*globalSpeedMultiplier;
         origYVel=yVel;
 
-        expNumber=3;
-        coinNumber=43;
+        expNumber=14;
+        coinNumber=15;
 
         sizeVariance=40;
         sizeRatio=0.6f;

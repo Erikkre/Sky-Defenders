@@ -154,7 +154,7 @@ public class UiHandler {
         shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
         loadBar = new ProgressBar(0, rank.expValues[rank.lvl], 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
         loadBar.setColor(0,1,0,0.8f);
-        loadBar.setAnimateDuration(0.1f);
+        loadBar.setAnimateDuration(0.05f);
         loadBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
 
         rankImage=new Image(Loader.ranksList[rank.lvl]);

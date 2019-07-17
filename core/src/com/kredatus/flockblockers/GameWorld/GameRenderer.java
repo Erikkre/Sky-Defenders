@@ -20,8 +20,8 @@ import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Background;
-import com.kredatus.flockblockers.GameObjects.Resources.MovingImageContainer;
 import com.kredatus.flockblockers.GameObjects.Projectile;
+import com.kredatus.flockblockers.GameObjects.Resources.MovingImageContainer;
 import com.kredatus.flockblockers.GameObjects.TinyBird;
 import com.kredatus.flockblockers.Handlers.BgHandler;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
@@ -570,8 +570,9 @@ public void setRotate(float angle){
             batcher.flush();
             batcher.end();
             uiHandler.stage.draw();
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);//topPadding is 5, left padding is 6
-            shapeRenderer.setColor(Color.BLACK);
+
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);//topPadding is 5, left padding is 6
+            shapeRenderer.setColor(Color.GRAY);
             shapeRenderer.rect(6-2,camHeight-5-(uiHandler.rankSize)-2,uiHandler.rankSize+5,uiHandler.rankSize+4);
 
             //shapeRenderer.rect(6-1,camHeight-5-(uiHandler.rankSize)-1,uiHandler.rankSize+3,uiHandler.rankSize+2);
