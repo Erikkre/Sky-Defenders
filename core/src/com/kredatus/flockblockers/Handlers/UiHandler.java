@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
@@ -96,7 +97,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        //4stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -113,7 +114,7 @@ public class UiHandler {
     }
     public void loadSurvivalStage(){
         table0=new Table().top();
-        rootTable.add(table0).growX().padTop(5).padBottom(-5);
+        rootTable.add(table0).growX().padTop(13).padBottom(-8);
 
         rootTable.row();
 
@@ -157,16 +158,20 @@ public class UiHandler {
         loadBar.setAnimateDuration(0.05f);
         loadBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
 
-        rankImage=new Image(Loader.ranksList[rank.lvl]);
-        rankImage.setName("rankImage");
 
-        table0.add(rankImage).size(35).colspan(1).padLeft(3);
-        table0.add(lvlLabel).colspan(1);
-        table0.add(loadBar).grow();//colSpan of this must be equal to # of however many labels there are under it
-        table0.row();table0.add(rankNameLabel).colspan(1).padLeft(3);
+        rankImage=new Image(Loader.ranksList[rank.lvl]);
+        rankImage.setAlign(Align.center);rankImage.setName("rankImage");
+        Image rankImageBg=new Image(Loader.tA.findRegion("rankBg"));rankImageBg.setAlign(Align.center);
+        Stack rankImageStack = new Stack();
+        rankImageStack.setLayoutEnabled(false);rankImageStack.add(rankImageBg);rankImageStack.add(rankImage); rankImageBg.setPosition(-4,-5f);
+
+        table0.add(rankImageStack).size(40).colspan(1).padLeft(12).padRight(4).padTop(1);
+        table0.add(lvlLabel).padLeft(5).padRight(5);
+        table0.add(loadBar).grow().padRight(5);//colSpan of this must be equal to # of however many labels there are under it
+        table0.row();table0.add(rankNameLabel).padLeft(2).padTop(2);
 
         goldSymbol=new Image(Loader.tA.findRegion("gold2"));
-        table1.add(goldSymbol).size(40);
+        table1.add(goldSymbol).size(40).padLeft(20);
         table1.add(goldLabel).size((camWidth-(40*5))/4.2f,goldLabel.getPrefHeight()).padLeft(3);
 
         table1.add(new Image(Loader.tA.findRegion("fuel"))).size(40);

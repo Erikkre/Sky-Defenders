@@ -104,7 +104,39 @@ public class GameHandler implements Screen {
     @Override
     public void hide() {
         Gdx.app.log("GameHandler", "hide called");
+        Gdx.app.log("GameHandler", "pause called");
+        if (!FlockBlockersMain.dontPauseOnUnfocus){
+            isPaused=true;
 
+            timeOfPause=System.currentTimeMillis();
+            for (Turret i : airship.turretList){
+                if (i.firing) {
+                    i.stopFiring();
+                    i.firingStoppedByGamePause = true;
+                }
+            }
+
+            birdHandler.pause();
+            ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.stopMusic(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.menumusiclist);
+        }
+
+        prefs.putInteger("burnerLvl",airship.burnerLvl);
+        prefs.putInteger("healthLvl",airship.healthLvl);
+        prefs.putInteger("armorLvl",airship.armorLvl);
+        prefs.putInteger("rackLvl",airship.rackLvl);
+        prefs.putInteger("speedLvl",airship.speedLvl);
+        prefs.putInteger("bgNumber",bgHandler.bgNumber);
+
+        prefs.putInteger("exp",world.exp);
+        prefs.putInteger("score",world.score);
+        prefs.putInteger("gold",world.gold);
+        prefs.putInteger("fuel",world.fuel);
+        prefs.putInteger("ammo",world.ammo);
+        prefs.putInteger("diamondNumber",world.diamonds);
+
+        prefs.putInteger("lvl", uiHandler.rank.lvl);
+        prefs.putInteger("exp",uiHandler.rank.expGained);
+        prefs.flush();
     }
 
     @Override
