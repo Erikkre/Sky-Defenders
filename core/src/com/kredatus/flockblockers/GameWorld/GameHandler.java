@@ -33,7 +33,7 @@ public class GameHandler implements Screen {
     public static float runTime;
     public boolean isPaused=false;
     public static double timeOfPause, timeOfResume;
-    public int birdType = FlockBlockersMain.birdType;
+    public int waveNumber = FlockBlockersMain.waveNumber;
     private Airship airship;
     //private Actor menuButtonActor;
     public float screenWidth, screenHeight;
@@ -48,8 +48,8 @@ public class GameHandler implements Screen {
 
         tinyBirdHandler = new TinyBirdHandler();
 
-        birdHandler= new BirdHandler(camWidth, camHeight, birdType);
-        bgHandler = new BgHandler(world,camWidth,camHeight,birdType,birdHandler);
+        birdHandler= new BirdHandler(camWidth, camHeight, waveNumber);
+        bgHandler = new BgHandler(world,camWidth,camHeight,waveNumber,birdHandler);
 
         //turretHandler = new TurretHandler(camWidth, camHeight);
         lightHandler = new LightHandler(bgHandler);
@@ -58,7 +58,7 @@ public class GameHandler implements Screen {
 
         uiHandler=new UiHandler(world, camWidth, camHeight, shadeSkin);
 
-        airship=new Airship(world,camWidth, camHeight, birdType, birdHandler,targetHandler,lightHandler);
+        airship=new Airship(world,camWidth, camHeight, waveNumber, birdHandler,targetHandler,lightHandler);
 
         birdHandler.setAirshipPos(airship);
         targetHandler.setAirship(airship);
@@ -127,7 +127,6 @@ public class GameHandler implements Screen {
         prefs.putInteger("speedLvl",airship.speedLvl);
         prefs.putInteger("bgNumber",bgHandler.bgNumber);
 
-        prefs.putInteger("exp",world.exp);
         prefs.putInteger("score",world.score);
         prefs.putInteger("gold",world.gold);
         prefs.putInteger("fuel",world.fuel);
@@ -164,7 +163,6 @@ public class GameHandler implements Screen {
         prefs.putInteger("speedLvl",airship.speedLvl);
         prefs.putInteger("bgNumber",bgHandler.bgNumber);
 
-        prefs.putInteger("exp",world.exp);
         prefs.putInteger("score",world.score);
         prefs.putInteger("gold",world.gold);
         prefs.putInteger("fuel",world.fuel);

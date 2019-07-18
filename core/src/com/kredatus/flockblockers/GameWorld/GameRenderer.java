@@ -493,13 +493,13 @@ public void setRotate(float angle){
 
         drawProjectiles();
 
-        for (BirdAbstractClass k : activeBirdQueue) {
-            /*shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        for (BirdAbstractClass k : activeBirdQueue) {/*
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(255,0,0, 1f);
 
             shapeRenderer.polygon(k.boundingPoly.getTransformedVertices());
-            shapeRenderer.end();
-*/
+            shapeRenderer.end();*/
+
             if (k.isFlashing){
                 //batcher.setColor(1,1,1,k.flashOpacityValue.get());
                 batcher.setShader(flashShader);
@@ -523,15 +523,15 @@ public void setRotate(float angle){
             //batcher.begin();
         }
         drawAirshipReticle();
-        /*
+/*
         shapeRendererCust.begin(ShapeRenderer.ShapeType.Line);
         shapeRendererCust.setColor(255,0,0, 1f);
 
         shapeRendererCust.polygon(airship.rackHitbox.getTransformedVertices());
-        shapeRendererCust.polygon(airship.balloonHitbox.getTransformedVertices());
+        //shapeRendererCust.polygon(airship.balloonHitbox.getTransformedVertices());
         shapeRendererCust.end();
-
 */
+
     }
     public void drawAirshipReticle(){
         airship.drawReticle(batcher);

@@ -15,8 +15,8 @@ public class Rank {
 
         expValues[0]=10;
         for (int i=1;i<=857;i++){
-            expValues[i]=3;//expValues[0]+(i*i);
-            System.out.println(expValues[i]);
+            expValues[i]=expValues[0]+(i*i);
+            //System.out.println(expValues[i]);
         }
         remExp=expValues[lvl]-expGained;
         this.expGained=expGained;
@@ -25,21 +25,21 @@ public class Rank {
     public void addExp(int expToAdd){
         if (lvl<857) {
             if (expToAdd < remExp) {//if gaining exp without gaining a lvl
-                System.out.println("0");
+                //System.out.println("0");
                 expGained += expToAdd;
                 remExp = expValues[lvl] - expGained;
                 UiHandler.loadBar.setValue(expGained);
             } else if (expToAdd - (remExp + expValues[lvl + 1]) >= 0) {//if gaining so much exp that you gain 2 or more levels
-                System.out.println("level up twice pt1");
+                //System.out.println("level up twice pt1");
                 expToAdd -= remExp + expValues[lvl + 1];
                 remExp = expValues[lvl + 2] = (expToAdd - (remExp) - expValues[lvl + 1]);
                 lvl += 2;
                 levelUp();
                 addExp(expToAdd);//knew recursivity would come in handy lol
-                System.out.println("level up twice pt2");
+                //System.out.println("level up twice pt2");
 
             } else {//if gaining a single level
-                System.out.println("level up once");
+                //System.out.println("level up once");
                 expGained = expToAdd - remExp;
                 remExp = expValues[lvl++] - expGained;
                 levelUp();

@@ -21,11 +21,12 @@ import box2dLight.Light;
 
 public class FlockBlockersMain extends Game {
     public static final boolean fastTest = false, dontPauseOnUnfocus = true;
-    public static int birdType=1;
+    public static int waveNumber;
     public Loader loader;
     public static long startTime;
 
     public FlockBlockersMain(){
+
         Tween.registerAccessor(Value.class, new ValueAccessor());
         Tween.registerAccessor(BirdAbstractClass.class, new BirdAccessor());
         Tween.registerAccessor(Vector2.class, new VectorAccessor());
@@ -53,6 +54,7 @@ public class FlockBlockersMain extends Game {
         loader=new Loader(this);
         this.setScreen(loader);
 
+        waveNumber =Gdx.app.getPreferences("skyDefenders").getInteger("bgNumber",0)/9;
     }
 
     @Override

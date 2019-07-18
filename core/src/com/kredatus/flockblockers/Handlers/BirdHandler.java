@@ -44,8 +44,8 @@ public class BirdHandler {
     private ArrayList<Float> flashLengths=new ArrayList<Float>();
     Vector2 airshipPos;
 
-    public BirdHandler( float camWidth, float camHeight, int birdType) {
-        waveTypeCnt=birdType;
+    public BirdHandler( float camWidth, float camHeight, int waveNumber) {
+        waveTypeCnt=waveNumber;
         //this.bgHandler = bgHandler;
         this.camHeight = camHeight;
         this.camWidth  = camWidth ;
@@ -107,7 +107,6 @@ public class BirdHandler {
     }
 
     public void update() {
-        if (waveTypeCnt==8){waveTypeCnt=0;}
         if ( bgHandler.isBirdSpawning ){ //(((bgHandler.getBackground().y <-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2)) ){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
             if (!taskRunning) {
                 //for the amount of birds in the wave,
@@ -180,6 +179,7 @@ public class BirdHandler {
                 //System.out.println("Timer cancelled");
                 task.cancel();
                 waveTypeCnt++; //nextWave when timer reset
+                if (waveTypeCnt==8){waveTypeCnt=0;}
                 taskRunning=false;
             }
         }

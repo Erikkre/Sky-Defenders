@@ -59,7 +59,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     //turretPositionOffsets 28,31    82,31  110-136 and 137-163
 
     public ArrayList<Turret> turretList=new ArrayList<Turret>(13);
-    public Polygon rackHitbox, balloonHitbox, prelimBoundPoly1, prelimBoundPoly2;
+    public Polygon rackHitbox=new Polygon(), balloonHitbox=new Polygon(), prelimBoundPoly1, prelimBoundPoly2;
 
     public static int airshipTouchPointer=-1, camWidth, camHeight;
     public float fingerAirshipXDiff, fingerAirshipYDiff;
@@ -158,7 +158,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public void backToSurvival(String sizeChangeType){
 
         if (sizeChangeType==null) this.sizeChangeType="buyMenuToSurvival";
-        else this.sizeChangeType=sizeChangeType;
+        else this.sizeChangeType="startToSurvival";
         changeTextureSizes(armorLvl,rackLvl,"survival");
         movtween =Tween.to(pos,0,sizeChangeDur).target(camWidth/2f,camHeight/2f).ease(TweenEquations.easeInOutCubic).delay(1f).start();
 
@@ -197,7 +197,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         speedLvl=  prefs.getInteger("speedLvl",0);
         burnerLvl=prefs.getInteger("burnerLvl",0);
         loadTextures();
-        
+
         loadFireEffects();
         for (int i = 3; i-burnerLvl>0; i--) {//turn off 6/8 of the burnerFire additive effect firstEmittersOfEachEffect (0-2 and 5-7) when burnerLvl==0, 4/8 when burnerLvl==1 etc
             setEmitterVal(additiveEffects.get(0).getEmitters().get(3-i).getEmission(),0,false);
@@ -226,6 +226,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         endSizeChange= new TweenCallback() {
             @Override
             public void onEvent(int i, BaseTween<?> baseTween) {
+                if (sizeChangeType.equals("startToSurvival")){
+                    assignRackBounds();
+                    assignBalloonBounds();
+                }
                 //baseBurnerVelocityPostSizeChange= additiveEffects.get(0).getEmitters().get(0).getVelocity().getHighMax();
                 //System.out.println("baseBurnerVelocityPostSizeChange set to "+baseBurnerVelocityPostSizeChange);
             }
@@ -243,8 +247,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         airshipTint=chooseColorBasedOnWave(birdStartType, true);
         airShipCloudTint=airshipTint.clone();
         rackSetup();
-        assignRackBounds();
-        assignBalloonBounds();
+
     }
 
     private void addTurret(char type){//button will upgrade turret based on position of click choosing which turretPosition on a rack diagram thats blown up on screen when you tap upgrade i.e.
@@ -272,18 +275,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         burnerLightTween=Tween.to(flameLights.get(0), 1, 1f).target(burnerOrigDist).start();
     }
 
-    private void assignBalloonBounds() {
-        float x = pos.x, y = pos.y+balloonBob.get(), rB = balloonWidth.get() / 2f, hB = balloonHeight.get();
-
-        //prelimBoundPoly2 = new Polygon(new float[]{x - balloonWidth / 2f, y, x - balloonWidth / 2f, y + hB, x + balloonWidth / 2f, y + hB, x + balloonWidth / 2f, y});//left side
-        //prelimBoundPoly1 = new Polygon(new float[]{x - rackWidth / 2f, y, x - rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y});
-
-        balloonHitbox = new Polygon(new float[]{
-                x, y + hB, x - rB * 0.60f, y + hB * 0.92f, x - rB * 0.95f, y + hB * 0.74f, x - rB * 0.88f, y + hB * 0.45f, x - rB * 0.15f, y-tHOrig*0.2f,  //top to bottom left of burner
-                x + rB * 0.15f, y-tHOrig*0.2f, x + rB * 0.88f, y + hB * 0.45f, x + rB * 0.95f, y + hB * 0.74f, x + rB * 0.60f, y + hB * 0.92f //to top of balloon
-        });
-        balloonHitbox.setOrigin(pos.x,pos.y);
-    }
     float newTurretHeightTarget,newTurretWidthTarget,currentNewTexturesSizeRatio;
 
     private void loadTextures(){
@@ -299,12 +290,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private void changeTextureSizes(int armorLvl, int rackLvl, String buyMenuOrSurvivalSize) {
         if (buyMenuOrSurvivalSize.equals("buyMenu"))    sizeTargetRatio=1f;
         else if (buyMenuOrSurvivalSize.equals("survival"))    sizeTargetRatio=0.661f;
-        
+
             newTurretHeightTarget=tHOrig * sizeTargetRatio;
             newTurretWidthTarget= tWOrig * sizeTargetRatio;
 
             //System.out.println("***"+newTurretWidthTarget+" "+sizeTargetRatio);
-    
+
 
         // 167x195 is res of small balloon, 640x800 is res of big balloon. 44 is turretWidth relative to original rack width of x167
         //make tweens for all these float values from current vals to new ones, including tW and tH, and set one for startX and startY to move towards whatever current pos is
@@ -364,45 +355,58 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
         //System.out.println("left");
     }
+
+    private void assignBalloonBounds() {
+        float x = pos.x, y = pos.y+balloonBob.get(), rB = balloonWidth.get() / 2f, hB = balloonHeight.get();
+
+        //prelimBoundPoly2 = new Polygon(new float[]{x - balloonWidth / 2f, y, x - balloonWidth / 2f, y + hB, x + balloonWidth / 2f, y + hB, x + balloonWidth / 2f, y});//left side
+        //prelimBoundPoly1 = new Polygon(new float[]{x - rackWidth / 2f, y, x - rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y - rackHeight, x + rackWidth / 2f, y});
+
+        balloonHitbox = new Polygon(new float[]{
+                x, y + hB, x - rB * 0.60f, y + hB * 0.92f, x - rB * 0.95f, y + hB * 0.74f, x - rB * 0.88f, y + hB * 0.45f, x - rB * 0.15f, y-tH.get()*0.2f,  //top to bottom left of burner
+                x + rB * 0.15f, y-tH.get()*0.2f, x + rB * 0.88f, y + hB * 0.45f, x + rB * 0.95f, y + hB * 0.74f, x + rB * 0.60f, y + hB * 0.92f //to top of balloon
+        });
+        balloonHitbox.setOrigin(startX,startY+balloonBob.get());
+    }
     private void assignRackBounds() {
         float x = pos.x, y = pos.y+balloonBob.get();
         if (rackLvl==0){
             rackHitbox = new Polygon(new float[] {
-                    x - tWOrig * 2, y -tHOrig*0.2f,         x - tWOrig * 2, y - 1 * tHOrig , //bottom left rack
-                    x, y - (1 * tHOrig),  //tip of bottom of armor
-                    x + tWOrig * 2, y - 1 * tHOrig ,     x + tWOrig * 2, y-tHOrig*0.2f ,     //bottom right of burner
+                    x - tW.get() * 2, y -tH.get()*0.2f,         x - tW.get() * 2, y - 1 * tH.get() , //bottom left rack
+                    x, y - (1 * tH.get()),  //tip of bottom of armor
+                    x + tW.get() * 2, y - 1 * tH.get() ,     x + tW.get() * 2, y-tH.get()*0.2f ,     //bottom right of burner
             }
             );
         } else if (rackLvl==1) {
             rackHitbox = new Polygon(new float[]{
-                    x - tWOrig * 2, y -tHOrig*0.2f,     x - tWOrig * 2, y - 2 * tHOrig ,//bottom left rack
-                    x, y - (2 * tHOrig),  //tip of bottom f armor
-                    x + tWOrig * 2, y - 2 * tHOrig ,   x + tWOrig * 2, y -tHOrig*0.2f ,     //bottom right of burner
+                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,//bottom left rack
+                    x, y - (2 * tH.get()),  //tip of bottom f armor
+                    x + tW.get() * 2, y - 2 * tH.get() ,   x + tW.get() * 2, y -tH.get()*0.2f ,     //bottom right of burner
             }
             );
         } else if (rackLvl==2) {
             rackHitbox = new Polygon(new float[]{
-                    x - tWOrig * 2, y -tHOrig*0.2f,     x - tWOrig * 2, y - 2 * tHOrig ,     x - tWOrig * 1.5f, y - 3 * tHOrig ,//bottom left rack
-                    x, y - (3 * tHOrig),  //tip of bottom of armor
-                    x + tWOrig * 1.5f, y - 3 * tHOrig ,        x + tWOrig * 2, y - 2 * tHOrig ,    x + tWOrig * 2, y -tHOrig*0.2f,     //bottom right of burner
+                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,     x - tW.get() * 1.5f, y - 3 * tH.get() ,//bottom left rack
+                    x, y - (3 * tH.get()),  //tip of bottom of armor
+                    x + tW.get() * 1.5f, y - 3 * tH.get() ,        x + tW.get() * 2, y - 2 * tH.get() ,    x + tW.get() * 2, y -tH.get()*0.2f,     //bottom right of burner
             }
             );
         } else if (rackLvl==3) {
             rackHitbox = new Polygon(new float[]{
-                    x - tWOrig * 2, y -tHOrig*0.2f,     x - tWOrig * 2, y - 2 * tHOrig ,     x - tWOrig * 1.5f, y - 4 * tHOrig ,//bottom left rack
-                    x, y - (4 * tHOrig),  //tip of bottom of armor
-                    x + tWOrig * 1.5f, y - 4 * tHOrig ,          x + tWOrig * 2, y - 2 * tHOrig ,    x + tWOrig * 2, y -tHOrig*0.2f,     //bottom right of burner
+                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,     x - tW.get() * 1.5f, y - 4 * tH.get() ,//bottom left rack
+                    x, y - (4 * tH.get()),  //tip of bottom of armor
+                    x + tW.get() * 1.5f, y - 4 * tH.get() ,          x + tW.get() * 2, y - 2 * tH.get() ,    x + tW.get() * 2, y -tH.get()*0.2f,     //bottom right of burner
             }
             );
         } else if (rackLvl==4) {
             rackHitbox = new Polygon(new float[]{
-                    x - tWOrig * 2, y -tHOrig*0.2f,     x - tWOrig * 2, y - 2 * tHOrig ,     x - tWOrig * 1.5f, y - 4 * tHOrig ,      x - tWOrig * 1f, y - 5 * tHOrig ,//bottom left rack
-                    x, y - (5 * tHOrig),  //tip of bottom of armor
-                    x + tWOrig * 1f, y - 5 * tHOrig , x + tWOrig * 1.5f, y - 4 * tHOrig , x + tWOrig * 2, y - 2 * tHOrig , x + tWOrig * 2, y -tHOrig*0.2f,     //bottom right of burner
+                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,     x - tW.get() * 1.5f, y - 4 * tH.get() ,      x - tW.get() * 1f, y - 5 * tH.get() ,//bottom left rack
+                    x, y - (5 * tH.get()),  //tip of bottom of armor
+                    x + tW.get() * 1f, y - 5 * tH.get() , x + tW.get() * 1.5f, y - 4 * tH.get() , x + tW.get() * 2, y - 2 * tH.get() , x + tW.get() * 2, y -tH.get()*0.2f,     //bottom right of burner
             }
             );
         }
-        rackHitbox.setOrigin(pos.x,pos.y);
+        rackHitbox.setOrigin(startX,startY+balloonBob.get());
     }
 
     public  boolean pointerOnAirship(int pointer) {
@@ -762,6 +766,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.print(pos.toString());
         rackHitbox.setRotation(rotation.get());
         balloonHitbox.setRotation(rotation.get());
+        rackHitbox.setPosition(pos.x - startX, pos.y+balloonBob.get() - startY);
+        balloonHitbox.setPosition(pos.x - startX, pos.y+balloonBob.get() - startY);
+
         //System.out.print(BgHandler.isbgVertFast);
         if (BgHandler.isbgVertFast||BgHandler.endWaveBgMotion) {
             fastBurner();
@@ -827,8 +834,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 );
             }
 
-            rackHitbox.setPosition(pos.x, pos.y+balloonBob.get());
-            balloonHitbox.setPosition(pos.x, pos.y+balloonBob.get());
+
             //checkBordersAndSlowdown(); not using velocity
 
             for (int i = 0; i <= burnerLvl; i++) {

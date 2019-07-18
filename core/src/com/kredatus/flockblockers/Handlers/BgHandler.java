@@ -2,7 +2,6 @@
 package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
@@ -64,7 +63,7 @@ public class BgHandler {
     ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,birdQueue;
 
     public GameWorld world;
-    Preferences prefs=Gdx.app.getPreferences("skyDefenders");
+
 
     public void buyMenuToSurvival(){
         vertPositionBg.resume();
@@ -99,7 +98,7 @@ public class BgHandler {
                 .repeatYoyo(Tween.INFINITY,0).start();*/
     }
 
-    public BgHandler(GameWorld world, float camWidth, float camHeight, int birdType, BirdHandler birdHandler){
+    public BgHandler(GameWorld world, float camWidth, float camHeight, int waveNumber, BirdHandler birdHandler){
         this.world=world;
         this.activeBirdQueue=birdHandler.activeBirdQueue;
         this.birdQueue=birdHandler.birdQueue;
@@ -108,9 +107,9 @@ public class BgHandler {
         this.camHeight=camHeight;
         this.camWidth =camWidth;
                           // 0    1    2    3    4    5    6    7
-        bgNumber=prefs.getInteger("bgNumber",0)/9;
-        if (bgNumber!=birdType * 9) bgNumber = 9 * birdType;
-        //bgNumber = 9 * birdType;// "pB","tB","wB","fB","aB","nB","lB","gB"
+        bgNumber=waveNumber*9;
+        //if (bgNumber!=waveNumber * 9) bgNumber = 9 * waveNumber;
+        //bgNumber = 9 * waveNumber;// "pB","tB","wB","fB","aB","nB","lB","gB"
         //System.out.print("Start height of bg1: "+-bgStackStartYHeight);
 
 
