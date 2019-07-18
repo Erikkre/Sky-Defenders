@@ -60,7 +60,8 @@ public class TargetHandler {
             //System.out.println(curDist);
             //if (i.collides(airship.prelimBoundPoly1)||i.collides(airship.prelimBoundPoly2)) {
                 //System.out.println("********************** HIT PRELIM *********************");
-            if (i.isAlive && (i.collides(airship.rackHitbox) || i.collides(airship.balloonHitbox)) ) {
+            System.out.println(airship.rackHitbox);
+            if (i.isAlive && airship.balloonHitbox!=null && (i.collides(airship.rackHitbox) || i.collides(airship.balloonHitbox)) ) {
                     //System.out.println("********************** HIT REAL *********************");
                     airship.hit(i.health);
                     i.hit(i.origHealth+1);    //lol I hope bird health is below orig

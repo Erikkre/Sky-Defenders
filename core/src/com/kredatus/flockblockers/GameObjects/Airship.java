@@ -27,7 +27,6 @@ import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
@@ -48,7 +47,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     protected boolean isScrolledDown;
     public float midpointY, midpointX, startY,startX;
     private boolean isAlive;
-    private ArrayList<Vector2> turretPositionOffsets = new ArrayList<Vector2>(Collections.nCopies(17, new Vector2()));
+    private ArrayList<Vector2> turretPositionOffsets = new ArrayList<Vector2>();
 
     public static int armor, health; //slowdownSpeed;
 
@@ -59,7 +58,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     //turretPositionOffsets 28,31    82,31  110-136 and 137-163
 
     public ArrayList<Turret> turretList=new ArrayList<Turret>(13);
-    public Polygon rackHitbox=new Polygon(), balloonHitbox=new Polygon(), prelimBoundPoly1, prelimBoundPoly2;
+    public Polygon rackHitbox, balloonHitbox, prelimBoundPoly1, prelimBoundPoly2;
 
     public static int airshipTouchPointer=-1, camWidth, camHeight;
     public float fingerAirshipXDiff, fingerAirshipYDiff;
@@ -167,7 +166,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //scaleFireEffects((1+finalNewTexturesSizeRatio)/2f);
     }
     public void rackSetup(){
-        burnerUp();burnerUp();burnerUp();rackUp();speedUp();speedUp();
+        //burnerUp();burnerUp();burnerUp();rackUp();speedUp();speedUp();
         addTurret('c');addTurret('c');addTurret('d');addTurret('d');addTurret('d');addTurret('f');addTurret('f');addTurret('f');
         turretList.get(1).lvlUp();turretList.get(3).lvlUp();turretList.get(4).lvlUp();turretList.get(4).lvlUp();turretList.get(6).lvlUp();turretList.get(7).lvlUp();turretList.get(7).lvlUp();
         //addTurret('d');turretList.get(0).lvlUp();turretList.get(0).lvlUp();
@@ -366,7 +365,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 x, y + hB, x - rB * 0.60f, y + hB * 0.92f, x - rB * 0.95f, y + hB * 0.74f, x - rB * 0.88f, y + hB * 0.45f, x - rB * 0.15f, y-tH.get()*0.2f,  //top to bottom left of burner
                 x + rB * 0.15f, y-tH.get()*0.2f, x + rB * 0.88f, y + hB * 0.45f, x + rB * 0.95f, y + hB * 0.74f, x + rB * 0.60f, y + hB * 0.92f //to top of balloon
         });
-        balloonHitbox.setOrigin(startX,startY+balloonBob.get());
+        balloonHitbox.setOrigin(startX,startY);
     }
     private void assignRackBounds() {
         float x = pos.x, y = pos.y+balloonBob.get();
@@ -406,7 +405,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
             );
         }
-        rackHitbox.setOrigin(startX,startY+balloonBob.get());
+        rackHitbox.setOrigin(startX,startY);
     }
 
     public  boolean pointerOnAirship(int pointer) {
@@ -764,11 +763,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing+", velX: "+vel.x);
         setDestAirship();
         //System.out.print(pos.toString());
-        rackHitbox.setRotation(rotation.get());
-        balloonHitbox.setRotation(rotation.get());
-        rackHitbox.setPosition(pos.x - startX, pos.y+balloonBob.get() - startY);
-        balloonHitbox.setPosition(pos.x - startX, pos.y+balloonBob.get() - startY);
-
+        if (balloonHitbox!=null) {//check if hitbox properly assigned
+            rackHitbox.setRotation(rotation.get());
+            balloonHitbox.setRotation(rotation.get());
+            rackHitbox.setPosition(pos.x - startX, pos.y+balloonBob.get()+ tH.get()/2 - startY);
+            balloonHitbox.setPosition(pos.x - startX, pos.y+balloonBob.get()+ tH.get()/2 - startY);
+        }
         //System.out.print(BgHandler.isbgVertFast);
         if (BgHandler.isbgVertFast||BgHandler.endWaveBgMotion) {
             fastBurner();
