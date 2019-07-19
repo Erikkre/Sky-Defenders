@@ -242,14 +242,14 @@ public class UiHandler {
         //slideMenuLeft.setFadeBackground(image_background, 0.5f);
 
         /* z-index = 2 */
-        rootTable.addActor(slideMenuLeft);
+        stage.addActor(slideMenuLeft);
 
         /* z-index = 3 */
         // add button_menu as a separating actor into stage to rotates with dragging value.
         menuButtonX.setWidth(menuButtonX.getWidth()*0.4f);menuButtonX.setHeight(menuButtonX.getHeight()*0.9f);menuButtonX.setColor(1,1,1,0.7f);
         menuButtonX.setOrigin(Align.center);
         //menuButtonActor=menuButtonX;
-        rootTable.addActor(menuButtonX);
+        stage.addActor(menuButtonX);
         slideMenuLeft.setMoveMenuButton(menuButtonX);
         //slideMenuLeft.setRotateMenuButton(menuButtonX, 90f);
 

@@ -237,7 +237,7 @@ public class GameWorld {
         GameHandler.timeOfResume = System.currentTimeMillis();
 
         currentState = GameState.SURVIVAL;
-        airship.backToSurvival(null);
+        airship.backToSurvival("buyMenuToSurvival");
         bgHandler.buyMenuToSurvival();
 
         for (Turret i : airship.turretList) {
