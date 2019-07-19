@@ -14,7 +14,7 @@ import com.kredatus.flockblockers.Birds.ThunderBird;
 import com.kredatus.flockblockers.Birds.WaterBird;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
-import com.kredatus.flockblockers.Screens.Loader;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 
 import java.util.ArrayList;
 import java.util.Timer;

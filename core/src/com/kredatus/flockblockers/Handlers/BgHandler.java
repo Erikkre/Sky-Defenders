@@ -10,7 +10,7 @@ import com.kredatus.flockblockers.GameObjects.Background;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Helpers.InvertedTweenEquations;
-import com.kredatus.flockblockers.Screens.Loader;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.Random;

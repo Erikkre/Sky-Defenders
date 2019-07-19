@@ -2,7 +2,7 @@
 package com.kredatus.flockblockers.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.kredatus.flockblockers.Screens.Loader;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 
 /**
  * Created by Mr. Kredatus on 8/31/2017.

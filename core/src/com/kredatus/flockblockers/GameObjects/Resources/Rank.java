@@ -2,7 +2,7 @@ package com.kredatus.flockblockers.GameObjects.Resources;
 
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kredatus.flockblockers.Handlers.UiHandler;
-import com.kredatus.flockblockers.Screens.Loader;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 
 public class Rank {
     public String[] rankNames=new String[]{"Copper","Bronze","Silver","Gold","Diamond","Emerald","Sapphire","Amethyst","Ruby","Pearl","Onyx"};

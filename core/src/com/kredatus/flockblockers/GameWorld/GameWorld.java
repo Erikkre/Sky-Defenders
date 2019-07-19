@@ -16,8 +16,7 @@ import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
-import com.kredatus.flockblockers.Screens.Loader;
-import com.kredatus.flockblockers.Screens.SplashScreen;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import aurelienribon.tweenengine.Tween;
@@ -265,7 +264,7 @@ public class GameWorld {
     public void ready() {
         //renderer.sunshineManager.killAll();
         //renderer.sunshineManager2.killAll();
-        SplashScreen.getManager().killAll();
+        //SplashScreen.getManager().killAll();
         Loader.stopMusic(Loader.menumusiclist);
         Loader.playnext(Loader.musiclist);
         //currentState = GameState.READY;

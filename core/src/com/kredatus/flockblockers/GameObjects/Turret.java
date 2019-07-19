@@ -13,7 +13,7 @@ import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
-import com.kredatus.flockblockers.Screens.Loader;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 
 import java.util.Timer;
 import java.util.TimerTask;

@@ -1,4 +1,4 @@
-package com.kredatus.flockblockers.Screens;
+package com.kredatus.flockblockers.NonGameHandlerScreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

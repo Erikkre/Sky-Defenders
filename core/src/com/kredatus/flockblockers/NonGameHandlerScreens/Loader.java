@@ -1,4 +1,4 @@
-package com.kredatus.flockblockers.Screens;
+package com.kredatus.flockblockers.NonGameHandlerScreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -30,7 +30,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.Handlers.AssetHandler;
-import com.kredatus.flockblockers.Helpers.CustomParticleEffectActor;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;
@@ -44,8 +43,10 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.scaleTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 
@@ -89,8 +90,8 @@ public class Loader implements Screen {
     private int camWidth,camHeight;
     public int screenWidth, screenHeight;
     public GameHandler gameHandler;
-    Image splashImg;
-    CustomParticleEffectActor logoFire;
+    Image logoImg,companyNameImg;
+    //CustomParticleEffectActor logoFire;
 
     int middleFirstLast=0, hueValue=66, hueAdder=4;
 
@@ -118,7 +119,7 @@ public class Loader implements Screen {
 
         setupStage();
         setupLoadingBarAndLogo();
-        soundID= ((Sound) manager.get(assets.ignitionFire0Deignition7s)).play(1f);
+        //soundID= ((Sound) manager.get(assets.ignitionFire0Deignition7s)).play(1f);
     }
 
     @Override
@@ -132,7 +133,7 @@ public class Loader implements Screen {
             } else if (manager.getProgress() == 1.0 && glowingLoadingBarTween.isYoyo()) glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 1f).target(0).ease(TweenEquations.easeNone).start();
 
             if (manager.getProgress() == 1.0 && !glowingLoadingBarTween.isYoyo() && !isFirstTime) {
-                ((Sound) manager.get(assets.ignitionFire0Deignition7s)).setVolume(soundID,loadBarAlpha.get());
+               // ((Sound) manager.get(assets.ignitionFire0Deignition7s)).setVolume(soundID,loadBarAlpha.get());
                 //System.out.println("sound set to: "+loadBarAlpha.get());
             }
             loadBar.setColor(1, 1, 1, loadBarAlpha.get());
@@ -147,7 +148,7 @@ public class Loader implements Screen {
 
             loadBar.setValue(manager.getProgress() + 0.032f);
 
-            setFireColor();
+            //setFireColor();
             percentDoneLabel.setText((int)(manager.getProgress()*100)+"%");
         }
     }
@@ -174,23 +175,23 @@ public class Loader implements Screen {
 
         stage.addActor(percentDoneLabel);
 
-        Texture splashTex = manager.get(assets.logo);
-        splashImg = new Image(splashTex);
-        /********************************************************PARTICLE EFFECT ACTOR BURNERFIRE*/
+        logoImg = new Image((Texture)manager.get(assets.logo));companyNameImg= new Image((Texture)manager.get(assets.companyName));
+
+        /*PARTICLE EFFECT ACTOR BURNERFIRE
         logoFire = new CustomParticleEffectActor((ParticleEffect) manager.get(assets.logoFire));
-        /*logoFire.particleEffect.getEmitters().get(0).getSpawnWidth().setHigh(splashImg.getWidth());
+        logoFire.particleEffect.getEmitters().get(0).getSpawnWidth().setHigh(logoImg.getWidth());
         logoFire.particleEffect.getEmitters().get(0).getEmission().setHigh(2000);
         logoFire.particleEffect.getEmitters().get(0).getVelocity().setHigh(200);
         logoFire.particleEffect.getEmitters().get(0).getLife().setHigh(900);
-        logoFire.particleEffect.getEmitters().get(0).getDuration().setLow(10,90);*/
-        logoFire.particleEffect.scaleEffect(1.2f);
+        logoFire.particleEffect.getEmitters().get(0).getDuration().setLow(10,90);
+        logoFire.particleEffect.scaleEffect(1.2f);*/
 
 //- logoFire.particleEffect.getEmitters().get(0).getSpawnWidth().getHighMax()/2f``
-        logoFire.setPosition(camWidth / 2f , camHeight / 2f );
+        //logoFire.setPosition(camWidth / 2f , camHeight / 2f );
 
         //logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{244/255f,216/255f,216/255f});
 
-        stage.addActor(logoFire);
+        //stage.addActor(logoFire);
 
         /********************************************************LOGO*/
         Runnable endLoad = new Runnable() {
@@ -203,27 +204,42 @@ public class Loader implements Screen {
                 }
             }
         };
-        Runnable endFire = new Runnable() {
-            @Override
-            public void run() {
-                logoFire.particleEffect.allowCompletion();
-            }
-        };
 
-        splashImg.setOrigin(splashImg.getWidth() / 2, splashImg.getHeight() / 2);
-        splashImg.setPosition(camWidth / 2f - splashImg.getWidth() / 2f, camHeight / 2f + splashImg.getHeight()*2.7f);
+        logoImg.setOrigin(logoImg.getWidth() / 2, logoImg.getHeight() / 2);
+        logoImg.setPosition(camWidth / 2f - logoImg.getWidth() / 2f, camHeight / 2f + logoImg.getHeight());
 
-        splashImg.addAction(sequence(alpha(0),delay(0.7f),
-                fadeIn(2.5f, Interpolation.pow2Out), delay(1),
-                parallel(sequence(delay(1.2f),run(endFire)),fadeOut(2.5f,Interpolation.exp10)), run(endLoad)));
+        float durationOfSwingIn=1.5f;
+        logoImg.addAction(sequence(alpha(0), scaleTo(.05f, .05f),
+                parallel(fadeIn(durationOfSwingIn, Interpolation.pow2),
+                        scaleTo(0.7f, 0.7f, durationOfSwingIn, Interpolation.pow5),
+                        moveTo(camWidth / 2f - logoImg.getWidth() / 2f, camHeight / 2f + logoImg.getHeight()/4, durationOfSwingIn, Interpolation.swing)),
+                delay(1.5f), fadeOut(1.25f), run(endLoad)));
 
-        /*splashImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
-                parallel(fadeIn(3f, Interpolation.pow2),
-                        scaleTo(1f, 1f, 2f, Interpolation.pow5),
-                        moveTo(camWidth / 2f - splashImg.getWidth() / 2, camHeight / 2f + splashImg.getHeight()*2.3f, 1.5f, Interpolation.swing)),
-                delay(2.5f), run(transitionRunnable)));*/
 
-        stage.addActor(splashImg);
+        companyNameImg.setOrigin(companyNameImg.getWidth() / 2, companyNameImg.getHeight() / 2);
+        companyNameImg.setPosition(camWidth / 2f - companyNameImg.getWidth() / 2f, camHeight / 2f + logoImg.getHeight()/4 - companyNameImg.getHeight());
+
+        companyNameImg.addAction(
+                sequence(
+                        alpha(0),
+                        delay(0.7f),
+                        fadeIn(2.5f, Interpolation.pow2Out),
+                        delay(1),
+                        fadeOut(2.5f,Interpolation.exp10),
+                        run(endLoad)
+                )
+        );
+
+
+        /*logoImg.addAction(sequence(alpha(0), scaleTo(.1f, .1f),
+                parallel(fadeIn(2f, Interpolation.pow2),
+                        scaleTo(2f, 2f, 2.5f, Interpolation.pow5),
+                        moveTo(camWidth / 2f - logoImg.getWidth() / 2, camHeight / 2f - logoImg.getHeight() / 2, 2f, Interpolation.swing)),
+                delay(1.5f), fadeOut(1.25f), run(transitionRunnable)));*/
+
+
+
+        stage.addActor(logoImg);stage.addActor(companyNameImg);
     }
 
     private void setupStage(){
@@ -237,10 +253,10 @@ public class Loader implements Screen {
         if (!manager.update()){
             //System.out.println(manager.getProgress());
         } else if (!isFirstTime){
-            logoFire.particleEffect.allowCompletion();
-            splashImg.clearActions();
+            //logoFire.particleEffect.allowCompletion();
+            logoImg.clearActions();
             if (!glowingLoadingBarTween.isYoyo()&&loadBarAlpha.get()==0){
-                ((Sound) manager.get(assets.ignitionFire0Deignition7s)).stop();
+                //((Sound) manager.get(assets.ignitionFire0Deignition7s)).stop();
                 loaded();
                 postLoad();
             }
@@ -254,7 +270,7 @@ public class Loader implements Screen {
         game.setScreen(gameHandler);
     }
 
-    public void setFireColor(){
+    /*public void setFireColor(){
         //System.out.println(logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0]);
         if (middleFirstLast == 0) {
             logoFire.particleEffect.getEmitters().get(0).getTint().setColors(new float[]{logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[0], (hueValue += hueAdder) / 255f, logoFire.particleEffect.getEmitters().get(0).getTint().getColors()[2]});
@@ -273,7 +289,7 @@ public class Loader implements Screen {
             if (hueAdder == 4) hueAdder = -4;
             else hueAdder = 4;
         }
-    }
+    }*/
     @Override
     public void show() {
     }

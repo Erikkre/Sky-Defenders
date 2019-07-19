@@ -31,7 +31,7 @@ import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.TinyBirdHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.Helpers.CustomShapeRenderer;
-import com.kredatus.flockblockers.Screens.Loader;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 import com.kredatus.flockblockers.ui.SimpleButton;
 
@@ -447,14 +447,6 @@ public void setRotate(float angle){
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
         }
 
-        if (airship.isFlashing){
-            //batcher.setColor(1,1,1,k.flashOpacityValue.get());
-            batcher.setShader(flashShader);
-
-            //System.out.println("Value sent to: "+k.flashOpacityValue.get());
-            flashShader.setUniformf("flashOpacityValue", airship.flashOpacityValue.get());
-            //flashShader.begin();
-        }
 
         for (BirdAbstractClass k : deadBirdQueue) {
             if (k.isFlashing){
@@ -479,6 +471,14 @@ public void setRotate(float angle){
             }
         }
 
+        if (airship.isFlashing){
+            //batcher.setColor(1,1,1,k.flashOpacityValue.get());
+            batcher.setShader(flashShader);
+
+            //System.out.println("Value sent to: "+k.flashOpacityValue.get());
+            flashShader.setUniformf("flashOpacityValue", airship.flashOpacityValue.get());
+            //flashShader.begin();
+        }
         drawAirship(delta);   //after deadBirds but before activeBirds
         if (airship.isFlashing){
             //batcher.setColor(1,1,1,1);
@@ -533,12 +533,8 @@ public void setRotate(float angle){
 
 
     }
-    public void drawAirshipReticle(){
-        airship.drawReticle(batcher);
-    }
-    public void drawAirship(float delta){
-        airship.draw(batcher, delta);
-    }
+    public void drawAirshipReticle(){airship.drawReticle(batcher);}
+    public void drawAirship(float delta){airship.draw(batcher, delta);}
     public void drawProjectiles(){
         for (Projectile j : projectileList) {
             batcher.draw(j.texture, j.position.x-j.width/2, j.position.y-j.height/2,

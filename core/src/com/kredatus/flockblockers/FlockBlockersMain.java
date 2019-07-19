@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameWorld.GameRenderer;
-import com.kredatus.flockblockers.Screens.Loader;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.BirdAccessor;
 import com.kredatus.flockblockers.TweenAccessors.LightAccessor;
 import com.kredatus.flockblockers.TweenAccessors.Value;

@@ -25,7 +25,7 @@ import com.kotcrab.vis.ui.VisUI;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Resources.Rank;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
-import com.kredatus.flockblockers.Screens.Loader;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
 
@@ -193,13 +193,13 @@ public class UiHandler {
         //touchpad2.setColor(1,1,1,1f);
 
         //keep original height ratio but sized down with current width: .height((touchpad.getPrefHeight()*touchpad.getWidth())/touchpad.getPrefWidth())
-        bottomTable.add(movPad).width(camHeight/9f).height(camHeight/8.5f).left().expand();
+        bottomTable.add(movPad).width(camHeight/9f).height(camHeight/8.5f).left().bottom().expand();
 
         aimPad = new TouchRotatePad(0, shadeSkin);
         aimPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         //touchpad2.setColor(1,1,1,1f);
 
-        bottomTable.add(aimPad).width(camHeight/9f).height(camHeight/8.5f).right().expand();
+        bottomTable.add(aimPad).width(camHeight/9f).height(camHeight/8.5f).right().bottom().expand();
         //change fill
 
         //stage.addCaptureListener(slideMenuLeft.getListeners().get(0));stage.addCaptureListener(slideMenuBottom.getListeners().get(0));
@@ -211,7 +211,7 @@ public class UiHandler {
         shareButton = tA.findRegion("shareButton");
         rateButton = tA.findRegion("rateButton");*/
         /**     ****************************************LEFT SLIDING MENU*****************************************     **/
-        slideMenuLeft = new SlideMenu(camWidth/9f,camHeight/2f,"left",camWidth,camHeight,movPad.getHeight()/2);//left or down
+        slideMenuLeft = new SlideMenu(camWidth/9f,camHeight/2f,"left",camWidth,camHeight,camHeight/35);//left or up
         Sprite temp=new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
         temp.setColor(new Color(0,0,0,0.5f));
         final Image image_backgroundX = new Image(new SpriteDrawable(temp));
@@ -220,9 +220,9 @@ public class UiHandler {
         final Image shareButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
 
         // add items into drawer panel.
-        slideMenuLeft.add(shareButton).size(63, 85).pad(0, 52, 5, 52).expandX().row();
+        slideMenuLeft.add(shareButton).expand().row();
         //slideMenuLeft.add().height(300f).row(); // empty space
-        slideMenuLeft.add(rateButton).pad(35, 52, 35, 52).expandX().row();
+        slideMenuLeft.add(rateButton).expand().row();
         //slideMenuLeft.add(icon_share).pad(35, 52, 35, 52).expandX().row();
 
         //icon_off_music.setVisible(false);

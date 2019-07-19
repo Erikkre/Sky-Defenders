@@ -22,7 +22,7 @@ import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.LightHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
-import com.kredatus.flockblockers.Screens.Loader;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import java.util.ArrayList;

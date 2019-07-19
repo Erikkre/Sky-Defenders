@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Handlers.UiHandler;
-import com.kredatus.flockblockers.Screens.Loader;
+import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 import com.kredatus.flockblockers.TweenAccessors.Value;
 
 import aurelienribon.tweenengine.BaseTween;

@@ -52,7 +52,7 @@ public class AssetHandler {/*
 
     public static AssetManager manager= new AssetManager();
 
-    public static   String textures="textures/texturePack.txt", logo="textures/logo.png",
+    public static   String textures="textures/texturePack.txt", logo="textures/logo.png",companyName="textures/companyName.png",
     logoFire= "effects/logoFire.p", logoFire2= "effects/logoFire2.p", burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
     ignitionFire0Deignition7s="sound/ignitionFire0Deignition7s.wav",ignition="sound/ignition.wav", fire0="sound/fire0.wav", fire1="sound/fire1.wav",
     swoop="sound/swoop.wav",
@@ -63,12 +63,11 @@ public class AssetHandler {/*
 
     public void load() {
 
-        //manager.load(niteRideUI, Skin.class);//syncronous loading, done on loader line assets.load();
+        //manager.load(niteRideUI, Skin.class);//syncronous loading, done on assets.load(); line in Loader class
         manager.load(shadeUI, Skin.class);
         manager.load(logo, Texture.class);
+        manager.load(companyName, Texture.class);
 
-        manager.load(logoFire, ParticleEffect.class);
-        manager.load(ignitionFire0Deignition7s, Sound.class);
         manager.finishLoading();
 
         manager.load(burnerFire, ParticleEffect.class);
