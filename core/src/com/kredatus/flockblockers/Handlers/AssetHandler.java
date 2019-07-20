@@ -52,7 +52,7 @@ public class AssetHandler {/*
 
     public static AssetManager manager= new AssetManager();
 
-    public static   String textures="textures/texturePack.txt", logo="textures/logo.png",companyName="textures/companyName.png",
+    public static String textures="textures/texturePack.txt",logo="textures/logo.png",logo2="textures/logo2.png",companyName="textures/suiGenerisFontCompanyNameWhiteBg300x.png",
     logoFire= "effects/logoFire.p", logoFire2= "effects/logoFire2.p", burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
     ignitionFire0Deignition7s="sound/ignitionFire0Deignition7s.wav",ignition="sound/ignition.wav", fire0="sound/fire0.wav", fire1="sound/fire1.wav",
     swoop="sound/swoop.wav",
@@ -62,7 +62,6 @@ public class AssetHandler {/*
     flashShader="shaders/flash.vert";
 
     public void load() {
-
         //manager.load(niteRideUI, Skin.class);//syncronous loading, done on assets.load(); line in Loader class
         manager.load(shadeUI, Skin.class);
         manager.load(logo, Texture.class);

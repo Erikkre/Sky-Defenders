@@ -211,14 +211,14 @@ public class Loader implements Screen {
         float durationOfSwingIn=1.5f;
         logoImg.addAction(sequence(alpha(0), scaleTo(.05f, .05f),
                 parallel(fadeIn(durationOfSwingIn, Interpolation.pow2),
-                        scaleTo(0.7f, 0.7f, durationOfSwingIn, Interpolation.pow5),
-                        moveTo(camWidth / 2f - logoImg.getWidth() / 2f, camHeight / 2f + logoImg.getHeight()/4, durationOfSwingIn, Interpolation.swing)),
+                        scaleTo(1f, 1f, durationOfSwingIn, Interpolation.pow5),
+                        moveTo(camWidth / 2f - logoImg.getWidth() / 2f, camHeight / 2f + logoImg.getHeight()/3  , durationOfSwingIn, Interpolation.swing)),
                 delay(1.5f), fadeOut(1.25f), run(endLoad)));
 
 
         companyNameImg.setOrigin(companyNameImg.getWidth() / 2, companyNameImg.getHeight() / 2);
-        companyNameImg.setPosition(camWidth / 2f - companyNameImg.getWidth() / 2f, camHeight / 2f + logoImg.getHeight()/4 - companyNameImg.getHeight());
-
+        companyNameImg.setPosition(camWidth / 2f - companyNameImg.getWidth() / 2f, camHeight / 2f );
+        //companyNameImg.setScale(1.2f);
         companyNameImg.addAction(
                 sequence(
                         alpha(0),
@@ -245,7 +245,7 @@ public class Loader implements Screen {
     private void setupStage(){
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
-        camHeight=1000;
+        camHeight=1100;
         camWidth=(int)  (camHeight* (screenWidth/(float)screenHeight)) ;
         stage = new Stage(new ExtendViewport(camWidth,camHeight, new OrthographicCamera()), new SpriteBatch());
     }
