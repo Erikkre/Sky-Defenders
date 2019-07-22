@@ -1,2 +1,0 @@
-httpswww.imagefu.comcreatebutton
-button settings: Corners 40, 40 xpadding, 20 y padding, for down: grey blur 12, for up semitransparent white blur 12 (unless not button then no blur & black border of 5)
