@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ThingDefs>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_9mmSMG</defName>
+<label>9mm bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>6</DamageAmountBase>
+<Speed>80</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_9mmSMG</defName>
+<label>9mm SMG</label>
+<description>A small fast firing inaccurate submachine gun, used more for spray-and-pray than for any accurate shooting </description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/9mmSMG</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>50000</WorkToMake>
+<MarketValue>500</MarketValue>
+<AccuracyTouch>0.75</AccuracyTouch>
+<AccuracyShort>0.5</AccuracyShort>
+<AccuracyMedium>0.33</AccuracyMedium>
+<AccuracyLong>0.12</AccuracyLong>
+<RangedWeapon_Cooldown>0.50</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>80</Steel>
+<Component>3</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_9mmSMG</projectileDef>
+<forcedMissRadius>0.8</forcedMissRadius>
+<warmupTicks>50</warmupTicks>
+<range>23</range>
+<burstShotCount>5</burstShotCount>
+<ticksBetweenBurstShots>5</ticksBetweenBurstShots>
+<soundCast>ShotPDW</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_10mmSMG</defName>
+<label>10mm bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>8</DamageAmountBase>
+<Speed>75</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_10mmSMG</defName>
+<label>10mm SMG</label>
+<description>A hybrid between a Heavy SMG and a rapid fire Light SMG, the 10mm SMG is used for outputting plenty of rounds with moderate accuracy. </description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/10mmSMG</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>52500</WorkToMake>
+<MarketValue>550</MarketValue>
+<AccuracyTouch>0.8</AccuracyTouch>
+<AccuracyShort>0.6</AccuracyShort>
+<AccuracyMedium>0.35</AccuracyMedium>
+<AccuracyLong>0.18</AccuracyLong>
+<RangedWeapon_Cooldown>1</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>100</Steel>
+<Component>4</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_10mmSMG</projectileDef>
+<warmupTicks>70</warmupTicks>
+<range>22</range>
+<burstShotCount>3</burstShotCount>
+<ticksBetweenBurstShots>9</ticksBetweenBurstShots>
+<soundCast>ShotPDW</soundCast>
+<!-- Above is a Placeholder Sound -->
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_SleepyTyme</defName>
+<label>10mm bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>9</DamageAmountBase>
+<Speed>70</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_SleepyTyme</defName>
+<label>SleepyTyme</label>
+<description>A unique 10mm SMG with a silencer. </description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/10mmSMG</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<MarketValue>1000</MarketValue>
+<AccuracyTouch>0.85</AccuracyTouch>
+<AccuracyShort>0.62</AccuracyShort>
+<AccuracyMedium>0.36</AccuracyMedium>
+<AccuracyLong>0.2</AccuracyLong>
+<RangedWeapon_Cooldown>0.88</RangedWeapon_Cooldown>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_SleepyTyme</projectileDef>
+<warmupTicks>70</warmupTicks>
+<range>22</range>
+<burstShotCount>3</burstShotCount>
+<ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+<soundCast>ShotSilenced</soundCast>
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_12_7mmSMG</defName>
+<label>12.7mm bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>14</DamageAmountBase>
+<Speed>80</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanGun">
+<defName>Gun_12_7mmSMG</defName>
+<label>12.7mm SMG</label>
+<description>A heavier caliber SMG, it does much more damage than others, but doesn't fire particularly quickly or accuractely. </description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/12.7mmSMG</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>55000</WorkToMake>
+<MarketValue>1300</MarketValue>
+<AccuracyTouch>0.92</AccuracyTouch>
+<AccuracyShort>0.66</AccuracyShort>
+<AccuracyMedium>0.4</AccuracyMedium>
+<AccuracyLong>0.12</AccuracyLong>
+<RangedWeapon_Cooldown>1.33</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>110</Steel>
+<Component>5</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_12_7mmSMG</projectileDef>
+<warmupTicks>90</warmupTicks>
+<range>24</range>
+<burstShotCount>3</burstShotCount>
+<ticksBetweenBurstShots>13</ticksBetweenBurstShots>
+<soundCast>ShotHeavySMG</soundCast>
+<soundCastTail>GunTail_Heavy</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseBullet">
+<defName>Bullet_22SMG</defName>
+<label>.22LR bullet</label>
+<graphicData>
+<texPath>Things/Projectile/Bullet_Small</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<projectile>
+<flyOverhead>false</flyOverhead>
+<damageDef>Bullet</damageDef>
+<DamageAmountBase>5</DamageAmountBase>
+<Speed>70</Speed>
+</projectile>
+</ThingDef>
+
+<ThingDef ParentName="BaseHumanMakeableGun">
+<defName>Gun_22SMG</defName>
+<label> Silenced .22 SMG</label>
+<description>An SMG with an integrated silencer, it does very little damage, and has poor range and accuracy, but has a very high fire rate. </description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Guns/Silenced22SMG</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<statBases>
+<WorkToMake>32000</WorkToMake>
+<MarketValue>600</MarketValue>
+<AccuracyTouch>0.75</AccuracyTouch>
+<AccuracyShort>0.46</AccuracyShort>
+<AccuracyMedium>0.3</AccuracyMedium>
+<AccuracyLong>0.16</AccuracyLong>
+<RangedWeapon_Cooldown>0.33</RangedWeapon_Cooldown>
+</statBases>
+<costList>
+<Steel>75</Steel>
+<Component>6</Component>
+</costList>
+<verbs>
+<li>
+<verbClass>Verb_Shoot</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<projectileDef>Bullet_22SMG</projectileDef>
+<warmupTicks>40</warmupTicks>
+<range>18</range>
+<burstShotCount>7</burstShotCount>
+<ticksBetweenBurstShots>6</ticksBetweenBurstShots>
+<soundCast>ShotSilenced</soundCast>
+<soundCastTail>GunTail_Light</soundCastTail>
+<muzzleFlashScale>9</muzzleFlashScale>
+</li>
+</verbs>
+
+</ThingDef>
+
+</ThingDefs>

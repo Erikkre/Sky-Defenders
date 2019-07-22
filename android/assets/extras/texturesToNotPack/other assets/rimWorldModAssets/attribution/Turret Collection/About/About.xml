@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>Turret Collection</name>
+	<author>eatKenny</author>
+	<url>https://ludeon.com/forums/index.php?topic=6895.0</url>
+	<supportedVersions>
+                   <li>1.0</li>
+                </supportedVersions>
+	<description>Adds more turrets.</description>
+</ModMetaData>

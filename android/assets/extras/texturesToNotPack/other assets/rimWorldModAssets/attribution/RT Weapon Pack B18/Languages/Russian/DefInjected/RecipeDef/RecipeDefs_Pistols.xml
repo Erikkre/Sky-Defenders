@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData> 
+
+<Glock17Craft.label>Собрать пистолет Glock 17</Glock17Craft.label>
+<Glock17Craft.description>Собрать Glock 17.</Glock17Craft.description>
+
+<DeagleCraft.label>Собрать пистолет Desert Eagle</DeagleCraft.label>
+<DeagleCraft.description>Собрать Desert Eagle.</DeagleCraft.description>
+
+<ColtPythonRevolverCraft.label>Собрать пистолет ColtPython Revolver</ColtPythonRevolverCraft.label>
+<ColtPythonRevolverCraft.description>Собрать ColtPython Revolver.</ColtPythonRevolverCraft.description>
+
+<M1911Craft.label>Собрать пистолет M1911</M1911Craft.label>
+<M1911Craft.description>Собрать M1911.</M1911Craft.description>
+
+<LugerP08Craft.label>Собрать пистолет Luger P08</LugerP08Craft.label>
+<LugerP08Craft.description>Собрать Luger P08.</LugerP08Craft.description>
+
+<DualBerettasCraft.label>Собрать пистолет DualBerettas</DualBerettasCraft.label>
+<DualBerettasCraft.description>Собрать DualBerettas.</DualBerettasCraft.description>
+
+
+</LanguageData>

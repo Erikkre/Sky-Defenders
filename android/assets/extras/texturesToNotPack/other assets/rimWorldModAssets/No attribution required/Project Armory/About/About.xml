@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Project Armory 1.2</name>
+  <author>Plymouth</author>
+   <targetVersion>1.0.2059</targetVersion>
+  <url></url>
+  <description>Version: 1.2.0.8
+        Hey there!
+        
+        Project Armoury 20th century pack adds 203 weapon designs from the later half of 20th century to rimworld(1945-2000), which are extensively balanced using linear mathematical conversion and approximation formulas,this mod aims to add a lot of variety while remaining  vanilla balance-friendly, as well as lore-friendly. Each weapon design has a short description of it's origins. This mod has been a long time in the making, and if you see any bugs be it duplicated descriptions or weapon being utterly unbalanced please do report!
+        
+        Have fun! 
+        
+        :)
+        
+        Changelog:
+        1.2.0.8
+        Added single-use rocket launchers with custom projectile graphics, added crafting workbenches to build them. Murderbone galore!
+        
+        1.1.0.8
+        Fixed some values for revolvers while creating stat lists.
+        
+        1.1.0.7
+        Added a tag to submachine guns. Now they will actually appear in-game.
+        
+        1.1.0.6
+        Added smeltability.
+        
+        
+        1.1.0.5
+        Fixed some shotguns not firing many pellets but just 1.
+        
+        
+        1.1.0.4
+        Added WorkGiver.xml so that the colonists will actually work.
+        
+        Reduced the placement size of smoothbore workbench to 1x1.
+        
+        1.1.0.3
+        Added Rifling and Smoothbore workbenches in order to reduce clutter, they are unlocked when you reach a certain tech level(Gunsmithing for Smoothbore, Precision Rifling for Rifle).
+        
+        Added revolvers and shotguns.
+        
+        Added weapon size scaling and dependency on Proper Shotguns mod.
+        
+        To run this mod properly you'll be required to install JecsTools libraries and XeoNovaDan's ProperShotguns.
+        
+        1.0.0.3
+        Fixed values for G11 thanks to the new info.
+        
+    
+    List of weapons included in this pack:
+    
+    Pistols:
+    
+    Akdal Ghost TR01
+    ALFA Combat
+    AMC Automag
+    AMT Automag II
+    AMT Automag III
+    AMT Automag IV
+    AMT Automag V
+    Arsenal P-M02
+    Benelli B76
+    Beretta 70
+    Beretta 87 Target
+    Beretta 92
+    Beretta 950
+    Beretta M1951
+    Bersa Thunder 9
+    Bersa Thunder 380
+    Bren Ten
+    Browning BDA
+    Browning Buck Mark
+    Colt Mustang
+    FN Five-seveN
+    Fort-12
+    Glock 17
+    Glock 22
+    Glock 25
+    H&amp;K P9
+    H&amp;K USP
+    IWI Jerico 941
+    Jennings J-22
+    Makarov
+    P-83 Wanad
+    Ruger P89
+    SIG P210
+    
+    Revolvers:
+    
+    Astra 680
+    Charter ARms Bulldog
+    Colt Anaconda
+    Colt Buntline
+    Colt Cobra
+    Colt Diamondback
+    Colt King Cobra
+    Colt Python
+    Colt Trooper
+    FN Barracuda
+    Gward Revolver
+    Korth Combat
+    Magnum Research BFR 45-70
+    Manurhin MR-73
+    Mateba Autorevolver
+    New Nambu M60
+    OTs-01 Kobalt
+    OTs-20 Gnom
+    Ruger Bearcat
+    TIL Thunder
+    
+    Rifles:
+    
+    AR-5
+    AR-30
+    Browning BLR
+    Bushmaster M17S
+    CZ-550
+    Ishapore 2A1
+    Marlin model 336
+    MAS-49
+    Remington Model 660
+    Remington Model 700
+    Remington Model 7400
+    Remington Model 7600
+    Ruger M77
+    
+    Shotguns:
+    
+    Armsel Striker
+    Atchisson Assault Shotguns
+    Bandaevsky RB-18
+    Benelli M1
+    Benelli M3
+    Benelli M4
+    Benelli Nova
+    Beretta 682
+    Beretta 1201FP
+    Beretta AL391
+    Browning BSS
+    Browning Citori
+    Browning Double Automatic Shotguns
+    Cooey 84
+    FN TPS
+    Franchi SPAS-12
+    Franchi SPAS-15
+    High Standard Model 10
+    H&amp;K Fabarm FP6
+    H&amp;K HK CAWS
+    Ithaca Mag-10
+    KS-23
+    MAG-7
+    Marlin Model 55
+    Molot Bekas M
+    Mossberg 590
+    Mossberg 930
+    MTs-255
+    Pancor Jackhammer
+    Remington Model 11-48
+    Remington Model 11-87
+    Remington Model SP-10
+    Remington Spartan 310
+    Saiga-12k
+    TOZ-106
+    USAS-12
+    Winchester Model 1200
+    
+    Submachine guns:
+    
+    American-180
+    Arsenal Shipka
+    Beretta M12
+    CETME C2
+    Colt 9mm 
+    Daewoo K1
+    DUX-53
+    F1 Submachin gun
+    FAMAE SAF
+    FBP submachine gun
+    Federal-Engineering-XC450
+    Floro MK-9
+    FMK-3
+    FN P90
+    Franchi LF-57
+    Halcon ML-57
+    H&amp;K MP5
+    H&amp;K UMP
+    INA model 953
+    Interdynamic MP-9
+    Jatimatic
+    M49 Submachine gun
+    M56 Submachine gun
+    Ingram MAC-10
+    Ingram MAC-11
+    Madsen M50
+    MAT-49
+    Mekanika URU
+    Mendoza HM-3
+    MGD PM-9
+    MGV-176
+    Parinco mod. 3R
+    OTs-33 Pernach
+    PP-19 Bizon
+    PP-91 Kedr
+    PP-93
+    Rexim-Favor
+    Sa vz. 23
+    Scorpion vz. 61
+    Sola submachine gun
+    S&amp;W M76
+    SR-2 Veresk
+    Star Model Z62
+    Steyr MPI-69
+    Steyr TMP
+    
+    Assault Rifles:
+    
+    AEK-971
+    AG-043
+    Ak 5
+    AK-47
+    AK-63
+    AK-74M
+    AKS-74U
+    AMD-65
+    AN-94
+    APS-95
+    AR-18
+    AS Val
+    Beretta AR 70/90
+    BSA-28P
+    CEAM Modele 1950
+    CETME Model L
+    Colt Canada C7
+    CZ-2000
+    Daewoo K2
+    EM-2
+    FAMAS G2
+    FARA-83
+    FB Beryl
+    FN CAL
+    FN FNC
+    G11
+    G36
+    G41
+    Howa Type 89
+    IMI Galil
+    INSAS
+    KBKG wz. 1960
+    L85A2
+    M4A1
+    M14A1
+    Norinco CQ
+    OTs-12
+    Pindad SS1
+    Pindad SS2
+    QBZ-95
+    Rk 62
+    Rk 95 Tp
+    SAR 21
+    SIG SG 550
+    SR-88
+    Type 86s
+    
+    Battle rifles:
+    
+    AR-10
+    Beretta BM 59
+    CETME Model C
+    FA-MAS Type 62
+    FN FAL
+    Sturmgewehr 57
+    Zastava M77 B1
+    
+    Light machine guns:
+    CETME Ameli
+    Daewoo K3
+    FN Minimi
+    HK 921
+    IMI Negev
+    M240
+    MG3
+    MG4
+    PKM
+    QJY-88
+    RPK
+    SIG MG 710-30
+    Uk vz. 59
+    Ultimax 100
+    Valmet Kvkk 62
+    Vektor SS-77
+    
+    Sniper rifles:
+    
+    Arctic International Accuracy Warfare
+    Barrett M98B
+    Barrett MRAD
+    Berkut rifle
+    Blaser R8
+    Parker-Hale C3A1
+    Dragunov SVU
+    FN Model 30-11
+    FR F2
+    H&amp;K PSG-1
+    Kongsberg M59
+    L42A1
+    M21 SWS
+    M40
+    QBU-88
+    Remington Model 597
+    Remington Model 740
+    Sako TRG-42
+    Savage 10FP
+    Steyr Scout
+    Steyr SSG 69 PI
+    SV-98
+    SVD
+    SVDK
+    Walther WA 2000
+    Zastava M91
+    
+    Anti-Materiel rifles:
+    
+    Armalite AR-50
+    Barrett M95
+    Barrett M99
+    Falcon
+    Gepard M4
+    KSVK 12.7
+    MacMillan Tac-50
+    OSV-96
+    Pauza P-50
+    PGM Hecate II
+    Robar RC-50
+    Steyr HS 50
+    Zastava M12 Black Spear
+    Zastava M93 Black Arrow
+    
+    
+    
+    
+    
+    </description>
+</ModMetaData>

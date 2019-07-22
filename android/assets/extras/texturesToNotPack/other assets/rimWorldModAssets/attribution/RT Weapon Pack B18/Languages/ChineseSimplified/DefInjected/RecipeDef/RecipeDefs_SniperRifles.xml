@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Kar98Craft.label>制作Kar 98k毛瑟步枪</Kar98Craft.label>
+  <Kar98Craft.description>制作Kar 98k毛瑟步枪。</Kar98Craft.description>
+  <Kar98Craft.jobString>正在制作Kar 98k毛瑟步枪。</Kar98Craft.jobString>
+
+
+  <SteyrSSG08Craft.label>制作斯太尔SSG08狙击步枪</SteyrSSG08Craft.label>
+  <SteyrSSG08Craft.description>制作斯太尔SSG08狙击步枪。</SteyrSSG08Craft.description>
+  <SteyrSSG08Craft.jobString>正在制作斯太尔SSG08狙击步枪。</SteyrSSG08Craft.jobString>
+
+  <L96A1Craft.label>制作L96A1狙击步枪</L96A1Craft.label>
+  <L96A1Craft.description>制作L96A1狙击步枪。</L96A1Craft.description>
+  <L96A1Craft.jobString>正在制作L96A1狙击步枪。</L96A1Craft.jobString>
+
+  <AWMCraft.label>制作AWM狙击步枪</AWMCraft.label>
+  <AWMCraft.description>制作AWM狙击步枪。</AWMCraft.description>
+  <AWMCraft.jobString>正在制作AWM狙击步枪。</AWMCraft.jobString>
+
+  <BarrettCraft.label>制作巴雷特M82A1反器材步枪</BarrettCraft.label>
+  <BarrettCraft.description>巴雷特M82A1反器材步枪。</BarrettCraft.description>
+  <BarrettCraft.jobString>巴雷特M82A1反器材步枪。</BarrettCraft.jobString>
+
+  <VSSVintorezCraft.label>制作VSS Vintorez微声狙击步枪</VSSVintorezCraft.label>
+  <VSSVintorezCraft.description>制作VSS Vintorez微声狙击步枪。</VSSVintorezCraft.description>
+  <VSSVintorezCraft.jobString>正在VSS Vintorez微声狙击步枪。</VSSVintorezCraft.jobString>
+
+  <DragunovCraft.label>制作SVD狙击步枪</DragunovCraft.label>
+  <DragunovCraft.description>SVD狙击步枪。</DragunovCraft.description>
+  <DragunovCraft.jobString>正在制作SVD狙击步枪。</DragunovCraft.jobString>
+
+
+</LanguageData>

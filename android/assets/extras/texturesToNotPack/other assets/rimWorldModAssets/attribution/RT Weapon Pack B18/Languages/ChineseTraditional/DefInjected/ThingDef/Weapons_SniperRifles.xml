@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- SteyrSSG08 -->
+
+  <Bullet_308Winchester_rt.label>斯太爾SSG08狙擊步槍子彈</Bullet_308Winchester_rt.label>
+
+  <Gun_SteyrSSG08_rt.label>斯太爾SSG08狙擊步槍</Gun_SteyrSSG08_rt.label>
+  <Gun_SteyrSSG08_rt.description>斯太爾SSG08狙擊步槍是一款旋轉後拉槍機式步槍，冷鍛槍管採用浮置式設計，槍管前端帶有一個高效的制退器。</Gun_SteyrSSG08_rt.description>
+
+
+  <!-- L96A1 -->
+
+  <Bullet_L96A1_rt.label>L96A1狙擊步槍子彈</Bullet_L96A1_rt.label>
+
+  <Gun_L96A1_rt.label>L96A1狙擊步槍</Gun_L96A1_rt.label>
+  <Gun_L96A1_rt.description>L96A1是由舊世界一家叫做精準國際的公司專門為舊世界國家英國的軍隊而製造的狙擊步槍。</Gun_L96A1_rt.description>
+
+
+  <!-- AWM -->
+
+  <Bullet_AWM_rt.label>AWM狙擊步槍子彈</Bullet_AWM_rt.label>
+
+  <Gun_AWM_rt.label>AWM狙擊步槍</Gun_AWM_rt.label>
+  <Gun_AWM_rt.description>AWM步槍是精準國際的一款栓動式狙擊步槍，是精準國際公司設計的一款使用.300馬格南步槍彈的改良型AW狙擊槍。</Gun_AWM_rt.description>
+
+
+  <!-- Barrett -->
+
+  <Bullet_Barrett_rt.label>巴雷特M82A1反器材步槍子彈</Bullet_Barrett_rt.label>
+
+  <Gun_Barrett_rt.label>巴雷特M82A1反器材步槍</Gun_Barrett_rt.label>
+  <Gun_Barrett_rt.description>這是一款利用反衝操作的半自動反器材步槍，由舊世界美國巴雷特公司研發和製造。</Gun_Barrett_rt.description>
+
+
+  <!-- Vss Vintorez -->
+
+  <Bullet_VSSVintorez_rt.label>VSS Vintorez微聲狙擊步槍子彈</Bullet_VSSVintorez_rt.label>
+
+  <Gun_VSSVintorez_rt.label>VSS Vintorez微聲狙擊步槍</Gun_VSSVintorez_rt.label>
+  <Gun_VSSVintorez_rt.description>一款專門為特別行動與潛入任務使用的微聲狙擊步槍。</Gun_VSSVintorez_rt.description>
+
+
+  <!-- Dragunov -->
+
+  <Bullet_Dragunov_rt.label>SVD狙擊步槍子彈</Bullet_Dragunov_rt.label>
+
+  <Gun_Dragunov_rt.label>SVD狙擊步槍</Gun_Dragunov_rt.label>
+  <Gun_Dragunov_rt.description>這是為了代替莫辛-納甘狙擊步槍而設計的。</Gun_Dragunov_rt.description>
+
+
+</LanguageData>

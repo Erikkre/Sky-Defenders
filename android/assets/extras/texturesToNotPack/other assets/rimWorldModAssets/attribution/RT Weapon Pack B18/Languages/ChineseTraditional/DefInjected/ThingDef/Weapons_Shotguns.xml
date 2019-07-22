@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- USAS-12 -->
+
+  <Bullet_USAS12_rt.label>USAS-12霰彈槍彈片</Bullet_USAS12_rt.label>
+
+  <Gun_USAS12_rt.label>USAS-12霰彈槍</Gun_USAS12_rt.label>
+  <Gun_USAS12_rt.description>USAS-12霰彈槍是一款氣動的霰彈槍。</Gun_USAS12_rt.description>
+
+
+  <!-- M1014 -->
+
+  <Bullet_M1014_rt.label>M1014霰彈槍彈片</Bullet_M1014_rt.label>
+
+  <Gun_M1014_rt.label>M1014霰彈槍</Gun_M1014_rt.label>
+  <Gun_M1014_rt.description>M1014是一款氣動的霰彈槍。</Gun_M1014_rt.description>
+
+
+  <!-- DP-12 -->
+
+  <Bullet_DP12_rt.label>DP-12雙管泵動式霰彈槍彈片</Bullet_DP12_rt.label>
+
+  <Gun_DP12_rt.label>DP-12雙管泵動式霰彈槍</Gun_DP12_rt.label>
+  <Gun_DP12_rt.description>這是一款雙管式泵動霰彈槍。</Gun_DP12_rt.description>
+
+
+  <!-- Winchester 1887 -->
+
+  <Bullet_Winchester87_rt.label>溫徹斯特M1887式霰彈槍彈片</Bullet_Winchester87_rt.label>
+
+  <Gun_Winchester87_rt.label>溫徹斯特M1887式霰彈槍</Gun_Winchester87_rt.label>
+  <Gun_Winchester87_rt.description>這是一款舊世界聞名遐邇的槓桿式霰彈槍。</Gun_Winchester87_rt.description>
+
+
+  <!-- SPAS-12 -->
+
+  <Bullet_SPAS12_rt.label>SPAS-12多功能霰彈槍彈片</Bullet_SPAS12_rt.label>
+
+  <Gun_SPAS12_rt.label>SPAS-12多功能霰彈槍</Gun_SPAS12_rt.label>
+  <Gun_SPAS12_rt.description>SPAS-12是一款半自動霰彈槍，由舊世界意大利弗蘭基公司於1979年至2000年製造併發行。</Gun_SPAS12_rt.description>
+
+
+</LanguageData>

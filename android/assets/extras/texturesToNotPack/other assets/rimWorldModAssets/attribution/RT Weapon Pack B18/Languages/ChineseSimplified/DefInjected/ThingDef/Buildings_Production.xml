@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+
+  <!-- Weapon Assembly Table -->
+
+  <RT_WeaponAssemblyTable.label>RT武器装配台</RT_WeaponAssemblyTable.label>
+  <RT_WeaponAssemblyTable.description>一个装配RT武器的工作台。</RT_WeaponAssemblyTable.description>
+  <RT_WeaponAssemblyTable_Blueprint.label>RT武器装配台(蓝图)</RT_WeaponAssemblyTable_Blueprint.label>
+  <RT_WeaponAssemblyTable_Frame.label>RT武器装配台(建造中)</RT_WeaponAssemblyTable_Frame.label>
+
+
+</LanguageData>

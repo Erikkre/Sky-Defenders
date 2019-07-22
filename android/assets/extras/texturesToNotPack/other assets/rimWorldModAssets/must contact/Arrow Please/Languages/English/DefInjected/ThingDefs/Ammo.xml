@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Trebuchet_ShellsN.label>trebuchet projectile</Trebuchet_ShellsN.label>
+  <Trebuchet_ShellsN.description>A large stone chunk shaped for trebuchet to launch.</Trebuchet_ShellsN.description>
+  <ShellsN_Trebuchet.label>trebuchet projectile</ShellsN_Trebuchet.label>
+  <Trebuchet_ShellsF.label>flaming trebuchet projectile</Trebuchet_ShellsF.label>
+  <Trebuchet_ShellsF.description>A large stone chunk, covered with inflammable components, shaped for trebuchet to launch.</Trebuchet_ShellsF.description>
+  <ShellsF_Trebuchet.label>flaming trebuchet projectile</ShellsF_Trebuchet.label>
+  <Trebuchet_ShellsH.label>human trebuchet projectile</Trebuchet_ShellsH.label>
+  <Trebuchet_ShellsH.description>An unlucky dead human made into a trebuchet shot.</Trebuchet_ShellsH.description>
+  <ShellsH_Trebuchet.label>human trebuchet projectile</ShellsH_Trebuchet.label>
+  <Catapult_ShellsN.label>catapult projectiles</Catapult_ShellsN.label>
+  <Catapult_ShellsN.description>A bunch of small stone chunks shaped for catapult to launch.</Catapult_ShellsN.description>
+  <ShellsN_Catapult.label>catapult projectiles</ShellsN_Catapult.label>
+  <Catapult_ShellsF.label>flaming catapult projectiles</Catapult_ShellsF.label>
+  <Catapult_ShellsF.description>A bunch of small stone chunks, covered with inflammable components, shaped for catapult to launch.</Catapult_ShellsF.description>
+  <ShellsF_Catapult.label>flaming catapult projectiles</ShellsF_Catapult.label>
+  
+</LanguageData>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Make_TrebuchetShells.label>制作抛石机弹药</Make_TrebuchetShells.label>
+  <Make_TrebuchetShells.description>重塑一颗石块以供抛石机使用。</Make_TrebuchetShells.description>
+  <Make_TrebuchetShells.jobString>制作抛石机弹药。</Make_TrebuchetShells.jobString>
+
+  <Make_TrebuchetShellsA.label>制作抛石机弹药</Make_TrebuchetShellsA.label>
+  <Make_TrebuchetShellsA.description>混合石材以供抛石机使用。</Make_TrebuchetShellsA.description>
+  <Make_TrebuchetShellsA.jobString>制作抛石机弹药。</Make_TrebuchetShellsA.jobString>
+
+  <MakeHumanRound.label>制作人肉抛石机弹药</MakeHumanRound.label>
+  <MakeHumanRound.description>重塑一个尸体以供抛石机使用。</MakeHumanRound.description>
+  <MakeHumanRound.jobString>制作人肉抛石机弹药。</MakeHumanRound.jobString>
+
+  <Make_CatapultShells.label>制作投石器弹药</Make_CatapultShells.label>
+  <Make_CatapultShells.description>重塑一颗石块以供投石器使用。</Make_CatapultShells.description>
+  <Make_CatapultShells.jobString>制作投石器弹药。</Make_CatapultShells.jobString>
+
+  <Make_CatapultShellsA.label>制作投石器弹药</Make_CatapultShellsA.label>
+  <Make_CatapultShellsA.description>混合石材以供投石器使用。</Make_CatapultShellsA.description>
+  <Make_CatapultShellsA.jobString>制作投石器弹药。</Make_CatapultShellsA.jobString>
+
+</LanguageData>

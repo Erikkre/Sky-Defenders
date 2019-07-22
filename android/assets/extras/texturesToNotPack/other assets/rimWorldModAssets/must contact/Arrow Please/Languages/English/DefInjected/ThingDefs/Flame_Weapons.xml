@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Bowshort_Flame.label>short bow(flaming arrow)</Bowshort_Flame.label>
+  <Bowshort_Flame.description>A simple short selfbow made from a single piece of wood, which allows you to shoot out flaming arrows.</Bowshort_Flame.description>
+  <Arrowshort_Flame.label>shortbow flaming arrow</Arrowshort_Flame.label>
+  <Bowrecurve_Flame.label>recurve bow(flaming arrow)</Bowrecurve_Flame.label>
+  <Bowrecurve_Flame.description>A recurve bow. Its construction behaves like a tuned spring, storing energy more efficiently and delivering a faster shot. It is also capable of shooting flaming arrow.</Bowrecurve_Flame.description>
+  <Arrowrecurve_Flame.label>recurve bow flaming arrow</Arrowrecurve_Flame.label>
+  <Bowgreat_Flame.label>greatbow(flaming arrow)</Bowgreat_Flame.label>
+  <Bowgreat_Flame.description>A powerful greatbow. Fires a flaming arrow long distances. Not as powerful as regular arrow, but it can set fire.</Bowgreat_Flame.description>
+  <Arrowgreat_Flame.label>greatbow flaming arrow</Arrowgreat_Flame.label>
+  
+</LanguageData>

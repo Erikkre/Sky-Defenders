@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData> 
+
+<!-- =============Glock 17============== -->
+<Bullet_Glock17_rt.label>Glock 17</Bullet_Glock17_rt.label>
+<Gun_Glock17_rt.label>Glock 17</Gun_Glock17_rt.label>
+<Gun_Glock17_rt.description>Предназначен для профессионалов, Glock 17 является самым широко используемым пистолетом правоохранительных органов по всему миру.</Gun_Glock17_rt.description>
+<!-- =============Deagle============== -->
+<Bullet_Deagle_rt.label>Desert Eagle</Bullet_Deagle_rt.label>
+<Gun_Deagle_rt.label>Desert Eagle</Gun_Deagle_rt.label>
+<Gun_Deagle_rt.description>Desert Eagle является полуавтоматическим пистолетом, отличается большим калибром. Имеет уникальный дизайн с треугольным стволом и большим весом.</Gun_Deagle_rt.description>
+<!-- =============ColtPythonRevolver============== -->
+<Bullet_ColtPythonRevolver_rt.label>ColtPython Револьвер</Bullet_ColtPythonRevolver_rt.label>
+<Gun_ColtPythonRevolver_rt.label>ColtPython Револьвер</Gun_ColtPythonRevolver_rt.label>
+<Gun_ColtPythonRevolver_rt.description>Colt Python является револьвером изготовленный Colt's Manufacturing Conpany в Хартфорде, штат Коннектикут. Его иногда называют "Боевый магнум" </Gun_ColtPythonRevolver_rt.description>
+<!-- =============M1911============== -->
+<Bullet_M1911_rt.label>M1911</Bullet_M1911_rt.label>
+<Gun_M1911_rt.label>M1911</Gun_M1911_rt.label>
+<Gun_M1911_rt.description>M1911 представляет собой полуавтоматический пистолет, с быстрой перезарядкой и низкой отдачей, Он использовался на вооружении Соединенных штатов с 1911 по 1986 год</Gun_M1911_rt.description>
+<!-- =============Luger P08============== -->
+<Bullet_LugerP08_rt.label>Luger P08</Bullet_LugerP08_rt.label>
+<Gun_LugerP08_rt.label>Luger P08</Gun_LugerP08_rt.label>
+<Gun_LugerP08_rt.description>Полуавтоматический пистолет, с хорошим контролем отдачи.</Gun_LugerP08_rt.description>
+<!-- =============Dual Berettas============== -->
+<Bullet_DualBerettas_rt.label>Dual Berettas</Bullet_DualBerettas_rt.label>
+<Gun_DualBerettas_rt.label>Dual Berettas</Gun_DualBerettas_rt.label>
+<Gun_DualBerettas_rt.description>Беретта полуавтоматический пистолет одинарного/двойного действия, имеет короткий ствол.</Gun_DualBerettas_rt.description>
+
+</LanguageData> 

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData> 
+
+    <Proj_M67FragGrenade.label>Осколочная граната M67</Proj_M67FragGrenade.label>  
+	<Weapon_M67FragGrenade.label>Осколочная граната M67</Weapon_M67FragGrenade.label>  
+    <Weapon_M67FragGrenade.description>Граната M67 является осколочной ручной гранатой, используется армией Соединенных Штатов. Очень удобный инструмент по зачистке комнат с врагами.</Weapon_M67FragGrenade.description> 
+
+	<Proj_M84FlashbangGrenade_rt.label>Светошумовая граната M84</Proj_M84FlashbangGrenade_rt.label>
+	<Weapon_M84FlashbangGrenade_rt.label>Светошумовая граната M84</Weapon_M84FlashbangGrenade_rt.label>
+	<Weapon_M84FlashbangGrenade_rt.description>Светошумовая граната M84. Используйте с осторожностью, оглушает всё в радиусе поражения.</Weapon_M84FlashbangGrenade_rt.description>
+
+	<Proj_ANM14TH3IncendiaryGrenade_rt.label>Зажигательная граната AN-M14 TH3</Proj_ANM14TH3IncendiaryGrenade_rt.label>
+	<Weapon_ANM14TH3IncendiaryGrenade_rt.label>Зажигательная граната AN-M14 TH3</Weapon_ANM14TH3IncendiaryGrenade_rt.label>
+	<Weapon_ANM14TH3IncendiaryGrenade_rt.description>Зажигательная граната AN-M14 TH3 используется для повреждения оборудования или для возгорания. Может привести к повреждению или уничтожению транспортных средств, систем вооружения, бункеров или боеприпасов.</Weapon_ANM14TH3IncendiaryGrenade_rt.description>
+	</LanguageData>

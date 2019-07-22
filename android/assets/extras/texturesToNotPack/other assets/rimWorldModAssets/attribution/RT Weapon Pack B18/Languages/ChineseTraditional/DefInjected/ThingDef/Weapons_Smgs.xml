@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- MP40 -->
+
+  <Bullet_MP40_rt.label>MP40衝鋒槍子彈</Bullet_MP40_rt.label>
+
+  <Gun_MP40_rt.label>MP40衝鋒槍</Gun_MP40_rt.label>
+  <Gun_MP40_rt.description>這是一款有著9×19mm彈夾的衝鋒槍。</Gun_MP40_rt.description>
+
+
+  <!-- Skorpion vz 61 -->
+
+  <Bullet_Skorpionvz61_rt.label>Skorpionvz61蝎式衝鋒槍子彈</Bullet_Skorpionvz61_rt.label>
+
+  <Gun_Skorpionvz61_rt.label>Skorpionvz61蝎式衝鋒槍</Gun_Skorpionvz61_rt.label>
+  <Gun_Skorpionvz61_rt.description>這把武器為各種非集團作戰提供個人防衛武器，比手槍更有效，但又不會很顯眼。</Gun_Skorpionvz61_rt.description>
+
+
+  <!-- Uzi -->
+
+  <Bullet_Uzi_rt.label>Uzi衝鋒槍子彈</Bullet_Uzi_rt.label>
+
+  <Gun_Uzi_rt.label>Uzi衝鋒槍</Gun_Uzi_rt.label>
+  <Gun_Uzi_rt.description>這是一款開放槍栓的反衝式衝鋒槍。</Gun_Uzi_rt.description>
+
+
+  <!-- MP7 -->
+
+  <Bullet_HKMP7_rt.label>HKMP7衝鋒槍子彈</Bullet_HKMP7_rt.label>
+
+  <Gun_HKMP7_rt.label>HKMP7衝鋒槍</Gun_HKMP7_rt.label>
+  <Gun_HKMP7_rt.description>這是一款德國個人防衛武器，由HK（Heckler Koch）公司製造，使用4.6×30mm彈夾。</Gun_HKMP7_rt.description>
+
+
+  <!-- CZ3A1 -->
+
+  <Bullet_CZ3A1_rt.label>CZ-3A1衝鋒槍子彈</Bullet_CZ3A1_rt.label>
+
+  <Gun_CZ3A1_rt.label>CZ-3A1衝鋒槍</Gun_CZ3A1_rt.label>
+  <Gun_CZ3A1_rt.description>這是一款輕量、緊湊並且易於在狹窄空間使用的衝鋒槍。</Gun_CZ3A1_rt.description>
+
+
+  <!-- KRISS Vector -->
+
+  <Bullet_KRISSvector_rt.label>KRISS Vector衝鋒槍子彈</Bullet_KRISSvector_rt.label>
+
+  <Gun_KRISSvector_rt.label>KRISS Vector衝鋒槍</Gun_KRISSvector_rt.label>
+  <Gun_KRISSvector_rt.description>KRISS Vector系列衝鋒槍是由美國槍械公司"美國KRISS公司"所研製及生產的衝鋒槍槍族，該公司前身為轉型武器研究國防工業。</Gun_KRISSvector_rt.description>
+
+
+  <!-- UMP-45 -->
+
+  <Bullet_HK_UMP45_rt.label>HK_UMP45衝鋒槍子彈</Bullet_HK_UMP45_rt.label>
+
+  <Gun_HK_UMP45_rt.label>HK-UMP45衝鋒槍</Gun_HK_UMP45_rt.label>
+  <Gun_HK_UMP45_rt.description>HK-UMP45衝鋒槍是一款使用.45ACP彈藥的衝鋒槍。</Gun_HK_UMP45_rt.description>
+
+
+  <!-- P90 -->
+
+  <Bullet_P90_rt.label>FN P90衝鋒槍子彈</Bullet_P90_rt.label>
+
+  <Gun_P90_rt.label>FN P90衝鋒槍</Gun_P90_rt.label>
+  <Gun_P90_rt.description>FN P90衝鋒槍是舊世界90年代由比利時的國營赫斯塔爾所推出一款衝鋒槍。</Gun_P90_rt.description>
+
+
+  <!-- TSMG -->
+
+  <Bullet_TSMG_rt.label>湯普森衝鋒槍子彈</Bullet_TSMG_rt.label>
+
+  <Gun_Thompson_Submachine_Gun_rt.label>湯普森衝鋒槍</Gun_Thompson_Submachine_Gun_rt.label>
+  <Gun_Thompson_Submachine_Gun_rt.description>湯普森衝鋒槍是舊世界美國人John T. Thompson於1918年發明的，在禁酒令期間很快地流行起來。</Gun_Thompson_Submachine_Gun_rt.description>
+
+
+  <!-- PPSH_41 -->
+
+  <Bullet_PPSH_41_rt.label>波波沙41型衝鋒槍子彈</Bullet_PPSH_41_rt.label>
+
+  <Gun_PPSH_41_rt.label>波波沙41型衝鋒槍</Gun_PPSH_41_rt.label>
+  <Gun_PPSH_41_rt.description>波波沙41型衝鋒槍是舊世界第二次世界大戰時蘇聯的主要步兵武器之一。</Gun_PPSH_41_rt.description>
+
+</LanguageData>

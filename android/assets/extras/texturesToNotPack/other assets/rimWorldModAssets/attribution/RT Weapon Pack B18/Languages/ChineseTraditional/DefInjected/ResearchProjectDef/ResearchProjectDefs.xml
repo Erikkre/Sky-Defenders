@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <WeaponAssemblyTable_RT.label>RT武器裝配台</WeaponAssemblyTable_RT.label>
+  <WeaponAssemblyTable_RT.description>這項研究將解鎖RT武器裝配台，讓你能組裝更多的武器。</WeaponAssemblyTable_RT.description>
+
+  <Pistols_RT.label>RT手槍</Pistols_RT.label>
+  <Pistols_RT.description>這項研究讓你能在RT武器裝配台組裝更多的手槍。</Pistols_RT.description>
+
+  <Shotguns_RT.label>RT霰彈槍</Shotguns_RT.label>
+  <Shotguns_RT.description>這項研究讓你能在RT武器裝配台組裝更多的霰彈槍。</Shotguns_RT.description>
+
+  <Smgs_RT.label>RT衝鋒槍</Smgs_RT.label>
+  <Smgs_RT.description>這項研究讓你能在RT武器裝配台組裝更多的衝鋒槍。</Smgs_RT.description>
+
+  <ThrowableGrenades_RT.label>RT手榴彈</ThrowableGrenades_RT.label>
+  <ThrowableGrenades_RT.description>這項研究讓你能在RT武器裝配台組裝更多的手雷。</ThrowableGrenades_RT.description>
+
+  <Rifles_RT.label>RT步槍</Rifles_RT.label>
+  <Rifles_RT.description>這項研究讓你能在RT武器裝配台組裝更多的步槍。</Rifles_RT.description>
+
+  <SniperRifles_RT.label>RT狙擊步槍</SniperRifles_RT.label>
+  <SniperRifles_RT.description>這項研究讓你能在RT武器裝配台組裝更多的狙擊步槍。</SniperRifles_RT.description>
+
+  <HeavyWeapons_RT.label>RT重型武器</HeavyWeapons_RT.label>
+  <HeavyWeapons_RT.description>允許你的殖民者通過機械加工台製作重型武器。</HeavyWeapons_RT.description>
+
+
+</LanguageData>

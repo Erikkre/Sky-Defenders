@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData> 
+
+<WeaponAssemblyTable_RT.label>Оружейный стол</WeaponAssemblyTable_RT.label>
+<WeaponAssemblyTable_RT.description>Это исследование позволит вам создавать оружейный стол, на котором вы можете собирать различное оружие.</WeaponAssemblyTable_RT.description>
+
+<Pistols_RT.label>Пистолеты</Pistols_RT.label>
+<Pistols_RT.description>Это исследование позволит вам собирать пистолеты на оружейном столе.</Pistols_RT.description>
+
+<Shotguns_RT.label>Дробовики</Shotguns_RT.label>
+<Shotguns_RT.description>Это исследование позволит вам собирать дробовики на оружейном столе.</Shotguns_RT.description>
+
+<Smgs_RT.label>Пистолеты - пулеметы</Smgs_RT.label>
+<Smgs_RT.description>Это исследование позволит вам собирать пистолеты-пулеметы на оружейном столе.</Smgs_RT.description>
+
+<ThrowableGrenades_RT.label>Гранаты</ThrowableGrenades_RT.label>
+<ThrowableGrenades_RT.description>Это исследование позволит вам собирать гранаты на оружейном столе.</ThrowableGrenades_RT.description>
+
+<Rifles_RT.label>Винтовки</Rifles_RT.label>
+<Rifles_RT.description>Это исследование позволит вам собирать винтовки на оружейном столе.</Rifles_RT.description>
+
+<SniperRifles_RT.label>Снайперские винтовки</SniperRifles_RT.label>
+<SniperRifles_RT.description>Это исследование позволит вам собирать винтовки на оружейном столе.</SniperRifles_RT.description>
+
+<HeavyWeapons_RT.label>Тяжелое оружие</HeavyWeapons_RT.label>
+<HeavyWeapons_RT.description>Это исследование позволит вам собирать тяжелое оружие на оружейном столе.</HeavyWeapons_RT.description>
+
+</LanguageData>
+

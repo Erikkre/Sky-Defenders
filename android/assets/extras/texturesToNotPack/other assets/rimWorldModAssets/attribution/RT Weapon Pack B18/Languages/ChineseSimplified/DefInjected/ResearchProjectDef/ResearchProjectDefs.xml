@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <RT_WeaponAssemblyTable.label>RT武器装配台</RT_WeaponAssemblyTable.label>
+  <RT_WeaponAssemblyTable.description>这项研究将解锁RT武器装配台，让你能组装更多的武器。</RT_WeaponAssemblyTable.description>
+
+
+     <RT_Melee.label>RT刀具</RT_Melee.label>
+  <RT_Melee.description>允许你的殖民者制作更加先进的刀具。</RT_Melee.description>
+   
+  
+  
+  <RT_Pistols.label>RT手枪</RT_Pistols.label>
+  <RT_Pistols.description>这项研究让你能在RT武器装配台组装更多的手枪。</RT_Pistols.description>
+
+  <RT_Shotguns.label>RT霰弹枪</RT_Shotguns.label>
+  <RT_Shotguns.description>这项研究让你能在RT武器装配台组装更多的霰弹枪。</RT_Shotguns.description>
+
+  <RT_Smgs.label>RT冲锋枪</RT_Smgs.label>
+  <RT_Smgs.description>这项研究让你能在RT武器装配台组装更多的冲锋枪。</RT_Smgs.description>
+
+  <RT_ThrowableGrenades.label>RT手榴弹</RT_ThrowableGrenades.label>
+  <RT_ThrowableGrenades.description>这项研究让你能在RT武器装配台组装更多的手榴弹。</RT_ThrowableGrenades.description>
+
+  <RT_Rifles.label>RT步枪</RT_Rifles.label>
+  <RT_Rifles.description>这项研究让你能在RT武器装配台组装更多的步枪。</RT_Rifles.description>
+
+  <RT_SniperRifles.label>RT狙击步枪</SniperRifles_RT.label>
+  <RT_SniperRifles.description>这项研究让你能在RT武器装配台组装更多的狙击步枪。</RT_SniperRifles.description>
+
+  <RT_HeavyWeapons.label>RT重型武器</HeavyWeapons_RT.label>
+  <RT_HeavyWeapons.description>允许你的殖民者通过机械加工台制作重型武器。</RT_HeavyWeapons.description>
+
+   <RT_Ballistics.label>弹道学</RT_Ballistics.label>
+  <RT_Ballistics.description>允许你的殖民者学习弹道学，并能立即解锁“飞镖”。</RT_Ballistics.description>
+
+ 
+   <RT_AmmoType.label>弹药生产</RT_AmmoType.label>
+  <RT_AmmoType.description>允许你的殖民者学习武器弹药种类及其制作。</RT_AmmoType.description>
+
+  <RT_CQB.label>近距离战斗</RT_CQB.label>
+  <RT_CQB.description>允许你的殖民者制作近距离战斗武器。这一项研究是制作手枪，霰弹枪，冲锋枪和一些近战刀具的前提条件。</RT_CQB.description>
+
+
+    <RT_AdvancedBow.label>进阶弓箭</RT_AdvancedBow.label>
+  <RT_AdvancedBow.description>允许你的殖民者制作更加先进的弓箭。</RT_AdvancedBow.description>
+
+  
+  
+</LanguageData>

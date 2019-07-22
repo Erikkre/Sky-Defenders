@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData> 
+
+
+<!--French-->
+
+
+    <USAS12Craft.label>Fabriquer USAS-12</USAS12Craft.label>  
+
+    <USAS12Craft.description>Fabrique USAS-12</USAS12Craft.description> 
+	
+	<USAS12Craft.jobString>Fabrique USAS-12</USAS12Craft.jobString>
+	
+	
+    <M1014Craft.label>Fabriquer M1014</M1014Craft.label>  
+
+    <M1014Craft.description>Fabrique M1014.</M1014Craft.description> 
+	
+	<M1014Craft.jobString>Fabrique M1014.</M1014Craft.jobString>
+	
+
+    <DP12Craft.label>Fabrique DP-12</DP12Craft.label>  
+
+    <DP12Craft.description>Fabrique DP-12.</DP12Craft.description> 
+	
+	<DP12Craft.jobString>Fabrique DP-12.</DP12Craft.jobString>
+	
+
+    <Winchester87Craft.label>Fabriquer Winchester 1887</Winchester87Craft.label>  
+
+    <Winchester87Craft.description>Fabrique Winchester 1887.</Winchester87Craft.description> 
+	
+	<Winchester87Craft.jobString>Fabrique Winchester 1887.</Winchester87Craft.jobString>
+	
+
+    <SPAS12Craft.label>Fabriquer SPAS-12</SPAS12Craft.label>  
+
+    <SPAS12Craft.description>Fabrique SPAS-12.</SPAS12Craft.description> 
+	
+	<SPAS12Craft.jobString>Fabrique SPAS-12.</SPAS12Craft.jobString>
+
+	
+</LanguageData>

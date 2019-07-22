@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData> Z
+
+<!--French-->
+
+    <CraftANM14TH3IncendiaryGrenade.label>Fabriquer Pack de grenades incendiaires AN-M14 TH3</CraftANM14TH3IncendiaryGrenade.label>  
+
+    <CraftANM14TH3IncendiaryGrenade.description>Fabrique Pack de grenades incendiaires AN-M14 TH3.</CraftANM14TH3IncendiaryGrenade.description> 
+	
+	<CraftANM14TH3IncendiaryGrenade.jobString>Fabrique Pack de grenades incendiaires AN-M14 TH3.</CraftANM14TH3IncendiaryGrenade.jobString>
+	
+	
+
+
+    <CraftM84FlashbangGrenade.label>Fabriquer Pack de grenades Flashbang M84.</CraftM84FlashbangGrenade.label>  
+
+    <CraftM84FlashbangGrenade.description>Fabrique Pack de grenades Flashbang M84.</CraftM84FlashbangGrenade.description> 
+	
+	<CraftM84FlashbangGrenade.jobString>Fabrique Pack de grenades Flashbang M84.</CraftM84FlashbangGrenade.jobString>
+	
+
+
+    <CraftM67FragGrenade.label>Fabriquer Pack de grenades M67.</CraftM67FragGrenade.label>  
+
+    <CraftM67FragGrenade.description>Fabrique Pack de grenades M67</CraftM67FragGrenade.description> 
+	
+	<CraftM67FragGrenade.jobString>Fabrique Pack de grenades M67.</CraftM67FragGrenade.jobString>
+	
+
+
+
+	
+	
+
+  
+</LanguageData>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<LanguageData> 
+
+<MP40Craft.label>Собрать пистолет-пулемет MP40</MP40Craft.label>
+<MP40Craft.description>Собрать MP40.</MP40Craft.description>
+
+<Skorpionvz61Craft.label>Собрать пистолет-пулемет Skorpion vz.61</Skorpionvz61Craft.label>
+<Skorpionvz61Craft.description>Собрать Skorpion vz.61.</Skorpionvz61Craft.description>
+
+<UziCraft.label>Собрать пистолет-пулемет Uzi</UziCraft.label>
+<UziCraft.description>Собрать Uzi.</UziCraft.description>
+
+<HKMP7Craft.label>Собрать пистолет-пулемет HK MP7</HKMP7Craft.label>
+<HKMP7Craft.description>Собрать HK MP7.</HKMP7Craft.description>
+
+<CZ3A1Craft.label>Собрать пистолет-пулемет CZ-3A1</CZ3A1Craft.label>
+<CZ3A1Craft.description>Собрать CZ-3A1.</CZ3A1Craft.description>
+
+<KRISSVectorCraft.label>Собрать пистолет-пулемет KRISS Vector</KRISSVectorCraft.label>
+<KRISSVectorCraft.description>Собрать KRISS Vector.</KRISSVectorCraft.description>
+
+<HKUMP45Craft.label>Собрать пистолет-пулемет HK UMP45</HKUMP45Craft.label>
+<HKUMP45Craft.description>Собрать HK UMP45.</HKUMP45Craft.description>
+
+<FNP90Craft.label>Собрать пистолет-пулемет FN P90</FNP90Craft.label>
+<FNP90Craft.description>Собрать FN P90.</FNP90Craft.description>
+
+<TSMGCraft.label>Собрать пистолет-пулемет пулемет Thompson</TSMGCraft.label>
+<TSMGCraft.description>Собрать Thompson.</TSMGCraft.description>
+
+<PPSH41Craft.label>Собрать пистолет-пулемет ППШ-41</PPSH41Craft.label>
+<PPSH41Craft.description>Собрать ППШ-41.</PPSH41Craft.description>
+
+</LanguageData>

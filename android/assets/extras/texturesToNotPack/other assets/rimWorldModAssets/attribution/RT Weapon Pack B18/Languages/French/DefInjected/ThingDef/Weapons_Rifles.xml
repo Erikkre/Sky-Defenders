@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData> 
+ 
+<!--French-->
+
+ 
+    <Gun_LVOAC_rt.label>LVOA-C</Gun_LVOAC_rt.label>  
+
+    <Gun_LVOAC_rt.description>Le LVOA-C (fabriqué par War Sport Industries) est un fusil actionné directement par le gaz, basé sur la plate-forme AR-15. Ce fusil d'assaut comporte deux options. 	Le 5,56X45mm rondes de l'OTAN et le .223 Wylde.</Gun_LVOAC_rt.description>
+	
+	<Gun_AACHoneyBadger_rt.label>AAC Honey Badger</Gun_AACHoneyBadger_rt.label>  
+
+    <Gun_AACHoneyBadger_rt.description>Il s'agit d'une arme qui peut infliger des dégâts aux cibles dans une vitesse subsonique et avec une portée significative.</Gun_AACHoneyBadger_rt.description> 
+	
+	<Gun_IWITavor_rt.label>IWI Tavor</Gun_IWITavor_rt.label>  
+
+    <Gun_IWITavor_rt.description>Ce fusil d'assaut a été spécialement créé pour répondre à des demandes variées, se distinguant ainsi comme l'arme ultime du 21ème siècle.</Gun_IWITavor_rt.description> 
+	
+	<Gun_FNFAL_rt.label>FN FAL</Gun_FNFAL_rt.label>  
+
+    <Gun_FNFAL_rt.description>Le FN FAL est produit depuis le début des années 1950 par la Fabrique Nationale de Herstal. Cette arme est toujours utilisée aujourd'hui.</Gun_FNFAL_rt.description> 
+	
+	<Gun_AK5C_rt.label>AK5C</Gun_AK5C_rt.label>  
+
+    <Gun_AK5C_rt.description>Ce fusil est la version modifiée du FN Fal. Introduit dans les années 1985 et il est encore en utilisée aujourd'hui. Le AK5C a un canon raccourci.</Gun_AK5C_rt.description> 
+	
+	<Gun_QBZ95_rt.label>QBZ-95</Gun_QBZ95_rt.label>  
+
+    <Gun_QBZ95_rt.description>Il s'agit d'un fusil d'assaut de type bullpup, utilisant un type de munition DBP87 de 5,8 × 42 mm.</Gun_QBZ95_rt.description> 
+
+	<Gun_HKG36C_rt.label>HK G36C</Gun_HKG36C_rt.label>  
+
+    <Gun_HKG36C_rt.description>Il s'agit d'un fusil d'assaut 5,56 × 45 mm conçu au début des années 1990.</Gun_HKG36C_rt.description> 
+	
+	<Gun_AK47_rt.label>AK-47</Gun_AK47_rt.label>  
+
+    <Gun_AK47_rt.description>L'AK-47 est un fusil d'assaut russe conçu en 1947 par Mikhail Kalashnikov et utilisé pour la première fois en 1949. Elle est encore beacoup utilisé aujourd'hui.</Gun_AK47_rt.description> 
+	
+	<Gun_M1Garand_rt.label>M1 Garand</Gun_M1Garand_rt.label>  
+
+    <Gun_M1Garand_rt.description>Le M1 Garand est un fusil semi-automatique qui était le fusil de service des États-Unis pendant la Seconde Guerre mondiale.</Gun_M1Garand_rt.description> 
+		
+	<Gun_M4A4_rt.label>M4</Gun_M4A4_rt.label>  
+
+    <Gun_M4A4_rt.description>Ce fusil est fortement utilisé par les forces armées des États-Unis et remplace la M16 dans la plupart des unités de combat de l'Armée des États-Unis.</Gun_M4A4_rt.description>	
+		
+	<Gun_G3A3_rt.label>HK G3A3</Gun_G3A3_rt.label>  
+
+    <Gun_G3A3_rt.description>Ce fusil est un fusil de combat développé dans les années 1950 par le fabricant d'armement allemand Heckler Koch GmbH.</Gun_G3A3_rt.description> 
+	
+	<Gun_Steyr_Stg77AUG_rt.label>Steyr Stg.77AUG</Gun_Steyr_Stg77AUG_rt.label>  
+
+    <Gun_Steyr_Stg77AUG_rt.description>Ce fusil est un fusil automatique bullpup.</Gun_Steyr_Stg77AUG_rt.description> 
+	
+	<Gun_XM8_rt.label>XM8</Gun_XM8_rt.label>  
+
+    <Gun_XM8_rt.description>En cours de développement par l'armée des États-Unis de la fin des années 1990 au début des années 2000.</Gun_XM8_rt.description> 
+	
+	<Gun_FNF2000_rt.label>FN F2000</Gun_FNF2000_rt.label>  
+
+    <Gun_FNF2000_rt.description>C'est un fusil bullpup entièrement automatique et ambidextre.</Gun_FNF2000_rt.description>
+	
+	<Gun_M14_rt.label>M14</Gun_M14_rt.label>  
+
+    <Gun_M14_rt.description>Il s'agit d'un fusil automatique de tir américain sélective. Elle a été utilisé pour l'armée américaine, la Marine et la Marine Corps du milieu des années 1960 au début des années 1970.</Gun_M14_rt.description> 
+	
+	<Gun_SCAR_rt.label>FN SCAR-L</Gun_SCAR_rt.label>  
+
+    <Gun_SCAR_rt.description>Ce fusil a été développé pour les équipes d'opérations spéciales. Elle utilise du 5.56x45mm OTAN.</Gun_SCAR_rt.description> 
+	
+	<Gun_Famas_rt.label>Famas</Gun_Famas_rt.label>  
+
+    <Gun_Famas_rt.description>Le FAMAS est un fusil d'assaut de style bullpup conçu et fabriqué en France.</Gun_Famas_rt.description> 
+	
+	<Gun_L85A2_rt.label>L85A2</Gun_L85A2_rt.label>  
+
+    <Gun_L85A2_rt.description>Il s'agit d'un fusil d'assaut sélectif. Ce fusil est le fusil de service standard des Forces armées britanniques depuis 1987.</Gun_L85A2_rt.description> 
+	
+	
+	
+	
+	
+</LanguageData>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData> 
+
+
+<!--French-->
+
+    <CompoundbowCraft.label>Fabriquer Arc à Poulie</CompoundbowCraft.label>  
+
+    <CompoundbowCraft.description>Fabrique Arc à Poulie Compound Bow.</CompoundbowCraft.description> 
+	
+	<CompoundbowCraft.jobString>Fabrique Arc à Poulie.</CompoundbowCraft.jobString>
+	
+	
+    <CompoundbowCraft.label>Fabriquer Arbalète tactique</CompoundbowCraft.label>  
+
+    <CompoundbowCraft.description>Fabrique Arbalète tactique.</CompoundbowCraft.description> 
+	
+	<CompoundbowCraft.jobString>Fabrique Arbalète tactique.</CompoundbowCraft.jobString>
+			
+</LanguageData>

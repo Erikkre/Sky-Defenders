@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  
+  <Flaming_Arrow.label>火箭</Flaming_Arrow.label>
+  <Flaming_Arrow.deathMessage>{0} 被火箭烧死。</Flaming_Arrow.deathMessage>
+  <Dart_Blowgun.label>毒镖</Dart_Blowgun.label>
+  <Dart_Blowgun.deathMessage>{0} 被区区一只吹箭射死。</Dart_Blowgun.deathMessage>
+  <Ballista.label>弩箭</Ballista.label>
+  <Ballista.deathMessage>{0} 被弩箭射死。</Ballista.deathMessage>
+  <Trebuchet.label>石块</Trebuchet.label>
+  <Trebuchet.deathMessage>{0} 被抛石机射出的石块砸死。.</Trebuchet.deathMessage>
+
+</LanguageData>

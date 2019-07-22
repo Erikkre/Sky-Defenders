@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ThingDefs>
+
+<ThingDef Abstract="True" Name="BaseMeleeWeapon_Sharp" ParentName="BaseMeleeWeapon">
+<recipeMaker>
+<defaultIngredientFilter>
+<categories>
+<li>Root</li>
+</categories>
+<exceptedThingDefs>
+<li>Silver</li>
+<li>Gold</li>
+<li>WoodLog</li>
+</exceptedThingDefs>
+</defaultIngredientFilter>
+</recipeMaker>
+
+</ThingDef>
+
+<ThingDef Abstract="True" Name="BaseSpecMeleeWeapon_Sharp" ParentName="BaseSpecMeleeWeapon">
+<recipeMaker>
+<defaultIngredientFilter>
+<categories>
+<li>Root</li>
+</categories>
+<exceptedThingDefs>
+<li>Silver</li>
+<li>Gold</li>
+<li>WoodLog</li>
+</exceptedThingDefs>
+</defaultIngredientFilter>
+</recipeMaker>
+
+</ThingDef>
+
+<ThingDef ParentName="BaseSpecMeleeWeapon_Sharp">
+<defName>Shishkebab</defName>
+<label>Shishkebab</label>
+<description>A makeshift 'flaming sword', with a dual purpose for cooking shish kebabs!</description>
+<graphicData>
+<texPath>Things/Fallout/Weapons/Melee/Shishkebab</texPath>
+<graphicClass>Graphic_Single</graphicClass>
+</graphicData>
+<equippedAngleOffset>-65</equippedAngleOffset>
+<CostList>
+<Steel>75</Steel>
+<Component>4</Component>
+</CostList>
+<soundInteract>InteractShishkebab</soundInteract>
+<statBases>
+<WorkToMake>18000</WorkToMake>
+<MeleeWeapon_Cooldown>1.8</MeleeWeapon_Cooldown>
+<MeleeWeapon_DamageAmount>11</MeleeWeapon_DamageAmount>
+<MarketValue>180</MarketValue>
+</statBases>
+<verbs>
+<li>
+<verbClass>Verb_MeleeAttack</verbClass>
+<hasStandardCommand>true</hasStandardCommand>
+<meleeDamageDef>Flame</meleeDamageDef>
+<soundCast>Shishkebab</soundCast>
+</li>
+</verbs>
+</ThingDef>
+
+</ThingDefs>

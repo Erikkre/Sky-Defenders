@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ThingDefs>
+
+<ThingDef Abstract="True" Name="MealBase">
+<thingClass>ThingWithComps</thingClass>
+<category>Item</category>
+<useHitPoints>true</useHitPoints>
+<selectable>true</selectable>
+<statBases>
+<MaxHitPoints>50</MaxHitPoints>
+<Flammability>1.0</Flammability>
+</statBases>
+<altitudeLayer>Item</altitudeLayer>
+<stackLimit>10</stackLimit>
+<tickerType>Rare</tickerType>
+<socialPropernessMatters>true</socialPropernessMatters>
+<thingCategories>
+<li>FoodMeals</li>
+</thingCategories>
+<alwaysHaulable>true</alwaysHaulable>
+<comps>
+<li Class="CompProperties_Forbiddable"/>
+<li Class="CompProperties_Ingredients"/>
+<li Class="CompProperties_FoodPoisonable"/>
+</comps>
+<pathCost>15</pathCost>
+<resourceReadoutPriority>Last</resourceReadoutPriority>
+<drawGUIOverlay>true</drawGUIOverlay>
+<ingestible>
+<foodType>Meal, Processed</foodType>
+<maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+</ingestible>
+</ThingDef>
+
+<ThingDef Abstract="True" Name="MealRottable" ParentName="MealBase">
+<comps>
+<li Class="CompProperties_Rottable">
+<daysToRotStart>4</daysToRotStart>
+<rotDestroys>true</rotDestroys>
+</li>
+</comps>
+</ThingDef>
+
+<ThingDef ParentName="MealBase">
+<defName>MealNukaCola</defName>
+<label>Nuka-Cola</label>
+<description>A slightly radioactive and popular cola soft drink.</description>
+<graphicData>
+<texPath>Things/Fallout/Food/NukaCola</texPath>
+<graphicClass>Graphic_StackCount</graphicClass>
+</graphicData>
+<stackLimit>25</stackLimit>
+<statBases>
+<DeteriorationRate>0.00</DeteriorationRate>
+<MarketValue>17</MarketValue>
+</statBases>
+<ingestible>
+<preferability>MealFine</preferability>
+<foodType>Fluid, Processed</foodType>
+<nutrition>0.4</nutrition>
+<joy>0.25</joy>
+<maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+<soundEat>Ingest_Beer</soundEat>
+<isPleasureDrug>true</isPleasureDrug>
+<hediffGivers>
+<li>
+<chance>1</chance>
+<hediffDef>NukaColaEnergy</hediffDef>
+</li>
+</hediffGivers>
+</ingestible>
+</ThingDef>
+
+<ThingDef ParentName="MealBase">
+<defName>MealSunsetSarsaparilla</defName>
+<label>Sunset Sarsaparilla</label>
+<description>A refreshing sarsaparilla flavored soft drink that predates even Nuka-Cola.</description>
+<graphicData>
+<texPath>Things/Fallout/Food/Sunset</texPath>
+<graphicClass>Graphic_StackCount</graphicClass>
+</graphicData>
+<stackLimit>25</stackLimit>
+<statBases>
+<DeteriorationRate>0.00</DeteriorationRate>
+<MarketValue>20</MarketValue>
+</statBases>
+<ingestible>
+<preferability>MealFine</preferability>
+<foodType>Fluid, Processed</foodType>
+<nutrition>0.5</nutrition>
+<joy>0.3</joy>
+<maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+<soundEat>Ingest_Beer</soundEat>
+<isPleasureDrug>true</isPleasureDrug>
+<hediffGivers>
+<li>
+<chance>1</chance>
+<hediffDef>SunsetEnergy</hediffDef>
+</li>
+</hediffGivers>
+</ingestible>
+</ThingDef>
+
+<ThingDef ParentName="MealBase">
+<defName>MealNukaQuantum</defName>
+<label>Nuka-Cola Quantum</label>
+<description>A variant of Nuka-Cola with even more radiation and the twice the calories! It glows blue due to a mildly radioactive isotope of Strontium-90. </description>
+<graphicData>
+<texPath>Things/Fallout/Food/NukaQuantum</texPath>
+<graphicClass>Graphic_StackCount</graphicClass>
+</graphicData>
+<stackLimit>25</stackLimit>
+<statBases>
+<DeteriorationRate>0.00</DeteriorationRate>
+<MarketValue>50</MarketValue>
+</statBases>
+<ingestible>
+<preferability>MealLavish</preferability>
+<foodType>Fluid, Processed</foodType>
+<nutrition>0.8</nutrition>
+<joy>0.4</joy>
+<maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+<soundEat>Ingest_Beer</soundEat>
+<isPleasureDrug>true</isPleasureDrug>
+<hediffGivers>
+<li>
+<chance>1</chance>
+<hediffDef>NukaQuantumEnergy</hediffDef>
+</li>
+</hediffGivers>
+</ingestible>
+</ThingDef>
+
+<ThingDef ParentName="MealBase">
+<defName>MealNukaQuartz</defName>
+<label>Nuka-Cola Quartz</label>
+<description>A variant of Nuka-Cola in a milky white bottle. It acts as a mild painkiller, and enhances eyesight temporarily. </description>
+<graphicData>
+<texPath>Things/Fallout/Food/NukaQuartz</texPath>
+<graphicClass>Graphic_StackCount</graphicClass>
+</graphicData>
+<stackLimit>25</stackLimit>
+<statBases>
+<DeteriorationRate>0.00</DeteriorationRate>
+<MarketValue>35</MarketValue>
+</statBases>
+<ingestible>
+<preferability>MealFine</preferability>
+<foodType>Fluid, Processed</foodType>
+<nutrition>0.6</nutrition>
+<joy>0.35</joy>
+<maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+<soundEat>Ingest_Beer</soundEat>
+<isPleasureDrug>true</isPleasureDrug>
+<hediffGivers>
+<li>
+<chance>1</chance>
+<hediffDef>QuartzBuff</hediffDef>
+</li>
+<li>
+<chance>1</chance>
+<hediffDef>NukaQuartzEnergy</hediffDef>
+</li>
+</hediffGivers>
+</ingestible>
+</ThingDef>
+
+<ThingDef ParentName="MealBase">
+<defName>MealNukaCherry</defName>
+<label>Nuka-Cherry</label>
+<description>A cherry flavored Nuka-Cola in a bright red bottle. </description>
+<graphicData>
+<texPath>Things/Fallout/Food/NukaCherry</texPath>
+<graphicClass>Graphic_StackCount</graphicClass>
+</graphicData>
+<stackLimit>25</stackLimit>
+<statBases>
+<DeteriorationRate>0.00</DeteriorationRate>
+<MarketValue>35</MarketValue>
+</statBases>
+<ingestible>
+<preferability>MealFine</preferability>
+<foodType>Fluid, Processed</foodType>
+<nutrition>0.5</nutrition>
+<joy>0.4</joy>
+<maxNumToIngestAtOnce>1</maxNumToIngestAtOnce>
+<soundEat>Ingest_Beer</soundEat>
+<isPleasureDrug>true</isPleasureDrug>
+<hediffGivers>
+<li>
+<chance>1</chance>
+<hediffDef>NukaQuartzEnergy</hediffDef>
+</li>
+</hediffGivers>
+</ingestible>
+</ThingDef>
+
+</ThingDefs>
