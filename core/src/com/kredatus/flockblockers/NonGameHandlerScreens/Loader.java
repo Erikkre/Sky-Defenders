@@ -175,7 +175,9 @@ public class Loader implements Screen {
 
         stage.addActor(percentDoneLabel);
 
-        logoImg = new Image((Texture)manager.get(assets.logo));companyNameImg= new Image((Texture)manager.get(assets.companyName));
+        Texture companyNameTex=manager.get(assets.companyName);companyNameTex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        Texture logoImgTex=manager.get(assets.logo);logoImgTex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        logoImg = new Image(logoImgTex);companyNameImg= new Image(companyNameTex);
 
         /*PARTICLE EFFECT ACTOR BURNERFIRE
         logoFire = new CustomParticleEffectActor((ParticleEffect) manager.get(assets.logoFire));
@@ -211,13 +213,13 @@ public class Loader implements Screen {
         float durationOfSwingIn=1.5f;
         logoImg.addAction(sequence(alpha(0), scaleTo(.05f, .05f),
                 parallel(fadeIn(durationOfSwingIn, Interpolation.pow2),
-                        scaleTo(1f, 1f, durationOfSwingIn, Interpolation.pow5),
-                        moveTo(camWidth / 2f - logoImg.getWidth() / 2f, camHeight / 2f + logoImg.getHeight()/3  , durationOfSwingIn, Interpolation.swing)),
+                        scaleTo(1, 1, durationOfSwingIn, Interpolation.pow5),
+                        moveTo(camWidth / 2f - logoImg.getWidth() / 2f, camHeight / 2f + companyNameImg.getHeight()/3  , durationOfSwingIn, Interpolation.swing)),
                 delay(1.5f), fadeOut(1.25f), run(endLoad)));
 
 
         companyNameImg.setOrigin(companyNameImg.getWidth() / 2, companyNameImg.getHeight() / 2);
-        companyNameImg.setPosition(camWidth / 2f - companyNameImg.getWidth() / 2f, camHeight / 2f );
+        companyNameImg.setPosition(camWidth / 2f - companyNameImg.getWidth() / 2f, camHeight / 2f - companyNameImg.getHeight() );
         //companyNameImg.setScale(1.2f);
         companyNameImg.addAction(
                 sequence(
