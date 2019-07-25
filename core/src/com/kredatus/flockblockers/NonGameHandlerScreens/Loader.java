@@ -214,7 +214,7 @@ public class Loader implements Screen {
         logoImg.addAction(sequence(alpha(0), scaleTo(.05f, .05f),
                 parallel(fadeIn(durationOfSwingIn, Interpolation.pow2),
                         scaleTo(1, 1, durationOfSwingIn, Interpolation.pow5),
-                        moveTo(camWidth / 2f - logoImg.getWidth() / 2f, camHeight / 2f + companyNameImg.getHeight()/3  , durationOfSwingIn, Interpolation.swing)),
+                        moveTo(camWidth / 2f - logoImg.getWidth() / 2f, camHeight / 2f + companyNameImg.getHeight()/3  , durationOfSwingIn, Interpolation.bounceOut)),
                 delay(1.5f), fadeOut(1.25f), run(endLoad)));
 
 
