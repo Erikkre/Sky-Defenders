@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
 import com.kredatus.flockblockers.FlockBlockersMain;
+import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Resources.Rank;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
@@ -55,7 +56,7 @@ public class UiHandler {
     float camWidth,camHeight;
     public GameWorld world;
     public TextButton buyButton,menuButton,playButton;
-    public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel, lvlLabel, rankNameLabel, roundLabel, waveLabel;
+    public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel, lvlLabel, rankNameLabel, roundLabel, waveLabel,airshipHealthLabel,airshipArmorLabel,expLabel;
     public Random r = new Random();
     //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
@@ -72,7 +73,7 @@ public class UiHandler {
     }
 
     public int rankSize;public Color rankColor;
-    public static Actor goldSymbol,fuelSymbol,ammoSymbol,diamondSymbol;public static Rank rank; public static ProgressBar loadBar;public static Image rankImage;
+    public static Actor goldSymbol,fuelSymbol,ammoSymbol,diamondSymbol;public static Rank rank; public static ProgressBar expBar,airshipHealthBar,airshipArmorBar;public static Image rankImage;
     Preferences prefs = Gdx.app.getPreferences("skyDefenders");
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
         /******* BUTTONS *******/
@@ -92,6 +93,7 @@ public class UiHandler {
         this.world=world;
         this.camWidth=camWidth;this.camHeight=camHeight;
         this.shadeSkin = shadeSkin;
+
         //nameLabel = new Label("Name: ", shadeSkin);
         //TextField nameText = new TextField("Name2: ", shadeSkin);
         //TextureAtlas
@@ -141,45 +143,50 @@ public class UiHandler {
         slideMenuBottom.getCell(playButton).setActor(buyButton);
     }
     public void loadSurvivalStage(){
+        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
+        loadSlideMenus();
+        /***********************************************************************************each of these is a table in a different row*/
         table0=new Table().top();
-        rootTable.add(table0).growX().padTop(13).padBottom(-8);
-
-        rootTable.row();
-
+        rootTable.add(table0).growX().padTop(13).padBottom(-8).colspan(2);rootTable.row();
+        /***********************************************************************************each of these is a table in a different row*/
         table1=new Table().top();
-        rootTable.add(table1).growX();
-
-        rootTable.row();
-
+        rootTable.add(table1).growX().colspan(2);rootTable.row();
+        /***********************************************************************************each of these is a table in a different row*/
         //table0.addAction();
         //table1.addAction();
 
         Table table2=new Table().bottom();//aligns elements of table to bottom
-        rootTable.add(table2).grow();     //grows table equally with table0 to share space
-
-        rootTable.row();
-
+        rootTable.add(table2).grow().colspan(2);rootTable.row();
+        /***********************************************************************************each of these is a table in a different row*/
         Table bottomTable=new Table().bottom();
         rootTable.add(bottomTable).growX();
-        roundLabel= new Label("Round "+world.round, shadeSkin,"title-plain");
-        waveLabel= new Label("Wave "+BirdHandler.waveNumber+"/8", shadeSkin,"title-plain");
-        roundLabel.setAlignment(Align.left);waveLabel.setAlignment(Align.right);
-        bottomTable.add(roundLabel).growX().left().pad(4);
-        bottomTable.add(waveLabel).growX().right().pad(4);
 
+        roundLabel= new Label("Round "+world.round, shadeSkin,"title-plain");
+        waveLabel= new Label("Wave "+(BirdHandler.waveNumber+1)+"/8", shadeSkin,"title-plain");
+        roundLabel.setAlignment(Align.left);waveLabel.setAlignment(Align.right);
+        bottomTable.add(roundLabel).growX().left().pad(4);bottomTable.add(waveLabel).growX().right().pad(4);
+
+        airshipHealthLabel= new Label("", shadeSkin,"title-plain");
+        airshipArmorLabel= new Label("", shadeSkin,"title-plain");
+
+
+        bottomTable.row();
+
+        airshipHealthBar=new ProgressBar(0, Airship.health, 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
+        airshipHealthBar.setColor(1,1,1,0.5f);
+        bottomTable.add(airshipHealthBar).growX().left().pad(4).padRight(menuButtonY.getHeight()/2);
+
+
+        airshipArmorBar=new ProgressBar(0, Airship.armor, 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
+        airshipArmorBar.setColor(1,1,1,0.5f);
+        bottomTable.add(airshipArmorBar).growX().right().pad(4).padLeft(menuButtonY.getHeight()/2);
         /***********************************************************************************each of these is a table in a different row*/
 
-
-        //lvlLabel.setSize(camWidth/50f,lvlLabel.getPrefHeight());
         goldLabel= new Label("", shadeSkin,"title-plain");
-        //goldLabel.setSize(camWidth/50f,goldLabel.getPrefHeight());
         fuelLabel= new Label("", shadeSkin,"title-plain");
-        //fuelLabel.setSize(camWidth/50f,fuelLabel.getPrefHeight());
         ammoLabel= new Label("", shadeSkin,"title-plain");
-        //ammoLabel.setSize(camWidth/50f,ammoLabel.getPrefHeight());
         diamondLabel= new Label("", shadeSkin,"title-plain");
-        //diamondLabel.setSize(camWidth/50f,diamondLabel.getPrefHeight());
-
+        expLabel= new Label("", shadeSkin,"title-plain");
 
         rankSize=35;rankColor=Color.GREEN;
         Gdx.gl20.glLineWidth(2);
@@ -190,11 +197,10 @@ public class UiHandler {
         rankNameLabel = new Label(rank.rankNames[rank.lvl/78], shadeSkin,"title-plain");
         rankNameLabel.setFontScale(0.5f);
 
-        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
-        loadBar = new ProgressBar(0, rank.expValues[rank.lvl], 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        loadBar.setColor(0,1,0,0.8f);
-        loadBar.setAnimateDuration(0.05f);
-        loadBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
+        expBar = new ProgressBar(0, rank.expValues[rank.lvl], 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
+        expBar.setColor(0,1,0,0.8f);
+        expBar.setAnimateDuration(0.05f);
+        expBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
 
 
         rankImage=new Image(Loader.ranksList[rank.lvl]);
@@ -205,7 +211,7 @@ public class UiHandler {
 
         table0.add(rankImageStack).size(40).colspan(1).padLeft(12).padRight(4).padTop(1);
         table0.add(lvlLabel).padLeft(5).padRight(5);
-        table0.add(loadBar).grow().padRight(5);//colSpan of this must be equal to # of however many labels there are under it
+        table0.add(expBar).grow().padRight(5);//colSpan of this must be equal to # of however many labels there are under it
         table0.row();table0.add(rankNameLabel).padLeft(2).padTop(2);
 
         goldSymbol=new Image(Loader.tA.findRegion("gold2"));
@@ -243,6 +249,9 @@ public class UiHandler {
         table2.add(aimPad).width(camHeight/9f).height(camHeight/8.5f).right().bottom().expand();
         //change fill
 
+
+    }
+    public void loadSlideMenus(){
         //stage.addCaptureListener(slideMenuLeft.getListeners().get(0));stage.addCaptureListener(slideMenuBottom.getListeners().get(0));
         //  stage.addCaptureListener(menuButtonX.getListeners().get(0));stage.addCaptureListener(men    uButtonY.getListeners().get(0));
 
@@ -251,6 +260,8 @@ public class UiHandler {
         menuButton = tA.findRegion("menuButton");
         shareButton = tA.findRegion("shareButton");
         rateButton = tA.findRegion("rateButton");*/
+
+
         /**     ****************************************LEFT SLIDING MENU*****************************************     **/
         slideMenuLeft = new SlideMenu(camWidth/9f,camHeight/2f,"left",camWidth,camHeight,camHeight/35);//left or up
         Sprite temp=new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
@@ -307,10 +318,10 @@ public class UiHandler {
         //System.out.println(image_backgroundX.getImageY());
         //System.out.println(image_backgroundY.getImageY());
 
-            rateButton.setName("RATE");
-            shareButton.setName("SHARE");
-            //icon_music.setName("MUSIC_ON");
-            //icon_off_music.setName("MUSIC_OFF");
+        rateButton.setName("RATE");
+        shareButton.setName("SHARE");
+        //icon_music.setName("MUSIC_ON");
+        //icon_off_music.setName("MUSIC_OFF");
 
         menuButtonX.setName("menuButtonX");
         //image_backgroundX.setName("IMAGE_BACKGROUNDX");

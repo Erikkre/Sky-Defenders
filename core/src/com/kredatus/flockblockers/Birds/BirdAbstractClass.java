@@ -65,7 +65,7 @@ Only add health to phoenix each round   after you hit multiples of 500 gold/phoe
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
 
-    protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 1.0f, globalDropMultiplier=1.0f;
+    protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 7.0f, globalDropMultiplier=1.0f;
 
     public float preX, preY, x, y, yVel, yAcc, xVel,yVelDeath, sizeRatio, finalSizeRatio=1, preTargetY;
     //public Hashtable xMotionTimePositions=new Hashtable();

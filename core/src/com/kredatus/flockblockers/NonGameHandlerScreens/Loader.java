@@ -247,7 +247,7 @@ public class Loader implements Screen {
     private void setupStage(){
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
-        camHeight=1100;
+        camHeight=1300;
         camWidth=(int)  (camHeight* (screenWidth/(float)screenHeight)) ;
         stage = new Stage(new ExtendViewport(camWidth,camHeight, new OrthographicCamera()), new SpriteBatch());
     }

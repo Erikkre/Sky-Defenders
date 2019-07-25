@@ -96,7 +96,7 @@ public class MovingImageContainer {
                 ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.goldSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.goldSymbol.getWidth()/4, UiHandler.table1.getY()+UiHandler.goldSymbol.getHeight()/7)),1,20);
                 } else if (type=='e') {
                     UiHandler.rank.addExp(1);
-                ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.loadBar.localToParentCoordinates(new Vector2(UiHandler.table0.getX()+UiHandler.loadBar.getPercent()*UiHandler.loadBar.getWidth(), UiHandler.table0.getY())),1,20);
+                ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.expBar.localToParentCoordinates(new Vector2(UiHandler.table0.getX()+UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.table0.getY())),1,20);
                 } else if (type=='d') {
                     GameWorld.diamonds+=1;
                     ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.diamondSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.diamondSymbol.getWidth()/4, UiHandler.table1.getY()+UiHandler.diamondSymbol.getHeight()/7)),1,20);

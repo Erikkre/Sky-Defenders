@@ -167,6 +167,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     public void rackSetup() {
         //burnerUp();burnerUp();burnerUp();rackUp();speedUp();speedUp();
+        if (rackLvl!=1) rackUp();
         addTurret('c');addTurret('c');addTurret('d');addTurret('d');addTurret('d');addTurret('f');addTurret('f');addTurret('f');
         turretList.get(1).lvlUp();turretList.get(3).lvlUp();turretList.get(4).lvlUp();turretList.get(4).lvlUp();turretList.get(6).lvlUp();turretList.get(7).lvlUp();turretList.get(7).lvlUp();
         //addTurret('d');turretList.get(0).lvlUp();turretList.get(0).lvlUp();
