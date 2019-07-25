@@ -58,7 +58,7 @@ public class GameWorld {
         this.score = score;
     }
 
-    public static int exp, score, gold, fuel, ammo, diamonds;
+    public static int exp, score, gold, fuel, ammo, diamonds, round;
 
     public Value alpha =new Value(0),alphaBg=new Value(0);
     public Tween logoTween, logoBgTween, timerTween;
@@ -92,7 +92,8 @@ public class GameWorld {
         gold=prefs.getInteger("gold",0);
         fuel=prefs.getInteger("fuel",0);
         ammo=prefs.getInteger("ammo",0);
-        diamonds=prefs.getInteger("diamondNumber",0);
+        diamonds=prefs.getInteger("diamonds",0);
+        round=prefs.getInteger("round",1);
     }
 
     public void initialize(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler,GameRenderer renderer, Airship airship) {

@@ -131,10 +131,12 @@ public class GameHandler implements Screen {
         prefs.putInteger("gold",world.gold);
         prefs.putInteger("fuel",world.fuel);
         prefs.putInteger("ammo",world.ammo);
-        prefs.putInteger("diamondNumber",world.diamonds);
+        prefs.putInteger("diamonds",world.diamonds);
 
         prefs.putInteger("lvl", uiHandler.rank.lvl);
         prefs.putInteger("exp",uiHandler.rank.expGained);
+
+        prefs.putInteger("round",world.round);
         prefs.flush();
     }
 
@@ -167,10 +169,12 @@ public class GameHandler implements Screen {
         prefs.putInteger("gold",world.gold);
         prefs.putInteger("fuel",world.fuel);
         prefs.putInteger("ammo",world.ammo);
-        prefs.putInteger("diamondNumber",world.diamonds);
+        prefs.putInteger("diamonds",world.diamonds);
 
         prefs.putInteger("lvl", uiHandler.rank.lvl);
         prefs.putInteger("exp",uiHandler.rank.expGained);
+
+        prefs.putInteger("round",world.round);
         prefs.flush();
     }
 

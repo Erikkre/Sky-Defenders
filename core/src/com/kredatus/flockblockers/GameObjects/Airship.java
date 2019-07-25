@@ -565,37 +565,37 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //burnerFire.start();
     }
 
-    public static float[] chooseColorBasedOnWave (int waveTypeCnt, boolean isBalloon) {
+    public static float[] chooseColorBasedOnWave (int waveNumber, boolean isBalloon) {
         if (!isBalloon){
-            if (waveTypeCnt==0) return new float[]{178/255f, 166/255f, 96/255f };
-            else if (waveTypeCnt==1) return new float[]{178/255f, 119/255f, 98/255f };
-            else if (waveTypeCnt==2) return new float[]{43/255f,  158/255f, 238/255f};
-            else if (waveTypeCnt==3) return new float[]{227/255f, 133/255f, 37/255f };
-            else if (waveTypeCnt==4) return new float[]{75/255f,  201/255f, 142/255f};
-            else if (waveTypeCnt==5) return new float[]{154/255f, 155/255f, 158/255f};
-            else if (waveTypeCnt==6) return new float[]{230/255f, 49/255f,  252/255f};
-            else if (waveTypeCnt==7) return new float[]{178/255f, 178/255f, 47/255f };
+            if (waveNumber==0) return new float[]{178/255f, 166/255f, 96/255f };
+            else if (waveNumber==1) return new float[]{178/255f, 119/255f, 98/255f };
+            else if (waveNumber==2) return new float[]{43/255f,  158/255f, 238/255f};
+            else if (waveNumber==3) return new float[]{227/255f, 133/255f, 37/255f };
+            else if (waveNumber==4) return new float[]{75/255f,  201/255f, 142/255f};
+            else if (waveNumber==5) return new float[]{154/255f, 155/255f, 158/255f};
+            else if (waveNumber==6) return new float[]{230/255f, 49/255f,  252/255f};
+            else if (waveNumber==7) return new float[]{178/255f, 178/255f, 47/255f };
         } else {
-                if (waveTypeCnt==0)  return new float[]{255, 180, 148};
-            else if (waveTypeCnt==1) return new float[]{249, 50,  109};
-            else if (waveTypeCnt==2) return new float[]{43,  158, 238};
-            else if (waveTypeCnt==3) return new float[]{227, 133, 37 };
-            else if (waveTypeCnt==4) return new float[]{75,  201, 142};
-            else if (waveTypeCnt==5) return new float[]{154, 155, 158};
-            else if (waveTypeCnt==6) return new float[]{230, 49,  252};
-            else if (waveTypeCnt==7) return new float[]{200, 200, 50 };
+                if (waveNumber==0)  return new float[]{255, 180, 148};
+            else if (waveNumber==1) return new float[]{249, 50,  109};
+            else if (waveNumber==2) return new float[]{43,  158, 238};
+            else if (waveNumber==3) return new float[]{227, 133, 37 };
+            else if (waveNumber==4) return new float[]{75,  201, 142};
+            else if (waveNumber==5) return new float[]{154, 155, 158};
+            else if (waveNumber==6) return new float[]{230, 49,  252};
+            else if (waveNumber==7) return new float[]{200, 200, 50 };
         }
         return null;
     }
 
-    public static void setFireColor(int waveTypeCnt){
+    public static void setFireColor(int waveNumber){
         //System.out.println("Was "+firstEmittersOfEachEffect.get(i).getTint().getColors()[0]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[1]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[2]);
         //{"pB","tB","wB","fB","aB","nB","lB","gB"};
         //  0    1    2    3    4    5    6    7
 
         float[] color =null;
         try {
-            color = chooseColorBasedOnWave(waveTypeCnt, false);
+            color = chooseColorBasedOnWave(waveNumber, false);
             assert color!=null;
         } catch (Exception e){
             e.printStackTrace();

@@ -419,7 +419,7 @@ public abstract class BirdAbstractClass {
 
     public abstract void specificUpdate(float delta, float runTime);
 
-    public final void hit(float collisionDmg){
+    public final void hit(float collisionDmg) {
         health -= collisionDmg;
         isFlashing = true;
         flashOpacityValue.set(1f);//always start from white flash to distinguish from bg

@@ -14,6 +14,7 @@ import com.kredatus.flockblockers.Birds.ThunderBird;
 import com.kredatus.flockblockers.Birds.WaterBird;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class BirdHandler {
     //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
     public final int[] birdNumberList=          { 1,   20,  20,  25,  10,  8,   7,   3  };
     private float[] spawnIntervals=new float[8];
-    public static int waveTypeCnt=0;
+    public static int waveNumber;
     public TimerTask task;
     public Timer timer;
     public float duration = 45 ;
@@ -45,7 +46,7 @@ public class BirdHandler {
     Vector2 airshipPos;
 
     public BirdHandler( float camWidth, float camHeight, int waveNumber) {
-        waveTypeCnt=waveNumber;
+        this.waveNumber =waveNumber;
         //this.bgHandler = bgHandler;
         this.camHeight = camHeight;
         this.camWidth  = camWidth ;
@@ -80,7 +81,7 @@ public class BirdHandler {
     public void setUpTask() {
         lastBirdSpawnTime=System.currentTimeMillis();
         //birdToAdd=(BirdAbstractClass) PhoenixBird.in
-        if (waveTypeCnt !=2) {//if not waterbird
+        if (waveNumber !=2) {//if not waterbird
             task = new TimerTask() {
                 @Override
                 public void run() {
@@ -110,20 +111,20 @@ public class BirdHandler {
         if ( bgHandler.isBirdSpawning ){ //(((bgHandler.getBackground().y <-camHeight/2) || (bgHandler.getBackground2().addedY!=0)) &&  (bgHandler.getBackground2().getTailY()>camHeight/2)) ){    //if halfway up bg1 or below bg2 keep the scheduleAtFixedRate timer
             if (!taskRunning) {
                 //for the amount of birds in the wave,
-                if (waveTypeCnt == 0) {
-                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                if (waveNumber == 0) {
+                    for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new PhoenixBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
                     //System.out.println("add birds");
-                } else if (waveTypeCnt == 1) {
-                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                } else if (waveNumber == 1) {
+                    for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new ThunderBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
                     //System.out.println("add birds");
-                } else if (waveTypeCnt == 2) {
+                } else if (waveNumber == 2) {
                     float height = ((TextureRegion) Loader.waterAnims[3].getKeyFrames()[3]).getRegionHeight();
                     //float width  =((TextureRegion)AssetHandler.waterAnimations[3].getKeyFrames()[0]).getRegionWidth();
-                    for (int i = 0; i < birdNumberList[waveTypeCnt] / 5; i++) {
+                    for (int i = 0; i < birdNumberList[waveNumber] / 5; i++) {
                         birdQueue.add(new WaterBird(airshipPos,camHeight, camWidth,  (camWidth / 6) * 1, (-height / 3) * 2f,  flashLengths));
                         birdQueue.add(new WaterBird(airshipPos,camHeight, camWidth,  (camWidth/ 6) * 2, (-height / 3) * 1.5f, flashLengths));
                         birdQueue.add(new WaterBird(airshipPos,camHeight, camWidth,  (camWidth/ 6) * 3,          (-height / 3),        flashLengths));
@@ -135,38 +136,38 @@ public class BirdHandler {
                         waterRound.add(waterArrowHeads);
                         waterArrowHeads.clear();*/
                     }
-                } else if (waveTypeCnt == 3) {
-                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                } else if (waveNumber == 3) {
+                    for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new FireBird(airshipPos,camHeight, camWidth, flashLengths, birdQueue));
                     }
-                } else if (waveTypeCnt == 4) {
-                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                } else if (waveNumber == 4) {
+                    for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new AcidBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
-                } else if (waveTypeCnt == 5) {
-                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                } else if (waveNumber == 5) {
+                    for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new NightBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
-                } else if (waveTypeCnt == 6) {
-                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                } else if (waveNumber == 6) {
+                    for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new LunarBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
-                } else if (waveTypeCnt == 7) {
-                    for (int i = 0; i < birdNumberList[waveTypeCnt]; i++) {
+                } else if (waveNumber == 7) {
+                    for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new GoldBird(airshipPos, camHeight, camWidth, flashLengths));
                     }
                 }
                 setUpTask();
 
-                if (waveTypeCnt == 2) {  //if waterbird
-                    if (!FlockBlockersMain.fastTest) timer.scheduleAtFixedRate(task, 2000, (int) ((duration / (birdNumberList[waveTypeCnt] / 5)) * 1000) / 2);   //  duration/amount of waves/2
+                if (waveNumber == 2) {  //if waterbird
+                    if (!FlockBlockersMain.fastTest) timer.scheduleAtFixedRate(task, 2000, (int) ((duration / (birdNumberList[waveNumber] / 5)) * 1000) / 2);   //  duration/amount of waves/2
                     else timer.scheduleAtFixedRate(task,0,1);
-                } else if (waveTypeCnt == 3 || waveTypeCnt == 0) {  //if fire or phoenix spawn all at once in blob
-                    for (int i=0; i<birdNumberList[waveTypeCnt]; i++){
+                } else if (waveNumber == 3 || waveNumber == 0) {  //if fire or phoenix spawn all at once in blob
+                    for (int i = 0; i<birdNumberList[waveNumber]; i++){
                         activeBirdQueue.add(birdQueue.poll());
                     }
                 } else {
-                    timer.scheduleAtFixedRate(task, 2000, (int) (spawnIntervals[waveTypeCnt] * 1000));
+                    timer.scheduleAtFixedRate(task, 2000, (int) (spawnIntervals[waveNumber] * 1000));
                 }
                //task.run();
                 //activeBirdQueue.remove(0);
@@ -178,29 +179,33 @@ public class BirdHandler {
             if (taskRunning){
                 //System.out.println("Timer cancelled");
                 task.cancel();
-                waveTypeCnt++; //nextWave when timer reset
-                if (waveTypeCnt==8){waveTypeCnt=0;}
+                waveNumber++; //nextWave when timer reset
+                if (waveNumber==8){
+                    waveNumber=0;
+                    UiHandler.roundLabel.setText("Round "+ ++GameWorld.round);
+                }
+                UiHandler.waveLabel.setText("Wave "+waveNumber+"/8");
                 taskRunning=false;
             }
         }
     }
 
     public void pause(){
-        if (waveTypeCnt!=3 && waveTypeCnt!=0 && BgHandler.isBirdSpawning && taskRunning) task.cancel();    //if not fire or phoenix, cancel. dont make taskRunning=false
+        if (waveNumber !=3 && waveNumber !=0 && BgHandler.isBirdSpawning && taskRunning) task.cancel();    //if not fire or phoenix, cancel. dont make taskRunning=false
     }
 
     public void resume(){
-        if (waveTypeCnt!=3 && waveTypeCnt!=0 && BgHandler.isBirdSpawning) {//if not fire or phoenix, restart
+        if (waveNumber !=3 && waveNumber !=0 && BgHandler.isBirdSpawning) {//if not fire or phoenix, restart
             setUpTask();
             int timeSinceLastBirdSpawn= (int) (System.currentTimeMillis() - lastBirdSpawnTime);
             int spawningInterval;
 
-            if (waveTypeCnt == 2) {  //if waterbird
-                spawningInterval=(int) (((duration / (birdNumberList[waveTypeCnt] / 5)) * 1000) / 2);
+            if (waveNumber == 2) {  //if waterbird
+                spawningInterval=(int) (((duration / (birdNumberList[waveNumber] / 5)) * 1000) / 2);
                 if (timeSinceLastBirdSpawn < spawningInterval) timer.scheduleAtFixedRate(task, spawningInterval-timeSinceLastBirdSpawn, spawningInterval);   //  duration/amount of waves/2
                 else timer.scheduleAtFixedRate(task, 2000, spawningInterval);
             } else {    //if any bird but water fire or phoenix
-                spawningInterval= (int) (spawnIntervals[waveTypeCnt] * 1000);
+                spawningInterval= (int) (spawnIntervals[waveNumber] * 1000);
                 if (timeSinceLastBirdSpawn < spawningInterval) timer.scheduleAtFixedRate(task, spawningInterval-timeSinceLastBirdSpawn, spawningInterval);
                 else timer.scheduleAtFixedRate(task, 2000, spawningInterval);   //will never really happen because if the birds are spawning the time since the last bird should be shorter than the time it takes for it to spawn
             }

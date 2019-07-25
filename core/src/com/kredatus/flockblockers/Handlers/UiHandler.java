@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -29,6 +31,14 @@ import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
 
+import java.util.Random;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 public class UiHandler {
 
     public static Table rootTable,table0,table1;
@@ -45,7 +55,8 @@ public class UiHandler {
     float camWidth,camHeight;
     public GameWorld world;
     public TextButton buyButton,menuButton,playButton;
-    public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel, lvlLabel, rankNameLabel;
+    public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel, lvlLabel, rankNameLabel, roundLabel, waveLabel;
+    public Random r = new Random();
     //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
@@ -61,7 +72,7 @@ public class UiHandler {
     }
 
     public int rankSize;public Color rankColor;
-    public static Actor goldSymbol;public static Rank rank; public static ProgressBar loadBar;public static Image rankImage;
+    public static Actor goldSymbol,fuelSymbol,ammoSymbol,diamondSymbol;public static Rank rank; public static ProgressBar loadBar;public static Image rankImage;
     Preferences prefs = Gdx.app.getPreferences("skyDefenders");
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
         /******* BUTTONS *******/
@@ -105,6 +116,23 @@ public class UiHandler {
 
         loadSurvivalStage();
     }
+    public void fadeAwayNumberEffect(Vector2 pos, int val, int randomizedMoveDistance){
+        Label effect;
+        if (val>=0) {effect=new Label("+"+val, shadeSkin,"title-plain");}
+        else {effect=new Label(Integer.toString(val), shadeSkin,"title-plain");}
+        effect.setPosition(pos.x,pos.y);
+        effect.addAction(
+                parallel(
+                    sequence(
+                            delay(0.2f),
+                            fadeOut(1f,Interpolation.exp10),
+                            com.badlogic.gdx.scenes.scene2d.actions.Actions.removeActor()
+                    ),
+                    moveTo(pos.x+(-randomizedMoveDistance+r.nextInt(randomizedMoveDistance*2)),pos.y+(-randomizedMoveDistance+r.nextInt(randomizedMoveDistance*2)),1,Interpolation.pow3Out)
+                )
+        );
+        stage.addActor(effect);
+    }
 
     public void survivalToBuyMenu(){
         slideMenuBottom.getCell(buyButton).setActor(playButton);
@@ -126,8 +154,18 @@ public class UiHandler {
         //table0.addAction();
         //table1.addAction();
 
-        Table bottomTable=new Table().bottom();//aligns elements of table to bottom
-        rootTable.add(bottomTable).grow();     //grows table equally with table0 to share space
+        Table table2=new Table().bottom();//aligns elements of table to bottom
+        rootTable.add(table2).grow();     //grows table equally with table0 to share space
+
+        rootTable.row();
+
+        Table bottomTable=new Table().bottom();
+        rootTable.add(bottomTable).growX();
+        roundLabel= new Label("Round "+world.round, shadeSkin,"title-plain");
+        waveLabel= new Label("Wave "+BirdHandler.waveNumber+"/8", shadeSkin,"title-plain");
+        roundLabel.setAlignment(Align.left);waveLabel.setAlignment(Align.right);
+        bottomTable.add(roundLabel).growX().left().pad(4);
+        bottomTable.add(waveLabel).growX().right().pad(4);
 
         /***********************************************************************************each of these is a table in a different row*/
 
@@ -174,13 +212,16 @@ public class UiHandler {
         table1.add(goldSymbol).size(40).padLeft(20);
         table1.add(goldLabel).size((camWidth-(40*5))/4.2f,goldLabel.getPrefHeight()).padLeft(3);
 
-        table1.add(new Image(Loader.tA.findRegion("fuel"))).size(40);
+        fuelSymbol=new Image(Loader.tA.findRegion("fuel"));
+        table1.add(fuelSymbol).size(40);
         table1.add(fuelLabel).size((camWidth-(40*5))/6f,fuelLabel.getPrefHeight()).padLeft(3);
 
-        table1.add(new Image(Loader.tA.findRegion("ammo"))).size(40);
+        ammoSymbol=new Image(Loader.tA.findRegion("ammo"));
+        table1.add(ammoSymbol).size(40);
         table1.add(ammoLabel).size((camWidth-(40*5))/5f,ammoLabel.getPrefHeight()).padLeft(3);
 
-        table1.add(new Image(Loader.tA.findRegion("diamond"))).size(40);
+        diamondSymbol=new Image(Loader.tA.findRegion("diamond"));
+        table1.add(diamondSymbol).size(40);
         table1.add(diamondLabel).size(diamondLabel.getPrefWidth(),diamondLabel.getPrefHeight()).padLeft(3);
 
         /******************************************************************************************/
@@ -193,13 +234,13 @@ public class UiHandler {
         //touchpad2.setColor(1,1,1,1f);
 
         //keep original height ratio but sized down with current width: .height((touchpad.getPrefHeight()*touchpad.getWidth())/touchpad.getPrefWidth())
-        bottomTable.add(movPad).width(camHeight/9f).height(camHeight/8.5f).left().bottom().expand();
+        table2.add(movPad).width(camHeight/9f).height(camHeight/8.5f).left().bottom().expand();
 
         aimPad = new TouchRotatePad(0, shadeSkin);
         aimPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         //touchpad2.setColor(1,1,1,1f);
 
-        bottomTable.add(aimPad).width(camHeight/9f).height(camHeight/8.5f).right().bottom().expand();
+        table2.add(aimPad).width(camHeight/9f).height(camHeight/8.5f).right().bottom().expand();
         //change fill
 
         //stage.addCaptureListener(slideMenuLeft.getListeners().get(0));stage.addCaptureListener(slideMenuBottom.getListeners().get(0));
