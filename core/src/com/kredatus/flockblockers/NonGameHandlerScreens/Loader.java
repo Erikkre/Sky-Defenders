@@ -211,7 +211,7 @@ public class Loader implements Screen {
         logoImg.setPosition(camWidth / 2f - logoImg.getWidth() / 2f, camHeight / 2f + logoImg.getHeight());
 
         float durationOfSwingIn=1.5f;
-        logoImg.addAction(sequence(alpha(0), scaleTo(.05f, .05f),
+        logoImg.addAction(sequence(alpha( 0), scaleTo(.05f, .05f),
                 parallel(fadeIn(durationOfSwingIn, Interpolation.pow2),
                         scaleTo(1, 1, durationOfSwingIn, Interpolation.pow5),
                         moveTo(camWidth / 2f - logoImg.getWidth() / 2f, camHeight / 2f + companyNameImg.getHeight()/3  , durationOfSwingIn, Interpolation.bounceOut)),
@@ -384,15 +384,15 @@ public class Loader implements Screen {
         //   0                 9                       18                      27                      36                      45                        54                      63
         //      1 2  4 5  7 8     10 11  13 14  16 17     19 20  22 23  25 26     28 29  31 32  34 35     37 38  40 41  43 44       46 47  49 50  52 53     55 56  58 59  61 62     64 65  67 68  70 71
         bgList = new ArrayList<TextureRegion>();    //3 times each to ensure speedy movement upwards, slower thru cities faster thru clouds
-        Collections.addAll(bgList, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2,
+        Collections.addAll(bgList,
                 bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2, bgCloudSeparatorTexture,  bgThundertexture, bgThundertexture2,
                 bgCloudSeparatorTexture,  bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture,  bgWatertexture, bgWatertexture2, bgCloudSeparatorTexture,  bgWatertexture, bgWatertexture2,
                 bgCloudSeparatorTexture,  bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture,  bgFiretexture, bgFiretexture2, bgCloudSeparatorTexture,  bgFiretexture, bgFiretexture2,
                 bgCloudSeparatorTexture,  bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture,  bgAcidtexture, bgAcidtexture2, bgCloudSeparatorTexture,  bgAcidtexture, bgAcidtexture2,
                 bgCloudSeparatorTexture,  bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture,  bgNighttexture, bgNighttexture2, bgCloudSeparatorTexture,  bgNighttexture, bgNighttexture2,
                 bgCloudSeparatorTexture,  bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture,  bgLunartexture, bgLunartexture2, bgCloudSeparatorTexture,  bgLunartexture, bgLunartexture2,
-                bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2);
-
+                bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2, bgCloudSeparatorTexture,  bgGoldtexture, bgGoldtexture2,
+                bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2, bgCloudSeparatorTexture,  bgPhoenixtexture, bgPhoenixtexture2);
 
 
         TextureRegion coinTexture=tA.findRegion("coin");

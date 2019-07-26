@@ -154,7 +154,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rotationTween.kill();
         //scaleFireEffects((1+finalNewTexturesSizeRatio)/2f);
     }
-    public void backToSurvival(String sizeChangeType){
+    public void toSurvival(String sizeChangeType){
+        Boolean rackWasSetUp=false;
+        if (sizeChangeType.equals("startToSurvival")&&rackLvl!=1) {rackSetup();rackWasSetUp=true;}
         if (sizeChangeType==null) this.sizeChangeType="buyMenuToSurvival";
         else this.sizeChangeType="startToSurvival";
         changeTextureSizes(armorLvl,rackLvl,"survival");
@@ -163,7 +165,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (flameLights.size==0) setupLights(lightHandler);
         rotationTween=Tween.to(rotation,0,2).waypoint((pos.x-(camWidth-balloonWidth.get()))/25f).target(0).ease(TweenEquations.easeOutCirc).start();
         //scaleFireEffects((1+finalNewTexturesSizeRatio)/2f);
-        if (sizeChangeType.equals("startToSurvival")) rackSetup();
+        if (sizeChangeType.equals("startToSurvival")&&rackLvl==1&&!rackWasSetUp)rackSetup();
     }
     public void rackSetup() {
         //burnerUp();burnerUp();burnerUp();rackUp();speedUp();speedUp();
@@ -568,23 +570,23 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     public static float[] chooseColorBasedOnWave (int waveNumber, boolean isBalloon) {
         if (!isBalloon){
-            if (waveNumber==0) return new float[]{178/255f, 166/255f, 96/255f };
-            else if (waveNumber==1) return new float[]{178/255f, 119/255f, 98/255f };
-            else if (waveNumber==2) return new float[]{43/255f,  158/255f, 238/255f};
-            else if (waveNumber==3) return new float[]{227/255f, 133/255f, 37/255f };
-            else if (waveNumber==4) return new float[]{75/255f,  201/255f, 142/255f};
-            else if (waveNumber==5) return new float[]{154/255f, 155/255f, 158/255f};
-            else if (waveNumber==6) return new float[]{230/255f, 49/255f,  252/255f};
-            else if (waveNumber==7) return new float[]{178/255f, 178/255f, 47/255f };
+            if (waveNumber==0)      return new float[]{178/255f, 119/255f, 98/255f };
+            else if (waveNumber==1) return new float[]{43/255f,  158/255f, 238/255f};
+            else if (waveNumber==2) return new float[]{227/255f, 133/255f, 37/255f };
+            else if (waveNumber==3) return new float[]{75/255f,  201/255f, 142/255f};
+            else if (waveNumber==4) return new float[]{154/255f, 155/255f, 158/255f};
+            else if (waveNumber==5) return new float[]{230/255f, 49/255f,  252/255f};
+            else if (waveNumber==6) return new float[]{178/255f, 178/255f, 47/255f };
+            else if (waveNumber==7) return new float[]{178/255f, 166/255f, 96/255f };
         } else {
-                if (waveNumber==0)  return new float[]{255, 180, 148};
-            else if (waveNumber==1) return new float[]{249, 50,  109};
-            else if (waveNumber==2) return new float[]{43,  158, 238};
-            else if (waveNumber==3) return new float[]{227, 133, 37 };
-            else if (waveNumber==4) return new float[]{75,  201, 142};
-            else if (waveNumber==5) return new float[]{154, 155, 158};
-            else if (waveNumber==6) return new float[]{230, 49,  252};
-            else if (waveNumber==7) return new float[]{200, 200, 50 };
+            if (waveNumber==0)      return new float[]{249, 50,  109};
+            else if (waveNumber==1) return new float[]{43,  158, 238};
+            else if (waveNumber==2) return new float[]{227, 133, 37 };
+            else if (waveNumber==3) return new float[]{75,  201, 142};
+            else if (waveNumber==4) return new float[]{154, 155, 158};
+            else if (waveNumber==5) return new float[]{230, 49,  252};
+            else if (waveNumber==6) return new float[]{230, 200, 255};
+            else if (waveNumber==7) return new float[]{255, 180, 148};
         }
         return null;
     }
