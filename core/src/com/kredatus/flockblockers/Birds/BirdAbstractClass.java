@@ -421,6 +421,7 @@ public abstract class BirdAbstractClass {
 
     public final void hit(float collisionDmg) {
         health -= collisionDmg;
+
         isFlashing = true;
         flashOpacityValue.set(1f);//always start from white flash to distinguish from bg
         if (collisionDmg<origHealth&&health>0){

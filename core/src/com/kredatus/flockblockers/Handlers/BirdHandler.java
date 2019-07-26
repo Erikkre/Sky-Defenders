@@ -30,8 +30,8 @@ public class BirdHandler {
     public  ConcurrentLinkedQueue<BirdAbstractClass> deadBirdQueue=new ConcurrentLinkedQueue<BirdAbstractClass>();
 
                                                 //0    1    2    3    4    5    6    7
-    //public static String[] birdOrderList=     {"tB","wB","fB","aB","nB","lB","gB","pB"};
-    public final int[] birdNumberList=          { 20,  20,  25,  10,  8,   7,   3,   1  };
+    //public static String[] birdOrderList=     {"pB","tB","wB","fB","aB","nB","lB","gB"};
+    public final int[] birdNumberList=          { 1,   20,  20,  25,  10,  8,   7,   3  };
     private float[] spawnIntervals=new float[8];
     public static int waveNumber;
     public TimerTask task;
@@ -113,10 +113,15 @@ public class BirdHandler {
                 //for the amount of birds in the wave,
                 if (waveNumber == 0) {
                     for (int i = 0; i < birdNumberList[waveNumber]; i++) {
+                        birdQueue.add(new PhoenixBird(airshipPos,camHeight, camWidth, flashLengths));
+                    }
+                    //System.out.println("add birds");
+                } else if (waveNumber == 1) {
+                    for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new ThunderBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
-
-                } else if (waveNumber == 1) {
+                    //System.out.println("add birds");
+                } else if (waveNumber == 2) {
                     float height = ((TextureRegion) Loader.waterAnims[3].getKeyFrames()[3]).getRegionHeight();
                     //float width  =((TextureRegion)AssetHandler.waterAnimations[3].getKeyFrames()[0]).getRegionWidth();
                     for (int i = 0; i < birdNumberList[waveNumber] / 5; i++) {
@@ -131,29 +136,25 @@ public class BirdHandler {
                         waterRound.add(waterArrowHeads);
                         waterArrowHeads.clear();*/
                     }
-                } else if (waveNumber == 2) {
+                } else if (waveNumber == 3) {
                     for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new FireBird(airshipPos,camHeight, camWidth, flashLengths, birdQueue));
                     }
-                } else if (waveNumber == 3) {
+                } else if (waveNumber == 4) {
                     for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new AcidBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
-                } else if (waveNumber == 4) {
+                } else if (waveNumber == 5) {
                     for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new NightBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
-                } else if (waveNumber == 5) {
+                } else if (waveNumber == 6) {
                     for (int i = 0; i < birdNumberList[waveNumber]; i++) {
                         birdQueue.add(new LunarBird(airshipPos,camHeight, camWidth, flashLengths));
                     }
-                } else if (waveNumber == 6) {
-                    for (int i = 0; i < birdNumberList[waveNumber]; i++) {
-                        birdQueue.add(new GoldBird(airshipPos, camHeight, camWidth, flashLengths));
-                    }
                 } else if (waveNumber == 7) {
                     for (int i = 0; i < birdNumberList[waveNumber]; i++) {
-                        birdQueue.add(new PhoenixBird(airshipPos,camHeight, camWidth, flashLengths));
+                        birdQueue.add(new GoldBird(airshipPos, camHeight, camWidth, flashLengths));
                     }
                 }
                 setUpTask();
