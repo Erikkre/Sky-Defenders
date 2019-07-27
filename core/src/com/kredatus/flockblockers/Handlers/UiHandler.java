@@ -184,7 +184,7 @@ public class UiHandler {
 
         expStack = new Stack();
         expBar = new ProgressBar(0, rank.expValues[rank.lvl], 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        expBar.setColor(0,1,0,0.7f); expBar.setAnimateDuration(0.05f); expBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
+        expBar.setColor(0,1,0,0.7f); expBar.setAnimateDuration(0.15f); expBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
         expLabel= new Label(Integer.toString(rank.expGained), shadeSkin,"title-plain");
         expStack.add(expBar);expStack.add(expLabel);expLabel.setAlignment(Align.center);
         table0.add(expStack).grow().padRight(4);//colSpan of this must be equal to # of however many labels there are under it
@@ -193,7 +193,7 @@ public class UiHandler {
 
         Stack airshipHealthStack = new Stack();
         airshipHealthBar=new ProgressBar(0,Airship.healthValues[Airship.healthLvl],1,false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        airshipHealthBar.setColor(1,0,0,0.8f);airshipHealthBar.setValue(Airship.health);
+        airshipHealthBar.setColor(1,0,0,0.8f);expBar.setAnimateDuration(0.15f);airshipHealthBar.setValue(Airship.health);
         airshipHealthLabel= new Label(Integer.toString(Airship.health), shadeSkin,"title-plain");
         airshipHealthStack.add(airshipHealthBar);airshipHealthStack.add(airshipHealthLabel);airshipHealthLabel.setAlignment(Align.center);
         table0.add(airshipHealthStack).grow().padRight(5);
@@ -202,7 +202,7 @@ public class UiHandler {
 
         Stack airshipArmorStack = new Stack();
         airshipArmorBar=new ProgressBar(0,Airship.armorValues[Airship.armorLvl],1,false,shadeSkin.get("default-horizontal",ProgressBar.ProgressBarStyle.class));
-        airshipArmorBar.setColor(0.2f,0.08f,0,0.8f);airshipArmorBar.setValue(Airship.armor);
+        airshipArmorBar.setColor(0.2f,0.08f,0,0.8f);expBar.setAnimateDuration(0.15f);airshipArmorBar.setValue(Airship.armor);
 
         airshipArmorLabel= new Label(Integer.toString(Airship.armor), shadeSkin,"title-plain");
         airshipArmorStack.add(airshipArmorBar);airshipArmorStack.add(airshipArmorLabel);airshipArmorLabel.setAlignment(Align.center);
