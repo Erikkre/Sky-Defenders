@@ -29,6 +29,8 @@ public class Rank {
                 expGained += expToAdd;
                 remExp = expValues[lvl] - expGained;
                 UiHandler.expBar.setValue(expGained);
+                UiHandler.expLabel.setText(expGained);
+
             } else if (expToAdd - (remExp + expValues[lvl + 1]) >= 0) {//if gaining so much exp that you gain 2 or more levels
                 System.out.println("level up twice pt1");
                 expToAdd -= remExp + expValues[lvl + 1];
@@ -52,6 +54,7 @@ public class Rank {
         UiHandler.lvlLabel.setText(lvl%78);
         UiHandler.expBar.setRange(0,expValues[lvl]);
         UiHandler.expBar.setValue(0);
+        UiHandler.expLabel.setText(0);
         if (lvl%78==0){ //if multiple of 78 on level up (level 0 of new rank), change name
             UiHandler.rankNameLabel.setText(rankNames[lvl/78]);
         }

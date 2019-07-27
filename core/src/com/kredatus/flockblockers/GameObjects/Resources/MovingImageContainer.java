@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
+import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Handlers.UiHandler;
 import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
@@ -93,19 +94,25 @@ public class MovingImageContainer {
             public void onEvent(int i, BaseTween<?> baseTween) {
                 if (type=='c') {
                     GameWorld.gold+=1;
-                ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.goldSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.goldSymbol.getWidth()/4, UiHandler.table1.getY()+UiHandler.goldSymbol.getHeight()/7)),1,20);
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.goldSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.goldSymbol.getWidth()/4, UiHandler.table1.getY()+UiHandler.goldSymbol.getHeight()/7)),1,20,1);
                 } else if (type=='e') {
                     UiHandler.rank.addExp(1);
-                ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.expBar.localToParentCoordinates(new Vector2(UiHandler.table0.getX()+UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.table0.getY())),1,20);
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.expStack.localToParentCoordinates(new Vector2(UiHandler.expBar.localToParentCoordinates( new Vector2(UiHandler.table0.getX()+UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.table0.getY()) ))),1,20,1);
                 } else if (type=='d') {
                     GameWorld.diamonds+=1;
-                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.diamondSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.diamondSymbol.getWidth()/4, UiHandler.table1.getY()+UiHandler.diamondSymbol.getHeight()/7)),1,20);
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.diamondSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.diamondSymbol.getWidth()/4, UiHandler.table1.getY()+UiHandler.diamondSymbol.getHeight()/7)),1,20,1);
                 } else if (type=='f') {
                     GameWorld.fuel+=1;
-                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.fuelSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.fuelSymbol.getWidth()/4, UiHandler.table1.getY()+UiHandler.fuelSymbol.getHeight()/7)),1,20);
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.fuelSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.fuelSymbol.getWidth()/4, UiHandler.table1.getY()+UiHandler.fuelSymbol.getHeight()/7)),1,20,1);
                 } else if (type=='a') {
                     GameWorld.ammo+=1;
-                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.ammoSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.ammoSymbol.getWidth()/4, UiHandler.table1.getY()+UiHandler.ammoSymbol.getHeight()/7)),1,20);
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.ammoSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.ammoSymbol.getWidth()/4, UiHandler.table1.getY()+UiHandler.ammoSymbol.getHeight()/7)),1,20,1);
+                } else if (type=='h'){
+                    Airship.health+=1;
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.expStack.localToParentCoordinates(new Vector2(UiHandler.airshipHealthBar.localToParentCoordinates( new Vector2(UiHandler.table0.getX()+UiHandler.airshipHealthBar.getPercent()*UiHandler.airshipHealthBar.getWidth(), UiHandler.table0.getY()) ))),1,20,1);
+                } else if (type=='r'){
+                    Airship.armor+=1;
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.expStack.localToParentCoordinates(new Vector2(UiHandler.airshipArmorBar.localToParentCoordinates( new Vector2(UiHandler.table0.getX()+UiHandler.airshipArmorBar.getPercent()*UiHandler.airshipArmorBar.getWidth(), UiHandler.table0.getY()) ))),1,20,1);
                 }
                 thisBird.dropsList.remove(thisMovingImageContainer);
             }

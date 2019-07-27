@@ -57,6 +57,7 @@ public class UiHandler {
     public GameWorld world;
     public TextButton buyButton,menuButton,playButton;
     public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel, lvlLabel, rankNameLabel, roundLabel, waveLabel,airshipHealthLabel,airshipArmorLabel,expLabel;
+    public static Stack expStack;
     public Random r = new Random();
     //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
@@ -110,7 +111,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -118,12 +119,12 @@ public class UiHandler {
 
         loadSurvivalStage();
     }
-    public void fadeAwayNumberEffect(Vector2 pos, int val, int randomizedMoveDistance){
+    public void fadeAwayNumberEffect(Vector2 pos,int val,int randomizedMoveDistance,float scale){
         Label effect;
         if (val>=0) {effect=new Label("+"+val, shadeSkin,"title-plain");}
         else {effect=new Label(Integer.toString(val), shadeSkin,"title-plain");}
         //float minHeight=shadeSkin.getDrawable("font-title").getMinHeight();
-        effect.setFontScale(1.25f);
+        effect.setFontScale(scale);
         effect.setPosition(pos.x,pos.y);
         effect.addAction(
                 parallel(
@@ -150,7 +151,7 @@ public class UiHandler {
         loadSlideMenus();
         /***********************************************************************************each of these is a table in a different row*/
         table0=new Table().top();
-        rootTable.add(table0).growX().padTop(13).padBottom(-8).colspan(2);rootTable.row();
+        rootTable.add(table0).growX().padTop(13).padBottom(-8).padRight(1).colspan(2);rootTable.row();
         /***********************************************************************************each of these is a table in a different row*/
         table1=new Table().top();
         rootTable.add(table1).growX().colspan(2);rootTable.row();
@@ -163,28 +164,12 @@ public class UiHandler {
         /***********************************************************************************each of these is a table in a different row*/
         Table bottomTable=new Table().bottom();
         rootTable.add(bottomTable).growX();
-
-        roundLabel= new Label("Round "+world.round, shadeSkin,"title-plain");
-        waveLabel= new Label("Wave "+(BirdHandler.waveNumber+1)+"/8", shadeSkin,"title-plain");
-        roundLabel.setAlignment(Align.left);waveLabel.setAlignment(Align.right);
-        bottomTable.add(roundLabel).growX().left().pad(4);bottomTable.add(waveLabel).growX().right().pad(4);
-
         /***********************************************************************************each of these is a table in a different row*/
 
-        goldLabel= new Label("", shadeSkin,"title-plain");
-        fuelLabel= new Label("", shadeSkin,"title-plain");
-        ammoLabel= new Label("", shadeSkin,"title-plain");
-        diamondLabel= new Label("", shadeSkin,"title-plain");
-        expLabel= new Label("", shadeSkin,"title-plain");
-        airshipHealthLabel= new Label(Integer.toString(Airship.health), shadeSkin,"title-plain");
-        airshipArmorLabel= new Label(Integer.toString(Airship.armor), shadeSkin,"title-plain");
+        rank = new Rank(prefs.getInteger("lvl",0),prefs.getInteger("exp",0));
 
         //rankSize=35;rankColor=Color.GREEN;
-
-
-        rank = new Rank(prefs.getInteger("lvl",0),prefs.getInteger("exp",0));
         //System.out.println("lvl: "+rank.lvl+", exp: "+rank.expGained+", rank values: "+rank.expValues[rank.lvl]);
-
 
 
         Stack rankImageStack = new Stack();
@@ -195,47 +180,55 @@ public class UiHandler {
         table0.add(rankImageStack).size(40).colspan(1).padLeft(12).padRight(4).padTop(1);
 
         lvlLabel = new Label(Integer.toString(rank.lvl%78), shadeSkin,"title-plain");
-        table0.add(lvlLabel).padLeft(5).padRight(5);
+        table0.add(lvlLabel).padLeft(3).padRight(2);
 
-        Stack expStack = new Stack();
+        expStack = new Stack();
         expBar = new ProgressBar(0, rank.expValues[rank.lvl], 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        expBar.setColor(0,1,0,0.8f); expBar.setAnimateDuration(0.05f); expBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
-        expStack.setLayoutEnabled(false);expStack.add(expBar);expStack.add(expLabel); expLabel.setPosition(expBar.getWidth()/2,expBar.getHeight()/2);
-        table0.add(expStack).grow();//colSpan of this must be equal to # of however many labels there are under it
+        expBar.setColor(0,1,0,0.7f); expBar.setAnimateDuration(0.05f); expBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
+        expLabel= new Label(Integer.toString(rank.expGained), shadeSkin,"title-plain");
+        expStack.add(expBar);expStack.add(expLabel);expLabel.setAlignment(Align.center);
+        table0.add(expStack).grow().padRight(4);//colSpan of this must be equal to # of however many labels there are under it
 
         airshipHealthSymbol=new Image(Loader.tA.findRegion("health"));table0.add(airshipHealthSymbol).size(40);
 
         Stack airshipHealthStack = new Stack();
         airshipHealthBar=new ProgressBar(0,Airship.healthValues[Airship.healthLvl],1,false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        airshipHealthBar.setColor(1,1,1,0.5f);airshipHealthBar.setValue(Airship.health);
-        airshipHealthStack.setLayoutEnabled(false);airshipHealthStack.add(airshipHealthBar);airshipHealthStack.add(airshipHealthLabel);airshipHealthLabel.setPosition(airshipHealthBar.getWidth()/2,airshipHealthBar.getHeight()/2);
-        table0.add(airshipHealthStack).grow();
+        airshipHealthBar.setColor(1,0,0,0.8f);airshipHealthBar.setValue(Airship.health);
+        airshipHealthLabel= new Label(Integer.toString(Airship.health), shadeSkin,"title-plain");
+        airshipHealthStack.add(airshipHealthBar);airshipHealthStack.add(airshipHealthLabel);airshipHealthLabel.setAlignment(Align.center);
+        table0.add(airshipHealthStack).grow().padRight(5);
 
         airshipArmorSymbol=new Image(Loader.tA.findRegion("armor"));table0.add(airshipArmorSymbol).size(40);
 
         Stack airshipArmorStack = new Stack();
         airshipArmorBar=new ProgressBar(0,Airship.armorValues[Airship.armorLvl],1,false,shadeSkin.get("default-horizontal",ProgressBar.ProgressBarStyle.class));
-        airshipArmorBar.setColor(1,1,1,0.5f);airshipArmorBar.setValue(Airship.armor);
-        airshipArmorStack.setLayoutEnabled(false);airshipArmorStack.add(airshipArmorBar);airshipArmorStack.add(airshipArmorLabel);airshipArmorLabel.setPosition(airshipArmorBar.getWidth()/2,airshipArmorBar.getHeight()/2);
-        table0.add(airshipArmorStack).grow();
+        airshipArmorBar.setColor(0.2f,0.08f,0,0.8f);airshipArmorBar.setValue(Airship.armor);
+
+        airshipArmorLabel= new Label(Integer.toString(Airship.armor), shadeSkin,"title-plain");
+        airshipArmorStack.add(airshipArmorBar);airshipArmorStack.add(airshipArmorLabel);airshipArmorLabel.setAlignment(Align.center);
+        table0.add(airshipArmorStack).grow().padRight(5);
 
         table0.row(); rankNameLabel=new Label(rank.rankNames[rank.lvl/78],shadeSkin,"title-plain");rankNameLabel.setFontScale(0.5f);table0.add(rankNameLabel).padLeft(2).padTop(2);
 
 
         goldSymbol=new Image(Loader.tA.findRegion("gold2"));
         table1.add(goldSymbol).size(40).padLeft(20);
+        goldLabel= new Label("", shadeSkin,"title-plain");
         table1.add(goldLabel).size((camWidth-(40*5))/4.2f,goldLabel.getPrefHeight()).padLeft(3);
 
         fuelSymbol=new Image(Loader.tA.findRegion("fuel"));
         table1.add(fuelSymbol).size(40);
+        fuelLabel= new Label("", shadeSkin,"title-plain");
         table1.add(fuelLabel).size((camWidth-(40*5))/6f,fuelLabel.getPrefHeight()).padLeft(3);
 
         ammoSymbol=new Image(Loader.tA.findRegion("ammo"));
         table1.add(ammoSymbol).size(40);
+        ammoLabel= new Label("", shadeSkin,"title-plain");
         table1.add(ammoLabel).size((camWidth-(40*5))/5f,ammoLabel.getPrefHeight()).padLeft(3);
 
         diamondSymbol=new Image(Loader.tA.findRegion("diamond"));
         table1.add(diamondSymbol).size(40);
+        diamondLabel= new Label("", shadeSkin,"title-plain");
         table1.add(diamondLabel).size(diamondLabel.getPrefWidth(),diamondLabel.getPrefHeight()).padLeft(3);
 
         /******************************************************************************************/
@@ -257,6 +250,10 @@ public class UiHandler {
         table2.add(aimPad).width(camHeight/9f).height(camHeight/8.5f).right().bottom().expand();
         //change fill
 
+        roundLabel= new Label("Round "+world.round, shadeSkin,"title-plain");
+        waveLabel= new Label("Wave "+(BirdHandler.waveNumber+1)+"/8", shadeSkin,"title-plain");
+        roundLabel.setAlignment(Align.left);waveLabel.setAlignment(Align.right);
+        bottomTable.add(roundLabel).growX().left().pad(4);bottomTable.add(waveLabel).growX().right().pad(4);
 
     }
     public void loadSlideMenus(){
