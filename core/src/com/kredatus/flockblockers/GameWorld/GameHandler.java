@@ -56,9 +56,9 @@ public class GameHandler implements Screen {
         bgHandler.survivalBgTweens(tinyBirdHandler,lightHandler);
         targetHandler = new TargetHandler(birdHandler);
 
-        uiHandler=new UiHandler(world, camWidth, camHeight, shadeSkin);
 
         airship=new Airship(world,camWidth, camHeight, waveNumber, birdHandler,targetHandler,lightHandler);
+        uiHandler=new UiHandler(world, camWidth, camHeight, shadeSkin);
 
         birdHandler.setAirshipPos(airship);
         targetHandler.setAirship(airship);
@@ -69,7 +69,6 @@ public class GameHandler implements Screen {
 
         bgHandler.setRendererAndCam(renderer);
         lightHandler.setCam(renderer);
-
 
 
         world.initialize(bgHandler,birdHandler,targetHandler,tinyBirdHandler,uiHandler,lightHandler,renderer,airship);
@@ -120,6 +119,8 @@ public class GameHandler implements Screen {
             ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.stopMusic(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.menumusiclist);
         }
 
+        prefs.putInteger("health",airship.health);
+        prefs.putInteger("armor",airship.armor);
         prefs.putInteger("burnerLvl",airship.burnerLvl);
         prefs.putInteger("healthLvl",airship.healthLvl);
         prefs.putInteger("armorLvl",airship.armorLvl);
@@ -158,6 +159,8 @@ public class GameHandler implements Screen {
             ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.stopMusic(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.menumusiclist);
         }
 
+        prefs.putInteger("health",airship.health);
+        prefs.putInteger("armor",airship.armor);
         prefs.putInteger("burnerLvl",airship.burnerLvl);
         prefs.putInteger("healthLvl",airship.healthLvl);
         prefs.putInteger("armorLvl",airship.armorLvl);

@@ -176,11 +176,11 @@ public class UiHandler {
         ammoLabel= new Label("", shadeSkin,"title-plain");
         diamondLabel= new Label("", shadeSkin,"title-plain");
         expLabel= new Label("", shadeSkin,"title-plain");
-        airshipHealthLabel= new Label("", shadeSkin,"title-plain");
-        airshipArmorLabel= new Label("", shadeSkin,"title-plain");
+        airshipHealthLabel= new Label(Integer.toString(Airship.health), shadeSkin,"title-plain");
+        airshipArmorLabel= new Label(Integer.toString(Airship.armor), shadeSkin,"title-plain");
 
-        rankSize=35;rankColor=Color.GREEN;
-        Gdx.gl20.glLineWidth(2);
+        //rankSize=35;rankColor=Color.GREEN;
+
 
         rank = new Rank(prefs.getInteger("lvl",0),prefs.getInteger("exp",0));
         //System.out.println("lvl: "+rank.lvl+", exp: "+rank.expGained+", rank values: "+rank.expValues[rank.lvl]);
@@ -201,21 +201,23 @@ public class UiHandler {
         expBar = new ProgressBar(0, rank.expValues[rank.lvl], 1, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
         expBar.setColor(0,1,0,0.8f); expBar.setAnimateDuration(0.05f); expBar.setValue(prefs.getInteger("exp",0));//3.2% is the minimum value right now
         expStack.setLayoutEnabled(false);expStack.add(expBar);expStack.add(expLabel); expLabel.setPosition(expBar.getWidth()/2,expBar.getHeight()/2);
-        table0.add(expStack).grow().padRight(5);//colSpan of this must be equal to # of however many labels there are under it
+        table0.add(expStack).grow();//colSpan of this must be equal to # of however many labels there are under it
 
-        table0.add(airshipHealthSymbol).grow().padRight(5);
+        airshipHealthSymbol=new Image(Loader.tA.findRegion("health"));table0.add(airshipHealthSymbol).size(40);
 
         Stack airshipHealthStack = new Stack();
         airshipHealthBar=new ProgressBar(0,Airship.healthValues[Airship.healthLvl],1,false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
         airshipHealthBar.setColor(1,1,1,0.5f);airshipHealthBar.setValue(Airship.health);
         airshipHealthStack.setLayoutEnabled(false);airshipHealthStack.add(airshipHealthBar);airshipHealthStack.add(airshipHealthLabel);airshipHealthLabel.setPosition(airshipHealthBar.getWidth()/2,airshipHealthBar.getHeight()/2);
-        table0.add(airshipHealthStack).grow().padRight(5);
+        table0.add(airshipHealthStack).grow();
+
+        airshipArmorSymbol=new Image(Loader.tA.findRegion("armor"));table0.add(airshipArmorSymbol).size(40);
 
         Stack airshipArmorStack = new Stack();
         airshipArmorBar=new ProgressBar(0,Airship.armorValues[Airship.armorLvl],1,false,shadeSkin.get("default-horizontal",ProgressBar.ProgressBarStyle.class));
         airshipArmorBar.setColor(1,1,1,0.5f);airshipArmorBar.setValue(Airship.armor);
         airshipArmorStack.setLayoutEnabled(false);airshipArmorStack.add(airshipArmorBar);airshipArmorStack.add(airshipArmorLabel);airshipArmorLabel.setPosition(airshipArmorBar.getWidth()/2,airshipArmorBar.getHeight()/2);
-        table0.add(airshipArmorStack).grow().padRight(4);
+        table0.add(airshipArmorStack).grow();
 
         table0.row(); rankNameLabel=new Label(rank.rankNames[rank.lvl/78],shadeSkin,"title-plain");rankNameLabel.setFontScale(0.5f);table0.add(rankNameLabel).padLeft(2).padTop(2);
 

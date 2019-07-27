@@ -198,6 +198,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackLvl=    prefs.getInteger("rackLvl",0);
         speedLvl=  prefs.getInteger("speedLvl",0);
         burnerLvl=prefs.getInteger("burnerLvl",0);
+        health=prefs.getInteger("health",healthValues[healthLvl]);
+        armor=prefs.getInteger("armor",armorValues[armorLvl]);
         loadTextures();
 
         loadFireEffects();
@@ -205,8 +207,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             setEmitterVal(additiveEffects.get(0).getEmitters().get(3-i).getEmission(),0,false);
             setEmitterVal(additiveEffects.get(0).getEmitters().get(4+i).getYOffsetValue(),0,false);
         }
-        health=healthValues[healthLvl];
-        armor=armorValues[armorLvl];
+
         speed=speedValues[speedLvl];
         startY=camHeight/2f; //-height;
         startX=camWidth/2f; //-balloonWidth;
@@ -291,10 +292,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (buyMenuOrSurvivalSizeTarget.equals("buyMenu"))    sizeTargetRatio=1f;
         else if (buyMenuOrSurvivalSizeTarget.equals("survival"))    sizeTargetRatio=0.661f;
 
-            newTurretHeightTarget=tHOrig * sizeTargetRatio;
-            newTurretWidthTarget= tWOrig * sizeTargetRatio;
+        newTurretHeightTarget=tHOrig * sizeTargetRatio;
+        newTurretWidthTarget= tWOrig * sizeTargetRatio;
 
-            //System.out.println("***"+newTurretWidthTarget+" "+sizeTargetRatio);
+        //System.out.println("***"+newTurretWidthTarget+" "+sizeTargetRatio);
 
 
         // 167x195 is res of small balloon, 640x800 is res of big balloon. 44 is turretWidth relative to original rack width of x167

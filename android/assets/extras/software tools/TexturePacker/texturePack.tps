@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>libgdx</string>
         <key>textureFileName</key>
-        <filename>../../textures/texturePack{n}.png</filename>
+        <filename>../../../textures/texturePack{n}.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrCompressionQuality</key>
@@ -132,7 +132,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../textures/texturePack.txt</filename>
+                <filename>../../../textures/texturePack.txt</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,14 +181,14 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../texturesToPack/backgrounds/levels/bgAcid2.jpg</key>
-            <key type="filename">../texturesToPack/backgrounds/levels/bgFire2.jpg</key>
-            <key type="filename">../texturesToPack/backgrounds/levels/bgGold2.jpg</key>
-            <key type="filename">../texturesToPack/backgrounds/levels/bgLunar2.jpg</key>
-            <key type="filename">../texturesToPack/backgrounds/levels/bgNight2.jpg</key>
-            <key type="filename">../texturesToPack/backgrounds/levels/bgPhoenix2.jpg</key>
-            <key type="filename">../texturesToPack/backgrounds/levels/bgThunder2.jpg</key>
-            <key type="filename">../texturesToPack/backgrounds/levels/bgWater2.jpg</key>
+            <key type="filename">../../texturesToPack/backgrounds/levels/bgAcid2.jpg</key>
+            <key type="filename">../../texturesToPack/backgrounds/levels/bgFire2.jpg</key>
+            <key type="filename">../../texturesToPack/backgrounds/levels/bgGold2.jpg</key>
+            <key type="filename">../../texturesToPack/backgrounds/levels/bgLunar2.jpg</key>
+            <key type="filename">../../texturesToPack/backgrounds/levels/bgNight2.jpg</key>
+            <key type="filename">../../texturesToPack/backgrounds/levels/bgPhoenix2.jpg</key>
+            <key type="filename">../../texturesToPack/backgrounds/levels/bgThunder2.jpg</key>
+            <key type="filename">../../texturesToPack/backgrounds/levels/bgWater2.jpg</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -201,7 +201,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/backgrounds/levels/cloudSeparator.jpg</key>
+            <key type="filename">../../texturesToPack/backgrounds/levels/cloudSeparator.jpg</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -214,7 +214,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/backgrounds/slideMenuBackground.png</key>
+            <key type="filename">../../texturesToPack/backgrounds/slideMenuBackground.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -227,7 +227,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/effect images/aimLine.png</key>
+            <key type="filename">../../texturesToPack/effect images/aimLine.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -240,7 +240,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/effect images/aimLineOrigThicc.png</key>
+            <key type="filename">../../texturesToPack/effect images/aimLineOrigThicc.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -253,12 +253,15 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/effect images/dragCirc.png</key>
-            <key type="filename">../texturesToPack/icons/ammo.png</key>
-            <key type="filename">../texturesToPack/icons/fuel.png</key>
-            <key type="filename">../texturesToPack/icons/gold1.png</key>
-            <key type="filename">../texturesToPack/icons/gold2.png</key>
-            <key type="filename">../texturesToPack/icons/gold3.png</key>
+            <key type="filename">../../texturesToPack/effect images/dragCirc.png</key>
+            <key type="filename">../../texturesToPack/icons/ammo.png</key>
+            <key type="filename">../../texturesToPack/icons/armor.png</key>
+            <key type="filename">../../texturesToPack/icons/diamond.png</key>
+            <key type="filename">../../texturesToPack/icons/fuel.png</key>
+            <key type="filename">../../texturesToPack/icons/gold1.png</key>
+            <key type="filename">../../texturesToPack/icons/gold2.png</key>
+            <key type="filename">../../texturesToPack/icons/gold3.png</key>
+            <key type="filename">../../texturesToPack/icons/health.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -271,7 +274,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/effect images/dragLine.png</key>
+            <key type="filename">../../texturesToPack/effect images/dragLine.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -284,7 +287,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/effect images/dragLine2.png</key>
+            <key type="filename">../../texturesToPack/effect images/dragLine2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -297,21 +300,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/icons/diamond.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>64,64,128,128</rect>
-                <key>scale9Paddings</key>
-                <rect>64,64,128,128</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../texturesToPack/icons/exp.png</key>
-            <key type="filename">../texturesToPack/icons/exp1.png</key>
+            <key type="filename">../../texturesToPack/icons/exp.png</key>
+            <key type="filename">../../texturesToPack/icons/exp1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -324,59 +314,20 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/icons/rankBg.png</key>
+            <key type="filename">../../texturesToPack/icons/rankBg.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>11,12,23,23</rect>
+                <rect>12,12,24,25</rect>
                 <key>scale9Paddings</key>
-                <rect>11,12,23,23</rect>
+                <rect>12,12,24,25</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/icons/rankBgL.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>13,13,25,25</rect>
-                <key>scale9Paddings</key>
-                <rect>13,13,25,25</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../texturesToPack/icons/rankBgS.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,12,23,23</rect>
-                <key>scale9Paddings</key>
-                <rect>12,12,23,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../texturesToPack/icons/rankBgXs.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,0.5</point_f>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>11,11,22,23</rect>
-                <key>scale9Paddings</key>
-                <rect>11,11,22,23</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../texturesToPack/non-scene2d ui/menuButton.png</key>
+            <key type="filename">../../texturesToPack/non-scene2d ui/menuButton.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -389,7 +340,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/non-scene2d ui/menuButton2.png</key>
+            <key type="filename">../../texturesToPack/non-scene2d ui/menuButton2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -402,7 +353,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/non-scene2d ui/rateButton.png</key>
+            <key type="filename">../../texturesToPack/non-scene2d ui/rateButton.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -415,7 +366,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/non-scene2d ui/shareButton.png</key>
+            <key type="filename">../../texturesToPack/non-scene2d ui/shareButton.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -428,17 +379,17 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/ranks/rank1.png</key>
-            <key type="filename">../texturesToPack/ranks/rank10.png</key>
-            <key type="filename">../texturesToPack/ranks/rank11.png</key>
-            <key type="filename">../texturesToPack/ranks/rank2.png</key>
-            <key type="filename">../texturesToPack/ranks/rank3.png</key>
-            <key type="filename">../texturesToPack/ranks/rank4.png</key>
-            <key type="filename">../texturesToPack/ranks/rank5.png</key>
-            <key type="filename">../texturesToPack/ranks/rank6.png</key>
-            <key type="filename">../texturesToPack/ranks/rank7.png</key>
-            <key type="filename">../texturesToPack/ranks/rank8.png</key>
-            <key type="filename">../texturesToPack/ranks/rank9.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank1.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank10.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank11.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank2.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank3.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank4.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank5.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank6.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank7.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank8.png</key>
+            <key type="filename">../../texturesToPack/ranks/rank9.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -451,7 +402,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/balloon.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/balloon.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -464,7 +415,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/burnerPipes.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/burnerPipes.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -477,13 +428,13 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/rack0.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/rack1.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/rack2.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/rack3.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/rack4.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/rack5.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/rack6.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/rack0.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/rack1.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/rack2.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/rack3.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/rack4.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/rack5.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/rack6.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -496,8 +447,8 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/sideThruster.png</key>
-            <key type="filename">../texturesToPack/sprites/balloons/x300/sideThrusterLight.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/sideThruster.png</key>
+            <key type="filename">../../texturesToPack/sprites/balloons/x300/sideThrusterLight.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -510,14 +461,14 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/birds/acid.png</key>
-            <key type="filename">../texturesToPack/sprites/birds/fire.png</key>
-            <key type="filename">../texturesToPack/sprites/birds/gold.png</key>
-            <key type="filename">../texturesToPack/sprites/birds/lunar.png</key>
-            <key type="filename">../texturesToPack/sprites/birds/night.png</key>
-            <key type="filename">../texturesToPack/sprites/birds/phoenix.png</key>
-            <key type="filename">../texturesToPack/sprites/birds/thunder.png</key>
-            <key type="filename">../texturesToPack/sprites/birds/water.png</key>
+            <key type="filename">../../texturesToPack/sprites/birds/acid.png</key>
+            <key type="filename">../../texturesToPack/sprites/birds/fire.png</key>
+            <key type="filename">../../texturesToPack/sprites/birds/gold.png</key>
+            <key type="filename">../../texturesToPack/sprites/birds/lunar.png</key>
+            <key type="filename">../../texturesToPack/sprites/birds/night.png</key>
+            <key type="filename">../../texturesToPack/sprites/birds/phoenix.png</key>
+            <key type="filename">../../texturesToPack/sprites/birds/thunder.png</key>
+            <key type="filename">../../texturesToPack/sprites/birds/water.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -530,20 +481,20 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/coin.png</key>
+            <key type="filename">../../texturesToPack/sprites/coin.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>128,8,256,16</rect>
+                <rect>80,5,160,10</rect>
                 <key>scale9Paddings</key>
-                <rect>128,8,256,16</rect>
+                <rect>80,5,160,10</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/reticle.png</key>
+            <key type="filename">../../texturesToPack/sprites/reticle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -556,17 +507,17 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird1.png</key>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird10.png</key>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird11.png</key>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird2.png</key>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird3.png</key>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird4.png</key>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird5.png</key>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird6.png</key>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird7.png</key>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird8.png</key>
-            <key type="filename">../texturesToPack/sprites/tinyBirds/tinyBird9.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird1.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird10.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird11.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird2.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird3.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird4.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird5.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird6.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird7.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird8.png</key>
+            <key type="filename">../../texturesToPack/sprites/tinyBirds/tinyBird9.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -579,7 +530,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/c/c0.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/c/c0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -592,7 +543,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/c/c1.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/c/c1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -605,7 +556,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/c/pc0.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/c/pc0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -618,7 +569,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/c/pc1.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/c/pc1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -631,7 +582,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/d/d0.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/d/d0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -644,7 +595,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/d/d1.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/d/d1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -657,7 +608,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/d/d2.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/d/d2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -670,7 +621,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/d/pd2.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/d/pd2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -683,7 +634,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/f/f0.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/f/f0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -696,7 +647,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/f/f1.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/f/f1.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -709,7 +660,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/f/f2.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/f/f2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -722,7 +673,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/f/pf0.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/f/pf0.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -735,7 +686,7 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../texturesToPack/sprites/turrets/f/pf2.png</key>
+            <key type="filename">../../texturesToPack/sprites/turrets/f/pf2.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -751,7 +702,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../texturesToPack</filename>
+            <filename>../../texturesToPack</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -135,7 +135,14 @@ aimLineOrigThicc
   index: -1
 ammo
   rotate: false
-  xy: 2970, 2273
+  xy: 2970, 2124
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+armor
+  rotate: false
+  xy: 2970, 2166
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
@@ -170,14 +177,14 @@ burnerPipes
   index: -1
 c0
   rotate: false
-  xy: 2970, 2227
+  xy: 2970, 2078
   size: 43, 44
   orig: 43, 44
   offset: 0, 0
   index: -1
 c1
   rotate: false
-  xy: 2970, 2123
+  xy: 2992, 1980
   size: 45, 55
   orig: 45, 55
   offset: 0, 0
@@ -205,7 +212,7 @@ d0
   index: -1
 d1
   rotate: false
-  xy: 2970, 2033
+  xy: 2970, 2037
   size: 70, 18
   orig: 70, 18
   offset: 0, 0
@@ -219,14 +226,14 @@ d2
   index: -1
 diamond
   rotate: false
-  xy: 2970, 2315
+  xy: 2970, 2208
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 dragCirc
   rotate: false
-  xy: 2970, 2357
+  xy: 2970, 2250
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
@@ -268,7 +275,7 @@ f0
   index: -1
 f1
   rotate: false
-  xy: 2970, 2053
+  xy: 2970, 2057
   size: 54, 19
   orig: 54, 19
   offset: 0, 0
@@ -282,28 +289,35 @@ f2
   index: -1
 fuel
   rotate: false
-  xy: 2894, 2364
+  xy: 2970, 2292
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 gold1
   rotate: false
-  xy: 2970, 2399
+  xy: 2970, 2334
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 gold2
   rotate: false
-  xy: 2874, 2406
+  xy: 2894, 2364
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
   index: -1
 gold3
   rotate: false
-  xy: 2916, 2432
+  xy: 2970, 2376
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+health
+  rotate: false
+  xy: 2970, 2418
   size: 40, 40
   orig: 40, 40
   offset: 0, 0
@@ -324,7 +338,7 @@ menuButton2
   index: -1
 pc0
   rotate: false
-  xy: 2874, 2448
+  xy: 2874, 2406
   size: 38, 38
   orig: 38, 38
   offset: 0, 0
@@ -485,30 +499,9 @@ rank11
   index: -1
 rankBg
   rotate: false
-  xy: 2992, 1982
+  xy: 2992, 1929
   size: 48, 49
   orig: 48, 49
-  offset: 0, 0
-  index: -1
-rankBgL
-  rotate: false
-  xy: 2992, 1929
-  size: 50, 51
-  orig: 50, 51
-  offset: 0, 0
-  index: -1
-rankBgS
-  rotate: false
-  xy: 2970, 2074
-  size: 46, 47
-  orig: 46, 47
-  offset: 0, 0
-  index: -1
-rankBgXs
-  rotate: false
-  xy: 2970, 2180
-  size: 44, 45
-  orig: 44, 45
   offset: 0, 0
   index: -1
 rateButton
