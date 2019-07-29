@@ -119,7 +119,7 @@ public class UiHandler {
 
         loadSurvivalStage();
     }
-    public void fadeAwayNumberEffect(Vector2 pos,int val,int randomizedMoveDistance,float scale){
+    public void fadeAwayNumberEffect(Vector2 pos,int val,int randomizedMoveDistance,float scale,float time){
         Label effect;
         if (val>=0) {effect=new Label("+"+val, shadeSkin,"title-plain");}
         else {effect=new Label(Integer.toString(val), shadeSkin,"title-plain");}
@@ -129,8 +129,8 @@ public class UiHandler {
         effect.addAction(
                 parallel(
                     sequence(
-                            delay(0.2f),
-                            fadeOut(1f,Interpolation.exp10),
+                            delay(time/3f),
+                            fadeOut(time,Interpolation.exp10),
                             com.badlogic.gdx.scenes.scene2d.actions.Actions.removeActor()
                     ),
                     moveTo(pos.x+(-randomizedMoveDistance+r.nextInt(randomizedMoveDistance*2)),pos.y+(-randomizedMoveDistance+r.nextInt(randomizedMoveDistance*2)),1,Interpolation.pow3Out)
@@ -213,22 +213,22 @@ public class UiHandler {
 
         goldSymbol=new Image(Loader.tA.findRegion("gold2"));
         table1.add(goldSymbol).size(40).padLeft(20);
-        goldLabel= new Label("", shadeSkin,"title-plain");
+        goldLabel= new Label(Integer.toString(world.gold), shadeSkin,"title-plain");
         table1.add(goldLabel).size((camWidth-(40*5))/4.2f,goldLabel.getPrefHeight()).padLeft(3);
 
         fuelSymbol=new Image(Loader.tA.findRegion("fuel"));
         table1.add(fuelSymbol).size(40);
-        fuelLabel= new Label("", shadeSkin,"title-plain");
+        fuelLabel= new Label(Integer.toString(Airship.fuel), shadeSkin,"title-plain");
         table1.add(fuelLabel).size((camWidth-(40*5))/6f,fuelLabel.getPrefHeight()).padLeft(3);
 
         ammoSymbol=new Image(Loader.tA.findRegion("ammo"));
         table1.add(ammoSymbol).size(40);
-        ammoLabel= new Label("", shadeSkin,"title-plain");
+        ammoLabel= new Label(Integer.toString(Airship.ammo), shadeSkin,"title-plain");
         table1.add(ammoLabel).size((camWidth-(40*5))/5f,ammoLabel.getPrefHeight()).padLeft(3);
 
         diamondSymbol=new Image(Loader.tA.findRegion("diamond"));
         table1.add(diamondSymbol).size(40);
-        diamondLabel= new Label("", shadeSkin,"title-plain");
+        diamondLabel= new Label(Integer.toString(world.diamonds), shadeSkin,"title-plain");
         table1.add(diamondLabel).size(diamondLabel.getPrefWidth(),diamondLabel.getPrefHeight()).padLeft(3);
 
         /******************************************************************************************/
@@ -465,10 +465,7 @@ public class UiHandler {
     }
     public void update(float delta){
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
-        goldLabel.setText(GameWorld.gold);
-        fuelLabel.setText(GameWorld.fuel);
-        ammoLabel.setText(GameWorld.ammo);
-        diamondLabel.setText(GameWorld.diamonds);
+        UiHandler.ammoLabel.setText(Airship.ammo);
         if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
     }
 }

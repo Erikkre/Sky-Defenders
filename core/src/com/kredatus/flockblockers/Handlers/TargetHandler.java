@@ -65,7 +65,7 @@ public class TargetHandler {
             if (i.isAlive && airship.balloonHitbox!=null && (i.collides(airship.rackHitbox) || i.collides(airship.balloonHitbox)) ) {
                     //System.out.println("********************** HIT REAL *********************");
                     airship.hit(i.health);
-                ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(new Vector2(airship.pos.x,airship.pos.y+airship.balloonHeight.get()),-i.health,70,1.25f);
+                ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(new Vector2(airship.pos.x,airship.pos.y+airship.balloonHeight.get()),-i.health,40,1.5f,2f);
                     i.hit(i.origHealth+1);    //lol I hope bird health is below orig
                     if (!balloonHitPlaying){
                         balloonHit.play(0.55f);
@@ -110,7 +110,7 @@ public class TargetHandler {
             for (BirdAbstractClass j : activeBirdQueue) {
                 if (i.pen>0 && !j.hitBulletList.contains(i) && j.collides(i.boundingRect) && j.health>0) {  //if bird j is colliding with bullet i and was not already hit before
                     j.hit(i.dmg);
-                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(i.position,-(int)Math.ceil(i.dmg),70,1.25f);
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(i.position,-(int)Math.ceil(i.dmg),60,1.25f,1);
                     //System.out.println("Bullet --, pen was "+i.pen);
                     i.pen--;
                     birdHit.play(0.05f);

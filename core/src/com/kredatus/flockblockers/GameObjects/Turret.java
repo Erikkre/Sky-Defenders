@@ -41,7 +41,7 @@ public class Turret {
     public int lvl = 0, firingInterval, timeSinceLastShot=0, gunTargetPointer=-1;
     private double lastShotTime=0;
 
-    public boolean firingStoppedByGamePause;
+    public boolean firingStoppedByGamePause,stopTheFiringUpdateMethod;
     public Vector2 lastFingerPosition=new Vector2();
     //public boolean turretIsProjectile;
     public boolean projRotates,preThrowSpin,flipSpinDir;
@@ -148,35 +148,51 @@ public class Turret {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                try{sound.play(0.5f);}catch(Exception e){}
-                //System.out.println("*******************************************Last shot time: "+lastShotTime+"**********************************************************");
-                if (projRotates){
-                    rotation=targetRot;
-                }
-                if (turretType != 'c') {
-                    if (spr == 1) {
-                        targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))),pos.y-(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                    } else if (spr == 2) {
-                        if (rotation >= 0 && rotation < 90) {
-                            targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                            targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation)))+ (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                        } else if (rotation >= 90 && rotation < 180) {
-                            targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                            targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                        } else if (rotation >= 180 && rotation < 270) {
-                            targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                            targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                        } else if (rotation >= 270 && rotation < 360) {
-                            targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
-                            targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x -(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y -(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates,posOffset.x));
+
+                if (airship.ammo > 0) {
+                    Airship.ammo--;
+
+                    try {
+                        sound.play(0.5f);
+                    } catch (Exception e) {
+                    }
+                    //System.out.println("*******************************************Last shot time: "+lastShotTime+"**********************************************************");
+                    if (projRotates) {
+                        rotation = targetRot;
+                    }
+                    if (turretType != 'c') {
+                        if (spr == 1) {
+                            targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x - (float) ((barrelLengthFromPos) * Math.cos(Math.toRadians(rotation))), pos.y - (float) ((barrelLengthFromPos) * Math.sin(Math.toRadians(rotation)))), camWidth, camHeight, rotation, acc, projRotates, posOffset.x));
+                        } else if (spr == 2) {
+                            if (rotation >= 0 && rotation < 90) {
+                                targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x - (float) ((barrelLengthFromPos) * Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y - (float) ((barrelLengthFromPos) * Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates, posOffset.x));
+                                targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x - (float) ((barrelLengthFromPos) * Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y - (float) ((barrelLengthFromPos) * Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates, posOffset.x));
+                            } else if (rotation >= 90 && rotation < 180) {
+                                targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x - (float) ((barrelLengthFromPos) * Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y - (float) ((barrelLengthFromPos) * Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates, posOffset.x));
+                                targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x - (float) ((barrelLengthFromPos) * Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y - (float) ((barrelLengthFromPos) * Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates, posOffset.x));
+                            } else if (rotation >= 180 && rotation < 270) {
+                                targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x - (float) ((barrelLengthFromPos) * Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y - (float) ((barrelLengthFromPos) * Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates, posOffset.x));
+                                targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x - (float) ((barrelLengthFromPos) * Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(90 - (rotation - 180)))), pos.y - (float) ((barrelLengthFromPos) * Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates, posOffset.x));
+                            } else if (rotation >= 270 && rotation < 360) {
+                                targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x - (float) ((barrelLengthFromPos) * Math.cos(Math.toRadians(rotation))) - (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y - (float) ((barrelLengthFromPos) * Math.sin(Math.toRadians(rotation))) - (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates, posOffset.x));
+                                targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x - (float) ((barrelLengthFromPos) * Math.cos(Math.toRadians(rotation))) + (float) (25 * Math.cos(Math.toRadians(rotation - 270))), pos.y - (float) ((barrelLengthFromPos) * Math.sin(Math.toRadians(rotation))) + (float) (15 * Math.sin(Math.toRadians(90 - rotation)))), camWidth, camHeight, rotation, acc, projRotates, posOffset.x));
+                            }
+                        }
+                    } else {
+                        for (int i = 1; i <= spr; i++) {
+                            targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x - (float) ((barrelLengthFromPos) * Math.cos(Math.toRadians(rotation))), pos.y - (float) ((barrelLengthFromPos) * Math.sin(Math.toRadians(rotation)))), camWidth, camHeight, (rotation - (spreadAngle / 2f)) + (spreadAngle / (spr + 1f)) * i, acc, projRotates, posOffset.x));
                         }
                     }
-                } else {
-                    for (int i = 1; i <= spr; i++) {
-                        targetHandler.projectileList.add(new Projectile(projTexture, dmg, pen, new Vector2(pos.x-(float)((barrelLengthFromPos)*Math.cos(Math.toRadians(rotation))),pos.y-(float)((barrelLengthFromPos)*Math.sin(Math.toRadians(rotation)))), camWidth, camHeight, (rotation - (spreadAngle / 2f)) + (spreadAngle / (spr + 1f)) * i, acc, projRotates,posOffset.x));
+                    lastShotTime = System.currentTimeMillis();
+                }
+
+                if (airship.ammo==0){
+                    UiHandler.ammoLabel.setColor(1,0,0,1);
+                    for (Turret i: airship.turretList) {
+                        i.stopTheFiringUpdateMethod=true;
+                        i.stopFiring();
                     }
                 }
-                lastShotTime = System.currentTimeMillis();
             }
         };//set task to run later using timer.schedule
     }
@@ -260,131 +276,151 @@ public class Turret {
     }
 
     public void update() {
-        /*if (turretType=='c'&&lvl==0){
-            System.out.print("targetPointer: "+gunTargetPointer+", turret's target bird: "+targetBird+" ");
-        }*/
-        if (   Gdx.input.justTouched()  && gunTargetPointer==-1 && !UiHandler.isTouched   ) {   //airShip updates first so takes the spot
+        if (!stopTheFiringUpdateMethod) {
+            if (Gdx.input.justTouched() && gunTargetPointer == -1 && !UiHandler.isTouched) {   //airShip updates first so takes the spot
 
-            //System.out.println("touched");
-            if (Airship.airshipTouchPointer >= 0) {
-                for (int i = 0; i <= 1; i++) {
-                    if (i!=Airship.airshipTouchPointer&&!airship.pointerOnAirship(i)&&Gdx.input.isTouched(i)) {
-                        gunTargetPointer = i;
-                        //System.out.println("Pointer "+i+" "+ Airship.pointerOnAirship(i));
-                        //if (targetBird!=null)targetBird=null;
+                //System.out.println("touched");
+                if (Airship.airshipTouchPointer >= 0) {
+                    for (int i = 0; i <= 1; i++) {
+                        if (i != Airship.airshipTouchPointer && !airship.pointerOnAirship(i) && Gdx.input.isTouched(i)) {
+                            gunTargetPointer = i;
+                            //System.out.println("Pointer "+i+" "+ Airship.pointerOnAirship(i));
+                            //if (targetBird!=null)targetBird=null;
                             //so that reticle knows to stop going to targeted bird but finger instead
-                        //System.out.println("Set and GunTargetPointer set to: " + gunTargetPointer);
-                        break;
+                            //System.out.println("Set and GunTargetPointer set to: " + gunTargetPointer);
+                            break;
+                        }
+                    }
+                } else {
+                    gunTargetPointer = 0;
+                    //if (targetBird!=null)targetBird=null;
+                    //System.out.println("Not set and GunTargetPointer set to: " + gunTargetPointer);
+                }
+            }
+
+            if (UiHandler.aimPad.isTouched() || (gunTargetPointer >= 0 && Gdx.input.isTouched(gunTargetPointer) && !airship.pointerOnAirship(gunTargetPointer))) {
+                if (projRotates) {
+                    if (firingInterval - (System.currentTimeMillis() - lastShotTime) < preThrowActionDur) {//if half a second before throw time
+                        if (!preThrowSpin) {
+                            preThrowSpin = true;
+                            rotAdded = spinStartSpeed;
+                            flipSpinDir = false;
+                        }
+                    } else {
+                        if (preThrowSpin) preThrowSpin = false;
+                    }
+                } else if (turretPullsBack) {
+                    if (firingInterval - (System.currentTimeMillis() - lastShotTime) < preThrowActionDur + 400) {//if half a second before throw time
+                        if (!pullBackThenThrow) {
+                            pullBackThenThrow = true;
+                            posOffset.setZero();
+                            vel.set(origVel);
+                            flipVel = false;
+                        }
+                    } else {
+                        if (pullBackThenThrow) {
+                            pullBackThenThrow = false;
+                            posOffset.setZero();
+                        }
                     }
                 }
-            } else {
-                gunTargetPointer = 0;
-                //if (targetBird!=null)targetBird=null;
-                //System.out.println("Not set and GunTargetPointer set to: " + gunTargetPointer);
-            }
-        }
 
-        if (UiHandler.aimPad.isTouched()   ||   (   gunTargetPointer>=0&&Gdx.input.isTouched(gunTargetPointer)&&!airship.pointerOnAirship(gunTargetPointer)   )   ) {
-            if (projRotates) {
-                if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur) {//if half a second before throw time
-                    if (!preThrowSpin) {preThrowSpin = true;rotAdded=spinStartSpeed;flipSpinDir=false;}
-                } else {
-                    if (preThrowSpin) preThrowSpin = false;
+                if (!UiHandler.aimPad.isTouched()) {
+                    lastFingerPosition.set(InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)), -(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight));
+                    setRotation(0, 0, lastFingerPosition.y - pos.y, lastFingerPosition.x - pos.x, false);
+                } else
+                    setRotation(0, 0, UiHandler.aimPad.getKnobPercentY(), UiHandler.aimPad.getKnobPercentX(), true);
+
+                if (!preThrowSpin) rotateToTarget();
+
+                //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
+                if (!firing && (targetAquired || projRotates)) {
+                    startFiring();
                 }
-            } else if (turretPullsBack){
-                if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur+400) {//if half a second before throw time
-                    if (!pullBackThenThrow){pullBackThenThrow = true; posOffset.setZero();vel.set(origVel);flipVel=false;}
-                } else {
-                    if (pullBackThenThrow) {pullBackThenThrow = false;posOffset.setZero();}
-                }
-            }
+            } else if (gunTargetPointer >= 0 && (!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
+                gunTargetPointer = -1;                                                   //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
+                //System.out.println("GunTargetPointer set to: "+gunTargetPointer+" because "+(!Gdx.input.isTouched(gunTargetPointer))+" and "+(Airship.airshipTouchPointer==gunTargetPointer));
 
-            if (!UiHandler.aimPad.isTouched() ) {
-                lastFingerPosition.set(InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)),-(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight));
-                setRotation(0, 0,  lastFingerPosition.y - pos.y,lastFingerPosition.x  - pos.x, false);
-            }
-            else setRotation(0, 0,  UiHandler.aimPad.getKnobPercentY(),UiHandler.aimPad.getKnobPercentX(), true);
+                //System.out.println("Set Bird if closer*****************************************");
 
-            if (!preThrowSpin) rotateToTarget();
-
-            //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
-            if (!firing && (targetAquired||projRotates)) {
-                startFiring();
-            }
-        } else if (gunTargetPointer>=0&&(!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
-            gunTargetPointer=-1;                                                   //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
-            //System.out.println("GunTargetPointer set to: "+gunTargetPointer+" because "+(!Gdx.input.isTouched(gunTargetPointer))+" and "+(Airship.airshipTouchPointer==gunTargetPointer));
-
-            //System.out.println("Set Bird if closer*****************************************");
-            if (!firingStoppedByGamePause) {
-                BirdAbstractClass target = null;
-                double distance;
-                if (targetBird != null) {
-                    if (activeBirdQueue.size() > 1) {//need min 2 birds to switch between
-                        double minDistance = camHeight * 3f;
-                        for (BirdAbstractClass i : activeBirdQueue) {//if theres a bird closer to the reticle when we drop it than the current targetBird would be
-                            distance = Math.sqrt(Math.pow(lastFingerPosition.x - i.x, 2) + (Math.pow(lastFingerPosition.y - i.y, 2)));
-                            if (distance < minDistance) {
-                                minDistance = distance;
-                                target = i;
+                    BirdAbstractClass target = null;
+                    double distance;
+                    if (targetBird != null) {
+                        if (activeBirdQueue.size() > 1) {//need min 2 birds to switch between
+                            double minDistance = camHeight * 3f;
+                            for (BirdAbstractClass i : activeBirdQueue) {//if theres a bird closer to the reticle when we drop it than the current targetBird would be
+                                distance = Math.sqrt(Math.pow(lastFingerPosition.x - i.x, 2) + (Math.pow(lastFingerPosition.y - i.y, 2)));
+                                if (distance < minDistance) {
+                                    minDistance = distance;
+                                    target = i;
+                                }
+                            }
+                            if (minDistance < Math.sqrt(Math.pow(lastFingerPosition.x - targetBird.x, 2) + (Math.pow(lastFingerPosition.y - targetBird.y, 2)))) {
+                                targetBird = target;
+                                //System.out.println("Change target");
                             }
                         }
-                        if (minDistance < Math.sqrt(Math.pow(lastFingerPosition.x - targetBird.x, 2) + (Math.pow(lastFingerPosition.y - targetBird.y, 2)))) {
-                            targetBird = target;
-                            //System.out.println("Change target");
+                    } else if (firing) {
+                        stopFiring();
+                    }
+
+                if (preThrowSpin) preThrowSpin = false;
+                if (pullBackThenThrow) pullBackThenThrow = false;
+            } else {    //AI SYSTEM
+                //System.out.println("TargetBird: "+targetBird);
+
+                if (activeBirdQueue.size() > 0) {
+                    if ((targetBird == null || !targetBird.isAlive) && targetHandler.targetBird != null) {
+
+                        //System.out.println("1");
+                        targetBird = targetHandler.targetBird;
+                        setRotation(targetBird.xVel, targetBird.yVel, targetBird.y - pos.y, targetBird.x - pos.x, false);
+                        if (!preThrowSpin) rotateToTarget();
+
+                    } else if (targetBird != null && targetBird.isAlive && activeBirdQueue.contains(targetBird)) {
+                        if (projRotates) {
+                            if (firingInterval - (System.currentTimeMillis() - lastShotTime) < preThrowActionDur) {//if half a second before throw time
+                                if (!preThrowSpin) {
+                                    preThrowSpin = true;
+                                    rotAdded = spinStartSpeed;
+                                    flipSpinDir = false;
+                                }
+                            } else {
+                                if (preThrowSpin) preThrowSpin = false;
+                            }
+                        } else if (turretPullsBack) {
+                            if (firingInterval - (System.currentTimeMillis() - lastShotTime) < preThrowActionDur + 400) {//if half a second before throw time
+                                if (!pullBackThenThrow) {
+                                    pullBackThenThrow = true;
+                                    vel.set(origVel);
+                                    flipVel = false;
+                                }
+                            } else {
+                                if (pullBackThenThrow) {
+                                    pullBackThenThrow = false;
+                                    posOffset.setZero();
+                                }
+                            }
                         }
+                        //`System.out.println("2 "+ BirdHandler.activeBirdQueue);
+                        //ask haoran for a better equation
+                        //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is vel but needs to be better scaled
+                        setRotation(targetBird.xVel, targetBird.yVel, targetBird.y - pos.y, targetBird.x - pos.x, false);
+                        if (!preThrowSpin) rotateToTarget();
+                        //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
+                        if (!firing && (targetAquired || projRotates)) {
+                            startFiring();
+                        }
+                    } else if (firing) {
+                        //System.out.print("Stop firing 1");
+                        stopFiring();
+                        targetBird = null;
                     }
                 } else if (firing) {
+                    //System.out.print("Stop firing 2");
                     stopFiring();
+                    targetBird = null;
                 }
-            } else if (targetBird==null&&firing){
-                    stopFiring();
-            }
-            if (preThrowSpin) preThrowSpin=false;
-            if (pullBackThenThrow) pullBackThenThrow=false;
-        } else if (!firingStoppedByGamePause) {    //AI SYSTEM
-            //System.out.println("TargetBird: "+targetBird);
-
-            if (activeBirdQueue.size() > 0) {
-                if ((targetBird==null||!targetBird.isAlive) && targetHandler.targetBird!=null) {
-
-                    //System.out.println("1");
-                    targetBird=targetHandler.targetBird;
-                    setRotation(targetBird.xVel, targetBird.yVel,targetBird.y- pos.y, targetBird.x- pos.x,false);
-                    if (!preThrowSpin) rotateToTarget();
-
-                } else if (targetBird!=null&&targetBird.isAlive&&activeBirdQueue.contains(targetBird)){
-                    if (projRotates) {
-                        if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur) {//if half a second before throw time
-                            if (!preThrowSpin) {preThrowSpin = true;rotAdded=spinStartSpeed;flipSpinDir=false;}
-                        } else {
-                            if (preThrowSpin) preThrowSpin = false;
-                        }
-                    } else if (turretPullsBack) {
-                        if (firingInterval-(System.currentTimeMillis() - lastShotTime)<preThrowActionDur+400) {//if half a second before throw time
-                            if (!pullBackThenThrow){pullBackThenThrow=true;vel.set(origVel);flipVel=false;}
-                        } else {
-                            if (pullBackThenThrow) {pullBackThenThrow = false; posOffset.setZero();}
-                        }
-                    }
-                    //`System.out.println("2 "+ BirdHandler.activeBirdQueue);
-                    //ask haoran for a better equation
-                    //rotation=Math.toDegrees(Math.atan(     (position.x-targetBird.x)/(position.y/targetBird.yVel)     ));//pen is vel but needs to be better scaled
-                    setRotation( targetBird.xVel, targetBird.yVel,targetBird.y- pos.y, targetBird.x- pos.x, false);
-                    if (!preThrowSpin)rotateToTarget();
-                    //if (turretType=='s') System.out.println("rotation: "+rotation+" , targetRot: "+targetRot);
-                    if (!firing && (targetAquired||projRotates)) {
-                        startFiring();
-                    }
-                } else if (firing) {
-                    //System.out.print("Stop firing 1");
-                    stopFiring();
-                    targetBird=null;
-                }
-            } else if (firing) {
-                //System.out.print("Stop firing 2");
-                stopFiring();
-                targetBird=null;
             }
         }
     }

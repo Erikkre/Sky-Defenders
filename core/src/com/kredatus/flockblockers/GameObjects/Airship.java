@@ -49,9 +49,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private boolean isAlive;
     private ArrayList<Vector2> turretPositionOffsets = new ArrayList<Vector2>();
 
-    public static int armor, health; //slowdownSpeed;
+    public static int armor, health, fuel, ammo; //slowdownSpeed;
 
-    public static int rackLvl, burnerLvl, healthLvl, armorLvl, speedLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
+    public static int rackLvl, burnerLvl, healthLvl, armorLvl, speedLvl, fuelLvl, ammoLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
     public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, pipeTexture, reticleTexture,
             dragCircleTexture, dragLineTexture, aimLineTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
     public static PointLight dragCircleLight;
@@ -89,14 +89,24 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static float[] airshipTint, airShipCloudTint;
     public boolean hitMaxBrightnessCloudBrightening=false;
     public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850, 2500},
-            speedValues={55, 65, 75, 88, 103, 119, 136};
+            speedValues={55, 65, 75, 88, 103, 119, 136},ammoValues={100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800},fuelValues={100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800};
     public TextureRegion[] rackTextures=new TextureRegion[7];
     
     public int nextTurretPosition;
     public float thrusterYposOffset;
     public void healthUp(){
         if (healthLvl<healthValues.length-1) {
-            health = healthValues[++healthLvl];
+            healthLvl++;
+        }
+    }
+    public void fuelUp(){
+        if (fuelLvl<fuelValues.length-1) {
+            fuelLvl++;
+        }
+    }
+    public void ammoUp(){
+        if (ammoLvl<ammoValues.length-1) {
+            ammoLvl++;
         }
     }
     public void armorUp(){
@@ -156,8 +166,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     public void toSurvival(String sizeChangeType){
         Boolean rackWasSetUp=false;
+
         if (sizeChangeType.equals("startToSurvival")&&rackLvl!=1) {rackSetup();rackWasSetUp=true;}
-        if (sizeChangeType==null) this.sizeChangeType="buyMenuToSurvival";
+        if (sizeChangeType.equals("buyMenuToSurvival")) this.sizeChangeType="buyMenuToSurvival";
         else this.sizeChangeType="startToSurvival";
         changeTextureSizes(armorLvl,rackLvl,"survival");
         movtween =Tween.to(pos,0,sizeChangeDur).target(camWidth/2f,camHeight/2f).ease(TweenEquations.easeInOutCubic).delay(1f).start();
@@ -199,8 +210,16 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackLvl=    prefs.getInteger("rackLvl",0);
         speedLvl=  prefs.getInteger("speedLvl",0);
         burnerLvl=prefs.getInteger("burnerLvl",0);
+        ammoLvl= prefs.getInteger("ammoLvl",0);
+        fuelLvl=prefs.getInteger("fuelLvl",0);
+
         health=prefs.getInteger("health",healthValues[healthLvl]);
         armor=prefs.getInteger("armor",armorValues[armorLvl]);
+        if (health==0) {health=healthValues[healthLvl];armor=armorValues[armorLvl];}
+        ammo=prefs.getInteger("ammo",ammoValues[ammoLvl]);
+        if (ammo==0)ammo=ammoValues[ammoLvl];
+        fuel=prefs.getInteger("fuel",fuelValues[fuelLvl]);
+        if (fuel==0)fuel=fuelValues[fuelLvl];
         loadTextures();
 
         loadFireEffects();
@@ -321,7 +340,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         rackTexture=rackTextures[armorLvl];
         rackTexture.setRegion(rackTexture, 0, 0, rackTexture.getRegionWidth(), (int) (tHOrig*(rackLvl + 1)  -  20) );
 
-        armor=armorValues[armorLvl];
         assignRackPositions();
     }
     private void updateRackAndPositionsDuringSizeChangeTween(){
@@ -869,8 +887,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             else batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
             //System.out.println("Turretlist size: " + turretList.size());
             Turret turretAimer = turretList.get(0);
-            if (turretAimer.gunTargetPointer != -1&&!pointerOnAirship(turretAimer.gunTargetPointer)) {    //if using finger to aim
-                if (!UiHandler.aimPad.isTouched()) UiHandler.aimPad.calculatePositionAndValue(UiHandler.aimPad.getX()+(turretAimer.lastFingerPosition.x-pos.x)*10,UiHandler.aimPad.getY()+(turretAimer.lastFingerPosition.y-pos.y)*10,false);
+            if (turretAimer.gunTargetPointer != -1&&!pointerOnAirship(turretAimer.gunTargetPointer)&&!turretAimer.stopTheFiringUpdateMethod) {    //if using finger to aim
+                UiHandler.aimPad.calculatePositionAndValue(UiHandler.aimPad.getX()+(turretAimer.lastFingerPosition.x-pos.x)*10,UiHandler.aimPad.getY()+(turretAimer.lastFingerPosition.y-pos.y)*10,false);
 
                 batcher.draw(reticleTexture, turretAimer.lastFingerPosition.x - reticleTexture.getRegionWidth() / 3f,
                         turretAimer.lastFingerPosition.y - reticleTexture.getRegionWidth() / 3f,
@@ -1042,6 +1060,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                         currentNewTexturesSizeRatio);
             }
         }
+        System.out.println(armor);
     }
 
     public void hit(int collisionDmg) {
@@ -1049,8 +1068,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             if (armor<collisionDmg) {health-=collisionDmg-armor;armor=0;UiHandler.airshipHealthBar.setValue(health);UiHandler.airshipHealthLabel.setText(health);}
             else armor-=collisionDmg;
             UiHandler.airshipArmorBar.setValue(armor);UiHandler.airshipArmorLabel.setText(armor);
-        } else if (health>=collisionDmg) health-=collisionDmg;
-        else health=0;
+        } else if (health>=collisionDmg) {
+            health -= collisionDmg;
+        } else health=0;
         UiHandler.airshipHealthBar.setValue(health);UiHandler.airshipHealthLabel.setText(health);
 
 

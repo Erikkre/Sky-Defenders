@@ -58,7 +58,7 @@ public class GameWorld {
         this.score = score;
     }
 
-    public static int exp, score, gold, fuel, ammo, diamonds, round;
+    public static int exp, score, gold, diamonds, round;
 
     public Value alpha =new Value(0),alphaBg=new Value(0);
     public Tween logoTween, logoBgTween, timerTween;
@@ -90,8 +90,6 @@ public class GameWorld {
         exp=prefs.getInteger("exp",0);
         score=prefs.getInteger("score",0);
         gold=prefs.getInteger("gold",0);
-        fuel=prefs.getInteger("fuel",0);
-        ammo=prefs.getInteger("ammo",0);
         diamonds=prefs.getInteger("diamonds",0);
         round=prefs.getInteger("round",1);
     }
@@ -223,9 +221,8 @@ public class GameWorld {
         bgHandler.survivalToBuyMenu();
         for (Turret i : airship.turretList){
             if (i.firing) {
+                i.stopTheFiringUpdateMethod =true;//dont need to stop firing because we are pausing entire update and refiring immediately after
                 i.stopFiring();
-                i.firingStoppedByGamePause = true;
-                i.targetBird=null;
             }
         }
 
@@ -241,9 +238,8 @@ public class GameWorld {
         bgHandler.buyMenuToSurvival();
 
         for (Turret i : airship.turretList) {
-            if (i.firingStoppedByGamePause) {
-                i.startFiring();
-                i.firingStoppedByGamePause = false;
+            if (i.stopTheFiringUpdateMethod) {
+                i.stopTheFiringUpdateMethod=false;
             }
         }
         birdHandler.resume();
