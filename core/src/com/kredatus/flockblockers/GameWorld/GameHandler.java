@@ -130,7 +130,7 @@ public class GameHandler implements Screen {
 
         prefs.putInteger("health",airship.health);
         prefs.putInteger("armor",airship.armor);
-        prefs.putInteger("fuel",airship.fuel);
+        prefs.putInteger("fuel",(int)airship.fuel);
         prefs.putInteger("ammo",airship.ammo);
 
 
@@ -176,7 +176,7 @@ public class GameHandler implements Screen {
 
         prefs.putInteger("health",airship.health);
         prefs.putInteger("armor",airship.armor);
-        prefs.putInteger("fuel",airship.fuel);
+        prefs.putInteger("fuel",(int)airship.fuel);
         prefs.putInteger("ammo",airship.ammo);
 
 

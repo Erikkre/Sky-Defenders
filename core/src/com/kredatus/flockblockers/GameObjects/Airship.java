@@ -49,7 +49,8 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     private boolean isAlive;
     private ArrayList<Vector2> turretPositionOffsets = new ArrayList<Vector2>();
 
-    public static int armor, health, fuel, ammo; //slowdownSpeed;
+    public static int armor, health, ammo; //slowdownSpeed;
+    public static float fuel;
 
     public static int rackLvl, burnerLvl, healthLvl, armorLvl, speedLvl, fuelLvl, ammoLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
     public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, pipeTexture, reticleTexture,
@@ -89,7 +90,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static float[] airshipTint, airShipCloudTint;
     public boolean hitMaxBrightnessCloudBrightening=false;
     public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850, 2500},
-            speedValues={55, 65, 75, 88, 103, 119, 136},ammoValues={100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800},fuelValues={100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800};
+            speedValues={85, 95, 105, 118, 133, 145, 160},ammoValues={1000, 200, 350, 550, 800, 1100, 1450,1850,2300,2800},fuelValues={1000, 2000, 3500, 5500, 8000, 11000, 14500,18500,23000,28000};
     public TextureRegion[] rackTextures=new TextureRegion[7];
     
     public int nextTurretPosition;
@@ -387,7 +388,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 x, y + hB, x - rB * 0.60f, y + hB * 0.92f, x - rB * 0.95f, y + hB * 0.74f, x - rB * 0.88f, y + hB * 0.45f, x - rB * 0.15f, y-tH.get()*0.2f,  //top to bottom left of burner
                 x + rB * 0.15f, y-tH.get()*0.2f, x + rB * 0.88f, y + hB * 0.45f, x + rB * 0.95f, y + hB * 0.74f, x + rB * 0.60f, y + hB * 0.92f //to top of balloon
         });
-        balloonHitbox.setOrigin(startX,startY);
+        balloonHitbox.setOrigin(startX,startY+balloonBob.get());
     }
     private void assignRackBounds() {
         float x = pos.x, y = pos.y+balloonBob.get();
@@ -427,7 +428,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
             );
         }
-        rackHitbox.setOrigin(startX,startY);
+        rackHitbox.setOrigin(startX,startY+balloonBob.get());
     }
 
     public  boolean pointerOnAirship(int pointer) {
@@ -636,7 +637,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.println("Was "+firstEmittersOfEachEffect.get(i).getTint().getColors()[0]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[1]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[2]);
     }
 
+    public void loseFuel(float rate){if (fuel>0) {fuel-=rate;if (fuel<0.51f)UiHandler.fuelLabel.setColor(Color.RED);}}
     public void fireThruster(int i){
+        loseFuel(0.1f);
         firstEmittersOfEachEffect.get(i).allowCompletion();
         if (i==1) {
             setEmitterVal(firstEmittersOfEachEffect.get(i).getAngle(), 180 + rotation.get(), true, true);
@@ -788,12 +791,13 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         if (balloonHitbox!=null) {//check if hitbox properly assigned
             rackHitbox.setRotation(rotation.get());
             balloonHitbox.setRotation(rotation.get());
-            rackHitbox.setPosition(pos.x - startX, pos.y+balloonBob.get()+ tH.get()/2 - startY);
-            balloonHitbox.setPosition(pos.x - startX, pos.y+balloonBob.get()+ tH.get()/2 - startY);
+            rackHitbox.setPosition(pos.x - startX, pos.y+balloonBob.get() - startY);
+            balloonHitbox.setPosition(pos.x - startX, pos.y+balloonBob.get() - startY);
         }
         //System.out.print(BgHandler.isbgVertFast);
         if (BgHandler.isbgVertFast||BgHandler.endWaveBgMotion) {
             fastBurner();
+            loseFuel(0.01f);
             //System.out.println("very fast");
         } /*else if (firstEmittersOfEachEffect.get(0).getEmission().getHighMax() == 2000){ //if past fastBurning stage, change emission to 200
             for (ParticleEmitter i : additiveEffects.get(0).getEmitters()) {
@@ -813,7 +817,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
 
         //0 is burner, 1 is thrustLeft, 2 is thrustRight
+        loseFuel(0.01f);
         if (!movtween.isFinished()) { //if moving
+            loseFuel(0.05f);
+
             dragLineFadeout.update(delta);
 
             //if (vel.y>-2&&firstEmittersOfEachEffect.get(0).isComplete()) firstEmittersOfEachEffect.get(0).reset();
@@ -1060,7 +1067,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                         currentNewTexturesSizeRatio);
             }
         }
-        System.out.println(armor);
     }
 
     public void hit(int collisionDmg) {

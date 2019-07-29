@@ -523,13 +523,13 @@ public void setRotate(float angle){
             //batcher.begin();
         }
         drawAirshipReticle();
-/*      if (airship.balloonHitbox!=null){
+      if (airship.balloonHitbox!=null){
         shapeRendererCust.begin(ShapeRenderer.ShapeType.Line);
         shapeRendererCust.setColor(255,0,0, 1f);
 
         shapeRendererCust.polygon(airship.rackHitbox.getTransformedVertices());
         shapeRendererCust.polygon(airship.balloonHitbox.getTransformedVertices());
-        shapeRendererCust.end();}*/
+        shapeRendererCust.end();}
 
 
     }

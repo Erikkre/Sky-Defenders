@@ -3,7 +3,6 @@ package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
@@ -65,7 +64,7 @@ public class TargetHandler {
             if (i.isAlive && airship.balloonHitbox!=null && (i.collides(airship.rackHitbox) || i.collides(airship.balloonHitbox)) ) {
                     //System.out.println("********************** HIT REAL *********************");
                     airship.hit(i.health);
-                ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(new Vector2(airship.pos.x,airship.pos.y+airship.balloonHeight.get()),-i.health,40,1.5f,2f);
+                ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.followFadeAwayNumberEffect(airship,-i.health,45,1.5f,2f);
                     i.hit(i.origHealth+1);    //lol I hope bird health is below orig
                     if (!balloonHitPlaying){
                         balloonHit.play(0.55f);

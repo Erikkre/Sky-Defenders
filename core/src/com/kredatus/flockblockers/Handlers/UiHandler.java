@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
+import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Resources.Rank;
@@ -36,8 +37,10 @@ import java.util.Random;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.forever;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 public class UiHandler {
@@ -120,9 +123,9 @@ public class UiHandler {
         loadSurvivalStage();
     }
     public void fadeAwayNumberEffect(Vector2 pos,int val,int randomizedMoveDistance,float scale,float time){
-        Label effect;
-        if (val>=0) {effect=new Label("+"+val, shadeSkin,"title-plain");}
-        else {effect=new Label(Integer.toString(val), shadeSkin,"title-plain");}
+        Label effect=new Label("", shadeSkin,"title-plain");
+        if (val>=0) effect.setText("+"+val);
+        else effect.setText(Integer.toString(val));
         //float minHeight=shadeSkin.getDrawable("font-title").getMinHeight();
         effect.setFontScale(scale);
         effect.setPosition(pos.x,pos.y);
@@ -138,6 +141,45 @@ public class UiHandler {
         );
         stage.addActor(effect);
         //shadeSkin.getDrawable("title-plain").setMinHeight(minHeight);
+    }
+    public void followFadeAwayNumberEffect(final Object T,int val,int randomizedMoveDistance,float scale,float time){
+        final Label effect=new Label("", shadeSkin,"title-plain");effect.setAlignment(Align.center);
+        if (val>=0) effect.setText("+"+val);
+        else effect.setText(Integer.toString(val));
+        //float minHeight=shadeSkin.getDrawable("font-title").getMinHeight();
+        effect.setFontScale(scale);
+        final Vector2 v=new Vector2(-randomizedMoveDistance+r.nextInt(randomizedMoveDistance*2),-randomizedMoveDistance+r.nextInt(randomizedMoveDistance*2));
+
+        Runnable setPos;
+        if (T instanceof Airship){
+            setPos = new Runnable() {
+            @Override
+            public void run() {
+                if (T instanceof Airship) {
+                    effect.setPosition(((Airship) T).pos.x+v.x,((Airship) T).pos.y+((Airship) T).balloonHeight.get()/2+v.y);
+                }
+            }
+        };} else {
+            setPos = new Runnable() {
+                @Override
+                public void run() {
+                if (T instanceof Airship) {
+                    effect.setPosition(((BirdAbstractClass) T).x+v.x, ((BirdAbstractClass) T).y+v.y);
+                }
+                }
+            };}
+
+        effect.addAction(
+            parallel(
+                sequence(
+                    delay(time / 3f),
+                    fadeOut(time, Interpolation.exp10),
+                    com.badlogic.gdx.scenes.scene2d.actions.Actions.removeActor()
+                ),
+                forever(run(setPos))
+            )
+        );
+        stage.addActor(effect);
     }
 
     public void survivalToBuyMenu(){
@@ -218,7 +260,7 @@ public class UiHandler {
 
         fuelSymbol=new Image(Loader.tA.findRegion("fuel"));
         table1.add(fuelSymbol).size(40);
-        fuelLabel= new Label(Integer.toString(Airship.fuel), shadeSkin,"title-plain");
+        fuelLabel= new Label(Integer.toString((int)Airship.fuel), shadeSkin,"title-plain");
         table1.add(fuelLabel).size((camWidth-(40*5))/6f,fuelLabel.getPrefHeight()).padLeft(3);
 
         ammoSymbol=new Image(Loader.tA.findRegion("ammo"));
@@ -236,7 +278,7 @@ public class UiHandler {
 
 
         movPad = new Touchpad(0, shadeSkin);
-        movPad.setColor(1,1,1,0.5f);//touchpad.settouchpad.scaleBy(0.7f);
+        movPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         shadeSkin.getDrawable("touchpad-knob").setMinWidth(50);shadeSkin.getDrawable("touchpad-knob").setMinHeight(50);
         //touchpad2.setColor(1,1,1,1f);
 
@@ -465,7 +507,7 @@ public class UiHandler {
     }
     public void update(float delta){
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
-        UiHandler.ammoLabel.setText(Airship.ammo);
+        ammoLabel.setText(Airship.ammo);fuelLabel.setText(Integer.toString((int)Airship.fuel));
         if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
     }
 }
