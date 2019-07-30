@@ -391,44 +391,44 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         balloonHitbox.setOrigin(startX,startY+balloonBob.get());
     }
     private void assignRackBounds() {
-        float x = pos.x, y = pos.y+balloonBob.get();
+        float x = pos.x, y = pos.y;
         if (rackLvl==0){
             rackHitbox = new Polygon(new float[] {
-                    x - tW.get() * 2, y -tH.get()*0.2f,         x - tW.get() * 2, y - 1 * tH.get() , //bottom left rack
-                    x, y - (1 * tH.get()),  //tip of bottom of armor
-                    x + tW.get() * 2, y - 1 * tH.get() ,     x + tW.get() * 2, y-tH.get()*0.2f ,     //bottom right of burner
+                    x - tW.get() * 2, y -tH.get()*0.1f,         x - tW.get() * 2, y - 0.9f * tH.get() , //bottom left rack
+                    //x, y - (1 * tH.get()),  //tip of bottom of armor
+                    x + tW.get() * 2, y - 0.9f * tH.get() ,     x + tW.get() * 2, y-tH.get()*0.1f ,     //bottom right of burner
             }
             );
         } else if (rackLvl==1) {
             rackHitbox = new Polygon(new float[]{
-                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,//bottom left rack
-                    x, y - (2 * tH.get()),  //tip of bottom f armor
-                    x + tW.get() * 2, y - 2 * tH.get() ,   x + tW.get() * 2, y -tH.get()*0.2f ,     //bottom right of burner
+                    x - tW.get() * 2, y - tH.get()*0.1f,     x - tW.get() * 2, y - 1.9f * tH.get() ,//bottom left rack
+                    //x, y - (2 * tH.get()),  //tip of bottom f armor
+                    x + tW.get() * 2, y - 1.9f * tH.get() ,   x + tW.get() * 2, y -tH.get()*0.1f ,     //bottom right of burner
             }
             );
         } else if (rackLvl==2) {
             rackHitbox = new Polygon(new float[]{
-                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,     x - tW.get() * 1.5f, y - 3 * tH.get() ,//bottom left rack
-                    x, y - (3 * tH.get()),  //tip of bottom of armor
-                    x + tW.get() * 1.5f, y - 3 * tH.get() ,        x + tW.get() * 2, y - 2 * tH.get() ,    x + tW.get() * 2, y -tH.get()*0.2f,     //bottom right of burner
+                    x - tW.get() * 2, y -tH.get()*0.1f,     x - tW.get() * 2, y - 1.9f * tH.get() ,     x - tW.get() * 1.5f, y - 2.9f * tH.get() ,//bottom left rack
+                    //x, y - (3 * tH.get()),  //tip of bottom of armor
+                    x + tW.get() * 1.5f, y - 2.9f * tH.get() ,        x + tW.get() * 2, y - 1.9f * tH.get() ,    x + tW.get() * 2, y -tH.get()*0.1f,     //bottom right of burner
             }
             );
         } else if (rackLvl==3) {
             rackHitbox = new Polygon(new float[]{
-                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,     x - tW.get() * 1.5f, y - 4 * tH.get() ,//bottom left rack
-                    x, y - (4 * tH.get()),  //tip of bottom of armor
-                    x + tW.get() * 1.5f, y - 4 * tH.get() ,          x + tW.get() * 2, y - 2 * tH.get() ,    x + tW.get() * 2, y -tH.get()*0.2f,     //bottom right of burner
+                    x - tW.get() * 2, y -tH.get()*0.1f,     x - tW.get() * 2, y - 1.9f * tH.get() ,     x - tW.get() * 1.5f, y - 3.9f * tH.get() ,//bottom left rack
+                    //x, y - (4 * tH.get()),  //tip of bottom of armor
+                    x + tW.get() * 1.5f, y - 3.9f * tH.get() ,          x + tW.get() * 2, y - 1.9f * tH.get() ,    x + tW.get() * 2, y -tH.get()*0.1f,     //bottom right of burner
             }
             );
         } else if (rackLvl==4) {
             rackHitbox = new Polygon(new float[]{
-                    x - tW.get() * 2, y -tH.get()*0.2f,     x - tW.get() * 2, y - 2 * tH.get() ,     x - tW.get() * 1.5f, y - 4 * tH.get() ,      x - tW.get() * 1f, y - 5 * tH.get() ,//bottom left rack
-                    x, y - (5 * tH.get()),  //tip of bottom of armor
-                    x + tW.get() * 1f, y - 5 * tH.get() , x + tW.get() * 1.5f, y - 4 * tH.get() , x + tW.get() * 2, y - 2 * tH.get() , x + tW.get() * 2, y -tH.get()*0.2f,     //bottom right of burner
+                    x - tW.get() * 2, y -tH.get()*0.1f,     x - tW.get() * 2, y - 1.9f * tH.get() ,     x - tW.get() * 1.5f, y - 3.9f * tH.get() ,      x - tW.get() * 1f, y - 4.9f * tH.get() ,//bottom left rack
+                    //x, y - (5 * tH.get()),  //tip of bottom of armor
+                    x + tW.get() * 1f, y - 4.9f * tH.get() , x + tW.get() * 1.5f, y - 3.9f * tH.get() , x + tW.get() * 2, y - 1.9f * tH.get() , x + tW.get() * 2, y -tH.get()*0.1f,     //bottom right of burner
             }
             );
         }
-        rackHitbox.setOrigin(startX,startY+balloonBob.get());
+        rackHitbox.setOrigin(startX,startY + tH.get()*0.1f);
     }
 
     public  boolean pointerOnAirship(int pointer) {

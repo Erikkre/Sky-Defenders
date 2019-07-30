@@ -128,11 +128,11 @@ public class Loader implements Screen {
             load();
             //System.out.println(loadBar.getPercent() + " " + (manager.getProgress() + 0.02f));
             glowingLoadingBarTween.update(delta);
-            if (manager.getProgress() != 1.0 && loadBar.getVisualPercent() < manager.getProgress() + 0.02f && glowingLoadingBarTween.isFinished()) {
+            if (manager.getProgress() != 1.0 && loadBar.getVisualPercent() < manager.getProgress() + 0.02f && glowingLoadingBarTween.isFinished()){
                 glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 0.5f).target(0).repeatYoyo(1, 0).ease(TweenEquations.easeInCubic).start();
             } else if (manager.getProgress() == 1.0 && glowingLoadingBarTween.isYoyo()) glowingLoadingBarTween = Tween.to(loadBarAlpha, 0, 1f).target(0).ease(TweenEquations.easeNone).start();
 
-            if (manager.getProgress() == 1.0 && !glowingLoadingBarTween.isYoyo() && !isFirstTime) {
+            if (manager.getProgress() == 1.0 && !glowingLoadingBarTween.isYoyo() && !isFirstTime){
                // ((Sound) manager.get(assets.ignitionFire0Deignition7s)).setVolume(soundID,loadBarAlpha.get());
                 //System.out.println("sound set to: "+loadBarAlpha.get());
             }
