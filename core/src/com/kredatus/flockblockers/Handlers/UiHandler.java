@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -24,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
+import com.kotcrab.vis.ui.widget.VisImageTextButton;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
@@ -34,6 +36,8 @@ import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
 
 import java.util.Random;
+
+import javax.swing.Icon;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
@@ -315,12 +319,24 @@ public class UiHandler {
         temp.setColor(new Color(0,0,0,0.5f));
         final Image image_backgroundX = new Image(new SpriteDrawable(temp));
         menuButtonX = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
+
+        VisImageTextButton buyHealthButton=new VisImageTextButton("100",ImageTextButton.ButtonStyle.class);
+        VisImageTextButton buyArmorButton=new VisImageTextButton("50",shadeSkin);
+        VisImageTextButton buyFuelButton=new VisImageTextButton("10",shadeSkin);
+        VisImageTextButton buyAmmoButton=new VisImageTextButton("10",shadeSkin);
+        VisImageTextButton buyGoldButton=new VisImageTextButton("1",shadeSkin);
+
+
         final Image rateButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rateButton"));
         final Image shareButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
+        Icon
 
-        slideMenuLeft.add(shareButton).expand().row();
+        slideMenuLeft.add(buyHealthButton).grow().pad(2);
+        slideMenuLeft.add(buyArmorButton).grow().pad(2);
+        slideMenuLeft.add(buyFuelButton).grow().pad(2);
+        slideMenuLeft.add(buyAmmoButton).grow().pad(2);
+        slideMenuLeft.add(buyGoldButton).grow().pad(2);
 
-        slideMenuLeft.add(rateButton).expand().row();
 
         //icon_off_music.setVisible(false);
         //slideMenuLeft.stack(icon_music, icon_off_music).pad(52, 52, 300, 52).expandX().row(); //one on top of the other

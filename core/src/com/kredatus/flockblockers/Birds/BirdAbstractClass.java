@@ -155,7 +155,7 @@ public abstract class BirdAbstractClass {
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
-        boundingPoly  = new Polygon(new float[]{x - width / 5f, y - height / 4,          x + width / 5f, y - height / 4,          x + width / 3f, y + height / 5f,          x - width / 3f, y + height / 5f}); //trapezoid to reach bid wings
+        boundingPoly  = new Polygon(new float[]{x - width / 5f, y - height / 4,          x + width / 5f, y - height / 4,          x + width / 3f, y + height / 5.3f,          x - width / 3f, y + height / 5.3f}); //trapezoid to reach bid wings
         boundingPoly  .  setOrigin(x, y);
     }
 
