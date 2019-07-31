@@ -301,6 +301,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 	default-horizontal: {
+		parent: default-vertical
 		handle: horizontal-splitplane
 	}
 	default-vertical: {

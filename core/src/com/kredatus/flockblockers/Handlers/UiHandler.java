@@ -4,17 +4,16 @@ package com.kredatus.flockblockers.Handlers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -22,10 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
-import com.kotcrab.vis.ui.widget.VisImageTextButton;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
@@ -36,8 +33,6 @@ import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
 
 import java.util.Random;
-
-import javax.swing.Icon;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
@@ -118,7 +113,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        //stage.setDebugAll(true);
+        stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -193,7 +188,7 @@ public class UiHandler {
         slideMenuBottom.getCell(playButton).setActor(buyButton);
     }
     public void loadSurvivalStage(){
-        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
+        shadeSkin.getDrawable("loading-bar-fill-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
         loadSlideMenus();
         /***********************************************************************************each of these is a table in a different row*/
         table0=new Table().top();
@@ -314,35 +309,36 @@ public class UiHandler {
 
 
         /**     ****************************************LEFT SLIDING MENU*****************************************     **/
-        slideMenuLeft = new SlideMenu(camWidth/9f,camHeight/2f,"left",camWidth,camHeight,camHeight/35);//left or up
-        Sprite temp=new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
-        temp.setColor(new Color(0,0,0,0.5f));
-        final Image image_backgroundX = new Image(new SpriteDrawable(temp));
+        slideMenuLeft = new SlideMenu(camWidth/7f,camHeight/2f,"left",camWidth,camHeight,camHeight/35);//left or up
+        Table leftTable=new Table();leftTable.setHeight(camHeight);
+        ScrollPane scrollPane=new ScrollPane(leftTable,shadeSkin,"android");scrollPane.setWidth(camWidth/17f);
+        scrollPane.setFillParent(true);scrollPane.setFadeScrollBars(true);scrollPane.setScrollBarPositions(false,false);scrollPane.setScrollingDisabled(true,false);
+        slideMenuLeft.add(scrollPane).grow().pad(-5).width(camWidth/7f);
+        //Sprite temp=new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
+        //temp.setColor(new Color(0,0,0,0.5f));
+        //final Image image_backgroundX = new Image(new SpriteDrawable(temp));
         menuButtonX = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
 
-        VisImageTextButton buyHealthButton=new VisImageTextButton("100",ImageTextButton.ButtonStyle.class);
-        VisImageTextButton buyArmorButton=new VisImageTextButton("50",shadeSkin);
-        VisImageTextButton buyFuelButton=new VisImageTextButton("10",shadeSkin);
-        VisImageTextButton buyAmmoButton=new VisImageTextButton("10",shadeSkin);
-        VisImageTextButton buyGoldButton=new VisImageTextButton("1",shadeSkin);
+        ImageTextButton buyArmorButton=new ImageTextButton("50",shadeSkin,"buyArmor");
+        buyArmorButton.clearChildren();
+        buyArmorButton.add(buyArmorButton.getImage());buyArmorButton.row();
+        buyArmorButton.add(goldSymbol);buyArmorButton.add(buyArmorButton.getText());
 
+        leftTable.add(buyArmorButton).expandY().fillX();leftTable.row();
+        leftTable.add(new ImageTextButton("10 Gold",shadeSkin,"buyAmmo")).expandY();leftTable.row();
+        leftTable.add(new ImageTextButton("10 Gold",shadeSkin,"buyFuel")).expandY();leftTable.row();
+        leftTable.add(new ImageTextButton("100 Gold",shadeSkin,"buyHealth")).expandY();leftTable.row();
+        leftTable.add(new ImageTextButton("2000 Gold",shadeSkin,"buyDiamond")).expandY();
 
-        final Image rateButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rateButton"));
-        final Image shareButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
-        Icon
+        //final Image rateButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rateButton"));
+        //final Image shareButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
 
-        slideMenuLeft.add(buyHealthButton).grow().pad(2);
-        slideMenuLeft.add(buyArmorButton).grow().pad(2);
-        slideMenuLeft.add(buyFuelButton).grow().pad(2);
-        slideMenuLeft.add(buyAmmoButton).grow().pad(2);
-        slideMenuLeft.add(buyGoldButton).grow().pad(2);
 
 
         //icon_off_music.setVisible(false);
         //slideMenuLeft.stack(icon_music, icon_off_music).pad(52, 52, 300, 52).expandX().row(); //one on top of the other
         // setup attributes for menu navigation slideMenuLeft.
 
-        slideMenuLeft.setBackground(image_backgroundX.getDrawable());
         slideMenuLeft.top().left();
         //slideMenuLeft.setWidthStartDrag(0);
         //slideMenuLeft.setWidthBackDrag(0);
@@ -379,8 +375,8 @@ public class UiHandler {
         //System.out.println(image_backgroundX.getImageY());
         //System.out.println(image_backgroundY.getImageY());
 
-        rateButton.setName("RATE");
-        shareButton.setName("SHARE");
+        //rateButton.setName("RATE");
+        //shareButton.setName("SHARE");
         //icon_music.setName("MUSIC_ON");
         //icon_off_music.setName("MUSIC_OFF");
 
@@ -420,7 +416,7 @@ public class UiHandler {
                 if (event.getTarget().getName().equals("menuButtonX")) {
                     System.out.println("Left menu clicked");
                     boolean closed = slideMenuLeft.isCompletelyClosedX();
-                    image_backgroundX.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
+                    //image_backgroundX.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
                     slideMenuLeft.showManually(closed);
                     isTouched=true;
                 }
@@ -432,7 +428,7 @@ public class UiHandler {
         /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
         slideMenuBottom = new SlideMenu(.7f*camWidth/2.75f,camHeight/7f,"down",camWidth,camHeight, 0);
         rootTable.addActor(slideMenuBottom);
-        final Image image_backgroundY = new Image(new SpriteDrawable(temp));
+        //final Image image_backgroundY = new Image(new SpriteDrawable(temp));
         menuButtonY = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
         menuButtonY.rotateBy(90);menuButtonY.setWidth(menuButtonY.getWidth()*0.4f);menuButtonY.setHeight(menuButtonY.getHeight()*0.9f);menuButtonY.setColor(1,1,1,0.5f);
         menuButtonY.setOrigin(Align.center);
@@ -475,7 +471,7 @@ public class UiHandler {
 
 
         menuButtonY.setName("menuButtonY");
-        image_backgroundY.setName("IMAGE_BACKGROUNDY");
+        //image_backgroundY.setName("IMAGE_BACKGROUNDY");
 
         /*slideMenuBottom.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
@@ -501,7 +497,7 @@ public class UiHandler {
             public boolean touchDown(InputEvent event, float x, float y, int pnt, int btn) {
                 if (event.getTarget().getName().equals("menuButtonY")) {//have to be moving mouse slow enough to touch
                     boolean closed = slideMenuBottom.isCompletelyClosedY();
-                    image_backgroundY.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
+                    //image_backgroundY.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
                     slideMenuBottom.showManually(closed);
                     isTouched=true;
                 }

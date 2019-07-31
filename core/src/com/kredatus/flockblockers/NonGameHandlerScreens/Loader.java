@@ -158,7 +158,7 @@ public class Loader implements Screen {
         //niteSkin = manager.get(assets.niteRideUI);
         shadeSkin = manager.get(assets.shadeUI);
         loadBar = new ProgressBar(0, 1, 0.001f, false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
-        shadeSkin.getDrawable("loading-bar-fill-3d-10patch").setMinHeight(loadBar.getPrefHeight()/3f);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(loadBar.getPrefHeight()/3f+4);
+        shadeSkin.getDrawable("loading-bar-fill-10patch").setMinHeight(loadBar.getPrefHeight()/3f);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(loadBar.getPrefHeight()/3f+4);
         //`loadBar.setColor(1,0,0,1f);
 
         loadBar.setAnimateDuration(0.3f);
