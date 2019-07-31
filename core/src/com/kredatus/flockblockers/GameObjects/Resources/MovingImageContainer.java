@@ -37,7 +37,7 @@ public class MovingImageContainer {
         this.setDrawable(new TextureRegionDrawable((TextureRegion) animation.getKeyFrame(GameHandler.runTime/2)));
     }*/
 
-    public MovingImageContainer(String type, float rotation, BirdAbstractClass bird, boolean phoenixOrGoldBirdMovementType){
+    public MovingImageContainer(String type, float rotation, BirdAbstractClass bird, boolean phoenixOrGoldBirdMovementType,Vector2 pos){
         if (type.equals("coin")) {
             animation = Loader.coinAnimation;
             width = ((TextureRegion) animation.getKeyFrame(0)).getRegionWidth();height=width;
@@ -61,33 +61,34 @@ public class MovingImageContainer {
             this.type = 'd';
         }
 
-        this.phoenixOrGoldBirdMovementType=phoenixOrGoldBirdMovementType;
-        this.thisBird=bird;
+        if (pos!=null){
+            x=pos.x;y=pos.y;
+        } else if (bird!=null){
+            this.phoenixOrGoldBirdMovementType=phoenixOrGoldBirdMovementType;
+            this.thisBird=bird;
 
-        if (phoenixOrGoldBirdMovementType) {
-            //x+=thisBird.width/7.7f;
-           x1 =  (float)(Math.cos(Math.toRadians(rotation)))*55 ;
-           y1 =  (float)(Math.sin(Math.toRadians(rotation)))*55;
-           //tweenX.set(x);
-           //tweenY.set(y);
-        } else {
-            x1 = (float) (Math.cos(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
-            y1 = (float) (Math.sin(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
+            if (phoenixOrGoldBirdMovementType) {
+                //x+=thisBird.width/7.7f;
+                x1 =  (float)(Math.cos(Math.toRadians(rotation)))*55 ;
+                y1 =  (float)(Math.sin(Math.toRadians(rotation)))*55;
+                //tweenX.set(x);
+                //tweenY.set(y);
+            } else {
+                x1 = (float) (Math.cos(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
+                y1 = (float) (Math.sin(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
+            }
+            //lastDest=new Vector2(0,0);
+
+            motion1TimePhoenix=0.7f;
+            motion2TimePhoenix=1.7f;
+            motion1Time=0.7f;
+            motion2Time=1.7f;
         }
-
-
-        //lastDest=new Vector2(0,0);
-
-        motion1TimePhoenix=0.7f;
-        motion2TimePhoenix=1.7f;
-        motion1Time=0.7f;
-        motion2Time=1.7f;
-
 
         setupTweens();
     }
 
-    private void setupTweens(){
+    private void setupTweens() {
         final MovingImageContainer thisMovingImageContainer =this;
         endSecondMovementY=new TweenCallback() {
             @Override
@@ -222,7 +223,7 @@ public class MovingImageContainer {
                 batcher.draw((TextureRegion) animation.getKeyFrame(0), x - width / 2, y - height / 2,
                         width, height);
             }
-        } else if (type=='e'||type=='d'){
+        } else {
             batcher.draw(texture, x - width / 2, y - height / 2,
                     width, height);
         }

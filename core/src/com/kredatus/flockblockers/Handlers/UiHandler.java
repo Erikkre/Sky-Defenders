@@ -308,12 +308,14 @@ public class UiHandler {
         rateButton = tA.findRegion("rateButton");*/
 
 
-        /**     ****************************************LEFT SLIDING MENU*****************************************     **/
+
+        /**      ****************************************LEFT SLIDING MENU*****************************************      **/
         slideMenuLeft = new SlideMenu(camWidth/7f,camHeight/2f,"left",camWidth,camHeight,camHeight/35);//left or up
-        Table leftTable=new Table();leftTable.setHeight(camHeight);
-        ScrollPane scrollPane=new ScrollPane(leftTable,shadeSkin,"android");scrollPane.setWidth(camWidth/17f);
+        Table leftTable=new Table();leftTable.setWidth(camWidth/7f);leftTable.setFillParent(true);
+        ScrollPane scrollPane=new ScrollPane(leftTable,shadeSkin,"android");scrollPane.setWidth(camWidth/7f);
         scrollPane.setFillParent(true);scrollPane.setFadeScrollBars(true);scrollPane.setScrollBarPositions(false,false);scrollPane.setScrollingDisabled(true,false);
         slideMenuLeft.add(scrollPane).grow().pad(-5).width(camWidth/7f);
+        scrollPane.layout();scrollPane.layout();
         //Sprite temp=new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
         //temp.setColor(new Color(0,0,0,0.5f));
         //final Image image_backgroundX = new Image(new SpriteDrawable(temp));
@@ -322,13 +324,34 @@ public class UiHandler {
         ImageTextButton buyArmorButton=new ImageTextButton("50",shadeSkin,"buyArmor");
         buyArmorButton.clearChildren();
         buyArmorButton.add(buyArmorButton.getImage());buyArmorButton.row();
-        buyArmorButton.add(goldSymbol);buyArmorButton.add(buyArmorButton.getText());
+        buyArmorButton.add(goldSymbol).size(10);buyArmorButton.add(buyArmorButton.getText());
+        leftTable.add(buyArmorButton).expandY().fillX().padTop(5).padBottom(5);leftTable.row();
 
-        leftTable.add(buyArmorButton).expandY().fillX();leftTable.row();
-        leftTable.add(new ImageTextButton("10 Gold",shadeSkin,"buyAmmo")).expandY();leftTable.row();
-        leftTable.add(new ImageTextButton("10 Gold",shadeSkin,"buyFuel")).expandY();leftTable.row();
-        leftTable.add(new ImageTextButton("100 Gold",shadeSkin,"buyHealth")).expandY();leftTable.row();
-        leftTable.add(new ImageTextButton("2000 Gold",shadeSkin,"buyDiamond")).expandY();
+        ImageTextButton buyAmmoButton=new ImageTextButton("50",shadeSkin,"buyAmmo");
+        buyAmmoButton.clearChildren();
+        buyAmmoButton.add(buyAmmoButton.getImage());buyAmmoButton.row();
+        buyAmmoButton.add(goldSymbol).size(10);buyAmmoButton.add(buyAmmoButton.getText());
+        leftTable.add(buyAmmoButton).expandY().fillX().padTop(5).padBottom(5);leftTable.row();
+
+        ImageTextButton buyFuelButton=new ImageTextButton("50",shadeSkin,"buyFuel");
+        buyFuelButton.clearChildren();
+        buyFuelButton.add(buyFuelButton.getImage());buyFuelButton.row();
+        buyFuelButton.add(goldSymbol).size(10);buyFuelButton.add(buyFuelButton.getText());
+        leftTable.add(buyFuelButton).expandY().fillX().padTop(5).padBottom(5);leftTable.row();
+
+        ImageTextButton buyHealthButton=new ImageTextButton("50",shadeSkin,"buyHealth");
+        buyHealthButton.clearChildren();
+        buyHealthButton.add(buyHealthButton.getImage());buyHealthButton.row();
+        buyHealthButton.add(goldSymbol).size(10);buyHealthButton.add(buyHealthButton.getText());
+        leftTable.add(buyHealthButton).expandY().fillX().padTop(5).padBottom(5);leftTable.row();
+
+        ImageTextButton buyDiamondButton=new ImageTextButton("50",shadeSkin,"buyDiamond");
+        buyDiamondButton.clearChildren();
+        buyDiamondButton.add(buyDiamondButton.getImage());buyDiamondButton.row();
+        buyDiamondButton.add(goldSymbol).size(10);buyDiamondButton.add(buyDiamondButton.getText());
+        leftTable.add(buyDiamondButton).expandY().fillX().padTop(5).padBottom(5);leftTable.row();
+
+
 
         //final Image rateButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rateButton"));
         //final Image shareButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
@@ -375,10 +398,11 @@ public class UiHandler {
         //System.out.println(image_backgroundX.getImageY());
         //System.out.println(image_backgroundY.getImageY());
 
-        //rateButton.setName("RATE");
-        //shareButton.setName("SHARE");
-        //icon_music.setName("MUSIC_ON");
-        //icon_off_music.setName("MUSIC_OFF");
+        buyArmorButton.setName("r");
+        buyAmmoButton.setName("a");
+        buyFuelButton.setName("f");
+        buyHealthButton.setName("h");
+        buyDiamondButton.setName("d");
 
         menuButtonX.setName("menuButtonX");
         //image_backgroundX.setName("IMAGE_BACKGROUNDX");
@@ -388,9 +412,9 @@ public class UiHandler {
                 //super.touchUp(event, x, y, 0, 0);
                 Actor actor = event.getTarget();
                 //System.out.println(32123132132321f);
-                if (actor.getName().equals("RATE")) {
+                if (actor.getName().equals("r")) {
                     //Gdx.app.debug(TAG, "Rate button clicked.");
-                    System.out.println("Rate button clicked.");
+
                     isTouched=true;
                 } else if (actor.getName().equals("SHARE")) {
                     //Gdx.app.debug(TAG, "Share button clicked.");
