@@ -318,16 +318,14 @@ public class UiHandler {
         final Image rateButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rateButton"));
         final Image shareButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
 
-        // add items into drawer panel.
         slideMenuLeft.add(shareButton).expand().row();
-        //slideMenuLeft.add().height(300f).row(); // empty space
+
         slideMenuLeft.add(rateButton).expand().row();
-        //slideMenuLeft.add(icon_share).pad(35, 52, 35, 52).expandX().row();
 
         //icon_off_music.setVisible(false);
         //slideMenuLeft.stack(icon_music, icon_off_music).pad(52, 52, 300, 52).expandX().row(); //one on top of the other
-
         // setup attributes for menu navigation slideMenuLeft.
+
         slideMenuLeft.setBackground(image_backgroundX.getDrawable());
         slideMenuLeft.top().left();
         //slideMenuLeft.setWidthStartDrag(0);
