@@ -26,6 +26,7 @@ import com.kotcrab.vis.ui.VisUI;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
+import com.kredatus.flockblockers.GameObjects.Resources.MovingImageContainer;
 import com.kredatus.flockblockers.GameObjects.Resources.Rank;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
@@ -33,6 +34,7 @@ import com.kredatus.flockblockers.ui.SlideMenu;
 import com.kredatus.flockblockers.ui.TouchRotatePad;
 
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
@@ -61,6 +63,7 @@ public class UiHandler {
     public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel, lvlLabel, rankNameLabel, roundLabel, waveLabel,airshipHealthLabel,airshipArmorLabel,expLabel;
     public static Stack expStack;
     public Random r = new Random();
+    public ConcurrentLinkedQueue<MovingImageContainer> boughtItemsList= new ConcurrentLinkedQueue<MovingImageContainer>();
     //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
@@ -76,7 +79,7 @@ public class UiHandler {
     }
 
     public int rankSize;public Color rankColor;
-    public static Actor goldSymbol,fuelSymbol,ammoSymbol,diamondSymbol,airshipHealthSymbol,airshipArmorSymbol;public static Rank rank; public static ProgressBar expBar,airshipHealthBar,airshipArmorBar;public static Image rankImage;
+    public static Image goldSymbol,fuelSymbol,ammoSymbol,diamondSymbol,airshipHealthSymbol,airshipArmorSymbol;public static Rank rank; public static ProgressBar expBar,airshipHealthBar,airshipArmorBar;public static Image rankImage;
     Preferences prefs = Gdx.app.getPreferences("skyDefenders");
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
         /******* BUTTONS *******/
@@ -189,7 +192,12 @@ public class UiHandler {
     }
     public void loadSurvivalStage(){
         shadeSkin.getDrawable("loading-bar-fill-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
-        loadSlideMenus();
+
+
+
+
+
+
         /***********************************************************************************each of these is a table in a different row*/
         table0=new Table().top();
         rootTable.add(table0).growX().padTop(13).padBottom(-8).padRight(1).colspan(2);rootTable.row();
@@ -296,6 +304,7 @@ public class UiHandler {
         roundLabel.setAlignment(Align.left);waveLabel.setAlignment(Align.right);
         bottomTable.add(roundLabel).growX().left().pad(4);bottomTable.add(waveLabel).growX().right().pad(4);
 
+        loadSlideMenus();
     }
     public void loadSlideMenus(){
         //stage.addCaptureListener(slideMenuLeft.getListeners().get(0));stage.addCaptureListener(slideMenuBottom.getListeners().get(0));
@@ -310,12 +319,12 @@ public class UiHandler {
 
 
         /**      ****************************************LEFT SLIDING MENU*****************************************      **/
-        slideMenuLeft = new SlideMenu(camWidth/7f,camHeight/2f,"left",camWidth,camHeight,camHeight/35);//left or up
-        Table leftTable=new Table();leftTable.setWidth(camWidth/7f);leftTable.setFillParent(true);
-        ScrollPane scrollPane=new ScrollPane(leftTable,shadeSkin,"android");scrollPane.setWidth(camWidth/7f);
+        slideMenuLeft = new SlideMenu(camWidth/6.5f,camHeight/2f,"left",camWidth,camHeight,camHeight/35);//left or up
+        final Table leftTable=new Table();leftTable.pad(-10);//leftTable.setFillParent(true);//leftTable.setWidth(camWidth/7f);
+        final ScrollPane scrollPane=new ScrollPane(leftTable,shadeSkin,"android");//scrollPane.setWidth(camWidth/7f);
         scrollPane.setFillParent(true);scrollPane.setFadeScrollBars(true);scrollPane.setScrollBarPositions(false,false);scrollPane.setScrollingDisabled(true,false);
-        slideMenuLeft.add(scrollPane).grow().pad(-5).width(camWidth/7f);
-        scrollPane.layout();scrollPane.layout();
+        slideMenuLeft.add(scrollPane).grow().pad(-10);//.width(camWidth/7f);
+        //scrollPane.layout();scrollPane.layout();
         //Sprite temp=new Sprite(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
         //temp.setColor(new Color(0,0,0,0.5f));
         //final Image image_backgroundX = new Image(new SpriteDrawable(temp));
@@ -323,33 +332,33 @@ public class UiHandler {
 
         ImageTextButton buyArmorButton=new ImageTextButton("50",shadeSkin,"buyArmor");
         buyArmorButton.clearChildren();
-        buyArmorButton.add(buyArmorButton.getImage());buyArmorButton.row();
-        buyArmorButton.add(goldSymbol).size(10);buyArmorButton.add(buyArmorButton.getText());
-        leftTable.add(buyArmorButton).expandY().fillX().padTop(5).padBottom(5);leftTable.row();
+        buyArmorButton.add(buyArmorButton.getImage()).colspan(2);buyArmorButton.row();
+        buyArmorButton.add(new Image(goldSymbol.getDrawable())).size(20);buyArmorButton.add(buyArmorButton.getLabel());
+        leftTable.add(buyArmorButton).expandY().padTop(5).padBottom(5);leftTable.row();
 
-        ImageTextButton buyAmmoButton=new ImageTextButton("50",shadeSkin,"buyAmmo");
+        ImageTextButton buyAmmoButton=new ImageTextButton("10",shadeSkin,"buyAmmo");
         buyAmmoButton.clearChildren();
-        buyAmmoButton.add(buyAmmoButton.getImage());buyAmmoButton.row();
-        buyAmmoButton.add(goldSymbol).size(10);buyAmmoButton.add(buyAmmoButton.getText());
-        leftTable.add(buyAmmoButton).expandY().fillX().padTop(5).padBottom(5);leftTable.row();
+        buyAmmoButton.add(buyAmmoButton.getImage()).colspan(2);buyAmmoButton.row();
+        buyAmmoButton.add(new Image(goldSymbol.getDrawable())).size(20);buyAmmoButton.add(buyAmmoButton.getLabel());
+        leftTable.add(buyAmmoButton).expandY().padTop(5).padBottom(5);leftTable.row();
 
-        ImageTextButton buyFuelButton=new ImageTextButton("50",shadeSkin,"buyFuel");
+        ImageTextButton buyFuelButton=new ImageTextButton("10",shadeSkin,"buyFuel");
         buyFuelButton.clearChildren();
-        buyFuelButton.add(buyFuelButton.getImage());buyFuelButton.row();
-        buyFuelButton.add(goldSymbol).size(10);buyFuelButton.add(buyFuelButton.getText());
-        leftTable.add(buyFuelButton).expandY().fillX().padTop(5).padBottom(5);leftTable.row();
+        buyFuelButton.add(buyFuelButton.getImage()).colspan(2);buyFuelButton.row();
+        buyFuelButton.add(new Image(goldSymbol.getDrawable())).size(20);buyFuelButton.add(buyFuelButton.getLabel());
+        leftTable.add(buyFuelButton).expandY().padTop(5).padBottom(5);leftTable.row();
 
-        ImageTextButton buyHealthButton=new ImageTextButton("50",shadeSkin,"buyHealth");
+        ImageTextButton buyHealthButton=new ImageTextButton("100",shadeSkin,"buyHealth");
         buyHealthButton.clearChildren();
-        buyHealthButton.add(buyHealthButton.getImage());buyHealthButton.row();
-        buyHealthButton.add(goldSymbol).size(10);buyHealthButton.add(buyHealthButton.getText());
-        leftTable.add(buyHealthButton).expandY().fillX().padTop(5).padBottom(5);leftTable.row();
+        buyHealthButton.add(buyHealthButton.getImage()).colspan(2);buyHealthButton.row();
+        buyHealthButton.add(new Image(goldSymbol.getDrawable())).size(20);buyHealthButton.add(buyHealthButton.getLabel());
+        leftTable.add(buyHealthButton).expandY().padTop(5).padBottom(5);leftTable.row();
 
-        ImageTextButton buyDiamondButton=new ImageTextButton("50",shadeSkin,"buyDiamond");
+        ImageTextButton buyDiamondButton=new ImageTextButton("2000",shadeSkin,"buyDiamond");
         buyDiamondButton.clearChildren();
-        buyDiamondButton.add(buyDiamondButton.getImage());buyDiamondButton.row();
-        buyDiamondButton.add(goldSymbol).size(10);buyDiamondButton.add(buyDiamondButton.getText());
-        leftTable.add(buyDiamondButton).expandY().fillX().padTop(5).padBottom(5);leftTable.row();
+        buyDiamondButton.add(buyDiamondButton.getImage()).colspan(2);buyDiamondButton.row();
+        buyDiamondButton.add(new Image(goldSymbol.getDrawable())).size(20);buyDiamondButton.add(buyDiamondButton.getLabel());
+        leftTable.add(buyDiamondButton).expandY().padTop(5).padBottom(5);leftTable.row();
 
 
 
@@ -413,10 +422,11 @@ public class UiHandler {
                 Actor actor = event.getTarget();
                 //System.out.println(32123132132321f);
                 if (actor.getName().equals("r")) {
-                    //Gdx.app.debug(TAG, "Rate button clicked.");
-
+                    boughtItemsList.add(new MovingImageContainer("diamond",r.nextInt(360), null, true,
+                            slideMenuLeft.localToParentCoordinates(new Vector2(scrollPane.localToParentCoordinates( new Vector2(leftTable.localToParentCoordinates(new Vector2(
+                            UiHandler.table0.getX()+UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.table0.getY()) )))))));
                     isTouched=true;
-                } else if (actor.getName().equals("SHARE")) {
+                } else if (actor.getName().equals("a")) {
                     //Gdx.app.debug(TAG, "Share button clicked.");
                     System.out.println("Share button clicked.");
                     isTouched=true;

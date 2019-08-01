@@ -41,29 +41,46 @@ public class MovingImageContainer {
         if (type.equals("coin")) {
             animation = Loader.coinAnimation;
             width = ((TextureRegion) animation.getKeyFrame(0)).getRegionWidth();height=width;
-
             dest=UiHandler.goldSymbol.localToParentCoordinates(new Vector2(UiHandler.table1.getX()+UiHandler.goldSymbol.getWidth()/2, UiHandler.table1.getY()));
-
             this.type='c';
-        } else if (type.equals("exp")) {
-            texture = Loader.tA.findRegion("exp");
-            width = texture.getRegionWidth();height=width;
+        } else {
+            if (type.equals("exp")) {
+                texture = Loader.tA.findRegion("exp");
+                dest=UiHandler.lvlLabel.localToParentCoordinates(new Vector2(UiHandler.table0.getX()+UiHandler.lvlLabel.getWidth(), UiHandler.table0.getY()));
+                this.type='e';
 
-            dest=UiHandler.lvlLabel.localToParentCoordinates(new Vector2(UiHandler.table0.getX()+UiHandler.lvlLabel.getWidth(), UiHandler.table0.getY()));
+            } else if (type.equals("diamond")) {
+                texture = Loader.tA.findRegion("diamond");
+                dest = UiHandler.diamondLabel.localToParentCoordinates(new Vector2(UiHandler.table1.getX() + UiHandler.diamondLabel.getWidth()/2, UiHandler.table1.getY()));
+                this.type = 'd';
 
-            this.type='e';
-        } else if (type.equals("diamond")) {
-            texture = Loader.tA.findRegion("diamond");
+            } else if (type.equals("health")) {
+                texture = Loader.tA.findRegion("health");
+                this.type = 'h';
+
+            } else if (type.equals("armor")) {
+                texture = Loader.tA.findRegion("armor");
+                this.type = 'r';
+
+            } else if (type.equals("fuel")) {
+                texture = Loader.tA.findRegion("fuel");
+                this.type = 'f';
+
+            } else if (type.equals("ammo")) {
+                texture = Loader.tA.findRegion("ammo");
+                this.type = 'a';
+
+            } else if (type.equals("science")) {
+                texture = Loader.tA.findRegion("science");
+                this.type = 's';
+
+            }
             width = texture.getRegionWidth();height = width;
-
-            dest = UiHandler.diamondLabel.localToParentCoordinates(new Vector2(UiHandler.table1.getX() + UiHandler.diamondLabel.getWidth()/2, UiHandler.table1.getY()));
-
-            this.type = 'd';
         }
 
-        if (pos!=null){
-            x=pos.x;y=pos.y;
-        } else if (bird!=null){
+        if (pos!=null){//if bought from slide side Menus and position is set
+            x=pos.x;y=pos.y;firstMovementEndedY=true;firstMovementEndedX=true;
+        } else if (bird!=null){//if dropped from birds
             this.phoenixOrGoldBirdMovementType=phoenixOrGoldBirdMovementType;
             this.thisBird=bird;
 
@@ -185,17 +202,20 @@ public class MovingImageContainer {
         startTime=System.currentTimeMillis();
     }
 
-    public void update(float delta){
-        //dest.set(airshipPos.x,airshipPos.y+ Airship.balloonHeight.get()/2f);
-        //differenceVector=dest.cpy().sub(lastDest);
-        //airshipMoved=Math.abs(differenceVector.x)>0 || Math.abs(differenceVector.y)>0;
+    public void update(float delta,Vector2 airshipPos){
 
-        //dont need to do this for firstMovementX
+        if (type!='c'&&type!='e'&&type!='d') {
+            dest.set(airshipPos.x,airshipPos.y+ Airship.balloonHeight.get()/2f);
+            differenceVector=dest.cpy().sub(lastDest);
+            airshipMoved=Math.abs(differenceVector.x)>0 || Math.abs(differenceVector.y)>0;
+        }
+
+
         if (!firstMovementEndedX) {
             x = tweenX.get() + thisBird.x;//+thisBird.width/9.7f; //higher number=more to the left
             firstXMotion.update(delta);
         } else {
-            if (airshipMoved&&(float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)>0) {
+            if (airshipMoved&&(float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)>0) { //if airship moves keep moving object over 0.9s using new secondXmotion
                 secondXMotion = (Tween.to(tweenX, -1, (float) (0.9 - (System.currentTimeMillis() - startTime)/1000d)).target(dest.x).ease(TweenEquations.easeNone)).start();
             }
             x = tweenX.get();
@@ -211,7 +231,7 @@ public class MovingImageContainer {
             y = tweenY.get();
             secondYMotion.update(delta);
         }
-        //lastDest = dest.cpy();
+        lastDest = dest.cpy();
     }
     
     public void draw(float runTime, SpriteBatch batcher){
