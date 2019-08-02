@@ -78,8 +78,6 @@ public class SlideMenu extends Table {
         noDrag();
 
         if (originEdge.equals("down")) {
-            this.areaHeight = this.getHeight();
-            this.setHeight(areaHeight);
             if (menuButton.getY() > areaHeight / 2 && menuButton.getRotation() != 270)
                 menuButton.setRotation(270);
             else if (menuButton.getRotation() != 90 && menuButton.getY() < areaHeight / 2)
@@ -104,8 +102,6 @@ public class SlideMenu extends Table {
             getStage().calculateScissors(areaBounds.set(camWidth/2f+offsetFromCenter-areaWidth/2f , 0, areaWidth, areaHeight), scissorBounds);
 
         } else if (originEdge.equals("left")) {
-            this.areaWidth = this.getWidth();
-            this.setWidth(areaWidth);
             if (menuButton.getX() > areaWidth / 2 && menuButton.getRotation() != 180)
                 menuButton.setRotation(180);
             else if (menuButton.getRotation() != 0 && menuButton.getX() < areaWidth / 2)

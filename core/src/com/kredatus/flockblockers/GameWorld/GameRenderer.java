@@ -530,8 +530,13 @@ public void setRotate(float angle){
         shapeRendererCust.polygon(airship.rackHitbox.getTransformedVertices());
         shapeRendererCust.polygon(airship.balloonHitbox.getTransformedVertices());
         shapeRendererCust.end();}
-
-*/
+*/}
+    public void drawBoughtItems(float runTime){
+        if (uiHandler.boughtItemsList!=null){
+            for (MovingImageContainer i : uiHandler.boughtItemsList){
+                i.draw(runTime,batcher);
+            }
+        }
     }
     public void drawAirshipReticle(){airship.drawReticle(batcher);}
     public void drawAirship(float delta){airship.draw(batcher, delta);}
@@ -563,10 +568,13 @@ public void setRotate(float angle){
             drawSurvival(runTime, delta);
 
             drawScore();
-            batcher.flush();
+
             batcher.end();
             uiHandler.stage.draw();
+            batcher.begin();
+            drawBoughtItems(runTime);
 
+            batcher.end();
             /*shapeRenderer.begin(ShapeRenderer.ShapeType.Line);//topPadding is 5, left padding is 6
             shapeRenderer.setColor(Color.BLACK);
             shapeRenderer.rect(6-2,camHeight-5-(uiHandler.rankSize)-2,uiHandler.rankSize+5,uiHandler.rankSize+4);

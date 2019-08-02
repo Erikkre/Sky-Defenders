@@ -370,9 +370,9 @@ public abstract class BirdAbstractClass {
         if (dropsNumber<30) {
             final float rotationIncrement = 360f / dropsNumber;
             for (int i=0;i<dropsNumber;i++) {
-                if (diamondNumber-- >0) dropsList.add(new MovingImageContainer("diamond",rotationIncrement * rotationCounter++, thisBird, true,null));   //random spurting for phoenix
-                if (expNumber-- >0)     dropsList.add(new MovingImageContainer("exp",rotationIncrement * rotationCounter++, thisBird, true,null));
-                if (coinNumber-- >0)    dropsList.add(new MovingImageContainer("coin",rotationIncrement * rotationCounter++, thisBird, true,null));
+                if (diamondNumber-- >0) dropsList.add(new MovingImageContainer("diamond",rotationIncrement * rotationCounter++, thisBird, false,null));   //random spurting for phoenix
+                if (expNumber-- >0)     dropsList.add(new MovingImageContainer("exp",rotationIncrement * rotationCounter++, thisBird, false,null));
+                if (coinNumber-- >0)    dropsList.add(new MovingImageContainer("gold",rotationIncrement * rotationCounter++, thisBird, false,null));
             }
 
         } else {
@@ -408,7 +408,7 @@ public abstract class BirdAbstractClass {
                     rotationCounter++;
                     if (diamondNumber-- >0) dropsList.add(new MovingImageContainer("diamond",r.nextInt(360), thisBird, true,null));   //random spurting for phoenix
                     if (expNumber-- >0)     dropsList.add(new MovingImageContainer("exp",r.nextInt(360), thisBird, true,null));
-                    if (coinNumber-- >0)    dropsList.add(new MovingImageContainer("coin",r.nextInt(360), thisBird, true,null));
+                    if (coinNumber-- >0)    dropsList.add(new MovingImageContainer("gold",r.nextInt(360), thisBird, true,null));
                     //System.out.println("MovingImageContainer added at rotation"+rotationIncrement*rotationCounter);
                 }
             };

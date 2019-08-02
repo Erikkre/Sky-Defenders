@@ -39,7 +39,7 @@ import box2dLight.PointLight;
 
 
 public class Airship {  //engines, sideThrusters, armors and health are organized as lvl1-lvl5
-    public  Vector2 pos, vel=new Vector2(), thrusterPosOffset, tweenTarget=new Vector2(); //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
+    public static Vector2 pos, vel=new Vector2(), thrusterPosOffset, tweenTarget=new Vector2(); //vel is only used for monitoring not changing pos, lastTouchVel=new Vector2(), acc, dest, lastDest, differenceVector;
     //public boolean was
 
     //x and y are at middle of textures, bottom of balloonTexture,top of rack
