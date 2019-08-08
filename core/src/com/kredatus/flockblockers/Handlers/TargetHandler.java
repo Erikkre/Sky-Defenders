@@ -8,6 +8,7 @@ import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -67,7 +68,7 @@ public class TargetHandler {
                 ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.followFadeAwayNumberEffect(airship,-i.health,45,1.5f,2f);
                     i.hit(i.origHealth+1);    //lol I hope bird health is below orig
                     if (!balloonHitPlaying){
-                        balloonHit.play(0.55f);
+                        if (!GameWorld.soundMuted) balloonHit.play(0.55f);
                         balloonHitPlaying=true;
                             //System.out.println("made true");
                             Timer timer=new Timer();
@@ -112,7 +113,7 @@ public class TargetHandler {
                     ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(i.position,-(int)Math.ceil(i.dmg),60,1.25f,1);
                     //System.out.println("Bullet --, pen was "+i.pen);
                     i.pen--;
-                    birdHit.play(0.05f);
+                    if (!GameWorld.soundMuted) birdHit.play(0.05f);
                     if (i.pen<1){
                         //System.out.println("Bullet exhausted");
                         projectileList.remove(i);

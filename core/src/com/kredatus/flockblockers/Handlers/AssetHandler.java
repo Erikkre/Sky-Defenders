@@ -50,7 +50,7 @@ public class AssetHandler {/*
 */
 
 
-    public static AssetManager manager= new AssetManager();
+    public  AssetManager manager= new AssetManager();
 
     public static String textures="textures/texturePack.txt",logo="textures/logo.png",logo2="textures/logo2.png",companyName="textures/suiGenerisFontCompanyNameWhiteBg300x.png",
     logoFire= "effects/logoFire.p", logoFire2= "effects/logoFire2.p", burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
@@ -81,7 +81,11 @@ public class AssetHandler {/*
 
 
         manager.load(music0, Music.class);
-
+        for (int i=0;i<=3;i++){
+            if (i<=1)manager.load("turretSound/c"+i+".mp3",Sound.class);
+            if (i<=2)manager.load("turretSound/f"+i+".mp3",Sound.class);
+            if (i<=3)manager.load("turretSound/d"+i+".mp3",Sound.class);
+        }
         ShaderProgram.pedantic = false;
         manager.load(flashShader, ShaderProgram.class);
 

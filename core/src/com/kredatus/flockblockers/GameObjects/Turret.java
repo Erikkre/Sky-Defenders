@@ -9,11 +9,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
+import com.kredatus.flockblockers.GameWorld.GameWorld;
 import com.kredatus.flockblockers.Handlers.BirdHandler;
 import com.kredatus.flockblockers.Handlers.InputHandler;
 import com.kredatus.flockblockers.Handlers.TargetHandler;
 import com.kredatus.flockblockers.Handlers.UiHandler;
-import com.kredatus.flockblockers.NonGameHandlerScreens.Loader;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,7 +50,7 @@ public class Turret {
     public boolean turretPullsBack, pullBackThenThrow, flipVel;
     public Vector2 origVel= new Vector2(0.3f,0), vel=new Vector2(), posOffset=new Vector2();
     public float pullBackScale=4f;
-    public  Sound sound;
+    public Sound sound;
 
     ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue;
     Airship airship;TargetHandler targetHandler;
@@ -153,7 +153,7 @@ public class Turret {
                     Airship.ammo--;
 
                     try {
-                        sound.play(0.5f);
+                        if (!GameWorld.soundMuted) sound.play(0.5f);
                     } catch (Exception e) {
                     }
                     //System.out.println("*******************************************Last shot time: "+lastShotTime+"**********************************************************");
@@ -427,7 +427,7 @@ public class Turret {
 
     private void turretSetup(char turretType, int lvl){
         texture[0]=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.turret(turretType,lvl,false);projTexture= ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.turret(turretType,lvl,true);
-        sound=Loader.turretSound(turretType,lvl);
+        sound=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.turretSound(turretType,lvl);
         barrelLengthFromPos=0;//reset barrel length so by default projectile spawns from middle of turret position instead of from end of barrel
         projRotates=false;
         turretPullsBack=false;

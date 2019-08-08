@@ -18,7 +18,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -56,7 +55,7 @@ public class Loader implements Screen {
     public static  Music[] musiclist, menumusiclist;
     public static Animation[] tinyAnims, phoenixAnims, nightAnims,waterAnims,fireAnims, acidAnims,thunderAnims,goldAnims,lunarAnims;
 
-    public static TextureAtlas tA;
+    public TextureAtlas tA;
 
 
     public static ArrayList<TextureRegion> bgList;
@@ -70,7 +69,7 @@ public class Loader implements Screen {
 
     public static Preferences prefs;
 
-    public  ShaderProgram flashShader;
+
 
     public static ParticleEffect burnerFire=new ParticleEffect(), thrusterFireLeft=new ParticleEffect(), thrusterFireRight=new ParticleEffect(); //thrusterFireUp=new ParticleEffect();
     public static Array<ParticleEffectPool.PooledEffect> additiveEffects = new Array<ParticleEffectPool.PooledEffect>(3), nonAdditiveEffects;
@@ -457,7 +456,7 @@ public class Loader implements Screen {
         TextureLoader.TextureParameter linearFilterParams=new TextureLoader.TextureParameter();
         linearFilterParams.minFilter=Texture.TextureFilter.Linear;linearFilterParams.magFilter=Texture.TextureFilter.Linear;
     }
-    public static TextureRegion[] getRacks(String name){
+    public  TextureRegion[] getRacks(String name){
         TextureRegion[] temp=new TextureRegion[7];
         for (int i=0;i<7;i++) {
             temp[i]=tA.findRegion(name+i);
@@ -516,16 +515,6 @@ public class Loader implements Screen {
         // We must dispose of the texture when we are finished.
         manager.dispose();
 
-
-        deathmenumusic.dispose();
-
-        flashShader.dispose();
-        for (Music music : musiclist){
-            music.dispose();
-        }
-        for (Music music : menumusiclist){
-            music.dispose();
-        }
     }
 
     public TextureRegion turret(char type, int lvl, boolean proj) {
@@ -533,8 +522,8 @@ public class Loader implements Screen {
         else return tA.findRegion("p"+type+Integer.toString(lvl));
     }
 
-    public static Sound turretSound(char type, int lvl) {
-        return Gdx.audio.newSound(Gdx.files.internal("turretSound/"+type+lvl+".mp3"));
+    public  Sound turretSound(char type, int lvl) {
+        return manager.get("turretSound/"+type+lvl+".mp3");
     }
 
     /*public static TextureRegion airshipRack(int armorLvl){

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -35,9 +36,10 @@ import com.kredatus.flockblockers.ui.TouchRotatePad;
 
 import java.util.Collections;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
@@ -46,6 +48,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 
 public class UiHandler {
 
@@ -68,8 +71,8 @@ public class UiHandler {
     public Random r = new Random();
     public static ConcurrentLinkedQueue<MovingImageContainer> boughtItemsList= new ConcurrentLinkedQueue<MovingImageContainer>();
     public ConcurrentLinkedQueue<ImageTextButton> buyButtons= new ConcurrentLinkedQueue<ImageTextButton>();
-    TimerTask sellDiamondForGoldTask; int coinCounter;
-    //might want to implement a current stage for new screens
+    Runnable giveDiamondGetGold,giveGoldGetDiamond,giveGoldGetArmor,giveGoldGetAmmo,giveGoldGetFuel,giveGoldGetHealth; int goldNum,ammoNum,fuelNum,healthNum,armorNum,diamondNum;
+    ScheduledFuture<?> giveDiamondGetGoldFuture,giveGoldGetDiamondFuture,giveGoldGetArmorFuture,giveGoldGetAmmoFuture,giveGoldGetFuelFuture,giveGoldGetHealthFuture;    //might want to implement a current stage for new screens
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
             if (i instanceof SlideMenu)      {if (((SlideMenu) i).isTouched){ return true;}}
@@ -85,9 +88,13 @@ public class UiHandler {
 
     public int rankSize;public Color rankColor;
     public static Image goldSymbol,fuelSymbol,ammoSymbol,diamondSymbol,airshipHealthSymbol,airshipArmorSymbol;public static Rank rank; public static ProgressBar expBar,airshipHealthBar,airshipArmorBar;public static Image rankImage;
-    ImageTextButton buyGoldButton;
-    Preferences prefs = Gdx.app.getPreferences("skyDefenders");
+    public ImageTextButton buyGoldButton,buyDiamondButton,buyFuelButton,buyArmorButton,buyAmmoButton,buyHealthButton;
+    private Preferences prefs = Gdx.app.getPreferences("skyDefenders");
+    public ScheduledThreadPoolExecutor timer = new ScheduledThreadPoolExecutor(10);
+    public Button musicButton,soundButton;
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
+        if (Gdx.app.getVersion() >= 21) timer.setRemoveOnCancelPolicy(true);
+
         /******* BUTTONS *******/
         buyButton  = new TextButton("Buy", shadeSkin);    //set button style
         buyButton .setStyle(shadeSkin.get("round", buyButton.getStyle().getClass()));
@@ -122,7 +129,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        //stage.setDebugAll(true);
+        stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -230,7 +237,7 @@ public class UiHandler {
         Stack rankImageStack = new Stack();
         rankImage=new Image(Loader.ranksList[rank.lvl]);
         rankImage.setAlign(Align.center);rankImage.setName("rankImage");
-        Image rankImageBg=new Image(Loader.tA.findRegion("rankBg"));rankImageBg.setAlign(Align.center);
+        Image rankImageBg=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rankBg"));rankImageBg.setAlign(Align.center);
         rankImageStack.setLayoutEnabled(false);rankImageStack.add(rankImageBg);rankImageStack.add(rankImage); rankImageBg.setPosition(-4,-5f);
         table0.add(rankImageStack).size(40).colspan(1).padLeft(12).padRight(4).padTop(1);
 
@@ -244,7 +251,7 @@ public class UiHandler {
         expStack.add(expBar);expStack.add(expLabel);expLabel.setAlignment(Align.center);
         table0.add(expStack).grow().padRight(4);//colSpan of this must be equal to # of however many labels there are under it
 
-        airshipHealthSymbol=new Image(Loader.tA.findRegion("health"));table0.add(airshipHealthSymbol).size(40);
+        airshipHealthSymbol=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("health"));table0.add(airshipHealthSymbol).size(40);
 
         Stack airshipHealthStack = new Stack();
         airshipHealthBar=new ProgressBar(0,Airship.healthValues[Airship.healthLvl],1,false, shadeSkin.get("default-horizontal", ProgressBar.ProgressBarStyle.class));
@@ -253,7 +260,7 @@ public class UiHandler {
         airshipHealthStack.add(airshipHealthBar);airshipHealthStack.add(airshipHealthLabel);airshipHealthLabel.setAlignment(Align.center);
         table0.add(airshipHealthStack).grow().padRight(5);
 
-        airshipArmorSymbol=new Image(Loader.tA.findRegion("armor"));table0.add(airshipArmorSymbol).size(40);
+        airshipArmorSymbol=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("armor"));table0.add(airshipArmorSymbol).size(40);
 
         Stack airshipArmorStack = new Stack();
         airshipArmorBar=new ProgressBar(0,Airship.armorValues[Airship.armorLvl],1,false,shadeSkin.get("default-horizontal",ProgressBar.ProgressBarStyle.class));
@@ -266,22 +273,22 @@ public class UiHandler {
         table0.row(); rankNameLabel=new Label(rank.rankNames[rank.lvl/78],shadeSkin,"title-plain");rankNameLabel.setFontScale(0.5f);table0.add(rankNameLabel).padLeft(2).padTop(2);
 
 
-        goldSymbol=new Image(Loader.tA.findRegion("gold2"));
+        goldSymbol=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("gold2"));
         table1.add(goldSymbol).size(40).padLeft(20);
         goldLabel= new Label(Integer.toString(world.gold), shadeSkin,"title-plain");
         table1.add(goldLabel).size((camWidth-(40*5))/4.2f,goldLabel.getPrefHeight()).padLeft(3);
 
-        fuelSymbol=new Image(Loader.tA.findRegion("fuel"));
+        fuelSymbol=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("fuel"));
         table1.add(fuelSymbol).size(40);
         fuelLabel= new Label(Integer.toString((int)Airship.fuel), shadeSkin,"title-plain");
         table1.add(fuelLabel).size((camWidth-(40*5))/6f,fuelLabel.getPrefHeight()).padLeft(3);
 
-        ammoSymbol=new Image(Loader.tA.findRegion("ammo"));
+        ammoSymbol=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("ammo"));
         table1.add(ammoSymbol).size(40);
         ammoLabel= new Label(Integer.toString(Airship.ammo), shadeSkin,"title-plain");
         table1.add(ammoLabel).size((camWidth-(40*5))/5f,ammoLabel.getPrefHeight()).padLeft(3);
 
-        diamondSymbol=new Image(Loader.tA.findRegion("diamond"));
+        diamondSymbol=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("diamond"));
         table1.add(diamondSymbol).size(40);
         diamondLabel= new Label(Integer.toString(world.diamonds), shadeSkin,"title-plain");
         table1.add(diamondLabel).size(diamondLabel.getPrefWidth(),diamondLabel.getPrefHeight()).padLeft(3);
@@ -323,9 +330,9 @@ public class UiHandler {
         rateButton = tA.findRegion("rateButton");*/
 
 
-
         /**      ****************************************LEFT SLIDING MENU*****************************************      **/
-        slideMenuLeft = new SlideMenu(camWidth/6f,camHeight/2f,"left",camWidth,camHeight,camHeight/35);//left or up
+        slideMenuLeft = new SlideMenu(camWidth/6f,camHeight/2.2f,"left",camWidth,camHeight,camHeight/35);//left or up
+        slideMenuLeft.setColor(1,1,1,0.7f);
         final Table leftTable=new Table();leftTable.setSize(camWidth/6f,camHeight/2f);//leftTable.setWidth(camWidth/7f);
         final ScrollPane scrollPane=new ScrollPane(leftTable,shadeSkin,"android");//scrollPane.setWidth(camWidth/7f);
         scrollPane.setFillParent(true);scrollPane.setFadeScrollBars(true);scrollPane.setScrollBarPositions(false,false);scrollPane.setScrollingDisabled(true,false);
@@ -336,46 +343,51 @@ public class UiHandler {
         //final Image image_backgroundX = new Image(new SpriteDrawable(temp));
         menuButtonX = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
 
-        leftTable.add(new Label("BUY", shadeSkin,"title-plain")).padBottom(5).row();
-        final String armorPrice="50",ammoPrice="10",fuelPrice="10",healthPrice="100",diamondPrice="5000",goldPrice="1",diamondToGoldSale="1000";
+        leftTable.add(new Label("BUY", shadeSkin,"title-plain")).padBottom(5).colspan(2).row();
+        final String armorPrice="100",ammoPrice="50",fuelPrice="50",healthPrice="200",diamondPrice="2500",goldPrice="1",//1 diamond
+                    armorPerTap="10",ammoPerTap="10",fuelPerTap="10",healthPerTap="10",diamondPerTap="1",goldPerTap="500";
 
-        final ImageTextButton buyArmorButton=new ImageTextButton(armorPrice,shadeSkin,"buyArmor");//buy cost
+        buyArmorButton=new ImageTextButton(armorPrice,shadeSkin,"buyArmor");//buy cost
         buyArmorButton.clearChildren();
-        buyArmorButton.add(buyArmorButton.getImage()).colspan(2);buyArmorButton.row();
-        buyArmorButton.add(new Image(goldSymbol.getDrawable())).size(20);buyArmorButton.add(buyArmorButton.getLabel());
-        leftTable.add(buyArmorButton).expandY().padTop(5).padBottom(5);leftTable.row();
+        buyArmorButton.add(new Label(armorPerTap, shadeSkin,"buttonfont"));buyArmorButton.add(buyArmorButton.getImage()).padLeft(-2).padBottom(5).colspan(6);buyArmorButton.row();//amount receiving
+        buyArmorButton.add(new Image(goldSymbol.getDrawable())).size(20).right();buyArmorButton.add(buyArmorButton.getLabel()).left();
+        leftTable.add(buyArmorButton).expandY().padTop(5).padBottom(5).colspan(2).row();
 
-        final ImageTextButton buyAmmoButton=new ImageTextButton(ammoPrice,shadeSkin,"buyAmmo");
+        buyAmmoButton=new ImageTextButton(ammoPrice,shadeSkin,"buyAmmo");
         buyAmmoButton.clearChildren();
-        buyAmmoButton.add(buyAmmoButton.getImage()).colspan(2);buyAmmoButton.row();
-        buyAmmoButton.add(new Image(goldSymbol.getDrawable())).size(20);buyAmmoButton.add(buyAmmoButton.getLabel());
-        leftTable.add(buyAmmoButton).expandY().padTop(5).padBottom(5);leftTable.row();
+        buyAmmoButton.add(new Label(ammoPerTap, shadeSkin,"buttonfont"));buyAmmoButton.add(buyAmmoButton.getImage()).padLeft(-2).padBottom(5).colspan(6);buyAmmoButton.row();//amount receiving
+        buyAmmoButton.add(new Image(goldSymbol.getDrawable())).size(20).right();buyAmmoButton.add(buyAmmoButton.getLabel()).left();
+        leftTable.add(buyAmmoButton).expandY().padTop(5).padBottom(5).colspan(2).row();
 
-        final ImageTextButton buyFuelButton=new ImageTextButton(fuelPrice,shadeSkin,"buyFuel");
+        buyFuelButton=new ImageTextButton(fuelPrice,shadeSkin,"buyFuel");
         buyFuelButton.clearChildren();
-        buyFuelButton.add(buyFuelButton.getImage()).colspan(2);buyFuelButton.row();
-        buyFuelButton.add(new Image(goldSymbol.getDrawable())).size(20);buyFuelButton.add(buyFuelButton.getLabel());
-        leftTable.add(buyFuelButton).expandY().padTop(5).padBottom(5);leftTable.row();
+        buyFuelButton.add(new Label(fuelPerTap, shadeSkin,"buttonfont"));buyFuelButton.add(buyFuelButton.getImage()).padLeft(-2).padBottom(5).colspan(6);buyFuelButton.row();//amount receiving
+        buyFuelButton.add(new Image(goldSymbol.getDrawable())).size(20).right();buyFuelButton.add(buyFuelButton.getLabel()).left();
+        leftTable.add(buyFuelButton).expandY().padTop(5).padBottom(5).colspan(2).row();
 
-        final ImageTextButton buyHealthButton=new ImageTextButton(healthPrice,shadeSkin,"buyHealth");
+        buyHealthButton=new ImageTextButton(healthPrice,shadeSkin,"buyHealth");
         buyHealthButton.clearChildren();
-        buyHealthButton.add(buyHealthButton.getImage()).colspan(2);buyHealthButton.row();
-        buyHealthButton.add(new Image(goldSymbol.getDrawable())).size(20);buyHealthButton.add(buyHealthButton.getLabel());
-        leftTable.add(buyHealthButton).expandY().padTop(5).padBottom(5);leftTable.row();
+        buyHealthButton.add(new Label(healthPerTap, shadeSkin,"buttonfont"));buyHealthButton.add(buyHealthButton.getImage()).padLeft(-2).padBottom(5).colspan(6);buyHealthButton.row();//amount receiving
+        buyHealthButton.add(new Image(goldSymbol.getDrawable())).size(20).right();buyHealthButton.add(buyHealthButton.getLabel()).left();
+        leftTable.add(buyHealthButton).expandY().padTop(5).padBottom(5).colspan(2).row();
 
-        final ImageTextButton buyDiamondButton=new ImageTextButton(diamondPrice,shadeSkin,"buyDiamond");
+        buyDiamondButton=new ImageTextButton(diamondPrice,shadeSkin,"buyDiamond");
         buyDiamondButton.clearChildren();
-        buyDiamondButton.add(buyDiamondButton.getImage()).colspan(2);buyDiamondButton.row();
-        buyDiamondButton.add(new Image(goldSymbol.getDrawable())).size(20);buyDiamondButton.add(buyDiamondButton.getLabel());
-        leftTable.add(buyDiamondButton).expandY().padTop(5).padBottom(5);leftTable.row();
+        buyDiamondButton.add(new Label(diamondPerTap, shadeSkin,"buttonfont"));buyDiamondButton.add(buyDiamondButton.getImage()).padLeft(-2).padBottom(5).colspan(6);buyDiamondButton.row();//amount receiving
+        buyDiamondButton.add(new Image(goldSymbol.getDrawable())).size(20).right();buyDiamondButton.add(buyDiamondButton.getLabel()).left();
+        leftTable.add(buyDiamondButton).expandY().padTop(5).padBottom(5).colspan(2).row();
 
         buyGoldButton=new ImageTextButton(goldPrice,shadeSkin,"buyGold");//only one with buy cost in diamonds, not gold
         buyGoldButton.clearChildren();
-        buyGoldButton.add(new Label(diamondToGoldSale, shadeSkin,"buttonfont"));buyGoldButton.add(buyGoldButton.getImage()).padLeft(-2).colspan(6);buyGoldButton.row();//amount receiving
+        buyGoldButton.add(new Label(goldPerTap, shadeSkin,"buttonfont"));buyGoldButton.add(buyGoldButton.getImage()).padLeft(-2).padBottom(5).colspan(6);buyGoldButton.row();//amount receiving
         buyGoldButton.add(new Image(diamondSymbol.getDrawable())).size(20).right();buyGoldButton.add(buyGoldButton.getLabel()).left();
-        leftTable.add(buyGoldButton).expandY().padTop(5).padBottom(5);leftTable.row();
+        leftTable.add(buyGoldButton).expandY().padTop(5).padBottom(10).colspan(2).row();
 
         Collections.addAll(buyButtons,buyArmorButton,buyAmmoButton,buyFuelButton,buyHealthButton,buyDiamondButton,buyGoldButton);
+        loadAllBuyButtonsTimerTasks();
+
+        musicButton=new Button(shadeSkin, "music");soundButton=new Button(shadeSkin, "sound");soundButton.setChecked(true);musicButton.setChecked(true);
+        leftTable.add(musicButton,soundButton);
         //final Image rateButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rateButton"));
         //final Image shareButton = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
 
@@ -427,7 +439,12 @@ public class UiHandler {
         buyHealthButton.setName("h");
         buyDiamondButton.setName("d");
         buyGoldButton.setName("g");
-
+        soundButton.setName("s");musicButton.setName("m");
+        for (ImageTextButton i:buyButtons) {
+            for (Actor j : i.getChildren()) {
+                j.setName(i.getName());
+            }
+        }
         menuButtonX.setName("menuButtonX");
         //image_backgroundX.setName("IMAGE_BACKGROUNDX");
 
@@ -438,61 +455,49 @@ public class UiHandler {
 
                 if (actor.getName()==null) {
                     super.cancel();
-                } else if (actor instanceof ImageTextButton && !((ImageTextButton) actor).isDisabled()) {
+                } else if (actor.getName().equals("m")) {
+                    if (!((Button)actor).isChecked()) Loader.stopMusic(Loader.menumusiclist);
+                    else Loader.startMusic(Loader.menumusiclist);
+                } else if (actor.getName().equals("s")) {
+                    if (!((Button)actor).isChecked()) world.soundMuted=true;
+                    else world.soundMuted=false;
+                } else if ((actor instanceof ImageTextButton && !((ImageTextButton) actor).isDisabled())||(actor.getParent() instanceof ImageTextButton && !((ImageTextButton) actor.getParent()).isDisabled())) {
                     if (actor.getName().equals("r")) {
-                        world.gold -= Integer.parseInt(armorPrice);
-                        boughtItemsList.add(new MovingImageContainer("armor", r.nextInt(360), null, false,
-                                buyArmorButton.localToStageCoordinates(new Vector2(buyArmorButton.getWidth() / 2, buyArmorButton.getHeight() / 2))));
-                    } else if (actor.getName().equals("a")) {
-                        world.gold -= Integer.parseInt(ammoPrice);
-                        boughtItemsList.add(new MovingImageContainer("ammo", r.nextInt(360), null, false,
-                                buyAmmoButton.localToStageCoordinates(new Vector2(buyAmmoButton.getWidth() / 2, buyAmmoButton.getHeight() / 2))));
-                    } else if (actor.getName().equals("f")) {
-                        world.gold -= Integer.parseInt(fuelPrice);
-                        boughtItemsList.add(new MovingImageContainer("fuel", r.nextInt(360), null, false,
-                                buyFuelButton.localToStageCoordinates(new Vector2(buyFuelButton.getWidth() / 2, buyFuelButton.getHeight() / 2))));
-                    } else if (actor.getName().equals("h")) {
-                        System.out.println("health clicked");
-                        world.gold -= Integer.parseInt(healthPrice);
-                        boughtItemsList.add(new MovingImageContainer("health", r.nextInt(360), null, false,
-                                buyHealthButton.localToStageCoordinates(new Vector2(buyHealthButton.getWidth() / 2, buyHealthButton.getHeight() / 2))));
-                    } else if (actor.getName().equals("d")) {
-                        world.gold -= Integer.parseInt(diamondPrice);
-                        boughtItemsList.add(new MovingImageContainer("diamond", r.nextInt(360), null, false,
-                                buyDiamondButton.localToStageCoordinates(new Vector2(buyDiamondButton.getWidth() / 2, buyDiamondButton.getHeight() / 2))));
-                    } else if (actor.getName().equals("g")) {
-                        world.diamonds -= Integer.parseInt(goldPrice);
-                        diamondLabel.setText(world.diamonds);
+                        world.gold -= Integer.parseInt(armorPrice);armorNum += Integer.parseInt(armorPerTap);
+                        giveGoldGetArmorFuture=timer.scheduleAtFixedRate(giveGoldGetArmor, 0, (long)(1000f/armorNum), TimeUnit.MILLISECONDS);
 
-                        final int goldNumber = Integer.parseInt(diamondToGoldSale);
-                        Timer timer = new Timer();
-                        coinCounter = 0;
-                        final Image goldBar = buyGoldButton.getImage();
-                        sellDiamondForGoldTask = new TimerTask() {
-                            @Override
-                            public void run() {
-                                if (coinCounter == goldNumber) {
-                                    sellDiamondForGoldTask.cancel();
-                                }
-                                coinCounter++;
-                                boughtItemsList.add(new MovingImageContainer("gold", r.nextInt(360), null, true,
-                                        goldBar.localToStageCoordinates(new Vector2(goldBar.getWidth() / 2, goldBar.getHeight() / 2))));
-                            }
-                        };
-                        float timerIntervals = 3f / goldNumber;  //because yacc and yvel are added every frameTimeDifference, we must multiply by delta to get seconds approximation
-                        timer.scheduleAtFixedRate(sellDiamondForGoldTask, 0, (int) (timerIntervals * 1000));
+                        System.out.println((long)(100f));
+                    } else if (actor.getName().equals("a")) {
+                        world.gold -= Integer.parseInt(ammoPrice);ammoNum += Integer.parseInt(ammoPerTap);
+                        if(ammoNum==Integer.parseInt(ammoPerTap))giveGoldGetAmmoFuture=timer.scheduleAtFixedRate(giveGoldGetAmmo, 0, (long)(1000f/ammoNum), TimeUnit.MILLISECONDS);
+
+                    } else if (actor.getName().equals("f")) {
+                        world.gold -= Integer.parseInt(fuelPrice);fuelNum += Integer.parseInt(fuelPerTap);
+                        if(fuelNum==Integer.parseInt(fuelPerTap))giveGoldGetFuelFuture=timer.scheduleAtFixedRate(giveGoldGetFuel, 0, (long)(1000f/fuelNum), TimeUnit.MILLISECONDS);
+
+                    } else if (actor.getName().equals("h")) {
+                        world.gold -= Integer.parseInt(healthPrice);healthNum += Integer.parseInt(healthPerTap);
+                        if(healthNum==Integer.parseInt(healthPerTap))giveGoldGetHealthFuture=timer.scheduleAtFixedRate(giveGoldGetHealth, 0, (long)(1000f/healthNum), TimeUnit.MILLISECONDS);
+
+                    } else if (actor.getName().equals("d")) {
+                        world.gold -= Integer.parseInt(diamondPrice);diamondNum += Integer.parseInt(diamondPerTap);
+                        if(diamondNum==Integer.parseInt(diamondPerTap))giveGoldGetDiamondFuture=timer.scheduleAtFixedRate(giveGoldGetDiamond, 0, (long)(1000f), TimeUnit.MILLISECONDS);
+
+                    } else if (actor.getName().equals("g")) {
+                        world.diamonds -= Integer.parseInt(goldPrice); goldNum += Integer.parseInt(goldPerTap);
+                        if(goldNum==Integer.parseInt(goldPerTap))giveDiamondGetGoldFuture=timer.scheduleAtFixedRate(giveDiamondGetGold, 0, (long)(1000f/goldNum), TimeUnit.MILLISECONDS);
+                        diamondLabel.setText(world.diamonds);
                     }
                     isTouched = true;
                     goldLabel.setText(world.gold);
                 }
-
                 super.cancel();
             }
         });
 
         menuButtonX.addListener(new ClickListener(){//separate listener for touch up events
             public boolean touchDown(InputEvent event, float x, float y, int pnt, int btn) {
-                System.out.println(Math.abs(Gdx.input.getDeltaX()));
+                //System.out.println(Math.abs(Gdx.input.getDeltaX()));
                 if (event.getTarget().getName().equals("menuButtonX")) {
                     System.out.println("Left menu clicked");
                     boolean closed = slideMenuLeft.isCompletelyClosedX();
@@ -609,6 +614,63 @@ public class UiHandler {
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
         ammoLabel.setText(Airship.ammo);fuelLabel.setText(Integer.toString((int)Airship.fuel));
         if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
+    }
+
+    public void loadAllBuyButtonsTimerTasks(){
+        giveDiamondGetGold = new Runnable() {
+            @Override
+            public void run() {
+                if (goldNum>0) {goldNum--;
+                    boughtItemsList.add(new MovingImageContainer("gold", r.nextInt(360), null, true,
+                            buyGoldButton.getImage().localToStageCoordinates(new Vector2(buyGoldButton.getImage().getWidth()/2,buyGoldButton.getImage().getHeight()/2))));
+                } else giveDiamondGetGoldFuture.cancel(true);
+            }
+        };
+        giveGoldGetDiamond = new Runnable() {
+            @Override
+            public void run() {
+                if (diamondNum>0) {diamondNum--;
+                    boughtItemsList.add(new MovingImageContainer("diamond", 0, null, true,
+                            buyDiamondButton.getImage().localToStageCoordinates(new Vector2(buyDiamondButton.getImage().getWidth()/2,buyDiamondButton.getImage().getHeight()/2))));
+                } else giveGoldGetDiamondFuture.cancel(true);
+            }
+        };
+        giveGoldGetArmor = new Runnable() {
+            @Override
+            public void run() {
+                if (armorNum>0) {armorNum--;
+                    boughtItemsList.add(new MovingImageContainer("armor", 0, null, false,
+                            buyArmorButton.getImage().localToStageCoordinates(new Vector2(buyArmorButton.getImage().getWidth()/2,buyArmorButton.getImage().getHeight()/2))));
+                } else if (!giveGoldGetArmorFuture.isCancelled()){giveGoldGetArmorFuture.cancel(true);}
+            }
+        };
+        giveGoldGetAmmo = new Runnable() {
+            @Override
+            public void run() {
+                if (ammoNum>0) {ammoNum--;
+                    boughtItemsList.add(new MovingImageContainer("ammo", 0, null, false,
+                            buyAmmoButton.getImage().localToStageCoordinates(new Vector2(buyAmmoButton.getImage().getWidth()/2,buyAmmoButton.getImage().getHeight()/2))));
+                } else giveGoldGetAmmoFuture.cancel(true);
+            }
+        };
+        giveGoldGetFuel = new Runnable() {
+            @Override
+            public void run() {
+                if (fuelNum>0) {fuelNum--;
+                    boughtItemsList.add(new MovingImageContainer("fuel", 0, null, false,
+                            buyFuelButton.getImage().localToStageCoordinates(new Vector2(buyFuelButton.getImage().getWidth()/2,buyFuelButton.getImage().getHeight()/2))));
+                } else {giveGoldGetFuelFuture.cancel(true);timer.remove(this);}
+            }
+        };
+        giveGoldGetHealth = new Runnable() {
+            @Override
+            public void run() {
+                if (healthNum>0) {healthNum--;
+                    boughtItemsList.add(new MovingImageContainer("health", 0, null, false,
+                            buyHealthButton.getImage().localToStageCoordinates(new Vector2(buyHealthButton.getImage().getWidth()/2,buyHealthButton.getImage().getHeight()/2))));
+                } else giveGoldGetHealthFuture.cancel(true);
+            }
+        };
     }
 }
 //aimPad.

@@ -300,14 +300,14 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     float newTurretHeightTarget,newTurretWidthTarget,currentNewTexturesSizeRatio;
 
     private void loadTextures(){
-        rackTextures=Loader.getRacks("rack");
-        balloonTexture = Loader.tA.findRegion("balloon");
-        sideThrustTexture = Loader.tA.findRegion("sideThruster");
-        pipeTexture = Loader.tA.findRegion("burnerPipes");
-        reticleTexture = Loader.tA.findRegion("reticle");
-        dragCircleTexture=Loader.tA.findRegion("dragCirc");
-        dragLineTexture=Loader.tA.findRegion("dragLine");
-        aimLineTexture=Loader.tA.findRegion("aimLine");
+        rackTextures=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.getRacks("rack");
+        balloonTexture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("balloon");
+        sideThrustTexture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("sideThruster");
+        pipeTexture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("burnerPipes");
+        reticleTexture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("reticle");
+        dragCircleTexture=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("dragCirc");
+        dragLineTexture=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("dragLine");
+        aimLineTexture=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("aimLine");
     }
     private void changeTextureSizes(int armorLvl, int rackLvl, String buyMenuOrSurvivalSizeTarget) {
         if (buyMenuOrSurvivalSizeTarget.equals("buyMenu"))    sizeTargetRatio=1f;

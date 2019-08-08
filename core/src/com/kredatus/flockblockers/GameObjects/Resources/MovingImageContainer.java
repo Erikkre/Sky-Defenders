@@ -33,7 +33,7 @@ public class MovingImageContainer {
     public double startTime;
     public Character type;
     public Vector2 startPos;
-    Random r = new Random();float goldCoinSpinRandomizationFactor;
+    Random r = new Random();float goldCoinSpinRandomizationFactor,buyMenuShootOutRandomizationFactor;
     float specificAirshipResourceYdestOffset,slideMenuLeftTime;
     /*
     @Overrided
@@ -51,68 +51,79 @@ public class MovingImageContainer {
             width = ((TextureRegion) animation.getKeyFrame(0)).getRegionWidth();height=width;
             dest=UiHandler.goldSymbol.localToStageCoordinates(new Vector2(UiHandler.goldSymbol.getWidth()/2,UiHandler.goldSymbol.getHeight()/2));
             this.type='g';
-        } else {
-            if (type.equals("exp")) {
-                texture = Loader.tA.findRegion("exp");
+        } else if (type.equals("exp")) {
+                texture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("exp");
                 dest=UiHandler.expBar.localToStageCoordinates(new Vector2(UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.expBar.getHeight()/2));
                 this.type='e';
-
-            } else if (type.equals("diamond")) {
-                texture = Loader.tA.findRegion("diamond");
-                dest = UiHandler.diamondLabel.localToStageCoordinates(new Vector2(UiHandler.diamondLabel.getWidth()/2,UiHandler.diamondLabel.getHeight()/2));
-                this.type = 'd';
-
-            } else if (type.equals("health")) {
+            width = texture.getRegionWidth();height = width;
+        } else if (type.equals("diamond")) {
+            texture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("diamond");
+            dest = UiHandler.diamondLabel.localToStageCoordinates(new Vector2(UiHandler.diamondLabel.getWidth() / 2, UiHandler.diamondLabel.getHeight() / 2));
+            this.type = 'd';
+            width = texture.getRegionWidth();height = width;
+        } else {//buymenu items
+            if (type.equals("health")) {
                 //System.out.println(startPos);
-                texture = Loader.tA.findRegion("health");
+                texture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("health");
                 this.type = 'h';
                 specificAirshipResourceYdestOffset=Airship.balloonHeight.get()/2;
             } else if (type.equals("armor")) {
-                texture = Loader.tA.findRegion("armor");
+                texture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("armor");
                 this.type = 'r';
                 specificAirshipResourceYdestOffset=-Airship.rackHeight.get()/2;
             } else if (type.equals("fuel")) {
-                texture = Loader.tA.findRegion("fuel");
+                texture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("fuel");
                 this.type = 'f';
                 specificAirshipResourceYdestOffset=Airship.balloonHeight.get()/10;
             } else if (type.equals("ammo")) {
-                texture = Loader.tA.findRegion("ammo");
+                texture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("ammo");
                 this.type = 'a';
                 specificAirshipResourceYdestOffset=-Airship.rackHeight.get()/2;
             } else if (type.equals("science")) {
-                texture = Loader.tA.findRegion("science");
+                texture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("science");
                 this.type = 's';
-
             }
 
             if (this.type!='d'&&this.type!='e'&&this.type!='g') {dest.set(Airship.pos.x,Airship.pos.y+specificAirshipResourceYdestOffset);slideMenuLeftTime=0.7f;}
-            width = texture.getRegionWidth();height = width;
+            width = texture.getRegionWidth()/1.5f;height = width;
         }
 
         if (startPos!=null ){//if bought from slide side Menus and position is set
-            x=startPos.x;y=startPos.y;tweenX.set(x);tweenY.set(y);firstMovementEndedY=true;firstMovementEndedX=true;
+            x=startPos.x;y=startPos.y;tweenX.set(0);tweenY.set(0);
         }
+
         if (bird!=null||this.type=='g'){//if dropped from birds or gold
             firstMovementEndedY=false;firstMovementEndedX=false;tweenX.set(0);tweenY.set(0);
             this.phoenixOrGoldBirdMovementType=phoenixOrGoldBirdMovementType;
             this.thisBird=bird;
+        }
+        if (phoenixOrGoldBirdMovementType) {
+            //x+=thisBird.width/7.7f;
+            x1 =  (float)(Math.cos(Math.toRadians(rotation)))*55 ;
+            y1 =  (float)(Math.sin(Math.toRadians(rotation)))*55;
 
-            if (phoenixOrGoldBirdMovementType) {
-                //x+=thisBird.width/7.7f;
-                x1 =  (float)(Math.cos(Math.toRadians(rotation)))*55 ;
-                y1 =  (float)(Math.sin(Math.toRadians(rotation)))*55;
+        } else {
+            if (thisBird==null&& rotation==0){
+                double rot=Math.toDegrees(Math.atan((Airship.pos.y-startPos.y) / (Airship.pos.x-startPos.x)));
+                if (Airship.pos.x-startPos.x > 0) { //(xDistance+position.x > position.x) {
+                    rot += 180;
+                } else if ((Airship.pos.y-startPos.y) > 0) {
+                    rot += 360;
+                }
+
+                x1 = -(float) (Math.cos(Math.toRadians(rot+  -35+r.nextInt(70))  ) ) * (30);
+                y1 = -(float) (Math.sin(Math.toRadians(rot+  -35+r.nextInt(70))  ) ) * (30);
 
             } else {
-                x1 = (float) (Math.cos(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
-                y1 = (float) (Math.sin(Math.toRadians(rotation))) * (thisBird.width/4 + width/1.5f);
+                x1 = (float) (Math.cos(Math.toRadians(rotation))) * (thisBird.width / 4 + width / 1.5f);
+                y1 = (float) (Math.sin(Math.toRadians(rotation))) * (thisBird.width / 4 + width / 1.5f);
             }
-
-
-            motion1TimePhoenix=0.7f;
-            motion2TimePhoenix=1.7f;
-            motion1Time=0.7f;
-            motion2Time=1.7f;
         }
+        motion1TimePhoenix=0.7f;
+        motion2TimePhoenix=1.7f;
+        motion1Time=0.7f;
+        motion2Time=1.7f;
+
         lastDest=dest.cpy() ;
         setupTweens();
     }
@@ -130,7 +141,7 @@ public class MovingImageContainer {
                     ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.goldSymbol.localToStageCoordinates(new Vector2(
                             UiHandler.goldSymbol.getWidth()/4, UiHandler.goldSymbol.getHeight()/7)),1,35,1,1);
 
-                    System.out.println(startPos);
+                    //System.out.println(startPos);
                 } else if (type=='e') {
                     UiHandler.rank.addExp(1);
                     UiHandler.expBar.setValue(UiHandler.rank.expGained);
@@ -200,22 +211,25 @@ public class MovingImageContainer {
             }
         };
 
-        if (thisBird==null&&type!='g'){
-            secondXMotion= Tween.to(tweenX, -1, slideMenuLeftTime).target(dest.x).ease(TweenEquations.easeInCubic).start();
-            secondYMotion= Tween.to(tweenY, -1, slideMenuLeftTime).target(dest.y).ease(TweenEquations.easeInCubic).setCallback(endSecondMovementY).start();
-        } else if (phoenixOrGoldBirdMovementType) {
+         if (phoenixOrGoldBirdMovementType) {
             firstXMotion=(Tween.to(tweenX, -1, motion1TimePhoenix).target(x1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementX).start();
             secondXMotion=(Tween.to(tweenX, -1, motion2TimePhoenix).target(dest.x).ease(TweenEquations.easeInCubic));
 
             firstYMotion=(Tween.to(tweenY, -1, motion1TimePhoenix).target(y1).ease(TweenEquations.easeNone)).setCallback(endFirstMovementY).start();
             secondYMotion=(Tween.to(tweenY, -1, motion2TimePhoenix).target(dest.y).ease(TweenEquations.easeInCubic)).setCallback(endSecondMovementY);
-        } else {
+        } else if (startPos==null){
             firstXMotion = Tween.to(tweenX, -1, motion1Time).target(x1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementX).start();
             secondXMotion= Tween.to(tweenX, -1, motion2Time).target(dest.x).ease(TweenEquations.easeNone);
 
             firstYMotion = Tween.to(tweenY, -1, motion1Time).target(y1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementY).start();
             secondYMotion= Tween.to(tweenY, -1, motion2Time).target(dest.y).ease(TweenEquations.easeNone).setCallback(endSecondMovementY);
-        }
+        } else {
+             firstXMotion = Tween.to(tweenX, -1, slideMenuLeftTime/2).target(x1).ease(TweenEquations.easeInSine).setCallback(endFirstMovementX).start();
+             secondXMotion= Tween.to(tweenX, -1, slideMenuLeftTime).target(dest.x).ease(TweenEquations.easeNone);
+
+             firstYMotion = Tween.to(tweenY, -1, slideMenuLeftTime/2).target(y1).ease(TweenEquations.easeInSine).setCallback(endFirstMovementY).start();
+             secondYMotion= Tween.to(tweenY, -1, slideMenuLeftTime).target(dest.y).ease(TweenEquations.easeNone).setCallback(endSecondMovementY);
+         }
 
         startTime=System.currentTimeMillis();
     }
@@ -232,7 +246,12 @@ public class MovingImageContainer {
 
         if (!firstMovementEndedX) {
             if (thisBird!=null) x = tweenX.get() + thisBird.x;
-            else x = tweenX.get() + startPos.x; //if startPosition not null
+            else {
+                x = tweenX.get() + startPos.x; //if startPosition not null
+                if (type!='g'&&airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0) { //if airship moves keep moving object over 0.9s using new secondXmotion
+                    firstXMotion = Tween.to(tweenX, -1, (float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)).target(x1).ease(TweenEquations.easeNone).setCallback(endFirstMovementX).start();
+                }
+            }
             firstXMotion.update(delta);
 
         } else {
@@ -245,7 +264,12 @@ public class MovingImageContainer {
         }
         if (!firstMovementEndedY) {
             if (thisBird!=null) y = tweenY.get() + thisBird.y;
-            else y = tweenY.get() + startPos.y; //if startPosition not null
+            else {
+                if (type!='g'&&airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0) { //if airship moves keep moving object over 0.9s using new secondXmotion
+                    firstYMotion = Tween.to(tweenY, -1, (float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)).target(y1).ease(TweenEquations.easeNone).setCallback(endFirstMovementY).start();
+                }
+                y = tweenY.get() + startPos.y; //if startPosition not null
+            }
             firstYMotion.update(delta);
 
         } else {

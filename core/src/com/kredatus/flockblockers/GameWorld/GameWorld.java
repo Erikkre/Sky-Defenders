@@ -46,10 +46,6 @@ public class GameWorld {
     private  GameState currentState;
 
 
-    public void setDiamonds(int diamonds) {
-        this.diamonds = diamonds;
-    }
-
     public int getScore() {
         return score;
     }
@@ -59,6 +55,7 @@ public class GameWorld {
     }
 
     public static int exp, score, gold, diamonds, round;
+    public static boolean soundMuted=false;
 
     public Value alpha =new Value(0),alphaBg=new Value(0);
     public Tween logoTween, logoBgTween, timerTween;

@@ -28,8 +28,8 @@ public float targetY, targetX;//, preTargetY;
         yVel=1*globalSpeedMultiplier;
 
         diamondNumber =1;
-        expNumber=100;
-        coinNumber=100;
+        expNumber=50;
+        coinNumber=50;
 
         origYVel=yVel;
         health=60;

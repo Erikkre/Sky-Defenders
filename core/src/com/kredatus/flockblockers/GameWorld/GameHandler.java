@@ -34,7 +34,7 @@ public class GameHandler implements Screen {
     public boolean isPaused=false;
     public static double timeOfPause, timeOfResume;
     public int waveNumber = FlockBlockersMain.waveNumber;
-    private Airship airship;
+    public Airship airship;
     //private Actor menuButtonActor;
     public float screenWidth, screenHeight;
     public static int camWidth, camHeight;
@@ -218,7 +218,7 @@ public class GameHandler implements Screen {
     public void dispose() {
         Gdx.app.log("GameHandler", "dispose called");
 
-
+        uiHandler.timer.shutdownNow();
         uiHandler.stage.dispose();
         uiHandler.shadeSkin.dispose();
     }
