@@ -3989,7 +3989,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.Color
 						name: disabledFontColor
 						optional: true
-						value: red1
+						value: null
 					}
 					up: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -4187,7 +4187,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.Color
 						name: disabledFontColor
 						optional: true
-						value: red1
+						value: null
 					}
 					up: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -4385,7 +4385,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.Color
 						name: disabledFontColor
 						optional: true
-						value: red1
+						value: null
 					}
 					up: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -4583,7 +4583,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.Color
 						name: disabledFontColor
 						optional: true
-						value: red1
+						value: null
 					}
 					up: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -4781,7 +4781,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.Color
 						name: disabledFontColor
 						optional: true
-						value: red1
+						value: null
 					}
 					up: {
 						class: com.ray3k.skincomposer.data.StyleProperty
@@ -4979,7 +4979,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.Color
 						name: disabledFontColor
 						optional: true
-						value: red1
+						value: null
 					}
 					up: {
 						class: com.ray3k.skincomposer.data.StyleProperty

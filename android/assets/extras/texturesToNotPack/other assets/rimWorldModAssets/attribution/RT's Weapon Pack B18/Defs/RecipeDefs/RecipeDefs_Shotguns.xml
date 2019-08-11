@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>USAS12Craft</defName>
+    <label>Make USAS-12 Shotgun</label>
+    <description>Craft USAS-12.</description>
+    <jobString>Making USAS-12.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>41000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_USAS12_rt>1</Gun_USAS12_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>140</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>		
+	</recipeUsers>
+	<researchPrerequisite>RT_Shotguns</researchPrerequisite>
+	<skillRequirements>
+<Crafting>4</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+  
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>M1014Craft</defName>
+    <label>Make M1014 Shotgun</label>
+    <description>Craft M1014.</description>
+    <jobString>Making M1014.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>50000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_M1014_rt>1</Gun_M1014_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>140</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>		
+	</recipeUsers>
+	<researchPrerequisite>RT_Shotguns</researchPrerequisite>
+	<skillRequirements>
+<Crafting>4</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>DP12Craft</defName>
+    <label>Make DP-12 Shotgun</label>
+    <description>Craft DP-12.</description>
+    <jobString>Making DP-12.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>49000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_DP12_rt>1</Gun_DP12_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>120</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>		
+	</recipeUsers>
+	<researchPrerequisite>RT_Shotguns</researchPrerequisite>
+	<skillRequirements>
+<Crafting>4</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+ 
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>Winchester87Craft</defName>
+    <label>Make Winchester 1887 Shotgun</label>
+    <description>Craft Winchester 1887.</description>
+    <jobString>Making Winchester 1887.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>45000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_Winchester87_rt>1</Gun_Winchester87_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>110</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>2</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>WoodLog</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+			<li>WoodLog</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>		
+	</recipeUsers>
+	<researchPrerequisite>RT_Shotguns</researchPrerequisite>
+	<skillRequirements>
+<Crafting>4</Crafting>
+	</skillRequirements>
+  </RecipeDef>  
+
+
+
+<!-- ===========--> 
+     <RecipeDef>
+    <defName>SPAS12Craft</defName>
+    <label>Make SPAS-12 Shotgun</label>
+    <description>Craft SPAS-12.</description>
+    <jobString>Making SPAS-12.</jobString>
+	<unfinishedThingDef>UnfinishedGun</unfinishedThingDef>
+	<workSpeedStat>SmithingSpeed</workSpeedStat> 
+ <effectWorking>Smith</effectWorking> 
+ <soundWorking>Recipe_Machining</soundWorking>
+    <workAmount>47000</workAmount>
+	<workSkill>Crafting</workSkill>
+    <products>
+        <Gun_SPAS12_rt>1</Gun_SPAS12_rt>
+    </products>
+    <ingredients>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Steel</li>
+				</thingDefs>
+			</filter>
+			<count>100</count>
+		</li>
+		<li>
+			<filter>
+				<thingDefs>
+					<li>Component</li>
+				</thingDefs>
+			</filter>
+			<count>3</count>
+		</li>
+    </ingredients>
+	<fixedIngredientFilter>
+         <thingDefs>
+            <li>Steel</li>
+			<li>Component</li>
+         </thingDefs>
+    </fixedIngredientFilter>
+	<recipeUsers>
+		<li>RT_WeaponAssemblyTable</li>		
+	</recipeUsers>
+	<researchPrerequisite>RT_Shotguns</researchPrerequisite>
+	<skillRequirements>
+<Crafting>4</Crafting>
+	</skillRequirements>
+  </RecipeDef>
+
+
+  
+  
+</Defs>

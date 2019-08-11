@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <CraftM18SmokeGrenade.label>制作M18烟雾弹挂包</CraftM18SmokeGrenade.label>
+  <CraftM18SmokeGrenade.description>制作M18烟雾弹挂包。</CraftM18SmokeGrenade.description>
+  <CraftM18SmokeGrenade.jobString>制作M18烟雾弹挂包。</CraftM18SmokeGrenade.jobString>
+
+  
+  <CraftFirefoamGrenade.label>制作泡沫灭火手雷</CraftFirefoamGrenade.label>
+  <CraftFirefoamGrenade.description>制作泡沫灭火手雷。</CraftFirefoamGrenade.description>
+  <CraftFirefoamGrenade.jobString>正在制作泡沫灭火手雷。</CraftFirefoamGrenade.jobString>
+
+
+
+
+  <CraftFirefoamGrenadeLite.label>制作泡沫灭火手雷（小型）</CraftFirefoamGrenadeLite.label>
+  <CraftFirefoamGrenadeLite.description>制作泡沫灭火手雷（小型）。</CraftFirefoamGrenadeLite.description>
+  <CraftFirefoamGrenadeLite.jobString>正在制作泡沫灭火手雷（小型）。</CraftFirefoamGrenadeLite.jobString>
+
+
+
+
+  <CraftANM14TH3IncendiaryGrenade.label>制作AN-M14 TH3燃烧手雷挂包</CraftANM14TH3IncendiaryGrenade.label>
+  <CraftANM14TH3IncendiaryGrenade.description>制作AN-M14 TH3燃烧手雷挂包。</CraftANM14TH3IncendiaryGrenade.description>
+  <CraftANM14TH3IncendiaryGrenade.jobString>正在制作AN-M14 TH3燃烧手雷挂包。</CraftANM14TH3IncendiaryGrenade.jobString>
+
+  
+  <CraftM84FlashbangGrenade.label>制作M84闪光手雷挂包</CraftM84FlashbangGrenade.label>
+  <CraftM84FlashbangGrenade.description>制作M84闪光手雷挂包。</CraftM84FlashbangGrenade.description>
+  <CraftM84FlashbangGrenade.jobString>正在制作M84闪光手雷挂包。</CraftM84FlashbangGrenade.jobString>
+
+  
+  <CraftM67FragGrenade.label>制作M67破片手雷挂包</CraftM67FragGrenade.label>
+  <CraftM67FragGrenade.description>制作M67破片手雷挂包。</CraftM67FragGrenade.description>
+  <CraftM67FragGrenade.jobString>正在制作M67破片手雷挂包。</CraftM67FragGrenade.jobString>
+
+
+</LanguageData>

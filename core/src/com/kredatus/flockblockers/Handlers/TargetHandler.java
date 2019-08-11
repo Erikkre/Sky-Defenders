@@ -2,17 +2,28 @@
 package com.kredatus.flockblockers.Handlers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
+import com.kredatus.flockblockers.Birds.AcidBird;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
+import com.kredatus.flockblockers.Birds.FireBird;
+import com.kredatus.flockblockers.Birds.GoldBird;
+import com.kredatus.flockblockers.Birds.LunarBird;
+import com.kredatus.flockblockers.Birds.NightBird;
+import com.kredatus.flockblockers.Birds.PhoenixBird;
+import com.kredatus.flockblockers.Birds.ThunderBird;
+import com.kredatus.flockblockers.Birds.WaterBird;
 import com.kredatus.flockblockers.FlockBlockersMain;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Projectile;
 import com.kredatus.flockblockers.GameWorld.GameHandler;
 import com.kredatus.flockblockers.GameWorld.GameWorld;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * Created by Erik Kredatus on 11/8/2018.
@@ -25,18 +36,29 @@ public class TargetHandler {
     //public static int minTargetingHeight=0;
     private float closestBirdDist=Float.POSITIVE_INFINITY,minTargetingHeight=0;
     private Airship airship;
-    public Sound birdHit,balloonHit;
+    public Sound birdHit,balloonHit,balloonDeath,thunderBirdDeath,waterBirdDeath,fireBirdDeath,acidBirdDeath,nightBirdDeath,lunarBirdDeath,goldBirdDeath,phoenixBirdDeath;
     public boolean balloonHitPlaying;
+    public ScheduledThreadPoolExecutor timer = new ScheduledThreadPoolExecutor(30);
     public int activeQueueSize;
     float curDist;
+    private Random r=new Random();
 
     public static ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,deadBirdQueue;
 
     public TargetHandler(BirdHandler birdHandler){
         this.activeBirdQueue=birdHandler.activeBirdQueue; this.deadBirdQueue=birdHandler.deadBirdQueue;
+        AssetManager m=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.manager;AssetHandler a=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.assets;
 
-        birdHit= ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.manager.get(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.assets.birdHit);
-        balloonHit=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.manager.get(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.assets.balloonHit);;
+        birdHit= m.get(a.birdHit);
+        balloonHit=m.get(a.balloonHit);balloonDeath=m.get(a.balloonDeath);
+        thunderBirdDeath=m.get(a.thunderBirdDeath);waterBirdDeath=m.get(a.waterBirdDeath);fireBirdDeath=m.get(a.fireBirdDeath);acidBirdDeath=m.get(a.acidBirdDeath);
+        nightBirdDeath=m.get(a.nightBirdDeath);lunarBirdDeath=m.get(a.lunarBirdDeath);goldBirdDeath=m.get(a.goldBirdDeath);phoenixBirdDeath=m.get(a.phoenixBirdDeath);
+
+        Sound[] list={balloonHit,birdHit,balloonDeath,thunderBirdDeath,waterBirdDeath,fireBirdDeath,acidBirdDeath,nightBirdDeath,lunarBirdDeath,goldBirdDeath,phoenixBirdDeath};
+        for (Sound i:list){
+            i.play(0);
+        }
+
     }
     public void setAirship(Airship airship){
         this.airship=airship;
@@ -49,52 +71,45 @@ public class TargetHandler {
         //if (activeBirdQueue.size()!=activeQueueSize) closestBirdDist = Float.POSITIVE_INFINITY;
         //System.out.println(BirdHandler.activeBirdQueue);
         //System.out.println(activeQueueSize+" "+targetBird);
-        for (BirdAbstractClass i : activeBirdQueue) {
-            i.update(delta, runTime);
+        for (BirdAbstractClass bird : activeBirdQueue) {
+            bird.update(delta, runTime);
 
 
             if (activeBirdQueue.size()!=activeQueueSize){
                 //System.out.println("update size");
-                curDist= (float) Math.sqrt(Math.pow(Math.abs(airship.pos.x-i.x),2) + Math.pow(Math.abs(airship.pos.y-airship.rackHeight.get()-i.y),2));
+                curDist= (float) Math.sqrt(Math.pow(Math.abs(airship.pos.x-bird.x),2) + Math.pow(Math.abs(airship.pos.y-airship.rackHeight.get()-bird.y),2));
             }
 
             //System.out.println(curDist);
-            //if (i.collides(airship.prelimBoundPoly1)||i.collides(airship.prelimBoundPoly2)) {
+            //if (bird.collides(airship.prelimBoundPoly1)||bird.collides(airship.prelimBoundPoly2)) {
                 //System.out.println("********************** HIT PRELIM *********************");
 
-            if (i.isAlive && airship.balloonHitbox!=null && (i.collides(airship.rackHitbox) || i.collides(airship.balloonHitbox)) ) {
-                    //System.out.println("********************** HIT REAL *********************");
-                    airship.hit(i.health);
-                ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.followFadeAwayNumberEffect(airship,-i.health,45,1.5f,2f);
-                    i.hit(i.origHealth+1);    //lol I hope bird health is below orig
-                    if (!balloonHitPlaying){
-                        if (!GameWorld.soundMuted) balloonHit.play(0.55f);
-                        balloonHitPlaying=true;
-                            //System.out.println("made true");
-                            Timer timer=new Timer();
-                            timer.schedule(new TimerTask(){
-                            @Override
-                            public void run(){
-                                balloonHitPlaying=false;
-                                //System.out.println("made false");
-                            }
-                        },450);
-                    }
-            } else if (!i.isAlive) {
-                activeBirdQueue.remove(i);
-                deadBirdQueue.add(i);
+            if (bird.isAlive && airship.balloonHitbox!=null && (bird.collides(airship.rackHitbox) || bird.collides(airship.balloonHitbox)) ) {
+                //System.out.println("********************** HIT REAL *********************");
+                if (!GameWorld.soundMuted) {
+                    if (airship.health<=bird.health) {balloonDeath.play(0.8f);((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.world.deathAndRestart();}
+                    balloonHit.play(0.55f,r.nextFloat()*0.6f+0.7f,1);
+                }
+                airship.hit(bird.health);
+                ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.followFadeAwayNumberEffect(airship,-bird.health,45,1.5f,2f);
+                bird.hit(bird.origHealth+1);    //lol I hope bird health is below orig
 
-                if (i==targetBird) {targetBird.isAlive=false;closestBirdDist = Float.POSITIVE_INFINITY;break;}
+
+            } else if (!bird.isAlive) {
+                activeBirdQueue.remove(bird);
+                deadBirdQueue.add(bird);
+                if (!bird.birdHitPlaying) chooseWhichBirdDeathToPlay(bird,true);
+                if (bird==targetBird) {targetBird.isAlive=false;closestBirdDist = Float.POSITIVE_INFINITY;break;}
                     //System.out.println("closestBirdDist reset");}
 
-                //if (i==targetBird)targetBird=null;
-            } else if (i.isAboveCam()) {
-                activeBirdQueue.remove(i);
-                if (i==targetBird) {targetBird.isAlive=false;closestBirdDist = Float.POSITIVE_INFINITY;break;}
+                //if (bird==targetBird)targetBird=null;
+            } else if (bird.isAboveCam()) {
+                activeBirdQueue.remove(bird);
+                if (bird==targetBird) {targetBird.isAlive=false;closestBirdDist = Float.POSITIVE_INFINITY;break;}
             } else if ( curDist < closestBirdDist ) {
                 //System.out.println("closer bird************************************");
                 closestBirdDist = curDist;
-                targetBird = i;
+                targetBird = bird;
             }
         }
 
@@ -102,23 +117,29 @@ public class TargetHandler {
             //System.out.println("stop rechecking after size change");}//if last bird in queue set queue size to new one to stop rechecking after queue size change
         //previousBirdHeight=minTargetingHeight; //in case some birds are moved past lead bird before any bird dies, need to check top bird every time
 
-        for (Projectile i : projectileList){    //could have dead bird higher than alive bird, so need separate loader, alive, dead lists
-            i.update();
-            if (i.isGone){
-                projectileList.remove(i);
+        for (Projectile proj : projectileList){    //could have dead bird higher than alive bird, so need separate loader, alive, dead lists
+            proj.update();
+            if (proj.isGone){
+                projectileList.remove(proj);
             }
-            for (BirdAbstractClass j : activeBirdQueue) {
-                if (i.pen>0 && !j.hitBulletList.contains(i) && j.collides(i.boundingRect) && j.health>0) {  //if bird j is colliding with bullet i and was not already hit before
-                    j.hit(i.dmg);
-                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(i.position,-(int)Math.ceil(i.dmg),60,1.25f,1);
-                    //System.out.println("Bullet --, pen was "+i.pen);
-                    i.pen--;
-                    if (!GameWorld.soundMuted) birdHit.play(0.05f);
-                    if (i.pen<1){
+            for (final BirdAbstractClass bird : activeBirdQueue) {
+                if (proj.pen>0 && !bird.hitBulletList.contains(proj) && bird.collides(proj.boundingRect) && bird.health>0) {  //if bird bird is colliding with bullet proj and was not already hit before
+                    if (!GameWorld.soundMuted&&!bird.birdHitPlaying) {chooseWhichBirdDeathToPlay(bird,false);
+                            bird.birdHitPlaying=true;timer.schedule(new Runnable() {@Override public void run() {
+                                bird.birdHitPlaying=false;
+                            }
+                        },1000L, TimeUnit.MILLISECONDS);//wait 1000ms before playing sound again
+                    }
+                    bird.hit(proj.dmg);
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(proj.position,-(int)Math.ceil(proj.dmg),60,1.25f,1);
+                    //System.out.println("Bullet --, pen was "+proj.pen);
+                    proj.pen--;
+
+                    if (proj.pen<1){
                         //System.out.println("Bullet exhausted");
-                        projectileList.remove(i);
+                        projectileList.remove(proj);
                     } else {
-                        j.hitBulletList.add(i);
+                        bird.hitBulletList.add(proj);
                     }
 
                 }
@@ -131,5 +152,17 @@ public class TargetHandler {
 
             }
         }
+    }
+    public void chooseWhichBirdDeathToPlay(BirdAbstractClass b, boolean death){
+        float v=0.1f;float p;
+        if (!death)p=0.3f+r.nextFloat()*0.9f;else p=1.4f+r.nextFloat()*0.1f;
+        if (b instanceof ThunderBird) thunderBirdDeath.play(v,p,1);
+        else if (b instanceof FireBird) fireBirdDeath.play(v,p,1);
+        else if (b instanceof WaterBird) waterBirdDeath.play(v,p,1);
+        else if (b instanceof AcidBird) acidBirdDeath.play(v,p,1);
+        else if (b instanceof NightBird) nightBirdDeath.play(v,p,1);
+        else if (b instanceof LunarBird) lunarBirdDeath.play(v,p,1);
+        else if (b instanceof GoldBird) goldBirdDeath.play(v,p,1);
+        else if (b instanceof PhoenixBird) phoenixBirdDeath.play(v,p,1);
     }
 }

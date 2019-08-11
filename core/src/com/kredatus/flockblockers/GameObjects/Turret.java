@@ -150,7 +150,7 @@ public class Turret {
             public void run() {
 
                 if (airship.ammo > 0) {
-                    Airship.ammo--;
+                    Airship.ammo--;UiHandler.totalAmmoNum--;
 
                     try {
                         if (!GameWorld.soundMuted) sound.play(0.5f);
@@ -189,7 +189,7 @@ public class Turret {
                 if (airship.ammo==0){
                     UiHandler.ammoLabel.setColor(1,0,0,1);
                     for (Turret i: airship.turretList) {
-                        i.stopTheFiringUpdateMethod=true;
+                        //i.stopTheFiringUpdateMethod=true;
                         i.stopFiring();
                     }
                 }

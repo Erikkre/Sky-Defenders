@@ -64,7 +64,7 @@ Only add health to phoenix each round   after you hit multiples of 500 gold/phoe
 
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
-
+    public boolean birdHitPlaying;
     protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 3.0f, globalDropMultiplier=1.0f;
 
     public float preX, preY, x, y, yVel, yAcc, xVel,yVelDeath, sizeRatio, finalSizeRatio=1, preTargetY;
@@ -155,7 +155,7 @@ public abstract class BirdAbstractClass {
     }
 
     protected void setBoundingPoly(float x, float y, float width, float height){
-        boundingPoly  = new Polygon(new float[]{x - width / 5f, y - height / 4,          x + width / 5f, y - height / 4,          x + width / 3f, y + height / 5.3f,          x - width / 3f, y + height / 5.3f}); //trapezoid to reach bid wings
+        boundingPoly  = new Polygon(new float[]{x - width / 6f, y - height / 4,          x + width / 6f, y - height / 4,          x + width / 4f, y + height / 5.3f,          x - width / 4f, y + height / 5.3f}); //trapezoid to reach bid wings
         boundingPoly  .  setOrigin(x, y);
     }
 

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- M72LAW -->
+
+  <Bullet_M72LAW_rt.label>M72LAW火箭筒弹药</Bullet_M72LAW_rt.label>
+
+  <Gun_M72LAW_rt.label>M72LAW火箭筒</Gun_M72LAW_rt.label>
+  <Gun_M72LAW_rt.description>M72LAW火箭筒是美国赫西东方公司研制的一种美军制式单兵武器，也可用于对炮位、碉堡，建筑或轻型车辆等次要目标进行破坏，采用了预封装的可以发射的火箭和使用后即弃的发射器的全新制作理念，杀伤力大。</Gun_M72LAW_rt.description>
+
+
+
+  <!-- M79GL -->
+
+  <Bullet_M79_rt.label>M79榴弹发射器弹药</Bullet_M79_rt.label>
+
+  <Gun_M79_rt.label>M79榴弹发射器</Gun_M79_rt.label>
+  <Gun_M79_rt.description>这是一种单发的肩扛式榴弹发射器，常用于突破行动，发射40x46mm榴弹。</Gun_M79_rt.description>
+
+
+  <!-- PKM -->
+
+  <Bullet_PKM_rt.label>PKM机枪弹药</Bullet_PKM_rt.label>
+
+  <Gun_PKM_rt.label>PKM机枪</Gun_PKM_rt.label>
+  <Gun_PKM_rt.description>这是一架苏联设计的7.62mm通用机枪，目前在俄罗斯生产。</Gun_PKM_rt.description>
+
+
+  <!-- RPG -->
+
+  <Bullet_RPG_rt.label>RPG-7式40mm火箭筒弹药</Bullet_RPG_rt.label>
+
+  <Gun_RPG_rt.label>RPG-7式40mm火箭筒</Gun_RPG_rt.label>
+  <Gun_RPG_rt.description>一种单兵肩扛式反装甲支援武器，使用火箭助推反装甲高爆弹用以对抗装甲单位，使用时请注意安全。</Gun_RPG_rt.description>
+
+
+  <!-- M32MGL -->
+
+  <Bullet_M32MGL_rt.label>M32MGL榴弹弹药</Bullet_M32MGL_rt.label>
+
+  <Gun_M32MGL_rt.label>M32MGL榴弹发射器</Gun_M32MGL_rt.label>
+  <Gun_M32MGL_rt.description>这是一款低速并通过左轮驱动击发方式的手持榴弹发射器，六发弹药足够让你把那些该死的掠夺者和海盗轰上天。</Gun_M32MGL_rt.description>
+
+
+  <!-- MG42 -->
+
+  <Bullet_MG42_rt.label>MG42机枪弹药</Bullet_MG42_rt.label>
+
+  <Gun_MG42_rt.label>MG42机枪</Gun_MG42_rt.label>
+  <Gun_MG42_rt.description>MG42通用机枪是旧世界于第二次世界大战时由纳粹德国研制的通用机枪。</Gun_MG42_rt.description>
+
+
+  <!-- SAW M249 -->
+
+  <Bullet_SAWM249_rt.label>M249机枪弹药</Bullet_SAWM249_rt.label>
+
+  <Gun_SAWM249_rt.label>M249机枪</Gun_SAWM249_rt.label>
+  <Gun_SAWM249_rt.description>这是一款单独便携式机枪，因为采用气动、气冷原理，所以枪管可快速更换，使得机枪手在枪管故障或过热时无须浪费时间修理。</Gun_SAWM249_rt.description>
+
+
+  <!-- BAR M1918 -->
+
+  <Bullet_BARM1918_rt.label>BAR1918自动步枪弹药</Bullet_BARM1918_rt.label>
+
+  <Gun_BARM1918_rt.label>BAR1918自动步枪自动步枪</Gun_BARM1918_rt.label>
+  <Gun_BARM1918_rt.description>BAR1918自动步枪自动步枪，可以安装在专用的防御设施上。</Gun_BARM1918_rt.description>
+
+
+</LanguageData>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <FiveSevenCraft.label>制作FN57手枪</FiveSevenCraft.label>
+  <FiveSevenCraft.description>制作FN57手枪。</FiveSevenCraft.description>
+  <FiveSevenCraft.jobString>正在制作FN57手枪。</FiveSevenCraft.jobString>
+
+  <Glock17Craft.label>制作Glock17手枪</Glock17Craft.label>
+  <Glock17Craft.description>制作Glock17手枪。</Glock17Craft.description>
+  <Glock17Craft.jobString>正在制作Glock17手枪。</Glock17Craft.jobString>
+
+  <SWMagnumCraft.label>制作SW玛格南左轮手枪</SWMagnumCraft.label>
+  <SWMagnumCraft.description>制作SW玛格南左轮手枪。</SWMagnumCraft.description>
+  <SWMagnumCraft.jobString>正在制作SW玛格南左轮手枪。</SWMagnumCraft.jobString>
+
+  <DeagleCraft.label>制作沙漠之鹰</DeagleCraft.label>
+  <DeagleCraft.description>制作沙漠之鹰。</DeagleCraft.description>
+  <DeagleCraft.jobString>正在制作沙漠之鹰。</DeagleCraft.jobString>
+
+  <ColtPythonRevolverCraft.label>制作柯尔特左轮手枪</ColtPythonRevolverCraft.label>
+  <ColtPythonRevolverCraft.description>制作柯尔特左轮手枪。</ColtPythonRevolverCraft.description>
+  <ColtPythonRevolverCraft.jobString>正在制作柯尔特左轮手枪。</ColtPythonRevolverCraft.jobString>
+
+  <M1911Craft.label>制作M1911手枪</M1911Craft.label>
+  <M1911Craft.description>制作M1911手枪。</M1911Craft.description>
+  <M1911Craft.jobString>正在制作M1911手枪。</M1911Craft.jobString>
+
+  <LugerP08Craft.label>制作鲁格P08手枪</LugerP08Craft.label>
+  <LugerP08Craft.description>制作鲁格P08手枪。</LugerP08Craft.description>
+  <LugerP08Craft.jobString>正在制作鲁格P08手枪。</LugerP08Craft.jobString>
+
+  <BerettaM9Craft.label>制作贝雷塔M9手枪</BerettaM9Craft.label>
+  <BerettaM9Craft.description>制作贝雷塔M9手枪。</BerettaM9Craft.description>
+  <BerettaM9Craft.jobString>正在制作贝雷塔M9手枪。</BerettaM9Craft.jobString>
+
+
+</LanguageData>

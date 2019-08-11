@@ -54,7 +54,7 @@ public class GameWorld {
         this.score = score;
     }
 
-    public static int exp, score, gold, diamonds, round;
+    public static int exp, score, gold, diamond, round;
     public static boolean soundMuted=false;
 
     public Value alpha =new Value(0),alphaBg=new Value(0);
@@ -63,7 +63,7 @@ public class GameWorld {
     private TextureRegion logo;
     private Sprite logoBg;
 
-    public static int camWidth,camHeight;
+    public static int camWidth,camHeight,waveStartHealth,waveStartArmor,waveStartFuel,waveStartAmmo;
     Preferences prefs = Gdx.app.getPreferences("skyDefenders");
     public GameWorld(int camWidth, int camHeight) {
         this.camWidth=camWidth;this.camHeight=camHeight;
@@ -86,8 +86,8 @@ public class GameWorld {
         //startLogos(camWidth,camHeight);
         exp=prefs.getInteger("exp",0);
         score=prefs.getInteger("score",0);
-        gold=prefs.getInteger("gold",0);
-        diamonds=prefs.getInteger("diamonds",0);
+        gold=prefs.getInteger("gold",0);UiHandler.totalGoldNum=gold;
+        diamond =prefs.getInteger("diamond",0);UiHandler.totalDiamondNum=diamond;
         round=prefs.getInteger("round",1);
     }
 
@@ -147,7 +147,7 @@ public class GameWorld {
             }
         }
         airship.update(delta);
-        //tinyBirdHandler.update(delta);
+        tinyBirdHandler.update(delta);
         //lightHandler.foreRayHandler.update();  //used for airship and gun lights too
     }
     private void updateLogos(float delta, float runTime) {
@@ -197,16 +197,25 @@ public class GameWorld {
     public BgHandler getbgHandler() {
         return bgHandler;
     }
-    public void restart() {
-        boost = 0;
-        //glider.onRestart();
-        //renderer.setCamPositionOriginal();
-        renderer.scorenumber=0;
-        Loader.deathmenumusic.stop();
-        Loader.playnext(Loader.musiclist);
+
+    public void deathAndRestart(){
         //AssetHandler.frontFlaps.setFrameDuration(0.2f);
         //currentState = GameState.READY;
-        renderer.makeTransition(0, 0, 0, 1f);
+        if (birdHandler.taskRunning){
+            //System.out.println("Timer cancelled");
+            birdHandler.task.cancel();
+            birdHandler.taskRunning=false;
+            birdHandler.activeBirdQueue.clear();
+            birdHandler.update();
+        }
+
+        int waveNumberFromLastWave=bgHandler.bgNumber/9;
+        bgHandler=null;
+        bgHandler=new BgHandler(this,camWidth,camHeight,waveNumberFromLastWave,birdHandler);
+        bgHandler.startToSurvival(tinyBirdHandler,lightHandler);
+        bgHandler.setRendererAndCam(renderer);
+        airship.health=waveStartHealth;airship.armor=waveStartArmor;airship.fuel=waveStartFuel;airship.ammo=waveStartAmmo;
+        renderer.makeTransition(100, 0, 0, 2f);
     }
 
     public void survivalToBuyMenu() {
@@ -216,13 +225,12 @@ public class GameWorld {
         currentState = GameState.BUYMENU;
         airship.survivalToBuyMenu();
         bgHandler.survivalToBuyMenu();
-        for (Turret i : airship.turretList){
+        for (Turret i : airship.turretList) {
             if (i.firing) {
                 i.stopTheFiringUpdateMethod =true;//dont need to stop firing because we are pausing entire update and refiring immediately after
                 i.stopFiring();
             }
         }
-
         birdHandler.pause();
         //renderer.makeTransition(0, 0, 0, 0.7f);
     }

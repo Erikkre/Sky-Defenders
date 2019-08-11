@@ -53,7 +53,7 @@ public class GameHandler implements Screen {
 
         //turretHandler = new TurretHandler(camWidth, camHeight);
         lightHandler = new LightHandler(bgHandler);
-        bgHandler.survivalBgTweens(tinyBirdHandler,lightHandler);
+        //bgHandler.survivalBgTweens(tinyBirdHandler,lightHandler);
         targetHandler = new TargetHandler(birdHandler);
 
 
@@ -138,7 +138,7 @@ public class GameHandler implements Screen {
 
         prefs.putInteger("score",world.score);
         prefs.putInteger("gold",world.gold);
-        prefs.putInteger("diamonds",world.diamonds);
+        prefs.putInteger("diamond",world.diamond);
 
         prefs.putInteger("lvl", uiHandler.rank.lvl);
         prefs.putInteger("exp",uiHandler.rank.expGained);
@@ -184,7 +184,7 @@ public class GameHandler implements Screen {
 
         prefs.putInteger("score",world.score);
         prefs.putInteger("gold",world.gold);
-        prefs.putInteger("diamonds",world.diamonds);
+        prefs.putInteger("diamond",world.diamond);
 
         prefs.putInteger("lvl", uiHandler.rank.lvl);
         prefs.putInteger("exp",uiHandler.rank.expGained);

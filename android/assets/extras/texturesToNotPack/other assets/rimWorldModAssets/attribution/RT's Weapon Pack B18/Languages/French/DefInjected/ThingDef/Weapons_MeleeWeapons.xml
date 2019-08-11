@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+
+<LanguageData> 
+
+<!--French-->
+
+	<MeleeWeapon_Pickaxe.label>Pioche</MeleeWeapon_Pickaxe.label>  
+
+    <MeleeWeapon_Pickaxe.description>Un outil pratique pour l'exploitation minière. ELLE peut également faire des dégâts.</MeleeWeapon_Pickaxe.description> 
+
+	<MeleeWeapon_Butcherknife.label>Couteau de boucher</MeleeWeapon_Butcherknife.label>  
+
+    <MeleeWeapon_Butcherknife.description>Un couteau qu'un bon chef doit avoir.</MeleeWeapon_Butcherknife.description> 
+	
+	<MeleeWeapon_Militaryshovel.label>Pelle militaire</MeleeWeapon_Militaryshovel.label>  
+
+    <MeleeWeapon_Militaryshovel.description>Il s'agit d'une pelle qui ne vous laissera pas tomber pendant l'utilisation d'un travail difficile.</MeleeWeapon_Militaryshovel.description>
+
+	<MeleeWeapon_Fireaxe.label>Hache d'incendie</MeleeWeapon_Fireaxe.label>  
+
+    <MeleeWeapon_Fireaxe.description>C'est une hache de pompier stéréotypée avec une tête rouge, bord en argent, et une poignée en bois.</MeleeWeapon_Fireaxe.description>
+
+ 	<MeleeWeapon_Karambit.label>Karambit</MeleeWeapon_Karambit.label>  
+
+    <MeleeWeapon_Karambit.description>Le karambit est un petit couteau du sud-est asiatique, courbé, ressemblant à une griffe.</MeleeWeapon_Karambit.description> 
+	
+	<MeleeWeapon_Machete.label>Machette</MeleeWeapon_Machete.label>  
+
+    <MeleeWeapon_Machete.description>C'est un grand couteau comme une hache. Fréquemment utilisé pour couper les sous-bois de la forêt tropicale.</MeleeWeapon_Machete.description> 
+		
+	<MeleeWeapon_Katana.label>Katana</MeleeWeapon_Katana.label>  
+
+    <MeleeWeapon_Katana.description>Le Katana était l'une des épées traditionnelles japonaise utilisées par les samouraïs.</MeleeWeapon_Katana.description>  
+	
+	<MeleeWeapon_Gerber.label>Couteau de survie</MeleeWeapon_Gerber.label>  
+
+    <MeleeWeapon_Gerber.description>Un couteau de survie pratique.</MeleeWeapon_Gerber.description> 
+	
+    <MeleeWeapon_Mbayonet.label>M9 Bayonet</MeleeWeapon_Mbayonet.label>  
+
+    <MeleeWeapon_Mbayonet.description>La baïonnette M9 est un couteau polyvalent, adopté en 1986 par les États-Unis. Il est polyvalent et robuste. Utile pour le combat.</MeleeWeapon_Mbayonet.description>
+	
+	<MeleeWeapon_Crowbar.label>Pied de biche</MeleeWeapon_Crowbar.label>  
+
+    <MeleeWeapon_Crowbar.description>Un pied de biche, est un outil constitué d'une barre métallique avec une seule extrémité incurvée et des points aplaties, souvent avec une petite fente sur une ou les deux extrémités pour enlever clous. Utilisé à la fois comme un outil et comme une arme.</MeleeWeapon_Crowbar.description>
+	
+	<MeleeWeapon_Baton.label>Bâton</MeleeWeapon_Baton.label>  
+
+    <MeleeWeapon_Baton.description>Très bien pour se défendre.</MeleeWeapon_Baton.description>  
+	
+	<MeleeWeapon_Huntsman.label>Couteau Huntsman</MeleeWeapon_Huntsman.label>  
+
+    <MeleeWeapon_Huntsman.description>Un couteau conçu pour des utilisations tactiques modernes, la lame est bien adapté pour les combats.</MeleeWeapon_Huntsman.description>  
+	
+	<MeleeWeapon_Kuri.label>Couteau Kukri</MeleeWeapon_Kuri.label>  
+
+    <MeleeWeapon_Kuri.description>Le Kukri est un couteau avec une lame incurvée vers l'intérieur, semblable à une machette, utilisé à la fois comme un outil et comme une arme.</MeleeWeapon_Kuri.description>  
+
+	
+	</LanguageData>

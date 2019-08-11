@@ -52,15 +52,16 @@ public class MovingImageContainer {
             dest=UiHandler.goldSymbol.localToStageCoordinates(new Vector2(UiHandler.goldSymbol.getWidth()/2,UiHandler.goldSymbol.getHeight()/2));
             this.type='g';
         } else if (type.equals("exp")) {
-                texture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("exp");
-                dest=UiHandler.expBar.localToStageCoordinates(new Vector2(UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.expBar.getHeight()/2));
-                this.type='e';
+            texture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("exp");
+            dest=UiHandler.expBar.localToStageCoordinates(new Vector2(UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.expBar.getHeight()/2));
+            this.type='e';
             width = texture.getRegionWidth();height = width;
         } else if (type.equals("diamond")) {
             texture = ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("diamond");
             dest = UiHandler.diamondLabel.localToStageCoordinates(new Vector2(UiHandler.diamondLabel.getWidth() / 2, UiHandler.diamondLabel.getHeight() / 2));
             this.type = 'd';
             width = texture.getRegionWidth();height = width;
+            System.out.println("set dest");
         } else {//buymenu items
             if (type.equals("health")) {
                 //System.out.println(startPos);
@@ -84,7 +85,7 @@ public class MovingImageContainer {
                 this.type = 's';
             }
 
-            if (this.type!='d'&&this.type!='e'&&this.type!='g') {dest.set(Airship.pos.x,Airship.pos.y+specificAirshipResourceYdestOffset);slideMenuLeftTime=0.7f;}
+            if (this.type!='d'&&this.type!='e'&&this.type!='g') {dest.set(Airship.pos.x,Airship.pos.y+specificAirshipResourceYdestOffset+Airship.balloonBob.get());}
             width = texture.getRegionWidth()/1.5f;height = width;
         }
 
@@ -123,6 +124,7 @@ public class MovingImageContainer {
         motion2TimePhoenix=1.7f;
         motion1Time=0.7f;
         motion2Time=1.7f;
+        slideMenuLeftTime=0.7f;
 
         lastDest=dest.cpy() ;
         setupTweens();
@@ -151,13 +153,14 @@ public class MovingImageContainer {
                             UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.expBar.getHeight()/7)),1,35,1,1);
 
                 } else if (type=='d') {
-                    GameWorld.diamonds+=1;
-                    UiHandler.diamondLabel.setText(GameWorld.diamonds);
+                    GameWorld.diamond +=1;
+                    UiHandler.diamondLabel.setText(GameWorld.diamond);
 
                     ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.diamondSymbol.localToStageCoordinates(new Vector2(
                             UiHandler.diamondSymbol.getWidth()/4, UiHandler.diamondSymbol.getHeight()/7)),1,35,1,1);
 
                 } else if (type=='f') {
+                    if (Airship.fuel<1) UiHandler.fuelLabel.setColor(1,1,1,1);
                     Airship.fuel+=1;
                     UiHandler.fuelLabel.setText(Integer.toString((int)Airship.fuel));
 
@@ -165,6 +168,7 @@ public class MovingImageContainer {
                             UiHandler.fuelSymbol.getWidth()/4, UiHandler.fuelSymbol.getHeight()/7)),1,35,1,1);
 
                 } else if (type=='a') {
+                    if (Airship.ammo<1) UiHandler.ammoLabel.setColor(1,1,1,1);
                     Airship.ammo+=1;
                     UiHandler.ammoLabel.setText(Airship.ammo);
 
@@ -224,10 +228,10 @@ public class MovingImageContainer {
             firstYMotion = Tween.to(tweenY, -1, motion1Time).target(y1).ease(TweenEquations.easeInBounce).setCallback(endFirstMovementY).start();
             secondYMotion= Tween.to(tweenY, -1, motion2Time).target(dest.y).ease(TweenEquations.easeNone).setCallback(endSecondMovementY);
         } else {
-             firstXMotion = Tween.to(tweenX, -1, slideMenuLeftTime/2).target(x1).ease(TweenEquations.easeInSine).setCallback(endFirstMovementX).start();
+             firstXMotion = Tween.to(tweenX, -1, slideMenuLeftTime/2f).target(x1).ease(TweenEquations.easeInSine).setCallback(endFirstMovementX).start();
              secondXMotion= Tween.to(tweenX, -1, slideMenuLeftTime).target(dest.x).ease(TweenEquations.easeNone);
 
-             firstYMotion = Tween.to(tweenY, -1, slideMenuLeftTime/2).target(y1).ease(TweenEquations.easeInSine).setCallback(endFirstMovementY).start();
+             firstYMotion = Tween.to(tweenY, -1, slideMenuLeftTime/2f).target(y1).ease(TweenEquations.easeInSine).setCallback(endFirstMovementY).start();
              secondYMotion= Tween.to(tweenY, -1, slideMenuLeftTime).target(dest.y).ease(TweenEquations.easeNone).setCallback(endSecondMovementY);
          }
 
@@ -236,19 +240,23 @@ public class MovingImageContainer {
 
     public void update(float delta,Vector2 airshipPos){
 
-        //System.out.println("Dest: "+dest+", x:"+x+", y:"+y);
+        if (type=='d') System.out.println("Dest: "+dest+", x:"+x+", y:"+y);
         if (type!='g'&&type!='e'&&type!='d') {
-            dest.set(airshipPos.x,airshipPos.y+specificAirshipResourceYdestOffset);
+            dest.set(airshipPos.x,airshipPos.y+specificAirshipResourceYdestOffset+Airship.balloonBob.get());
             differenceVector=dest.cpy().sub(lastDest);
             airshipMoved=Math.abs(differenceVector.x)>0 || Math.abs(differenceVector.y)>0;
         }
 
-
+        //System.out.println("lol"+(slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d));
         if (!firstMovementEndedX) {
             if (thisBird!=null) x = tweenX.get() + thisBird.x;
             else {
                 x = tweenX.get() + startPos.x; //if startPosition not null
-                if (type!='g'&&airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0) { //if airship moves keep moving object over 0.9s using new secondXmotion
+                if (airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0) { //if airship moves keep moving object over 0.9s using new secondXmotion
+                    double rot=Math.toDegrees(Math.atan((Airship.pos.y-startPos.y) / (Airship.pos.x-startPos.x)));
+                    x1 = (float) (Math.cos(Math.toRadians(rot+  -35+r.nextInt(70))  ) ) * (30);
+                    y1 = (float) (Math.sin(Math.toRadians(rot+  -35+r.nextInt(70))  ) ) * (30);
+
                     firstXMotion = Tween.to(tweenX, -1, (float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)).target(x1).ease(TweenEquations.easeNone).setCallback(endFirstMovementX).start();
                 }
             }
@@ -256,6 +264,8 @@ public class MovingImageContainer {
 
         } else {
             if (airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0) { //if airship moves keep moving object over 0.9s using new secondXmotion
+                dest.set(Airship.pos.x,Airship.pos.y+specificAirshipResourceYdestOffset+Airship.balloonBob.get());
+
                 secondXMotion = (Tween.to(tweenX, -1, (float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)).target(dest.x).ease(TweenEquations.easeNone)).start();
             }
 
@@ -274,6 +284,7 @@ public class MovingImageContainer {
 
         } else {
             if (airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0) {
+
                 secondYMotion = (Tween.to(tweenY, -1, (float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)).target(dest.y).ease(TweenEquations.easeNone)).setCallback(endSecondMovementY).start();
             }
             y = tweenY.get();

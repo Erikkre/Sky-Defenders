@@ -40,7 +40,7 @@ public class BirdHandler {
     private BgHandler bgHandler;
     private float camWidth, camHeight;
     //BirdAbstractClass birdToAdd;
-    boolean taskRunning;
+    public boolean taskRunning;
     public double lastBirdSpawnTime;
     private ArrayList<Float> flashLengths=new ArrayList<Float>();
     Vector2 airshipPos;
@@ -183,6 +183,7 @@ public class BirdHandler {
                 if (waveNumber==8){
                     waveNumber=0;
                     UiHandler.roundLabel.setText("Round "+ ++GameWorld.round);
+                    GameWorld.waveStartAmmo=Airship.ammo;GameWorld.waveStartArmor=Airship.armor;GameWorld.waveStartHealth=Airship.health;GameWorld.waveStartFuel=(int)Airship.fuel;
                 }
                 UiHandler.waveLabel.setText("Wave "+waveNumber+"/8");
                 taskRunning=false;

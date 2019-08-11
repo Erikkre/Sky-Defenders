@@ -66,13 +66,18 @@ public class UiHandler {
     float camWidth,camHeight;
     public GameWorld world;
     public TextButton buyButton,menuButton,playButton;
-    public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel, lvlLabel, rankNameLabel, roundLabel, waveLabel,airshipHealthLabel,airshipArmorLabel,expLabel;
+    public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel, lvlLabel, rankNameLabel, roundLabel, waveLabel,airshipHealthLabel,airshipArmorLabel,expLabel,goldLimitLabel,diamondLimitLabel,fuelLimitLabel,ammoLimitLabel;
     public static Stack expStack;
     public Random r = new Random();
     public static ConcurrentLinkedQueue<MovingImageContainer> boughtItemsList= new ConcurrentLinkedQueue<MovingImageContainer>();
     public ConcurrentLinkedQueue<ImageTextButton> buyButtons= new ConcurrentLinkedQueue<ImageTextButton>();
-    Runnable giveDiamondGetGold,giveGoldGetDiamond,giveGoldGetArmor,giveGoldGetAmmo,giveGoldGetFuel,giveGoldGetHealth; int goldNum,ammoNum,fuelNum,healthNum,armorNum,diamondNum;
-    ScheduledFuture<?> giveDiamondGetGoldFuture,giveGoldGetDiamondFuture,giveGoldGetArmorFuture,giveGoldGetAmmoFuture,giveGoldGetFuelFuture,giveGoldGetHealthFuture;    //might want to implement a current stage for new screens
+    public Runnable giveDiamondGetGold,giveGoldGetDiamond,giveGoldGetArmor,giveGoldGetAmmo,giveGoldGetFuel,giveGoldGetHealth;
+    public static int boughtGoldNum, boughtAmmoNum, boughtFuelNum, boughtHealthNum, boughtArmorNum, boughtDiamondNum,
+    totalGoldNum,totalAmmoNum,totalHealthNum,totalArmorNum,totalDiamondNum;
+    public static float totalFuelNum;
+    public ScheduledFuture<?> giveDiamondGetGoldFuture,giveGoldGetDiamondFuture,giveGoldGetArmorFuture,giveGoldGetAmmoFuture,giveGoldGetFuelFuture,giveGoldGetHealthFuture;    //might want to implement a current stage for new screens
+    public String armorPrice,ammoPrice,fuelPrice,healthPrice,diamondPrice,goldPrice,//1 diamond
+            armorPerTap,ammoPerTap,fuelPerTap,healthPerTap,diamondPerTap,goldPerTap;
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
             if (i instanceof SlideMenu)      {if (((SlideMenu) i).isTouched){ return true;}}
@@ -129,7 +134,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -207,10 +212,6 @@ public class UiHandler {
         shadeSkin.getDrawable("loading-bar-fill-10patch").setMinHeight(26);shadeSkin.getDrawable("loading-bar-bg").setMinHeight(30);
 
 
-
-
-
-
         /***********************************************************************************each of these is a table in a different row*/
         table0=new Table().top();
         rootTable.add(table0).growX().padTop(13).padBottom(-8).padRight(1).colspan(2);rootTable.row();
@@ -232,7 +233,6 @@ public class UiHandler {
 
         //rankSize=35;rankColor=Color.GREEN;
         //System.out.println("lvl: "+rank.lvl+", exp: "+rank.expGained+", rank values: "+rank.expValues[rank.lvl]);
-
 
         Stack rankImageStack = new Stack();
         rankImage=new Image(Loader.ranksList[rank.lvl]);
@@ -274,27 +274,36 @@ public class UiHandler {
 
 
         goldSymbol=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("gold2"));
-        table1.add(goldSymbol).size(40).padLeft(20);
+        table1.add(goldSymbol).size(40);
         goldLabel= new Label(Integer.toString(world.gold), shadeSkin,"title-plain");
-        table1.add(goldLabel).size((camWidth-(40*5))/4.2f,goldLabel.getPrefHeight()).padLeft(3);
+        goldLimitLabel=new Label("/"+Airship.goldValues[Airship.goldLvl], shadeSkin);
+        Table t0=new Table();t0.add(goldLabel).size((camWidth-(40*5))/4.2f,goldLabel.getPrefHeight());t0.row();t0.add(goldLimitLabel).left();
+        table1.add(t0).padLeft(3);
+
 
         fuelSymbol=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("fuel"));
         table1.add(fuelSymbol).size(40);
         fuelLabel= new Label(Integer.toString((int)Airship.fuel), shadeSkin,"title-plain");
-        table1.add(fuelLabel).size((camWidth-(40*5))/6f,fuelLabel.getPrefHeight()).padLeft(3);
+        fuelLimitLabel=new Label("/"+Airship.fuelValues[Airship.fuelLvl], shadeSkin);
+        Table t1=new Table();t1.add(fuelLabel).size((camWidth-(40*5))/5f,fuelLabel.getPrefHeight());t1.row();t1.add(fuelLimitLabel).left();
+        table1.add(t1).padLeft(3);
+
 
         ammoSymbol=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("ammo"));
         table1.add(ammoSymbol).size(40);
         ammoLabel= new Label(Integer.toString(Airship.ammo), shadeSkin,"title-plain");
-        table1.add(ammoLabel).size((camWidth-(40*5))/5f,ammoLabel.getPrefHeight()).padLeft(3);
+        ammoLimitLabel=new Label("/"+Airship.ammoValues[Airship.ammoLvl], shadeSkin);
+        Table t2=new Table();t2.add(ammoLabel).size((camWidth-(40*5))/5f,ammoLabel.getPrefHeight());t2.row();t2.add(ammoLimitLabel).left();
+        table1.add(t2).padLeft(3);
+
 
         diamondSymbol=new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("diamond"));
         table1.add(diamondSymbol).size(40);
-        diamondLabel= new Label(Integer.toString(world.diamonds), shadeSkin,"title-plain");
-        table1.add(diamondLabel).size(diamondLabel.getPrefWidth(),diamondLabel.getPrefHeight()).padLeft(3);
-
+        diamondLabel= new Label(Integer.toString(world.diamond), shadeSkin,"title-plain");
+        diamondLimitLabel=new Label("/"+Airship.diamondValues[Airship.diamondLvl], shadeSkin);
+        Table t3=new Table();t3.add(diamondLabel).size(diamondLabel.getPrefWidth(),diamondLabel.getPrefHeight());t3.row();t3.add(diamondLimitLabel);
+        table1.add(t3).padLeft(3);
         /******************************************************************************************/
-
 
 
         movPad = new Touchpad(0, shadeSkin);
@@ -319,6 +328,7 @@ public class UiHandler {
 
         loadSlideMenus();
     }
+
     public void loadSlideMenus(){
         //stage.addCaptureListener(slideMenuLeft.getListeners().get(0));stage.addCaptureListener(slideMenuBottom.getListeners().get(0));
         //  stage.addCaptureListener(menuButtonX.getListeners().get(0));stage.addCaptureListener(men    uButtonY.getListeners().get(0));
@@ -344,8 +354,8 @@ public class UiHandler {
         menuButtonX = new Image(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
 
         leftTable.add(new Label("BUY", shadeSkin,"title-plain")).padBottom(5).colspan(2).row();
-        final String armorPrice="100",ammoPrice="50",fuelPrice="50",healthPrice="200",diamondPrice="2500",goldPrice="1",//1 diamond
-                    armorPerTap="10",ammoPerTap="10",fuelPerTap="10",healthPerTap="10",diamondPerTap="1",goldPerTap="500";
+        armorPrice="50";ammoPrice="20";fuelPrice="20";healthPrice="100";diamondPrice="2500";goldPrice="1";//1 diamond
+                    armorPerTap="10";ammoPerTap="30";fuelPerTap="50";healthPerTap="10";diamondPerTap="1";goldPerTap="500";
 
         buyArmorButton=new ImageTextButton(armorPrice,shadeSkin,"buyArmor");//buy cost
         buyArmorButton.clearChildren();
@@ -377,7 +387,7 @@ public class UiHandler {
         buyDiamondButton.add(new Image(goldSymbol.getDrawable())).size(20).right();buyDiamondButton.add(buyDiamondButton.getLabel()).left();
         leftTable.add(buyDiamondButton).expandY().padTop(5).padBottom(5).colspan(2).row();
 
-        buyGoldButton=new ImageTextButton(goldPrice,shadeSkin,"buyGold");//only one with buy cost in diamonds, not gold
+        buyGoldButton=new ImageTextButton(goldPrice,shadeSkin,"buyGold");//only one with buy cost in diamond, not gold
         buyGoldButton.clearChildren();
         buyGoldButton.add(new Label(goldPerTap, shadeSkin,"buttonfont"));buyGoldButton.add(buyGoldButton.getImage()).padLeft(-2).padBottom(5).colspan(6);buyGoldButton.row();//amount receiving
         buyGoldButton.add(new Image(diamondSymbol.getDrawable())).size(20).right();buyGoldButton.add(buyGoldButton.getLabel()).left();
@@ -463,30 +473,34 @@ public class UiHandler {
                     else world.soundMuted=false;
                 } else if ((actor instanceof ImageTextButton && !((ImageTextButton) actor).isDisabled())||(actor.getParent() instanceof ImageTextButton && !((ImageTextButton) actor.getParent()).isDisabled())) {
                     if (actor.getName().equals("r")) {
-                        world.gold -= Integer.parseInt(armorPrice);armorNum += Integer.parseInt(armorPerTap);
-                        giveGoldGetArmorFuture=timer.scheduleAtFixedRate(giveGoldGetArmor, 0, (long)(1000f/armorNum), TimeUnit.MILLISECONDS);
+                        world.gold-=Integer.parseInt(armorPrice);UiHandler.totalGoldNum-=Integer.parseInt(armorPrice);
+                        boughtArmorNum += Integer.parseInt(armorPerTap);totalArmorNum+=Integer.parseInt(armorPerTap);
+                        if(boughtArmorNum ==Integer.parseInt(armorPerTap))giveGoldGetArmorFuture=timer.scheduleAtFixedRate(giveGoldGetArmor, 0, (long)(1000f/ boughtArmorNum), TimeUnit.MILLISECONDS);
 
-                        System.out.println((long)(100f));
                     } else if (actor.getName().equals("a")) {
-                        world.gold -= Integer.parseInt(ammoPrice);ammoNum += Integer.parseInt(ammoPerTap);
-                        if(ammoNum==Integer.parseInt(ammoPerTap))giveGoldGetAmmoFuture=timer.scheduleAtFixedRate(giveGoldGetAmmo, 0, (long)(1000f/ammoNum), TimeUnit.MILLISECONDS);
+                        world.gold -= Integer.parseInt(ammoPrice);UiHandler.totalGoldNum-=Integer.parseInt(ammoPrice);
+                        boughtAmmoNum += Integer.parseInt(ammoPerTap);totalAmmoNum+= Integer.parseInt(ammoPerTap);
+                        if(boughtAmmoNum ==Integer.parseInt(ammoPerTap))giveGoldGetAmmoFuture=timer.scheduleAtFixedRate(giveGoldGetAmmo, 0, (long)(1000f/ boughtAmmoNum), TimeUnit.MILLISECONDS);
 
                     } else if (actor.getName().equals("f")) {
-                        world.gold -= Integer.parseInt(fuelPrice);fuelNum += Integer.parseInt(fuelPerTap);
-                        if(fuelNum==Integer.parseInt(fuelPerTap))giveGoldGetFuelFuture=timer.scheduleAtFixedRate(giveGoldGetFuel, 0, (long)(1000f/fuelNum), TimeUnit.MILLISECONDS);
+                        world.gold -= Integer.parseInt(fuelPrice);UiHandler.totalGoldNum-=Integer.parseInt(fuelPrice);
+                        boughtFuelNum += Integer.parseInt(fuelPerTap);totalFuelNum+= Integer.parseInt(fuelPerTap);
+                        if(boughtFuelNum ==Integer.parseInt(fuelPerTap))giveGoldGetFuelFuture=timer.scheduleAtFixedRate(giveGoldGetFuel, 0, (long)(1000f/ boughtFuelNum), TimeUnit.MILLISECONDS);
 
                     } else if (actor.getName().equals("h")) {
-                        world.gold -= Integer.parseInt(healthPrice);healthNum += Integer.parseInt(healthPerTap);
-                        if(healthNum==Integer.parseInt(healthPerTap))giveGoldGetHealthFuture=timer.scheduleAtFixedRate(giveGoldGetHealth, 0, (long)(1000f/healthNum), TimeUnit.MILLISECONDS);
+                        world.gold -= Integer.parseInt(healthPrice);UiHandler.totalGoldNum-=Integer.parseInt(healthPrice);
+                        boughtHealthNum += Integer.parseInt(healthPerTap);totalHealthNum+= Integer.parseInt(healthPerTap);
+                        if(boughtHealthNum==Integer.parseInt(healthPerTap))giveGoldGetHealthFuture=timer.scheduleAtFixedRate(giveGoldGetHealth,0,(long)(1000f/boughtHealthNum), TimeUnit.MILLISECONDS);
 
                     } else if (actor.getName().equals("d")) {
-                        world.gold -= Integer.parseInt(diamondPrice);diamondNum += Integer.parseInt(diamondPerTap);
-                        if(diamondNum==Integer.parseInt(diamondPerTap))giveGoldGetDiamondFuture=timer.scheduleAtFixedRate(giveGoldGetDiamond, 0, (long)(1000f), TimeUnit.MILLISECONDS);
+                        world.gold -= Integer.parseInt(diamondPrice);UiHandler.totalGoldNum-=Integer.parseInt(diamondPrice);
+                        boughtDiamondNum += Integer.parseInt(diamondPerTap);totalDiamondNum+= Integer.parseInt(diamondPerTap);
+                        if(boughtDiamondNum==Integer.parseInt(diamondPerTap))giveGoldGetDiamondFuture=timer.scheduleAtFixedRate(giveGoldGetDiamond, 0, (long)(1000f), TimeUnit.MILLISECONDS);
 
                     } else if (actor.getName().equals("g")) {
-                        world.diamonds -= Integer.parseInt(goldPrice); goldNum += Integer.parseInt(goldPerTap);
-                        if(goldNum==Integer.parseInt(goldPerTap))giveDiamondGetGoldFuture=timer.scheduleAtFixedRate(giveDiamondGetGold, 0, (long)(1000f/goldNum), TimeUnit.MILLISECONDS);
-                        diamondLabel.setText(world.diamonds);
+                        world.diamond -= Integer.parseInt(goldPrice);totalDiamondNum-=Integer.parseInt(goldPrice);boughtGoldNum += Integer.parseInt(goldPerTap);
+                        if(boughtGoldNum ==Integer.parseInt(goldPerTap))giveDiamondGetGoldFuture=timer.scheduleAtFixedRate(giveDiamondGetGold, 0, (long)(1000f/ boughtGoldNum), TimeUnit.MILLISECONDS);
+                        diamondLabel.setText(world.diamond);
                     }
                     isTouched = true;
                     goldLabel.setText(world.gold);
@@ -600,17 +614,41 @@ public class UiHandler {
         //slideMenuBottom.setPosition(0, Gdx.graphics.getHeight());
         //slideMenuBottom.setFillParent(true);
     }
+    public void disableOrEnableResourceButtons(ImageTextButton b,int amntPerTap,int curAmnt,int cap,Label limitLabel){
+        int cost=Integer.parseInt(b.getText().toString());
+
+        if (curAmnt+amntPerTap>cap) {
+            b.setDisabled(true);
+            b.getChildren().get(0).setColor(Color.RED);if (limitLabel!=null)limitLabel.setColor(Color.RED);
+        } else if (world.gold<cost||(b==buyGoldButton&&world.diamond<cost)){
+            b.setDisabled(true);
+            b.getLabel().setColor(Color.RED);
+
+        } else if (b.isDisabled()) {
+            b.setDisabled(false);
+            if (b.getChildren().get(0).getColor().equals(Color.RED)&&curAmnt+amntPerTap<=cap) {
+                b.getChildren().get(0).setColor(Color.WHITE);if (limitLabel!=null)limitLabel.setColor(Color.WHITE);
+            } else if (b.getLabel().getColor().equals(Color.RED)&&(world.gold>=cost||(b==buyGoldButton&&world.diamond>=cost))){
+                b.getLabel().setColor(Color.WHITE);
+            }
+        }
+    }
+
     public void update(float delta){
         if (boughtItemsList!=null){
             for (MovingImageContainer i : boughtItemsList){
                 i.update(delta, Airship.pos);
             }
         }
-        for (ImageTextButton i : buyButtons){
-            int cost=Integer.parseInt(i.getText().toString());
-            if (world.gold<cost||(i==buyGoldButton&&world.diamonds<cost)) i.setDisabled(true);
-            else if (i.isDisabled()) i.setDisabled(false);
-        }
+
+        disableOrEnableResourceButtons(buyGoldButton,Integer.parseInt(goldPerTap),totalGoldNum,Airship.goldValues[Airship.goldLvl],goldLimitLabel);
+        disableOrEnableResourceButtons(buyDiamondButton,Integer.parseInt(diamondPerTap),totalDiamondNum,Airship.diamondValues[Airship.diamondLvl],diamondLimitLabel);
+        disableOrEnableResourceButtons(buyFuelButton,Integer.parseInt(fuelPerTap),(int)totalFuelNum,Airship.fuelValues[Airship.fuelLvl],fuelLimitLabel);
+        //System.out.println("amntWithoutBuying: "+Airship.fuel+"totalAmnt"+(int)totalFuelNum+", cap: "+Airship.fuelValues[Airship.fuelLvl]);
+        disableOrEnableResourceButtons(buyAmmoButton,Integer.parseInt(ammoPerTap),totalAmmoNum,Airship.ammoValues[Airship.ammoLvl],ammoLimitLabel);
+        disableOrEnableResourceButtons(buyArmorButton,Integer.parseInt(armorPerTap),totalAmmoNum,Airship.armorValues[Airship.armorLvl],null);
+        disableOrEnableResourceButtons(buyHealthButton,Integer.parseInt(healthPerTap),totalHealthNum,Airship.healthValues[Airship.healthLvl],null);
+
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
         ammoLabel.setText(Airship.ammo);fuelLabel.setText(Integer.toString((int)Airship.fuel));
         if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
@@ -620,7 +658,8 @@ public class UiHandler {
         giveDiamondGetGold = new Runnable() {
             @Override
             public void run() {
-                if (goldNum>0) {goldNum--;
+                if (boughtGoldNum >0) {
+                    boughtGoldNum--;
                     boughtItemsList.add(new MovingImageContainer("gold", r.nextInt(360), null, true,
                             buyGoldButton.getImage().localToStageCoordinates(new Vector2(buyGoldButton.getImage().getWidth()/2,buyGoldButton.getImage().getHeight()/2))));
                 } else giveDiamondGetGoldFuture.cancel(true);
@@ -629,8 +668,9 @@ public class UiHandler {
         giveGoldGetDiamond = new Runnable() {
             @Override
             public void run() {
-                if (diamondNum>0) {diamondNum--;
-                    boughtItemsList.add(new MovingImageContainer("diamond", 0, null, true,
+                if (boughtDiamondNum >0) {
+                    boughtDiamondNum--;
+                    boughtItemsList.add(new MovingImageContainer("diamond", 0, null, false,
                             buyDiamondButton.getImage().localToStageCoordinates(new Vector2(buyDiamondButton.getImage().getWidth()/2,buyDiamondButton.getImage().getHeight()/2))));
                 } else giveGoldGetDiamondFuture.cancel(true);
             }
@@ -638,7 +678,8 @@ public class UiHandler {
         giveGoldGetArmor = new Runnable() {
             @Override
             public void run() {
-                if (armorNum>0) {armorNum--;
+                if (boughtArmorNum >0) {
+                    boughtArmorNum--;
                     boughtItemsList.add(new MovingImageContainer("armor", 0, null, false,
                             buyArmorButton.getImage().localToStageCoordinates(new Vector2(buyArmorButton.getImage().getWidth()/2,buyArmorButton.getImage().getHeight()/2))));
                 } else if (!giveGoldGetArmorFuture.isCancelled()){giveGoldGetArmorFuture.cancel(true);}
@@ -647,7 +688,8 @@ public class UiHandler {
         giveGoldGetAmmo = new Runnable() {
             @Override
             public void run() {
-                if (ammoNum>0) {ammoNum--;
+                if (boughtAmmoNum >0) {
+                    boughtAmmoNum--;
                     boughtItemsList.add(new MovingImageContainer("ammo", 0, null, false,
                             buyAmmoButton.getImage().localToStageCoordinates(new Vector2(buyAmmoButton.getImage().getWidth()/2,buyAmmoButton.getImage().getHeight()/2))));
                 } else giveGoldGetAmmoFuture.cancel(true);
@@ -656,7 +698,8 @@ public class UiHandler {
         giveGoldGetFuel = new Runnable() {
             @Override
             public void run() {
-                if (fuelNum>0) {fuelNum--;
+                if (boughtFuelNum > 0) {
+                    boughtFuelNum--;
                     boughtItemsList.add(new MovingImageContainer("fuel", 0, null, false,
                             buyFuelButton.getImage().localToStageCoordinates(new Vector2(buyFuelButton.getImage().getWidth()/2,buyFuelButton.getImage().getHeight()/2))));
                 } else {giveGoldGetFuelFuture.cancel(true);timer.remove(this);}
@@ -665,7 +708,8 @@ public class UiHandler {
         giveGoldGetHealth = new Runnable() {
             @Override
             public void run() {
-                if (healthNum>0) {healthNum--;
+                if (boughtHealthNum >0) {
+                    boughtHealthNum--;
                     boughtItemsList.add(new MovingImageContainer("health", 0, null, false,
                             buyHealthButton.getImage().localToStageCoordinates(new Vector2(buyHealthButton.getImage().getWidth()/2,buyHealthButton.getImage().getHeight()/2))));
                 } else giveGoldGetHealthFuture.cancel(true);

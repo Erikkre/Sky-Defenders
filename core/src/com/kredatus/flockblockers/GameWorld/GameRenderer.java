@@ -281,11 +281,11 @@ public void setRotate(float angle){
 
     private void drawBackground() {
     batcher.disableBlending();
-        batcher.draw(background.getTexture(), background.getX(), background.getY(),
-                background.getWidth(), background.getHeight());
+        batcher.draw(BgHandler.background.getTexture(), BgHandler.background.getX(), BgHandler.background.getY(),
+                BgHandler.background.getWidth(), BgHandler.background.getHeight());
 
-        batcher.draw(background2.getTexture(), background2.getX(), background2.getY(),
-               background2.getWidth(), background2.getHeight());
+        batcher.draw(BgHandler.background2.getTexture(), BgHandler.background2.getX(), BgHandler.background2.getY(),
+               BgHandler.background2.getWidth(), BgHandler.background2.getHeight());
         batcher.enableBlending();
 
     }

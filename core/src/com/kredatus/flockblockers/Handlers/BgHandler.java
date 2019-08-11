@@ -29,7 +29,7 @@ import aurelienribon.tweenengine.TweenEquations;
 public class BgHandler {
     public static boolean endWaveBgMotion;
     // BgHandler will create all five objects that we need.
-    private Background background, background2, background3, background4;
+    public static Background background, background2, background3, background4;
     private Random r = new Random();
     // BgHandler will use the constants below to determine
     // how fast we need to scroll and also determine
@@ -63,17 +63,47 @@ public class BgHandler {
     ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue,birdQueue;
 
     public GameWorld world;
+    LightHandler lightHandler;  TinyBirdHandler tinyBirdHandler;
 
+    public void deathAndRestart(){
+        bgNumber=bgNumber/9;
 
+        //vert.set(0); //everything is done in negative (camera goes up by that amount
+        vert.set(0);
+
+        if (background.y < background2.y) {
+            background2.reset(0,bgNumber++);background.reset(background2.getTailY(),bgNumber++);
+        } else {
+            background.reset(0,bgNumber++);background2.reset(background.getTailY(),bgNumber++);
+        }
+        survivalBgTweens(tinyBirdHandler,lightHandler);
+
+        //startToSurvival(tinyBirdHandler,lightHandler);
+    }
     public void buyMenuToSurvival(){
         vertPositionBg.resume();
+        (horizPositionBg = Timeline.createSequence()
+                .push(Tween.to(horiz, -1, sideToSideMotionDuration).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .repeatYoyo(Tween.INFINITY, 0).start();
     }
     public void survivalToBuyMenu(){
         //background = new Background(horiz.get(), vert.get(), bgw, separatorHeight, Loader.bgList.get(0));
         //background2 = new Background(horiz.get(), background.getTailY(), bgw, separatorHeight, Loader.bgList.get(0));
-        buyMenuBgTweens();
+        vertPositionBg.pause();
+        (horizPositionBg = Timeline.createSequence()
+                .push(Tween.to(horiz, -1, sideToSideMotionDuration/2).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .repeatYoyo(Tween.INFINITY, 0).start();
+        //horiz.set(0);
+        //vert.set(0);
+        /*(horizPositionBg = Timeline.createSequence()
+                .push(Tween.to(horiz, -1, sideToSideMotionDuration).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
+                .repeatYoyo(Tween.INFINITY, 0).start();
+        /*(vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
+                .push(Tween.to(vert, -1, 5).target(-bgh)))
+                .repeatYoyo(Tween.INFINITY,0).start();*/
     }
     public void startToSurvival(TinyBirdHandler tinyBirdHandler,LightHandler lightHandler){
+        this.tinyBirdHandler=tinyBirdHandler;this.lightHandler=lightHandler;
         horiz.set(0);
         vert.set(0); //everything is done in negative (camera goes up by that amount
         shake.set(0);                              //but in reality its the bg's lowering by that much
@@ -86,17 +116,7 @@ public class BgHandler {
         survivalBgTweens(tinyBirdHandler,lightHandler);
     }
 
-    public void buyMenuBgTweens(){
-        vertPositionBg.pause();
-        /*horiz.set(0);
-        //vert.set(0);
-        (horizPositionBg = Timeline.createSequence()
-                .push(Tween.to(horiz, -1, sideToSideMotionDuration).target((camWidth)-bgw).ease(TweenEquations.easeInOutSine)))
-                .repeatYoyo(Tween.INFINITY, 0).start();
-        /*(vertPositionBg = Timeline.createSequence()  //-1 so it happens slightly before reset with added y
-                .push(Tween.to(vert, -1, 5).target(-bgh)))
-                .repeatYoyo(Tween.INFINITY,0).start();*/
-    }
+
 
     public BgHandler(GameWorld world, float camWidth, float camHeight, int waveNumber, BirdHandler birdHandler){
         this.world=world;
@@ -255,7 +275,7 @@ public class BgHandler {
     //   0                 9                       18                      27                      36                      45                        54                      63
     //      1 2  4 5  7 8     10 11  13 14  16 17     19 20  22 23  25 26     28 29  31 32  34 35     37 38  40 41  43 44       46 47  49 50  52 53     55 56  58 59  61 62     64 65  67 68  70 71
     public void update(float delta) {
-        if (world.isSurvival()) {
+        if (world.isSurvival()||world.isBuyMenu()) {
             //basically if middle of each wave start brightening, i.e. 6, if beginning of new wave start darkening
             if (lightsBrightening && ((bgNumber - 4) % 9) == 0) {
                 lightsBrightening = false;

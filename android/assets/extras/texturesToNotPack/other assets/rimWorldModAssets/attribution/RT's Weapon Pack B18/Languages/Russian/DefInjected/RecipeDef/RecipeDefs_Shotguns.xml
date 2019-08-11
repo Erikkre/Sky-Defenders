@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<LanguageData> 
+
+<USAS12Craft.label>Собрать дробовик USAS-12</USAS12Craft.label>
+<USAS12Craft.description>Собрать USAS-12.</USAS12Craft.description>
+
+<M1014Craft.label>Собрать дробовик M1014</M1014Craft.label>
+<M1014Craft.description>Собрать M1014.</M1014Craft.description>
+
+<DP12Craft.label>Собрать дробовик DP-12</DP12Craft.label>
+<DP12Craft.description>Собрать DP-12.</DP12Craft.description>
+
+<Winchester87Craft.label>Собрать дробовик Winchester 1887</Winchester87Craft.label>
+<Winchester87Craft.description>Собрать Winchester 1887.</Winchester87Craft.description>
+
+<SPAS12Craft.label>Собрать дробовик SPAS-12</SPAS12Craft.label>
+<SPAS12Craft.description>Собрать SPAS-12.</SPAS12Craft.description>
+
+</LanguageData>

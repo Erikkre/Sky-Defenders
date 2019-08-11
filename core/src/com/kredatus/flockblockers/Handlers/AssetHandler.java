@@ -54,10 +54,12 @@ public class AssetHandler {/*
 
     public static String textures="textures/texturePack.txt",logo="textures/logo.png",logo2="textures/logo2.png",companyName="textures/suiGenerisFontCompanyNameWhiteBg300x.png",
     logoFire= "effects/logoFire.p", logoFire2= "effects/logoFire2.p", burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
-    ignitionFire0Deignition7s="sound/ignitionFire0Deignition7s.wav",ignition="sound/ignition.wav", fire0="sound/fire0.wav", fire1="sound/fire1.wav",
-    swoop="sound/swoop.wav",
-    birdHit="sound/birdHit.mp3",balloonHit="sound/balloonHit.mp3",
+
+    swoop="sound/swoop.wav", birdHit="sound/birdHit.mp3",balloonHit="sound/balloonHit.mp3",balloonDeath="sound/balloonDeath.mp3",
+    thunderBirdDeath="sound/thunderBirdDeath.mp3",waterBirdDeath="sound/waterBirdDeath.mp3",fireBirdDeath="sound/fireBirdDeath.mp3",acidBirdDeath="sound/acidBirdDeath.mp3",
+    nightBirdDeath="sound/nightBirdDeath.mp3",lunarBirdDeath="sound/lunarBirdDeath.mp3",goldBirdDeath="sound/goldBirdDeath.mp3",phoenixBirdDeath="sound/phoenixBirdDeath.mp3",
     music0="music/music0.mp3",
+
     shadeUI="ui/shadeUI/shadeUI-decolored/uiskin.json", niteRideUI="ui/niteRideUI/nite-ride-ui.json",
     flashShader="shaders/flash.vert";
 
@@ -74,14 +76,15 @@ public class AssetHandler {/*
         manager.load(thrusterFireRight, ParticleEffect.class);
 
 
-        manager.load(fire0, Sound.class);
         manager.load(swoop, Sound.class);
         manager.load(birdHit, Sound.class);
+        manager.load(thunderBirdDeath, Sound.class);manager.load(waterBirdDeath, Sound.class);manager.load(fireBirdDeath, Sound.class);manager.load(acidBirdDeath, Sound.class);
+        manager.load(nightBirdDeath, Sound.class);manager.load(lunarBirdDeath, Sound.class);manager.load(goldBirdDeath, Sound.class);manager.load(phoenixBirdDeath, Sound.class);
         manager.load(balloonHit, Sound.class);
-
+        manager.load(balloonDeath, Sound.class);
 
         manager.load(music0, Music.class);
-        for (int i=0;i<=3;i++){
+        for (int i=0;i<=3;i++) {
             if (i<=1)manager.load("turretSound/c"+i+".mp3",Sound.class);
             if (i<=2)manager.load("turretSound/f"+i+".mp3",Sound.class);
             if (i<=3)manager.load("turretSound/d"+i+".mp3",Sound.class);

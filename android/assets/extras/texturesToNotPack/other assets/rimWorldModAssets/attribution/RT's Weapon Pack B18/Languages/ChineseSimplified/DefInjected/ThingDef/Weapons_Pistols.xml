@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- S&W Magnum -->
+
+  <Bullet_SWMagnum_rt.label>SW玛格南左轮手枪子弹</Bullet_SWMagnum_rt.label>
+
+  <Gun_SWMagnum_rt.label>SW玛格南左轮手枪</Gun_SWMagnum_rt.label>
+  <Gun_SWMagnum_rt.description>这是一款.500口径的SW玛格南左轮手枪。</Gun_SWMagnum_rt.description>
+
+
+  <!-- Five Seven -->
+
+  <Bullet_FiveSeven_rt.label>FN57手枪子弹</Bullet_FiveSeven_rt.label>
+
+  <Gun_FiveSeven_rt.label>FN57手枪</Gun_FiveSeven_rt.label>
+  <Gun_FiveSeven_rt.description>FN57手枪是一款半自动手枪，使用FN 5.7×28mm子弹。</Gun_FiveSeven_rt.description>
+
+
+  <!-- Glock 17 -->
+
+  <Bullet_Glock17_rt.label>Glock17手枪子弹</Bullet_Glock17_rt.label>
+
+  <Gun_Glock17_rt.label>Glock17手枪</Gun_Glock17_rt.label>
+  <Gun_Glock17_rt.description>这是一把为专业人士设计的，全球使用最广泛的执法手枪。</Gun_Glock17_rt.description>
+
+
+  <!-- Deagle -->
+
+  <Bullet_Deagle_rt.label>沙漠之鹰子弹</Bullet_Deagle_rt.label>
+
+  <Gun_Deagle_rt.label>沙漠之鹰</Gun_Deagle_rt.label>
+  <Gun_Deagle_rt.description>沙漠之鹰是一把半自动手枪，一出现就因为巨大的威力和自动装填而闻名，它有着三角形的枪管和巨大的枪口，造型独特。</Gun_Deagle_rt.description>
+
+
+  <!-- ColtPythonRevolver -->
+
+  <Bullet_ColtPythonRevolver_rt.label>柯尔特左轮手枪子弹</Bullet_ColtPythonRevolver_rt.label>
+
+  <Gun_ColtPythonRevolver_rt.label>柯尔特左轮手枪</Gun_ColtPythonRevolver_rt.label>
+  <Gun_ColtPythonRevolver_rt.description>柯尔特左轮手枪是由美国康狄格涅州卡特伏德市的柯尔特制造公司以前生产的，它曾经被称为“杀人放火，出门旅行必备的手枪”。</Gun_ColtPythonRevolver_rt.description>
+
+
+  <!-- M1911 -->
+
+  <Bullet_M1911_rt.label>M1911手枪子弹</Bullet_M1911_rt.label>
+
+  <Gun_M1911_rt.label>M1911手枪</Gun_M1911_rt.label>
+  <Gun_M1911_rt.description>M1911手枪是一种单发的半自动反冲式手枪，1911年成为美军的制式手枪，直到1985年才退役。</Gun_M1911_rt.description>
+
+
+  <!-- Luger P08 -->
+
+  <Bullet_LugerP08_rt.label>鲁格P08手枪子弹</Bullet_LugerP08_rt.label>
+
+  <Gun_LugerP08_rt.label>鲁格P08手枪</Gun_LugerP08_rt.label>
+  <Gun_LugerP08_rt.description>鲁格P08手枪是一种有保险的半自动反冲式手枪。</Gun_LugerP08_rt.description>
+
+
+  <!-- Dual Berettas -->
+
+  <Bullet_BerettaM9_rt.label>贝雷塔手枪子弹</Bullet_BerettaM9_rt.label>
+
+  <Gun_BerettaM9_rt.label>贝雷塔M9手枪</Gun_BerettaM9_rt.label>
+  <Gun_BerettaM9_rt.description>贝雷塔手枪是一种小后坐力的半自动手枪，可以双持。</Gun_BerettaM9_rt.description>
+
+
+</LanguageData>

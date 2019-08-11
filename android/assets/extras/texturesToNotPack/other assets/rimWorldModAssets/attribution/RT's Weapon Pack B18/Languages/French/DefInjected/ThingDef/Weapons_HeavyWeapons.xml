@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+ <LanguageData> 
+
+ <!--French -->
+ 
+ 
+ 
+    <Bullet_M79GL_rt.label>Munition pour Lance-Grenades M79</Bullet_M79GL_rt.label>  
+	
+	<Gun_M79GL.label>Lance-grenades M79</Gun_M79GL.label>  
+
+    <Gun_M79GL.description>Il s'agit d'un lance-grenades un seul tire, tiré sur une épaule, qui tire une grenade 40 × 46 mm.</Gun_M79GL.description> 
+	
+	
+	<Bullet_PKM_rt.label>Balles pour PKM</Bullet_PKM_rt.label>  
+	
+	<Gun_PKM_rt.label>PKM</Gun_PKM_rt.label>  
+
+    <Gun_PKM_rt.description>Il s'agit d'une mitrailleuse à usage général de 7,62 mm conçue en Union Soviétique et actuellement en production en Russie.</Gun_PKM_rt.description> 
+	
+	
+	<Bullet_RPG_rt.label>Rocket de RPG</Bullet_RPG_rt.label>  
+	
+	<Gun_RPG.label>RPG-7</Gun_RPG.label>  
+
+    <Gun_RPG.description>Arme anti-char à tenir sur  l'épaule, qui tire des roquettes équipées d'une ogive explosive. Utiliser la avec précaution!</Gun_RPG.description> 
+	
+	
+	<Bullet_M32MGL_rt.label>Grenades pour Lance-Grenades M32</Bullet_M32MGL_rt.label>
+
+    <Gun_M32MGL.label>Lance-Grenades M32</Gun_M32MGL.label>
+
+    <Gun_M32MGL.description>Il s'agit d'un lance-grenades à faible vitesse et à épaulettes muni d'un chargeur à six tours à ressort.</Gun_M32MGL.description>
+	
+	
+	<Bullet_MG42_rt.label>Balles de MG42</Bullet_MG42_rt.label>
+	
+	<Gun_MG42_rt.label>MG42</Gun_MG42_rt.label>
+	
+	<Gun_MG42_rt.description>La MG42 est une mitrailleuse à usage général conçue dans l'Allemagne Nazi.</Gun_MG42_rt.description>
+
+	
+	<Bullet_SAWM249_rt.label>Balles de SAW M249</Bullet_SAWM249_rt.label>
+	
+	<Gun_SAWM249_rt.label>SAW M249</Gun_SAWM249_rt.label>
+	
+	<Gun_SAWM249_rt.description>Il s'agit d'une mitralleuse légère.</Gun_SAWM249_rt.description>
+	
+	
+	<Bullet_BARM1918_rt.label>Balles de BAR M1918</Bullet_BARM1918_rt.label>
+	
+	<Gun_BARM1918_rt.label>BAR M1918</Gun_BARM1918_rt.label>
+	
+	<Gun_BARM1918_rt.description>Une mitrailleuse B.A.R M1918. Peut être utilisé sur un complexe Défensif.</Gun_BARM1918_rt.description>
+</LanguageData>

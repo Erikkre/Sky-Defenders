@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData>
+<!-- =============MP40============== -->
+<Bullet_MP40_rt.label>MP40</Bullet_MP40_rt.label>
+<Gun_MP40_rt.label>MP40</Gun_MP40_rt.label>
+<Gun_MP40_rt.description>MP40 пистолет-пулемет использует патроны 9x19mm.</Gun_MP40_rt.description>
+<!-- =============Skorpion vz 61 ============== -->
+<Bullet_Skorpionvz61_rt.label>Skorpion vz.61</Bullet_Skorpionvz61_rt.label>
+<Gun_Skorpionvz61_rt.label>Skorpion vz.61</Gun_Skorpionvz61_rt.label>
+<Gun_Skorpionvz61_rt.description>Это оружие не использует пехота, является личным оружием самообороны, является более эффективным, чем пистолет.</Gun_Skorpionvz61_rt.description>
+<!-- =============Uzi============== -->
+<Bullet_Uzi_rt.label>Uzi</Bullet_Uzi_rt.label>
+<Gun_Uzi_rt.label>Uzi</Gun_Uzi_rt.label>
+<Gun_Uzi_rt.description>Это пистолет-пулемет с открытым стволом и со свободным управлением затвора</Gun_Uzi_rt.description>
+<!-- =============MP7============== -->
+<Bullet_HKMP7_rt.label>MP7</Bullet_HKMP7_rt.label>
+<Gun_HKMP7_rt.label>MP7</Gun_HKMP7_rt.label>
+<Gun_HKMP7_rt.description>Это оружие немецкой обороны (PDW), произведен Heckler Koch, использует HK 4.6x30mm.</Gun_HKMP7_rt.description>
+<!-- =============CZ3A1============== -->
+<Bullet_CZ3A1_rt.label>CZ3A1</Bullet_CZ3A1_rt.label>
+<Gun_CZ3A1_rt.label>CZ3A1</Gun_CZ3A1_rt.label>
+<Gun_CZ3A1_rt.description>Это легкий, компактный пистолет-пулемет разработан, чтобы легко маневрировать в тесном пространстве.</Gun_CZ3A1_rt.description>
+<!-- =============KRISS Vector============== -->
+<Bullet_KRISSvector_rt.label>KRISS Vector</Bullet_KRISSvector_rt.label>
+<Gun_KRISSvector_rt.label>KRISS Vector</Gun_KRISSvector_rt.label>
+<Gun_KRISSvector_rt.description>KRISS Vector серия представляет собой семейство оружия, основанного на конструкции пистолета, разработанного KRISS USA, ранее Transformational Defense Industries (TDI). Они используют нетрадиционную систему отдачи в сочетании с линейным дизайном, чтобы уменьшить воспринимаемую отдачу и подъём дула.</Gun_KRISSvector_rt.description>
+<!-- =============UMP-45============== -->
+<Bullet_HK_UMP45_rt.label>UMP-45</Bullet_HK_UMP45_rt.label>
+<Gun_HK_UMP45_rt.label>UMP-45</Gun_HK_UMP45_rt.label>
+<Gun_HK_UMP45_rt.description>Это очень эффективный и экономичный пистолет-пулемет для военных и правоохранительных целей.</Gun_HK_UMP45_rt.description>
+<!-- =============P90============== -->
+<Bullet_P90_rt.label>P90</Bullet_P90_rt.label>
+<Gun_P90_rt.label>P90</Gun_P90_rt.label>
+<Gun_P90_rt.description>P90 пистолет-пулемет был разработан в конце 1980 года бельгийской Fabrique Nationale (FN) of Herstal.</Gun_P90_rt.description>
+<!-- =============TSMG============== -->
+<Bullet_TSMG_rt.label>Томпсон SMG</Bullet_TSMG_rt.label>
+<Gun_Thompson_Submachine_Gun_r.label>Томпсон SMG</Gun_Thompson_Submachine_Gun_r.label>
+<Gun_Thompson_Submachine_Gun_r.description>Американский пистолет-пулемет Томпсон, изобретён Джоном Т. Томпсоном в 1918, который стал печально известен во время сухого закона.</Gun_Thompson_Submachine_Gun_r.description>
+<!-- =============PPSH_41============== -->
+<Bullet_PPSH_41_rt.label>ППШ-41</Bullet_PPSH_41_rt.label>
+<Gun_PPSH_41_rt.label>ППШ-41</Gun_PPSH_41_rt.label>
+<Gun_PPSH_41_rt.description>ППШ-41 был одним из основных стрелковых оружий советских войск во времена Второй мировой войны.</Gun_PPSH_41_rt.description>
+</LanguageData> 

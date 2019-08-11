@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+
+  <Bullet_Karabiner98kurz_rt.label>Kar 98k毛瑟步枪子弹</Bullet_Karabiner98kurz_rt.label>
+
+  <Gun_Karabiner98kurz_rt.label>Kar 98k毛瑟步枪</Gun_Karabiner98kurz_rt.label>
+  <Gun_Karabiner98kurz_rt.description>Kar 98k毛瑟步枪，由Gew 98毛瑟步枪改进而来，Kar 98k步枪是第二次世界大战时期纳粹德国军队装备的制式步枪。</Gun_Karabiner98kurz_rt.description>
+ 
+
+
+ <!-- SteyrSSG08 -->
+
+  <Bullet_308Winchester_rt.label>斯太尔SSG08狙击步枪子弹</Bullet_308Winchester_rt.label>
+
+  <Gun_SteyrSSG08_rt.label>斯太尔SSG08狙击步枪</Gun_SteyrSSG08_rt.label>
+  <Gun_SteyrSSG08_rt.description>斯太尔SSG08狙击步枪是一款旋转后拉枪机式步枪，冷锻枪管采用浮置式设计，枪管前端带有一个高效的制退器。</Gun_SteyrSSG08_rt.description>
+
+
+  <!-- L96A1 -->
+
+  <Bullet_L96A1_rt.label>L96A1狙击步枪子弹</Bullet_L96A1_rt.label>
+
+  <Gun_L96A1_rt.label>L96A1狙击步枪</Gun_L96A1_rt.label>
+  <Gun_L96A1_rt.description>L96A1是由旧世界一家叫做精准国际的公司专门为旧世界国家英国的军队而制造的狙击步枪。</Gun_L96A1_rt.description>
+
+
+  <!-- AWM -->
+
+  <Bullet_AWM_rt.label>AWM狙击步枪子弹</Bullet_AWM_rt.label>
+
+  <Gun_AWM_rt.label>AWM狙击步枪</Gun_AWM_rt.label>
+  <Gun_AWM_rt.description>AWM步枪是精准国际的一款栓动式狙击步枪，是精准国际公司设计的一款使用.300马格南步枪弹的改良型AW狙击枪。</Gun_AWM_rt.description>
+
+
+  <!-- Barrett -->
+
+  <Bullet_Barrett_rt.label>巴雷特M82A1反器材步枪子弹</Bullet_Barrett_rt.label>
+
+  <Gun_Barrett_rt.label>巴雷特M82A1反器材步枪</Gun_Barrett_rt.label>
+  <Gun_Barrett_rt.description>这是一款利用反冲操作的半自动反器材步枪，由旧世界美国巴雷特公司研发和制造。</Gun_Barrett_rt.description>
+
+
+  <!-- Vss Vintorez -->
+
+  <Bullet_VSSVintorez_rt.label>VSS Vintorez微声狙击步枪子弹</Bullet_VSSVintorez_rt.label>
+
+  <Gun_VSSVintorez_rt.label>VSS Vintorez微声狙击步枪</Gun_VSSVintorez_rt.label>
+  <Gun_VSSVintorez_rt.description>一款专门为特别行动与潜入任务使用的微声狙击步枪。</Gun_VSSVintorez_rt.description>
+
+
+  <!-- Dragunov -->
+
+  <Bullet_Dragunov_rt.label>SVD狙击步枪子弹</Bullet_Dragunov_rt.label>
+
+  <Gun_Dragunov_rt.label>SVD狙击步枪</Gun_Dragunov_rt.label>
+  <Gun_Dragunov_rt.description>这是为了代替莫辛-纳甘狙击步枪而设计的。</Gun_Dragunov_rt.description>
+
+
+</LanguageData>

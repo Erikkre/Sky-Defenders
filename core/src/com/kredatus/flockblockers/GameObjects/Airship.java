@@ -52,7 +52,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static int armor, health, ammo; //slowdownSpeed;
     public static float fuel;
 
-    public static int rackLvl, burnerLvl, healthLvl, armorLvl, speedLvl, fuelLvl, ammoLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
+    public static int rackLvl, burnerLvl, healthLvl, armorLvl, speedLvl, fuelLvl, ammoLvl, goldLvl, diamondLvl;   //Levels: 1-5, rack: 1-5, engine 1-4 //mobility level decides thruster size and how fast you move on screen
     public static TextureRegion balloonTexture, rackTexture, sideThrustTexture, pipeTexture, reticleTexture,
             dragCircleTexture, dragLineTexture, aimLineTexture;    //balloonTexture is top part of hot air balloon, rack is bottom
     public static PointLight dragCircleLight;
@@ -90,30 +90,30 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static float[] airshipTint, airShipCloudTint;
     public boolean hitMaxBrightnessCloudBrightening=false;
     public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850, 2500},
-            speedValues={85, 95, 105, 118, 133, 145, 160},ammoValues={1000, 200, 350, 550, 800, 1100, 1450,1850,2300,2800},fuelValues={1000, 2000, 3500, 5500, 8000, 11000, 14500,18500,23000,28000};
+            speedValues={85, 95, 105, 118, 133, 145, 160},ammoValues={100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800},fuelValues={500, 1000, 2000, 3500, 5500, 8000, 11000, 14500,18500,23000},
+            goldValues={3000, 4000, 5500, 7500, 10000, 13000, 16500, 20500, 25000, 30000},diamondValues={3, 9, 18, 30, 45, 63, 84, 108, 135, 165};
     public TextureRegion[] rackTextures=new TextureRegion[7];
     
     public int nextTurretPosition;
     public float thrusterYposOffset;
+
+    public void goldUp(){
+        if (goldLvl<goldValues.length-1) goldLvl++;
+    }
+    public void diamondUp(){
+        if (diamondLvl<diamondValues.length-1) diamondLvl++;
+    }
     public void healthUp(){
-        if (healthLvl<healthValues.length-1) {
-            healthLvl++;
-        }
+        if (healthLvl<healthValues.length-1) healthLvl++;
     }
     public void fuelUp(){
-        if (fuelLvl<fuelValues.length-1) {
-            fuelLvl++;
-        }
+        if (fuelLvl<fuelValues.length-1) fuelLvl++;
     }
     public void ammoUp(){
-        if (ammoLvl<ammoValues.length-1) {
-            ammoLvl++;
-        }
+        if (ammoLvl<ammoValues.length-1) ammoLvl++;
     }
     public void armorUp(){
-        if (armorLvl<armorValues.length-1) {
-            assignRackAndArmor(++armorLvl, rackLvl);
-        }
+        if (armorLvl<armorValues.length-1) assignRackAndArmor(++armorLvl, rackLvl);
     }
     public void rackUp(){
         if (rackLvl<4) {
@@ -141,7 +141,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
     float timeToTweenTarget;
     private int reticleRotation;
-    public Value reticleSize=new Value(0.9f), dragLineOpacity=new Value(), aimLineOpacity =new Value(); private static Value balloonBob=new Value(-10f); public static Value aimLineRotation=new Value();
+    public Value reticleSize=new Value(0.9f), dragLineOpacity=new Value(), aimLineOpacity =new Value(); public static Value balloonBob=new Value(-10f); public static Value aimLineRotation=new Value();
     public Tween reticleSizeTween= Tween.to(reticleSize,1,0.9f).target(1.3f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
     public Tween balloonBobTween= Tween.to(balloonBob,1,1f).target(10f).ease(TweenEquations.easeInOutSine).repeatYoyo(Tween.INFINITY,0).start();
     public Tween dragLineFadeout= Tween.to(dragLineOpacity,1,timeToTweenTarget*0.5f).target(0).ease(TweenEquations.easeInCubic);
@@ -216,11 +216,12 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         health=prefs.getInteger("health",healthValues[healthLvl]);
         armor=prefs.getInteger("armor",armorValues[armorLvl]);
-        if (health==0) {health=healthValues[healthLvl];armor=armorValues[armorLvl];}
+        //if (health==0) {health=5;armor=5;}UiHandler.totalArmorNum=armor;UiHandler.totalHealthNum=health;
         ammo=prefs.getInteger("ammo",ammoValues[ammoLvl]);
-        if (ammo==0)ammo=ammoValues[ammoLvl];
+        //if (ammo==0)ammo=50;UiHandler.totalAmmoNum=ammo;
         fuel=prefs.getInteger("fuel",fuelValues[fuelLvl]);
-        if (fuel==0)fuel=fuelValues[fuelLvl];
+        //if (fuel==0)fuel=50;UiHandler.totalFuelNum=fuel;
+
         loadTextures();
 
         loadFireEffects();
@@ -639,7 +640,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.println("Was "+firstEmittersOfEachEffect.get(i).getTint().getColors()[0]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[1]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[2]);
     }
 
-    public void loseFuel(float rate){if (fuel>0) {fuel-=rate;if (fuel<0.51f)UiHandler.fuelLabel.setColor(Color.RED);}}
+    public void loseFuel(float rate){if (fuel>0) {fuel-=rate;UiHandler.totalFuelNum-=rate;if (fuel<0.51f)UiHandler.fuelLabel.setColor(Color.RED);}}
     public void fireThruster(int i){
         loseFuel(0.1f);
         firstEmittersOfEachEffect.get(i).allowCompletion();
@@ -776,6 +777,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void update(float delta) {
+
+        if (fuel<1&&(pos.x!=camWidth/2||pos.y!=camHeight/2)&&(tweenTarget.x!=camWidth/2||tweenTarget.y!=camHeight/2)){
+            tweenTarget.set(camWidth/2,camHeight/2);
+            movtween = Tween.to(pos, 0, timeToTweenTarget*3).target(tweenTarget.x,tweenTarget.y).ease(TweenEquations.easeInOutSine).setCallback(endOfMovement).start();
+        }
         if(sizeChangeTween!=null && !sizeChangeTween.isFinished()){sizeChangeTween.update(delta); updateRackAndPositionsDuringSizeChangeTween();}
 
         aimLineFadeout.update(delta);
@@ -789,7 +795,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
 
         //System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing+", velX: "+vel.x);
-        setDestAirship();
+        if (fuel>=1) setDestAirship();
         //System.out.print(pos.toString());
 
         //System.out.print(BgHandler.isbgVertFast);
@@ -864,11 +870,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
             //checkBordersAndSlowdown(); not using velocity
 
-            for (int i = 0; i <= burnerLvl; i++) {
-                //change originX x100 multiplier for burnerFire rotation,
-                setEmitterVal(additiveEffects.get(0).getEmitters().get(3-i).getYOffsetValue(),yOffsetDueToRotation(pos.y+pipeHeight.get()*3,((pipeWidth.get()*(i+1))-pipeWidth.get()/2f)*150,-(pos.y+pipeHeight.get()*3))/180f,false);
-                setEmitterVal(additiveEffects.get(0).getEmitters().get(4+i).getYOffsetValue(),yOffsetDueToRotation(pos.y+pipeHeight.get()*3,(-(pipeWidth.get()*(i+1))+pipeWidth.get()/2f)*150,-(pos.y+pipeHeight.get()*3))/180f,false);
-            }
+
         } else {
             flameLights.get(0).setPosition (
                     xOffsetDueToRotation(pos.x                 +((CustomPointLight) flameLights.get(0)).distanceFromAirship.x,-((CustomPointLight) flameLights.get(0)).distanceFromAirship.x,-((CustomPointLight) flameLights.get(0)).distanceFromAirship.y),
@@ -878,6 +880,11 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             }
         }
 
+        for (int i = 0; i <= burnerLvl; i++) {
+            //change originX x100 multiplier for burnerFire rotation,
+            setEmitterVal(additiveEffects.get(0).getEmitters().get(3-i).getYOffsetValue(),yOffsetDueToRotation(pos.y+pipeHeight.get()*3,((pipeWidth.get()*(i+1))-pipeWidth.get()/2f)*150,-(pos.y+pipeHeight.get()*3))/180f,false);
+            setEmitterVal(additiveEffects.get(0).getEmitters().get(4+i).getYOffsetValue(),yOffsetDueToRotation(pos.y+pipeHeight.get()*3,(-(pipeWidth.get()*(i+1))+pipeWidth.get()/2f)*150,-(pos.y+pipeHeight.get()*3))/180f,false);
+        }
         for (Turret i : turretList) {//update turret position no matter what
             i.update();
 
@@ -1077,10 +1084,10 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public void hit(int collisionDmg) {
         if (armor>0) {
             if (armor<collisionDmg) {health-=collisionDmg-armor;armor=0;UiHandler.airshipHealthBar.setValue(health);UiHandler.airshipHealthLabel.setText(health);}
-            else armor-=collisionDmg;
+            else {armor-=collisionDmg;UiHandler.totalArmorNum-=collisionDmg;}
             UiHandler.airshipArmorBar.setValue(armor);UiHandler.airshipArmorLabel.setText(armor);
         } else if (health>=collisionDmg) {
-            health -= collisionDmg;
+            health -= collisionDmg;UiHandler.totalHealthNum-=collisionDmg;
         } else health=0;
         UiHandler.airshipHealthBar.setValue(health);UiHandler.airshipHealthLabel.setText(health);
 

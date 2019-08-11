@@ -182,7 +182,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 		imageDisabled: diamondDisabled
 		font: font-button
 		fontColor: white
-		disabledFontColor: red1
 		disabled: round-button-down
 	}
 	buyGold: {
@@ -192,7 +191,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 		imageDisabled: goldDisabled
 		font: font-button
 		fontColor: white
-		disabledFontColor: red1
 		disabled: round-button-down
 	}
 	buyFuel: {
@@ -202,7 +200,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 		imageDisabled: fuelDisabled
 		font: font-button
 		fontColor: white
-		disabledFontColor: red1
 		disabled: round-button-down
 	}
 	buyHealth: {
@@ -212,7 +209,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 		imageDisabled: healthDisabled
 		font: font-button
 		fontColor: white
-		disabledFontColor: red1
 		disabled: round-button-down
 	}
 	buyArmor: {
@@ -222,7 +218,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 		imageDisabled: armorDisabled
 		font: font-button
 		fontColor: white
-		disabledFontColor: red1
 		disabled: round-button-down
 	}
 	buyAmmo: {
@@ -232,7 +227,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 		imageDisabled: ammoDisabled
 		font: font-button
 		fontColor: white
-		disabledFontColor: red1
 		disabled: round-button-down
 	}
 }

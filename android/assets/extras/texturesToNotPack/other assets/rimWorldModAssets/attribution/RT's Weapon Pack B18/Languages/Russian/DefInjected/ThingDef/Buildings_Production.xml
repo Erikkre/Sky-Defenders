@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<LanguageData> 
+<!-- =================== Weapon Assembly Table ==================== -->
+<WeaponAssemblyTable_RT.label>Оружейный стол</WeaponAssemblyTable_RT.label>
+<WeaponAssemblyTable_RT.description>Рабочая станция для сборки различного вида оружия.</WeaponAssemblyTable_RT.description>
+</LanguageData> 
