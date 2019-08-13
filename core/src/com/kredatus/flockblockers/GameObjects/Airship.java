@@ -216,12 +216,13 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         health=prefs.getInteger("health",healthValues[healthLvl]);
         armor=prefs.getInteger("armor",armorValues[armorLvl]);
-        //if (health==0) {health=5;armor=5;}UiHandler.totalArmorNum=armor;UiHandler.totalHealthNum=health;
+        //if (health==0) {health=5;armor=5;}
         ammo=prefs.getInteger("ammo",ammoValues[ammoLvl]);
-        //if (ammo==0)ammo=50;UiHandler.totalAmmoNum=ammo;
+        //if (ammo==0)ammo=50;
         fuel=prefs.getInteger("fuel",fuelValues[fuelLvl]);
-        //if (fuel==0)fuel=50;UiHandler.totalFuelNum=fuel;
-
+        //if (fuel==0)fuel=50;
+        UiHandler.totalFuelNum=fuel;UiHandler.totalAmmoNum=ammo;
+        UiHandler.totalArmorNum=armor;UiHandler.totalHealthNum=health;
         loadTextures();
 
         loadFireEffects();

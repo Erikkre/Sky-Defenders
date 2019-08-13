@@ -64,15 +64,15 @@ Only add health to phoenix each round   after you hit multiples of 500 gold/phoe
 
 public abstract class BirdAbstractClass {
     //protected GameWorld world;
-    public boolean birdHitPlaying;
+    public boolean birdHitPlaying;public int hitSoundLengthMS;
     protected float globalSpeedMultiplier = 1.0f, globalHealthMultiplier = 3.0f, globalDropMultiplier=1.0f;
 
     public float preX, preY, x, y, yVel, yAcc, xVel,yVelDeath, sizeRatio, finalSizeRatio=1, preTargetY;
     //public Hashtable xMotionTimePositions=new Hashtable();
     public double xMotionTime;
     public float width, height;
-    protected float camWidth, camHeight, edge;
-    public boolean isOffCam, isColliding;
+    public float camWidth, camHeight, edge;
+    //public boolean isOffCam, isColliding;
     public ArrayList<Projectile> hitBulletList = new ArrayList<Projectile>(30);
     public ConcurrentLinkedQueue<MovingImageContainer> dropsList= new ConcurrentLinkedQueue<MovingImageContainer>();
     public float  starty;
@@ -124,13 +124,22 @@ public abstract class BirdAbstractClass {
         };
 
         isAlive=true;
-        isOffCam = false;
         yAcc=-0.6f;
         yVelDeath=10;
         rotStep=2.1f;
         unRotStep=0.6f;
         //this.manager=manager;
         flapRandomFactor=r.nextFloat()*0.5f;
+
+        if (this instanceof ThunderBird) hitSoundLengthMS = 361;
+        else if (this instanceof FireBird) hitSoundLengthMS= 331;
+        else if (this instanceof WaterBird) hitSoundLengthMS= 654-50;
+        else if (this instanceof AcidBird) hitSoundLengthMS= 482;
+        else if (this instanceof NightBird) hitSoundLengthMS= 365;
+        else if (this instanceof LunarBird) hitSoundLengthMS= 462;
+        else if (this instanceof GoldBird) hitSoundLengthMS= 1356-50;
+        else if (this instanceof PhoenixBird) hitSoundLengthMS= 1855-100;
+        hitSoundLengthMS -= 60;
     }
 
     public void postInitSetup(){
@@ -284,10 +293,10 @@ public abstract class BirdAbstractClass {
     }
 
     public boolean isOffCam(){
-        return y+height/2<0 || x+width/2< 0 || x-width/2> camWidth;
+        return y+height/2<=0 || x+width/2<= 0 || x-width/2>= camWidth;
     }
     public boolean isAboveCam(){
-        return y-height/2>camHeight;
+        return y-height/2>=camHeight;
     }
 
     public abstract void setManager(float camWidth);

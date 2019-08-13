@@ -172,6 +172,12 @@ public class BirdHandler {
                //task.run();
                 //activeBirdQueue.remove(0);
                 taskRunning = true;
+
+
+                UiHandler.roundLabel.setText("Round "+ ++GameWorld.round);
+                GameWorld.waveStartAmmo=Airship.ammo;GameWorld.waveStartArmor=Airship.armor;GameWorld.waveStartHealth=Airship.health;GameWorld.waveStartFuel=(int)Airship.fuel;
+                GameWorld.waveStartDiamond=GameWorld.diamond;GameWorld.waveStartGold=GameWorld.gold;GameWorld.waveStartExp=GameWorld.exp;
+                //System.out.println("waveStartFuel: "+GameWorld.waveStartHealth);
                 //System.out.println("Timer started");
             }
 
@@ -182,8 +188,6 @@ public class BirdHandler {
                 waveNumber++; //nextWave when timer reset
                 if (waveNumber==8){
                     waveNumber=0;
-                    UiHandler.roundLabel.setText("Round "+ ++GameWorld.round);
-                    GameWorld.waveStartAmmo=Airship.ammo;GameWorld.waveStartArmor=Airship.armor;GameWorld.waveStartHealth=Airship.health;GameWorld.waveStartFuel=(int)Airship.fuel;
                 }
                 UiHandler.waveLabel.setText("Wave "+waveNumber+"/8");
                 taskRunning=false;

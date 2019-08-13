@@ -37,6 +37,8 @@ public class TargetHandler {
     private float closestBirdDist=Float.POSITIVE_INFINITY,minTargetingHeight=0;
     private Airship airship;
     public Sound birdHit,balloonHit,balloonDeath,thunderBirdDeath,waterBirdDeath,fireBirdDeath,acidBirdDeath,nightBirdDeath,lunarBirdDeath,goldBirdDeath,phoenixBirdDeath;
+    public static Sound resourceGather;
+
     public boolean balloonHitPlaying;
     public ScheduledThreadPoolExecutor timer = new ScheduledThreadPoolExecutor(30);
     public int activeQueueSize;
@@ -49,6 +51,7 @@ public class TargetHandler {
         this.activeBirdQueue=birdHandler.activeBirdQueue; this.deadBirdQueue=birdHandler.deadBirdQueue;
         AssetManager m=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.manager;AssetHandler a=((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.assets;
 
+        resourceGather=m.get(a.resourceGather);
         birdHit= m.get(a.birdHit);
         balloonHit=m.get(a.balloonHit);balloonDeath=m.get(a.balloonDeath);
         thunderBirdDeath=m.get(a.thunderBirdDeath);waterBirdDeath=m.get(a.waterBirdDeath);fireBirdDeath=m.get(a.fireBirdDeath);acidBirdDeath=m.get(a.acidBirdDeath);
@@ -86,24 +89,31 @@ public class TargetHandler {
 
             if (bird.isAlive && airship.balloonHitbox!=null && (bird.collides(airship.rackHitbox) || bird.collides(airship.balloonHitbox)) ) {
                 //System.out.println("********************** HIT REAL *********************");
-                if (!GameWorld.soundMuted) {
-                    if (airship.health<=bird.health) {balloonDeath.play(0.8f);((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.world.deathAndRestart();}
-                    balloonHit.play(0.55f,r.nextFloat()*0.6f+0.7f,1);
+
+                if (airship.health+airship.armor<=bird.health) {
+                    if (!GameWorld.soundMuted)balloonDeath.play(0.8f);
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.world.deathAndRestart();
+                } else {
+                    if (!GameWorld.soundMuted) balloonHit.play(0.55f,r.nextFloat()*0.6f+0.7f,1);
+                    airship.hit(bird.health);
+                    ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.renderer.makeTransition(100, 0, 0, 0.5f);
                 }
-                airship.hit(bird.health);
+
                 ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.followFadeAwayNumberEffect(airship,-bird.health,45,1.5f,2f);
                 bird.hit(bird.origHealth+1);    //lol I hope bird health is below orig
 
 
             } else if (!bird.isAlive) {
+                System.out.println("bird added to death queue because dead");
                 activeBirdQueue.remove(bird);
                 deadBirdQueue.add(bird);
-                if (!bird.birdHitPlaying) chooseWhichBirdDeathToPlay(bird,true);
+                if (!bird.birdHitPlaying) chooseWhichBirdHitToPlay(bird,true);
                 if (bird==targetBird) {targetBird.isAlive=false;closestBirdDist = Float.POSITIVE_INFINITY;break;}
                     //System.out.println("closestBirdDist reset");}
 
                 //if (bird==targetBird)targetBird=null;
             } else if (bird.isAboveCam()) {
+                System.out.println("bird removed because above cam");
                 activeBirdQueue.remove(bird);
                 if (bird==targetBird) {targetBird.isAlive=false;closestBirdDist = Float.POSITIVE_INFINITY;break;}
             } else if ( curDist < closestBirdDist ) {
@@ -111,9 +121,10 @@ public class TargetHandler {
                 closestBirdDist = curDist;
                 targetBird = bird;
             }
+            //System.out.println((bird.y-bird.height/2)+", camHeight: "+bird.camHeight);
         }
 
-        if (closestBirdDist!=Float.POSITIVE_INFINITY&& activeBirdQueue.size()!=activeQueueSize) {activeQueueSize=activeBirdQueue.size();}
+        if (closestBirdDist!=Float.POSITIVE_INFINITY && activeBirdQueue.size()!=activeQueueSize) {activeQueueSize=activeBirdQueue.size();}
             //System.out.println("stop rechecking after size change");}//if last bird in queue set queue size to new one to stop rechecking after queue size change
         //previousBirdHeight=minTargetingHeight; //in case some birds are moved past lead bird before any bird dies, need to check top bird every time
 
@@ -124,11 +135,11 @@ public class TargetHandler {
             }
             for (final BirdAbstractClass bird : activeBirdQueue) {
                 if (proj.pen>0 && !bird.hitBulletList.contains(proj) && bird.collides(proj.boundingRect) && bird.health>0) {  //if bird bird is colliding with bullet proj and was not already hit before
-                    if (!GameWorld.soundMuted&&!bird.birdHitPlaying) {chooseWhichBirdDeathToPlay(bird,false);
+                    if (!GameWorld.soundMuted&&!bird.birdHitPlaying) { chooseWhichBirdHitToPlay(bird,false);
                             bird.birdHitPlaying=true;timer.schedule(new Runnable() {@Override public void run() {
                                 bird.birdHitPlaying=false;
                             }
-                        },1000L, TimeUnit.MILLISECONDS);//wait 1000ms before playing sound again
+                        },bird.hitSoundLengthMS, TimeUnit.MILLISECONDS);//wait specific bird call length before playing sound again
                     }
                     bird.hit(proj.dmg);
                     ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(proj.position,-(int)Math.ceil(proj.dmg),60,1.25f,1);
@@ -149,13 +160,12 @@ public class TargetHandler {
             i.update(delta, runTime);
             if (i.isOffCam()&&i.dropsList==null) {
                 deadBirdQueue.remove(i);
-
             }
         }
     }
-    public void chooseWhichBirdDeathToPlay(BirdAbstractClass b, boolean death){
-        float v=0.1f;float p;
-        if (!death)p=0.3f+r.nextFloat()*0.9f;else p=1.4f+r.nextFloat()*0.1f;
+    public void chooseWhichBirdHitToPlay(BirdAbstractClass b, boolean death){
+        float v=0.2f;float p;
+        if (!death)p=0.9f+r.nextFloat()*0.2f;else p=1.4f+r.nextFloat()*0.1f;
         if (b instanceof ThunderBird) thunderBirdDeath.play(v,p,1);
         else if (b instanceof FireBird) fireBirdDeath.play(v,p,1);
         else if (b instanceof WaterBird) waterBirdDeath.play(v,p,1);

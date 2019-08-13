@@ -56,9 +56,10 @@ public class AssetHandler {/*
     logoFire= "effects/logoFire.p", logoFire2= "effects/logoFire2.p", burnerFire="effects/burnerFire.p", thrusterFireLeft="effects/thrusterFireLeft.p",thrusterFireRight="effects/thrusterFireRight.p",
 
     swoop="sound/swoop.wav", birdHit="sound/birdHit.mp3",balloonHit="sound/balloonHit.mp3",balloonDeath="sound/balloonDeath.mp3",
+    resourceGather="sound/resourceGather.wav",
     thunderBirdDeath="sound/thunderBirdDeath.mp3",waterBirdDeath="sound/waterBirdDeath.mp3",fireBirdDeath="sound/fireBirdDeath.mp3",acidBirdDeath="sound/acidBirdDeath.mp3",
     nightBirdDeath="sound/nightBirdDeath.mp3",lunarBirdDeath="sound/lunarBirdDeath.mp3",goldBirdDeath="sound/goldBirdDeath.mp3",phoenixBirdDeath="sound/phoenixBirdDeath.mp3",
-    music0="music/music0.mp3",
+    music0="music/music0.wav",
 
     shadeUI="ui/shadeUI/shadeUI-decolored/uiskin.json", niteRideUI="ui/niteRideUI/nite-ride-ui.json",
     flashShader="shaders/flash.vert";
@@ -76,7 +77,7 @@ public class AssetHandler {/*
         manager.load(thrusterFireRight, ParticleEffect.class);
 
 
-        manager.load(swoop, Sound.class);
+        manager.load(resourceGather, Sound.class);
         manager.load(birdHit, Sound.class);
         manager.load(thunderBirdDeath, Sound.class);manager.load(waterBirdDeath, Sound.class);manager.load(fireBirdDeath, Sound.class);manager.load(acidBirdDeath, Sound.class);
         manager.load(nightBirdDeath, Sound.class);manager.load(lunarBirdDeath, Sound.class);manager.load(goldBirdDeath, Sound.class);manager.load(phoenixBirdDeath, Sound.class);

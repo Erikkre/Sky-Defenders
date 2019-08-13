@@ -63,11 +63,10 @@ public class GameWorld {
     private TextureRegion logo;
     private Sprite logoBg;
 
-    public static int camWidth,camHeight,waveStartHealth,waveStartArmor,waveStartFuel,waveStartAmmo;
+    public static int camWidth,camHeight,waveStartHealth,waveStartArmor,waveStartFuel,waveStartAmmo,waveStartGold,waveStartDiamond,waveStartExp;
     Preferences prefs = Gdx.app.getPreferences("skyDefenders");
     public GameWorld(int camWidth, int camHeight) {
         this.camWidth=camWidth;this.camHeight=camHeight;
-
 
         /*if (AssetHandler.getHighScore()==0){
             isFirstTime=true;
@@ -80,13 +79,13 @@ public class GameWorld {
         //this.midPointY=midPointY;
         //glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
 
-        Loader.playnext(Loader.menumusiclist);
+        Loader.playnext(Loader.musiclist);
 
         currentState=GameState.SURVIVAL;
         //startLogos(camWidth,camHeight);
         exp=prefs.getInteger("exp",0);
         score=prefs.getInteger("score",0);
-        gold=prefs.getInteger("gold",0);UiHandler.totalGoldNum=gold;
+        gold=prefs.getInteger("gold",100);UiHandler.totalGoldNum=gold;
         diamond =prefs.getInteger("diamond",0);UiHandler.totalDiamondNum=diamond;
         round=prefs.getInteger("round",1);
     }
@@ -201,6 +200,27 @@ public class GameWorld {
     public void deathAndRestart(){
         //AssetHandler.frontFlaps.setFrameDuration(0.2f);
         //currentState = GameState.READY;
+
+
+        int waveNumberFromLastWave=bgHandler.bgNumber/9;
+        bgHandler=null;
+        bgHandler=new BgHandler(this,camWidth,camHeight,waveNumberFromLastWave,birdHandler);
+        bgHandler.startToSurvival(tinyBirdHandler,lightHandler);
+        bgHandler.setRendererAndCam(renderer);
+
+        //System.out.println("airshipAmmo("+Airship.ammo+") set to: "+waveStartAmmo);
+        Airship.health=waveStartHealth;UiHandler.airshipHealthLabel.setText(Airship.health);UiHandler.airshipHealthBar.setValue(Airship.health);
+        Airship.armor=waveStartArmor;UiHandler.airshipArmorLabel.setText(Airship.armor);UiHandler.airshipArmorBar.setValue(Airship.armor);
+        Airship.fuel=waveStartFuel;UiHandler.fuelLabel.setText((int)Airship.fuel);
+        Airship.ammo=waveStartAmmo;UiHandler.ammoLabel.setText(Airship.ammo);
+
+        gold=waveStartGold+Integer.parseInt(uiHandler.ammoPrice)+Integer.parseInt(uiHandler.fuelPrice);UiHandler.goldLabel.setText(gold);//have minimum to fly and shoot
+        diamond=waveStartDiamond;UiHandler.diamondLabel.setText(diamond);
+        exp=waveStartExp;UiHandler.expLabel.setText(exp);UiHandler.expBar.setValue(exp);
+
+        UiHandler.totalHealthNum=waveStartHealth;UiHandler.totalArmorNum=waveStartArmor;UiHandler.totalFuelNum=waveStartFuel;
+        UiHandler.totalAmmoNum=waveStartAmmo;UiHandler.totalGoldNum=gold;UiHandler.totalDiamondNum=diamond;
+
         if (birdHandler.taskRunning){
             //System.out.println("Timer cancelled");
             birdHandler.task.cancel();
@@ -208,14 +228,10 @@ public class GameWorld {
             birdHandler.activeBirdQueue.clear();
             birdHandler.update();
         }
-
-        int waveNumberFromLastWave=bgHandler.bgNumber/9;
-        bgHandler=null;
-        bgHandler=new BgHandler(this,camWidth,camHeight,waveNumberFromLastWave,birdHandler);
-        bgHandler.startToSurvival(tinyBirdHandler,lightHandler);
-        bgHandler.setRendererAndCam(renderer);
-        airship.health=waveStartHealth;airship.armor=waveStartArmor;airship.fuel=waveStartFuel;airship.ammo=waveStartAmmo;
-        renderer.makeTransition(100, 0, 0, 2f);
+        for (Turret i: airship.turretList){
+            i.stopFiring();
+        }
+        renderer.makeTransition(0, 0, 0, 3f);
     }
 
     public void survivalToBuyMenu() {
@@ -262,16 +278,6 @@ public class GameWorld {
         renderer.makeTransition(0, 0, 0, 0.7f);
         GameHandler.timeOfPause = System.currentTimeMillis();
     }
-
-    public void ready() {
-        //renderer.sunshineManager.killAll();
-        //renderer.sunshineManager2.killAll();
-        //SplashScreen.getManager().killAll();
-        Loader.stopMusic(Loader.menumusiclist);
-        Loader.playnext(Loader.musiclist);
-        //currentState = GameState.READY;
-        renderer.makeTransition(0, 0, 0, 1f);}
-
     public void exit() {
         Gdx.app.exit();
     }

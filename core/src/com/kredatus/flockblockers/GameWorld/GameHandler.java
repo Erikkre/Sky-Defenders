@@ -22,7 +22,7 @@ import com.kredatus.flockblockers.Handlers.UiHandler;
 
 public class GameHandler implements Screen {
     public GameWorld world;
-    private GameRenderer renderer;
+    public GameRenderer renderer;
     public BgHandler bgHandler;
     public BirdHandler birdHandler;
     private TargetHandler targetHandler;

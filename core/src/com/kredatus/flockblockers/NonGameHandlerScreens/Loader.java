@@ -334,8 +334,8 @@ public class Loader implements Screen {
             firstEmittersOfEachEffect.add(i.getEmitters().get(0));
         }
 
-        menumusiciterator = r.nextInt(3);
-        musiciterator = r.nextInt(6);
+        //menumusiciterator = r.nextInt(3);
+        //musiciterator = r.nextInt(6);
 
         tA=manager.get(assets.textures);
 
@@ -430,7 +430,8 @@ public class Loader implements Screen {
 
 
         musiclist = new Music[] {manager.get(assets.music0)};
-
+        musiclist[0].setLooping(true);
+        musiclist[0].setVolume(0.3f);
         prefs = Gdx.app.getPreferences("SkyDefenders");
         if (!prefs.contains("highScore")) {
             prefs.putInteger("highScore", 0);
@@ -488,14 +489,12 @@ public class Loader implements Screen {
     }
     public static void playnext(Music[] list) {
         if (list==musiclist){
+            list[musiciterator].play();
             if (musiciterator<5){
                 musiciterator++;
             } else{
                 musiciterator=0;
             }
-            list[musiciterator].setVolume(0.6f);
-            list[musiciterator].play();
-            list[musiciterator].setLooping(true);
         } else{ //menumusic
             /*if (menumusiciterator<1){
                 menumusiciterator++;

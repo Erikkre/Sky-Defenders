@@ -54,7 +54,7 @@ public class FlockBlockersMain extends Game {
         loader=new Loader(this);
         this.setScreen(loader);
 
-        waveNumber =Gdx.app.getPreferences("skyDefenders").getInteger("bgNumber",0)/9;
+        waveNumber =Gdx.app.getPreferences("skyDefenders").getInteger("bgNumber",9)/9;
     }
 
     @Override

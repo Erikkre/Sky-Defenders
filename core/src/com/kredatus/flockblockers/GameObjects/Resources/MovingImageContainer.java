@@ -2,6 +2,7 @@
 package com.kredatus.flockblockers.GameObjects.Resources;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -188,10 +189,15 @@ public class MovingImageContainer {
 
                     ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.airshipArmorBar.localToStageCoordinates(new Vector2(
                             UiHandler.airshipArmorBar.getPercent()*UiHandler.airshipArmorBar.getWidth(), UiHandler.airshipArmorBar.getHeight()/7)),1,35,1,1);
-
                 }
+
+                //System.out.println(System.currentTimeMillis()-UiHandler.lastResourceGatherTime);
+                if (System.currentTimeMillis()-UiHandler.lastResourceGatherTime<400)UiHandler.resourceGatherStreak++;else UiHandler.resourceGatherStreak=0;
+                //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
+                ((Sound)((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.manager.get(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.assets.resourceGather)).play(0.1f,0.55f+ 0.0035f*UiHandler.resourceGatherStreak,1);
                 if (thisBird==null) UiHandler.boughtItemsList.remove(thisMovingImageContainer);
                 else thisBird.dropsList.remove(thisMovingImageContainer);
+                UiHandler.lastResourceGatherTime=System.currentTimeMillis();
             }
         };
 
@@ -240,7 +246,7 @@ public class MovingImageContainer {
 
     public void update(float delta,Vector2 airshipPos){
 
-        if (type=='d') System.out.println("Dest: "+dest+", x:"+x+", y:"+y);
+        //if (type=='d') System.out.println("Dest: "+dest+", x:"+x+", y:"+y);
         if (type!='g'&&type!='e'&&type!='d') {
             dest.set(airshipPos.x,airshipPos.y+specificAirshipResourceYdestOffset+Airship.balloonBob.get());
             differenceVector=dest.cpy().sub(lastDest);

@@ -78,6 +78,7 @@ public class UiHandler {
     public ScheduledFuture<?> giveDiamondGetGoldFuture,giveGoldGetDiamondFuture,giveGoldGetArmorFuture,giveGoldGetAmmoFuture,giveGoldGetFuelFuture,giveGoldGetHealthFuture;    //might want to implement a current stage for new screens
     public String armorPrice,ammoPrice,fuelPrice,healthPrice,diamondPrice,goldPrice,//1 diamond
             armorPerTap,ammoPerTap,fuelPerTap,healthPerTap,diamondPerTap,goldPerTap;
+    public static double lastResourceGatherTime;public static int resourceGatherStreak;
     public  boolean anyUITouched() {
         for (Actor i : stage.getActors()){
             if (i instanceof SlideMenu)      {if (((SlideMenu) i).isTouched){ return true;}}
@@ -628,8 +629,10 @@ public class UiHandler {
             b.setDisabled(false);
             if (b.getChildren().get(0).getColor().equals(Color.RED)&&curAmnt+amntPerTap<=cap) {
                 b.getChildren().get(0).setColor(Color.WHITE);if (limitLabel!=null)limitLabel.setColor(Color.WHITE);
-            } else if (b.getLabel().getColor().equals(Color.RED)&&(world.gold>=cost||(b==buyGoldButton&&world.diamond>=cost))){
+            }
+            if (b.getLabel().getColor().equals(Color.RED)&&(world.gold>=cost||(b==buyGoldButton&&world.diamond>=cost))){
                 b.getLabel().setColor(Color.WHITE);
+                //System.out.println("set "+b.getName()+" white because you can afford");
             }
         }
     }
@@ -644,7 +647,7 @@ public class UiHandler {
         disableOrEnableResourceButtons(buyGoldButton,Integer.parseInt(goldPerTap),totalGoldNum,Airship.goldValues[Airship.goldLvl],goldLimitLabel);
         disableOrEnableResourceButtons(buyDiamondButton,Integer.parseInt(diamondPerTap),totalDiamondNum,Airship.diamondValues[Airship.diamondLvl],diamondLimitLabel);
         disableOrEnableResourceButtons(buyFuelButton,Integer.parseInt(fuelPerTap),(int)totalFuelNum,Airship.fuelValues[Airship.fuelLvl],fuelLimitLabel);
-        //System.out.println("amntWithoutBuying: "+Airship.fuel+"totalAmnt"+(int)totalFuelNum+", cap: "+Airship.fuelValues[Airship.fuelLvl]);
+        //System.out.println("amntWithoutBuying: "+Airship.ammo+", totalAmnt"+(int)totalAmmoNum+", cap: "+Airship.ammoValues[Airship.ammoLvl]);
         disableOrEnableResourceButtons(buyAmmoButton,Integer.parseInt(ammoPerTap),totalAmmoNum,Airship.ammoValues[Airship.ammoLvl],ammoLimitLabel);
         disableOrEnableResourceButtons(buyArmorButton,Integer.parseInt(armorPerTap),totalAmmoNum,Airship.armorValues[Airship.armorLvl],null);
         disableOrEnableResourceButtons(buyHealthButton,Integer.parseInt(healthPerTap),totalHealthNum,Airship.healthValues[Airship.healthLvl],null);
