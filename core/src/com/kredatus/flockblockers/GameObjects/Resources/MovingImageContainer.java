@@ -195,7 +195,7 @@ public class MovingImageContainer {
                 if (System.currentTimeMillis()-UiHandler.lastResourceGatherTime<400)UiHandler.resourceGatherStreak++;else UiHandler.resourceGatherStreak=0;
                 //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
                 ((Sound)((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.manager.get(((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.assets.resourceGather)).play(0.1f,0.55f+ 0.0035f*UiHandler.resourceGatherStreak,1);
-                if (thisBird==null) UiHandler.boughtItemsList.remove(thisMovingImageContainer);
+                if (thisBird==null) ((FlockBlockersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.boughtItemsList.remove(thisMovingImageContainer);
                 else thisBird.dropsList.remove(thisMovingImageContainer);
                 UiHandler.lastResourceGatherTime=System.currentTimeMillis();
             }
@@ -245,7 +245,6 @@ public class MovingImageContainer {
     }
 
     public void update(float delta,Vector2 airshipPos){
-
         //if (type=='d') System.out.println("Dest: "+dest+", x:"+x+", y:"+y);
         if (type!='g'&&type!='e'&&type!='d') {
             dest.set(airshipPos.x,airshipPos.y+specificAirshipResourceYdestOffset+Airship.balloonBob.get());
@@ -258,7 +257,7 @@ public class MovingImageContainer {
             if (thisBird!=null) x = tweenX.get() + thisBird.x;
             else {
                 x = tweenX.get() + startPos.x; //if startPosition not null
-                if (airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0) { //if airship moves keep moving object over 0.9s using new secondXmotion
+                if (airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0.01) { //if airship moves keep moving object over 0.9s using new secondXmotion
                     double rot=Math.toDegrees(Math.atan((Airship.pos.y-startPos.y) / (Airship.pos.x-startPos.x)));
                     x1 = (float) (Math.cos(Math.toRadians(rot+  -35+r.nextInt(70))  ) ) * (30);
                     y1 = (float) (Math.sin(Math.toRadians(rot+  -35+r.nextInt(70))  ) ) * (30);
@@ -269,7 +268,7 @@ public class MovingImageContainer {
             firstXMotion.update(delta);
 
         } else {
-            if (airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0) { //if airship moves keep moving object over 0.9s using new secondXmotion
+            if (airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0.01) { //if airship moves keep moving object over 0.9s using new secondXmotion
                 dest.set(Airship.pos.x,Airship.pos.y+specificAirshipResourceYdestOffset+Airship.balloonBob.get());
 
                 secondXMotion = (Tween.to(tweenX, -1, (float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)).target(dest.x).ease(TweenEquations.easeNone)).start();
@@ -281,7 +280,7 @@ public class MovingImageContainer {
         if (!firstMovementEndedY) {
             if (thisBird!=null) y = tweenY.get() + thisBird.y;
             else {
-                if (type!='g'&&airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0) { //if airship moves keep moving object over 0.9s using new secondXmotion
+                if (type!='g'&&airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0.01) { //if airship moves keep moving object over 0.9s using new secondXmotion
                     firstYMotion = Tween.to(tweenY, -1, (float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)).target(y1).ease(TweenEquations.easeNone).setCallback(endFirstMovementY).start();
                 }
                 y = tweenY.get() + startPos.y; //if startPosition not null
@@ -289,7 +288,7 @@ public class MovingImageContainer {
             firstYMotion.update(delta);
 
         } else {
-            if (airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0) {
+            if (airshipMoved&&(float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)>0.01) {
 
                 secondYMotion = (Tween.to(tweenY, -1, (float) (slideMenuLeftTime - (System.currentTimeMillis() - startTime)/1000d)).target(dest.y).ease(TweenEquations.easeNone)).setCallback(endSecondMovementY).start();
             }

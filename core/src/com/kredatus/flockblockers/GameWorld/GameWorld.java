@@ -6,6 +6,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.kredatus.flockblockers.Birds.BirdAbstractClass;
 import com.kredatus.flockblockers.GameObjects.Airship;
 import com.kredatus.flockblockers.GameObjects.Projectile;
@@ -202,7 +203,9 @@ public class GameWorld {
         //currentState = GameState.READY;
 
 
-        int waveNumberFromLastWave=bgHandler.bgNumber/9;
+        int waveNumberFromLastWave=(BgHandler.bgNumber-2)/9;
+
+        System.out.println("bgNumber: "+BgHandler.bgNumber);
         bgHandler=null;
         bgHandler=new BgHandler(this,camWidth,camHeight,waveNumberFromLastWave,birdHandler);
         bgHandler.startToSurvival(tinyBirdHandler,lightHandler);
@@ -226,11 +229,15 @@ public class GameWorld {
             birdHandler.task.cancel();
             birdHandler.taskRunning=false;
             birdHandler.activeBirdQueue.clear();
+            birdHandler.deadBirdQueue.clear();
+            birdHandler.birdQueue.clear();
             birdHandler.update();
         }
         for (Turret i: airship.turretList){
             i.stopFiring();
         }
+        uiHandler.boughtItemsList.clear();
+        Airship.pos=new Vector2(airship.startX,airship.startY);
         renderer.makeTransition(0, 0, 0, 3f);
     }
 

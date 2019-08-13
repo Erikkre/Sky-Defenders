@@ -69,7 +69,7 @@ public class UiHandler {
     public static Label fuelLabel,goldLabel,diamondLabel,ammoLabel, lvlLabel, rankNameLabel, roundLabel, waveLabel,airshipHealthLabel,airshipArmorLabel,expLabel,goldLimitLabel,diamondLimitLabel,fuelLimitLabel,ammoLimitLabel;
     public static Stack expStack;
     public Random r = new Random();
-    public static ConcurrentLinkedQueue<MovingImageContainer> boughtItemsList= new ConcurrentLinkedQueue<MovingImageContainer>();
+    public  ConcurrentLinkedQueue<MovingImageContainer> boughtItemsList= new ConcurrentLinkedQueue<MovingImageContainer>();
     public ConcurrentLinkedQueue<ImageTextButton> buyButtons= new ConcurrentLinkedQueue<ImageTextButton>();
     public Runnable giveDiamondGetGold,giveGoldGetDiamond,giveGoldGetArmor,giveGoldGetAmmo,giveGoldGetFuel,giveGoldGetHealth;
     public static int boughtGoldNum, boughtAmmoNum, boughtFuelNum, boughtHealthNum, boughtArmorNum, boughtDiamondNum,

@@ -391,7 +391,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 x,y + hB,                       x - rB*0.60f,y + hB*0.92f,        x - rB*0.95f,y + hB*0.74f,         x - rB*0.88f,y + hB*0.45f,      x - rB*0.15f,y-tH.get()*0.2f,  //top to bottom left of burner
                 x + rB*0.15f,y-tH.get()*0.2f,   x + rB*0.88f,y + hB*0.45f,        x + rB*0.95f, y + hB*0.74f,        x + rB*0.60f,y + hB*0.92f //to top of balloon
         });
-        balloonHitbox.setOrigin(startX,startY);
+        balloonHitbox.setOrigin(pos.x,pos.y);
     }
     private void assignRackBounds() {
         float x = pos.x, y = pos.y;
@@ -432,7 +432,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                 }
             );
         }
-        rackHitbox.setOrigin(startX,startY );
+        rackHitbox.setOrigin(pos.x,pos.y);
     }
 
     public  boolean pointerOnAirship(int pointer) {
