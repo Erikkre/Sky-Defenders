@@ -4,8 +4,8 @@ gwt {
     minHeapSize="1G"
 
     src = files(file("src/")) // Needs to be in front of "modules" below.
-    modules 'com.kredatus.flockblockers.GdxDefinition'
-    devModules 'com.kredatus.flockblockers.GdxDefinitionSuperdev'
+    modules 'com.kredatus.skydefenders.GdxDefinition'
+    devModules 'com.kredatus.skydefenders.GdxDefinitionSuperdev'
     project.webAppDirName = 'webapp'
 
     compiler {

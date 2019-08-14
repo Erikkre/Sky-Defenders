@@ -3,7 +3,7 @@ atlasData: {
 	atlasCurrent: true
 	drawables: [
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/android-horizontal-scrollbar.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/android-horizontal-scrollbar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -20,7 +20,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/android-horizontal-scrollbar-knob.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/android-horizontal-scrollbar-knob.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -37,7 +37,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/android-vertical-scrollbar.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/android-vertical-scrollbar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -54,7 +54,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/android-vertical-scrollbar-knob.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/android-vertical-scrollbar-knob.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -71,7 +71,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/button.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/button.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -88,7 +88,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/button-down.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/button-down.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -105,7 +105,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/check-off.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/check-off.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -122,7 +122,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/check-on.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/check-on.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -139,7 +139,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/cursor.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/cursor.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -156,7 +156,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/horizontal-scrollbar.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/horizontal-scrollbar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -173,7 +173,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/horizontal-scrollbar-knob.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/horizontal-scrollbar-knob.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -190,7 +190,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/horizontal-splitplane.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/horizontal-splitplane.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -207,7 +207,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/label.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/label.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -224,7 +224,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/left-button.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/left-button.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -241,7 +241,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/left-button-down.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/left-button-down.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -258,7 +258,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/list.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/list.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -275,7 +275,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/list-selection.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/list-selection.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -292,7 +292,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/loading-bar.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/loading-bar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -309,7 +309,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/minus.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/minus.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -326,7 +326,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/music.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/music.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -343,7 +343,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/music-down.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/music-down.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -360,7 +360,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/music-off.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/music-off.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -377,7 +377,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/panel1.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/panel1.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -394,7 +394,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/panel2.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/panel2.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -411,7 +411,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/plus.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/plus.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -428,7 +428,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/radio-button.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/radio-button.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -445,7 +445,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/radio-button-off.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/radio-button-off.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -462,7 +462,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/right-button.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/right-button.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -479,7 +479,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/right-button-down.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/right-button-down.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -496,7 +496,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/round-button.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/round-button.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -513,7 +513,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/round-button-down.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/round-button-down.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -530,7 +530,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/select-box.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/select-box.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -547,7 +547,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/select-box-down.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/select-box-down.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -564,7 +564,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/slider-bar.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/slider-bar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -581,7 +581,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/slider-bar-fill.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/slider-bar-fill.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -598,7 +598,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/slider-bar-knob.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/slider-bar-knob.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -615,7 +615,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/sound.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/sound.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -632,7 +632,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/sound-down.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/sound-down.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -649,7 +649,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/sound-off.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/sound-off.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -666,7 +666,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/switch.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/switch.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -683,7 +683,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/switch-off.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/switch-off.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -700,7 +700,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/text-selection.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/text-selection.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -717,7 +717,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/textfield.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/textfield.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -734,7 +734,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/toggle-button.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/toggle-button.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -751,7 +751,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/toggle-button-down.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/toggle-button-down.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -768,7 +768,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/toggle-button-off.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/toggle-button-off.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -785,7 +785,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/touchpad.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/touchpad.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -802,7 +802,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/touchpad-knob.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/touchpad-knob.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -819,7 +819,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/tree-minus.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/tree-minus.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -836,7 +836,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/tree-plus.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/tree-plus.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -853,7 +853,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/vertical-scrollbar.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/vertical-scrollbar.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -870,7 +870,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/vertical-scrollbar-knob.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/vertical-scrollbar-knob.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -887,7 +887,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/vertical-splitpane.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/vertical-splitpane.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -904,7 +904,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/white.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/white.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -921,7 +921,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/window.9.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/window.9.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -938,7 +938,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/white.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/white.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -960,7 +960,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/loading-bar-bg.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/loading-bar-bg.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -977,7 +977,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/loading-bar-fill-3d.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/loading-bar-fill-3d.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -994,7 +994,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/loading-bar-fill-3d.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/loading-bar-fill-3d.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1028,7 +1028,7 @@ atlasData: {
 			}
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/diamond.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/diamond.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1045,7 +1045,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/ammo.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/ammo.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -1062,7 +1062,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/armor.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/armor.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -1079,7 +1079,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/fuel.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/fuel.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1096,7 +1096,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/gold2.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/gold2.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1113,7 +1113,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/health.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/health.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1130,7 +1130,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/rankBg.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/rankBg.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1147,7 +1147,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/ammoDisabled.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/ammoDisabled.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -1164,7 +1164,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/armorDisabled.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/armorDisabled.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -1181,7 +1181,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/diamondDisabled.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/diamondDisabled.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1198,7 +1198,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/fuelDisabled.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/fuelDisabled.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1215,7 +1215,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/goldDisabled.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/goldDisabled.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -1232,7 +1232,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/healthDisabled.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/healthDisabled.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1251,7 +1251,7 @@ atlasData: {
 	]
 	fontDrawables: [
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-button.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-button.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1268,7 +1268,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-label.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-label.png
 			bgColor: {
 				r: 0
 				g: 0
@@ -1285,7 +1285,7 @@ atlasData: {
 			tenPatchData: null
 		}
 		{
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-title.png
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-title.png
 			bgColor: {
 				r: 1
 				g: 1
@@ -1380,17 +1380,17 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: font-button
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-button.fnt
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-button.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: font-label
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-label.fnt
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-label.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: font-title
-			file: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-title.fnt
+			file: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored_data/font-title.fnt
 		}
 	]
 	freeTypeFonts: []
@@ -10878,7 +10878,7 @@ preferences: {
 	}
 	last-import-export-path: {
 		class: java.lang.String
-		value: C:/Development/flockBlockers/android/assets/ui/shadeUI/shadeUI-decolored/uiskin.json
+		value: C:/Development/skyDefenders/android/assets/ui/shadeUI/shadeUI-decolored/uiskin.json
 	}
 	id: {
 		class: java.lang.Integer
@@ -10905,6 +10905,6 @@ preferences: {
 		value: E:/workspace/Neon UI/skin-export
 	}
 }
-saveFile: C:/Development/flockBlockers/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored.scmp
+saveFile: C:/Development/skyDefenders/android/assets/extras/software tools/SkinComposer/skinToExportToAssetsUi/shadeUi-decolored.scmp
 version: 30
 }

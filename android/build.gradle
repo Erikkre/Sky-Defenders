@@ -2,12 +2,12 @@ android {
     signingConfigs {
 
     debug {
-        storeFile file('C:\\Development\\debug.keystore')
+        storeFile file('C:\\Development\\extras\\release\\debug.keystore')
         storePassword '19980131Sk'
         keyPassword '19980131Sk'
     }
     }
-    compileSdkVersion 27
+    compileSdkVersion 28
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -24,7 +24,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.kredatus.flockblockers"
+        applicationId "com.kredatus.skydefenders"
         minSdkVersion 9
         targetSdkVersion 28
         versionCode 1
@@ -87,7 +87,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.kredatus.flockblockers/com.kredatus.flockblockers.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.kredatus.skydefenders/com.kredatus.skydefenders.AndroidLauncher'
 }
 // sets up the Android Eclipse project, using the old Ant based build.
 eclipse {
