@@ -442,7 +442,7 @@ public void setRotate(float angle){
 
     public void drawSurvival(float runTime, float delta) {
 //burnerFire.setEmittersCleanUpBlendFunction(false);//can use this to make tall textures ghostly, see what blending function actually enables that
-        for (TinyBird i : tinyBirdQueue){
+        for (TinyBird i : tinyBirdQueue) {
             batcher.draw((TextureRegion) i.animation.getKeyFrame(runTime+i.flapRandomFactor), i.pos.x-i.width/2, i.pos.y-i.height/2,
                     i.width/2, i.height/2, i.width, i.height, 1f, 1f, i.rotation);
         }

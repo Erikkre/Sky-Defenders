@@ -104,7 +104,7 @@ public class TargetHandler {
 
 
             } else if (!bird.isAlive) {
-                System.out.println("bird added to death queue because dead");
+                //System.out.println("bird added to death queue because dead");
                 activeBirdQueue.remove(bird);
                 deadBirdQueue.add(bird);
                 if (!bird.birdHitPlaying) chooseWhichBirdHitToPlay(bird,true);
@@ -113,7 +113,7 @@ public class TargetHandler {
 
                 //if (bird==targetBird)targetBird=null;
             } else if (bird.isAboveCam()) {
-                System.out.println("bird removed because above cam");
+                //System.out.println("bird removed because above cam");
                 activeBirdQueue.remove(bird);
                 if (bird==targetBird) {targetBird.isAlive=false;closestBirdDist = Float.POSITIVE_INFINITY;break;}
             } else if ( curDist < closestBirdDist ) {

@@ -2,7 +2,7 @@ android {
     signingConfigs {
 
     debug {
-        storeFile file('C:\\Development\\extras\\release\\debug.keystore')
+        storeFile file('C:\\Development\\SkyDefendersRelease\\debug.keystore')
         storePassword '19980131Sk'
         keyPassword '19980131Sk'
     }
