@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.Pools;
 
 public class TouchRotatePad extends Widget {
     private com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle style;
-    boolean touched;
+    public boolean touched;
     boolean resetOnTouchUp;
     private float deadzoneRadius;
     private final Circle knobBounds;

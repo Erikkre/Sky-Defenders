@@ -7,13 +7,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.skydefenders.Birds.BirdAbstractClass;
-import com.kredatus.skydefenders.SkyDefendersMain;
 import com.kredatus.skydefenders.GameWorld.GameHandler;
 import com.kredatus.skydefenders.GameWorld.GameWorld;
 import com.kredatus.skydefenders.Handlers.BirdHandler;
 import com.kredatus.skydefenders.Handlers.InputHandler;
 import com.kredatus.skydefenders.Handlers.TargetHandler;
 import com.kredatus.skydefenders.Handlers.UiHandler;
+import com.kredatus.skydefenders.SkyDefendersMain;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -214,7 +214,7 @@ public class Turret {
             firing = true;
         } catch (IllegalStateException e) {
             e.printStackTrace();
-            timer=new Timer();
+            //timer=new Timer();
         }
     }
 
@@ -277,7 +277,7 @@ public class Turret {
 
     public void update() {
         if (!stopTheFiringUpdateMethod) {
-            if (Gdx.input.justTouched() && gunTargetPointer == -1 && !UiHandler.isTouched) {   //airShip updates first so takes the spot
+            /*if (Gdx.input.justTouched() && gunTargetPointer == -1 && !UiHandler.isTouched) {   //airShip updates first so takes the spot
 
                 //System.out.println("touched");
                 if (Airship.airshipTouchPointer >= 0) {
@@ -297,8 +297,8 @@ public class Turret {
                     //System.out.println("Not set and GunTargetPointer set to: " + gunTargetPointer);
                 }
             }
-
-            if (UiHandler.aimPad.isTouched() || (gunTargetPointer >= 0 && Gdx.input.isTouched(gunTargetPointer) && !airship.pointerOnAirship(gunTargetPointer))) {
+            */
+            if (UiHandler.aimPad.isTouched() ) {//|| (gunTargetPointer >= 0 && Gdx.input.isTouched(gunTargetPointer) && !airship.pointerOnAirship(gunTargetPointer))) {
                 if (projRotates) {
                     if (firingInterval - (System.currentTimeMillis() - lastShotTime) < preThrowActionDur) {//if half a second before throw time
                         if (!preThrowSpin) {
@@ -325,11 +325,11 @@ public class Turret {
                     }
                 }
 
-                if (!UiHandler.aimPad.isTouched()) {
+                /*if (!UiHandler.aimPad.isTouched()) {
                     lastFingerPosition.set(InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)), -(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight));
                     setRotation(0, 0, lastFingerPosition.y - pos.y, lastFingerPosition.x - pos.x, false);
-                } else
-                    setRotation(0, 0, UiHandler.aimPad.getKnobPercentY(), UiHandler.aimPad.getKnobPercentX(), true);
+                } else*/
+                setRotation(0, 0, UiHandler.aimPad.getKnobPercentY(), UiHandler.aimPad.getKnobPercentX(), true);
 
                 if (!preThrowSpin) rotateToTarget();
 
@@ -337,35 +337,38 @@ public class Turret {
                 if (!firing && (targetAquired || projRotates)) {
                     startFiring();
                 }
-            } else if (gunTargetPointer >= 0 && (!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
-                gunTargetPointer = -1;                                                   //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
+            } else if (Gdx.input.justTouched()&&activeBirdQueue.size()>1&&targetBird!=null) {//switching between by directly pressing birds
+                //if (gunTargetPointer >= 0 && (!Gdx.input.isTouched(gunTargetPointer))) {//IF NOT TOUCHED OR IF THE GUNTARGET WAS SET TO 1 AND THE ONLY LIBGDX POINTER USED IS THE AIRSHIP ONE THAT'S SET TO 0
+                //gunTargetPointer = -1;                                                   //So when you check for .isTouched(1) it will return false and make gunTarget=-1 again, skipping to the ai system until justTouched happens again
                 //System.out.println("GunTargetPointer set to: "+gunTargetPointer+" because "+(!Gdx.input.isTouched(gunTargetPointer))+" and "+(Airship.airshipTouchPointer==gunTargetPointer));
 
                 //System.out.println("Set Bird if closer*****************************************");
 
-                    BirdAbstractClass target = null;
-                    double distance;
-                    if (targetBird != null) {
-                        if (activeBirdQueue.size() > 1) {//need min 2 birds to switch between
-                            double minDistance = camHeight * 3f;
-                            for (BirdAbstractClass i : activeBirdQueue) {//if theres a bird closer to the reticle when we drop it than the current targetBird would be
-                                distance = Math.sqrt(Math.pow(lastFingerPosition.x - i.x, 2) + (Math.pow(lastFingerPosition.y - i.y, 2)));
-                                if (distance < minDistance) {
-                                    minDistance = distance;
-                                    target = i;
-                                }
-                            }
-                            if (minDistance < Math.sqrt(Math.pow(lastFingerPosition.x - targetBird.x, 2) + (Math.pow(lastFingerPosition.y - targetBird.y, 2)))) {
-                                targetBird = target;
-                                //System.out.println("Change target");
-                            }
-                        }
-                    } else if (firing) {
-                        stopFiring();
-                    }
+                    //BirdAbstractClass target = null;
+                    //double distance;
 
-                if (preThrowSpin) preThrowSpin = false;
-                if (pullBackThenThrow) pullBackThenThrow = false;
+                        //need min 2 birds to switch between
+                            //double minDistance = camHeight * 3f;
+                for (BirdAbstractClass i : activeBirdQueue) {//if theres a bird closer to the reticle when we drop it than the current targetBird would be
+                    //distance = Math.sqrt(Math.pow(lastFingerPosition.x - i.x, 2) + (Math.pow(lastFingerPosition.y - i.y, 2)));
+                    if (i != targetBird &&
+                    InputHandler.scaleX(Gdx.input.getX()) > i.x - i.width / 2 && InputHandler.scaleX(Gdx.input.getX()) < i.x + i.width / 2 &&
+                            -(InputHandler.scaleY(Gdx.input.getY()) - camHeight) > i.y - i.height / 2 && -(InputHandler.scaleY(Gdx.input.getY()) - camHeight) < i.y + i.height / 2) {
+                        targetBird = i;
+                        break;
+                    }
+                }
+                            //if (minDistance < Math.sqrt(Math.pow(lastFingerPosition.x - targetBird.x, 2) + (Math.pow(lastFingerPosition.y - targetBird.y, 2)))) {
+                                 //targetBird= target;
+                                //System.out.println("Change target");
+                            //}
+
+                     //else if (firing) {
+                        //stopFiring();
+                    //}
+
+                //if (preThrowSpin) preThrowSpin = false;
+                //if (pullBackThenThrow) pullBackThenThrow = false;
             } else {    //AI SYSTEM
                 //System.out.println("TargetBird: "+targetBird);
 
@@ -425,7 +428,7 @@ public class Turret {
         }
     }
 
-    private void turretSetup(char turretType, int lvl){
+    private void turretSetup(char turretType, int lvl) {
         texture[0]=((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.turret(turretType,lvl,false);projTexture= ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.turret(turretType,lvl,true);
         sound=((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.turretSound(turretType,lvl);
         barrelLengthFromPos=0;//reset barrel length so by default projectile spawns from middle of turret position instead of from end of barrel

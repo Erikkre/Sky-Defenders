@@ -20,6 +20,8 @@ import com.kredatus.skydefenders.Handlers.UiHandler;
 import com.kredatus.skydefenders.NonGameHandlerScreens.Loader;
 import com.kredatus.skydefenders.TweenAccessors.Value;
 
+import java.util.concurrent.Future;
+
 import aurelienribon.tweenengine.Tween;
 
 /**
@@ -205,7 +207,7 @@ public class GameWorld {
 
         int waveNumberFromLastWave=(BgHandler.bgNumber-2)/9;
 
-        System.out.println("bgNumber: "+BgHandler.bgNumber);
+        //System.out.println("bgNumber: "+BgHandler.bgNumber);
         bgHandler=null;
         bgHandler=new BgHandler(this,camWidth,camHeight,waveNumberFromLastWave,birdHandler);
         bgHandler.startToSurvival(tinyBirdHandler,lightHandler);
@@ -236,6 +238,11 @@ public class GameWorld {
         for (Turret i: airship.turretList){
             i.stopFiring();
         }
+        for (Future i : uiHandler.futureList){
+            i.cancel(false);
+        }
+        UiHandler.boughtAmmoNum=0;UiHandler.boughtArmorNum=0;UiHandler.boughtDiamondNum=0;
+        UiHandler.boughtFuelNum=0;UiHandler.boughtGoldNum=0;UiHandler.boughtHealthNum=0;
         uiHandler.boughtItemsList.clear();
         Airship.pos=new Vector2(airship.startX,airship.startY);
         renderer.makeTransition(0, 0, 0, 3f);

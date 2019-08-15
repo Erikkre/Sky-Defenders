@@ -25,18 +25,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
 import com.kredatus.skydefenders.Birds.BirdAbstractClass;
-import com.kredatus.skydefenders.SkyDefendersMain;
 import com.kredatus.skydefenders.GameObjects.Airship;
 import com.kredatus.skydefenders.GameObjects.Resources.MovingImageContainer;
 import com.kredatus.skydefenders.GameObjects.Resources.Rank;
 import com.kredatus.skydefenders.GameWorld.GameWorld;
 import com.kredatus.skydefenders.NonGameHandlerScreens.Loader;
+import com.kredatus.skydefenders.SkyDefendersMain;
+import com.kredatus.skydefenders.ui.AppearOnTouchPad;
 import com.kredatus.skydefenders.ui.SlideMenu;
 import com.kredatus.skydefenders.ui.TouchRotatePad;
 
 import java.util.Collections;
 import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -58,8 +60,7 @@ public class UiHandler {
     //public Skin shadeSkin=new Skin(Gdx.files.internal("ui/button.png"));
     public  Stage stage;
     public Skin shadeSkin;
-    public static Touchpad movPad;
-    public static TouchRotatePad aimPad;
+    public static AppearOnTouchPad movPad, aimPad;
     public static SlideMenu slideMenuLeft, slideMenuBottom;
     public Image menuButtonX, menuButtonY;
     public static boolean isTouched;
@@ -70,6 +71,7 @@ public class UiHandler {
     public static Stack expStack;
     public Random r = new Random();
     public  ConcurrentLinkedQueue<MovingImageContainer> boughtItemsList= new ConcurrentLinkedQueue<MovingImageContainer>();
+    public ConcurrentLinkedQueue<Future> futureList= new ConcurrentLinkedQueue<Future>();
     public ConcurrentLinkedQueue<ImageTextButton> buyButtons= new ConcurrentLinkedQueue<ImageTextButton>();
     public Runnable giveDiamondGetGold,giveGoldGetDiamond,giveGoldGetArmor,giveGoldGetAmmo,giveGoldGetFuel,giveGoldGetHealth;
     public static int boughtGoldNum, boughtAmmoNum, boughtFuelNum, boughtHealthNum, boughtArmorNum, boughtDiamondNum,
@@ -307,20 +309,17 @@ public class UiHandler {
         /******************************************************************************************/
 
 
-        movPad = new Touchpad(0, shadeSkin);
-        movPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
         shadeSkin.getDrawable("touchpad-knob").setMinWidth(50);shadeSkin.getDrawable("touchpad-knob").setMinHeight(50);
-        //touchpad2.setColor(1,1,1,1f);
 
-        //keep original height ratio but sized down with current width: .height((touchpad.getPrefHeight()*touchpad.getWidth())/touchpad.getPrefWidth())
-        table2.add(movPad).width(camHeight/9f).height(camHeight/8.5f).left().bottom().expand();
+        movPad = new AppearOnTouchPad(0,camWidth/2, 0, shadeSkin,false);
+        movPad.setColor(1,1,1,0.25f);movPad.setVisible(false);
+        rootTable.addActor(movPad);
 
-        aimPad = new TouchRotatePad(0, shadeSkin);
-        aimPad.setColor(1,1,1,0.25f);//touchpad.settouchpad.scaleBy(0.7f);
-        //touchpad2.setColor(1,1,1,1f);
+        aimPad = new AppearOnTouchPad(camWidth/2,camWidth,0, shadeSkin,true);
+        aimPad.setColor(1,1,1,0.25f);aimPad.setVisible(false);
+        rootTable.addActor(aimPad);
 
-        table2.add(aimPad).width(camHeight/9f).height(camHeight/8.5f).right().bottom().expand();
-        //change fill
+
 
         roundLabel= new Label("Round "+world.round, shadeSkin,"title-plain");
         waveLabel= new Label("Wave "+(BirdHandler.waveNumber+1)+"/8", shadeSkin,"title-plain");
@@ -463,7 +462,7 @@ public class UiHandler {
             public void clicked(InputEvent event, float x, float y) {
                 //super.touchUp(event, x, y, 0, 0);
                 Actor actor = event.getTarget();
-
+                isTouched = true;
                 if (actor.getName()==null) {
                     super.cancel();
                 } else if (actor.getName().equals("m")) {
@@ -472,38 +471,39 @@ public class UiHandler {
                 } else if (actor.getName().equals("s")) {
                     if (!((Button)actor).isChecked()) world.soundMuted=true;
                     else world.soundMuted=false;
+
                 } else if ((actor instanceof ImageTextButton && !((ImageTextButton) actor).isDisabled())||(actor.getParent() instanceof ImageTextButton && !((ImageTextButton) actor.getParent()).isDisabled())) {
                     if (actor.getName().equals("r")) {
                         world.gold-=Integer.parseInt(armorPrice);UiHandler.totalGoldNum-=Integer.parseInt(armorPrice);
                         boughtArmorNum += Integer.parseInt(armorPerTap);totalArmorNum+=Integer.parseInt(armorPerTap);
                         if(boughtArmorNum ==Integer.parseInt(armorPerTap))giveGoldGetArmorFuture=timer.scheduleAtFixedRate(giveGoldGetArmor, 0, (long)(1000f/ boughtArmorNum), TimeUnit.MILLISECONDS);
-
+                        futureList.add(giveGoldGetArmorFuture);
                     } else if (actor.getName().equals("a")) {
                         world.gold -= Integer.parseInt(ammoPrice);UiHandler.totalGoldNum-=Integer.parseInt(ammoPrice);
                         boughtAmmoNum += Integer.parseInt(ammoPerTap);totalAmmoNum+= Integer.parseInt(ammoPerTap);
                         if(boughtAmmoNum ==Integer.parseInt(ammoPerTap))giveGoldGetAmmoFuture=timer.scheduleAtFixedRate(giveGoldGetAmmo, 0, (long)(1000f/ boughtAmmoNum), TimeUnit.MILLISECONDS);
-
+                        futureList.add(giveGoldGetAmmoFuture);
                     } else if (actor.getName().equals("f")) {
                         world.gold -= Integer.parseInt(fuelPrice);UiHandler.totalGoldNum-=Integer.parseInt(fuelPrice);
                         boughtFuelNum += Integer.parseInt(fuelPerTap);totalFuelNum+= Integer.parseInt(fuelPerTap);
                         if(boughtFuelNum ==Integer.parseInt(fuelPerTap))giveGoldGetFuelFuture=timer.scheduleAtFixedRate(giveGoldGetFuel, 0, (long)(1000f/ boughtFuelNum), TimeUnit.MILLISECONDS);
-
+                        futureList.add(giveGoldGetFuelFuture);
                     } else if (actor.getName().equals("h")) {
                         world.gold -= Integer.parseInt(healthPrice);UiHandler.totalGoldNum-=Integer.parseInt(healthPrice);
                         boughtHealthNum += Integer.parseInt(healthPerTap);totalHealthNum+= Integer.parseInt(healthPerTap);
                         if(boughtHealthNum==Integer.parseInt(healthPerTap))giveGoldGetHealthFuture=timer.scheduleAtFixedRate(giveGoldGetHealth,0,(long)(1000f/boughtHealthNum), TimeUnit.MILLISECONDS);
-
+                        futureList.add(giveGoldGetHealthFuture);
                     } else if (actor.getName().equals("d")) {
                         world.gold -= Integer.parseInt(diamondPrice);UiHandler.totalGoldNum-=Integer.parseInt(diamondPrice);
                         boughtDiamondNum += Integer.parseInt(diamondPerTap);totalDiamondNum+= Integer.parseInt(diamondPerTap);
                         if(boughtDiamondNum==Integer.parseInt(diamondPerTap))giveGoldGetDiamondFuture=timer.scheduleAtFixedRate(giveGoldGetDiamond, 0, (long)(1000f), TimeUnit.MILLISECONDS);
-
+                        futureList.add(giveGoldGetDiamondFuture);
                     } else if (actor.getName().equals("g")) {
                         world.diamond -= Integer.parseInt(goldPrice);totalDiamondNum-=Integer.parseInt(goldPrice);boughtGoldNum += Integer.parseInt(goldPerTap);
                         if(boughtGoldNum ==Integer.parseInt(goldPerTap))giveDiamondGetGoldFuture=timer.scheduleAtFixedRate(giveDiamondGetGold, 0, (long)(1000f/ boughtGoldNum), TimeUnit.MILLISECONDS);
+                        futureList.add(giveDiamondGetGoldFuture);
                         diamondLabel.setText(world.diamond);
                     }
-                    isTouched = true;
                     goldLabel.setText(world.gold);
                 }
                 super.cancel();
@@ -513,12 +513,12 @@ public class UiHandler {
         menuButtonX.addListener(new ClickListener(){//separate listener for touch up events
             public boolean touchDown(InputEvent event, float x, float y, int pnt, int btn) {
                 //System.out.println(Math.abs(Gdx.input.getDeltaX()));
+                isTouched = true;
                 if (event.getTarget().getName().equals("menuButtonX")) {
                     System.out.println("Left menu clicked");
                     boolean closed = slideMenuLeft.isCompletelyClosedX();
                     //image_backgroundX.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
                     slideMenuLeft.showManually(closed);
-                    isTouched=true;
                 }
                 super.cancel(); return true;
             }});
@@ -546,6 +546,7 @@ public class UiHandler {
         slideMenuBottom.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                isTouched = true;
                 if (actor.equals(buyButton)) {
                     world.survivalToBuyMenu();
                 } else if (actor.equals(menuButton))
@@ -595,6 +596,7 @@ public class UiHandler {
 
         menuButtonY.addListener(new ClickListener(){//separate listener for touch up events
             public boolean touchDown(InputEvent event, float x, float y, int pnt, int btn) {
+                isTouched = true;
                 if (event.getTarget().getName().equals("menuButtonY")) {//have to be moving mouse slow enough to touch
                     boolean closed = slideMenuBottom.isCompletelyClosedY();
                     //image_backgroundY.setTouchable(closed ? Touchable.enabled : Touchable.disabled);
@@ -652,9 +654,37 @@ public class UiHandler {
         disableOrEnableResourceButtons(buyArmorButton,Integer.parseInt(armorPerTap),totalAmmoNum,Airship.armorValues[Airship.armorLvl],null);
         disableOrEnableResourceButtons(buyHealthButton,Integer.parseInt(healthPerTap),totalHealthNum,Airship.healthValues[Airship.healthLvl],null);
 
-        stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
+
         ammoLabel.setText(Airship.ammo);fuelLabel.setText(Integer.toString((int)Airship.fuel));
         if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
+        stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
+        if (!UiHandler.isTouched&&Gdx.input.justTouched()){
+            movPad.calculatePositionAndValue(Gdx.input.getX(),Gdx.input.getY(),false);
+            aimPad.calculatePositionAndValue(Gdx.input.getX(),Gdx.input.getY(),false);
+        } else {
+            if (!movPad.isTouched()) movPad.setVisible(false);
+            if (!aimPad.isTouched()) aimPad.setVisible(false);
+        }
+        /*if (!isTouched&&Gdx.input.justTouched()) {//if screen is touched and it is not ui
+            if (!movPad.isTouched() && !movPad.isVisible() && InputHandler.scaleX(Gdx.input.getX()) < camWidth / 2) {
+                movPad.setPosition(InputHandler.scaleX(Gdx.input.getX())-movPad.getWidth()/2, -(InputHandler.scaleY(Gdx.input.getY()) - camHeight)-movPad.getHeight()/2);
+                movPad.setVisible(true);
+                movPad.act(delta);
+                System.out.println(1);
+            } else if (!movPad.isTouched() && movPad.isVisible()) {
+                System.out.println(2);
+                movPad.setVisible(false);
+            }
+
+            if (!aimPad.isTouched() && !aimPad.isVisible() && InputHandler.scaleX(Gdx.input.getX()) > camWidth / 2) {
+                aimPad.setPosition(InputHandler.scaleX(Gdx.input.getX())-aimPad.getWidth()/2, -(InputHandler.scaleY(Gdx.input.getY()) - camHeight)-aimPad.getHeight()/2);
+                aimPad.setVisible(true);
+                aimPad.touched=true;
+                aimPad.act(delta);
+            } else if (!aimPad.isTouched() && aimPad.isVisible()) {
+                aimPad.setVisible(false);
+            }
+        }*/
     }
 
     public void loadAllBuyButtonsTimerTasks(){
