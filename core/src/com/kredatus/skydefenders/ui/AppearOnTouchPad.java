@@ -19,8 +19,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Pools;
+import com.kredatus.skydefenders.GameObjects.Airship;
 import com.kredatus.skydefenders.GameWorld.GameHandler;
 import com.kredatus.skydefenders.Handlers.InputHandler;
+import com.kredatus.skydefenders.Handlers.UiHandler;
 
 public class AppearOnTouchPad extends Widget {
     private com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle style;
@@ -46,15 +48,62 @@ public class AppearOnTouchPad extends Widget {
     private InputEvent fakeTouchDownEvent;
     private float leftTouchBound,rightTouchBound;
     public boolean rotationTouchpad;
-    public AppearOnTouchPad(float leftTouchBound, float rightTouchBound, float deadzoneRadius, com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle style,boolean rotationTouchpad) {
+    public AppearOnTouchPad thisTouchPad;
+    public int currentPtr=-1;
+
+    @Override
+    public void act(float delta){
+       //if (Gdx.input.justTouched()) System.out.println(ptr0X()+", "+GameHandler.camWidth/2);
+        //if (this==UiHandler.movPad)System.out.println(!isVisible());
+        //System.out.println(isVisible());
+        if (Gdx.input.justTouched()&&!UiHandler.isTouched&&(!touched&&!thisTouchPad.isVisible())&&currentPtr==-1){
+
+            if (this==UiHandler.movPad) {
+                if ((UiHandler.aimPad.currentPtr==1||UiHandler.aimPad.currentPtr==-1)&&Gdx.input.isTouched(0)&&(ptr0X()>leftTouchBound&& ptr0X()<rightTouchBound)) {
+                    System.out.println("movpad ptr=0");currentPtr=0;screenPos.set(Gdx.input.getX(0), Gdx.input.getY(0));
+                } else if ((UiHandler.aimPad.currentPtr==0||UiHandler.aimPad.currentPtr==-1)&&Gdx.input.isTouched(1)&&(ptr1X()>leftTouchBound&& ptr1X()<rightTouchBound)){
+                    System.out.println("movpad ptr=1");currentPtr=1;screenPos.set(Gdx.input.getX(1), Gdx.input.getY(1));
+                }
+            } else if (this==UiHandler.aimPad) {
+                if ((UiHandler.movPad.currentPtr==1||UiHandler.movPad.currentPtr==-1)&&Gdx.input.isTouched(0)&&(ptr0X()>leftTouchBound&& ptr0X()<rightTouchBound)) {
+                    System.out.println("aimPad ptr=0");currentPtr=0;screenPos.set(Gdx.input.getX(0), Gdx.input.getY(0));
+                } else if ((UiHandler.movPad.currentPtr==0||UiHandler.movPad.currentPtr==-1)&&Gdx.input.isTouched(1)&&(ptr1X()>leftTouchBound&& ptr1X()<rightTouchBound)){
+                    System.out.println("aimPad ptr=1");currentPtr=1;screenPos.set(Gdx.input.getX(1), Gdx.input.getY(1));
+                }
+            }
+            if (thisTouchPad==UiHandler.aimPad)System.out.println("Should be a ptr= right above this");
+
+            // Convert the touch point into local coordinates, place the touchpad and show it.
+            if (currentPtr!=-1) {
+                localPos.set(screenPos);
+                localPos = this.getParent().screenToLocalCoordinates(localPos);
+                this.setPosition(localPos.x - this.getWidth() / 2, localPos.y - this.getHeight() / 2);
+                //System.out.println("setposition");
+                // Fire a touch down event to get the touchpad working.
+                Vector2 stagePos = this.getStage().screenToStageCoordinates(screenPos);
+                fakeTouchDownEvent.setStageX(stagePos.x);
+                fakeTouchDownEvent.setStageY(stagePos.y);
+                this.fire(fakeTouchDownEvent);
+            }
+        } else if (isVisible()&&!isTouched()&&Airship.turretList.size()>0) { //only for rotationTouchpad
+                //System.out.println(getY()+", "+ GameHandler.camHeight+", "+this.getStage().screenToStageCoordinates(new Vector2(getX(),0)).x+", "+GameHandler.camWidth);
+            System.out.println("********************************************************************");
+            calculatePositionAndValue(
+                    knobBounds.x  -(float)Math.cos(Math.toRadians(Airship.turretList.get(0).targetRot))*100,
+                    knobBounds.y  -(float)Math.sin(Math.toRadians(Airship.turretList.get(0).targetRot))*100,
+                        false);
+        }
+    }
+
+    public AppearOnTouchPad(float leftTouchBound, float rightTouchBound, float deadzoneRadius, com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle style, final boolean rotationTouchpad) {
+        thisTouchPad=this;
         this.leftTouchBound=leftTouchBound;this.rightTouchBound=rightTouchBound;this.rotationTouchpad=rotationTouchpad;
         screenPos = new Vector2(0,0);
         localPos = new Vector2();
         fakeTouchDownEvent = new InputEvent();
         fakeTouchDownEvent.setType(InputEvent.Type.touchDown);
 
-
-        this.resetOnTouchUp = true;
+        this.resetOnTouchUp = false;
         this.knobBounds = new Circle(0.0F, 0.0F, 0.0F);
         this.touchBounds = new Circle(0.0F, 0.0F, 0.0F);
         this.deadzoneBounds = new Circle(0.0F, 0.0F, 0.0F);
@@ -68,122 +117,100 @@ public class AppearOnTouchPad extends Widget {
             this.knobPosition.set(this.getWidth() / 2.0F, this.getHeight() / 2.0F);
             this.setStyle(style);
             this.setSize(this.getPrefWidth(), this.getPrefHeight());
+
             this.addListener(new ClickListener() {
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-                    if (touched) {
-                        return false;
-                    } else {
-                        touched = true;
-                        calculatePositionAndValue(x, y, false);
-                        return true;
-                    }
+                    if (thisTouchPad==UiHandler.aimPad){System.out.println("touchDown for aimpad, currentptr:"+currentPtr+", eventpointer:"+pointer);}
+                    else System.out.println("touchDown for movpad, currentptr:"+currentPtr+", eventpointer:"+pointer);
+                        if (touched||pointer!=currentPtr) {
+                            return false;
+                        } else {
+                            thisTouchPad.setVisible(true);
+                            System.out.println("set visible");
+                            if (!rotationTouchpad) {
+                                touched = true;
+                                calculatePositionAndValue(x, y, false);
+                            }
+                            return true;
+                        }
                 }
 
                 public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                    calculatePositionAndValue(x, y, false);
+                    //System.out.println("touchDrag");
+                    if (thisTouchPad==UiHandler.aimPad){System.out.println("touchdrag for aimpad, currentptr:"+currentPtr+", eventPointer:"+pointer);}
+                    else System.out.println("touchdrag for movpad, currentptr:"+currentPtr+", eventPointer:"+pointer);
+
+                    if (!touched&&!deadzoneBounds.contains(x,y))touched=true;//lets aimpad aim once finger moves out of deadzone, otherwise let it follow Airship.turretList.get(0).targetRot
+                    if (currentPtr==pointer&&touched) {
+
+                        //if (thisTouchPad==UiHandler.aimPad)System.out.println("calculate aimpad pos");
+                        calculatePositionAndValue(x, y, false);
+                    }
                 }
 
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    touched = false;
-                    //calculatePositionAndValue(x, y, resetOnTouchUp);
+                    if (thisTouchPad==UiHandler.aimPad){System.out.println("touchup for aimpad, currentptr:"+currentPtr+", eventPointer:"+pointer);}
+                    else System.out.println("touchup for movpad, currentptr:"+currentPtr+", eventPointer:"+pointer);
+
+                        if (pointer==currentPtr) {
+                            touched = false;
+                            currentPtr = -1;
+                            setPosition(GameHandler.camWidth, GameHandler.camHeight);
+                            thisTouchPad.setVisible(false);
+                        }
                 }
             });
         }
     }
 
-    public float inputX(){
-        return InputHandler.scaleX(Gdx.input.getX());
+    public float ptr1X(){
+        return InputHandler.scaleX(Gdx.input.getX(1));
+    }
+    public float ptr0X(){
+        return InputHandler.scaleX(Gdx.input.getX(0));
     }
     private float inputY() {
-        return -(InputHandler.scaleY(Gdx.input.getY())- GameHandler.camHeight);
+        return InputHandler.scaleY(Gdx.input.getY());
     }
 
     public void calculatePositionAndValue(float x, float y, boolean isTouchUp) {
-        // System.out.println("UiTouched: "+!UiHandler.isTouched+", Screen touched: "+Gdx.input.justTouched()+", x:"+inputX()+", leftBound:"+leftTouchBound+", rightBound:"+rightTouchBound+", Movpad: "+!rotationTouchpad);
-        if (!touched&&InputHandler.scaleX((int)x)>leftTouchBound&&InputHandler.scaleX((int)x)<rightTouchBound) {
-
-            // Get the touch point in screen coordinates.
-            screenPos.set(x, y);
-
-            // Convert the touch point into local coordinates, place the touchpad and show it.
-            localPos.set(screenPos);
-            localPos = this.getParent().screenToLocalCoordinates(localPos);
-            this.setPosition(localPos.x - this.getWidth() / 2, localPos.y - this.getHeight() / 2);
-            this.setVisible(true);
-
-            // Fire a touch down event to get the touchpad working.
-            Vector2 stagePos = this.getStage().screenToStageCoordinates(screenPos);
-            fakeTouchDownEvent.setStageX(stagePos.x);
-            fakeTouchDownEvent.setStageY(stagePos.y);
-            this.fire(fakeTouchDownEvent);
-
-
-        } else if (!Gdx.input.isTouched()) {
-            // The touch was just released, so hide the touchpad.
-            System.out.println("hide touchpad");
-            this.setVisible(false);
-        }
-
-        if (rotationTouchpad) {
-            //System.out.println("knobPercent.x: "+knobPercent.x+", knobPercent.y: "+knobPercent.y);
-            float oldPositionX = this.knobPosition.x;
-            float oldPositionY = this.knobPosition.y;
-            float oldPercentX = this.knobPercent.x;
-            float oldPercentY = this.knobPercent.y;
-            float centerX = this.knobBounds.x;
-            float centerY = this.knobBounds.y;
+        System.out.println(knobPercent);
+        //System.out.println("calculate new pos");
+        //System.out.println("knobPercent.x: "+knobPercent.x+", knobPercent.y: "+knobPercent.y);
+        float oldPositionX = this.knobPosition.x;
+        float oldPositionY = this.knobPosition.y;
+        float oldPercentX = this.knobPercent.x;
+        float oldPercentY = this.knobPercent.y;
+        float centerX = this.knobBounds.x;
+        float centerY = this.knobBounds.y;
+        //System.out.println("Center: "+new Vector2(centerX,centerY)+"Current Knob Percent"+knobPercent+", currentX:"+x+",currentY:"+y);
+        if (!rotationTouchpad) {
             this.knobPosition.set(centerX, centerY);
             this.knobPercent.set(0.0F, 0.0F);
-            if (!isTouchUp && !this.deadzoneBounds.contains(x, y)) {
-                this.knobPercent.set((x - centerX) / this.knobBounds.radius, (y - centerY) / this.knobBounds.radius);
-                float length = this.knobPercent.len();
-                if (length > 1.0F) {
-                    this.knobPercent.scl(1.0F / length);
-                }
-                this.knobPosition.set(this.knobPercent).nor().scl(this.knobBounds.radius).add(this.knobBounds.x, this.knobBounds.y);
-            }
-
-            if (oldPercentX != this.knobPercent.x || oldPercentY != this.knobPercent.y) {
-                ChangeListener.ChangeEvent changeEvent = (ChangeListener.ChangeEvent) Pools.obtain(ChangeListener.ChangeEvent.class);
-                if (this.fire(changeEvent)) {
-                    this.knobPercent.set(oldPercentX, oldPercentY);
-                    this.knobPosition.set(oldPositionX, oldPositionY);
-                }
-
-                Pools.free(changeEvent);
-            }
-        } else {
-            float oldPositionX = knobPosition.x;
-            float oldPositionY = knobPosition.y;
-            float oldPercentX = knobPercent.x;
-            float oldPercentY = knobPercent.y;
-            float centerX = knobBounds.x;
-            float centerY = knobBounds.y;
-            knobPosition.set(centerX, centerY);
-            knobPercent.set(0f, 0f);
-            if (!isTouchUp) {
-                if (!deadzoneBounds.contains(x, y)) {
-                    knobPercent.set((x - centerX) / knobBounds.radius, (y - centerY) / knobBounds.radius);
-                    float length = knobPercent.len();
-                    if (length > 1) knobPercent.scl(1 / length);
-                    if (knobBounds.contains(x, y)) {
-                        knobPosition.set(x, y);
-                    } else {
-                        knobPosition.set(knobPercent).nor().scl(knobBounds.radius).add(knobBounds.x, knobBounds.y);
-                    }
-                }
-            }
-            if (oldPercentX != knobPercent.x || oldPercentY != knobPercent.y) {
-                ChangeListener.ChangeEvent changeEvent = Pools.obtain(ChangeListener.ChangeEvent.class);
-                if (fire(changeEvent)) {
-                    knobPercent.set(oldPercentX, oldPercentY);
-                    knobPosition.set(oldPositionX, oldPositionY);
-                }
-                Pools.free(changeEvent);
-            }
         }
 
+        if (!isTouchUp && !this.deadzoneBounds.contains(x, y)) {
+
+            this.knobPercent.set((x - centerX) / this.knobBounds.radius, (y - centerY) / this.knobBounds.radius);
+
+            float length = this.knobPercent.len();
+            if (length > 1.0F) this.knobPercent.scl(1.0F / length);
+
+            if (rotationTouchpad)
+                this.knobPosition.set(this.knobPercent).nor().scl(this.knobBounds.radius).add(this.knobBounds.x, this.knobBounds.y);
+            else {
+                if (knobBounds.contains(x, y)) knobPosition.set(x, y);
+                else  knobPosition.set(knobPercent).nor().scl(knobBounds.radius).add(knobBounds.x, knobBounds.y);
+            }
+        }
+        if (oldPercentX != knobPercent.x || oldPercentY != knobPercent.y) {
+            ChangeListener.ChangeEvent changeEvent = Pools.obtain(ChangeListener.ChangeEvent.class);
+            if (fire(changeEvent)) {
+                knobPercent.set(oldPercentX, oldPercentY);
+                knobPosition.set(oldPositionX, oldPositionY);
+            }
+            Pools.free(changeEvent);
+        }
     }
 
     public void setStyle(com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle style) {

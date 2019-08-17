@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.kredatus.skydefenders.Handlers.InputHandler;
-import com.kredatus.skydefenders.Handlers.UiHandler;
 
 
 public class SlideMenu extends Table {
@@ -87,16 +86,16 @@ public class SlideMenu extends Table {
             updatePositionY();
             moveMenuButtonY();
 
-            //System.out.println((stgXToScrX(menuButton.getX())-menuButton.getHeight()/4)+", "+inputX()+", "+(stgXToScrX(menuButton.getX())+5*menuButton.getHeight()/4));
+            //System.out.println((stgXToScrX(menuButton.getX())-menuButton.getHeight()/4)+", "+ptr0X()+", "+(stgXToScrX(menuButton.getX())+5*menuButton.getHeight()/4));
             //System.out.println(inputY()+", "+stgYToScrY(this.getHeight()/2f)+", "+stgYToScrY(this.getHeight()) );
 
 
             if (auto && (isCompletelyClosedY()||isCompletelyOpenedY())) auto = false;
 
-            //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and    inputX is on menu button   and  touchpads not touched
+            //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and    ptr0X is on menu button   and  touchpads not touched
             if (!auto && isTouched() && ( (isCompletelyClosedY() && inputY() < this.getHeight()/1.5f) || (!isCompletelyClosedY()&&inputY() < this.getHeight()*1.5f) )
-                    && inputX() > stgXToScrX(menuButton.getX())-menuButton.getHeight()/4 && inputX() < stgXToScrX(menuButton.getX())+5*menuButton.getHeight()/4
-                    && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
+                    && inputX() > stgXToScrX(menuButton.getX())-menuButton.getHeight()/4 && inputX() < stgXToScrX(menuButton.getX())+5*menuButton.getHeight()/4 ){
+                    //&& !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
                 if (!isTouched) isTouched=true;
                 //if closed, in zone and swiping down
                 if (isCompletelyClosedY()&&Gdx.input.getDeltaY()<-3) showManually(true);// open = false, close = true;
@@ -125,8 +124,8 @@ public class SlideMenu extends Table {
 
             //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and    inputY is on menu button   and  touchpads not touched
             if (!auto && isTouched() && (  (isCompletelyClosedX()&&inputX() < stgXToScrX(this.getWidth()) ) || ( !isCompletelyClosedX()&&inputX() < stgXToScrX(this.getWidth())*1.5f )  )
-                    && inputY() > menuButton.getY()-menuButton.getHeight()/2 && inputY() < menuButton.getY()+ 3*menuButton.getHeight()/2
-                    && !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {
+                    && inputY() > menuButton.getY()-menuButton.getHeight()/2 && inputY() < menuButton.getY()+ 3*menuButton.getHeight()/2 ){
+                    //&& !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {
                 if (!isTouched) isTouched=true;
                 //if closed, in zone and swiping left
                 if (isCompletelyClosedX() && Gdx.input.getDeltaX() > 3) showManually(true);// open = false, close = true;
@@ -204,7 +203,7 @@ public class SlideMenu extends Table {
     }
 
     private float inputY() {
-        return -(InputHandler.scaleY(Gdx.input.getY())-camHeight);
+        return InputHandler.scaleY(Gdx.input.getY());
     }
     
     private boolean isTouched() {

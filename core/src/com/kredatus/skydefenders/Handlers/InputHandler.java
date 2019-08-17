@@ -3,6 +3,7 @@ package com.kredatus.skydefenders.Handlers;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.kredatus.skydefenders.GameWorld.GameHandler;
 import com.kredatus.skydefenders.GameWorld.GameWorld;
 import com.kredatus.skydefenders.ui.SimpleButton;
 
@@ -192,12 +193,12 @@ public class InputHandler implements InputProcessor {
         return false;
     }
 
-    public static int scaleX(int screenX) {
-        return (int) (screenX / scaleFactorX);
+    public static float scaleX(float screenX) {
+        return screenX / scaleFactorX;
     }
 
-    public static int scaleY(int screenY) {
-        return (int) (screenY / scaleFactorY);
+    public static float scaleY(float screenY) {
+        return  -((screenY / scaleFactorY)- GameHandler.camHeight);
     }
 
     public List<SimpleButton> getMenuButtons() {

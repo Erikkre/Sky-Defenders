@@ -311,12 +311,12 @@ public class UiHandler {
 
         shadeSkin.getDrawable("touchpad-knob").setMinWidth(50);shadeSkin.getDrawable("touchpad-knob").setMinHeight(50);
 
-        movPad = new AppearOnTouchPad(0,camWidth/2, 0, shadeSkin,false);
-        movPad.setColor(1,1,1,0.25f);movPad.setVisible(false);
+        movPad = new AppearOnTouchPad(0,camWidth/2, 12, shadeSkin,false);
+        movPad.setColor(1,1,1,0.25f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);
         rootTable.addActor(movPad);
 
-        aimPad = new AppearOnTouchPad(camWidth/2,camWidth,0, shadeSkin,true);
-        aimPad.setColor(1,1,1,0.25f);aimPad.setVisible(false);
+        aimPad = new AppearOnTouchPad(camWidth/2,camWidth,15, shadeSkin,true);
+        aimPad.setColor(1,1,1,0.25f);aimPad.setPosition(camWidth,camHeight);aimPad.setVisible(false);
         rootTable.addActor(aimPad);
 
 
@@ -354,8 +354,8 @@ public class UiHandler {
         menuButtonX = new Image(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
 
         leftTable.add(new Label("BUY", shadeSkin,"title-plain")).padBottom(5).colspan(2).row();
-        armorPrice="50";ammoPrice="20";fuelPrice="20";healthPrice="100";diamondPrice="2500";goldPrice="1";//1 diamond
-                    armorPerTap="10";ammoPerTap="30";fuelPerTap="50";healthPerTap="10";diamondPerTap="1";goldPerTap="500";
+                    armorPrice="100";ammoPrice="20";fuelPrice="20";healthPrice="200";diamondPrice="2500";goldPrice="1";//1 diamond
+                    armorPerTap="20";ammoPerTap="30";fuelPerTap="50";healthPerTap="20";diamondPerTap="1";goldPerTap="500";
 
         buyArmorButton=new ImageTextButton(armorPrice,shadeSkin,"buyArmor");//buy cost
         buyArmorButton.clearChildren();
@@ -651,20 +651,15 @@ public class UiHandler {
         disableOrEnableResourceButtons(buyFuelButton,Integer.parseInt(fuelPerTap),(int)totalFuelNum,Airship.fuelValues[Airship.fuelLvl],fuelLimitLabel);
         //System.out.println("amntWithoutBuying: "+Airship.ammo+", totalAmnt"+(int)totalAmmoNum+", cap: "+Airship.ammoValues[Airship.ammoLvl]);
         disableOrEnableResourceButtons(buyAmmoButton,Integer.parseInt(ammoPerTap),totalAmmoNum,Airship.ammoValues[Airship.ammoLvl],ammoLimitLabel);
-        disableOrEnableResourceButtons(buyArmorButton,Integer.parseInt(armorPerTap),totalAmmoNum,Airship.armorValues[Airship.armorLvl],null);
+        disableOrEnableResourceButtons(buyArmorButton,Integer.parseInt(armorPerTap),totalArmorNum,Airship.armorValues[Airship.armorLvl],null);
         disableOrEnableResourceButtons(buyHealthButton,Integer.parseInt(healthPerTap),totalHealthNum,Airship.healthValues[Airship.healthLvl],null);
 
 
         ammoLabel.setText(Airship.ammo);fuelLabel.setText(Integer.toString((int)Airship.fuel));
         if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
+        else isTouched=false;
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
-        if (!UiHandler.isTouched&&Gdx.input.justTouched()){
-            movPad.calculatePositionAndValue(Gdx.input.getX(),Gdx.input.getY(),false);
-            aimPad.calculatePositionAndValue(Gdx.input.getX(),Gdx.input.getY(),false);
-        } else {
-            if (!movPad.isTouched()) movPad.setVisible(false);
-            if (!aimPad.isTouched()) aimPad.setVisible(false);
-        }
+    }
         /*if (!isTouched&&Gdx.input.justTouched()) {//if screen is touched and it is not ui
             if (!movPad.isTouched() && !movPad.isVisible() && InputHandler.scaleX(Gdx.input.getX()) < camWidth / 2) {
                 movPad.setPosition(InputHandler.scaleX(Gdx.input.getX())-movPad.getWidth()/2, -(InputHandler.scaleY(Gdx.input.getY()) - camHeight)-movPad.getHeight()/2);
@@ -685,7 +680,7 @@ public class UiHandler {
                 aimPad.setVisible(false);
             }
         }*/
-    }
+
 
     public void loadAllBuyButtonsTimerTasks(){
         giveDiamondGetGold = new Runnable() {

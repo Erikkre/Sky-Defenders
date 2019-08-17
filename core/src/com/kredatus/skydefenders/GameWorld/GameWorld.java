@@ -237,10 +237,16 @@ public class GameWorld {
         }
         for (Turret i: airship.turretList){
             i.stopFiring();
+            i.targetBird=null;
         }
+        TargetHandler.targetBird=null;
+        targetHandler.closestBirdDist=Float.POSITIVE_INFINITY;
+
         for (Future i : uiHandler.futureList){
             i.cancel(false);
         }
+
+
         UiHandler.boughtAmmoNum=0;UiHandler.boughtArmorNum=0;UiHandler.boughtDiamondNum=0;
         UiHandler.boughtFuelNum=0;UiHandler.boughtGoldNum=0;UiHandler.boughtHealthNum=0;
         uiHandler.boughtItemsList.clear();

@@ -85,17 +85,15 @@ public class TouchRotatePad extends Widget {
         float oldPercentY = this.knobPercent.y;
         float centerX = this.knobBounds.x;
         float centerY = this.knobBounds.y;
-        this.knobPosition.set(centerX, centerY);
-        this.knobPercent.set(0.0F, 0.0F);
+        //this.knobPosition.set(centerX, centerY);
+        //this.knobPercent.set(0.0F, 0.0F);
         if (!isTouchUp && !this.deadzoneBounds.contains(x, y)) {
             this.knobPercent.set((x - centerX) / this.knobBounds.radius, (y - centerY) / this.knobBounds.radius);
             float length = this.knobPercent.len();
             if (length > 1.0F) {
                 this.knobPercent.scl(1.0F / length);
             }
-
-                this.knobPosition.set(this.knobPercent).nor().scl(this.knobBounds.radius).add(this.knobBounds.x, this.knobBounds.y);
-
+            this.knobPosition.set(this.knobPercent).nor().scl(this.knobBounds.radius).add(this.knobBounds.x, this.knobBounds.y);
         }
 
         if (oldPercentX != this.knobPercent.x || oldPercentY != this.knobPercent.y) {

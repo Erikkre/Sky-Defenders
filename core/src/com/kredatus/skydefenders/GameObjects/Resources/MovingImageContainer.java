@@ -194,7 +194,7 @@ public class MovingImageContainer {
                 //System.out.println(System.currentTimeMillis()-UiHandler.lastResourceGatherTime);
                 if (System.currentTimeMillis()-UiHandler.lastResourceGatherTime<400)UiHandler.resourceGatherStreak++;else UiHandler.resourceGatherStreak=0;
                 //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
-                ((Sound)((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.manager.get(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.assets.resourceGather)).play(0.1f,0.55f+ 0.0035f*UiHandler.resourceGatherStreak,1);
+                ((Sound)((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.manager.get(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.assets.resourceGather)).play(0.07f,0.55f+ 0.0010f*UiHandler.resourceGatherStreak,1);
                 if (thisBird==null) ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.boughtItemsList.remove(thisMovingImageContainer);
                 else thisBird.dropsList.remove(thisMovingImageContainer);
                 UiHandler.lastResourceGatherTime=System.currentTimeMillis();

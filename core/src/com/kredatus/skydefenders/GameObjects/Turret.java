@@ -54,6 +54,7 @@ public class Turret {
 
     ConcurrentLinkedQueue<BirdAbstractClass> activeBirdQueue;
     Airship airship;TargetHandler targetHandler;
+    public float rotCompYDiff,rotCompXDiff;
     public void draw(SpriteBatch batcher, float xPos, float yPos, float scale) {
         if (texture.length>1 && firingInterval-(System.currentTimeMillis()-lastShotTime)<400) {//if there are multiple frames and if 400ms or less before shot draw loaded turret
             batcher.draw(texture[1], xPos, yPos,
@@ -228,8 +229,8 @@ public class Turret {
 
     private void setRotation(float xVel, float yVel, float yDistance, float xDistance, boolean aimPadAiming) {
         if (!aimPadAiming) {
-            float rotCompYDiff = ((xVel * (Math.abs(yDistance) / (camHeight * 4))) * 1.5f) / (pen / 1.5f);
-            float rotCompXDiff = yVel * ((Math.abs(xDistance)) / camWidth) * 5;   //smaller and should be constant
+            rotCompYDiff = ((xVel * (Math.abs(yDistance) / (camHeight * 4))) * 1.5f) / (pen / 1.5f);
+            rotCompXDiff = yVel * ((Math.abs(xDistance)) / camWidth) * 5;   //smaller and should be constant
             targetRot = (int) (Math.toDegrees(Math.atan(yDistance / xDistance)) + rotCompYDiff + rotCompXDiff); //the further it is the more ahead we aim when vel increases
             //System.out.println("Rot due to yDiff: " + rotCompYDiff + ", Rot due to xDiff: " + rotCompXDiff);
 
@@ -353,7 +354,7 @@ public class Turret {
                     //distance = Math.sqrt(Math.pow(lastFingerPosition.x - i.x, 2) + (Math.pow(lastFingerPosition.y - i.y, 2)));
                     if (i != targetBird &&
                     InputHandler.scaleX(Gdx.input.getX()) > i.x - i.width / 2 && InputHandler.scaleX(Gdx.input.getX()) < i.x + i.width / 2 &&
-                            -(InputHandler.scaleY(Gdx.input.getY()) - camHeight) > i.y - i.height / 2 && -(InputHandler.scaleY(Gdx.input.getY()) - camHeight) < i.y + i.height / 2) {
+                            InputHandler.scaleY(Gdx.input.getY()) > i.y - i.height / 2 && InputHandler.scaleY(Gdx.input.getY()) < i.y + i.height / 2) {
                         targetBird = i;
                         break;
                     }
@@ -375,12 +376,13 @@ public class Turret {
                 if (activeBirdQueue.size() > 0) {
                     if ((targetBird == null || !targetBird.isAlive) && targetHandler.targetBird != null) {
 
-                        //System.out.println("1");
+                        //System.out.println("if targetBird == null || !targetBird.isAlive) && targetHandler.targetBird != null");
                         targetBird = targetHandler.targetBird;
                         setRotation(targetBird.xVel, targetBird.yVel, targetBird.y - pos.y, targetBird.x - pos.x, false);
                         if (!preThrowSpin) rotateToTarget();
 
                     } else if (targetBird != null && targetBird.isAlive && activeBirdQueue.contains(targetBird)) {
+                        //System.out.println("targetBird != null && targetBird.isAlive && activeBirdQueue.contains(targetBird)");
                         if (projRotates) {
                             if (firingInterval - (System.currentTimeMillis() - lastShotTime) < preThrowActionDur) {//if half a second before throw time
                                 if (!preThrowSpin) {
@@ -415,6 +417,7 @@ public class Turret {
                             startFiring();
                         }
                     } else if (firing) {
+                        //System.out.println("targetBird == null");
                         //System.out.print("Stop firing 1");
                         stopFiring();
                         targetBird = null;
