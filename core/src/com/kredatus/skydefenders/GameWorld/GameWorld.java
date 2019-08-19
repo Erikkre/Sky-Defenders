@@ -88,7 +88,7 @@ public class GameWorld {
         //startLogos(camWidth,camHeight);
         exp=prefs.getInteger("exp",0);
         score=prefs.getInteger("score",0);
-        gold=prefs.getInteger("gold",100);UiHandler.totalGoldNum=gold;
+        gold=prefs.getInteger("gold",300);UiHandler.totalGoldNum=gold;
         diamond =prefs.getInteger("diamond",0);UiHandler.totalDiamondNum=diamond;
         round=prefs.getInteger("round",1);
     }

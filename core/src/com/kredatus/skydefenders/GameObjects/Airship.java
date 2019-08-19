@@ -114,6 +114,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public void armorUp(){
         if (armorLvl<armorValues.length-1) assignRackAndArmor(++armorLvl, rackLvl);
     }
+
     public void rackUp(){
         if (rackLvl<4) {
             assignRackAndArmor(armorLvl, ++rackLvl);

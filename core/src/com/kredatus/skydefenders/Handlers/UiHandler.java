@@ -108,7 +108,7 @@ public class UiHandler {
 
                 )
 
-            ) {System.out.println(true);return true;
+            ) {return true;
                 }
             }
         }
@@ -348,7 +348,7 @@ public class UiHandler {
         table1.add(t3).padLeft(3);
         /******************************************************************************************/
 
-        shadeSkin.getDrawable("touchpad-knob").setMinWidth(30);shadeSkin.getDrawable("touchpad-knob").setMinHeight(30);
+
 
 
 
@@ -359,13 +359,14 @@ public class UiHandler {
 
         loadSlideMenus();//want to check slidemenu touches before
 
-        float size = shadeSkin.getDrawable("touchpad").getMinWidth()/2;
+        //shadeSkin.getDrawable("touchpad-knob").setMinWidth(30);shadeSkin.getDrawable("touchpad-knob").setMinHeight(30);
+        //float size = shadeSkin.getDrawable("touchpad").getMinWidth()/2;
         movPad = new AppearOnTouchPad(0,camWidth/2, 12, shadeSkin,false);
-        movPad.setColor(1,1,1,0.25f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);movPad.setSize(size,size);
+        movPad.setColor(1,1,1,0.1f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);//movPad.setSize(size,size);
         rootTable.addActor(movPad);
 
         aimPad = new AppearOnTouchPad(camWidth/2,camWidth,10, shadeSkin,true);
-        aimPad.setColor(1,1,1,0.25f);aimPad.setPosition(camWidth,camHeight);aimPad.setVisible(false);aimPad.setSize(size,size);
+        aimPad.setColor(1,1,1,0.1f);aimPad.setPosition(camWidth,camHeight);aimPad.setVisible(false);//aimPad.setSize(size,size);
         rootTable.addActor(aimPad);
     }
 

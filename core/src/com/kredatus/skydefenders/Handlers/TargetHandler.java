@@ -98,7 +98,7 @@ public class TargetHandler {
                         //Gdx.input.vibrate(10);
                         if (!GameWorld.soundMuted) balloonHit.play(0.55f,r.nextFloat()*0.6f+0.7f,1);
                         airship.hit(bird.origHealth);
-                        ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.renderer.makeTransition(100, 0, 0, 0.5f);
+                        ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.renderer.makeTransition(150, 0, 0, 0.2f);
                         bird.hit(bird.origHealth+1);    //lol I hope bird health is below orig
                     }
 
