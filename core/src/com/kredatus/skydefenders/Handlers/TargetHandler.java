@@ -92,7 +92,7 @@ public class TargetHandler {
                     if (Airship.health+Airship.armor<=bird.origHealth) {
                         bird.hit(bird.origHealth+1);    //lol I hope bird health is below orig
                         //Gdx.input.vibrate(100);
-                        if (!GameWorld.soundMuted)balloonDeath.play(0.8f);
+                        if (!GameWorld.soundMuted)balloonDeath.play(1f);
                         ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.world.deathAndRestart();
                     } else {
                         //Gdx.input.vibrate(10);

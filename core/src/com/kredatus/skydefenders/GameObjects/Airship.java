@@ -89,7 +89,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     public static float[] airshipTint, airShipCloudTint;
     public boolean hitMaxBrightnessCloudBrightening=false;
     public static int[] healthValues=new int[]{100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800}, armorValues={100, 250, 500, 850, 1300, 1850, 2500},
-            speedValues={85, 95, 105, 118, 133, 145, 160},ammoValues={100, 200, 350, 550, 800, 1100, 1450,1850,2300,2800},fuelValues={500, 1000, 2000, 3500, 5500, 8000, 11000, 14500,18500,23000},
+            speedValues={85, 95, 105, 118, 133, 145, 160},ammoValues={150, 250, 400, 600, 850, 1150, 1500,1900,2350,2850},fuelValues={500, 1000, 2000, 3500, 5500, 8000, 11000, 14500,18500,23000},
             goldValues={3000, 4000, 5500, 7500, 10000, 13000, 16500, 20500, 25000, 30000},diamondValues={3, 9, 18, 30, 45, 63, 84, 108, 135, 165};
     public TextureRegion[] rackTextures=new TextureRegion[7];
 

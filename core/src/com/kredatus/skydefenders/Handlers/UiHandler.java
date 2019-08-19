@@ -85,15 +85,15 @@ public class UiHandler {
 
         //System.out.println(slideMenuLeft.getY()+", "+ptrY(0));
         //System.out.println( slideMenuBottom.originEdge.equals("down") +", "+ (ptrX(0)>slideMenuBottom.getX()) +", "+ (ptrX(0)<slideMenuBottom.getX()+slideMenuBottom.getWidth()) +", "+ (ptrY(0)>0) +", "+ (ptrY(0)<slideMenuBottom.getHeight()));
-
+        //dont allow touchpads where pull out menus will be
         for (Actor i : stage.getActors()){
             if (i instanceof SlideMenu)      {if ( ((SlideMenu) i).isTouched ||
                 (Gdx.input.isTouched(0)&&
 
                     (
-                            ( ((SlideMenu) i).originEdge.equals("down") && ptrX(0)>i.getX()  && ptrX(0)<i.getX()+i.getWidth() && ptrY(0)>0 && ptrY(0)<i.getHeight())
+                            ( ((SlideMenu) i).originEdge.equals("down") && ptrX(0)>i.getX()  && ptrX(0)<i.getX()+i.getWidth() && ptrY(0)>0 && ptrY(0)<i.getHeight()/1.5)
                         ||
-                                    ( ((SlideMenu) i).originEdge.equals("left") && ptrX(0)<i.getWidth() && ptrX(0)>0 && ptrY(0)>i.getY() && ptrY(0)<i.getY()+i.getHeight())
+                            ( ((SlideMenu) i).originEdge.equals("left") && ptrX(0)<i.getWidth()/1.5 && ptrX(0)>0 && ptrY(0)>i.getY()+i.getHeight()/5 && ptrY(0)<i.getY()+(4*i.getHeight())/5)
                     )
 
                 )||(
@@ -177,7 +177,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -348,7 +348,7 @@ public class UiHandler {
         table1.add(t3).padLeft(3);
         /******************************************************************************************/
 
-        shadeSkin.getDrawable("touchpad-knob").setMinWidth(50);shadeSkin.getDrawable("touchpad-knob").setMinHeight(50);
+        shadeSkin.getDrawable("touchpad-knob").setMinWidth(30);shadeSkin.getDrawable("touchpad-knob").setMinHeight(30);
 
 
 
@@ -358,12 +358,14 @@ public class UiHandler {
         bottomTable.add(roundLabel).growX().left().pad(4);bottomTable.add(waveLabel).growX().right().pad(4);
 
         loadSlideMenus();//want to check slidemenu touches before
+
+        float size = shadeSkin.getDrawable("touchpad").getMinWidth()/2;
         movPad = new AppearOnTouchPad(0,camWidth/2, 12, shadeSkin,false);
-        movPad.setColor(1,1,1,0.25f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);
+        movPad.setColor(1,1,1,0.25f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);movPad.setSize(size,size);
         rootTable.addActor(movPad);
 
-        aimPad = new AppearOnTouchPad(camWidth/2,camWidth,15, shadeSkin,true);
-        aimPad.setColor(1,1,1,0.25f);aimPad.setPosition(camWidth,camHeight);aimPad.setVisible(false);
+        aimPad = new AppearOnTouchPad(camWidth/2,camWidth,10, shadeSkin,true);
+        aimPad.setColor(1,1,1,0.25f);aimPad.setPosition(camWidth,camHeight);aimPad.setVisible(false);aimPad.setSize(size,size);
         rootTable.addActor(aimPad);
     }
 
