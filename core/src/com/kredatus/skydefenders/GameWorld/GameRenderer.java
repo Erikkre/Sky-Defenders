@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.kredatus.skydefenders.Birds.BirdAbstractClass;
-import com.kredatus.skydefenders.SkyDefendersMain;
 import com.kredatus.skydefenders.GameObjects.Airship;
 import com.kredatus.skydefenders.GameObjects.Background;
 import com.kredatus.skydefenders.GameObjects.Projectile;
@@ -25,13 +24,13 @@ import com.kredatus.skydefenders.GameObjects.Resources.MovingImageContainer;
 import com.kredatus.skydefenders.GameObjects.TinyBird;
 import com.kredatus.skydefenders.Handlers.BgHandler;
 import com.kredatus.skydefenders.Handlers.BirdHandler;
-import com.kredatus.skydefenders.Handlers.InputHandler;
 import com.kredatus.skydefenders.Handlers.LightHandler;
 import com.kredatus.skydefenders.Handlers.TargetHandler;
 import com.kredatus.skydefenders.Handlers.TinyBirdHandler;
 import com.kredatus.skydefenders.Handlers.UiHandler;
 import com.kredatus.skydefenders.Helpers.CustomShapeRenderer;
 import com.kredatus.skydefenders.NonGameHandlerScreens.Loader;
+import com.kredatus.skydefenders.SkyDefendersMain;
 import com.kredatus.skydefenders.TweenAccessors.Value;
 import com.kredatus.skydefenders.ui.SimpleButton;
 
@@ -162,15 +161,6 @@ public class GameRenderer {
         //System.out.println(batcher.getBlendDstFunc()+" "+batcher.getBlendDstFuncAlpha()+" "+batcher.getBlendSrcFunc()+" "+batcher.getBlendSrcFuncAlpha()+" "+batcher.getPackedColor());
     }
 
-    public void assignButtonsUsingInputHandlerAndUiHandler(InputHandler inputHandler,UiHandler uiHandler){
-        this.menuButtons = inputHandler.getMenuButtons();
-        this.deathButtons = inputHandler.getDeathButtons();
-
-        this.readyButton = inputHandler.getReadyButton();
-        this.menuButton = inputHandler.getMenuButton();
-        this.nextButton =  inputHandler.getNextButton();
-        this.uiHandler=uiHandler;
-    }
     /*private void survivalBgTweens() {
         Tween.registerAccessor(Value.class, new ValueAccessor());
         manager = new TweenManager();

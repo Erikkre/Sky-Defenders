@@ -20,7 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.kotcrab.vis.ui.VisUI;
@@ -81,9 +80,37 @@ public class UiHandler {
     public String armorPrice,ammoPrice,fuelPrice,healthPrice,diamondPrice,goldPrice,//1 diamond
             armorPerTap,ammoPerTap,fuelPerTap,healthPerTap,diamondPerTap,goldPerTap;
     public static double lastResourceGatherTime;public static int resourceGatherStreak;
+    public static boolean justSet=false;
     public  boolean anyUITouched() {
+
+        //System.out.println(slideMenuLeft.getY()+", "+ptrY(0));
+        //System.out.println( slideMenuBottom.originEdge.equals("down") +", "+ (ptrX(0)>slideMenuBottom.getX()) +", "+ (ptrX(0)<slideMenuBottom.getX()+slideMenuBottom.getWidth()) +", "+ (ptrY(0)>0) +", "+ (ptrY(0)<slideMenuBottom.getHeight()));
+
         for (Actor i : stage.getActors()){
-            if (i instanceof SlideMenu)      {if (((SlideMenu) i).isTouched){ return true;}}
+            if (i instanceof SlideMenu)      {if ( ((SlideMenu) i).isTouched ||
+                (Gdx.input.isTouched(0)&&
+
+                    (
+                            ( ((SlideMenu) i).originEdge.equals("down") && ptrX(0)>i.getX()  && ptrX(0)<i.getX()+i.getWidth() && ptrY(0)>0 && ptrY(0)<i.getHeight())
+                        ||
+                                    ( ((SlideMenu) i).originEdge.equals("left") && ptrX(0)<i.getWidth() && ptrX(0)>0 && ptrY(0)>i.getY() && ptrY(0)<i.getY()+i.getHeight())
+                    )
+
+                )||(
+
+                Gdx.input.isTouched(1)&&
+
+                    (
+                    ( ((SlideMenu) i).originEdge.equals("left") && ptrX(1)<i.getWidth() && ptrX(1)>0 && ptrY(1)>i.getY() && ptrY(1)<i.getY()+i.getHeight())
+                    ||
+                    ( ((SlideMenu) i).originEdge.equals("down") && ptrX(1)>i.getX() - i.getWidth()/2 && ptrX(1)<i.getX()+i.getWidth() && ptrY(1)>0 && ptrY(1)<i.getHeight())
+                    )
+
+                )
+
+            ) {System.out.println(true);return true;
+                }
+            }
         }
         if (rootTable!=null){
             for (Actor i : rootTable.getChildren()){//check if rootTable is removed when stage.clear is called
@@ -92,6 +119,19 @@ public class UiHandler {
             }
         }
         return false;
+    }
+
+    public float ptrX(int ptr){
+        return InputHandler.scaleX(Gdx.input.getX(ptr));
+    }
+    public float ptrY(int ptr){
+        return InputHandler.scaleY(Gdx.input.getY(ptr));
+    }
+    public float scrnPtrX(int ptr){
+        return Gdx.input.getX(ptr);
+    }
+    public float scrnPtrY(int ptr){
+        return Gdx.input.getY(ptr);
     }
 
     public int rankSize;public Color rankColor;
@@ -137,13 +177,13 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        //stage.setDebugAll(true);
+        stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
         stage.addActor(rootTable);
 
-        loadSurvivalStage();
+
     }
     public void fadeAwayNumberEffect(Vector2 pos,int val,int randomizedMoveDistance,float scale,float time){
         Label effect=new Label("", shadeSkin,"title-plain");
@@ -308,16 +348,7 @@ public class UiHandler {
         table1.add(t3).padLeft(3);
         /******************************************************************************************/
 
-
         shadeSkin.getDrawable("touchpad-knob").setMinWidth(50);shadeSkin.getDrawable("touchpad-knob").setMinHeight(50);
-
-        movPad = new AppearOnTouchPad(0,camWidth/2, 12, shadeSkin,false);
-        movPad.setColor(1,1,1,0.25f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);
-        rootTable.addActor(movPad);
-
-        aimPad = new AppearOnTouchPad(camWidth/2,camWidth,15, shadeSkin,true);
-        aimPad.setColor(1,1,1,0.25f);aimPad.setPosition(camWidth,camHeight);aimPad.setVisible(false);
-        rootTable.addActor(aimPad);
 
 
 
@@ -326,7 +357,14 @@ public class UiHandler {
         roundLabel.setAlignment(Align.left);waveLabel.setAlignment(Align.right);
         bottomTable.add(roundLabel).growX().left().pad(4);bottomTable.add(waveLabel).growX().right().pad(4);
 
-        loadSlideMenus();
+        loadSlideMenus();//want to check slidemenu touches before
+        movPad = new AppearOnTouchPad(0,camWidth/2, 12, shadeSkin,false);
+        movPad.setColor(1,1,1,0.25f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);
+        rootTable.addActor(movPad);
+
+        aimPad = new AppearOnTouchPad(camWidth/2,camWidth,15, shadeSkin,true);
+        aimPad.setColor(1,1,1,0.25f);aimPad.setPosition(camWidth,camHeight);aimPad.setVisible(false);
+        rootTable.addActor(aimPad);
     }
 
     public void loadSlideMenus(){
@@ -341,12 +379,13 @@ public class UiHandler {
 
 
         /**      ****************************************LEFT SLIDING MENU*****************************************      **/
-        slideMenuLeft = new SlideMenu(camWidth/6f,camHeight/2.2f,"left",camWidth,camHeight,camHeight/35);//left or up
+        slideMenuLeft = new SlideMenu(camWidth/6.1f,camHeight/2.2f,"left",camWidth,camHeight,camHeight/35);//left or up
+        stage.addActor(slideMenuLeft);
         slideMenuLeft.setColor(1,1,1,0.7f);
-        final Table leftTable=new Table();leftTable.setSize(camWidth/6f,camHeight/2f);//leftTable.setWidth(camWidth/7f);
+        final Table leftTable=new Table();leftTable.setSize(camWidth/6.1f,camHeight/2f);//leftTable.setWidth(camWidth/7f);
         final ScrollPane scrollPane=new ScrollPane(leftTable,shadeSkin,"android");//scrollPane.setWidth(camWidth/7f);
         scrollPane.setFillParent(true);scrollPane.setFadeScrollBars(true);scrollPane.setScrollBarPositions(false,false);scrollPane.setScrollingDisabled(true,false);
-        slideMenuLeft.add(scrollPane).grow().pad(-10).center();//.width(camWidth/7f);
+        slideMenuLeft.add(scrollPane).grow().padLeft(-7).center();//.width(camWidth/7f);
         //scrollPane.layout();scrollPane.layout();
         //Sprite temp=new Sprite(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));
         //temp.setColor(new Color(0,0,0,0.5f));
@@ -527,7 +566,8 @@ public class UiHandler {
 
         /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
         slideMenuBottom = new SlideMenu(.7f*camWidth/2.75f,camHeight/7f,"down",camWidth,camHeight, 0);
-        rootTable.addActor(slideMenuBottom);
+        stage.addActor(slideMenuBottom);
+        slideMenuBottom.setColor(1,1,1,0.7f);
         //final Image image_backgroundY = new Image(new SpriteDrawable(temp));
         menuButtonY = new Image(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
         menuButtonY.rotateBy(90);menuButtonY.setWidth(menuButtonY.getWidth()*0.4f);menuButtonY.setHeight(menuButtonY.getHeight()*0.9f);menuButtonY.setColor(1,1,1,0.5f);
@@ -539,20 +579,24 @@ public class UiHandler {
 
 
         slideMenuBottom.add(buyButton).grow().row();
-
-
         slideMenuBottom.add(menuButton).grow().row();
+        buyButton.setName("b");menuButton.setName("m");playButton.setName("p");
 
-        slideMenuBottom.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+        slideMenuBottom.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                Actor actor = event.getTarget();
+                System.out.println("bottom isTouched");
                 isTouched = true;
-                if (actor.equals(buyButton)) {
+                if (actor.getName()==null) {
+                    super.cancel();
+                } else if (actor.getName().equals("b")) {
                     world.survivalToBuyMenu();
-                } else if (actor.equals(menuButton))
+                } else if (actor.getName().equals("m")) {
                     world.survivalToMenu();
-                else if (actor.equals(playButton))
+                } else if (actor.getName().equals("p")) {
                     world.buyMenuToSurvival();
+                }
+                super.cancel();
             }
         });
         //slideMenuLeft.add().height(300f).row(); // empty space
@@ -639,9 +683,9 @@ public class UiHandler {
         }
     }
 
-    public void update(float delta){
-        if (boughtItemsList!=null){
-            for (MovingImageContainer i : boughtItemsList){
+    public void update(float delta) {
+        if (boughtItemsList!=null) {
+            for (MovingImageContainer i : boughtItemsList) {
                 i.update(delta, Airship.pos);
             }
         }
@@ -654,11 +698,11 @@ public class UiHandler {
         disableOrEnableResourceButtons(buyArmorButton,Integer.parseInt(armorPerTap),totalArmorNum,Airship.armorValues[Airship.armorLvl],null);
         disableOrEnableResourceButtons(buyHealthButton,Integer.parseInt(healthPerTap),totalHealthNum,Airship.healthValues[Airship.healthLvl],null);
 
-
-        ammoLabel.setText(Airship.ammo);fuelLabel.setText(Integer.toString((int)Airship.fuel));
-        if (anyUITouched())isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
+        ammoLabel.setText(Airship.ammo); fuelLabel.setText(Integer.toString((int)Airship.fuel));
+        if (anyUITouched()) isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
         else isTouched=false;
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
+        justSet=false;
     }
         /*if (!isTouched&&Gdx.input.justTouched()) {//if screen is touched and it is not ui
             if (!movPad.isTouched() && !movPad.isVisible() && InputHandler.scaleX(Gdx.input.getX()) < camWidth / 2) {

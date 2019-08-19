@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Pools;
 import com.kredatus.skydefenders.GameObjects.Airship;
@@ -55,44 +54,72 @@ public class AppearOnTouchPad extends Widget {
     public void act(float delta){
        //if (Gdx.input.justTouched()) System.out.println(ptr0X()+", "+GameHandler.camWidth/2);
         //if (this==UiHandler.movPad)System.out.println(!isVisible());
-        //System.out.println(isVisible());
-        if (Gdx.input.justTouched()&&!UiHandler.isTouched&&(!touched&&!thisTouchPad.isVisible())&&currentPtr==-1){
+        //System.out.println(Gdx.input.justTouched()+", "+!UiHandler.isTouched+", "+!touched+", "+!thisTouchPad.isVisible()+", "+ (currentPtr==-1));
+        if (Gdx.input.justTouched()&&!UiHandler.isTouched&&!thisTouchPad.isVisible()&&!UiHandler.justSet&&currentPtr==-1){//if unnasigned
+            //if theres only 1 tap and the other touchpad hasn't been given a pointer already and the tap is in the zone, this touchpad's currentptr is 0
+            if ( !Gdx.input.isTouched(1) && !((this==UiHandler.aimPad&&UiHandler.movPad.currentPtr!=-1)||(this==UiHandler.movPad&&UiHandler.aimPad.currentPtr!=-1))
+                    && ptrX(0)>leftTouchBound && ptrX(0)<rightTouchBound ){
+                if (this==UiHandler.aimPad) System.out.println("aimpad set to 0");
+                else System.out.println("movpad set to 0");
+                currentPtr=0;
 
-            if (this==UiHandler.movPad) {
-                if ((UiHandler.aimPad.currentPtr==1||UiHandler.aimPad.currentPtr==-1)&&Gdx.input.isTouched(0)&&(ptr0X()>leftTouchBound&& ptr0X()<rightTouchBound)) {
-                    System.out.println("movpad ptr=0");currentPtr=0;screenPos.set(Gdx.input.getX(0), Gdx.input.getY(0));
-                } else if ((UiHandler.aimPad.currentPtr==0||UiHandler.aimPad.currentPtr==-1)&&Gdx.input.isTouched(1)&&(ptr1X()>leftTouchBound&& ptr1X()<rightTouchBound)){
-                    System.out.println("movpad ptr=1");currentPtr=1;screenPos.set(Gdx.input.getX(1), Gdx.input.getY(1));
-                }
-            } else if (this==UiHandler.aimPad) {
-                if ((UiHandler.movPad.currentPtr==1||UiHandler.movPad.currentPtr==-1)&&Gdx.input.isTouched(0)&&(ptr0X()>leftTouchBound&& ptr0X()<rightTouchBound)) {
-                    System.out.println("aimPad ptr=0");currentPtr=0;screenPos.set(Gdx.input.getX(0), Gdx.input.getY(0));
-                } else if ((UiHandler.movPad.currentPtr==0||UiHandler.movPad.currentPtr==-1)&&Gdx.input.isTouched(1)&&(ptr1X()>leftTouchBound&& ptr1X()<rightTouchBound)){
-                    System.out.println("aimPad ptr=1");currentPtr=1;screenPos.set(Gdx.input.getX(1), Gdx.input.getY(1));
-                }
-            }
-            if (thisTouchPad==UiHandler.aimPad)System.out.println("Should be a ptr= right above this");
+            } else if (!Gdx.input.isTouched(2) && Gdx.input.isTouched(1) && ptrX(1)>leftTouchBound && ptrX(1)<rightTouchBound ) {
+                if (this==UiHandler.aimPad) System.out.println("aimpad set to 1");
+                else System.out.println("movpad set to 1");
+                currentPtr=1;
+            }//if second finger tapped and in it's zone, this touchpad's currentptr is 1
+
+            if (thisTouchPad==UiHandler.aimPad)System.out.println("Should be a set to right above this, aimpad currentptr= "+currentPtr);
+            else System.out.println("Should be a set to right above this, movpad currentptr= "+currentPtr);
 
             // Convert the touch point into local coordinates, place the touchpad and show it.
             if (currentPtr!=-1) {
+                screenPos.set(scrnCurPtrX(),scrnCurPtrY());
                 localPos.set(screenPos);
                 localPos = this.getParent().screenToLocalCoordinates(localPos);
                 this.setPosition(localPos.x - this.getWidth() / 2, localPos.y - this.getHeight() / 2);
-                //System.out.println("setposition");
-                // Fire a touch down event to get the touchpad working.
-                Vector2 stagePos = this.getStage().screenToStageCoordinates(screenPos);
-                fakeTouchDownEvent.setStageX(stagePos.x);
-                fakeTouchDownEvent.setStageY(stagePos.y);
-                this.fire(fakeTouchDownEvent);
+                thisTouchPad.setVisible(true);
+                System.out.println("set visible");
+
+                if (!rotationTouchpad) {
+                    touched = true;
+                }
+                UiHandler.justSet=true;
             }
-        } else if (isVisible()&&!isTouched()&&Airship.turretList.size()>0) { //only for rotationTouchpad
+        } else if (currentPtr!=-1) {
+
+            if (rotationTouchpad && isVisible() && !isTouched() && Airship.turretList.size() > 0) { //only for rotationTouchpad
+
                 //System.out.println(getY()+", "+ GameHandler.camHeight+", "+this.getStage().screenToStageCoordinates(new Vector2(getX(),0)).x+", "+GameHandler.camWidth);
-            System.out.println("********************************************************************");
-            calculatePositionAndValue(
-                    knobBounds.x  -(float)Math.cos(Math.toRadians(Airship.turretList.get(0).targetRot))*100,
-                    knobBounds.y  -(float)Math.sin(Math.toRadians(Airship.turretList.get(0).targetRot))*100,
+                System.out.println("********************************************************************");
+                calculatePositionAndValue(
+                        knobBounds.x - (float) Math.cos(Math.toRadians(Airship.turretList.get(0).targetRot)) * 100,
+                        knobBounds.y - (float) Math.sin(Math.toRadians(Airship.turretList.get(0).targetRot)) * 100,
                         false);
+
+                Vector2 screenPos=new Vector2(scrnCurPtrX(), scrnCurPtrY());
+                if (!deadzoneBounds.contains(screenToLocalCoordinates(screenPos))){
+                    System.out.println("moved out of deadzonebounds, touched=true");touched=true;}//lets aimpad aim once finger moves out of deadzone, otherwise let it follow Airship.turretList.get(0).targetRot
+
+            } else if (!Gdx.input.isTouched(currentPtr)) {
+                if (thisTouchPad==UiHandler.aimPad){System.out.println("touchUp for aimpad, currentptr:"+currentPtr);}
+                else System.out.println("touchUp for movpad, currentptr:"+currentPtr);
+
+                touched = false;
+                currentPtr = -1;
+                setPosition(GameHandler.camWidth, GameHandler.camHeight);
+                thisTouchPad.setVisible(false);
+            } else if (touched) {
+                if (thisTouchPad==UiHandler.aimPad){System.out.println("touchCalc for aimpad, currentptr:"+currentPtr);}
+                else System.out.println("touchCalc for movpad, currentptr:"+currentPtr);
+
+                //if (thisTouchPad==UiHandler.aimPad)System.out.println("calculate aimpad pos");
+                localPos.set(screenToLocalCoordinates(new Vector2(scrnCurPtrX(),scrnCurPtrY())));
+                //System.out.println(localPos);
+                calculatePositionAndValue(localPos.x,localPos.y,false);
+            }
         }
+
     }
 
     public AppearOnTouchPad(float leftTouchBound, float rightTouchBound, float deadzoneRadius, com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle style, final boolean rotationTouchpad) {
@@ -117,64 +144,25 @@ public class AppearOnTouchPad extends Widget {
             this.knobPosition.set(this.getWidth() / 2.0F, this.getHeight() / 2.0F);
             this.setStyle(style);
             this.setSize(this.getPrefWidth(), this.getPrefHeight());
-
-            this.addListener(new ClickListener() {
-                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    if (thisTouchPad==UiHandler.aimPad){System.out.println("touchDown for aimpad, currentptr:"+currentPtr+", eventpointer:"+pointer);}
-                    else System.out.println("touchDown for movpad, currentptr:"+currentPtr+", eventpointer:"+pointer);
-                        if (touched||pointer!=currentPtr) {
-                            return false;
-                        } else {
-                            thisTouchPad.setVisible(true);
-                            System.out.println("set visible");
-                            if (!rotationTouchpad) {
-                                touched = true;
-                                calculatePositionAndValue(x, y, false);
-                            }
-                            return true;
-                        }
-                }
-
-                public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                    //System.out.println("touchDrag");
-                    if (thisTouchPad==UiHandler.aimPad){System.out.println("touchdrag for aimpad, currentptr:"+currentPtr+", eventPointer:"+pointer);}
-                    else System.out.println("touchdrag for movpad, currentptr:"+currentPtr+", eventPointer:"+pointer);
-
-                    if (!touched&&!deadzoneBounds.contains(x,y))touched=true;//lets aimpad aim once finger moves out of deadzone, otherwise let it follow Airship.turretList.get(0).targetRot
-                    if (currentPtr==pointer&&touched) {
-
-                        //if (thisTouchPad==UiHandler.aimPad)System.out.println("calculate aimpad pos");
-                        calculatePositionAndValue(x, y, false);
-                    }
-                }
-
-                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                    if (thisTouchPad==UiHandler.aimPad){System.out.println("touchup for aimpad, currentptr:"+currentPtr+", eventPointer:"+pointer);}
-                    else System.out.println("touchup for movpad, currentptr:"+currentPtr+", eventPointer:"+pointer);
-
-                        if (pointer==currentPtr) {
-                            touched = false;
-                            currentPtr = -1;
-                            setPosition(GameHandler.camWidth, GameHandler.camHeight);
-                            thisTouchPad.setVisible(false);
-                        }
-                }
-            });
         }
     }
 
-    public float ptr1X(){
-        return InputHandler.scaleX(Gdx.input.getX(1));
+    public float ptrX(int ptr){
+        return InputHandler.scaleX(Gdx.input.getX(ptr));
     }
-    public float ptr0X(){
-        return InputHandler.scaleX(Gdx.input.getX(0));
+    public float ptrY(int ptr){
+        return InputHandler.scaleY(Gdx.input.getY(ptr));
     }
-    private float inputY() {
-        return InputHandler.scaleY(Gdx.input.getY());
+    public float scrnCurPtrX(){
+        return Gdx.input.getX(currentPtr);
+    }
+    public float scrnCurPtrY(){
+        return Gdx.input.getY(currentPtr);
     }
 
+
     public void calculatePositionAndValue(float x, float y, boolean isTouchUp) {
-        System.out.println(knobPercent);
+        //System.out.println(knobPercent);
         //System.out.println("calculate new pos");
         //System.out.println("knobPercent.x: "+knobPercent.x+", knobPercent.y: "+knobPercent.y);
         float oldPositionX = this.knobPosition.x;

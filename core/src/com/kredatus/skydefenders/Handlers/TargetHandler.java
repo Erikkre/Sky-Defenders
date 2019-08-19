@@ -168,8 +168,8 @@ public class TargetHandler {
         }
     }
     public void chooseWhichBirdHitToPlay(BirdAbstractClass b, boolean death){
-        float v=0.15f;float p;
-        if (!death)p=0.9f+r.nextFloat()*0.2f;else p=1.4f+r.nextFloat()*0.1f;
+        float v=0.12f;float p;
+        if (!death)p=0.9f+r.nextFloat()*0.2f;else p=1.2f+r.nextFloat()*0.3f;
         if (b instanceof ThunderBird) thunderBirdDeath.play(v,p,1);
         else if (b instanceof FireBird) fireBirdDeath.play(v,p,1);
         else if (b instanceof WaterBird) waterBirdDeath.play(v,p,1);

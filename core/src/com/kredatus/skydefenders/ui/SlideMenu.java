@@ -14,12 +14,12 @@ import com.kredatus.skydefenders.Handlers.InputHandler;
 public class SlideMenu extends Table {
 
     // only visual window and using scissor to avoid GPU to draw out of left-edge screen.
-    private float areaWidth;
-    private float areaHeight;
-    private String originEdge;
+    public float areaWidth;
+    public float areaHeight;
+    public String originEdge;
     private float camWidth, camHeight;
-    private final Rectangle areaBounds = new Rectangle();
-    private final Rectangle scissorBounds = new Rectangle();
+    public final Rectangle areaBounds = new Rectangle();
+    public final Rectangle scissorBounds = new Rectangle();
 
     // it's revealed with (widthStart = 60F;) when the user swipes a finger from the left edge of the screen with start touch.
     private float widthStart = 15f;
@@ -40,7 +40,7 @@ public class SlideMenu extends Table {
     private boolean auto = false;
     private boolean enableDrag = true;
 
-    private float offsetFromCenter;
+    public float offsetFromCenter;
     public SlideMenu(float width, float height, String originEdge, float camWidth, float camHeight, float offsetFromCenter) {
         this.offsetFromCenter=offsetFromCenter;
         this.areaWidth = width;
@@ -96,6 +96,7 @@ public class SlideMenu extends Table {
             if (!auto && isTouched() && ( (isCompletelyClosedY() && inputY() < this.getHeight()/1.5f) || (!isCompletelyClosedY()&&inputY() < this.getHeight()*1.5f) )
                     && inputX() > stgXToScrX(menuButton.getX())-menuButton.getHeight()/4 && inputX() < stgXToScrX(menuButton.getX())+5*menuButton.getHeight()/4 ){
                     //&& !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
+
                 if (!isTouched) isTouched=true;
                 //if closed, in zone and swiping down
                 if (isCompletelyClosedY()&&Gdx.input.getDeltaY()<-3) showManually(true);// open = false, close = true;

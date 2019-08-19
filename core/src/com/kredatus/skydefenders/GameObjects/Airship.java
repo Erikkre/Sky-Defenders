@@ -14,8 +14,6 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.kredatus.skydefenders.CustomLights.CustomPointLight;
-import com.kredatus.skydefenders.SkyDefendersMain;
-import com.kredatus.skydefenders.GameWorld.GameWorld;
 import com.kredatus.skydefenders.Handlers.BgHandler;
 import com.kredatus.skydefenders.Handlers.BirdHandler;
 import com.kredatus.skydefenders.Handlers.InputHandler;
@@ -23,6 +21,7 @@ import com.kredatus.skydefenders.Handlers.LightHandler;
 import com.kredatus.skydefenders.Handlers.TargetHandler;
 import com.kredatus.skydefenders.Handlers.UiHandler;
 import com.kredatus.skydefenders.NonGameHandlerScreens.Loader;
+import com.kredatus.skydefenders.SkyDefendersMain;
 import com.kredatus.skydefenders.TweenAccessors.Value;
 
 import java.util.ArrayList;
@@ -195,9 +194,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
     int birdStartType;
     Preferences prefs = Gdx.app.getPreferences("skyDefenders");
-    BirdHandler birdHandler;TargetHandler targetHandler;LightHandler lightHandler;
-    public Airship(GameWorld world, int camWidth, int camHeight, int birdStartType, BirdHandler birdHandler, TargetHandler targetHandler, LightHandler lightHandler) {
-
+    BirdHandler birdHandler;TargetHandler targetHandler;LightHandler lightHandler;UiHandler uiHandler;
+    public Airship(UiHandler uiHandler, int camWidth, int camHeight, int birdStartType, BirdHandler birdHandler, TargetHandler targetHandler, LightHandler lightHandler) {
+        this.uiHandler=uiHandler;
         this.lightHandler=lightHandler;
         this.birdStartType=birdStartType;
         this.targetHandler=targetHandler;
@@ -493,18 +492,18 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //fingerAirshipYDiff = 0;
 
         //System.out.println(UiHandler.movPad.getKnobPercentX());
-        if (UiHandler.movPad.getKnobPercentX() * 5 < -1.5) {
+        if (uiHandler.movPad.getKnobPercentX() * 5 < -1.5) {
             fireThruster(2);
             //System.out.println("Thrust Right");
-        } else if (UiHandler.movPad.getKnobPercentX() * 5 > 1.5) {
+        } else if (uiHandler.movPad.getKnobPercentX() * 5 > 1.5) {
             fireThruster(1);
                     // System.out.println("Thrust Left");
         }
 
-        if (isOnCam(inputX + UiHandler.movPad.getKnobPercentX() * 5f, "x") || isOnCam(inputX + UiHandler.movPad.getKnobPercentX() * 150f, "x"))
-            inputX += UiHandler.movPad.getKnobPercentX() * 4f * speed / 50f;
-        if (isOnCam(inputY + UiHandler.movPad.getKnobPercentY() * 5f, "y") || isOnCam(inputY + UiHandler.movPad.getKnobPercentY() * 150f, "y"))
-            inputY += UiHandler.movPad.getKnobPercentY() * 4f * speed / 50f;
+        if (isOnCam(inputX + uiHandler.movPad.getKnobPercentX() * 5f, "x") || isOnCam(inputX + uiHandler.movPad.getKnobPercentX() * 150f, "x"))
+            inputX += uiHandler.movPad.getKnobPercentX() * 4f * speed / 50f;
+        if (isOnCam(inputY + uiHandler.movPad.getKnobPercentY() * 5f, "y") || isOnCam(inputY + uiHandler.movPad.getKnobPercentY() * 150f, "y"))
+            inputY += uiHandler.movPad.getKnobPercentY() * 4f * speed / 50f;
 
             /*} else {
                 ptr0X = InputHandler.scaleX(Gdx.input.getX(airshipTouchPointer)) - fingerAirshipXDiff;//input with finger touch difference
@@ -541,7 +540,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         movtween = Tween.to(pos, 0, timeToTweenTarget).target(inputX, inputY).ease(TweenEquations.easeOutQuint).setCallback(endOfMovement).start();
 
-                /*if (!UiHandler.movPad.isTouched()) {
+                /*if (!uiHandler.movPad.isTouched()) {
                     if (Math.abs((pos.x - ptr0X) / 10f)<30) rotationTween = Tween.to(rotation, 0, 1.5f).waypoint((pos.x - ptr0X) / 10f).target(0).ease(TweenEquations.easeOutCirc).start();
                     else if (pos.x-ptr0X>0) rotationTween = Tween.to(rotation, 0, 1.5f).waypoint(30).target(0).ease(TweenEquations.easeOutCirc).start();
                     else rotationTween = Tween.to(rotation, 0, 1.5f).waypoint(-30).target(0).ease(TweenEquations.easeOutCirc).start();
@@ -642,7 +641,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         //System.out.println("Was "+firstEmittersOfEachEffect.get(i).getTint().getColors()[0]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[1]+", "+firstEmittersOfEachEffect.get(i).getTint().getColors()[2]);
     }
 
-    public void loseFuel(float rate){if (fuel>0) {fuel-=rate;UiHandler.totalFuelNum-=rate;if (fuel<0.51f)UiHandler.fuelLabel.setColor(Color.RED);}}
+    public void loseFuel(float rate){if (fuel>0) {fuel-=rate;uiHandler.totalFuelNum-=rate;if (fuel<0.51f)uiHandler.fuelLabel.setColor(Color.RED);}}
     public void fireThruster(int i){
         loseFuel(0.1f);
         firstEmittersOfEachEffect.get(i).allowCompletion();
@@ -797,7 +796,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
 
         //System.out.println("isMovingRightAndSlowing: "+isMovingRightAndSlowing+", velX: "+vel.x);
-        if (fuel>=1 && UiHandler.movPad.isTouched()) setDestAirship();
+        if (fuel>=1 && uiHandler.movPad.isTouched()) setDestAirship();
         //System.out.print(pos.toString());
 
         //System.out.print(BgHandler.isbgVertFast);
@@ -903,20 +902,20 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         }
     }
     public void drawReticle(SpriteBatch batcher) {
-        if (turretList.size() > 0 && !UiHandler.aimPad.isTouched()&&!birdHandler.activeBirdQueue.isEmpty()) {
+        if (turretList.size() > 0 && !uiHandler.aimPad.isTouched()&&!birdHandler.activeBirdQueue.isEmpty()) {
             if (BgHandler.changingBalloonBrightness) batcher.setColor(airShipCloudTint[0] / 255f, airShipCloudTint[1] / 255f, airShipCloudTint[2] / 255f, 1);
             else batcher.setColor(airshipTint[0] / 255f, airshipTint[1] / 255f, airshipTint[2] / 255f, 1);
             //System.out.println("Turretlist size: " + turretList.size());
             Turret turretAimer = turretList.get(0);
             /*if (turretAimer.gunTargetPointer != -1&&!pointerOnAirship(turretAimer.gunTargetPointer)&&!turretAimer.stopTheFiringUpdateMethod) {    //if using finger to aim
-                UiHandler.aimPad.calculatePositionAndValue(UiHandler.aimPad.getX()+(turretAimer.lastFingerPosition.x-pos.x)*10,UiHandler.aimPad.getY()+(turretAimer.lastFingerPosition.y-pos.y)*10,false);
+                uiHandler.aimPad.calculatePositionAndValue(uiHandler.aimPad.getX()+(turretAimer.lastFingerPosition.x-pos.x)*10,uiHandler.aimPad.getY()+(turretAimer.lastFingerPosition.y-pos.y)*10,false);
 
                 batcher.draw(reticleTexture, turretAimer.lastFingerPosition.x - reticleTexture.getRegionWidth() / 3f,
                         turretAimer.lastFingerPosition.y - reticleTexture.getRegionWidth() / 3f,
                         reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 3f, reticleTexture.getRegionWidth() / 1.5f, reticleTexture.getRegionHeight() / 1.5f,reticleSize.get(),reticleSize.get(),reticleRotation--);
 
             } else*/ if (turretAimer.targetBird!=null&&turretAimer.targetBird.isAlive) {                                                          //if ai is engaged
-                //if (!UiHandler.aimPad.isTouched()) UiHandler.aimPad.calculatePositionAndValue(UiHandler.aimPad.getX()+(turretAimer.targetBird.x-pos.x)*10,UiHandler.aimPad.getY()+(turretAimer.targetBird.y-pos.y)*10,false);
+                //if (!uiHandler.aimPad.isTouched()) uiHandler.aimPad.calculatePositionAndValue(uiHandler.aimPad.getX()+(turretAimer.targetBird.x-pos.x)*10,uiHandler.aimPad.getY()+(turretAimer.targetBird.y-pos.y)*10,false);
 
                 batcher.draw(reticleTexture, turretAimer.targetBird.x - turretAimer.targetBird.width / 3f, turretAimer.targetBird.y - turretAimer.targetBird.width / 3f,
                         turretAimer.targetBird.width/3f, turretAimer.targetBird.width/3f, turretAimer.targetBird.width/1.5f, turretAimer.targetBird.width/1.5f,reticleSize.get(),reticleSize.get(), reticleRotation--);
@@ -934,7 +933,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
     }
 
     public void draw(SpriteBatch batcher, float delta) {
-        if (UiHandler.aimPad.isVisible()){
+        if (uiHandler.aimPad.isVisible()){
             aimLineOpacity.set(0.4f);
             aimLineFadeout = Tween.to(aimLineOpacity,1,2).target(0).ease(TweenEquations.easeOutSine).start();
 
@@ -954,7 +953,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
         batcher.setColor(Color.WHITE);
 
 
-        if (!movtween.isFinished() && !UiHandler.movPad.isTouched()) {
+        if (!movtween.isFinished() && !uiHandler.movPad.isTouched()) {
             Color l=dragCircleLight.getColor();
             dragCircleLight.setColor(l.r, l.g, l.b, dragLineOpacity.get());
             if (dragLineOpacity.get()>0) {

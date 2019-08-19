@@ -198,7 +198,7 @@ public class InputHandler implements InputProcessor {
     }
 
     public static float scaleY(float screenY) {
-        return  -((screenY / scaleFactorY)- GameHandler.camHeight);
+        return  -((screenY / scaleFactorY) - GameHandler.camHeight);
     }
 
     public List<SimpleButton> getMenuButtons() {

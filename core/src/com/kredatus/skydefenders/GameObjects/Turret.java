@@ -214,7 +214,7 @@ public class Turret {
             }
             firing = true;
         } catch (IllegalStateException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             //timer=new Timer();
         }
     }
@@ -299,7 +299,7 @@ public class Turret {
                 }
             }
             */
-            if (UiHandler.aimPad.isTouched() ) {//|| (gunTargetPointer >= 0 && Gdx.input.isTouched(gunTargetPointer) && !airship.pointerOnAirship(gunTargetPointer))) {
+            if (((SkyDefendersMain)Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.aimPad.isTouched() ) {//|| (gunTargetPointer >= 0 && Gdx.input.isTouched(gunTargetPointer) && !airship.pointerOnAirship(gunTargetPointer))) {
                 if (projRotates) {
                     if (firingInterval - (System.currentTimeMillis() - lastShotTime) < preThrowActionDur) {//if half a second before throw time
                         if (!preThrowSpin) {
@@ -330,7 +330,7 @@ public class Turret {
                     lastFingerPosition.set(InputHandler.scaleX(Gdx.input.getX(gunTargetPointer)), -(InputHandler.scaleY(Gdx.input.getY(gunTargetPointer)) - camHeight));
                     setRotation(0, 0, lastFingerPosition.y - pos.y, lastFingerPosition.x - pos.x, false);
                 } else*/
-                setRotation(0, 0, UiHandler.aimPad.getKnobPercentY(), UiHandler.aimPad.getKnobPercentX(), true);
+                setRotation(0, 0, ((SkyDefendersMain)Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.aimPad.getKnobPercentY(), ((SkyDefendersMain)Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.aimPad.getKnobPercentX(), true);
 
                 if (!preThrowSpin) rotateToTarget();
 

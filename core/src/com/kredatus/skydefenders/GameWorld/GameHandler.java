@@ -2,10 +2,10 @@
 package com.kredatus.skydefenders.GameWorld;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.kredatus.skydefenders.SkyDefendersMain;
 import com.kredatus.skydefenders.GameObjects.Airship;
 import com.kredatus.skydefenders.GameObjects.Turret;
 import com.kredatus.skydefenders.Handlers.BgHandler;
@@ -15,6 +15,7 @@ import com.kredatus.skydefenders.Handlers.LightHandler;
 import com.kredatus.skydefenders.Handlers.TargetHandler;
 import com.kredatus.skydefenders.Handlers.TinyBirdHandler;
 import com.kredatus.skydefenders.Handlers.UiHandler;
+import com.kredatus.skydefenders.SkyDefendersMain;
 
 /**
  * Created by Mr. Kredatus on 8/5/2017.
@@ -36,7 +37,7 @@ public class GameHandler implements Screen {
     public int waveNumber = SkyDefendersMain.waveNumber;
     public Airship airship;
     //private Actor menuButtonActor;
-    public float screenWidth, screenHeight;
+    public static float screenWidth, screenHeight;
     public static int camWidth, camHeight;
     public Preferences prefs=Gdx.app.getPreferences("skyDefenders");
     public GameHandler(Skin shadeSkin, int camWidth, int camHeight) {
@@ -56,27 +57,28 @@ public class GameHandler implements Screen {
         //bgHandler.survivalBgTweens(tinyBirdHandler,lightHandler);
         targetHandler = new TargetHandler(birdHandler);
 
-
-        airship=new Airship(world,camWidth, camHeight, waveNumber, birdHandler,targetHandler,lightHandler);
         uiHandler=new UiHandler(world, camWidth, camHeight, shadeSkin);
+        airship=new Airship(uiHandler,camWidth, camHeight, waveNumber, birdHandler,targetHandler,lightHandler);
+
 
         birdHandler.setAirshipPos(airship);
         targetHandler.setAirship(airship);
 
+        uiHandler.loadSurvivalStage();
         world.startToSurvival(tinyBirdHandler,lightHandler,airship,bgHandler);
+
         renderer = new GameRenderer(world,lightHandler,tinyBirdHandler,birdHandler,bgHandler,targetHandler,uiHandler,airship, camWidth, camHeight);
         renderer.makeTransition(0, 0, 0, 1.7f);
 
         bgHandler.setRendererAndCam(renderer);
         lightHandler.setCam(renderer);
 
-
         world.initialize(bgHandler,birdHandler,targetHandler,tinyBirdHandler,uiHandler,lightHandler,renderer,airship);
 
-        InputHandler inputHandler=new InputHandler(world, screenWidth / camWidth, screenHeight / camHeight, camWidth, camHeight);
-
-        renderer.assignButtonsUsingInputHandlerAndUiHandler(inputHandler, uiHandler);
-        Gdx.input.setInputProcessor(((SkyDefendersMain)Gdx.app.getApplicationListener()).loader.stage);
+        InputMultiplexer im = new InputMultiplexer();
+        im.addProcessor(((SkyDefendersMain)Gdx.app.getApplicationListener()).loader.stage);
+        im.addProcessor(new InputHandler(world,screenWidth / camWidth,screenHeight / camHeight, camWidth, camHeight));
+        Gdx.input.setInputProcessor(im);
     }
 
     @Override
@@ -85,6 +87,7 @@ public class GameHandler implements Screen {
             runTime += delta;
             world.update(delta, runTime);
             renderer.render(delta, runTime);
+
             //Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
             //            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         }
