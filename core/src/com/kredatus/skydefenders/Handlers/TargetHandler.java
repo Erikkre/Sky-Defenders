@@ -96,7 +96,7 @@ public class TargetHandler {
                         ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.world.deathAndRestart();
                     } else {
                         //Gdx.input.vibrate(10);
-                        if (!GameWorld.soundMuted) balloonHit.play(0.55f,r.nextFloat()*0.6f+0.7f,1);
+                        if (!GameWorld.soundMuted) balloonHit.play(0.55f,r.nextFloat()*0.6f+0.7f,0);
                         airship.hit(bird.origHealth);
                         ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.renderer.makeTransition(150, 0, 0, 0.2f);
                         bird.hit(bird.origHealth+1);    //lol I hope bird health is below orig
@@ -170,13 +170,13 @@ public class TargetHandler {
     public void chooseWhichBirdHitToPlay(BirdAbstractClass b, boolean death){
         float v=0.12f;float p;
         if (!death)p=0.9f+r.nextFloat()*0.2f;else p=1.2f+r.nextFloat()*0.3f;
-        if (b instanceof ThunderBird) thunderBirdDeath.play(v,p,1);
-        else if (b instanceof FireBird) fireBirdDeath.play(v,p,1);
-        else if (b instanceof WaterBird) waterBirdDeath.play(v,p,1);
-        else if (b instanceof AcidBird) acidBirdDeath.play(v,p,1);
-        else if (b instanceof NightBird) nightBirdDeath.play(v,p,1);
-        else if (b instanceof LunarBird) lunarBirdDeath.play(v,p,1);
-        else if (b instanceof GoldBird) goldBirdDeath.play(v,p,1);
-        else if (b instanceof PhoenixBird) phoenixBirdDeath.play(v,p,1);
+        if (b instanceof ThunderBird) thunderBirdDeath.play(v,p,0);
+        else if (b instanceof FireBird) fireBirdDeath.play(v,p,0);
+        else if (b instanceof WaterBird) waterBirdDeath.play(v,p,0);
+        else if (b instanceof AcidBird) acidBirdDeath.play(v,p,0);
+        else if (b instanceof NightBird) nightBirdDeath.play(v,p,0);
+        else if (b instanceof LunarBird) lunarBirdDeath.play(v,p,0);
+        else if (b instanceof GoldBird) goldBirdDeath.play(v,p,0);
+        else if (b instanceof PhoenixBird) phoenixBirdDeath.play(v,p,0);
     }
 }
