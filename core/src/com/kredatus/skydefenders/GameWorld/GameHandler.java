@@ -95,6 +95,7 @@ public class GameHandler implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        Gdx.app.log("GameHandler", "resize called");
     }
 
     @Override
@@ -105,49 +106,8 @@ public class GameHandler implements Screen {
 
     @Override
     public void hide() {
-        Gdx.app.log("GameHandler", "hide called");
-        Gdx.app.log("GameHandler", "pause called");
-        if (!SkyDefendersMain.dontPauseOnUnfocus){
-            isPaused=true;
-
-            timeOfPause=System.currentTimeMillis();
-            for (Turret i : airship.turretList){
-                if (i.firing) {
-                    i.stopFiring();
-                    i.firingStoppedByGamePause = true;
-                    i.stopTheFiringUpdateMethod=true;
-                }
-            }
-
-            birdHandler.pause();
-            ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.stopMusic(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.menumusiclist);
-        }
-
-        prefs.putInteger("healthLvl",airship.healthLvl);
-        prefs.putInteger("armorLvl",airship.armorLvl);
-        prefs.putInteger("fuelLvl",airship.fuelLvl);
-        prefs.putInteger("ammoLvl",airship.ammoLvl);
-        prefs.putInteger("burnerLvl",airship.burnerLvl);
-        prefs.putInteger("rackLvl",airship.rackLvl);
-        prefs.putInteger("speedLvl",airship.speedLvl);
-
-        prefs.putInteger("health",airship.health);
-        prefs.putInteger("armor",airship.armor);
-        prefs.putInteger("fuel",(int)airship.fuel);
-        prefs.putInteger("ammo",airship.ammo);
-
-
-        prefs.putInteger("bgNumber",bgHandler.bgNumber);
-
-        prefs.putInteger("score",world.score);
-        prefs.putInteger("gold",world.gold);
-        prefs.putInteger("diamond",world.diamond);
-
-        prefs.putInteger("lvl", uiHandler.rank.lvl);
-        prefs.putInteger("exp",uiHandler.rank.expGained);
-
-        prefs.putInteger("round",world.round);
-        prefs.flush();
+        this.pause();
+        Gdx.app.log("GameHandler", "disregard \"pause called\", hide actually called");
     }
 
     @Override
@@ -193,13 +153,17 @@ public class GameHandler implements Screen {
         prefs.putInteger("exp",uiHandler.rank.expGained);
 
         prefs.putInteger("round",world.round);
+
+        prefs.putBoolean("soundMuted",world.soundMuted);
+        prefs.putBoolean("musicMuted",world.musicMuted);
+
         prefs.flush();
     }
 
     @Override
     public void resume() {
         Gdx.app.log("GameHandler", "resume called");
-        ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.startMusic(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.menumusiclist);
+        if (!world.musicMuted) ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.startMusic(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.menumusiclist);
         if (!SkyDefendersMain.dontPauseOnUnfocus) {
             isPaused = false;
 

@@ -142,7 +142,7 @@ public class MovingImageContainer {
                     UiHandler.goldLabel.setText(GameWorld.gold);
 
                     ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.goldSymbol.localToStageCoordinates(new Vector2(
-                            UiHandler.goldSymbol.getWidth()/4, UiHandler.goldSymbol.getHeight()/7)),1,35,1,1);
+                            UiHandler.goldSymbol.getWidth()/4, UiHandler.goldSymbol.getHeight()/7)),1,35,1,1,1,1);
 
                     //System.out.println(startPos);
                 } else if (type=='e') {
@@ -151,14 +151,14 @@ public class MovingImageContainer {
                     UiHandler.expLabel.setText(UiHandler.rank.expGained);
 
                     ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.expBar.localToStageCoordinates(new Vector2(
-                            UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.expBar.getHeight()/7)),1,35,1,1);
+                            UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.expBar.getHeight()/7)),1,35,1,1,1,1);
 
                 } else if (type=='d') {
                     GameWorld.diamond +=1;
                     UiHandler.diamondLabel.setText(GameWorld.diamond);
 
                     ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.diamondSymbol.localToStageCoordinates(new Vector2(
-                            UiHandler.diamondSymbol.getWidth()/4, UiHandler.diamondSymbol.getHeight()/7)),1,35,1,1);
+                            UiHandler.diamondSymbol.getWidth()/4, UiHandler.diamondSymbol.getHeight()/7)),1,35,1,1,1,1);
 
                 } else if (type=='f') {
                     if (Airship.fuel<1) UiHandler.fuelLabel.setColor(1,1,1,1);
@@ -166,7 +166,7 @@ public class MovingImageContainer {
                     UiHandler.fuelLabel.setText(Integer.toString((int)Airship.fuel));
 
                     ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.fuelSymbol.localToStageCoordinates(new Vector2(
-                            UiHandler.fuelSymbol.getWidth()/4, UiHandler.fuelSymbol.getHeight()/7)),1,35,1,1);
+                            UiHandler.fuelSymbol.getWidth()/4, UiHandler.fuelSymbol.getHeight()/7)),1,35,1,1,1,1);
 
                 } else if (type=='a') {
                     if (Airship.ammo<1) UiHandler.ammoLabel.setColor(1,1,1,1);
@@ -174,21 +174,21 @@ public class MovingImageContainer {
                     UiHandler.ammoLabel.setText(Airship.ammo);
 
                     ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.ammoSymbol.localToStageCoordinates(new Vector2(
-                            UiHandler.ammoSymbol.getWidth()/4, UiHandler.ammoSymbol.getHeight()/7)),1,35,1,1);
+                            UiHandler.ammoSymbol.getWidth()/4, UiHandler.ammoSymbol.getHeight()/7)),1,35,1,1,1,1);
 
                 } else if (type=='h'){
                     Airship.health+=1;
                     UiHandler.airshipHealthBar.setValue(Airship.health);UiHandler.airshipHealthLabel.setText(Airship.health);
 
                     ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.airshipHealthBar.localToStageCoordinates(new Vector2(
-                            UiHandler.airshipHealthBar.getPercent()*UiHandler.airshipHealthBar.getWidth(), UiHandler.airshipHealthBar.getHeight()/7)),1,35,1,1);
+                            UiHandler.airshipHealthBar.getPercent()*UiHandler.airshipHealthBar.getWidth(), UiHandler.airshipHealthBar.getHeight()/7)),1,35,1,1,1,1);
 
                 } else if (type=='r'){
                     Airship.armor+=1;
                     UiHandler.airshipArmorBar.setValue(Airship.armor);UiHandler.airshipArmorLabel.setText(Airship.armor);
 
                     ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.airshipArmorBar.localToStageCoordinates(new Vector2(
-                            UiHandler.airshipArmorBar.getPercent()*UiHandler.airshipArmorBar.getWidth(), UiHandler.airshipArmorBar.getHeight()/7)),1,35,1,1);
+                            UiHandler.airshipArmorBar.getPercent()*UiHandler.airshipArmorBar.getWidth(), UiHandler.airshipArmorBar.getHeight()/7)),1,35,1,1,1,1);
                 }
 
                 //System.out.println(System.currentTimeMillis()-UiHandler.lastResourceGatherTime);

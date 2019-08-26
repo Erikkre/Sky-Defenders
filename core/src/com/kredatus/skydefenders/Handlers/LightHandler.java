@@ -52,12 +52,13 @@ public class LightHandler { //consider making barlight and mirroring on each sid
     private static int cloudDia=3000, sunDia=1000, xxxxsDia=30, xxxsDia=50, xxsDia=80,xsDia=130, sDia=180, smDia=230, mDia=280, mlDia=350, lDia=450, xlDia=700, xxlDia=1000, xxxlDia=1300, xxxxlDia=1600;
     private static float cloudA=0.60f, sunA=0.85f,  xxsA=0.23f, xsA=0.35f, sA=0.46f,smA=0.56f,mA=0.65f,mlA=0.73f, lA =0.80f,xlA=0.86f, xxlA=0.91f, xxxlA=0.95f, xxxxlA=1.00f;
 
-    public static float rayHandlerAmbLightLvl=0.75f;
+    public static final float backRayAmbLvl = .85f, foreRayAmbDiff = .15f;
+    public static float rayHandlerAmbLightLvl = backRayAmbLvl;
     public LightHandler(BgHandler bgHandler) {
         //foreRayHandler.useDiffuseLight(true); //smoother but makes everywhere but light dark
 
-        foreRayHandler.setAmbientLight(0.70f);  //++ makes backhandler lights brighter, -- makes birds darker outside of forehandler lights and forehandler lights brighter
-        backRayHandler.setAmbientLight(0.75f);  //-- makes backhandler lights darker and background much darker
+        foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl - foreRayAmbDiff);  //++ makes backhandler lights brighter, -- makes birds darker outside of forehandler lights and forehandler lights brighter
+        backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);  //-- makes backhandler lights darker and background much darker
 
         //backRayHandler.setGammaCorrection(false);
         //foreRayHandler.setGammaCorrection(false);    //play with all the options to see what fits best
@@ -304,16 +305,16 @@ public class LightHandler { //consider making barlight and mirroring on each sid
                 backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
         }*/
     public void update() {
-        if (rayHandlerAmbLightLvl<=0.75&&BgHandler.lightsBrightening) {
+        if (rayHandlerAmbLightLvl<= backRayAmbLvl && BgHandler.lightsBrightening) {
             rayHandlerAmbLightLvl+=Math.abs(BgHandler.yVel/14000f);
             //System.out.println("+ "+BgHandler.yVel/7000f);
-                foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl-0.15f);
+                foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl- foreRayAmbDiff);
                 backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
 
-        } else if (rayHandlerAmbLightLvl>=0.45&&!BgHandler.lightsBrightening) {
+        } else if (rayHandlerAmbLightLvl>= backRayAmbLvl /2 && !BgHandler.lightsBrightening) {
             rayHandlerAmbLightLvl-=Math.abs(BgHandler.yVel/10000f);
             //System.out.println("- "+BgHandler.yVel/7000f);
-            foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl-0.15f);
+            foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl- foreRayAmbDiff);
             backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
         }
         //System.out.println(rayHandlerAmbLightLvl);

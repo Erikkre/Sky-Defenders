@@ -58,7 +58,7 @@ public class GameWorld {
     }
 
     public static int exp, score, gold, diamond, round;
-    public static boolean soundMuted=false;
+    public static boolean soundMuted=false, musicMuted=false;
 
     public Value alpha =new Value(0),alphaBg=new Value(0);
     public Tween logoTween, logoBgTween, timerTween;
@@ -82,7 +82,7 @@ public class GameWorld {
         //this.midPointY=midPointY;
         //glider = new Glider(0, 0, AssetHandler.frontFlaps.getKeyFrame(0).getRegionWidth(), AssetHandler.frontFlaps.getKeyFrame(0).getRegionHeight(), this);
 
-        Loader.playnext(Loader.musiclist);
+
 
         currentState=GameState.SURVIVAL;
         //startLogos(camWidth,camHeight);
@@ -91,6 +91,11 @@ public class GameWorld {
         gold=prefs.getInteger("gold",300);UiHandler.totalGoldNum=gold;
         diamond =prefs.getInteger("diamond",0);UiHandler.totalDiamondNum=diamond;
         round=prefs.getInteger("round",1);
+
+        musicMuted=prefs.getBoolean("musicMuted",musicMuted);
+        soundMuted=prefs.getBoolean("soundMuted",soundMuted);
+
+        if (!musicMuted) Loader.playnext(Loader.musiclist);
     }
 
     public void initialize(BgHandler bgHandler, BirdHandler birdHandler, TargetHandler targetHandler, TinyBirdHandler tinyBirdHandler, UiHandler uiHandler, LightHandler lightHandler,GameRenderer renderer, Airship airship) {
@@ -243,7 +248,8 @@ public class GameWorld {
         targetHandler.closestBirdDist=Float.POSITIVE_INFINITY;
 
         for (Future i : uiHandler.futureList){
-            i.cancel(false);
+            i.cancel(true);
+            uiHandler.futureList.clear();
         }
 
 

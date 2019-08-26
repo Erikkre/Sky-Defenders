@@ -101,9 +101,9 @@ public class UiHandler {
                 Gdx.input.isTouched(1)&&
 
                     (
-                    ( ((SlideMenu) i).originEdge.equals("left") && ptrX(1)<i.getWidth() && ptrX(1)>0 && ptrY(1)>i.getY() && ptrY(1)<i.getY()+i.getHeight())
+                            ( ((SlideMenu) i).originEdge.equals("down") && ptrX(1)>i.getX() - i.getWidth()/2 && ptrX(1)<i.getX()+i.getWidth() && ptrY(1)>0 && ptrY(1)<i.getHeight())
                     ||
-                    ( ((SlideMenu) i).originEdge.equals("down") && ptrX(1)>i.getX() - i.getWidth()/2 && ptrX(1)<i.getX()+i.getWidth() && ptrY(1)>0 && ptrY(1)<i.getHeight())
+                            ( ((SlideMenu) i).originEdge.equals("left") && ptrX(1)<i.getWidth() && ptrX(1)>0 && ptrY(1)>i.getY() && ptrY(1)<i.getY()+i.getHeight())
                     )
 
                 )
@@ -112,12 +112,12 @@ public class UiHandler {
                 }
             }
         }
-        if (rootTable!=null){
+        /*if (rootTable!=null){
             for (Actor i : rootTable.getChildren()){//check if rootTable is removed when stage.clear is called
                 if (i instanceof Touchpad)      {if (((Touchpad) i).isTouched()){ return true;}}
                 else if (i instanceof TouchRotatePad)      {if (((TouchRotatePad) i).isTouched()){ return true;}}
             }
-        }
+        }*/
         return false;
     }
 
@@ -177,7 +177,7 @@ public class UiHandler {
                 super.cancel();
             }
         });
-        //stage.setDebugAll(true);
+        stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -185,13 +185,13 @@ public class UiHandler {
 
 
     }
-    public void fadeAwayNumberEffect(Vector2 pos,int val,int randomizedMoveDistance,float scale,float time){
+    public void fadeAwayNumberEffect(Vector2 pos,int val,int randomizedMoveDistance,float scale,float time,int randomizedSpawnWidth,int randomizedSpawnHeight){
         Label effect=new Label("", shadeSkin,"title-plain");
         if (val>=0) effect.setText("+"+val);
         else effect.setText(Integer.toString(val));
         //float minHeight=shadeSkin.getDrawable("font-title").getMinHeight();
         effect.setFontScale(scale);
-        effect.setPosition(pos.x,pos.y);
+        effect.setPosition(pos.x+r.nextInt(randomizedSpawnWidth),pos.y+r.nextInt(randomizedSpawnHeight));
         effect.addAction(
                 parallel(
                     sequence(
@@ -205,13 +205,13 @@ public class UiHandler {
         stage.addActor(effect);
         //shadeSkin.getDrawable("title-plain").setMinHeight(minHeight);
     }
-    public void followFadeAwayNumberEffect(final Object T,int val,int randomizedMoveDistance,float scale,float time){
+    public void followFadeAwayNumberEffect(final Object T,int val,float scale,float time,int randomizedSpawnWidth,int randomizedSpawnHeight){
         final Label effect=new Label("", shadeSkin,"title-plain");effect.setAlignment(Align.center);
         if (val>=0) effect.setText("+"+val);
         else effect.setText(Integer.toString(val));
         //float minHeight=shadeSkin.getDrawable("font-title").getMinHeight();
         effect.setFontScale(scale);
-        final Vector2 v=new Vector2(-randomizedMoveDistance+r.nextInt(randomizedMoveDistance*2),-randomizedMoveDistance+r.nextInt(randomizedMoveDistance*2));
+        final Vector2 v=new Vector2(-randomizedSpawnWidth+r.nextInt(randomizedSpawnWidth*2),-randomizedSpawnHeight+r.nextInt(randomizedSpawnHeight*2));
 
         Runnable setPos;
         if (T instanceof Airship){
@@ -361,13 +361,15 @@ public class UiHandler {
 
         //shadeSkin.getDrawable("touchpad-knob").setMinWidth(30);shadeSkin.getDrawable("touchpad-knob").setMinHeight(30);
         //float size = shadeSkin.getDrawable("touchpad").getMinWidth()/2;
-        movPad = new AppearOnTouchPad(0,camWidth/2, 12, shadeSkin,false);
-        movPad.setColor(1,1,1,0.1f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);//movPad.setSize(size,size);
-        rootTable.addActor(movPad);
 
-        aimPad = new AppearOnTouchPad(camWidth/2,camWidth,10, shadeSkin,true);
+
+        aimPad = new AppearOnTouchPad( 0,camWidth/2,10, shadeSkin,true);
         aimPad.setColor(1,1,1,0.1f);aimPad.setPosition(camWidth,camHeight);aimPad.setVisible(false);//aimPad.setSize(size,size);
         rootTable.addActor(aimPad);
+
+        movPad = new AppearOnTouchPad( camWidth/2,camWidth,12, shadeSkin,false);
+        movPad.setColor(1,1,1,0.1f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);//movPad.setSize(size,size);
+        rootTable.addActor(movPad);
     }
 
     public void loadSlideMenus(){
@@ -382,10 +384,10 @@ public class UiHandler {
 
 
         /**      ****************************************LEFT SLIDING MENU*****************************************      **/
-        slideMenuLeft = new SlideMenu(camWidth/6.1f,camHeight/2.2f,"left",camWidth,camHeight,camHeight/35);//left or up
+        slideMenuLeft = new SlideMenu(camWidth/6.1f,camHeight/2.2f,"left",camWidth,camHeight,-camHeight/2f+(camHeight/2.2f)/2);//left or up
         stage.addActor(slideMenuLeft);
         slideMenuLeft.setColor(1,1,1,0.7f);
-        final Table leftTable=new Table();leftTable.setSize(camWidth/6.1f,camHeight/2f);//leftTable.setWidth(camWidth/7f);
+        final Table leftTable=new Table();leftTable.setSize(slideMenuLeft.getWidth(),slideMenuLeft.getHeight());//leftTable.setWidth(camWidth/7f);
         final ScrollPane scrollPane=new ScrollPane(leftTable,shadeSkin,"android");//scrollPane.setWidth(camWidth/7f);
         scrollPane.setFillParent(true);scrollPane.setFadeScrollBars(true);scrollPane.setScrollBarPositions(false,false);scrollPane.setScrollingDisabled(true,false);
         slideMenuLeft.add(scrollPane).grow().padLeft(-7).center();//.width(camWidth/7f);
@@ -438,7 +440,7 @@ public class UiHandler {
         Collections.addAll(buyButtons,buyArmorButton,buyAmmoButton,buyFuelButton,buyHealthButton,buyDiamondButton,buyGoldButton);
         loadAllBuyButtonsTimerTasks();
 
-        musicButton=new Button(shadeSkin, "music");soundButton=new Button(shadeSkin, "sound");soundButton.setChecked(true);musicButton.setChecked(true);
+        musicButton=new Button(shadeSkin, "music");soundButton=new Button(shadeSkin, "sound");soundButton.setChecked(!world.soundMuted);musicButton.setChecked(!world.musicMuted);
         leftTable.add(musicButton,soundButton);
         //final Image rateButton = new Image(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("rateButton"));
         //final Image shareButton = new Image(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("shareButton"));
@@ -508,8 +510,8 @@ public class UiHandler {
                 if (actor.getName()==null) {
                     super.cancel();
                 } else if (actor.getName().equals("m")) {
-                    if (!((Button)actor).isChecked()) Loader.stopMusic(Loader.menumusiclist);
-                    else Loader.startMusic(Loader.menumusiclist);
+                    if (!((Button)actor).isChecked()) {Loader.stopMusic(Loader.menumusiclist);world.musicMuted=true;}
+                    else {Loader.startMusic(Loader.menumusiclist); world.musicMuted=false;}
                 } else if (actor.getName().equals("s")) {
                     if (!((Button)actor).isChecked()) world.soundMuted=true;
                     else world.soundMuted=false;
@@ -518,31 +520,31 @@ public class UiHandler {
                     if (actor.getName().equals("r")) {
                         world.gold-=Integer.parseInt(armorPrice);UiHandler.totalGoldNum-=Integer.parseInt(armorPrice);
                         boughtArmorNum += Integer.parseInt(armorPerTap);totalArmorNum+=Integer.parseInt(armorPerTap);
-                        if(boughtArmorNum ==Integer.parseInt(armorPerTap))giveGoldGetArmorFuture=timer.scheduleAtFixedRate(giveGoldGetArmor, 0, (long)(1000f/ boughtArmorNum), TimeUnit.MILLISECONDS);
+                        giveGoldGetArmorFuture=timer.scheduleAtFixedRate(giveGoldGetArmor, 0, (long)(1000f/ boughtArmorNum), TimeUnit.MILLISECONDS);
                         futureList.add(giveGoldGetArmorFuture);
                     } else if (actor.getName().equals("a")) {
                         world.gold -= Integer.parseInt(ammoPrice);UiHandler.totalGoldNum-=Integer.parseInt(ammoPrice);
                         boughtAmmoNum += Integer.parseInt(ammoPerTap);totalAmmoNum+= Integer.parseInt(ammoPerTap);
-                        if(boughtAmmoNum ==Integer.parseInt(ammoPerTap))giveGoldGetAmmoFuture=timer.scheduleAtFixedRate(giveGoldGetAmmo, 0, (long)(1000f/ boughtAmmoNum), TimeUnit.MILLISECONDS);
+                        giveGoldGetAmmoFuture=timer.scheduleAtFixedRate(giveGoldGetAmmo, 0, (long)(1000f/ boughtAmmoNum), TimeUnit.MILLISECONDS);
                         futureList.add(giveGoldGetAmmoFuture);
                     } else if (actor.getName().equals("f")) {
                         world.gold -= Integer.parseInt(fuelPrice);UiHandler.totalGoldNum-=Integer.parseInt(fuelPrice);
                         boughtFuelNum += Integer.parseInt(fuelPerTap);totalFuelNum+= Integer.parseInt(fuelPerTap);
-                        if(boughtFuelNum ==Integer.parseInt(fuelPerTap))giveGoldGetFuelFuture=timer.scheduleAtFixedRate(giveGoldGetFuel, 0, (long)(1000f/ boughtFuelNum), TimeUnit.MILLISECONDS);
+                        giveGoldGetFuelFuture=timer.scheduleAtFixedRate(giveGoldGetFuel, 0, (long)(1000f/ boughtFuelNum), TimeUnit.MILLISECONDS);
                         futureList.add(giveGoldGetFuelFuture);
                     } else if (actor.getName().equals("h")) {
                         world.gold -= Integer.parseInt(healthPrice);UiHandler.totalGoldNum-=Integer.parseInt(healthPrice);
                         boughtHealthNum += Integer.parseInt(healthPerTap);totalHealthNum+= Integer.parseInt(healthPerTap);
-                        if(boughtHealthNum==Integer.parseInt(healthPerTap))giveGoldGetHealthFuture=timer.scheduleAtFixedRate(giveGoldGetHealth,0,(long)(1000f/boughtHealthNum), TimeUnit.MILLISECONDS);
+                        giveGoldGetHealthFuture=timer.scheduleAtFixedRate(giveGoldGetHealth,0,(long)(1000f/boughtHealthNum), TimeUnit.MILLISECONDS);
                         futureList.add(giveGoldGetHealthFuture);
                     } else if (actor.getName().equals("d")) {
                         world.gold -= Integer.parseInt(diamondPrice);UiHandler.totalGoldNum-=Integer.parseInt(diamondPrice);
                         boughtDiamondNum += Integer.parseInt(diamondPerTap);totalDiamondNum+= Integer.parseInt(diamondPerTap);
-                        if(boughtDiamondNum==Integer.parseInt(diamondPerTap))giveGoldGetDiamondFuture=timer.scheduleAtFixedRate(giveGoldGetDiamond, 0, (long)(1000f), TimeUnit.MILLISECONDS);
+                        giveGoldGetDiamondFuture=timer.scheduleAtFixedRate(giveGoldGetDiamond, 0, (long)(1000f), TimeUnit.MILLISECONDS);
                         futureList.add(giveGoldGetDiamondFuture);
                     } else if (actor.getName().equals("g")) {
                         world.diamond -= Integer.parseInt(goldPrice);totalDiamondNum-=Integer.parseInt(goldPrice);boughtGoldNum += Integer.parseInt(goldPerTap);
-                        if(boughtGoldNum ==Integer.parseInt(goldPerTap))giveDiamondGetGoldFuture=timer.scheduleAtFixedRate(giveDiamondGetGold, 0, (long)(1000f/ boughtGoldNum), TimeUnit.MILLISECONDS);
+                        giveDiamondGetGoldFuture=timer.scheduleAtFixedRate(giveDiamondGetGold, 0, (long)(1000f/ boughtGoldNum), TimeUnit.MILLISECONDS);
                         futureList.add(giveDiamondGetGoldFuture);
                         diamondLabel.setText(world.diamond);
                     }
@@ -568,7 +570,7 @@ public class UiHandler {
 
 
         /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
-        slideMenuBottom = new SlideMenu(.7f*camWidth/2.75f,camHeight/7f,"down",camWidth,camHeight, 0);
+        slideMenuBottom = new SlideMenu(camWidth,camHeight/7f,"down",camWidth,camHeight, 0);
         stage.addActor(slideMenuBottom);
         slideMenuBottom.setColor(1,1,1,0.7f);
         //final Image image_backgroundY = new Image(new SpriteDrawable(temp));

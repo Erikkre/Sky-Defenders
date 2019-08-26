@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.kredatus.skydefenders.Handlers.InputHandler;
+import com.kredatus.skydefenders.Handlers.UiHandler;
 
 
 public class SlideMenu extends Table {
@@ -94,8 +95,8 @@ public class SlideMenu extends Table {
 
             //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and    ptr0X is on menu button   and  touchpads not touched
             if (!auto && isTouched() && ( (isCompletelyClosedY() && stgY() < this.getHeight()/1.5f) || (!isCompletelyClosedY()&& stgY() < this.getHeight()*1.5f) )
-                    && stgX() > menuButton.getX()-menuButton.getHeight()/4 && stgX() < menuButton.getX()+5*menuButton.getHeight()/4 ){
-                    //&& !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched() )  {
+                    && stgX() > menuButton.getX()-menuButton.getHeight()/4 && stgX() < menuButton.getX()+5*menuButton.getHeight()/4
+                    && !UiHandler.aimPad.isVisible() && !UiHandler.movPad.isVisible() )  {
 
                 if (!isTouched) isTouched=true;
                 //if closed, in zone and swiping down
@@ -109,7 +110,7 @@ public class SlideMenu extends Table {
         } else if (originEdge.equals("left")) {
             //System.out.println("width"+this.getWidth()+", scrX:"+scrX());
 
-            if (menuButton.getX() > areaWidth / 2 && menuButton.getRotation() != 180)
+            if ( menuButton.getX() > areaWidth / 2 && menuButton.getRotation() != 180 )
                 menuButton.setRotation(180);
             else if (menuButton.getRotation() != 0 && menuButton.getX() < areaWidth / 2)
                 menuButton.setRotation(0);
@@ -127,8 +128,8 @@ public class SlideMenu extends Table {
 
             //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and    stgY is on menu button   and  touchpads not touched
             if (!auto && isTouched() && (  (isCompletelyClosedX()&& stgX() < this.getWidth() ) || ( !isCompletelyClosedX()&& stgX() < this.getWidth()   *1.5f )  )
-                    && stgY() > menuButton.getY()-menuButton.getHeight()/2 && stgY() < menuButton.getY()+ 3*menuButton.getHeight()/2 ){
-                    //&& !UiHandler.movPad.isTouched() && !UiHandler.aimPad.isTouched()) {
+                    && stgY() > menuButton.getY()-menuButton.getHeight()/2 && stgY() < menuButton.getY()+ 3*menuButton.getHeight()/2
+                    && !UiHandler.aimPad.isVisible()  ) {
                 if (!isTouched) isTouched=true;
                 //if closed, in zone and swiping left
                 if (isCompletelyClosedX() && Gdx.input.getDeltaX() > 2) showManually(true);// open = false, close = true;

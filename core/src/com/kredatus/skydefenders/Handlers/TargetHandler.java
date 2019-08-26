@@ -102,7 +102,7 @@ public class TargetHandler {
                         bird.hit(bird.origHealth+1);    //lol I hope bird health is below orig
                     }
 
-                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.followFadeAwayNumberEffect(airship,-bird.origHealth,45,1.5f,2f);
+                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.followFadeAwayNumberEffect(airship,-bird.origHealth,2f,2f,45,45);
 
 
 
@@ -147,7 +147,7 @@ public class TargetHandler {
                         },bird.hitSoundLengthMS, TimeUnit.MILLISECONDS);//wait specific bird call length before playing sound again
                     }
                     bird.hit(proj.dmg);
-                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(proj.position,-(int)Math.ceil(proj.dmg),60,1.25f,1);
+                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(proj.position,-(int)Math.ceil(proj.dmg),60,1.25f,1,1,1);
                     //System.out.println("Bullet --, pen was "+proj.pen);
                     proj.pen--;
 
