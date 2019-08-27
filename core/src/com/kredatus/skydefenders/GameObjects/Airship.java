@@ -782,9 +782,9 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         if (fuel<1&&(pos.x!=camWidth/2||pos.y!=camHeight/2)&&(tweenTarget.x!=camWidth/2||tweenTarget.y!=camHeight/2)){
             tweenTarget.set(camWidth/2,camHeight/2);
-            movtween = Tween.to(pos, 0, timeToTweenTarget*3).target(tweenTarget.x,tweenTarget.y).ease(TweenEquations.easeInOutSine).setCallback(endOfMovement).start();
+            movtween = Tween.to(pos, 0, 6f).target(tweenTarget.x,tweenTarget.y).ease(TweenEquations.easeInOutSine).setCallback(endOfMovement).start();
         }
-        if(sizeChangeTween!=null && !sizeChangeTween.isFinished()){sizeChangeTween.update(delta); updateRackAndPositionsDuringSizeChangeTween();}
+        if(sizeChangeTween!=null && !sizeChangeTween.isFinished()){ sizeChangeTween.update(delta); updateRackAndPositionsDuringSizeChangeTween(); }
 
         aimLineFadeout.update(delta);
         aimLineRotationSmoothing.update(delta);
@@ -852,7 +852,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
             preY=pos.y+balloonBob.get();
             movtween.update(delta);
             rotationTween.update(delta);
-            vel.set(pos.x-preX, pos.y+balloonBob.get()-preY);
+            vel.set( pos.x-preX, pos.y+balloonBob.get()-preY );
 
             /*if ((vel.x<=0&&tween.getTargetValues()[0]-pos.x<0)||(vel.x>=0&&tween.getTargetValues()[0]-pos.x>0)){
                 rotation.get() += -Math.signum(vel.x)*((Math.abs(vel.x*2)-Math.abs(rotation.get()))/1.5f);
@@ -868,8 +868,6 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
                         yOffsetDueToRotation(pos.y+balloonBob.get() + ((CustomPointLight) i).distanceFromAirship.y, -((CustomPointLight) i).distanceFromAirship.x,-((CustomPointLight) i).distanceFromAirship.y)
                 );
             }
-
-
             //checkBordersAndSlowdown(); not using velocity
 
 

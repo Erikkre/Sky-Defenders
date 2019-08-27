@@ -93,7 +93,7 @@ public class UiHandler {
                     (
                             ( ((SlideMenu) i).originEdge.equals("down") && ptrX(0)>i.getX()  && ptrX(0)<i.getX()+i.getWidth() && ptrY(0)>0 && ptrY(0)<i.getHeight()/1.5)
                         ||
-                            ( ((SlideMenu) i).originEdge.equals("left") && ptrX(0)<i.getWidth()/1.5 && ptrX(0)>0 && ptrY(0)>i.getY()+i.getHeight()/5 && ptrY(0)<i.getY()+(4*i.getHeight())/5)
+                            ( ((SlideMenu) i).originEdge.equals("left") && ptrX(0)<i.getWidth() && ptrX(0)>0 && ptrY(0)>i.getY()+i.getHeight()/5 && ptrY(0)<i.getY()+(4*i.getHeight())/5)
                     )
 
                 )||(
@@ -183,8 +183,8 @@ public class UiHandler {
         rootTable.setFillParent(true);
         stage.addActor(rootTable);
 
-
     }
+
     public void fadeAwayNumberEffect(Vector2 pos,int val,int randomizedMoveDistance,float scale,float time,int randomizedSpawnWidth,int randomizedSpawnHeight){
         Label effect=new Label("", shadeSkin,"title-plain");
         if (val>=0) effect.setText("+"+val);
@@ -705,7 +705,7 @@ public class UiHandler {
 
         ammoLabel.setText(Airship.ammo); fuelLabel.setText(Integer.toString((int)Airship.fuel));
         if (anyUITouched()) isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
-        else isTouched=false;
+
         stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
         justSet=false;
     }

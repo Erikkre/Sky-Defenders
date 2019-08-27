@@ -111,7 +111,7 @@ public class TargetHandler {
                 //System.out.println("bird added to death queue because dead");
                 activeBirdQueue.remove(bird);
                 deadBirdQueue.add(bird);
-                if (!bird.birdHitPlaying) chooseWhichBirdHitToPlay(bird,true);
+                if (!bird.birdHitPlaying && !GameWorld.soundMuted) chooseWhichBirdHitToPlay(bird,true);
                 if (bird==targetBird) {targetBird.isAlive=false;closestBirdDist = Float.POSITIVE_INFINITY;break;}
 
 
