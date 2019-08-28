@@ -58,7 +58,7 @@ public class GameWorld {
     }
 
     public static int exp, score, gold, diamond, round;
-    public static boolean soundMuted=false, musicMuted=false;
+    public static boolean soundMuted, musicMuted;
 
     public Value alpha =new Value(0),alphaBg=new Value(0);
     public Tween logoTween, logoBgTween, timerTween;
@@ -92,8 +92,8 @@ public class GameWorld {
         diamond =prefs.getInteger("diamond",0);UiHandler.totalDiamondNum=diamond;
         round=prefs.getInteger("round",1);
 
-        musicMuted=prefs.getBoolean("musicMuted",musicMuted);
-        soundMuted=prefs.getBoolean("soundMuted",soundMuted);
+        musicMuted=prefs.getBoolean("musicMuted",false);
+        soundMuted=prefs.getBoolean("soundMuted",false);
 
         if (!musicMuted) Loader.playnext(Loader.musiclist);
     }
@@ -213,9 +213,11 @@ public class GameWorld {
         int waveNumberFromLastWave=(BgHandler.bgNumber-2)/9;
 
         //System.out.println("bgNumber: "+BgHandler.bgNumber);
-        bgHandler=null;
+        //bgHandler=null;
         bgHandler=new BgHandler(this,camWidth,camHeight,waveNumberFromLastWave,birdHandler);
         bgHandler.startToSurvival(tinyBirdHandler,lightHandler);
+        lightHandler.foreRayHandler.setAmbientLight(lightHandler.origAmbLightLvl + lightHandler.foreRayAmbDiff);
+        lightHandler.backRayHandler.setAmbientLight(lightHandler.origAmbLightLvl);
         bgHandler.setRendererAndCam(renderer);
 
         //System.out.println("airshipAmmo("+Airship.ammo+") set to: "+waveStartAmmo);
@@ -347,7 +349,7 @@ public class GameWorld {
 }
 
     /*public void startLogos(int camWidth,int camHeight) {
-        LightHandler.rayHandlerAmbLightLvl=0.75f;
+        LightHandler.curAmbLightLvl=0.75f;
         currentState=GameState.LOGOS;
         logo=((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("companyLogo");
         logoBg=new Sprite(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("slideMenuBackground"));

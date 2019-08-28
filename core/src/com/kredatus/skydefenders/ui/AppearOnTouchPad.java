@@ -55,13 +55,14 @@ public class AppearOnTouchPad extends Widget {
        //if (Gdx.input.justTouched()) System.out.println(ptr0X()+", "+GameHandler.camWidth/2);
         //if (this==UiHandler.movPad)System.out.println(!isVisible());
         //System.out.println(Gdx.input.justTouched()+", "+!UiHandler.isTouched+", "+!touched+", "+!thisTouchPad.isVisible()+", "+ (currentPtr==-1));
+
+        System.out.println(UiHandler.isTouched);
         if (Gdx.input.justTouched()&&!UiHandler.isTouched&&!thisTouchPad.isVisible()&&!UiHandler.justSet&&currentPtr==-1){//if unnasigned
             //if theres only 1 tap and the other touchpad hasn't been given a pointer already and the tap is in the zone, this touchpad's currentptr is 0
             if ( Gdx.input.isTouched(0) && (  (this==UiHandler.aimPad&&(UiHandler.movPad.currentPtr==1||UiHandler.movPad.currentPtr==-1)) || (this==UiHandler.movPad&&(UiHandler.aimPad.currentPtr==1||UiHandler.aimPad.currentPtr==-1))  )
                     && ptrX(0)>leftTouchBound && ptrX(0)<rightTouchBound ){
                 /*if (this==UiHandler.aimPad) System.out.println("aimpad set to 0");
                 else System.out.println("movpad set to 0");*/
-
                 currentPtr=0;
 
             } else if ( Gdx.input.isTouched(1) && (  (this==UiHandler.aimPad&&UiHandler.movPad.currentPtr==0) || (this==UiHandler.movPad&&UiHandler.aimPad.currentPtr==0)  )
@@ -81,7 +82,7 @@ public class AppearOnTouchPad extends Widget {
                 localPos = this.getParent().screenToLocalCoordinates(localPos);
                 this.setPosition(localPos.x - this.getWidth() / 2, localPos.y - this.getHeight() / 2);
                 thisTouchPad.setVisible(true);
-                //System.out.println("set visible");
+                System.out.println("set visible");
 
                 if (!rotationTouchpad) {
                     touched = true;
@@ -112,7 +113,7 @@ public class AppearOnTouchPad extends Widget {
                     //System.out.println("moved out of deadzonebounds, touched=true");
                     touched=true;}//lets aimpad aim once finger moves out of deadzone, otherwise let it follow Airship.turretList.get(0).targetRot
 
-            } else if (touched&&Math.abs(Gdx.input.getDeltaX())+Math.abs(Gdx.input.getDeltaY())>0.5f) {
+            } else if (touched&&Math.abs(Gdx.input.getDeltaX(currentPtr))+Math.abs(Gdx.input.getDeltaY(currentPtr))>0.5f) {
                 /*if (thisTouchPad==UiHandler.aimPad){System.out.println("touchCalc for aimpad, currentptr:"+currentPtr);}
                 else System.out.println("touchCalc for movpad, currentptr:"+currentPtr);*/
 

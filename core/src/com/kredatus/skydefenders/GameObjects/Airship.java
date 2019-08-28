@@ -782,7 +782,7 @@ public class Airship {  //engines, sideThrusters, armors and health are organize
 
         if (fuel<1&&(pos.x!=camWidth/2||pos.y!=camHeight/2)&&(tweenTarget.x!=camWidth/2||tweenTarget.y!=camHeight/2)){
             tweenTarget.set(camWidth/2,camHeight/2);
-            movtween = Tween.to(pos, 0, 6f).target(tweenTarget.x,tweenTarget.y).ease(TweenEquations.easeInOutSine).setCallback(endOfMovement).start();
+            movtween = Tween.to(pos, 0, 6f).target(tweenTarget.x,tweenTarget.y).ease(TweenEquations.easeOutElastic).setCallback(endOfMovement).start();
         }
         if(sizeChangeTween!=null && !sizeChangeTween.isFinished()){ sizeChangeTween.update(delta); updateRackAndPositionsDuringSizeChangeTween(); }
 

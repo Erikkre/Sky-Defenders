@@ -52,13 +52,13 @@ public class LightHandler { //consider making barlight and mirroring on each sid
     private static int cloudDia=3000, sunDia=1000, xxxxsDia=30, xxxsDia=50, xxsDia=80,xsDia=130, sDia=180, smDia=230, mDia=280, mlDia=350, lDia=450, xlDia=700, xxlDia=1000, xxxlDia=1300, xxxxlDia=1600;
     private static float cloudA=0.60f, sunA=0.85f,  xxsA=0.23f, xsA=0.35f, sA=0.46f,smA=0.56f,mA=0.65f,mlA=0.73f, lA =0.80f,xlA=0.86f, xxlA=0.91f, xxxlA=0.95f, xxxxlA=1.00f;
 
-    public static final float backRayAmbLvl = .85f, foreRayAmbDiff = .15f;
-    public static float rayHandlerAmbLightLvl = backRayAmbLvl;
+    public static final float origAmbLightLvl = .85f, foreRayAmbDiff = -.15f;
+    public static float curAmbLightLvl = origAmbLightLvl;
     public LightHandler(BgHandler bgHandler) {
         //foreRayHandler.useDiffuseLight(true); //smoother but makes everywhere but light dark
 
-        foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl - foreRayAmbDiff);  //++ makes backhandler lights brighter, -- makes birds darker outside of forehandler lights and forehandler lights brighter
-        backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);  //-- makes backhandler lights darker and background much darker
+        foreRayHandler.setAmbientLight(curAmbLightLvl + foreRayAmbDiff);  //++ makes backhandler lights brighter, -- makes birds darker outside of forehandler lights and forehandler lights brighter
+        backRayHandler.setAmbientLight(curAmbLightLvl);  //-- makes backhandler lights darker and background much darker
 
         //backRayHandler.setGammaCorrection(false);
         //foreRayHandler.setGammaCorrection(false);    //play with all the options to see what fits best
@@ -297,27 +297,27 @@ public class LightHandler { //consider making barlight and mirroring on each sid
         return l.getY() + l.getDistance() < 0; //if light yPos+radius*0.66 is lower than 0, delete it
     }
 
-/*if (rayHandlerAmbLightLvl<=0.75) {
-            rayHandlerAmbLightLvl+=0.001f;
-            if (rayHandlerAmbLightLvl <= 0.70)
-                foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
-            if (rayHandlerAmbLightLvl <= 0.75)
-                backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
+/*if (curAmbLightLvl<=0.75) {
+            curAmbLightLvl+=0.001f;
+            if (curAmbLightLvl <= 0.70)
+                foreRayHandler.setAmbientLight(curAmbLightLvl);
+            if (curAmbLightLvl <= 0.75)
+                backRayHandler.setAmbientLight(curAmbLightLvl);
         }*/
     public void update() {
-        if (rayHandlerAmbLightLvl<= backRayAmbLvl && BgHandler.lightsBrightening) {
-            rayHandlerAmbLightLvl+=Math.abs(BgHandler.yVel/14000f);
+        if (curAmbLightLvl <= origAmbLightLvl && BgHandler.lightsBrightening) {
+            curAmbLightLvl +=Math.abs(BgHandler.yVel/14000f);
             //System.out.println("+ "+BgHandler.yVel/7000f);
-                foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl- foreRayAmbDiff);
-                backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
+                foreRayHandler.setAmbientLight(curAmbLightLvl + foreRayAmbDiff);
+                backRayHandler.setAmbientLight(curAmbLightLvl);
 
-        } else if (rayHandlerAmbLightLvl>= backRayAmbLvl /2 && !BgHandler.lightsBrightening) {
-            rayHandlerAmbLightLvl-=Math.abs(BgHandler.yVel/10000f);
+        } else if (curAmbLightLvl >= origAmbLightLvl /2 && !BgHandler.lightsBrightening) {
+            curAmbLightLvl -=Math.abs(BgHandler.yVel/10000f);
             //System.out.println("- "+BgHandler.yVel/7000f);
-            foreRayHandler.setAmbientLight(rayHandlerAmbLightLvl- foreRayAmbDiff);
-            backRayHandler.setAmbientLight(rayHandlerAmbLightLvl);
+            foreRayHandler.setAmbientLight(curAmbLightLvl + foreRayAmbDiff);
+            backRayHandler.setAmbientLight(curAmbLightLvl);
         }
-        //System.out.println(rayHandlerAmbLightLvl);
+        //System.out.println(curAmbLightLvl);
 
         //System.out.println(Math.abs(BgHandler.vert.get()/BgHandler.bgStackHeight));
         float bgVert = BgHandler.vert.get();

@@ -29,7 +29,7 @@ public class SlideMenu extends Table {
     private float heightStart = 15f;
     private float heightBack = 0f;
     // speed of dragging
-    private float speed = 20f;
+    private float speed = 30f;
 
     // some attributes to make real draggingX
     private Vector2 clamp = new Vector2();
@@ -94,11 +94,10 @@ public class SlideMenu extends Table {
             if (auto && (isCompletelyClosedY()||isCompletelyOpenedY())) auto = false;
 
             //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and    ptr0X is on menu button   and  touchpads not touched
-            if (!auto && isTouched() && ( (isCompletelyClosedY() && stgY() < this.getHeight()/1.5f) || (!isCompletelyClosedY()&& stgY() < this.getHeight()*1.5f) )
-                    && stgX() > menuButton.getX()-menuButton.getHeight()/4 && stgX() < menuButton.getX()+5*menuButton.getHeight()/4
+            if (!auto && isTouched()
                     && !UiHandler.aimPad.isVisible() && !UiHandler.movPad.isVisible() )  {
 
-                if (!isTouched) isTouched=true;
+                if (!isTouched) {isTouched=true;UiHandler.isTouched=true;}
                 //if closed, in zone and swiping down
                 if (isCompletelyClosedY()&&Gdx.input.getDeltaY()<-2) showManually(true);// open = false, close = true;
 
@@ -120,17 +119,19 @@ public class SlideMenu extends Table {
 
             if (auto && (isCompletelyClosedX() || isCompletelyOpenedX())) auto = false;
 
+
             /*if (isTouched()){
                 System.out.println("stgY: "+stgY()+", menuButtonTopEdge: "+(menuButton.getY()-menuButton.getHeight()*1.35)+", menuButtonBottEdge: "+(menuButton.getY()-menuButton.getHeight()/1.45));
             }//used to test if drag input is on button*/
 
             //System.out.println(stgY()+", "+(menuButton.getY()+menuButton.getHeight()/2));
 
+            System.out.println(!auto+", "+isTouched()+", "+!UiHandler.movPad.isVisible());
             //if not autoSliding and touched and (input is above 950 when closed or above menuHeight when opened) and    stgY is on menu button   and  touchpads not touched
-            if (!auto && isTouched() && (  (isCompletelyClosedX()&& stgX() < this.getWidth() ) || ( !isCompletelyClosedX()&& stgX() < this.getWidth()   *1.5f )  )
-                    && stgY() > menuButton.getY()-menuButton.getHeight()/2 && stgY() < menuButton.getY()+ 3*menuButton.getHeight()/2
-                    && !UiHandler.aimPad.isVisible()  ) {
-                if (!isTouched) isTouched=true;
+            if (!auto && isTouched()
+                    && !UiHandler.movPad.isVisible()  ) {
+
+                if (!isTouched) {isTouched=true;UiHandler.isTouched=true;}
                 //if closed, in zone and swiping left
                 if (isCompletelyClosedX() && Gdx.input.getDeltaX() > 2) showManually(true);// open = false, close = true;
 
@@ -202,7 +203,7 @@ public class SlideMenu extends Table {
         return getStage().stageToScreenCoordinates(posTap.set(0, y)).y;
     }
 
-    private float stgX() {
+    /*private float stgX() {
         return InputHandler.scaleX(Gdx.input.getX());
     }
     private float stgY() {
@@ -213,10 +214,29 @@ public class SlideMenu extends Table {
     }
     private float scrY() {
         return Gdx.input.getY();
+    }*/
+    public float ptrX(int ptr){
+        return InputHandler.scaleX(Gdx.input.getX(ptr));
+    }
+    public float ptrY(int ptr){
+        return InputHandler.scaleY(Gdx.input.getY(ptr));
     }
     
     private boolean isTouched() {
-        return Gdx.input.isTouched();
+        if (originEdge.equals("left")) System.out.println(getX()+getWidth()*1.7);
+        return (Gdx.input.isTouched(0)&&(
+
+                ( originEdge.equals("down") && ptrX(0)<getX()+getWidth() && ptrX(0)>getX() && ptrY(0)>getY() && ptrY(0)<getY()+getHeight()*1.7 )
+                ||
+                ( originEdge.equals("left") && ptrX(0)<getX()+getWidth()*1.8 && ptrX(0)>getX() && ptrY(0)>getY() && ptrY(0)<getY()+getHeight() )
+
+                ))||(Gdx.input.isTouched(1)&&(
+
+                ( originEdge.equals("down") && ptrX(1)<getX()+getWidth() && ptrX(1)>getX() && ptrY(1)>getY() && ptrY(1)<getY()+getHeight()*1.7 )
+                ||
+                ( originEdge.equals("left") && ptrX(1)<getX()+getWidth()*1.8 && ptrX(1)>getX() && ptrY(1)>getY() && ptrY(1)<getY()+getHeight() )
+            )
+        );
     }
 
     private Actor menuButton = new Actor();

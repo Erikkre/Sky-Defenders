@@ -86,32 +86,15 @@ public class UiHandler {
         //System.out.println(slideMenuLeft.getY()+", "+ptrY(0));
         //System.out.println( slideMenuBottom.originEdge.equals("down") +", "+ (ptrX(0)>slideMenuBottom.getX()) +", "+ (ptrX(0)<slideMenuBottom.getX()+slideMenuBottom.getWidth()) +", "+ (ptrY(0)>0) +", "+ (ptrY(0)<slideMenuBottom.getHeight()));
         //dont allow touchpads where pull out menus will be
-        for (Actor i : stage.getActors()){
-            if (i instanceof SlideMenu)      {if ( ((SlideMenu) i).isTouched ||
-                (Gdx.input.isTouched(0)&&
+        /*for (Actor i : stage.getActors()){
+            if (i instanceof SlideMenu)      {if ( ((SlideMenu) i).isTouched
 
-                    (
-                            ( ((SlideMenu) i).originEdge.equals("down") && ptrX(0)>i.getX()  && ptrX(0)<i.getX()+i.getWidth() && ptrY(0)>0 && ptrY(0)<i.getHeight()/1.5)
-                        ||
-                            ( ((SlideMenu) i).originEdge.equals("left") && ptrX(0)<i.getWidth() && ptrX(0)>0 && ptrY(0)>i.getY()+i.getHeight()/5 && ptrY(0)<i.getY()+(4*i.getHeight())/5)
-                    )
 
-                )||(
+            ) {System.out.println("Mouse within bounds of slidemenu, isTouched=true");return true;
 
-                Gdx.input.isTouched(1)&&
-
-                    (
-                            ( ((SlideMenu) i).originEdge.equals("down") && ptrX(1)>i.getX() - i.getWidth()/2 && ptrX(1)<i.getX()+i.getWidth() && ptrY(1)>0 && ptrY(1)<i.getHeight())
-                    ||
-                            ( ((SlideMenu) i).originEdge.equals("left") && ptrX(1)<i.getWidth() && ptrX(1)>0 && ptrY(1)>i.getY() && ptrY(1)<i.getY()+i.getHeight())
-                    )
-
-                )
-
-            ) {return true;
                 }
             }
-        }
+        }*/
         /*if (rootTable!=null){
             for (Actor i : rootTable.getChildren()){//check if rootTable is removed when stage.clear is called
                 if (i instanceof Touchpad)      {if (((Touchpad) i).isTouched()){ return true;}}
@@ -121,12 +104,7 @@ public class UiHandler {
         return false;
     }
 
-    public float ptrX(int ptr){
-        return InputHandler.scaleX(Gdx.input.getX(ptr));
-    }
-    public float ptrY(int ptr){
-        return InputHandler.scaleY(Gdx.input.getY(ptr));
-    }
+
     public float scrnPtrX(int ptr){
         return Gdx.input.getX(ptr);
     }
@@ -174,10 +152,11 @@ public class UiHandler {
             public void touchUp(InputEvent event, float x, float y, int pnt, int btn) {
                 super.touchUp(event, x, y, pnt, btn);
                 isTouched = false;
+                System.out.println("isTouched=false");
                 super.cancel();
             }
         });
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
 
         rootTable = new Table();
         rootTable.setFillParent(true);
@@ -363,12 +342,12 @@ public class UiHandler {
         //float size = shadeSkin.getDrawable("touchpad").getMinWidth()/2;
 
 
-        aimPad = new AppearOnTouchPad( 0,camWidth/2,10, shadeSkin,true);
-        aimPad.setColor(1,1,1,0.1f);aimPad.setPosition(camWidth,camHeight);aimPad.setVisible(false);//aimPad.setSize(size,size);
+        aimPad = new AppearOnTouchPad( camWidth/2,camWidth,10, shadeSkin,true);
+        aimPad.setColor(1,1,1,0.07f);aimPad.setPosition(camWidth,camHeight);aimPad.setVisible(false);//aimPad.setSize(size,size);
         rootTable.addActor(aimPad);
 
-        movPad = new AppearOnTouchPad( camWidth/2,camWidth,12, shadeSkin,false);
-        movPad.setColor(1,1,1,0.1f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);//movPad.setSize(size,size);
+        movPad = new AppearOnTouchPad( 0,camWidth/2,12, shadeSkin,false);
+        movPad.setColor(1,1,1,0.07f);movPad.setPosition(camWidth,camHeight);movPad.setVisible(false);//movPad.setSize(size,size);
         rootTable.addActor(movPad);
     }
 
@@ -385,7 +364,7 @@ public class UiHandler {
 
         /**      ****************************************LEFT SLIDING MENU*****************************************      **/
         slideMenuLeft = new SlideMenu(camWidth/6.1f,camHeight/2.2f,"left",camWidth,camHeight,-camHeight/2f+(camHeight/2.2f)/2);//left or up
-        stage.addActor(slideMenuLeft);
+        stage.getRoot().addActorAt(0,slideMenuLeft);
         slideMenuLeft.setColor(1,1,1,0.7f);
         final Table leftTable=new Table();leftTable.setSize(slideMenuLeft.getWidth(),slideMenuLeft.getHeight());//leftTable.setWidth(camWidth/7f);
         final ScrollPane scrollPane=new ScrollPane(leftTable,shadeSkin,"android");//scrollPane.setWidth(camWidth/7f);
@@ -571,7 +550,7 @@ public class UiHandler {
 
         /**     ****************************************BOTTOM SLIDING MENU*****************************************     **/
         slideMenuBottom = new SlideMenu(camWidth,camHeight/7f,"down",camWidth,camHeight, 0);
-        stage.addActor(slideMenuBottom);
+        stage.getRoot().addActorAt(1,slideMenuBottom);
         slideMenuBottom.setColor(1,1,1,0.7f);
         //final Image image_backgroundY = new Image(new SpriteDrawable(temp));
         menuButtonY = new Image(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.tA.findRegion("menuButton"));
@@ -704,9 +683,13 @@ public class UiHandler {
         disableOrEnableResourceButtons(buyHealthButton,Integer.parseInt(healthPerTap),totalHealthNum,Airship.healthValues[Airship.healthLvl],null);
 
         ammoLabel.setText(Airship.ammo); fuelLabel.setText(Integer.toString((int)Airship.fuel));
-        if (anyUITouched()) isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
 
-        stage.act(delta);//check if listened ui was touched, move knobs and progressBars etc
+        //check if listened ui was touched, move knobs and progressBars etc
+
+        if (Gdx.input.justTouched()&&!isTouched&&anyUITouched()) isTouched=true;//check if any non-listened ui like slidemenus(updated in stage.act) or touchpads were touched, made false if nothing is touched
+
+        stage.act(delta);
+
         justSet=false;
     }
         /*if (!isTouched&&Gdx.input.justTouched()) {//if screen is touched and it is not ui

@@ -8,11 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.kredatus.skydefenders.Birds.BirdAbstractClass;
-import com.kredatus.skydefenders.SkyDefendersMain;
 import com.kredatus.skydefenders.GameObjects.Airship;
 import com.kredatus.skydefenders.GameWorld.GameWorld;
+import com.kredatus.skydefenders.Handlers.TargetHandler;
 import com.kredatus.skydefenders.Handlers.UiHandler;
 import com.kredatus.skydefenders.NonGameHandlerScreens.Loader;
+import com.kredatus.skydefenders.SkyDefendersMain;
 import com.kredatus.skydefenders.TweenAccessors.Value;
 
 import java.util.Random;
@@ -128,10 +129,10 @@ public class MovingImageContainer {
         slideMenuLeftTime=0.7f;
 
         lastDest=dest.cpy() ;
-        setupTweens();
+        setupTweens(TargetHandler.resourceGather);
     }
 
-    private void setupTweens() {
+    private void setupTweens(final Sound gatherSound) {
         final MovingImageContainer thisMovingImageContainer =this;
         endSecondMovementY=new TweenCallback() {
             @Override
@@ -194,7 +195,7 @@ public class MovingImageContainer {
                 //System.out.println(System.currentTimeMillis()-UiHandler.lastResourceGatherTime);
                 if (System.currentTimeMillis()-UiHandler.lastResourceGatherTime<400)UiHandler.resourceGatherStreak++;else UiHandler.resourceGatherStreak=0;
                 //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
-                ((Sound)((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.manager.get(((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.assets.resourceGather)).play(0.07f,0.55f+ 0.0010f*UiHandler.resourceGatherStreak,0);
+                if (!GameWorld.soundMuted) gatherSound.play(0.07f,0.55f+ 0.0010f*UiHandler.resourceGatherStreak,0);
                 if (thisBird==null) ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.boughtItemsList.remove(thisMovingImageContainer);
                 else thisBird.dropsList.remove(thisMovingImageContainer);
                 UiHandler.lastResourceGatherTime=System.currentTimeMillis();
