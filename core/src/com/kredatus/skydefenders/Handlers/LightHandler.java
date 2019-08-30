@@ -309,7 +309,9 @@ public class LightHandler { //consider making barlight and mirroring on each sid
 
     public int newCamWidth(int camHeight){ return (int)  (camHeight* (Loader.screenWidth/(float)Loader.screenHeight)); }
     public void updateCamDimensions(int newCamHeight){
-        GameHandler.camHeight=newCamHeight;GameHandler.camWidth=newCamWidth(newCamHeight);
+        //cam.viewportHeight=newCamHeight;cam.viewportWidth=newCamWidth(newCamHeight);
+        GameHandler.camHeight=newCamHeight;
+        GameHandler.camWidth=newCamWidth(newCamHeight);
         GameHandler.camHeight=newCamHeight;GameHandler.camWidth=newCamWidth(newCamHeight);
         GameHandler.camHeight=newCamHeight;GameHandler.camWidth=newCamWidth(newCamHeight);
         GameHandler.camHeight=newCamHeight;GameHandler.camWidth=newCamWidth(newCamHeight);
@@ -323,7 +325,7 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             //System.out.println("+ "+BgHandler.yVel/7000f);
                 foreRayHandler.setAmbientLight(curAmbLightLvl + foreRayAmbDiff);
                 backRayHandler.setAmbientLight(curAmbLightLvl);
-                updateCamDimensions(Loader.origCamHeight+300);
+
 
         } else if (curAmbLightLvl >= origAmbLightLvl /2 && !BgHandler.lightsBrightening) {
             curAmbLightLvl -=Math.abs(BgHandler.yVel/10000f);

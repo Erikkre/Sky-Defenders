@@ -97,7 +97,7 @@ public class Loader implements Screen {
     Value loadBarAlpha= new Value(1);
     Tween glowingLoadingBarTween=Tween.to(loadBarAlpha,0,0.5f).target(0).repeatYoyo(1,0).ease(TweenEquations.easeInCubic).start();
     boolean isFirstTime;
-0
+
     long soundID;
     public static TextureRegion[] ranksList;
     public static final int origCamHeight=1200;
@@ -124,7 +124,7 @@ public class Loader implements Screen {
 
     @Override
     public void render(final float delta) {
-        if (System.currentTimeMillis()-game.startTime>550) {
+        //if (System.currentTimeMillis()-game.startTime>550) {
             load();
             //System.out.println(loadBar.getPercent() + " " + (manager.getProgress() + 0.02f));
             glowingLoadingBarTween.update(delta);
@@ -150,7 +150,7 @@ public class Loader implements Screen {
 
             //setFireColor();
             percentDoneLabel.setText((int)(manager.getProgress()*100)+"%");
-        }
+        //}
     }
 
     private void setupLoadingBarAndLogo(){

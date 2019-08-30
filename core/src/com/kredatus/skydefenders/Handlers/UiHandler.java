@@ -79,7 +79,15 @@ public class UiHandler {
     public ScheduledFuture<?> giveDiamondGetGoldFuture,giveGoldGetDiamondFuture,giveGoldGetArmorFuture,giveGoldGetAmmoFuture,giveGoldGetFuelFuture,giveGoldGetHealthFuture;    //might want to implement a current stage for new screens
     public String armorPrice,ammoPrice,fuelPrice,healthPrice,diamondPrice,goldPrice,//1 diamond
             armorPerTap,ammoPerTap,fuelPerTap,healthPerTap,diamondPerTap,goldPerTap;
-    public static double lastResourceGatherTime;public static int resourceGatherStreak;
+    public static double lastGoldGatherTime;public static int goldGatherStreak=1;public static Future goldGatherFuture;
+    public static double lastDiamondGatherTime;public static int diamondGatherStreak=1;public static Future diamondGatherFuture;
+    public static double lastFuelGatherTime;public static int fuelGatherStreak=1;public static Future fuelGatherFuture;
+    public static double lastAmmoGatherTime;public static int ammoGatherStreak=1;public static Future ammoGatherFuture;
+    public static double lastArmorGatherTime;public static int armorGatherStreak=1;public static Future armorGatherFuture;
+    public static double lastHealthGatherTime;public static int healthGatherStreak=1;public static Future healthGatherFuture;
+    public static double lastExpGatherTime;public static int expGatherStreak=1;public static Future expGatherFuture;
+    public static int maxStreakInterval=300;
+
     public static boolean justSet=false;
     public  boolean anyUITouched() {
 
@@ -116,7 +124,7 @@ public class UiHandler {
     public static Image goldSymbol,fuelSymbol,ammoSymbol,diamondSymbol,airshipHealthSymbol,airshipArmorSymbol;public static Rank rank; public static ProgressBar expBar,airshipHealthBar,airshipArmorBar;public static Image rankImage;
     public ImageTextButton buyGoldButton,buyDiamondButton,buyFuelButton,buyArmorButton,buyAmmoButton,buyHealthButton;
     private Preferences prefs = Gdx.app.getPreferences("skyDefenders");
-    public ScheduledThreadPoolExecutor timer = new ScheduledThreadPoolExecutor(10);
+    public static ScheduledThreadPoolExecutor timer = new ScheduledThreadPoolExecutor(10);
     public Button musicButton,soundButton;
     public UiHandler(GameWorld world, float camWidth, float camHeight, Skin shadeSkin) {
         if (Gdx.app.getVersion() >= 21) timer.setRemoveOnCancelPolicy(true);

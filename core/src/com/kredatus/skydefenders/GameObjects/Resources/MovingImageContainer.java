@@ -17,6 +17,7 @@ import com.kredatus.skydefenders.SkyDefendersMain;
 import com.kredatus.skydefenders.TweenAccessors.Value;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
@@ -142,63 +143,143 @@ public class MovingImageContainer {
                     GameWorld.gold+=1;
                     UiHandler.goldLabel.setText(GameWorld.gold);
 
-                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.goldSymbol.localToStageCoordinates(new Vector2(
-                            UiHandler.goldSymbol.getWidth()/4, UiHandler.goldSymbol.getHeight()/7)),1,35,1,1,1,1);
+                    if (!GameWorld.soundMuted) gatherSound.play(0.07f,0.50f+ 0.0007f*UiHandler.goldGatherStreak,0); //if resource collected in last 300ms set pitch 0.05f higher, else, stop setting pitch higher
 
-                    //System.out.println(startPos);
+                    if (System.currentTimeMillis()-UiHandler.lastGoldGatherTime<UiHandler.maxStreakInterval) UiHandler.goldGatherStreak++;
+                        if (UiHandler.goldGatherFuture!=null) UiHandler.goldGatherFuture.cancel(true);
+                        UiHandler.goldGatherFuture=UiHandler.timer.schedule(new Runnable() {
+                            @Override
+                            public void run() {
+                                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.goldSymbol.localToStageCoordinates(new Vector2(
+                                            UiHandler.goldSymbol.getWidth() / 4, UiHandler.goldSymbol.getHeight() / 7)), UiHandler.goldGatherStreak, 35, 1, 1, 1, 1);
+                                    UiHandler.goldGatherStreak=1;
+                             }
+                        }, (long) (UiHandler.maxStreakInterval/1.5), TimeUnit.MILLISECONDS);
+
+                    UiHandler.lastGoldGatherTime=System.currentTimeMillis();
+
                 } else if (type=='e') {
                     UiHandler.rank.addExp(1);
                     UiHandler.expBar.setValue(UiHandler.rank.expGained);
                     UiHandler.expLabel.setText(UiHandler.rank.expGained);
 
-                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.expBar.localToStageCoordinates(new Vector2(
-                            UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.expBar.getHeight()/7)),1,35,1,1,1,1);
+                    if (!GameWorld.soundMuted) gatherSound.play(0.07f,0.55f+ 0.0010f*UiHandler.expGatherStreak,0); //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
+
+                    if (System.currentTimeMillis()-UiHandler.lastExpGatherTime<UiHandler.maxStreakInterval) UiHandler.expGatherStreak++;
+                    if (UiHandler.expGatherFuture!=null) UiHandler.expGatherFuture.cancel(true);
+                    UiHandler.expGatherFuture=UiHandler.timer.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.expBar.localToStageCoordinates(new Vector2(
+                                    UiHandler.expBar.getPercent()*UiHandler.expBar.getWidth(), UiHandler.expBar.getHeight()/7)),UiHandler.expGatherStreak,35,1,1,1,1);
+                            UiHandler.expGatherStreak=1;
+                        }
+                    }, (long) (UiHandler.maxStreakInterval/1.5), TimeUnit.MILLISECONDS);
+
+                    UiHandler.lastExpGatherTime=System.currentTimeMillis();
 
                 } else if (type=='d') {
                     GameWorld.diamond +=1;
                     UiHandler.diamondLabel.setText(GameWorld.diamond);
 
-                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.diamondSymbol.localToStageCoordinates(new Vector2(
-                            UiHandler.diamondSymbol.getWidth()/4, UiHandler.diamondSymbol.getHeight()/7)),1,35,1,1,1,1);
+                    if (!GameWorld.soundMuted) gatherSound.play(0.07f,0.55f+ 0.0010f*UiHandler.diamondGatherStreak,0); //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
+
+                    if (System.currentTimeMillis()-UiHandler.lastExpGatherTime<UiHandler.maxStreakInterval) UiHandler.diamondGatherStreak++;
+                    if (UiHandler.diamondGatherFuture!=null) UiHandler.diamondGatherFuture.cancel(true);
+                    UiHandler.diamondGatherFuture=UiHandler.timer.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.diamondSymbol.localToStageCoordinates(new Vector2(
+                                    UiHandler.diamondSymbol.getWidth()/4, UiHandler.diamondSymbol.getHeight()/7)),UiHandler.diamondGatherStreak,35,1,1,1,1);
+                            UiHandler.diamondGatherStreak=1;
+                        }
+                    }, (long) (UiHandler.maxStreakInterval/1.5), TimeUnit.MILLISECONDS);
+
+                    UiHandler.lastDiamondGatherTime=System.currentTimeMillis();
 
                 } else if (type=='f') {
                     if (Airship.fuel<1) UiHandler.fuelLabel.setColor(1,1,1,1);
                     Airship.fuel+=1;
                     UiHandler.fuelLabel.setText(Integer.toString((int)Airship.fuel));
 
-                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.fuelSymbol.localToStageCoordinates(new Vector2(
-                            UiHandler.fuelSymbol.getWidth()/4, UiHandler.fuelSymbol.getHeight()/7)),1,35,1,1,1,1);
+
+                    if (!GameWorld.soundMuted) gatherSound.play(0.17f,0.55f + 0.0010f*UiHandler.fuelGatherStreak,0); //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
+
+                    if (System.currentTimeMillis()-UiHandler.lastFuelGatherTime<UiHandler.maxStreakInterval) UiHandler.fuelGatherStreak++;
+                    if (UiHandler.fuelGatherFuture!=null) UiHandler.fuelGatherFuture.cancel(true);
+                    UiHandler.fuelGatherFuture=UiHandler.timer.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.fuelSymbol.localToStageCoordinates(new Vector2(
+                                    UiHandler.fuelSymbol.getWidth()/4, UiHandler.fuelSymbol.getHeight()/7)),UiHandler.fuelGatherStreak,35,1,1,1,1);
+                            UiHandler.fuelGatherStreak=1;
+                        }
+                    }, (long) (UiHandler.maxStreakInterval/1.5), TimeUnit.MILLISECONDS);
+
+                    UiHandler.lastFuelGatherTime=System.currentTimeMillis();
 
                 } else if (type=='a') {
                     if (Airship.ammo<1) UiHandler.ammoLabel.setColor(1,1,1,1);
                     Airship.ammo+=1;
                     UiHandler.ammoLabel.setText(Airship.ammo);
 
-                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.ammoSymbol.localToStageCoordinates(new Vector2(
-                            UiHandler.ammoSymbol.getWidth()/4, UiHandler.ammoSymbol.getHeight()/7)),1,35,1,1,1,1);
+                    if (!GameWorld.soundMuted) gatherSound.play(0.07f,0.55f+ 0.0010f*UiHandler.ammoGatherStreak,0); //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
+
+                    if (System.currentTimeMillis()-UiHandler.lastAmmoGatherTime<UiHandler.maxStreakInterval) UiHandler.ammoGatherStreak++;
+                    if (UiHandler.ammoGatherFuture!=null) UiHandler.ammoGatherFuture.cancel(true);
+                    UiHandler.ammoGatherFuture=UiHandler.timer.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.ammoSymbol.localToStageCoordinates(new Vector2(
+                                    UiHandler.ammoSymbol.getWidth()/4, UiHandler.ammoSymbol.getHeight()/7)),UiHandler.ammoGatherStreak,35,1,1,1,1);
+                            UiHandler.ammoGatherStreak=1;
+                        }
+                    }, (long) (UiHandler.maxStreakInterval/1.5), TimeUnit.MILLISECONDS);
+
+                    UiHandler.lastAmmoGatherTime=System.currentTimeMillis();
 
                 } else if (type=='h'){
                     Airship.health+=1;
                     UiHandler.airshipHealthBar.setValue(Airship.health);UiHandler.airshipHealthLabel.setText(Airship.health);
 
-                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.airshipHealthBar.localToStageCoordinates(new Vector2(
-                            UiHandler.airshipHealthBar.getPercent()*UiHandler.airshipHealthBar.getWidth(), UiHandler.airshipHealthBar.getHeight()/7)),1,35,1,1,1,1);
+                    if (!GameWorld.soundMuted) gatherSound.play(0.07f,0.55f+ 0.0010f*UiHandler.healthGatherStreak,0); //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
+
+                    if (System.currentTimeMillis()-UiHandler.lastHealthGatherTime<UiHandler.maxStreakInterval) UiHandler.healthGatherStreak++;
+                    if (UiHandler.healthGatherFuture!=null) UiHandler.healthGatherFuture.cancel(true);
+                    UiHandler.healthGatherFuture=UiHandler.timer.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.airshipHealthBar.localToStageCoordinates(new Vector2(
+                                    UiHandler.airshipHealthBar.getPercent()*UiHandler.airshipHealthBar.getWidth(), UiHandler.airshipHealthBar.getHeight()/7)),UiHandler.healthGatherStreak,35,1,1,1,1);
+                            UiHandler.healthGatherStreak=1;
+                        }
+                    }, (long) (UiHandler.maxStreakInterval/1.5), TimeUnit.MILLISECONDS);
+
+                    UiHandler.lastHealthGatherTime=System.currentTimeMillis();
 
                 } else if (type=='r'){
                     Airship.armor+=1;
                     UiHandler.airshipArmorBar.setValue(Airship.armor);UiHandler.airshipArmorLabel.setText(Airship.armor);
 
-                    ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.airshipArmorBar.localToStageCoordinates(new Vector2(
-                            UiHandler.airshipArmorBar.getPercent()*UiHandler.airshipArmorBar.getWidth(), UiHandler.airshipArmorBar.getHeight()/7)),1,35,1,1,1,1);
+                    if (!GameWorld.soundMuted) gatherSound.play(0.07f,0.55f+ 0.0010f*UiHandler.armorGatherStreak,0); //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
+
+                    if (System.currentTimeMillis()-UiHandler.lastArmorGatherTime<UiHandler.maxStreakInterval) UiHandler.armorGatherStreak++;
+                    if (UiHandler.armorGatherFuture!=null) UiHandler.armorGatherFuture.cancel(true);
+                    UiHandler.armorGatherFuture=UiHandler.timer.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.fadeAwayNumberEffect(UiHandler.airshipArmorBar.localToStageCoordinates(new Vector2(
+                                    UiHandler.airshipArmorBar.getPercent()*UiHandler.airshipArmorBar.getWidth(), UiHandler.airshipArmorBar.getHeight()/7)),UiHandler.armorGatherStreak,35,1,1,1,1);
+                            UiHandler.armorGatherStreak=1;
+                        }
+                    }, (long) (UiHandler.maxStreakInterval/1.5), TimeUnit.MILLISECONDS);
+
+                    UiHandler.lastArmorGatherTime=System.currentTimeMillis();
                 }
 
-                //System.out.println(System.currentTimeMillis()-UiHandler.lastResourceGatherTime);
-                if (System.currentTimeMillis()-UiHandler.lastResourceGatherTime<400)UiHandler.resourceGatherStreak++;else UiHandler.resourceGatherStreak=0;
-                //if resource collected in last 200ms set pitch 0.05f higher, else, stop setting pitch higher
-                if (!GameWorld.soundMuted) gatherSound.play(0.07f,0.55f+ 0.0010f*UiHandler.resourceGatherStreak,0);
                 if (thisBird==null) ((SkyDefendersMain) Gdx.app.getApplicationListener()).loader.gameHandler.uiHandler.boughtItemsList.remove(thisMovingImageContainer);
                 else thisBird.dropsList.remove(thisMovingImageContainer);
-                UiHandler.lastResourceGatherTime=System.currentTimeMillis();
+
             }
         };
 
