@@ -6,7 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.kredatus.skydefenders.CustomLights.CustomChainLight;
 import com.kredatus.skydefenders.CustomLights.CustomConeLight;
 import com.kredatus.skydefenders.CustomLights.CustomPointLight;
+import com.kredatus.skydefenders.GameWorld.GameHandler;
 import com.kredatus.skydefenders.GameWorld.GameRenderer;
+import com.kredatus.skydefenders.NonGameHandlerScreens.Loader;
 
 import java.util.Collections;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -304,19 +306,34 @@ public class LightHandler { //consider making barlight and mirroring on each sid
             if (curAmbLightLvl <= 0.75)
                 backRayHandler.setAmbientLight(curAmbLightLvl);
         }*/
+
+    public int newCamWidth(int camHeight){ return (int)  (camHeight* (Loader.screenWidth/(float)Loader.screenHeight)); }
+    public void updateCamDimensions(int newCamHeight){
+        GameHandler.camHeight=newCamHeight;GameHandler.camWidth=newCamWidth(newCamHeight);
+        GameHandler.camHeight=newCamHeight;GameHandler.camWidth=newCamWidth(newCamHeight);
+        GameHandler.camHeight=newCamHeight;GameHandler.camWidth=newCamWidth(newCamHeight);
+        GameHandler.camHeight=newCamHeight;GameHandler.camWidth=newCamWidth(newCamHeight);
+        GameHandler.camHeight=newCamHeight;GameHandler.camWidth=newCamWidth(newCamHeight);
+        GameHandler.camHeight=newCamHeight;GameHandler.camWidth=newCamWidth(newCamHeight);
+    }
+
     public void update() {
         if (curAmbLightLvl <= origAmbLightLvl && BgHandler.lightsBrightening) {
             curAmbLightLvl +=Math.abs(BgHandler.yVel/14000f);
             //System.out.println("+ "+BgHandler.yVel/7000f);
                 foreRayHandler.setAmbientLight(curAmbLightLvl + foreRayAmbDiff);
                 backRayHandler.setAmbientLight(curAmbLightLvl);
+                updateCamDimensions(Loader.origCamHeight+300);
 
         } else if (curAmbLightLvl >= origAmbLightLvl /2 && !BgHandler.lightsBrightening) {
             curAmbLightLvl -=Math.abs(BgHandler.yVel/10000f);
             //System.out.println("- "+BgHandler.yVel/7000f);
             foreRayHandler.setAmbientLight(curAmbLightLvl + foreRayAmbDiff);
             backRayHandler.setAmbientLight(curAmbLightLvl);
+
+
         }
+
         //System.out.println(curAmbLightLvl);
 
         //System.out.println(Math.abs(BgHandler.vert.get()/BgHandler.bgStackHeight));

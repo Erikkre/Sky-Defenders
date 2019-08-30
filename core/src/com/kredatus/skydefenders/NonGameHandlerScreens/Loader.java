@@ -87,7 +87,7 @@ public class Loader implements Screen {
     public AssetManager manager=assets.manager;
     public Stage stage;
     private int camWidth,camHeight;
-    public int screenWidth, screenHeight;
+    public static int screenWidth, screenHeight;
     public GameHandler gameHandler;
     Image logoImg,companyNameImg;
     //CustomParticleEffectActor logoFire;
@@ -97,9 +97,10 @@ public class Loader implements Screen {
     Value loadBarAlpha= new Value(1);
     Tween glowingLoadingBarTween=Tween.to(loadBarAlpha,0,0.5f).target(0).repeatYoyo(1,0).ease(TweenEquations.easeInCubic).start();
     boolean isFirstTime;
-
+0
     long soundID;
     public static TextureRegion[] ranksList;
+    public static final int origCamHeight=1200;
     public Loader(SkyDefendersMain game) {
         Texture.setAssetManager(manager);
 
@@ -246,7 +247,7 @@ public class Loader implements Screen {
     private void setupStage(){
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
-        camHeight=1200;
+        camHeight=origCamHeight;
         camWidth=(int)  (camHeight* (screenWidth/(float)screenHeight)) ;
         stage = new Stage(new ExtendViewport(camWidth,camHeight, new OrthographicCamera()), new SpriteBatch());
     }
